@@ -2569,7 +2569,17 @@ a {
 .valign-wrapper .valign {
   display: block;
 }
-
+/*垂直水平居中*/
+.vc-center {
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-justify-content: center;
+  justify-content: center;
+}
 .clearfix {
   clear: both;
 }
