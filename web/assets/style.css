@@ -1,0 +1,28 @@
+.input-field .prefix.active {
+    color: #6a1b9a;
+}
+.input-field label {
+    color: #000;
+}
+.input-field input[type=text]:focus + label {
+    color: #6a1b9a;
+}
+.input-field input[type=password]:focus + label {
+    color: #6a1b9a;
+}
+.input-field input[type=text]:focus  {
+    color: #6a1b9a;
+    border-bottom: 1px solid #6a1b9a;
+    box-shadow: 0 1px 0 0 #6a1b9a;
+}
+.input-field input[type=password]:focus  {
+    color: #6a1b9a;
+    border-bottom: 1px solid #6a1b9a;
+    box-shadow: 0 1px 0 0 #6a1b9a;
+}
+.input-field input[type=text]:focus  {
+     color: #6a1b9a;
+     border-bottom: 1px solid #6a1b9a;
+     box-shadow: 0 1px 0 0 #6a1b9a;
+ }
+
