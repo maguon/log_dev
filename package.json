@@ -1,0 +1,19 @@
+{
+  "name": "application-name",
+  "version": "0.0.1",
+  "dependencies": {
+    "assert-plus": "*",
+    "extend": "*",
+    "posix-getopt": "1.0.0",
+    "request": "*",
+    "restify": "4.0.3",
+    "restify-errors" :"*",
+    "seq": "0.3.5",
+    "serializer": ">=0.0.2 <0.1.0"
+  },
+  "scripts": {
+    "start": "node main.js"
+  },
+  "author": "MingYuan",
+  "license": ""
+}
