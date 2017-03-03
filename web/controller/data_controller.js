@@ -7,7 +7,10 @@ app.controller("dataController", ['$rootScope','$scope','$location','$q','$basic
         $scope.upload = function(dom,val){
             console.log($scope.csvFile);
         }
-
+        $scope.update = function(){
+            $basic.setCookie('url',"jiangsen")
+        }
+        $scope.update();
         $scope.tableHeader =[]
 
         $scope.fileChange = function(file){

@@ -1,4 +1,4 @@
-app.factory('$basic',['$http','$location','$q',function($http,$location,$q){
+app.factory('$basic',['$http','$location','$q',"$cookies",function($http,$location,$q,$cookies){
     var _this = {};
     _this.USER_AUTH_NAME = "auth-token";
     _this.COMMON_AUTH_NAME ='auth-token';
@@ -21,7 +21,7 @@ app.factory('$basic',['$http','$location','$q',function($http,$location,$q){
             url: url,
             type:'post',
             beforeSend: function(xhr) {
-                xhr.setRequestHeader(_this.COMMON_AUTH_NAME,$.cookie(_this.ADMIN_AUTH_NAME));
+                xhr.setRequestHeader(_this.COMMON_AUTH_NAME,$cookies.get(_this.ADMIN_AUTH_NAME));
                 //xhr.setRequestHeader('Content-Type','multipart/form-data');
             },
             success: function(data) {
@@ -59,19 +59,20 @@ app.factory('$basic',['$http','$location','$q',function($http,$location,$q){
 
     function checkAuthorizedStatus(data) {
         if(!angular.isUndefined(data.outMsg) && data.outMsg=="Access token error ,the Api can't be accessed") {
-            $.cookie(_this.ADMIN_AUTH_NAME,"");
+            $cookies.get(_this.ADMIN_AUTH_NAME,"");
             window.location.href="admin_login.html";
         }
     }
 
     _this.setCookie = function (name,value) {
-        $.cookie(name, value,{path:'/',expires: 30});
+        $cookies.put(name, value,{path:'/',expires: new Date(new Date().getTime()+5000)});
+
     }
     _this.getCookie = function (name) {
-        return $.cookie(name);
+        return $cookies.get(name);
     }
     _this.removeCookie = function (name){
-        $.cookie(name,"");
+        $cookies(name,"");
     }
     _this. getParameter = function(name) {
         var url = document.location.href;

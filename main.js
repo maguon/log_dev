@@ -6,7 +6,6 @@ var restify = require('restify');
 (function main() {
 
     var server = restify.createServer({
-
         name: 'LOG_DEV',
         version: '0.0.1'
     });

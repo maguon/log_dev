@@ -7,7 +7,7 @@ var toggleFullScreen = function(){
         document.cancelFullScreen?document.cancelFullScreen():document.mozCancelFullScreen?document.mozCancelFullScreen():
         document.webkitCancelFullScreen&&document.webkitCancelFullScreen()
 
-}
+};
 $(document).ready(function() {
     jQuery.extend( jQuery.fn.pickadate.defaults, {
         monthsFull: [ '一月', '二月', '三月', '四月', '五月', '六月', '七月', '八月', '九月', '十月', '十一月', '十二月' ],
@@ -27,15 +27,14 @@ $(document).ready(function() {
      clear: '清除'
      });*/
 
+        // $('.datepicker').pickadate({
+        //     onSet: function () {
+        //         $('.picker__close').click();
+        //     },
+        //     selectMonths: false, // Creates a dropdown to control month
+        //     selectYears: 0 // Creates a dropdown of 15 years to control year
+        // });
 
-    $('.datepicker').pickadate({
-
-        onSet: function () {
-            $('.picker__close').click();
-        },
-        selectMonths: false, // Creates a dropdown to control month
-        selectYears: 0 // Creates a dropdown of 15 years to control year
-    });
     $('select').material_select();
     $('.tooltipped').tooltip();
 });

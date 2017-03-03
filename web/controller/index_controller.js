@@ -120,4 +120,12 @@ app.controller("indexController", ['$rootScope','$scope','$location','$q',
         });
 
         console.log('Index Controller Init !')
+        $('.datepicker').pickadate({
+            onSet: function () {
+                $('.picker__close').click();
+            },
+            selectMonths: false, // Creates a dropdown to control month
+            selectYears: 0 // Creates a dropdown of 15 years to control year
+        });
+
     }])
