@@ -1,6 +1,6 @@
-app.controller("dataController", ['$rootScope','$scope','$location','$q',
+app.controller("dataController", ['$rootScope','$scope','$location','$q','$basic',
 
-    function($rootScope,$scope,$location,$q ) {
+    function($rootScope,$scope,$location,$q,$basic ) {
         $scope.csvFile = null;
         $scope.rightNumber = 0;
         $scope.errorNumber = 0;
