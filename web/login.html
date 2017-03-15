@@ -10,7 +10,7 @@
 </head>
 <body class="purple darken-3">
     <div>
-        <div ng-view></div>
+        <div ui-view></div>
     </div>
 </body>
 
@@ -19,8 +19,13 @@
 <script src="/assets/plugins/alert/alert.min.js"></script>
 <script src="/assets/custom.js"></script>
 <script src="/lib/angular/angular.min.js"></script>
-<script src="/lib/angular/angular-route.min.js"></script>
-<script src="/module/app_module.js"></script>
-<script src="/service/router.js"></script>
-<script src="/controller/login_controller.js"></script>
+<script src="/lib/angular/angular-ui-router.min.js"></script>
+<script src="/lib/angular/angular-cookies.min.js"></script>
+<script src="/module/login_module.js"></script>
+<script src="/host/hostUrl.js"></script>
+<script src="/js/service/service.js"></script>
+<!--<script src="/lib/angular/angular-route.min.js"></script>-->
+
+<script src="/js/router/router.js"></script>
+<script src="/js/controller/login_controller.js"></script>
 </html>
