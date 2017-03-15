@@ -47,9 +47,9 @@ CommonService.factory('$basic',['$http','$location','$q',"$cookies",function($ht
                 // url = '/api' + (url[0]==='/'?'':'/') + url;
                 var deferred = $q.defer();
                 //only 'post,put' need 2nd parameter
-                $http[fn](url,param).success(function(data){
+                $http[fn](url,param).then(function(data){
                     deferred.resolve(data);
-                }).error(function(data){
+                }).catch(function(data){
                     checkAuthorizedStatus(data);
                     deferred.reject(data);
                 });
