@@ -47,10 +47,11 @@ CommonService.factory('$basic',['$http','$location','$q',"$cookies",function($ht
                 // url = '/api' + (url[0]==='/'?'':'/') + url;
                 var deferred = $q.defer();
                 //only 'post,put' need 2nd parameter
-                $http[fn](url,param).then(function(data){
-                    deferred.resolve(data);
+                $http[fn](url,param).then(function(success){
+                    deferred.resolve(success.data);
+
                 }).catch(function(data){
-                    checkAuthorizedStatus(data);
+                    // checkAuthorizedStatus(data);
                     deferred.reject(data);
                 });
                 return deferred.promise;
@@ -66,15 +67,15 @@ CommonService.factory('$basic',['$http','$location','$q',"$cookies",function($ht
     }
 
     _this.setCookie = function (name,value) {
-        $cookies.put(name, value,{path:'/',expires: new Date(new Date().getTime()+5000)});
+        $cookies.put(name, value);
 
-    }
+    };
     _this.getCookie = function (name) {
         return $cookies.get(name);
-    }
+    };
     _this.removeCookie = function (name){
         $cookies(name,"");
-    }
+    };
     _this. getParameter = function(name) {
         var url = document.location.href;
         var start = url.indexOf("?")+1;
@@ -90,7 +91,7 @@ CommonService.factory('$basic',['$http','$location','$q',"$cookies",function($ht
             }
         }
         return value;
-    }
+    };
 
     function getParameterName(str) {
         var start = str.indexOf("=");

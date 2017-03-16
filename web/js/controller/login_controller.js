@@ -2,16 +2,62 @@ var loginController=angular.module("loginController",[]);
 loginController.controller("loginController", ['$rootScope','$scope','$location','$q',"$basic",
 
     function($rootScope,$scope,$location,$q,$basic ) {
+        // if(sessionStorage.getItem("userId")){
+        //     var userId=sessionStorage.getItem("userId");
+        //     console.log(userId);
+        //     $basic.get(DataUrl+"/admin/"+userId).then(function (data) {
+        //         $scope.username=data.data.result[0].user_name;
+        //     }).catch(function (error) {
+        //         sweetAlert("系统异常", "", "error");
+        //     });
+        // }else {
+        //     $scope.username='';
+        // }
+        // console.log(sessionStorage.getItem("userId"));
         $scope.username='';
         $scope.password='';
         $scope.login = function(){
-            console.log($scope.username,$scope.password);
-            $basic.post(DataUrl+"/admin/do/login", {
-                "userName": $scope.username,
-                "password": $scope.password
-            }).then(function(data){
-                    console.log(data)
-                }).catch(function(error){            });
+           if($scope.username==''||$scope.username==''){
+
+               sweetAlert("账号或密码不能为空", "", "error");
+           } else {
+               $basic.post(DataUrl+"/admin/do/login", {
+                   "userName": $scope.username,
+                   "password": $scope.password
+               }).then(function(data){
+                   console.log(data)
+                   if(data.success==true){
+                       sessionStorage.setItem("auth-token",data.result.accessToken);
+                       sessionStorage.setItem("userId",data.result.userId);
+                       window.location.href="index.html";
+                   }else {
+                       sweetAlert(data.msg,"","error");
+                   }
+
+
+                   // $basic.setCookie("auth-token",data.data.result.accessToken);
+                   // $basic.setCookie("userId",data.data.result.userId);
+
+                   // sweetAlert({
+                   //     title: "Are you sure?",
+                   //     text: "You will not be able to recover this imaginary file!",
+                   //     type: "warning",
+                   //     showCancelButton: true,
+                   //     confirmButtonColor: "#DD6B55",
+                   //     confirmButtonText: "Yes, delete it!",
+                   //     closeOnConfirm: false
+                   // }, function(){
+                   //     swal("Deleted!",
+                   //         "Your imaginary file has been deleted.",
+                   //         "success");
+                   // });
+
+               }).catch(function(error){
+                   sweetAlert("登录异常", "", "error");
+                    console.log(error)
+               });
+           }
+
 
             //swal('登录成功','欢迎您进入系统'+$scope.username,'success')
 
