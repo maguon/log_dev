@@ -159,5 +159,27 @@ body{
     margin: 0;
 }
 .searchBox{
+    position: relative;
     margin-bottom: 20px;
+
+}
+.operation {
+    font-size: 20px;
+}
+.operation span{
+    cursor: pointer;
+    margin-right: 10px;
+}
+.search{
+    width: auto;
+
+    margin: 0;
+}
+.hSearch{
+   background: rgba(0,0,0,0.1);
+}
+.searchIcon{
+    font-size: 20px;
+    cursor: pointer;
+    height: auto;
 }

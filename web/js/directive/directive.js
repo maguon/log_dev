@@ -7,7 +7,7 @@ commonDirective.directive('header', function() {
         restrict: 'E',
         controller: function($scope, $element,$rootScope){
             $scope.logOut = function(){
-                sweetAlert({
+                swal({
                     title: "注销账号",
                     text: "是否确认退出登录",
                     type: "warning",
@@ -62,3 +62,13 @@ commonDirective.directive("carSelect",function () {
        }
    } 
 });
+// commonDirective.directive("shadeDow",function () {
+//     return{
+//         restrict:"A",
+//         link:function (ele) {
+//             ele.css({
+//                 "display":"block"
+//             })
+//         }
+//     }
+// });
