@@ -21,6 +21,30 @@ index_router.config(['$stateProvider',"$urlRouterProvider",function($stateProvid
             templateUrl: "/view/index.html",  //路由填充的模板
             controller:'indexController'
         })
+        .state("Com", {
+            url: "/Com",  //路由路径
+            templateUrl: "/view/car/Com.html",  //路由填充的模板
+            // controller:'dataController'
+        })
+        .state("CarMsg", {
+            url: "/CarMsg",  //路由路径
+            templateUrl: "/view/car/CarMsg.html", //路由填充的模板
+            // abstract:true,
+            controller:function ($state) {
+                    $state.go("CarMsg.truck");
+            }
+        })
+        .state("CarMsg.truck", {
+            url: "/truck",  //路由路径
+            templateUrl: "/view/car/truck.html",  //路由填充的模板
+
+            // controller:'dataController'
+        })
+            .state("CarMsg.hand", {
+            url: "/hand",  //路由路径
+            templateUrl: "/view/car/hand.html",  //路由填充的模板
+            // controller:'dataController'
+        })
         .state("data", {
             url: "/data",  //路由路径
             templateUrl: "/view/data.html",  //路由填充的模板

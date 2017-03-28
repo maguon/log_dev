@@ -1,0 +1,163 @@
+body{
+    position: relative;
+    background: #f1f5f5;
+}
+/*.header, .ConWrap.footer {*/
+    /*padding-left: 280px;*/
+/*}*/
+.ConWrap{
+    margin-bottom: 70px;
+    background: #f1f5f5;
+
+}
+@media only screen and (max-width : 992px) {
+    .header, .ConWrap {
+        padding-left: 0;
+    }
+}
+.side-nav{
+    /*background: #1c2127;*/
+
+}
+.side-nav a{
+    color: #757d7f;
+}
+.nav-logo a{
+    /*color: #fff;*/
+    height: 64px;
+}
+.side-nav .divider{
+    margin: 0;
+}
+/*.side-nav .collapsible-header{*/
+    /*padding:0 32px ;*/
+/*}*/
+.side-nav a{
+    padding: 0 16px;
+}
+.first-N i{
+    font-size: 1.6rem;
+}
+.collapsible-body a{
+    padding: 0;
+}
+.footer{
+    width: 100%;
+    position: fixed;
+    bottom: 0;
+    height: 50px;
+    background: #667481;
+}
+.footer-msg{
+    color: white;
+    padding-right: 20px;
+    font-size: 20px;
+}
+
+/*home*/
+.gm-1{
+    /*height:330px;*/
+}
+.gm1-left .gm1-leftBoxWrap{
+    /*height: 145px;*/
+}
+
+.gm1-leftBoxWrap .gm1-leftBox{
+    height: 145px;
+    /*margin: 20px;*/
+}
+.gm1-right{
+     height: 310px;
+ }
+/*.gm1-right div{*/
+    /*height: 100%;*/
+/*}*/
+/*各种车辆类别数量*/
+.category-T{
+    margin-top: 10px;
+}
+.category-T i{
+    font-size: 2.5rem;
+}
+.category-TMsg{
+    font-size: 13px;
+    margin-left: 15px;
+}
+.category-TNum{
+    font-size: 40px;
+}
+.category-F{
+   margin-top: 40px;
+}
+.category-F-divider{
+    /*margin: 0 10px;*/
+}
+.gm1-rightT{
+    margin: 20px;
+    font-size: 2rem;
+}
+.gm1-rightTMsg{
+    font-size: 1rem;
+}
+.gm1-rightTNum{
+    margin: 20px 0;
+    font-size: 40px;
+}
+.gm-2{
+    /*height: 150px;*/
+}
+.gm-2Box{
+    height: 90px;
+    background: white;
+    margin: 20px 0;
+    font-size: 40px;
+}
+.gm-2BoxLine{
+    border-right: 1px solid #d5d5d5;
+}
+
+.gm-2BoxWrap{
+    margin: 0 auto;
+}
+.gm-2BoxTitle{
+    font-size: 20px;
+    margin: 0 10px;
+}
+.gm-2BoxNum{
+    /*margin-left: 5px;*/
+}
+.gm-3{
+    /*height: 160px;*/
+    margin-top: 40px;
+}
+.gm-3box{
+    height: 160px;
+    background: #f88282;
+    color: white;
+}
+.gm-3Title{
+    font-size: 25px;
+}
+.gm-3Msg{
+    font-size: 14px;
+}
+.gm-3Num{
+    font-size: 100px;
+}
+
+/*carMsg*/
+/*.CarMsgWrap .select-dropdown{*/
+    /*margin: 0;*/
+/*}*/
+.searchBoxWrap{
+    background: #f1f5f6;
+}
+.searchBoxWrap .row{
+    margin: 0;
+}
+.searchBoxWrap .input-field{
+    margin: 0;
+}
+.searchBox{
+    margin-bottom: 20px;
+}

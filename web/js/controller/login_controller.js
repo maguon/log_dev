@@ -25,7 +25,7 @@ loginController.controller("loginController", ['$rootScope','$scope','$location'
                    "userName": $scope.username,
                    "password": $scope.password
                }).then(function(data){
-                   console.log(data)
+                   console.log(data);
                    if(data.success==true){
                        sessionStorage.setItem("auth-token",data.result.accessToken);
                        sessionStorage.setItem("userId",data.result.userId);

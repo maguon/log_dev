@@ -1,29 +1,50 @@
-<ul id="slide-out" class="side-nav">
-    <li>
-        <div class="userView">
-            <div class="background">
-                <img src="/assets/images/office.jpg">
-            </div>
-            <a ><img class="circle" src="/assets/images/avatar.jpeg"></a>
-            <a ><span class="white-text name">John Doe</span></a>
-            <a ><span class="white-text email">jdandturk@gmail.com</span></a>
-        </div>
+<ul id="slide-out" class="side-nav  ">
+    <li class="nav-logo">
+        <!--<div class="userView">-->
+            <!--<div class="background">-->
+                <!--<img src="/assets/images/office.jpg">-->
+            <!--</div>-->
+            <!--<a ><img class="circle" src="/assets/images/avatar.jpeg"></a>-->
+            <!--<a ><span class="white-text name">John Doe</span></a>-->
+            <!--<a ><span class="white-text email">jdandturk@gmail.com</span></a>-->
+        <!--</div>-->
+        <a href="#!" class="waves-effect waves-purple" >大连顺通盛世物流</a>
     </li>
-    <li><div class="divider"></div></li>
+    <li class="divider"></li>
     <li >
+        <ul class="collapsible collapsible-accordion">
+            <li class="bold ">
+                <a class="collapsible-header waves-effect waves-purple first-N" ><i class="mdi mdi-ambulance "></i>车辆管理</a>
+                <div class="collapsible-body" style="padding: 0">
+                    <ul >
+                        <li><a href="#!" ui-sref="Com"><i class="mdi mdi-chevron-right "></i>综合信息</a></li>
+                        <li><a href="#!" ui-sref="CarMsg" ><i class="mdi mdi-chevron-right "></i>车辆信息</a></li>
+                        <li><a href="#!"><i class="mdi mdi-chevron-right "></i>司机管理</a></li>
+                        <li><a href="#!"><i class="mdi mdi-chevron-right "></i>事故信息管理</a></li>
+                        <li><a href="#!"><i class="mdi mdi-chevron-right "></i>车辆救援管理</a></li>
+                        <li><a href="#!"><i class="mdi mdi-chevron-right "></i>车辆维修管理</a></li>
+                        <li><a href="#!"><i class="mdi mdi-chevron-right "></i>车辆加油记录</a></li>
+                    </ul>
+                </div>
+            </li>
+        </ul>
+    </li>
+    <li class="divider"></li>
+    <li class="bold" >
         <!--<a class="waves-effect waves-purple" href="#!/"  onclick="Materialize.toast('收到即时消息', 4000,'rounded');"><i class="mdi mdi-view-dashboard "></i>主页</a>-->
-        <a class="waves-effect waves-purple" ui-sref="index" onclick="Materialize.toast('收到即时消息', 4000,'rounded');"><i class="mdi mdi-view-dashboard "></i>主页</a>
+        <a class="waves-effect waves-purple first-N" ui-sref="index" onclick="Materialize.toast('收到即时消息', 4000,'rounded');"><i class="mdi mdi-crop-free "></i>主页</a>
 
     </li>
-    <li>
+    <li class="divider"></li>
+    <li class="bold">
     <!--<a class="waves-effect waves-purple" href="#!/setting" ><i class="mdi mdi-settings "></i>设置</a>-->
-        <a class="waves-effect waves-purple"  ui-sref="setting"><i class="mdi mdi-settings "></i>设置</a>
+        <a class="waves-effect waves-purple first-N"  ui-sref="setting"><i class="mdi mdi-settings "></i>设置</a>
 
     </li>
-    <li><div class="divider"></div></li>
-    <li >
+    <li class="divider"></li>
+    <li class="bold">
         <!--<a class="waves-effect waves-purple" href="#!/data" ><i class="mdi mdi-database-plus"></i>数据</a>-->
-        <a class="waves-effect waves-purple"  ui-sref="data"><i class="mdi mdi-database-plus"></i>数据</a>
+        <a class="waves-effect waves-purple first-N"  ui-sref="data"><i class="mdi mdi-database-plus"></i>数据</a>
     </li>
 
 

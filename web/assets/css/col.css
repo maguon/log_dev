@@ -1,0 +1,72 @@
+.row .col.s1-0{
+    width: 10%;
+    margin-left: auto;
+    left: auto;
+    right: auto;
+}
+.row .col.s2-0{
+    width: 20%;
+    margin-left: auto;
+    left: auto;
+    right: auto;
+}
+.row .col.s2-1{
+    width: 21%;
+    margin-left: auto;
+    left: auto;
+    right: auto;
+}
+.gm-sharedown{
+    box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12), 0 3px 1px -2px rgba(0, 0, 0, 0.2);
+}
+.row .col.s3-0{
+    width: 30%;
+    margin-left: auto;
+    left: auto;
+    right: auto;
+}
+.row .col.s4-0{
+    width: 40%;
+    margin-left: auto;
+    left: auto;
+    right: auto;
+}
+.row .col.s5-0{
+    width: 50%;
+    margin-left: auto;
+    left: auto;
+    right: auto;
+}
+.row .col.s4-8{
+    width: 48%;
+    margin-left: auto;
+    left: auto;
+    right: auto;
+}
+.row .col.offset-s0-4 {
+    margin-left: 4%;
+}
+.row .col.s6-0{
+    width: 60%;
+    margin-left: auto;
+    left: auto;
+    right: auto;
+}
+.row .col.s7-0{
+    width: 70%;
+    margin-left: auto;
+    left: auto;
+    right: auto;
+}
+.row .col.s8-0{
+    width: 80%;
+    margin-left: auto;
+    left: auto;
+    right: auto;
+}
+.row .col.s9-0{
+    width: 90%;
+    margin-left: auto;
+    left: auto;
+    right: auto;
+}

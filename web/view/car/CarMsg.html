@@ -1,0 +1,95 @@
+<div class="CarMsgWrap" ng-controller="carMsgController" >
+    <div class="row searchBoxWrap valign-wrapper">
+        <div class="col s3">
+            <div class="row valign-wrapper">
+                <div class="col s4 center-align">
+                    车辆类型:
+                </div>
+                <select car-select class="col s8 browser-default "  ng-model="carType" style="margin-bottom: 20px">
+                    <option value="" disabled selected>请选择</option>
+                    <option value="1">选项 1</option>
+                    <option value="2">选项 2</option>
+                    <option value="3">选项 3</option>
+                </select>
+            </div>
+            <div class="row valign-wrapper">
+                <div class="col s4 center-align">
+                    所属类型:
+                </div>
+                <select car-select class="col s8 browser-default " ng-model="beToType">
+                    <option value="" disabled selected>请选择</option>
+                    <option value="1">选项 1</option>
+                    <option value="2">选项 2</option>
+                    <option value="3">选项 3</option>
+                </select>
+            </div>
+
+        </div>
+        <div class="col s3">
+            <div class="row valign-wrapper">
+                <div class="col s4 center-align">
+                    车牌号:
+                </div>
+                <!--<select car-select class="col s8 ">-->
+                    <!--<option value="" disabled selected>Choose your option</option>-->
+                    <!--<option value="1">选项 1</option>-->
+                    <!--<option value="2">选项 2</option>-->
+                    <!--<option value="3">选项 3</option>-->
+                <!--</select>-->
+                <div class="input-field col s8">
+                    <input placeholder=""  type="text" ng-model="carNum" class="validate">
+                </div>
+            </div>
+            <div class="row valign-wrapper">
+                <div class="col s4 center-align">
+                    司机:
+                </div>
+                <div class="input-field col s8">
+                    <input placeholder=""  type="text" ng-model="driver" class="validate">
+                </div>
+            </div>
+        </div>
+        <div class="col s3">
+            <div class="row valign-wrapper ">
+                <div class="col s4 center-align">
+                    车检:
+                </div>
+                <select car-select class="col s8 browser-default " ng-model="carState" style="margin-bottom: 20px">
+                    <option value="" disabled selected>请选择</option>
+                    <option value="1">选项 1</option>
+                    <option value="2">选项 2</option>
+                    <option value="3">选项 3</option>
+                </select>
+            </div>
+            <div class="row valign-wrapper input-field">
+                <div class="col s4 center-align">
+                    保险:
+                </div>
+                <select car-select class="col s8 browser-default " ng-model="insurance" ng-change="change(x)">
+                    <option value="" disabled selected>请选择</option>
+                    <option value="1">选项 1</option>
+                    <option value="2">选项 2</option>
+                    <option value="3">选项 3</option>
+                </select>
+            </div>
+        </div>
+        <div class="col s1">
+            <a style="width: 100%;padding:0  1rem" class="waves-effect waves-light btn-large" ng-click="search()">搜索</a>
+        </div>
+        <div class="col s2">
+            <a style="width: 100%" class="waves-effect waves-light materialize-red lighten-1 btn-large">增加车辆</a>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col s12">
+            <ul class="tabs" car-msg >
+                <li class="tab col s6" ui-sref=".truck"><a class="active" href="#">货车</a></li>
+                <li class="tab col s6" ui-sref=".hand"><a  href="#">挂车</a></li>
+            </ul>
+        </div>
+        <div class="col s12" >
+            <div ui-view=""></div>
+        </div>
+    </div>
+
+</div>

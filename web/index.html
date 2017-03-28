@@ -6,16 +6,22 @@
     <link rel="stylesheet" href="./assets/plugins/materialize/css/materialize.css">
     <link rel="stylesheet" href="/assets/plugins/alert/sweet-alert.css">
     <link rel="stylesheet" href="/assets/plugins/material_icon/css/materialdesignicons.css">
+    <link rel="stylesheet" href="/assets/css/index.css">
+    <link rel="stylesheet" href="/assets/css/col.css">
 </head>
 <body>
 <header></header>
 <navigator></navigator>
-<div>
+<div class="ConWrap">
     <div class="container" style="width: 85%;">
         <div ui-view></div>
     </div>
     </h1>
 </div>
+
+    <div class="footer">
+        <h5 class="footer-msg right">大连顺通物流有限公司</h5>
+    </div>
 </body>
 <script src="/lib/jquery.min.js"></script>
 <script src="/assets/plugins/materialize/js/materialize.js"></script>
@@ -27,6 +33,7 @@
 <script src="/js/controller/index_controller.js"></script>
 <script src="/js/controller/login_controller.js"></script>
 <script src="/js/controller/setting_controller.js"></script>
+<script src="/js/controller/carMsg_controller.js"></script>
 <script src="/js/service/service.js"></script>
 <script src="/js/directive/directive.js"></script>
 <script src="/js/router/index_router.js"></script>
