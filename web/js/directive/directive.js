@@ -42,6 +42,7 @@ commonDirective.directive('navigator', function() {
             });
             // $(".button-collapse").sideNav();
             $('.collapsible').collapsible();
+
         }
     };
 });
