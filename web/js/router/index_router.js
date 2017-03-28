@@ -32,6 +32,7 @@ index_router.config(['$stateProvider',"$urlRouterProvider",function($stateProvid
             // abstract:true,
             controller:function ($state) {
                     $state.go("CarMsg.truck");
+                    console.log($state);
             }
         })
         .state("CarMsg.truck", {

@@ -1,7 +1,7 @@
 var loginController=angular.module("loginController",[]);
-loginController.controller("loginController", ['$rootScope','$scope','$location','$q',"$basic",
+loginController.controller("loginController", ['$rootScope','$scope','$location','$q',"$basic","$host",
 
-    function($rootScope,$scope,$location,$q,$basic ) {
+    function($rootScope,$scope,$location,$q,$basic,$host) {
         // if(sessionStorage.getItem("userId")){
         //     var userId=sessionStorage.getItem("userId");
         //     console.log(userId);
@@ -21,7 +21,7 @@ loginController.controller("loginController", ['$rootScope','$scope','$location'
 
                sweetAlert("账号或密码不能为空", "", "error");
            } else {
-               $basic.post(DataUrl+"/admin/do/login", {
+               $basic.post($host.api_url+"/admin/do/login", {
                    "userName": $scope.username,
                    "password": $scope.password
                }).then(function(data){
