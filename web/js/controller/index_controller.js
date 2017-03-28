@@ -2,8 +2,7 @@ var index_controller=angular.module("index_controller",[]);
 index_controller.controller("indexController", ['$rootScope','$scope','$location','$q',"$basic",
     function($rootScope,$scope,$location,$q,$basic) {
     //
-    $basic.setCookie('auth-token',"1133");
-        if($basic.getCookie('auth-token')){
+        if(sessionStorage.getItem("auth-token")){
             Highcharts.chart('pie_chart', {
                 chart: {
                     plotBackgroundColor: null,
@@ -132,7 +131,6 @@ index_controller.controller("indexController", ['$rootScope','$scope','$location
             });
         }else {
             window.location.href = 'login.html';
-            console.log(11)
 
         }
 

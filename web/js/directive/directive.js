@@ -7,7 +7,21 @@ commonDirective.directive('header', function() {
         restrict: 'E',
         controller: function($scope, $element,$rootScope){
             $scope.logOut = function(){
-                window.location.href='/login.html';
+                sweetAlert({
+                    title: "注销账号",
+                    text: "是否确认退出登录",
+                    type: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: "#DD6B55",
+                    confirmButtonText: "确认",
+                    cancelButtonText:"取消",
+                    closeOnConfirm: false
+                }, function(){
+                   sessionStorage.removeItem("auth-token");
+                    sessionStorage.removeItem("userId");
+                    window.location.href='/login.html';
+                });
+
             }
         }
     };
