@@ -1,36 +1,57 @@
+html{
+    height: 100%;
+}
 body{
     position: relative;
+    height: 100%;
     background: #f1f5f5;
 }
-/*.header, .ConWrap.footer {*/
-    /*padding-left: 280px;*/
-/*}*/
 .ConWrap{
     margin-bottom: 70px;
     background: #f1f5f5;
+}
+.containerBox{
+    padding: 0 5px;
+}
 
+
+/*固定侧边导航*/
+.header,.ConWrap,.footer {
+    padding-left: 280px;
 }
 @media only screen and (max-width : 992px) {
     .header, .ConWrap {
         padding-left: 0;
     }
 }
-.side-nav{
-    /*background: #1c2127;*/
 
+/*侧边导航样式调整*/
+
+.side-nav{
+    background: #1c2127;
+    color: white;
 }
 .side-nav a{
-    color: #757d7f;
+    color: white;
 }
-.nav-logo a{
+
+.nav-logo {
     /*color: #fff;*/
     height: 64px;
 }
+.userBox{
+    margin-bottom: 0;
+    cursor: pointer;
+}
+
 .side-nav .divider{
     margin: 0;
 }
+.side-nav li.active{
+    background: red;
+}
 /*.side-nav .collapsible-header{*/
-    /*padding:0 32px ;*/
+/*padding:0 32px ;*/
 /*}*/
 .side-nav a{
     padding: 0 16px;
@@ -41,6 +62,31 @@ body{
 .collapsible-body a{
     padding: 0;
 }
+
+
+/*加载遮罩层*/
+.shadeDowWrap{
+    display: none;
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.3);
+    z-index: 10;
+}
+.shadeDow{
+    width: 100%;
+    height: 100%;
+}
+.preloader-wrapper.big{
+    width: 200px;
+    height: 200px;
+}
+
+
+
+/*固定底部样式*/
 .footer{
     width: 100%;
     position: fixed;
@@ -54,9 +100,13 @@ body{
     font-size: 20px;
 }
 
+
+
+/*车辆管理样式*/
 /*home*/
-.gm-1{
+.gm-1,.gm-2,.gm-3{
     /*height:330px;*/
+    margin-top: 60px;
 }
 .gm1-left .gm1-leftBoxWrap{
     /*height: 145px;*/
@@ -67,10 +117,10 @@ body{
     /*margin: 20px;*/
 }
 .gm1-right{
-     height: 310px;
- }
+    height: 310px;
+}
 /*.gm1-right div{*/
-    /*height: 100%;*/
+/*height: 100%;*/
 /*}*/
 /*各种车辆类别数量*/
 .category-T{
@@ -87,7 +137,7 @@ body{
     font-size: 40px;
 }
 .category-F{
-   margin-top: 40px;
+    margin-top: 40px;
 }
 .category-F-divider{
     /*margin: 0 10px;*/
@@ -128,7 +178,6 @@ body{
 }
 .gm-3{
     /*height: 160px;*/
-    margin-top: 40px;
 }
 .gm-3box{
     height: 160px;
@@ -147,12 +196,15 @@ body{
 
 /*carMsg*/
 /*.CarMsgWrap .select-dropdown{*/
-    /*margin: 0;*/
+/*margin: 0;*/
 /*}*/
+
+
+/*顶部搜索样式*/
 .searchBoxWrap{
     background: #f1f5f6;
 }
-.searchBoxWrap .row{
+.searchBoxWrap input{
     margin: 0;
 }
 .searchBoxWrap .input-field{
@@ -176,10 +228,42 @@ body{
     margin: 0;
 }
 .hSearch{
-   background: rgba(0,0,0,0.1);
+    background: rgba(0,0,0,0.1);
 }
 .searchIcon{
     font-size: 20px;
     cursor: pointer;
     height: auto;
+}
+
+
+
+/*切换选项卡*/
+.PublicTabs{
+    height: 50px;
+}
+.PublicTabs div{
+    height: 100%;
+    cursor: pointer;
+    border-right: 1px solid white;
+}
+.PublicTabs .active{
+    background: white;
+    border-bottom: 1px solid black;
+}
+
+/*日期选择组件*/
+.dateBox{
+    position: relative;
+}
+.dataIcon{
+    position: absolute;
+    right: 0;
+    bottom: 25px;
+}
+
+/*模态弹出层*/
+
+.modal-content p{
+    margin: 0;
 }

@@ -31,20 +31,56 @@ index_router.config(['$stateProvider',"$urlRouterProvider",function($stateProvid
             templateUrl: "/view/car/CarMsg.html", //路由填充的模板
             // abstract:true,
             controller:function ($state) {
-                    $state.go("CarMsg.truck");
-                    console.log($state);
+                $('.modal').modal();
+                $state.go("CarMsg.truck");
+                console.log($state);
             }
         })
         .state("CarMsg.truck", {
             url: "/truck",  //路由路径
-            templateUrl: "/view/car/truck.html",  //路由填充的模板
-
+            templateUrl: "/view/car/truck/truck.html",  //路由填充的模板
             // controller:'dataController'
         })
-            .state("CarMsg.hand", {
+        .state("CarMsg.hand", {
             url: "/hand",  //路由路径
-            templateUrl: "/view/car/hand.html",  //路由填充的模板
+            templateUrl: "/view/car/truck/hand.html",  //路由填充的模板
             // controller:'dataController'
+        })
+        .state("Driver", {
+            url: "/Driver",  //路由路径
+            templateUrl: "/view/car/Driver.html", //路由填充的模板
+            // abstract:true,
+            // controller:
+        })
+        .state("Company", {
+            url: "/Company",  //路由路径
+            templateUrl: "/view/car/company.html", //路由填充的模板
+            // abstract:true,
+            // controller:
+        })
+        .state("malfunction", {
+            url: "/malfunction",  //路由路径
+            templateUrl: "/view/car/malfunction.html", //路由填充的模板
+            // abstract:true,
+            // controller:
+        })
+        .state("refuel", {
+            url: "/refuel",  //路由路径
+            templateUrl: "/view/car/refuel.html", //路由填充的模板
+            // abstract:true,
+            // controller:
+        })
+        .state("refuel.carRefuel", {
+            url: "/refuel",  //路由路径
+            templateUrl: "/view/car/refuel.html", //路由填充的模板
+            // abstract:true,
+            // controller:
+        })
+        .state("refuel.oilMass", {
+            url: "/refuel",  //路由路径
+            templateUrl: "/view/car/refuel.html", //路由填充的模板
+            // abstract:true,
+            // controller:
         })
         .state("data", {
             url: "/data",  //路由路径

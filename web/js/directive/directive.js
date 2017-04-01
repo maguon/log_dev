@@ -60,7 +60,51 @@ commonDirective.directive("carSelect",function () {
        link:function () {
            $('select').material_select();
        }
-   } 
+   }
+});
+commonDirective.directive("date",function () {
+    return{
+        restrict:"A",
+        link:function () {
+            $('.datepicker').pickadate({
+                onSet: function () {
+                    $('.picker__close').click();
+                },
+                selectMonths: false, // Creates a dropdown to control month
+                selectYears: 0 // Creates a dropdown of 15 years to control year
+            });
+        }
+    }
+});
+commonDirective.directive("addNav",function () {
+    return{
+        templateUrl: '/view/car/addTruck/addTnav.html',
+        restrict:"EA",
+        replace:true,
+        link:function () {
+            $(".add_Truck_view").load("/view/car/addTruck/basic.html");
+            $(".PublicTabs").children().on("click",function () {
+                $(".PublicTabs").children().removeClass("active");
+                $(this).addClass("active");
+                $(".add_Truck_view").load($(this).attr("data-url"))
+            })
+        }
+    }
+});
+
+commonDirective.directive("basicTruck",function () {
+    return{
+        templateUrl: '/view/car/addTruck/basic.html',
+        restrict:"EA",
+        replace:true
+    }
+});
+commonDirective.directive("carInspection",function () {
+    return{
+        templateUrl: '/view/car/addTruck/car_inspection.html',
+        restrict:"EA",
+        replace:true
+    }
 });
 // commonDirective.directive("shadeDow",function () {
 //     return{

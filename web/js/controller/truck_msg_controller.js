@@ -9,5 +9,12 @@ truckMsgController.controller("truckMsgController",["$state","$scope",function (
     // };
     $scope.search=function () {
         console.log($scope.carType,$scope.beToType,$scope.carNum,$scope.driver,$scope.carState,$scope.insurance)
+    };
+    $scope.addTruck=function () {
+        $('#modal1').modal('open');
+        $(".PublicTabs").children("div").removeClass("active");
+        $(".basic").addClass("active");
+        $(".add_Truck_view").load("/view/car/addTruck/basic.html");
     }
+
 }]);

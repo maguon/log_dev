@@ -12,8 +12,8 @@
 <body>
 <header></header>
 <navigator></navigator>
-<div class="ConWrap">
-    <div class="container" style="width: 85%;">
+<div class="ConWrap ">
+    <div class="containerBox" >
         <div ui-view></div>
     </div>
     </h1>
@@ -22,15 +22,19 @@
     <div class="footer">
         <h5 class="footer-msg right">大连顺通物流有限公司</h5>
     </div>
-<div class="shadeDow" >
-    <div class="spinner-layer spinner-blue">
-        <div class="circle-clipper left">
-            <div class="circle"></div>
-        </div><div class="gap-patch">
-        <div class="circle"></div>
-    </div><div class="circle-clipper right">
-        <div class="circle"></div>
-    </div>
+<div class="shadeDowWrap" >
+    <div class="shadeDow vc-center">
+        <div class="preloader-wrapper big active ">
+            <div class="spinner-layer spinner-blue-only">
+                <div class="circle-clipper left">
+                    <div class="circle"></div>
+                </div><div class="gap-patch">
+                <div class="circle"></div>
+            </div><div class="circle-clipper right">
+                <div class="circle"></div>
+            </div>
+            </div>
+        </div>
     </div>
 </div>
 </body>
@@ -45,7 +49,10 @@
 <script src="/js/controller/login_controller.js"></script>
 <script src="/js/controller/setting_controller.js"></script>
 <script src="/js/controller/truck_msg_controller.js"></script>
+<script src="/js/controller/truck_controller.js"></script>
+<script src="/js/controller/CompanyController.js"></script>
 <script src="/js/service/service.js"></script>
+<script src="/host/host_config.js"></script>
 <script src="/js/directive/directive.js"></script>
 <script src="/js/router/index_router.js"></script>
 <script src="/assets/custom.js"></script>
