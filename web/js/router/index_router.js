@@ -23,12 +23,12 @@ index_router.config(['$stateProvider',"$urlRouterProvider",function($stateProvid
         })
         .state("Com", {
             url: "/Com",  //路由路径
-            templateUrl: "/view/car/Com.html",  //路由填充的模板
+            templateUrl: "/view/car/truck_statistics.html",  //路由填充的模板
             // controller:'dataController'
         })
         .state("CarMsg", {
             url: "/CarMsg",  //路由路径
-            templateUrl: "/view/car/CarMsg.html", //路由填充的模板
+            templateUrl: "/view/car/truck_manager.html", //路由填充的模板
             // abstract:true,
             controller:function ($state) {
                 $('.modal').modal();
@@ -38,12 +38,12 @@ index_router.config(['$stateProvider',"$urlRouterProvider",function($stateProvid
         })
         .state("CarMsg.truck", {
             url: "/truck",  //路由路径
-            templateUrl: "/view/car/truck/truck.html",  //路由填充的模板
+            templateUrl: "/view/car/truck/truck_head.html",  //路由填充的模板
             // controller:'dataController'
         })
         .state("CarMsg.hand", {
             url: "/hand",  //路由路径
-            templateUrl: "/view/car/truck/hand.html",  //路由填充的模板
+            templateUrl: "/view/car/truck/truck_hand.html",  //路由填充的模板
             // controller:'dataController'
         })
         .state("Driver", {

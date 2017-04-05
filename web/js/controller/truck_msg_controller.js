@@ -14,7 +14,7 @@ truckMsgController.controller("truckMsgController",["$state","$scope",function (
         $('#modal1').modal('open');
         $(".PublicTabs").children("div").removeClass("active");
         $(".basic").addClass("active");
-        $(".add_Truck_view").load("/view/car/addTruck/basic.html");
+        $(".add_Truck_view").load("/view/car/new_truck/basic.html");
     }
 
 }]);

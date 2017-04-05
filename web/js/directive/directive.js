@@ -106,11 +106,11 @@ commonDirective.directive("dateFilter",["$filter",function ($filter) {
 }]);
 commonDirective.directive("addNav",function () {
     return{
-        templateUrl: '/view/car/addTruck/addTnav.html',
+        templateUrl: '/view/car/new_truck/addTnav.html',
         restrict:"EA",
         replace:true,
         link:function () {
-            $(".add_Truck_view").load("/view/car/addTruck/basic.html");
+            $(".add_Truck_view").load("/view/car/new_truck/basic.html");
             $(".PublicTabs").children().on("click",function () {
                 $(".PublicTabs").children().removeClass("active");
                 $(this).addClass("active");
@@ -122,14 +122,14 @@ commonDirective.directive("addNav",function () {
 
 commonDirective.directive("basicTruck",function () {
     return{
-        templateUrl: '/view/car/addTruck/basic.html',
+        templateUrl: '/view/car/new_truck/basic.html',
         restrict:"EA",
         replace:true
     }
 });
 commonDirective.directive("carInspection",function () {
     return{
-        templateUrl: '/view/car/addTruck/car_inspection.html',
+        templateUrl: '/view/car/new_truck/car_inspection.html',
         restrict:"EA",
         replace:true
     }

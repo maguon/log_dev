@@ -79,17 +79,13 @@ CompanyController.controller("CompanyController",['$rootScope','$scope','$basic'
     $scope.LookCompany=function (id) {
         $('.modal').modal();
         $('#LookCompany').modal('open');
-        // var ComId=$(this).attr("comid");
-        // console.log(id)
         $basic.get($host.api_url+"/user/"+userId+"/company?companyId="+id, {
         }).then(function(data){
             // $(".shadeDowWrap").hide();
             if(data.success==true){
                 $scope.company=data.result[0];
-                console.log($scope.company)
+                console.log($scope.company.cooperation_time)
                 companyMsg=$scope.company;
-                // $scope.cityName=$scope.company.city_id;
-                console.log($scope.cityName)
             }else {
                 swal(data.msg,"","error");
             }
@@ -101,7 +97,7 @@ CompanyController.controller("CompanyController",['$rootScope','$scope','$basic'
 
     };
     $scope.changeCom=function (id) {
-        console.log(companyMsg);
+        // console.log(companyMsg);
         var subParam = {
             "companyName": companyMsg.company_name,
             "operateType": companyMsg.operate_type,
