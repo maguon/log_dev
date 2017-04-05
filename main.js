@@ -43,7 +43,7 @@ var restify = require('restify');
     server.get(/\.html\?/i,restify.serveStatic({
         directory: './web',
         maxAge: 0}));
-    server.listen(9001, function onListening() {
+    server.listen(9000, function onListening() {
         server.get('/',restify.serveStatic({
             directory: './web',
             default: 'index.html',
