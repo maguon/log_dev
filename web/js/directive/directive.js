@@ -33,7 +33,17 @@ commonDirective.directive('navigator', function() {
         replace: true,
         transclude: false,
         restrict: 'E',
-        controller: function($scope, $element,$rootScope){
+        controller: function($scope,$basic,$host, $element,$rootScope){
+            if(sessionStorage.getItem("auth-token")){
+                $basic.get($host.api_url+"/admin/"+sessionStorage.getItem("userId")).then(function(data) {
+                    // $(".shadeDowWrap").hide();
+                    if (data.success == true) {
+                        $scope.userName=data.result[0].user_name;
+                    } else {
+                        swal(data.msg, "", "error");
+                    }
+                });
+            }
             $("#menu_link").sideNav({
                 menuWidth: 280, // Default is 300
                 edge: 'left', // Choose the horizontal origin
@@ -67,7 +77,8 @@ commonDirective.directive("date",function () {
         restrict:"A",
         link:function () {
             $('.datepicker').pickadate({
-                onSet: function () {
+                format:'yyyy-mm-dd',
+                onSet: function (val) {
                     $('.picker__close').click();
                 },
                 selectMonths: false, // Creates a dropdown to control month
@@ -76,6 +87,23 @@ commonDirective.directive("date",function () {
         }
     }
 });
+commonDirective.directive("dateFilter",["$filter",function ($filter) {
+    var dateFilter=$filter("date");
+    return{
+        restrict:"A",
+        require:"ngModel",
+        link:function (scope, elm, attrs, ctrl) {
+            function formatter(value) {
+                return dateFilter(value, "yyyy-MM-dd");
+            }
+        function parser() {
+            return ctrl.$modelValue;
+        }
+            ctrl.$formatters.push(formatter);
+            ctrl.$parsers.unshift(parser);
+        }
+    }
+}]);
 commonDirective.directive("addNav",function () {
     return{
         templateUrl: '/view/car/addTruck/addTnav.html',

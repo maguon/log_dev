@@ -16,15 +16,20 @@ body{
 
 
 /*固定侧边导航*/
-.header,.ConWrap,.footer {
-    padding-left: 280px;
+/*.header,.ConWrap,.footer {*/
+    /*padding-left: 280px;*/
+/*}*/
+/*@media only screen and (max-width : 992px) {*/
+    /*.header, .ConWrap {*/
+        /*padding-left: 0;*/
+    /*}*/
+/*}*/
+.no-marBottom{
+    margin-bottom: 0;
 }
-@media only screen and (max-width : 992px) {
-    .header, .ConWrap {
-        padding-left: 0;
-    }
-}
-
+/*.no-pm{*/
+    /*padding-left: 0;*/
+/*}*/
 /*侧边导航样式调整*/
 
 .side-nav{
@@ -207,6 +212,9 @@ body{
 .searchBoxWrap input{
     margin: 0;
 }
+#LookCompany input{
+    margin: 0;
+}
 .searchBoxWrap .input-field{
     margin: 0;
 }
@@ -259,7 +267,7 @@ body{
 .dataIcon{
     position: absolute;
     right: 0;
-    bottom: 25px;
+    bottom: 10px;
 }
 
 /*模态弹出层*/

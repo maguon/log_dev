@@ -11,7 +11,7 @@ settingController.controller("settingController", ['$rootScope','$scope','$locat
             swal('更新成功','你的生日是'+$scope.birth,'success')
         }
         $('.datepicker').pickadate({
-            format:'yyyy/mm/dd',
+            format:'yyyy-mm-dd',
             onSet: function () {
                 $('.picker__close').click();
             },
