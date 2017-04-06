@@ -1,5 +1,5 @@
 
-var app = angular.module("log_dev", ['ui.router',"ngCookies","data_controller","index_controller","loginController","settingController","truckMsgController","truckController","CompanyController","hostService","commonDirective","CommonService","index_router"]);
+var app = angular.module("log_dev", ['ui.router',"ngCookies","ngMessages","data_controller","index_controller","loginController","settingController","truckMsgController","truckController","CompanyController","hostService","baseService","commonDirective","CommonService","index_router"]);
 
 app.config(['$httpProvider',"$cookiesProvider",function($httpProvider,$cookiesProvider) {
     $cookiesProvider.defaults = {

@@ -106,7 +106,7 @@ commonDirective.directive("dateFilter",["$filter",function ($filter) {
 }]);
 commonDirective.directive("addNav",function () {
     return{
-        templateUrl: '/view/car/new_truck/addTnav.html',
+        templateUrl: '/view/car/new_truck/new_truck.html',
         restrict:"EA",
         replace:true,
         link:function () {
