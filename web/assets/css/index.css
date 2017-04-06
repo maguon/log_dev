@@ -290,3 +290,21 @@ body{
     right: 0;
     top: 0;
 }
+
+/*系统用户界面*/
+.users_chip{
+    height: 100px;
+    line-height: 100px;
+    font-size: 35px;
+    padding: 0 20px;
+    border-radius: 60px;
+    border: 1px solid #00bcd4;
+    background: white;
+    color: #00bcd4;
+    cursor: pointer;
+}
+.users_ch.active{
+    border: 1px solid #00bcd4;
+    background: #00bcd4;
+    color: white;
+}

@@ -2,10 +2,13 @@
  * Created by ASUS on 2017/4/1.
  */
 var CompanyController=angular.module("CompanyController",[]);
-CompanyController.controller("CompanyController",['$rootScope','$scope','$basic','$host',function ($rootScope,$scope,$basic,$host) {
+CompanyController.controller("CompanyController",['$rootScope','$scope','$basic','$host','$baseService','$urlMethod',function ($rootScope,$scope,$basic,$host,$baseService,$urlMethod) {
     var userId=sessionStorage.getItem("userId");
     // 单条公司信息
     var companyMsg;
+
+
+
     // 搜索查询
     $scope.search=function () {
 
@@ -15,19 +18,13 @@ CompanyController.controller("CompanyController",['$rootScope','$scope','$basic'
             cityId:$scope.s_city
         };
 
-        var urlMethod=function (obj) {
-            var str="?";
-            for(var i in obj){
-                if(obj[i]!=null){
-                    str=str+i+"="+obj[i]+"&&"
-                }
-            }
-            return str.substr(0,str.length-2);
-        };
+        // var urlMethod=function (obj) {
+        //
+        // };
 
 
 
-        $basic.get($host.api_url+"/user/"+userId+"/company"+urlMethod(obj)).then(function(data){
+        $basic.get($host.api_url+"/user/"+userId+"/company"+$urlMethod.urlMethod(obj)).then(function(data){
             // $(".shadeDowWrap").hide();
             if(data.success==true){
                 console.log(data.result);
@@ -125,7 +122,8 @@ CompanyController.controller("CompanyController",['$rootScope','$scope','$basic'
                 $scope.company=data.result[0];
                 // console.log($scope.company.cooperation_time)
                 companyMsg=$scope.company;
-                console.log($scope.company)
+                console.log($scope.company,$scope.company.cooperation_time);
+                $scope.look_cooperation_time=$baseService.formDate($scope.company.cooperation_time)
             }else {
                 swal(data.msg,"","error");
             }
@@ -174,7 +172,7 @@ CompanyController.controller("CompanyController",['$rootScope','$scope','$basic'
             var subParam = {
                 "companyName": companyMsg.company_name,
                 "operateType": companyMsg.operate_type,
-                "cooperationTime":companyMsg.cooperation_time,
+                "cooperationTime":$scope.look_cooperation_time,
                 "contacts": companyMsg.contacts,
                 "tel": companyMsg.tel,
                 "cityId": companyMsg.city_id,

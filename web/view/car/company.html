@@ -1,4 +1,4 @@
-<div class="CarMsgWrap" ng-controller="CompanyController" >
+<div class="CompanyWrap" ng-controller="CompanyController" >
     <div class="row searchBoxWrap valign-wrapper">
         <div class="col s8">
             <div class="row valign-wrapper">
@@ -229,7 +229,7 @@
                         <div class="row valign-wrapper ">
                             <p class="col s2-0"><span class="red-text">*</span><span >合作时间:</span></p>
                             <div class="dateBox col s8-0 form_box" style="padding:0" ng-class="{'has-error':look_companyForm.look_cooperation_time.$invalid&&look_submitted}">
-                                <input type="text" autocomplete="off" name="look_cooperation_time" class="datepicker" ng-model="company.cooperation_time" date-filter date required><i class="mdi dataIcon mdi-table-large"></i>
+                                <input type="text" autocomplete="off" name="look_cooperation_time" class="datepicker" ng-model="look_cooperation_time"  date required><i class="mdi dataIcon mdi-table-large"></i>
                                 <div class="form-tips red white-text" ng-if="look_companyForm.look_cooperation_time.$error&&look_submitted" ng-messages="look_companyForm.look_cooperation_time.$error">
                                     <div ng-message="required">不能为空</div>
                                 </div>
@@ -251,7 +251,7 @@
                         </div>
                         <div class="row">
                             <p class="left"><span >备注:</span></p>
-                            <textarea style="height: 80px"></textarea>
+                            <textarea style="height: 80px" ng-model="company.remark"></textarea>
                         </div>
                     </div>
                 </div>

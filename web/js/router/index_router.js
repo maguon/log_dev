@@ -87,6 +87,11 @@ index_router.config(['$stateProvider',"$urlRouterProvider",function($stateProvid
             templateUrl: "/view/data.html",  //路由填充的模板
             controller:'dataController'
         })
+        .state("users", {
+            url: "/users",  //路由路径
+            templateUrl: "/view/car/user_manager.html", //路由填充的模板
+            // abstract:true,
+        })
         .state("setting", {
             url:"/setting",
             templateUrl: "/view/setting.html",

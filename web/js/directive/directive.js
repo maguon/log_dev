@@ -134,6 +134,17 @@ commonDirective.directive("carInspection",function () {
         replace:true
     }
 });
+
+commonDirective.directive("users_tabs",function () {
+    return{
+        restrict:"EA",
+        link:function () {
+            $(".users_chip").on("click",function () {
+                $(this).addClass("")
+            })
+        }
+    }
+});
 // commonDirective.directive("shadeDow",function () {
 //     return{
 //         restrict:"A",
