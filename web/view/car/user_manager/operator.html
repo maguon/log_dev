@@ -1,0 +1,114 @@
+<div class="row">
+    <div class="row">
+        <a class="waves-light waves-effect btn right"  ng-click="newOperator()">
+            增加操作员
+        </a>
+        <div id="newOperator" class="modal">
+            <form name="operatorForm" ng-submit="submitForm(operatorForm.$valid)" novalidate>
+                <div class="modal-content">
+                    <h4 class="center-align">增加操作员</h4>
+                    <div class="divider" style="background: #00bcd4;height: 2px;"></div>
+                    <div class="container">
+                        <div class="row">
+                            <div class="row">
+                                <h5 class="col s2-0">
+                                    <span style="color: red">*</span>
+                                    姓名:</h5>
+                                <input  id="new_userName" type="text" ng-model="new_userName" class="validate col s6-0">
+                                <div class="col s2-0 sexBox" sex-change>
+                                    <i class="mdi mdi-human-male sex" ng-class="{ 'sex' : new_companyForm.Tel.$invalid&&submitted }"></i>
+                                    <i class="mdi mdi-human-female " ng-class="{ 'sex' : new_companyForm.Tel.$invalid&&submitted }"></i>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col s6">
+                                    <div class="row">
+                                        <h5 class="col s4-0">
+                                            <span style="color: red">*</span>
+                                            部门:
+                                        </h5>
+                                        <select car-select name="dep" class="browser-default col s6-0" ng-model="new_depId" required>
+                                            <option value="" disabled selected>请选择</option>
+                                            <option ng-value="{{op.dept_id}}" ng-repeat="op in department">{{op.dept_name}}</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col s6">
+                                    <h5 class="col s4-0">
+                                        <span style="color: red">*</span>
+                                        电话:
+                                    </h5>
+                                    <input  id="phone" ng-model="user_phone" type="text" class="validate col s6-0">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer vc-center">
+                    <button class="btn waves-light waves-effect" type="submit" name="action" >提交</button>
+                    <a  class=" modal-action modal-close blue white-text waves-effect waves-white btn-flat" style="margin-left: 10px" >取消</a>
+                </div>
+            </form>
+
+        </div>
+    </div>
+    <div class="divider" style="background: #00bcd4;height: 2px;"></div>
+    <div class="col s12" >
+        <table class="highlight bordered">
+            <thead>
+            <tr>
+                <th data-field="">姓名</th>
+                <th data-field="">性别</th>
+                <th data-field="">部门</th>
+                <th data-field="">密码</th>
+                <th data-field="">手机号</th>
+                <th data-field="">目前状态</th>
+                <th data-field="">工作状态</th>
+                <th>操作</th>
+            </tr>
+            </thead>
+
+            <tbody>
+            <tr>
+                <td>张三</td>
+                <td>17</td>
+                <td>汉</td>
+                <td>张三</td>
+                <td>17</td>
+                <td>汉</td>
+                <td>张三</td>
+                <td class="operation">
+                    <span><i class="mdi mdi-eye"></i></span>
+                </td>
+            </tr>
+            <tr>
+                <td>李四</td>
+                <td>12</td>
+                <td>苗</td>
+                <td>张三</td>
+                <td>17</td>
+                <td>汉</td>
+                <td>张三</td>
+                <td class="operation">
+                    <span><i class="mdi mdi-eye"></i></span>
+                </td>
+
+            </tr>
+            <tr>
+                <td>李明</td>
+                <td>25</td>
+                <td>汉</td>
+                <td>张三</td>
+                <td>17</td>
+                <td>汉</td>
+                <td>张三</td>
+                <td class="operation">
+                    <span><i class="mdi mdi-eye"></i></span>
+                </td>
+            </tr>
+
+            </tbody>
+        </table>
+
+    </div>
+</div>

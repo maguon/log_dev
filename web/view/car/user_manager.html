@@ -1,89 +1,18 @@
 <div class="usersWrap" ng-controller="usersController" >
-    <div class="row BoxWrap valign-wrapper">
+    <div class="row BoxWrap valign-wrapper" users-tabs>
         <div class="col s6">
-            <div class="chip users_chip active">
+            <div class="chip users_chip active" ui-sref=".operator" >
                 <i class="mdi mdi-account"></i>
                 操作员设置
             </div>
         </div>
         <div class="col s6">
-            <div class="chip users_chip right">
+            <div class="chip users_chip right" ui-sref=".admin" >
                 <i class="mdi mdi-wrench"></i>
                 管理员设置
             </div>
         </div>
     </div>
-    <div class="row">
-        <div class="divider"></div>
-        <div class="col s12" >
-            <table class="highlight bordered">
-                <thead>
-                <tr>
-                    <th data-field="">姓名</th>
-                    <th data-field="">性别</th>
-                    <th data-field="">年龄</th>
-                    <th data-field="">电话</th>
-                    <th data-field="">所属类型</th>
-                    <th data-field="">所属单位</th>
-                    <th data-field="">车牌号</th>
-                    <th data-field="">调度状态</th>
-                    <th data-field="">工作状态</th>
-                    <th>操作</th>
-                </tr>
-                </thead>
-
-                <tbody>
-                <tr>
-                    <td>张三</td>
-                    <td>17</td>
-                    <td>汉</td>
-                    <td>张三</td>
-                    <td>17</td>
-                    <td>汉</td>
-                    <td>张三</td>
-                    <td>17</td>
-                    <td>17</td>
-                    <td class="operation">
-                        <span><i class="mdi mdi-eye"></i></span>
-                        <span><i class="mdi mdi-truck-delivery"></i></span>
-                    </td>
-                </tr>
-                <tr>
-                    <td>李四</td>
-                    <td>12</td>
-                    <td>苗</td>
-                    <td>张三</td>
-                    <td>17</td>
-                    <td>汉</td>
-                    <td>张三</td>
-                    <td>17</td>
-                    <td>17</td>
-                    <td class="operation">
-                        <span><i class="mdi mdi-eye"></i></span>
-                        <span><i class="mdi mdi-truck-delivery"></i></span>
-                    </td>
-
-                </tr>
-                <tr>
-                    <td>李明</td>
-                    <td>25</td>
-                    <td>汉</td>
-                    <td>张三</td>
-                    <td>17</td>
-                    <td>汉</td>
-                    <td>张三</td>
-                    <td>17</td>
-                    <td>17</td>
-                    <td class="operation">
-                        <span><i class="mdi mdi-eye"></i></span>
-                        <span><i class="mdi mdi-truck-delivery"></i></span>
-                    </td>
-                </tr>
-
-                </tbody>
-            </table>
-
-        </div>
-    </div>
+  <div ui-view=""></div>
 
 </div>

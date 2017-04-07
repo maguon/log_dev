@@ -4,6 +4,12 @@
     left: auto;
     right: auto;
 }
+.row .col.s1-5{
+    width: 15%;
+    margin-left: auto;
+    left: auto;
+    right: auto;
+}
 .row .col.s2-0{
     width: 20%;
     margin-left: auto;
@@ -60,6 +66,12 @@
 }
 .row .col.s8-0{
     width: 80%;
+    margin-left: auto;
+    left: auto;
+    right: auto;
+}
+.row .col.s8-5{
+    width: 85%;
     margin-left: auto;
     left: auto;
     right: auto;

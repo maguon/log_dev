@@ -33,7 +33,7 @@ index_router.config(['$stateProvider',"$urlRouterProvider",function($stateProvid
             controller:function ($state) {
                 $('.modal').modal();
                 $state.go("CarMsg.truck");
-                console.log($state);
+                // console.log($state);
             }
         })
         .state("CarMsg.truck", {
@@ -46,12 +46,12 @@ index_router.config(['$stateProvider',"$urlRouterProvider",function($stateProvid
             templateUrl: "/view/car/truck/truck_hand.html",  //路由填充的模板
             // controller:'dataController'
         })
-        .state("Driver", {
-            url: "/Driver",  //路由路径
-            templateUrl: "/view/car/Driver.html", //路由填充的模板
-            // abstract:true,
-            // controller:
-        })
+        // .state("Driver", {
+        //     url: "/Driver",  //路由路径
+        //     templateUrl: "/view/car/Driver.html", //路由填充的模板
+        //     // abstract:true,
+        //     // controller:
+        // })
         .state("Company", {
             url: "/Company",  //路由路径
             templateUrl: "/view/car/company.html", //路由填充的模板
@@ -90,7 +90,21 @@ index_router.config(['$stateProvider',"$urlRouterProvider",function($stateProvid
         .state("users", {
             url: "/users",  //路由路径
             templateUrl: "/view/car/user_manager.html", //路由填充的模板
+            controller:function ($state) {
+                $state.go("users.operator");
+            }
             // abstract:true,
+        })
+        .state("users.operator", {
+            url: "/users/operator",  //路由路径
+            templateUrl: "/view/car/user_manager/operator.html", //路由填充的模板
+            controller:'operator_controller'
+            // abstract:true,
+        })
+        .state("users.admin", {
+            url: "/users/admin",  //路由路径
+            templateUrl: "/view/car/user_manager/admin.html", //路由填充的模板
+            controller:"admin_controller"
         })
         .state("setting", {
             url:"/setting",

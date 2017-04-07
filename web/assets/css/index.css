@@ -4,6 +4,7 @@ html{
 body{
     position: relative;
     height: 100%;
+    min-width: 960px;
     background: #f1f5f5;
 }
 .ConWrap{
@@ -275,6 +276,9 @@ body{
 .modal-content p{
     margin: 0;
 }
+.modal{
+    min-width: 845px;
+}
 /*自定义form验证*/
 .has-error input{
     border-bottom: 1px solid red;
@@ -303,8 +307,17 @@ body{
     color: #00bcd4;
     cursor: pointer;
 }
-.users_ch.active{
+.usersWrap .active{
     border: 1px solid #00bcd4;
     background: #00bcd4;
     color: white;
+}
+.sexBox{
+    font-size: 40px;
+}
+.sexBox i{
+    cursor: pointer;
+}
+.sexBox .sex{
+    color:#00bcd4 ;
 }

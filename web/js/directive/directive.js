@@ -135,12 +135,24 @@ commonDirective.directive("carInspection",function () {
     }
 });
 
-commonDirective.directive("users_tabs",function () {
+commonDirective.directive("usersTabs",function () {
     return{
-        restrict:"EA",
+        restrict:"A",
         link:function () {
             $(".users_chip").on("click",function () {
-                $(this).addClass("")
+                $(".users_chip").removeClass("active");
+                $(this).addClass("active")
+            })
+        }
+    }
+});
+commonDirective.directive("sexChange",function () {
+    return{
+        restrict:"A",
+        link:function () {
+            $(".sexBox i").on("click",function () {
+                $(".sexBox i").removeClass("sex");
+                $(this).addClass("sex")
             })
         }
     }
