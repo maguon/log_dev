@@ -90,26 +90,23 @@ index_router.config(['$stateProvider',"$urlRouterProvider",function($stateProvid
         .state("users", {
             url: "/users",  //路由路径
             templateUrl: "/view/car/user_manager.html", //路由填充的模板
-            controller:function ($state) {
-                $state.go("users.operator");
-            }
             // abstract:true,
         })
-        .state("users.operator", {
-            url: "/users/operator",  //路由路径
-            templateUrl: "/view/car/user_manager/operator.html", //路由填充的模板
-            controller:'operator_controller'
-            // abstract:true,
-        })
-        .state("users.admin", {
-            url: "/users/admin",  //路由路径
-            templateUrl: "/view/car/user_manager/admin.html", //路由填充的模板
-            controller:"admin_controller"
-        })
-        .state("setting", {
-            url:"/setting",
-            templateUrl: "/view/setting.html",
-            controller:'settingController'
+        // .state("users.operator", {
+        //     url: "/users/operator",  //路由路径
+        //     templateUrl: "/view/car/user_manager/operator.html", //路由填充的模板
+        //     controller:'operator_controller'
+        //     // abstract:true,
+        // })
+        // .state("users.admin", {
+        //     url: "/users/admin",  //路由路径
+        //     templateUrl: "/view/car/user_manager/admin.html", //路由填充的模板
+        //     controller:"admin_controller"
+        // })
+        .state("setting_pw", {
+            url:"/setting_pw",
+            templateUrl: "/view/system_settings/setting_password.html",
+            // controller:'settingController'
         });
 
 

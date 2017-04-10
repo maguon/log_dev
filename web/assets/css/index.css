@@ -68,9 +68,14 @@ body{
 .collapsible-body a{
     padding: 0;
 }
+.side-nav .collapsible-body li:hover{
+    background: green;
+}
+/*.side-nav>.bold:hover{*/
+    /*background: paleturquoise;*/
+/*}*/
 
-
-/*加载遮罩层*/
+    /*加载遮罩层*/
 .shadeDowWrap{
     display: none;
     position: absolute;
