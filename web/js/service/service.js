@@ -44,10 +44,12 @@ CommonService.factory('$basic',['$http','$location','$q',"$cookies",function($ht
     for(var i in fnArray) {
         (function(fn) {
             _this[fn] = function(url,param) {
+                $(".shadeDowWrap").show();
                 // url = '/api' + (url[0]==='/'?'':'/') + url;
                 var deferred = $q.defer();
                 //only 'post,put' need 2nd parameter
                 $http[fn](url,param).then(function(success){
+                    $(".shadeDowWrap").hide();
                     deferred.resolve(success.data);
 
                 }).catch(function(data){

@@ -22,12 +22,12 @@ loginController.controller("loginController", ['$rootScope','$scope','$location'
 
                swal("账号或密码不能为空", "", "error");
            } else {
-               $(".shadeDowWrap").show();
+               // $(".shadeDowWrap").show();
                $basic.post($host.api_url+"/admin/do/login", {
                    "userName": $scope.username,
                    "password": $scope.password
                }).then(function(data){
-                   $(".shadeDowWrap").hide();
+
                    if(data.success==true){
                        sessionStorage.setItem("auth-token",data.result.accessToken);
                        sessionStorage.setItem("userId",data.result.userId);
