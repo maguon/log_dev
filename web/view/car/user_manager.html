@@ -25,11 +25,11 @@
                         <div class="divider" style="background: #00bcd4;height: 2px;"></div>
                         <div class="container">
                             <div class="row" style="margin-top: 40px">
-                                <div class="row" ng-class="{ 'has-error' : operatorForm.new_userName.$invalid&&submitted }">
+                                <div class="row" ng-class="{ 'has-error':operatorForm.phone.$invalid&&submitted }" >
                                     <h5 class="col s2-0">
                                         <span style="color: red">*</span>
-                                        姓名:</h5>
-                                    <input  id="new_userName" name="new_userName" type="text" autocomplete="off"  ng-model="newRealName" required class=" col s6-0">
+                                        电话:</h5>
+                                    <input  id="phone" name="phone" autocomplete="off" ng-model="newUserName" type="text"   required class=" col s6-0">
                                     <div class="col s2-0 sexBox" sex-change >
                                         <i class="mdi mdi-human-male sex" sex="1" ></i>
                                         <i class="mdi mdi-human-female " sex="0"  ng-class="{ 'sex' : new_companyForm.Tel.$invalid&&submitted }"></i>
@@ -51,16 +51,17 @@
                                             </h5>
                                             <select car-select name="dep" class="browser-default col s6-0" ng-model="newDepId" required>
                                                 <option value="" disabled selected>请选择</option>
-                                                <option ng-value="{{op.dept_id}}" ng-repeat="op in department">{{op.dept_name}}</option>
+                                                <option ng-value="1" >车管部</option>
+                                                <option ng-value="2" >仓储部</option>
                                             </select>
                                         </div>
                                     </div>
-                                    <div class="col s6"  ng-class="{ 'has-error':operatorForm.phone.$invalid&&submitted }">
+                                    <div class="col s6"  ng-class="{ 'has-error' : operatorForm.new_userName.$invalid&&submitted }">
                                         <h5 class="col s4-0">
                                             <span style="color: red">*</span>
-                                            电话:
+                                            姓名:
                                         </h5>
-                                        <input  id="phone" name="phone" autocomplete="off" ng-model="newUserName" type="text"   required class=" col s6-0">
+                                        <input  id="new_userName" name="new_userName" type="text" autocomplete="off"  ng-model="newRealName" required class=" col s6-0">
                                     </div>
                                 </div>
 
@@ -99,7 +100,8 @@
                     <td ng-bind="el.real_name"></td>
                     <td  ng-if="el.gender==0">女</td>
                     <td  ng-if="el.gender==1">男</td>
-                    <td ng-bind="el.dept_name"></td>
+                    <td ng-if="el.type==1">车管部</td>
+                    <td ng-if="el.type==2">仓储部</td>
                     <td ng-bind="el.mobile"></td>
                     <td ng-if="el.status==1">可用</td>
                     <td ng-if="el.status==0">停用</td>
@@ -134,9 +136,10 @@
                                                             <span style="color: red">*</span>
                                                             部门:
                                                         </h5>
-                                                        <select car-select name="dep" class="browser-default col s6-0" ng-model="look_operation.dept_id" required>
-                                                            <option value="" disabled selected>请选择</option>
-                                                            <option ng-value="{{op.dept_id}}" ng-repeat="op in department">{{op.dept_name}}</option>
+                                                        <select car-select name="dep" class="browser-default col s6-0" ng-model="look_operation.type" required>
+                                                            <!--<option value="" disabled selected>请选择</option>-->
+                                                            <option ng-value="1" >车管部</option>
+                                                            <option ng-value="2" >仓储部</option>
                                                         </select>
                                                     </div>
                                                 </div>
@@ -148,16 +151,16 @@
                                                     <input  id="look_phone" name="phone" ng-model="look_operation.mobile" autocomplete="off" type="text" required class=" col s6-0">
                                                 </div>
                                             </div>
-                                            <div class="row" ng-class="{ 'has-error':change_operatorForm.password.$invalid&&submitted }">
-                                                <h5 class="col s2-0">
-                                                    <span style="color: red">*</span>
-                                                    权限:
-                                                </h5>
-                                                <select car-select name="dep" class="browser-default col s4-0" ng-model="look_operation.dept_id" required>
-                                                    <option value="" disabled selected>请选择</option>
-                                                    <option ng-value="{{op.dept_id}}" ng-repeat="op in department">{{op.dept_name}}</option>
-                                                </select>
-                                            </div>
+                                            <!--<div class="row" ng-class="{ 'has-error':change_operatorForm.password.$invalid&&submitted }">-->
+                                                <!--<h5 class="col s2-0">-->
+                                                    <!--<span style="color: red">*</span>-->
+                                                    <!--权限:-->
+                                                <!--</h5>-->
+                                                <!--<select car-select name="dep" class="browser-default col s4-0" ng-model="look_operation.dept_id" required>-->
+                                                    <!--<option value="" disabled selected>请选择</option>-->
+                                                    <!--<option ng-value="{{op.dept_id}}" ng-repeat="op in department">{{op.dept_name}}</option>-->
+                                                <!--</select>-->
+                                            <!--</div>-->
                                             <div class="row" ng-class="{ 'has-error':change_operatorForm.password.$invalid&&submitted }">
                                                 <div class="col s6">
                                                     工作状态:

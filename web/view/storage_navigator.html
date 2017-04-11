@@ -1,0 +1,23 @@
+<ul id="slide-out" class="side-nav">
+    <li class="nav-logo  vc-center ">
+        <div class="row valign-wrapper userBox">
+            <div class="col s3 valign-wrapper">
+                <img src="../assets/images/office.jpg" alt="" class=" responsive-img"> <!-- notice the "circle" class -->
+            </div>
+            <div class="col s9 userBoxMsg">
+              <span class="white-text">
+                操作员:
+              </span>
+                <span class="white-text" ng-bind="userName">
+
+              </span>
+            </div>
+        </div>
+    </li>
+    <li class="divider"></li>
+    <li class="bold" >
+        <!--<a class="waves-effect waves-purple" href="#!/"  onclick="Materialize.toast('收到即时消息', 4000,'rounded');"><i class="mdi mdi-view-dashboard "></i>主页</a>-->
+        <a class="waves-effect waves-purple first-N" ui-sref="storage_index" onclick="Materialize.toast('收到即时消息', 4000,'rounded');"><i class="white-text mdi mdi-crop-free "></i>主页</a>
+
+    </li>
+</ul>

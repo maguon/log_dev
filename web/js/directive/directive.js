@@ -56,6 +56,35 @@ commonDirective.directive('navigator', function() {
         }
     };
 });
+commonDirective.directive('storageNavigator', function() {
+    return {
+        templateUrl: '/view/storage_navigator.html',
+        replace: true,
+        transclude: false,
+        restrict: 'E',
+        controller: function($scope,$basic,$host, $element,$rootScope){
+            if(sessionStorage.getItem("auth-token")){
+                $basic.get($host.api_url+"/admin/"+sessionStorage.getItem("userId")).then(function(data) {
+                    // $(".shadeDowWrap").hide();
+                    if (data.success == true) {
+                        $scope.userName=data.result[0].user_name;
+                    } else {
+                        swal(data.msg, "", "error");
+                    }
+                });
+            }
+            $("#menu_link").sideNav({
+                menuWidth: 280, // Default is 300
+                edge: 'left', // Choose the horizontal origin
+                // closeOnClick: false, // Closes side-nav on <a> clicks, useful for Angular/Meteor
+                // draggable: true // Choose whether you can drag to open on touch screens
+            });
+            // $(".button-collapse").sideNav();
+            $('.collapsible').collapsible();
+
+        }
+    };
+});
 commonDirective.directive("carMsg",function () {
     return{
         restrict: 'A',

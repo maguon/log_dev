@@ -15,14 +15,14 @@ userController.controller("usersController",["$basic","$host","$scope",function 
                 swal(data.msg,"","error");
             }
         });
-        $basic.get($host.api_url+"/admin/"+adminId+"/department").then(function (data) {
-            if(data.success==true){
-                $scope.department=data.result;
-                // console.log($scope.Company);
-            }else {
-                swal(data.msg,"","error");
-            }
-        })
+        // $basic.get($host.api_url+"/admin/"+adminId+"/department").then(function (data) {
+        //     if(data.success==true){
+        //         $scope.department=data.result;
+        //         // console.log($scope.Company);
+        //     }else {
+        //         swal(data.msg,"","error");
+        //     }
+        // })
     };
     searchAll();
 
@@ -47,7 +47,7 @@ userController.controller("usersController",["$basic","$host","$scope",function 
             var obj={
                 mobile:$scope.newUserName,
                 realName:$scope.newRealName,
-                deptId:$scope.newDepId,
+                type:$scope.newDepId,
                 gender:$scope.newUserSex,
                 // mobile:$scope.new_userName,
                 password:$scope.newUserPassword
@@ -73,7 +73,7 @@ userController.controller("usersController",["$basic","$host","$scope",function 
         $basic.get($host.api_url+"/admin/"+adminId+"/user?userId="+id).then(function (data) {
             if(data.success==true){
                 $scope.look_operation=data.result[0];
-
+                console.log( $scope.look_operation)
             }else {
                 swal(data.msg,"","error");
             }
@@ -126,7 +126,7 @@ userController.controller("usersController",["$basic","$host","$scope",function 
             var obj={
                 mobile:$scope.look_operation.mobile,
                 realName:$scope.look_operation.real_name,
-                deptId:$scope.look_operation.dept_id,
+                type:$scope.look_operation.type,
                 // gender:$scope.look_operation.gender,
                 status:$scope.look_operation.status,
                 gender:$scope.newUserSex

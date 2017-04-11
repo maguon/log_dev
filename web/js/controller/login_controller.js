@@ -31,6 +31,7 @@ loginController.controller("loginController", ['$rootScope','$scope','$location'
                    if(data.success==true){
                        sessionStorage.setItem("auth-token",data.result.accessToken);
                        sessionStorage.setItem("userId",data.result.userId);
+                       sessionStorage.setItem("userType","99");
                        window.location.href="index.html";
                    }else {
                        swal(data.msg,"","error");

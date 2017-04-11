@@ -1,0 +1,47 @@
+<div>
+    <div class="row">
+        <div class="col s4 push-l4 z-depth-4 card-panel" style="margin-top: 40px;">
+            <form class="col s12">
+                <div class="row">
+                    <div class="input-field col s12 center">
+                        <img src="http://demo.geekslabs.com/materialize-v1.0/images/login-logo.png" alt="" class="circle responsive-img valign profile-image-login">
+                        <p class="center login-form-text">欢迎进入AngularJs Material系统</p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="input-field col s12">
+                        <i class="mdi mdi-account-card-details prefix"></i>
+                        <input id="username" ng-model="username" autocomplete="off"   type="text" class="validate">
+                        <label for="username" class="active" >用户名</label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="input-field col s12">
+                        <i class="mdi mdi-lock prefix"></i>
+                        <input id="password" ng-model="password"  type="password">
+                        <label for="password" class="active" >密码</label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="input-field col s12 ">
+                        <input type="checkbox" id="remember-me">
+                        <label for="remember-me">自动登录</label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="input-field col s12">
+                        <button class="btn waves-effect waves-light col s12 purple darken-3" ng-click="login()">登录</button>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="input-field col s6 m6 l6">
+                        <p class="margin medium-small"><a href="#">注册</a></p>
+                    </div>
+                    <div class="input-field col s6 m6 l6">
+                        <p class="margin right-align medium-small"><a href="#">忘记密码</a></p>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
