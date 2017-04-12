@@ -1,4 +1,4 @@
-<div class="CarMsgWrap" ng-controller="truckMsgController" >
+<div class="CarMsgWrap" ng-controller="truckController" >
     <div class="row searchBoxWrap valign-wrapper">
         <div class="col s2-0">
             <div class="row valign-wrapper">
@@ -131,7 +131,7 @@
         </div>
         <div class="col s2">
             <a style="width: 100%" class="waves-effect waves-light materialize-red lighten-1 btn-large" ng-click="addTruck()">增加车辆</a>
-            <div id="modal1" class="modal ">
+            <div id="modal1" class="modal">
                 <div class="modal-content">
                     <h4 class="ch4 classign center-align">增加车辆</h4>
                     <div class="divider"></div>
@@ -149,7 +149,7 @@
 
                     </div>
                     <div class="modal-footer">
-                        <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat ">下一步</a>
+                        <a  class="modal-action  waves-effect waves-green btn-flat " ng-click="next()">下一步</a>
                     </div>
                 </div>
 

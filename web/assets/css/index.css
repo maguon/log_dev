@@ -291,6 +291,9 @@ body{
 .has-error select{
     border: 1px solid red;
 }
+.has-error textarea{
+    border: 1px solid red;
+}
 .form_box{
     position: relative;
 }

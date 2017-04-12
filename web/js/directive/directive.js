@@ -138,13 +138,26 @@ commonDirective.directive("addNav",function () {
         templateUrl: '/view/car/new_truck/new_truck.html',
         restrict:"EA",
         replace:true,
+        // link:function () {
+        //     $(".add_Truck_view").load("/view/car/new_truck/basic.html");
+        //     $(".PublicTabs").children().on("click",function () {
+        //         $(".PublicTabs").children().removeClass("active");
+        //         $(this).addClass("active");
+        //         $(".add_Truck_view").load($(this).attr("data-url"))
+        //     })
+        // }
+    }
+});
+commonDirective.directive("truckNav",function () {
+    return{
+        restrict:"EA",
         link:function () {
-            $(".add_Truck_view").load("/view/car/new_truck/basic.html");
-            $(".PublicTabs").children().on("click",function () {
-                $(".PublicTabs").children().removeClass("active");
-                $(this).addClass("active");
-                $(".add_Truck_view").load($(this).attr("data-url"))
-            })
+            $(this).on("click",function () {
+                        alert(2);
+                        $(".PublicTabs").children().removeClass("active");
+                        $(this).addClass("active");
+                        $(".add_Truck_view").load($(this).attr("data-url"))
+                    })
         }
     }
 });
@@ -183,6 +196,14 @@ commonDirective.directive("sexChange",function () {
                 $(".sexBox i").removeClass("sex");
                 $(this).addClass("sex")
             })
+        }
+    }
+});
+commonDirective.directive("collapsible",function () {
+    return{
+        restrict:"A",
+        link:function () {
+            $('.collapsible').collapsible();
         }
     }
 });

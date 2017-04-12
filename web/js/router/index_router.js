@@ -39,12 +39,12 @@ index_router.config(['$stateProvider',"$urlRouterProvider",function($stateProvid
         .state("CarMsg.truck", {
             url: "/truck",  //路由路径
             templateUrl: "/view/car/truck/truck_head.html",  //路由填充的模板
-            // controller:'dataController'
+            controller:'truck_head_controller'
         })
         .state("CarMsg.hand", {
             url: "/hand",  //路由路径
             templateUrl: "/view/car/truck/truck_hand.html",  //路由填充的模板
-            // controller:'dataController'
+            controller:'truck_hand_controller'
         })
         // .state("Driver", {
         //     url: "/Driver",  //路由路径
@@ -106,9 +106,18 @@ index_router.config(['$stateProvider',"$urlRouterProvider",function($stateProvid
         .state("setting_pw", {
             url:"/setting_pw",
             templateUrl: "/view/system_settings/setting_password.html",
-            // controller:'settingController'
+            controller:'settingPW_controller'
+        })
+        .state("setting_wh", {
+            url:"/setting_wh",
+            templateUrl: "/view/system_settings/system_warehouse.html",
+            controller:'settingWH_controller'
+        })
+        .state("setting_truck", {
+            url:"/setting_truck",
+            templateUrl: "/view/system_settings/setting_truck.html",
+            controller:'settingT_Controller'
         });
-
 
     // $urlRouterProvider.otherwise("/pageTab");
 
