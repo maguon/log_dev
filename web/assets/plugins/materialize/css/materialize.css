@@ -647,8 +647,8 @@
   background-color: #2196F3 !important;
 }
 
-.blue-text {
-  color: #2196F3 !important;
+.blue-text { color: #2196F3 !important;
+
 }
 
 .blue.lighten-5 {
@@ -5068,7 +5068,7 @@ button.btn-floating {
 }
 
 .fixed-action-btn {
-  position: fixed;
+  position: relative;
   right: 23px;
   bottom: 23px;
   padding-top: 15px;

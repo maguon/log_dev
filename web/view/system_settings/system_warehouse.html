@@ -23,7 +23,7 @@
                 <form name="StorageForm" ng-submit="newStorageForm(StorageForm.$valid)" novalidate>
                     <div class="modal-content">
                         <h4 class="center-align">创建新仓库</h4>
-                        <div class="divider" style="background: #00bcd4; height: 2px;"></div>
+                        <div class="divider a1_divider" ></div>
                         <div class="container">
                             <div class="row" style="margin-top:40px">
                                 <div class="row" ng-class="{ 'has-error':StorageForm.storageName.$invalid&&submitted }" >
@@ -93,7 +93,7 @@
                 <tbody>
                 <tr ng-repeat="el in storage">
                     <td ng-bind="el.storage_name"></td>
-                    <td  ng-bind="el.col*el.road">女</td>
+                    <td  ng-bind="el.row*el.col">女</td>
                     <td ng-if="el.storage_status==1">在用</td>
                     <td ng-if="el.storage_status==0">停用</td>
                     <td class="operation">
@@ -108,7 +108,7 @@
                 <form name="selfStorageForm" ng-submit="lookStorageForm(selfStorageForm.$valid,selfStorage.id)" novalidate>
                     <div class="modal-content">
                         <h4 class="center-align">查看仓库详情</h4>
-                        <div class="divider" style="background: #00bcd4;height: 2px;"></div>
+                        <div class="divider a1_divider" ></div>
                         <div class="container">
                             <div class="row" style="margin-top: 40px">
                                 <div class="row" ng-class="{ 'has-error':selfStorageForm.selfStorageName.$invalid&&submitted }" >
@@ -134,14 +134,14 @@
                                     </h5>
                                     <div class=" col s4-0" ng-class="{ 'has-error':selfStorageForm.selfStorageCol.$invalid&&submitted }">
                                         <div class="row">
-                                            <input  id="selfStorageCol" name="selfStorageCol" disabled autocomplete="off" ng-model="selfStorage.col" type="text" required class="col s9-0">
+                                            <input  id="selfStorageCol" name="selfStorageCol" disabled autocomplete="off" ng-model="selfStorage.row" type="text" required class="col s9-0">
                                             <h5 class="col s1-0">排</h5>
                                         </div>
 
                                     </div>
                                     <div class=" col s4-0" ng-class="{ 'has-error':selfStorageForm.selfStorageRoad.$invalid&&submitted }">
                                         <div class="row">
-                                            <input  id="selfStorageRoad" name="selfStorageRoad" disabled autocomplete="off" ng-model="selfStorage.road" type="text" required class="col s9-0">
+                                            <input  id="selfStorageRoad" name="selfStorageRoad" disabled autocomplete="off" ng-model="selfStorage.col" type="text" required class="col s9-0">
                                             <h5 class="col s1-0">位</h5>
                                         </div>
 

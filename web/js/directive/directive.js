@@ -47,7 +47,7 @@ commonDirective.directive('navigator', function() {
             $("#menu_link").sideNav({
                 menuWidth: 280, // Default is 300
                 edge: 'left', // Choose the horizontal origin
-                // closeOnClick: false, // Closes side-nav on <a> clicks, useful for Angular/Meteor
+                closeOnClick: true, // Closes side-nav on <a> clicks, useful for Angular/Meteor
                 // draggable: true // Choose whether you can drag to open on touch screens
             });
             // $(".button-collapse").sideNav();
@@ -153,7 +153,7 @@ commonDirective.directive("truckNav",function () {
         restrict:"EA",
         link:function () {
             $(this).on("click",function () {
-                        alert(2);
+
                         $(".PublicTabs").children().removeClass("active");
                         $(this).addClass("active");
                         $(".add_Truck_view").load($(this).attr("data-url"))
@@ -204,6 +204,142 @@ commonDirective.directive("collapsible",function () {
         restrict:"A",
         link:function () {
             $('.collapsible').collapsible();
+        }
+    }
+});
+// commonDirective.directive("collapsibleModel",function () {
+//     return{
+//         restrict:"A",
+//         link:function () {
+//             $('.collapsible').collapsible({
+//                 onOpen: function(el) { alert('Open'); }, // 回调当开启开启时
+//                 onClose: function(el) { alert('Closed'); } // 回调当关闭时
+//             });
+//         }
+//     }
+// });
+commonDirective.directive("tooltipped",function () {
+    return{
+        restrict:"A",
+        link:function () {
+            $('.tooltipped').tooltip({delay: 50});
+        }
+    }
+});
+commonDirective.directive("addBrand",function () {
+    return{
+        restrict:"A",
+        controller:function ($scope,$host,$basic) {
+            var adminId=sessionStorage.getItem("userId");
+            $scope.add_brand=function (iValid) {
+                $scope.submitted1=true;
+                if(iValid){
+                    // $(".add_Brand_Icon button").attr("disabled",true);
+                    $basic.post($host.api_url+"/admin/"+adminId+"/carMake/",{
+                        makeName: $scope.b_txt
+                    }).then(function (data) {
+                        if(data.success==true){
+                            swal("新增成功","","success");
+                            // $("<li>").html(str).appendTo($(".Brand_box"));
+                            // $(".add_Brand_Icon button").removeAttr("disabled");
+                            $scope.b_txt="";
+                            $scope.searchAll();
+                        }else {
+                            swal(data.msg,"","error");
+                        }
+                    })
+                }
+                // var val=$scope.b_txt;
+                // var str="<div class='collapsible-header blue-text'><i class='mdi mdi-car blue-text'></i>"+val+"</div> <div class='collapsible-body'><p>人的一生，其实就是一场自己对自己的战争。</p></div>";
+
+            }
+        }
+    }
+});
+commonDirective.directive("addBrandModel",function () {
+    return{
+        restrict:"A",
+        controller:function ($scope,$host,$basic) {
+            var adminId=sessionStorage.getItem("userId");
+            // 关闭新增型号
+            $scope.close_brand_model=function (id) {
+                $(".add_brand_box"+id).fadeIn(500);
+                $(".add_brand_model_wrap"+id).fadeOut(500);
+            };
+            // 新增型号
+            $scope.verify_brand_model=function (iValid,id) {
+                $scope.submitted3=true;
+                if(iValid){
+                    console.log($scope.brandModelText);
+                    // console.log($scope.brand_model_text)
+                    $basic.post($host.api_url+"/admin/"+adminId+"/carMake/"+id+"/carModel",{
+                        modelName:$scope.brandModelText
+                    }).then(function (data) {
+                        if(data.success==true){
+                            // $(".add_brand_box").fadeIn(500);
+                            // $(".add_brand_model_wrap"+id).fadeOut(500);
+                            $scope.search_carModel(id);
+                            $scope.brandModelText="";
+                        }else {
+                            swal(data.msg,"","error");
+                        }
+                    })
+                }
+
+
+            };
+            // $scope.add_brand=function () {
+            //     // var val=$scope.b_txt;
+            //     // var str="<div class='collapsible-header blue-text'><i class='mdi mdi-car blue-text'></i>"+val+"</div> <div class='collapsible-body'><p>人的一生，其实就是一场自己对自己的战争。</p></div>";
+            //     $(".add_Brand_Icon button").attr("disabled",true);
+            //     $basic.post($host.api_url+"/admin/"+adminId+"/carMake/",{
+            //         makeName: $scope.b_txt
+            //     }).then(function (data) {
+            //         if(data.success==true){
+            //             swal("新增成功","","success");
+            //             // $("<li>").html(str).appendTo($(".Brand_box"));
+            //             $(".add_Brand_Icon button").removeAttr("disabled");
+            //             $scope.b_txt="";
+            //             $scope.searchAll();
+            //         }else {
+            //             swal(data.msg,"","error");
+            //         }
+            //     })
+            // }
+        }
+    }
+});
+commonDirective.directive("calendar",function () {
+    return{
+        restrict:"EA",
+        link:function () {
+            // var options={
+            //     // monthNames :"[‘一月’, ‘二月’, ……]" ,
+            //     dayNames:"[‘周日’,‘周一’,‘周二’,‘周三’,‘周四’,‘周五’,‘周六’]"
+            // };
+            // $.fullCalendar.formatDate(date, formatString[options])
+                //页面加载完初始化日历
+                $('#calendar').fullCalendar({
+                    height:750,
+                        // monthNames:['一月','二月', '三月', '四月', '五月', '六月', '七月',
+                        //     '八月', '九月', '十月', '十一月', '十二月'],
+                        // dayNames:['星期日', '星期一', '星期二', '星期三',
+                        //     '星期四', '星期五', '星期六'],
+                        // buttonText:{
+                        //     prev:     '上个月',
+                        //     next:     '下个月',
+                        //     prevYear: '去年',
+                        //     nextYear: '明年',
+                        //     today:    '当月',
+                        //     month:    '月',
+                        //     week:     '周',
+                        //     day:      '日'
+                        // }
+                    }
+                    //设置选项和回调
+
+                )
+
         }
     }
 });

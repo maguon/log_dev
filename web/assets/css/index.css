@@ -28,6 +28,9 @@ body{
 .no-marBottom{
     margin-bottom: 0;
 }
+.no-mp{
+    margin: 0;
+}
 /*.no-pm{*/
     /*padding-left: 0;*/
 /*}*/
@@ -65,7 +68,7 @@ body{
 .first-N i{
     font-size: 1.6rem;
 }
-.collapsible-body a{
+.slider_nav_box a{
     padding: 0;
 }
 .side-nav .collapsible-body li:hover{
@@ -104,6 +107,7 @@ body{
     bottom: 0;
     height: 50px;
     background: #667481;
+    z-index: 10;
 }
 .footer-msg{
     color: white;
@@ -229,6 +233,10 @@ body{
     margin-bottom: 20px;
 
 }
+input[type=text]{
+    margin: 0;
+}
+
 .operation {
     font-size: 20px;
 }
@@ -282,7 +290,7 @@ body{
     margin: 0;
 }
 .modal{
-    min-width: 845px;
+    min-width: 1040px;
 }
 /*自定义form验证*/
 .has-error input{
@@ -293,6 +301,10 @@ body{
 }
 .has-error textarea{
     border: 1px solid red;
+}
+.has-inputError{
+    border: 1px solid red;
+
 }
 .form_box{
     position: relative;
@@ -328,4 +340,40 @@ body{
 }
 .sexBox .sex{
     color:#00bcd4 ;
+}
+/*分割条样式*/
+.a1_divider{
+    background: #00bcd4; height: 2px;
+}
+.blue_divider{
+    background: #2196F3 !important; height: 2px;
+}
+/*增加品牌*/
+.add_Brand_Icon{
+    font-size: 25px;
+    cursor: pointer;
+}
+.Brand_box input[readonly]{
+    border-bottom: none;
+}
+.remark_brand_box{
+    margin-bottom: 20px;
+}
+.car_model{
+    background: gainsboro;
+}
+.car_model input{
+    margin-bottom: 5px;
+}
+.selfBrand_operation{
+    display: none;
+}
+.okCar_model{
+    background: white;
+}
+
+/*新增入库车辆*/
+/*最小宽度*/
+.min-width{
+    min-width:98px;
 }

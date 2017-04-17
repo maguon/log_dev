@@ -1,0 +1,309 @@
+<div class="usersWrap" ng-controller="Storage_car_Controller" >
+    <!--<div class="row BoxWrap valign-wrapper" users-tabs>-->
+    <!--<div class="col s6">-->
+    <!--<div class="chip users_chip active" ui-sref=".operator" >-->
+    <!--<i class="mdi mdi-account"></i>-->
+    <!--操作员设置-->
+    <!--</div>-->
+    <!--</div>-->
+    <!--<div class="col s6">-->
+    <!--<div class="chip users_chip right" ui-sref=".admin" >-->
+    <!--<i class="mdi mdi-wrench"></i>-->
+    <!--管理员设置-->
+    <!--</div>-->
+    <!--</div>-->
+    <!--</div>-->
+    <div class="row">
+        <div class="row">
+            <a class="waves-light waves-effect btn right"  ng-click="newStorage_car()">
+                新增入库车辆
+            </a>
+            <div id="newStorage_car" class="modal">
+                <form name="newStorage_carForm" ng-submit="submitForm(newStorage_carForm.$valid)" novalidate>
+                    <div class="modal-content">
+                        <h4 class="center-align">新增入库车辆</h4>
+                        <div class="divider" style="background: #00bcd4;height: 2px;"></div>
+                        <div class="container">
+                            <div class="row" style="margin-top: 40px">
+                                <div class="row " ng-class="{ 'has-error':operatorForm.phone.$invalid&&submitted }" >
+                                    <div class="col s4 valign-wrapper">
+                                        <h6 class="col s4-0 min-width right-align">
+                                        <span style="color: red">*</span>
+                                        WIN码:</h6>
+                                        <input  id="win" name="win" autocomplete="off" ng-model="win" type="text"   required class=" col s6-0">
+                                    </div>
+                                    <div class="col s4 valign-wrapper">
+                                        <h6 class="col s4-0 min-width right-align">
+                                            制造商:</h6>
+                                        <select car-select name="dep" class="browser-default col s6-0" ng-model="newDepId" required>
+                                            <option value="" disabled selected>请选择</option>
+                                            <option ng-value="1" >车管部</option>
+                                            <option ng-value="2" >仓储部</option>
+                                        </select>
+                                    </div>
+                                    <div class="col s4 valign-wrapper right-align">
+                                        <h6 class="col s4-0">
+                                            型号:</h6>
+                                        <select car-select name="dep" class="browser-default col s6-0" ng-model="newDepId" required>
+                                            <option value="" disabled selected>请选择</option>
+                                            <option ng-value="1" >车管部</option>
+                                            <option ng-value="2" >仓储部</option>
+                                        </select>
+                                    </div>
+                                    <!--<h5 class="col s2-0">-->
+                                        <!--<span style="color: red">*</span>-->
+                                        <!--电话:</h5>-->
+                                    <!--<input  id="phone" name="phone" autocomplete="off" ng-model="newUserName" type="text"   required class=" col s6-0">-->
+                                    <!--<div class="col s2-0 sexBox" sex-change >-->
+                                        <!--<i class="mdi mdi-human-male sex" sex="1" ></i>-->
+                                        <!--<i class="mdi mdi-human-female " sex="0"  ng-class="{ 'sex' : new_companyForm.Tel.$invalid&&submitted }"></i>-->
+                                    <!--</div>-->
+                                </div>
+                                <div class="row " ng-class="{ 'has-error':operatorForm.phone.$invalid&&submitted }" >
+                                    <div class="col s4 valign-wrapper">
+                                        <h6 class="col s4-0 min-width right-align">
+                                            生产日期:</h6>
+                                        <input  id="create_time" name="phone" autocomplete="off" ng-model="newUserName" type="text"   required class=" col s6-0">
+                                    </div>
+                                    <div class="col s4 valign-wrapper">
+                                        <h6 class="col s4-0 min-width right-align">
+                                            颜色:</h6>
+                                        <select car-select name="dep" class="browser-default col s6-0" ng-model="newDepId" required>
+                                            <option value="" disabled selected>请选择</option>
+                                            <option ng-value="1" >车管部</option>
+                                            <option ng-value="2" >仓储部</option>
+                                        </select>
+                                    </div>
+                                    <div class="col s4 valign-wrapper right-align">
+                                        <h6 class="col s4-0 min-width">
+                                            发动机号:</h6>
+                                        <input  id="" name="phone" autocomplete="off" ng-model="newUserName" type="text"   required class=" col s6-0">
+                                    </div>
+                                    <!--<h5 class="col s2-0">-->
+                                    <!--<span style="color: red">*</span>-->
+                                    <!--电话:</h5>-->
+                                    <!--<input  id="phone" name="phone" autocomplete="off" ng-model="newUserName" type="text"   required class=" col s6-0">-->
+                                    <!--<div class="col s2-0 sexBox" sex-change >-->
+                                    <!--<i class="mdi mdi-human-male sex" sex="1" ></i>-->
+                                    <!--<i class="mdi mdi-human-female " sex="0"  ng-class="{ 'sex' : new_companyForm.Tel.$invalid&&submitted }"></i>-->
+                                    <!--</div>-->
+                                </div>
+                                <div class="row " ng-class="{ 'has-error':operatorForm.phone.$invalid&&submitted }" >
+                                    <div class="col s4 valign-wrapper">
+                                        <h6 class="col s4-0 min-width right-align">
+                                            <span style="color: red">*</span>
+                                            存放仓库:</h6>
+                                        <input  id="storage_name" name="phone" autocomplete="off" ng-model="newUserName" type="text"   required class=" col s6-0">
+                                    </div>
+                                    <div class="col s8 valign-wrapper ">
+                                        <div class="col s2-0 valign-wrapper min-width right-align">
+                                            <span style="color: red">*</span>
+                                            <h6 class="">
+                                                存放车位:</h6>
+                                        </div>
+                                        <div class="col s8-0 valign-wrapper" style="padding: 0">
+                                            <select car-select name="dep" class="browser-default  col s4-0" ng-model="newDepId" required>
+                                                <option value="" disabled selected>请选择</option>
+                                                <option ng-value="1" >车管部</option>
+                                                <option ng-value="2" >仓储部</option>
+                                            </select>
+                                            <span class="col s1-0">
+                                                排
+                                            </span>
+                                            <select car-select name="dep" class="browser-default col s4-0" ng-model="newDepId" required>
+                                                <option value="" disabled selected>请选择</option>
+                                                <option ng-value="1" >车管部</option>
+                                                <option ng-value="2" >仓储部</option>
+                                            </select>
+                                            <span class="col s1-0">
+                                                列
+                                            </span>
+                                        </div>
+
+
+                                    </div>
+                                    <!--<h5 class="col s2-0">-->
+                                    <!--<span style="color: red">*</span>-->
+                                    <!--电话:</h5>-->
+                                    <!--<input  id="phone" name="phone" autocomplete="off" ng-model="newUserName" type="text"   required class=" col s6-0">-->
+                                    <!--<div class="col s2-0 sexBox" sex-change >-->
+                                    <!--<i class="mdi mdi-human-male sex" sex="1" ></i>-->
+                                    <!--<i class="mdi mdi-human-female " sex="0"  ng-class="{ 'sex' : new_companyForm.Tel.$invalid&&submitted }"></i>-->
+                                    <!--</div>-->
+                                </div>
+                                <div class="row " ng-class="{ 'has-error':operatorForm.phone.$invalid&&submitted }" >
+                                    <div class="col s6 valign-wrapper">
+                                        <h6 class="col s4-0 min-width ">
+                                            <span style="color: red">*</span>
+                                            入库时间:</h6>
+                                        <input  id="enter_time" name="enter_time" autocomplete="off" ng-model="newUserName" type="text"   required class=" col s6-0">
+                                    </div>
+                                    <div class="col s6 valign-wrapper">
+                                        <h6 class="col s4-0 min-width ">
+                                            <span style="color: red">*</span>
+                                            计划出库时间:</h6>
+                                        <input  id="plan_out_time" name="plan_out_time" autocomplete="off" ng-model="newUserName" type="text"   required class=" col s6-0">
+                                    </div>
+
+                                    <!--<h5 class="col s2-0">-->
+                                    <!--<span style="color: red">*</span>-->
+                                    <!--电话:</h5>-->
+                                    <!--<input  id="phone" name="phone" autocomplete="off" ng-model="newUserName" type="text"   required class=" col s6-0">-->
+                                    <!--<div class="col s2-0 sexBox" sex-change >-->
+                                    <!--<i class="mdi mdi-human-male sex" sex="1" ></i>-->
+                                    <!--<i class="mdi mdi-human-female " sex="0"  ng-class="{ 'sex' : new_companyForm.Tel.$invalid&&submitted }"></i>-->
+                                    <!--</div>-->
+                                </div>
+
+                                <!--<div class="row" ng-class="{ 'has-error':operatorForm.password.$invalid&&submitted }">-->
+                                    <!--<div class="col s6 valign-wrapper">-->
+                                        <!--<h6 class="col s4-0 ">-->
+                                            <!--<span style="color: red">*</span>-->
+                                            <!--入库操作员:</h6>-->
+                                        <!--<select car-select name="dep" class="browser-default col s6-0" ng-model="newDepId" required>-->
+                                            <!--<option value="" disabled selected>请选择</option>-->
+                                            <!--<option ng-value="1" >车管部</option>-->
+                                            <!--<option ng-value="2" >仓储部</option>-->
+                                        <!--</select>-->
+                                    <!--</div>-->
+                                <!--</div>-->
+                                <div class="row">
+                                    <h6 class="col s2-0 center-align">
+                                        备注:</h6>
+                                    <textarea id="remark" name="remark" class=" col s8-0 " style="height: 100px"></textarea>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="divider" style="background: #00bcd4;height: 2px;"></div>
+                    <div class="modal-footer vc-center">
+                        <button class="btn waves-light waves-effect" type="submit" name="action" >
+                            <i class="mdi mdi-check"></i>
+                        </button>
+                        <a  class=" modal-action modal-close waves-effect waves-light materialize-red lighten-1 btn" style="margin-left: 10px" >
+                            <i class="mdi mdi-close"></i>
+                        </a>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+        <div class="divider" style="background: #00bcd4;height: 2px;"></div>
+        <div class="col s12" >
+            <table class="highlight bordered">
+                <thead>
+                <tr>
+                    <th data-field="">入库时间</th>
+                    <th data-field="">WIN码</th>
+                    <th data-field="">品牌</th>
+                    <th data-field="">型号</th>
+                    <th data-field="">存放车库</th>
+                    <th data-field="">存放位置</th>
+                    <th data-field="">计划出库时间</th>
+                    <th>操作</th>
+                </tr>
+                </thead>
+
+                <tbody>
+                <tr ng-repeat="el in storage_car">
+                    <td ng-bind="el.enter_time|date:'yyyy-MM-dd HH:mm:ss'"></td>
+                    <td  ng-bind="el.vin"></td>
+                    <td ng-bind="el.make_name"></td>
+                    <td ng-bind="el.model_name"></td>
+                    <td ng-bind="el.storage_name"></td>
+                    <td >{{el.row}}排{{el.col}}列</td>
+                    <td ng-bind="el.plan_out_time|date:'yyyy-MM-dd HH:mm:ss'"></td>
+                    <td class="operation">
+                        <span><i class="mdi mdi-eye" ng-click="lookOperation(el.uid)"></i></span>
+                        <div id="look_Operator" class="modal">
+                            <form name="change_operatorForm" ng-submit="changeOperatorForm(change_operatorForm.$valid,look_operation.uid)" novalidate>
+                                <div class="modal-content">
+                                    <h4 class="center-align">操作员信息</h4>
+                                    <div class="divider" style="background: #00bcd4;height: 2px;"></div>
+                                    <div class="container">
+                                        <div class="row" style="margin-top: 40px">
+                                            <div class="row" ng-class="{ 'has-error' : change_operatorForm.new_userName.$invalid&&submitted }">
+                                                <h5 class="col s2-0">
+                                                    <span style="color: red">*</span>
+                                                    姓名:</h5>
+                                                <input  id="look_userName" name="new_userName" type="text" autocomplete="off" ng-model="look_operation.real_name" required class=" col s6-0">
+                                                <div class="col s2-0 sexBox" sex-change >
+                                                    <i class="mdi mdi-human-male " sex="1" ng-class="{ 'sex' : look_operation.gender=='1' }"></i>
+                                                    <i class="mdi mdi-human-female " sex="0"  ng-class="{ 'sex' : look_operation.gender=='0' }"></i>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col s6">
+                                                    <div class="row" ng-class="{ 'has-error' : change_operatorForm.dep.$invalid&&submitted }">
+                                                        <h5 class="col s4-0">
+                                                            <span style="color: red">*</span>
+                                                            部门:
+                                                        </h5>
+                                                        <select car-select name="dep" class="browser-default col s6-0" ng-model="look_operation.type" required>
+                                                            <!--<option value="" disabled selected>请选择</option>-->
+                                                            <option ng-value="1" >车管部</option>
+                                                            <option ng-value="2" >仓储部</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="col s6"  ng-class="{ 'has-error':change_operatorForm.phone.$invalid&&submitted }">
+                                                    <h5 class="col s4-0">
+                                                        <span style="color: red">*</span>
+                                                        电话:
+                                                    </h5>
+                                                    <input  id="look_phone" name="phone" ng-model="look_operation.mobile" autocomplete="off" type="text" required class=" col s6-0">
+                                                </div>
+                                            </div>
+                                            <!--<div class="row" ng-class="{ 'has-error':change_operatorForm.password.$invalid&&submitted }">-->
+                                            <!--<h5 class="col s2-0">-->
+                                            <!--<span style="color: red">*</span>-->
+                                            <!--权限:-->
+                                            <!--</h5>-->
+                                            <!--<select car-select name="dep" class="browser-default col s4-0" ng-model="look_operation.dept_id" required>-->
+                                            <!--<option value="" disabled selected>请选择</option>-->
+                                            <!--<option ng-value="{{op.dept_id}}" ng-repeat="op in department">{{op.dept_name}}</option>-->
+                                            <!--</select>-->
+                                            <!--</div>-->
+                                            <div class="row" ng-class="{ 'has-error':change_operatorForm.password.$invalid&&submitted }">
+                                                <div class="col s6">
+                                                    工作状态:
+                                                    <span ng-if="look_operation.status==0">停用</span>
+                                                    <span ng-if="look_operation.status==1">可用</span>
+                                                </div>
+                                            </div>
+                                            <!--<div class="row" ng-class="{ 'has-error':change_operatorForm.password.$invalid&&submitted }">-->
+                                            <!--&lt;!&ndash;<div class="col s6">&ndash;&gt;-->
+                                            <!--&lt;!&ndash;<a  class=" modal-action    white-text waves-effect waves-white btn" style="margin-left: 10px" >重置密码</a>&ndash;&gt;-->
+
+                                            <!--&lt;!&ndash;</div>&ndash;&gt;-->
+                                            <!--<div class="col s6" ng-click="changeStatus(look_operation.status,look_operation.uid)">-->
+                                            <!--<a  class=" modal-action   white-text waves-effect waves-white btn" style="margin-left: 10px" ng-if="look_operation.status==0" >启用</a>-->
+                                            <!--<a  class=" modal-action   white-text waves-effect waves-white btn" style="margin-left: 10px" ng-if="look_operation.status==1" >停用</a>-->
+                                            <!--</div>-->
+                                            <!--</div>-->
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="divider" style="background: #00bcd4;height: 2px;"></div>
+                                <div class="modal-footer vc-center">
+                                    <button class="btn waves-light waves-effect" type="submit" name="action" >
+                                        <i class="mdi mdi-check"></i>
+                                    </button>
+                                    <a  class=" modal-action modal-close waves-effect waves-light materialize-red lighten-1 btn" style="margin-left: 10px" >
+                                        <i class="mdi mdi-close"></i>
+                                    </a>
+                                </div>
+                            </form>
+
+                        </div>
+                    </td>
+                </tr>
+
+                </tbody>
+            </table>
+
+        </div>
+    </div>
+
+</div>

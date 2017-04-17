@@ -117,6 +117,15 @@ index_router.config(['$stateProvider',"$urlRouterProvider",function($stateProvid
             url:"/setting_truck",
             templateUrl: "/view/system_settings/setting_truck.html",
             controller:'settingT_Controller'
+        })
+        .state("calendar", {
+            url:"/calendar",
+            templateUrl: "/view/storage/working_calendar.html",
+            // controller:'calendar_Controller'
+        })
+        .state("storageCar", {
+            url:"/storage_car",
+            templateUrl: "/view/storage/storage_car.html",
         });
 
     // $urlRouterProvider.otherwise("/pageTab");
