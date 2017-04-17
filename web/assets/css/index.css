@@ -238,11 +238,12 @@ input[type=text]{
 }
 
 .operation {
-    font-size: 20px;
+
 }
-.operation span{
+.operation .look_icon {
     cursor: pointer;
     margin-right: 10px;
+    font-size: 20px;
 }
 .search{
     width: auto;
@@ -375,5 +376,8 @@ input[type=text]{
 /*新增入库车辆*/
 /*最小宽度*/
 .min-width{
-    min-width:98px;
+    min-width:100px;
+}
+.min-width-2{
+    min-width: 130px;
 }

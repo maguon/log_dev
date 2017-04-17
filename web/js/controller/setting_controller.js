@@ -25,7 +25,7 @@ settingController.controller("settingWH_controller",["$scope","$host","$basic",f
     var adminId=sessionStorage.getItem("userId");
     // 整体查询
     var searchAll=function () {
-        $basic.get($host.api_url+"/admin/"+adminId+"/storage").then(function (data) {
+        $basic.get($host.api_url+"/storage").then(function (data) {
             if(data.success==true){
                 $scope.storage=data.result;
             }else {
@@ -72,7 +72,7 @@ settingController.controller("settingWH_controller",["$scope","$host","$basic",f
     $scope.lookStorage=function (id) {
         $(".modal").modal();
         $("#look_Storage").modal("open");
-        $basic.get($host.api_url+"/admin/"+adminId+"/storage?storageId="+id).then(function (data) {
+        $basic.get($host.api_url+"/storage?storageId="+id).then(function (data) {
             if(data.success==true){
                 $scope.selfStorage=data.result[0];
             }else {
@@ -123,7 +123,7 @@ settingController.controller("settingT_Controller",["$scope","$host","$basic",fu
     var adminId=sessionStorage.getItem("userId");
     // 汽车品牌
     $scope.searchAll=function () {
-        $basic.get($host.api_url+"/admin/"+adminId+"/carMake/").then(function (data) {
+        $basic.get($host.api_url+"/carMake/").then(function (data) {
             if(data.success==true){
                 // console.log(data.result);
                 $scope.brand=data.result;
@@ -166,7 +166,7 @@ settingController.controller("settingT_Controller",["$scope","$host","$basic",fu
 
     // 汽车型号
     $scope.search_carModel=function (id) {
-        $basic.get($host.api_url+"/admin/"+adminId+"/carMake/"+id+"/carModel").then(function (data) {
+        $basic.get($host.api_url+"/carMake/"+id+"/carModel").then(function (data) {
             if(data.success==true){
                 // console.log(data.result);
                 $scope.brand_model=data.result;
@@ -179,7 +179,7 @@ settingController.controller("settingT_Controller",["$scope","$host","$basic",fu
 
     // 打开
     $scope.open_car_model=function ($event,id) {
-        console.log($($event.target).attr("flag"));
+        // console.log($($event.target).attr("flag"));
             if($($event.target).attr("flag")=="true"){
                 $scope.search_carModel(id);
                 $($event.target).attr("flag","false");
