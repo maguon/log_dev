@@ -31,6 +31,9 @@ body{
 .no-mp{
     margin: 0;
 }
+.no-pd{
+    padding: 0;
+}
 /*.no-pm{*/
     /*padding-left: 0;*/
 /*}*/
@@ -285,6 +288,13 @@ input[type=text]{
     bottom: 10px;
 }
 
+/*select选择组件*/
+.select-wrapper input.select-dropdown{
+    margin: 0;
+}
+.select-wrapper.col {
+    padding: 0;
+}
 /*模态弹出层*/
 
 .modal-content p{
@@ -380,4 +390,16 @@ input[type=text]{
 }
 .min-width-2{
     min-width: 130px;
+}
+.move_box{
+    border: 1px solid #b0bec5;
+    border-radius: 5px;
+    padding: 0.75rem 0;
+    display: none;
+}
+.move_box i{
+    cursor: pointer;
+}
+.look_StorageCar .row.col{
+    padding: 0;
 }

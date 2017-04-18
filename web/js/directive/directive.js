@@ -97,10 +97,18 @@ commonDirective.directive("carSelect",function () {
    return{
        restrict:"A",
        link:function () {
-           $('select').material_select();
+
        }
    }
 });
+commonDirective.directive('myRepeatDirective', function() {
+        return function(scope, element, attrs) {
+            angular.element(element).css('color','blue');
+            if (scope.$last){
+                window.alert("im the last!");
+            }
+        };
+    })
 commonDirective.directive("date",function () {
     return{
         restrict:"A",
@@ -226,6 +234,7 @@ commonDirective.directive("tooltipped",function () {
         }
     }
 });
+
 commonDirective.directive("addBrand",function () {
     return{
         restrict:"A",
