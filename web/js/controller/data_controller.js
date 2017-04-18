@@ -1,7 +1,10 @@
 var data_controller=angular.module("data_controller",[]);
-data_controller.controller("dataController", ['$rootScope','$scope','$location','$q','$basic',
+data_controller.controller("dataController", ['$rootScope','$scope','$location','$q','$basic',"$host",
 
-    function($rootScope,$scope,$location,$q,$basic ) {
+    function($rootScope,$scope,$location,$q,$basic ,$host) {
+        //$scope.selectArray =[{id:1,name:'a'},{id:2,name:'b'}];
+        $scope.selectArray =[];
+
         $scope.csvFile = null;
         $scope.rightNumber = 0;
         $scope.errorNumber = 0;
@@ -52,7 +55,13 @@ data_controller.controller("dataController", ['$rootScope','$scope','$location',
                 }
             }
         };
-
+        $basic.get($host.api_url+"/storage").then(function (data) {
+            if(data.success=true){
+                $scope.selectArray =data.result;
+            }else {
+                swal(data.msg,"","error");
+            }
+        });
 
         $scope.fileChange = function(file){
             $(file).parse({
