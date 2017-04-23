@@ -34,6 +34,10 @@ body{
 .no-pd{
     padding: 0;
 }
+/*模态*/
+/*.modal.modal-fixed-footer{*/
+    /*height: 90%;*/
+/*}*/
 /*.no-pm{*/
     /*padding-left: 0;*/
 /*}*/
@@ -243,7 +247,7 @@ input[type=text]{
 .operation {
 
 }
-.operation .look_icon {
+.operation i {
     cursor: pointer;
     margin-right: 10px;
     font-size: 20px;
@@ -402,4 +406,10 @@ input[type=text]{
 }
 .look_StorageCar .row.col{
     padding: 0;
+}
+/*车辆照片*/
+.storage_car_picture{
+    height: 100px;
+    cursor: pointer;
+
 }

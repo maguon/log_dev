@@ -15,7 +15,9 @@ storage_controller.controller("Storage_car_Controller",["$scope","$host","$basic
     searchAll();
         
     $scope.newStorage_car=function () {
-        $(".modal").modal();
+        $(".modal").modal({
+            height:500
+        });
         $("#newStorage_car").modal("open");
         // 车辆品牌查询
         $basic.get($host.api_url+"/carMake").then(function (data) {
@@ -158,9 +160,34 @@ storage_controller.controller("Storage_car_Controller",["$scope","$host","$basic
            }
        });
     };
+    // 立刻出库
+    $scope.outStorageCar=function () {
+        swal({
+                title: "该车辆确定要出库吗?",
+                text: "",
+                type: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#DD6B55",
+                confirmButtonText: "确定",
+                cancelButtonText:"取消",
+                closeOnConfirm: false
+            },
+            function(){
+                swal("ok!", "Your ", "success");
+            }
+        );
+    };
+    // 车位转移
+    $scope.changeStorageCar=function () {
+        $(".modal").modal();
+        $("#change_storageCar").modal("open");
+    }
     // 仓库车辆详情
     $scope.lookStorageCar=function () {
-        $(".modal").modal();
+        $(".modal").modal({
+            starting_top: '1%', // Starting top style attribute
+            // ending_top: '1%',
+        });
         $("#look_StorageCar").modal("open");
     };
     $scope.move_box=function () {
@@ -186,6 +213,7 @@ storage_controller.controller("Storage_car_Controller",["$scope","$host","$basic
                 showCancelButton: true,
                 confirmButtonColor: "#DD6B55",
                 confirmButtonText: "Yes",
+                cancelButtonText:"取消",
                 closeOnConfirm: false
             },
             function(){
