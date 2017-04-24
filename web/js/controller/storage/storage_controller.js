@@ -32,6 +32,24 @@ storage_controller.controller("Storage_car_Controller",["$scope","$host","$basic
         }
     });
     $scope.newStorage_car=function () {
+        $scope.submitted=false;
+        $('ul.tabs li a').removeClass("active");
+        $(".tab_box").removeClass("active");
+        $(".tab_box").hide();
+        $('ul.tabs li.test1 a').addClass("active");
+        $("#test1").addClass("active");
+        $("#test1").show();
+        $scope.win="";
+        $scope.make_name="";
+        $scope.model_name="";
+        $scope.create_time="";
+        $scope.car_color="";
+        $scope.engineNum="";
+        $scope.remark="";
+        $scope.storage_name="";
+            // "enterTime":$scope.enter_time,
+        $scope.col_id="";
+        $scope.plan_out_time="";
         $(".modal").modal({
             height:500
         });
@@ -192,8 +210,10 @@ storage_controller.controller("Storage_car_Controller",["$scope","$host","$basic
     };
     $scope.color=config_color;
 
-    $scope.submitForm=function () {
-        var obj_car={
+    $scope.submitForm=function (isValid) {
+        $scope.submitted=true;
+        if(isValid){
+            var obj_car={
                 "vin":$scope.win,
                 "makeId":$scope.make_name.id,
                 "makeName":$scope.make_name.make_name,
@@ -208,25 +228,27 @@ storage_controller.controller("Storage_car_Controller",["$scope","$host","$basic
                 // "enterTime":$scope.enter_time,
                 "parkingId":$scope.col_id,
                 "planOutTime": $scope.plan_out_time
-        };
-        console.log(obj_car);
-       $basic.post($host.api_url+"/user/"+userId+"/carStorageRel",obj_car).then(function (data) {
-           if(data.success==true){
-               // swal("新增成功","","success");
-               // $("#newStorage_car").modal("close");
-               // $('ul.tabs').tabs('select_tab', 'test2');
-               $('ul.tabs li a').removeClass("active");
-                $(".tab_box").removeClass("active");
-               $(".tab_box").hide();
-               $('ul.tabs li.test2 a').addClass("active");
-               $("#test2").addClass("active");
-               $("#test2").show();
-               searchAll();
-               $scope.carPicture_carId=data.id;
-           }else {
-                swal(data.msg,"","error")
-           }
-       });
+            };
+            console.log(obj_car);
+            $basic.post($host.api_url+"/user/"+userId+"/carStorageRel",obj_car).then(function (data) {
+                if(data.success==true){
+                    // swal("新增成功","","success");
+                    // $("#newStorage_car").modal("close");
+                    // $('ul.tabs').tabs('select_tab', 'test2');
+                    $('ul.tabs li a').removeClass("active");
+                    $(".tab_box").removeClass("active");
+                    $(".tab_box").hide();
+                    $('ul.tabs li.test2 a').addClass("active");
+                    $("#test2").addClass("active");
+                    $("#test2").show();
+                    searchAll();
+                    $scope.carPicture_carId=data.id;
+                }else {
+                    swal(data.msg,"","error")
+                }
+            });
+        }
+
     };
     // 立刻出库
     $scope.outStorageCar=function () {

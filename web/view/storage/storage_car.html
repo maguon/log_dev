@@ -26,21 +26,21 @@
                              <div class="row no-marBottom" ul-tabs>
                                 <div class="col s12">
                                     <ul class="tabs">
-                                        <li  class="tab col s6 test1"><a  class="active " href="#test1">基本信息</a></li>
-                                        <li  class="tab col s6 test2"><a   href="#test2">车辆照片</a></li>
+                                        <li class="tab col s6 disabled test1"><a  class="active " href="#test1">基本信息</a></li>
+                                        <li  class="tab disabled col s6 test2"><a   href="#test2">车辆照片</a></li>
                                     </ul>
                                 </div>
                                 <div id="test1" class="col s12 tab_box">
                                     <form name="newStorage_carForm" ng-submit="submitForm(newStorage_carForm.$valid)" novalidate>
                                     <div class="row" style="margin-top: 40px">
-                                        <div class="row " ng-class="{ 'has-error':operatorForm.phone.$invalid&&submitted }" >
-                                            <div class="col s4 valign-wrapper">
+                                        <div class="row "  >
+                                            <div class="col s4 valign-wrapper" ng-class="{ 'has-error':newStorage_carForm.win.$invalid&&submitted }">
                                                 <h6 class="col s4-0 min-width-2 ">
                                                     <span style="color: red">*</span>
                                                     WIN码:</h6>
                                                 <input  id="win" name="win" autocomplete="off" ng-model="win" type="text"   required class=" col s6-0">
                                             </div>
-                                            <div class="col s4 valign-wrapper">
+                                            <div class="col s4 valign-wrapper" ng-class="{ 'has-error':newStorage_carForm.makecarName.$invalid&&submitted }" >
                                                 <h6 class="col s4-0 min-width ">
                                                     制造商:</h6>
                                                 <select material-select watch name="makecarName" ng-options="o.make_name for o in makecarName" class=" col s6-0" ng-change="changeMakeId(make_name.id)" ng-model="make_name" required>
@@ -48,7 +48,7 @@
                                                     <!--<option ng-repeat="el in makecarName" ng-value="el.id" >{{el.make_name}}</option>-->
                                                 </select>
                                             </div>
-                                            <div class="col s4 valign-wrapper ">
+                                            <div class="col s4 valign-wrapper " ng-class="{ 'has-error':newStorage_carForm.model_name.$invalid&&submitted }">
                                                 <h6 class="col s4-0">
                                                     型号:</h6>
                                                 <select material-select watch name="model_name" class=" col s6-0" ng-options="o.model_name for o in carModelName" ng-model="model_name" required>
@@ -64,8 +64,8 @@
                                             <!--<i class="mdi mdi-human-female " sex="0"  ng-class="{ 'sex' : new_companyForm.Tel.$invalid&&submitted }"></i>-->
                                             <!--</div>-->
                                         </div>
-                                        <div class="row" ng-class="{ 'has-error':operatorForm.phone.$invalid&&submitted }" >
-                                            <div class="col s4 valign-wrapper" style="position: relative">
+                                        <div class="row" >
+                                            <div class="col s4 valign-wrapper" style="position: relative" >
                                                 <h6 class="col s4-0 min-width-2 ">
                                                     生产日期:</h6>
                                                 <input type="text" id="create_time" name="create_time" class="datepicker" autocomplete="off" ng-model="create_time" required   date><i class="mdi dataIcon mdi-table-large"></i>
@@ -84,8 +84,8 @@
                                                 <input  id="engineNum" name="engineNum" autocomplete="off" ng-model="engineNum" type="text"   required class=" col s6-0">
                                             </div>
                                         </div>
-                                        <div class="row" ng-class="{ 'has-error':operatorForm.phone.$invalid&&submitted }" >
-                                            <div class="col s4 valign-wrapper">
+                                        <div class="row" >
+                                            <div class="col s4 valign-wrapper" ng-class="{ 'has-error':newStorage_carForm.storageName.$invalid&&submitted }">
                                                 <h6 class="col s4-0 min-width-2 ">
                                                     <span style="color: red">*</span>
                                                     存放仓库:</h6>
@@ -99,7 +99,7 @@
                                                     <h6 class="">
                                                         存放车位:</h6>
                                                 </div>
-                                                <div class="col s8-0 valign-wrapper" style="padding: 0">
+                                                <div class="col s8-0 valign-wrapper" style="padding: 0" ng-class="{ 'has-error':(newStorage_carForm.row.$invalid||newStorage_carForm.col_id.$invalid)&&submitted }">
                                                     <select material-select watch name="row" class="  col s4-0" ng-change="changeStorageRow(row)"  ng-model="row" required>
                                                         <option value="" disabled selected>请选择</option>
                                                         <option ng-repeat="el in parkingArray" ng-value="el.row" >{{el.row}}</option>
@@ -118,14 +118,14 @@
 
                                             </div>
                                         </div>
-                                        <div class="row" ng-class="{ 'has-error':operatorForm.phone.$invalid&&submitted }" >
+                                        <div class="row"  >
                                             <!--<div class="col s6 valign-wrapper" style="position: relative">-->
                                             <!--<h6 class="col s2-0 min-width right-align">-->
                                             <!--<span style="color: red">*</span>-->
                                             <!--入库时间:</h6>-->
                                             <!--<input  id="enter_time" name="enter_time"  autocomplete="off" ng-model="enter_time" type="text"   required class="datepicker col s8-0" date><i class="mdi dataIcon mdi-table-large"></i>-->
                                             <!--</div>-->
-                                            <div class="col s6 valign-wrapper " style="position: relative">
+                                            <div class="col s6 valign-wrapper " style="position: relative" ng-class="{ 'has-error':newStorage_carForm.plan_out_time.$invalid&&submitted }">
                                                 <h6 class="col s2-0 min-width-2 ">
                                                     <span style="color: red">*</span>
                                                     计划出库时间:
