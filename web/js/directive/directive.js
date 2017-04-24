@@ -39,6 +39,7 @@ commonDirective.directive('navigator', function() {
                     // $(".shadeDowWrap").hide();
                     if (data.success == true) {
                         $scope.userName=data.result[0].user_name;
+                        sessionStorage.setItem("userName",$scope.userName)
                     } else {
                         swal(data.msg, "", "error");
                     }
@@ -91,6 +92,55 @@ commonDirective.directive("carMsg",function () {
         link:function (ele,attr) {
             $('ul.tabs').tabs();
         }
+    }
+});
+commonDirective.directive("truckUpload",function () {
+    return{
+        restrict: 'A',
+        controller: function($basic,$upload){
+            var userId=sessionStorage.getItem("userId");
+            var arr=[];
+            $("#img").on("change",function (e) {
+                // 获取文件列表对象
+                var files = e.target.files || e.dataTransfer.files;
+                for (var i = 0, file; file = files[i]; i++) {
+                    if (file.type.indexOf("image") == 0) {
+                        if (file.size >= 512000) {
+                            alert('您这张"'+ file.name +'"图片大小过大，应小于500k');
+                        } else {
+                            var reader = new FileReader();
+                            reader.onload = function(e) {
+                                // var imgB=document.getElementById("imgBox");
+                                var div=$("<div>").addClass("storage_car_picture col s3 vc-center  p0 grey white-text");
+                                var imgEle=$("<img>");
+                                imgEle.addClass("responsive-img");
+                                imgEle.attr("src",e.target.result);
+                                // imgEle.setAttribute("src",e.target.result);
+                                imgEle.appendTo(div);
+                                // div.appendChild(imgEle);
+                                div.appendTo($(".storage_car_picture_wrap"));
+                                // .appendChild(div)
+                            };
+                            reader.readAsDataURL(file);
+                            var fd = new FormData();
+                            fd.append("truck_picture", file);
+                            $basic.post($upload.api_url_upload+"/user/"+userId+"/image?imageType="+2,{
+                                image:fd
+                            }).then(function (data) {
+
+                            });
+                            arr.push(file);
+                            console.log(arr);
+                        }
+                    } else {
+                        alert('文件"' + file.name + '"不是图片。');
+                    }
+                }
+            })
+        }
+        // link:function (ele,attr) {
+        //
+        // }
     }
 });
 commonDirective.directive("carSelect",function () {
@@ -204,6 +254,15 @@ commonDirective.directive("sexChange",function () {
                 $(".sexBox i").removeClass("sex");
                 $(this).addClass("sex")
             })
+        }
+    }
+});
+
+commonDirective.directive("ulTabs",function () {
+    return{
+        restrict:"A",
+        link:function () {
+            $('ul.tabs').tabs();
         }
     }
 });

@@ -10,3 +10,11 @@ hostService.factory("$host",function () {
     return _this;
 
 });
+hostService.factory("$upload",function () {
+    var _this={
+        api_url_upload:"http://stg.myxxjs.com:9002/api"
+
+    };
+    return _this;
+
+});

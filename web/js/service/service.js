@@ -37,7 +37,7 @@ CommonService.factory('$basic',['$http','$location','$q',"$cookies",function($ht
                 }
             }
         };
-        $(dom).ajaxSubmit(options);
+        $(dom).submit(options);
     };
 
     var fnArray = ['get','delete','jsonp','head','post','put'];

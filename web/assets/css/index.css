@@ -66,6 +66,9 @@ body{
 .side-nav li.active{
     background: red;
 }
+.tabs .active{
+    border-bottom: 2px solid #f6b2b5;
+}
 /*.side-nav .collapsible-header{*/
 /*padding:0 32px ;*/
 /*}*/
@@ -411,5 +414,17 @@ input[type=text]{
 .storage_car_picture{
     height: 100px;
     cursor: pointer;
-
+    position: relative;
+    overflow: hidden;
+    margin:10px 10px 0 0;
+}
+.storage_car_picture input{
+    font-size: 200px;
+    position: absolute;
+    opacity: 0;
+    -ms-filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=0);
+    filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=0);
+    top: 0;
+    right: 0;
+    cursor: pointer;
 }
