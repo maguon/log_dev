@@ -26,11 +26,11 @@
                              <div class="row no-marBottom" ul-tabs>
                                 <div class="col s12">
                                     <ul class="tabs">
-                                        <li  class="tab col s6 "><a  class="active " href="#test1">基本信息</a></li>
-                                        <li  class="tab col s6 "><a   href="#test2">车辆照片</a></li>
+                                        <li  class="tab col s6 test1"><a  class="active " href="#test1">基本信息</a></li>
+                                        <li  class="tab col s6 test2"><a   href="#test2">车辆照片</a></li>
                                     </ul>
                                 </div>
-                                <div id="test1" class="col s12">
+                                <div id="test1" class="col s12 tab_box">
                                     <form name="newStorage_carForm" ng-submit="submitForm(newStorage_carForm.$valid)" novalidate>
                                     <div class="row" style="margin-top: 40px">
                                         <div class="row " ng-class="{ 'has-error':operatorForm.phone.$invalid&&submitted }" >
@@ -156,7 +156,7 @@
                                     </div>
                                 </form>
                                 </div>
-                                <div id="test2" class="col s12">
+                                <div id="test2" class="col s12 tab_box">
                                     <div class="row no-marBottom">
                                         <div class="col s12 valign-wrapper " style="position: relative">
                                             <p class="col s1-0 min-width-2 left-align p0">

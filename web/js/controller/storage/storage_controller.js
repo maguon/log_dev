@@ -41,43 +41,65 @@ storage_controller.controller("Storage_car_Controller",["$scope","$host","$basic
 
     };
     // 图片上传
-    $scope.uploadBrandImage=function (dom) {
-        var filename = $(dom).val();
-        console.log($(dom)[0].files[0].size);
-        if((/\.(jpe?g|png|gif|svg|bmp|tiff?)$/i).test(filename)) {
-            //check size
-            //$file_input[0].files[0].size
-            var max_size_str = $(dom).attr('max_size');
-            var max_size = 4*1024*1024; //default: 4M
-            var re = /\d+m/i;
-            if(re.test(max_size_str))  {
-                max_size = parseInt(max_size_str.substring(0,max_size_str.length-1))*1024*1024;
-            }
+        $scope.uploadBrandImage=function (dom) {
+            var filename = $(dom).val();
+            console.log($(dom)[0].files[0].size);
+            if((/\.(jpe?g|png|gif|svg|bmp|tiff?)$/i).test(filename)) {
+                //check size
+                //$file_input[0].files[0].size
+                var max_size_str = $(dom).attr('max_size');
+                var max_size = 4*1024*1024; //default: 4M
+                var re = /\d+m/i;
+                if(re.test(max_size_str))  {
+                    max_size = parseInt(max_size_str.substring(0,max_size_str.length-1))*1024*1024;
+                }
 
-            if($(dom)[0].files[0].size > max_size) {
-                swal('图片文件最大: '+max_size_str,"","error");
-                return false;
-            }
+                if($(dom)[0].files[0].size > max_size) {
+                    swal('图片文件最大: '+max_size_str,"","error");
+                    return false;
+                }
 
-        }
-        else if(filename && filename.length>0){
-            $(dom).val('');
-            swal('支持的图片类型为. (jpeg,jpg,png,gif,svg,bmp,tiff)',"","error");
-        }
-        // $currentDom = $(dom).prev();
-        $basic.formPost($(dom).parent().parent(),$host.file_url+'/user/'+userId+'/image?imageType=4',function(data){
-            if(data.success){
-                console.log(data);
-                // $($currentDom.children()[0]).attr("src",'/api/image/'+data.imageId);
-                // $scope.img = data.imageId;
-            }else{
-                swal('上传图片失败',"","error");
             }
-        },function(error){
-            swal('服务器内部错误',"","error");
-        })
+            else if(filename && filename.length>0){
+                $(dom).val('');
+                swal('支持的图片类型为. (jpeg,jpg,png,gif,svg,bmp,tiff)',"","error");
+            }
+            // $currentDom = $(dom).prev();
+            $basic.formPost($(dom).parent().parent(),$host.file_url+'/user/'+userId+'/image?imageType=4',function(data){
+                if(data.success){
+                    console.log(data);
+                    var imageId=data.imageId;
+                    // $($currentDom.children()[0]).attr("src",'/api/image/'+data.imageId);
+                    // $scope.img = data.imageId;
+                    // var imgB=document.getElementById("imgBox");
 
-    };
+                    $basic.post($host.file_url+"/car/"+$scope.carPicture_carId+"/vin/"+$scope.vin+"/storageImage",{
+                        "username": sessionStorage.getItem("userName"),
+                        "userId": userId,
+                        "userType": sessionStorage.getItem("userType"),
+                        "url": imageId
+                    }).then(function (data) {
+                        if(data.success==true){
+                            var div=$("<div>").addClass("storage_car_picture col s3 vc-center  p0 grey white-text");
+                            var imgEle=$("<img>");
+                            imgEle.addClass("responsive-img");
+                            imgEle.attr("src",$host.file_url+"/user/"+userId+'/image/'+imageId);
+                            // imgEle.setAttribute("src",$host.file_url+'/api/image/'+data.imageId);
+                            imgEle.appendTo(div);
+                            // div.appendChild(imgEle);
+                            div.appendTo($(".storage_car_picture_wrap"));
+                        }
+                    })
+                    // .appendChild(div)
+                }else{
+                    swal('上传图片失败',"","error");
+                }
+            },function(error){
+                swal('服务器内部错误',"","error");
+            })
+
+        };
+
     // 存放位置联动查询--行
     $scope.changeStorageId=function (val){
         $basic.get($host.api_url+"/storageParking?storageId="+val).then(function (data) {
@@ -190,10 +212,17 @@ storage_controller.controller("Storage_car_Controller",["$scope","$host","$basic
         console.log(obj_car);
        $basic.post($host.api_url+"/user/"+userId+"/carStorageRel",obj_car).then(function (data) {
            if(data.success==true){
-               swal("新增成功","","success");
+               // swal("新增成功","","success");
                // $("#newStorage_car").modal("close");
-               $('ul.tabs').tabs('select_tab', 'test2');
+               // $('ul.tabs').tabs('select_tab', 'test2');
+               $('ul.tabs li a').removeClass("active");
+                $(".tab_box").removeClass("active");
+               $(".tab_box").hide();
+               $('ul.tabs li.test2 a').addClass("active");
+               $("#test2").addClass("active");
+               $("#test2").show();
                searchAll();
+               $scope.carPicture_carId=data.id;
            }else {
                 swal(data.msg,"","error")
            }
