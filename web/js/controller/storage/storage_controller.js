@@ -65,7 +65,7 @@ storage_controller.controller("Storage_car_Controller",["$scope","$host","$basic
             swal('支持的图片类型为. (jpeg,jpg,png,gif,svg,bmp,tiff)',"","error");
         }
         // $currentDom = $(dom).prev();
-        $basic.formPost($(dom).parent().parent(),'/admin/'+userId+'/image?type='+4,function(data){
+        $basic.formPost($(dom).parent().parent(),$host.file_url+'/user/'+userId+'/image?imageType=4',function(data){
             if(data.success){
                 console.log(data);
                 // $($currentDom.children()[0]).attr("src",'/api/image/'+data.imageId);
