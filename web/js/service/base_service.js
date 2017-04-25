@@ -32,3 +32,28 @@ baseService.factory("$urlMethod",function () {
     };
     return _this
 });
+baseService.factory("service_storage_parking",function () {
+    var storageParking=function (pk) {
+        var parkingArray =[];
+        for(i=0;i<pk.length;i++){
+            for(j=0;j<parkingArray.length;){
+                if(parkingArray[j].row == pk[i].row){
+                    break;
+                }else{
+                    j++;
+                }
+            }
+            if(j==parkingArray.length){
+                parkingArray.push({row:pk[i].row,col:[{col:pk[i].col,carId:pk[i].car_id,id:pk[i].id,status:pk[i].parking_status}]})
+            }else{
+                parkingArray[j].col.push({col:pk[i].col,carId:pk[i].car_id,id:pk[i].id,status:pk[i].parking_status});
+            }
+        }
+        console.log(parkingArray);
+        return parkingArray;
+
+    };
+    return{
+        storage_parking:storageParking
+    }
+});

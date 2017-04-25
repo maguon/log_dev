@@ -398,11 +398,16 @@ input[type=text]{
 .min-width-2{
     min-width: 130px;
 }
-.move_box{
+.col.move_box{
+    position: absolute;
+    left: 0;
+    top:100%;
+    z-index: 100;
     border: 1px solid #b0bec5;
     border-radius: 5px;
     padding: 0.75rem 0;
     display: none;
+    background: white;
 }
 .move_box i{
     cursor: pointer;
