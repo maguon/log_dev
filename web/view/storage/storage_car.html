@@ -174,7 +174,7 @@
                                                     <!--<img  class="responsive-img" src="" alt="">-->
                                                 </div>
                                                 <div ng-repeat="el in imgArr" class="storage_car_picture col s3 vc-center  p0 grey white-text">
-                                                    <img ng-src="el" class="responsive-img">
+                                                    <img ng-src="{{el.src}}" class="responsive-img">
                                                 </div>
                                                 </form>
                                             </div>
@@ -430,17 +430,31 @@
                                             </div>
                                         </div>
                                         <div id="look_car_img" class="col s12 tab_box">
-                                            <div class="row">
-                                                <div class="col s12 valign-wrapper p0" style="position: relative">
+                                            <div class="row no-marBottom">
+                                                <div class="col s12 valign-wrapper " style="position: relative">
                                                     <p class="col s1-0 min-width-2 left-align p0">
                                                         <span style="color: red">*</span>
                                                         车辆照片:</p>
-                                                    <div class=" col s9-0 p0" >
-                                                        <div class="storage_car_picture col s3 vc-center grey white-text">
-                                                            <span>+</span>
-                                                            <!--<img  class="responsive-img" src="" alt="">-->
-                                                        </div>
+                                                    <div class="storage_car_picture_wrap col s9-0 p0" >
+                                                        <form name="uploadImageForm" class="uploadImageForm">
+                                                            <div class="storage_car_picture col s3 vc-center  p0 grey white-text">
+                                                                <input name="image" type="file" onchange="angular.element(this).scope().uploadBrandImage(this)" max_size="4M">
+
+                                                                <!--<input type="file" truck-upload id="img" multiple >-->
+                                                                +
+                                                                <!--<img  class="responsive-img" src="" alt="">-->
+                                                            </div>
+                                                            <div ng-repeat="el in imgArr" class="storage_car_picture col s3 vc-center  p0 grey white-text">
+                                                                <img ng-src="{{el.src}}" class="responsive-img">
+                                                            </div>
+                                                        </form>
                                                     </div>
+                                                </div>
+                                                <div class="divider" style="background: #00bcd4;height: 2px;"></div>
+                                                <div class="modal-footer vc-center">
+                                                    <a  class=" modal-action modal-close waves-effect waves-light materialize-red lighten-1 btn" style="margin-left: 10px" >
+                                                        <i class="mdi mdi-close"></i>
+                                                    </a>
                                                 </div>
                                             </div>
                                         </div>
