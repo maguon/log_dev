@@ -11,3 +11,17 @@ CommonFilter.filter("ptime",function () {
         return time;
     }
 });
+CommonFilter.filter("formdate",function () {
+    return function (input) {
+        var date = new Date(input);
+        var new_date;
+        var Y = date.getFullYear() + '-';
+        var M = (date.getMonth()+1 < 10 ? '0'+(date.getMonth()+1) : date.getMonth()+1) + '-';
+        var D = (date.getDate()<10 ?'0'+(date.getDate())+' ':date.getDate()+' ');
+        var h = date.getHours() + ':';
+        var m = date.getMinutes() + ':';
+        var s = date.getSeconds();
+        new_date=Y+M+D+h+m+s;
+        return new_date
+    }
+});

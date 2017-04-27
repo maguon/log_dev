@@ -1,9 +1,7 @@
-var storage_controller=angular.module("storage_controller",[]);/**
+var storage_controller=angular.module("storage_controller",[]);
 
- * Created by ASUS on 2017/4/14.
- */
 storage_controller.controller("Storage_car_Controller",["$scope","$host","$basic","$baseService","service_storage_parking",function ($scope,$host,$basic,$baseService,service_storage_parking) {
-    $scope.modelId  =0;
+    $scope.curruntId=0;
     var userId=sessionStorage.getItem("userId");
     var searchAll=function () {
         $basic.get($host.api_url+"/user/"+userId+"/car").then(function (data) {
@@ -62,15 +60,15 @@ storage_controller.controller("Storage_car_Controller",["$scope","$host","$basic
             $(".modal").modal({
                 height:500
             });
-        $("#newStorage_car").modal("open");
+            $("#newStorage_car").modal("open");
 
     };
     // 图片上传
         $scope.imgArr=[];
         $scope.uploadBrandImage=function (dom) {
             var filename = $(dom).val();
-            // console.log($(dom)[0].files[0].size);
-            if((/\.(jpe?g|png|gif|svg|bmp|tiff?)$/i).test(filename)) {
+            console.log($(dom).val());
+            if((/\.(jpe?g|png|gif|svg|bmp|tiff?)$/i).test(filename)){
                 //check size
                 //$file_input[0].files[0].size
                 var max_size_str = $(dom).attr('max_size');
@@ -152,22 +150,30 @@ storage_controller.controller("Storage_car_Controller",["$scope","$host","$basic
         };
 
     // 车辆型号联动查询
-    $scope.changeMakeId=function (val,id) {
+    $scope.changeMakeId=function (val) {
         // console.log(val);
 
-        $basic.get($host.api_url+"/carMake/"+val+"/carModel").then(function (data) {
-            if(data.success==true){
-                $scope.carModelName=data.result;
-                $scope.self_car.model_id = $scope.modelId;
-                // setTimeout($scope.look_model_id=id,2000);
 
-                // console.log(id);
-                // $scope.look_model_id=id;
+            if($scope.curruntId==val){
 
             }else {
-                swal(data.msg,"","error")
+                $scope.curruntId=val;
+                $basic.get($host.api_url+"/carMake/"+val+"/carModel").then(function (data) {
+                    if(data.success==true){
+                        $scope.carModelName=data.result;
+                        // $scope.self_car.model_id = $scope.modelId;
+                        // setTimeout($scope.look_model_id=id,2000);
+
+                        // console.log(id);
+                        // $scope.look_model_id=id;
+
+                    }else {
+                        swal(data.msg,"","error")
+                    }
+                })
             }
-        })
+
+
     };
     $scope.color=config_color;
     // modelId全局变量
@@ -193,6 +199,7 @@ storage_controller.controller("Storage_car_Controller",["$scope","$host","$basic
                 "parkingId":$scope.parking_id,
                 "planOutTime": $scope.plan_out_time
             };
+
             // console.log(obj_car);
             $basic.post($host.api_url+"/user/"+userId+"/carStorageRel",obj_car).then(function (data) {
                 if(data.success==true){
@@ -243,18 +250,24 @@ storage_controller.controller("Storage_car_Controller",["$scope","$host","$basic
         );
     };
     // 车位转移
-    $scope.changeStorageCar=function (val) {
+    $scope.changeStorageCar=function (val,id,row,col){
         $(".modal").modal();
         $("#change_storageCar").modal("open");
+        $scope.now_row=row;
+        $scope.now_col=col;
+        $scope.move_carId=id;
         $basic.get($host.api_url+"/storageParking?storageId="+val).then(function (data) {
             if (data.success == true) {
-                $scope.move_storageParking = data.result;
-                $scope.move_parkingArray=service_storage_parking.storage_parking($scope.move_storageParking );
+                $scope.self_storageParking=data.result;
+                $scope.garageParkingArray=service_storage_parking.storage_parking($scope.self_storageParking);
+                $scope.ageParkingCol=$scope.garageParkingArray[0].col
+                // console.log($scope.garageParkingArray)
 
             }
         })
-
     };
+
+
     // 车辆照片跳转
     $scope.look_car_img=function () {
         $('ul.tabs li a').removeClass("active");
@@ -275,7 +288,12 @@ storage_controller.controller("Storage_car_Controller",["$scope","$host","$basic
     // };
     $scope.lookStorageCar=function (val) {
         $scope.submitted=false;
-        // console.log(val);
+        // 照片清空
+        $scope.imgArr=[];
+        // 预览详情照片
+        $scope.storage_imageBox=[];
+
+        console.log(val);
         $(".modal").modal({
             // dismissible: false
         });
@@ -290,38 +308,54 @@ storage_controller.controller("Storage_car_Controller",["$scope","$host","$basic
             right: "493px",
             left: "0px"
         });
-        $basic.get($host.api_url+"/user/"+userId+"/car?carId="+val).then(function (data) {
-            if(data.success==true){
 
+        $scope.Picture_carId=val;
+
+        $basic.get($host.record_url+"/user/"+userId+"/car/"+val+"/record").then(function (data) {
+            if(data.success==true){
                 console.log(data);
-                $scope.modelId = data.result[0].model_id;
-                $scope.self_car=data.result[0];
-                console.log(data.result[0]);
-                // modelID赋值
-                $scope.look_make_id=$scope.self_car.make_id,
-                $scope.changeMakeId($scope.look_make_id);
-                $scope.look_model_id=$scope.self_car.model_id,
-                console.log($scope.look_model_id);
-                $("#look_model_name").val($scope.look_model_id);
-                // $scope.changeModelId(data.re)
-                $scope.look_create_time=$baseService.formDate($scope.self_car.created_on);
-                $scope.look_car_color=$scope.self_car.colour;
-                $scope.look_engineNum=$scope.self_car.engine_num;
-                $scope.look_storageName=$scope.self_car.storage_name;
-                $scope.look_row=$scope.self_car.row;
-                $scope.look_col=$scope.self_car.col;
-                $scope.look_plan_out_time=$baseService.formDate($scope.self_car.plan_out_time);
-                // 车辆id
-                $scope.look_car_id=$scope.self_car.id
-                
-                $scope.remark=$scope.self_car.remark;
+                $scope.operating_record=data.result[0];
+                $scope.comment=$scope.operating_record.comment;
+                $scope.storage_image=$scope.operating_record.storage_image;
+                for(var  i in $scope.storage_image ){
+                    $scope.storage_imageBox.push({src:$host.file_url+'/image/'+$scope.storage_image[i].url});
+                }
+
+                // $scope.imgArr.push({src:$host.file_url+'/image/'+imageId});
             }else {
                 swal(data.msg,"","error")
             }
-        })
+        });
+            $basic.get($host.api_url+"/user/"+userId+"/car?carId="+val).then(function (data) {
+                if(data.success==true){
+                    $scope.modelId = data.result[0].model_id;
+                    $scope.self_car=data.result[0];
+                    console.log(data.result[0]);
+                    // modelID赋值
+                    $scope.look_make_id=$scope.self_car.make_id,
+                        $scope.changeMakeId($scope.look_make_id);
+                    $scope.look_model_id=$scope.self_car.model_id,
+                        console.log($scope.look_model_id);
+                    // $("#look_model_name").val($scope.look_model_id);
+                    // $scope.changeModelId(data.re)
+                    $scope.look_create_time=$baseService.formDate($scope.self_car.pro_date);
+                    // $scope.look_car_color=$scope.self_car.colour;
+                    // $scope.look_engineNum=$scope.self_car.engine_num;
+                    $scope.look_storageName=$scope.self_car.storage_name;
+                    $scope.look_row=$scope.self_car.row;
+                    $scope.look_col=$scope.self_car.col;
+                    // $scope.look_plan_out_time=$baseService.formDate($scope.self_car.plan_out_time);
+                    // 车辆id
+                    $scope.look_car_id=$scope.self_car.id;
+                    // $scope.remark=$scope.self_car.remark;
+                }else {
+                    swal(data.msg,"","error")
+                }
+            })
+
     };
     // 修改仓库详情
-    $scope.submitForm=function (isValid,id) {
+    $scope.submitForm=function (isValid,id,r_id) {
         $scope.submitted=true;
         var obj={
             "vin":$scope.self_car.vin,
@@ -329,17 +363,25 @@ storage_controller.controller("Storage_car_Controller",["$scope","$host","$basic
             "makeName":$("#look_makecarName").find("option:selected").text(),
             "modelId": $scope.self_car.model_id,
             "modelName":$("#look_model_name").find("option:selected").text() ,
-            "proDate":$scope.look_create_time,
-            "colour": $scope.look_car_color,
-            "engineNum": $scope.look_engineNum,
-            "remark": $scope.remark
+            "proDate":$scope.self_car.pro_date,
+            "colour":$scope.self_car.colour,
+            "engineNum": $scope.self_car.engine_num,
+            "remark": $scope.self_car.remark
         };
         console.log(obj,id);
         if(isValid){
-
+            // 修改计划出库时间
+            $basic.put($host.api_url+"/user/"+userId+"/carStorageRel/"+r_id+"/planOutTime",{
+                "planOutTime": $scope.self_car.plan_out_time
+            }).then(function (data) {
+                console.log(data)
+            });
+            // 修改仓库信息
             $basic.put($host.api_url+"/user/"+userId+"/car/"+id,obj).then(function (data) {
                 if(data.success==true){
-                    swal("修改成功","","success")
+                    swal("修改成功","","success");
+                    $("#look_StorageCar").modal("close");
+                    searchAll();
                 }else {
                     swal(data.msg,"","error")
                 }
@@ -368,27 +410,41 @@ storage_controller.controller("Storage_car_Controller",["$scope","$host","$basic
             $(".move_box").attr("flag",true);
 
         }
-
     };
     $scope.close_move_box=function () {
         $(".move_box").hide();
         $(".move_box").attr("flag",true);
     };
     // 移动位置
-    $scope.move_parking=function (parkingId,carId) {
-        if(parkingId!=null){
-            $basic.put($host.api_url+"/user/"+userId+"/storageParking/"+parkingId,{
-                carId:carId
-            }).then(function (data) {
-                if (data.success == true) {
-                    swal("移位成功","","success");
-                    searchAll();
-                    $("#look_StorageCar").modal("close");
-                }else {
-                    swal(data.msg,"","error")
+    $scope.move_parking=function (parkingId) {
+        // console.log(parkingId,$scope.move_carId);
+        swal({
+                title: "该车辆确定移位?",
+                text: "",
+                type: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#DD6B55",
+                confirmButtonText: "确定",
+                cancelButtonText:"取消",
+                closeOnConfirm: false
+            },
+            function(){
+                if(parkingId!=null){
+                    $basic.put($host.api_url+"/user/"+userId+"/storageParking/"+parkingId,{
+                        carId:$scope.move_carId
+                    }).then(function (data) {
+                        if (data.success == true) {
+                            swal("移位成功","","success");
+                            searchAll();
+                            $("#change_storageCar").modal("close");
+                        }else {
+                            swal(data.msg,"","error")
+                        }
+                    })
                 }
-            })
-        }
+            }
+            )
+
 
     };
     // 车辆出库
