@@ -3,6 +3,7 @@ var storage_controller=angular.module("storage_controller",[]);/**
  * Created by ASUS on 2017/4/14.
  */
 storage_controller.controller("Storage_car_Controller",["$scope","$host","$basic","$baseService","service_storage_parking",function ($scope,$host,$basic,$baseService,service_storage_parking) {
+    $scope.modelId  =0;
     var userId=sessionStorage.getItem("userId");
     var searchAll=function () {
         $basic.get($host.api_url+"/user/"+userId+"/car").then(function (data) {
@@ -48,7 +49,8 @@ storage_controller.controller("Storage_car_Controller",["$scope","$host","$basic
             $scope.engineNum="";
             $scope.remark="";
             $scope.storage_name="";
-
+            // 照片清空
+            $scope.imgArr=[];
             // 车辆型号清空
             $scope.carModelName="";
             // 存放位置清空
@@ -150,20 +152,29 @@ storage_controller.controller("Storage_car_Controller",["$scope","$host","$basic
         };
 
     // 车辆型号联动查询
-    $scope.changeMakeId=function (val) {
+    $scope.changeMakeId=function (val,id) {
         // console.log(val);
 
         $basic.get($host.api_url+"/carMake/"+val+"/carModel").then(function (data) {
             if(data.success==true){
                 $scope.carModelName=data.result;
+                $scope.self_car.model_id = $scope.modelId;
+                // setTimeout($scope.look_model_id=id,2000);
+
+                // console.log(id);
+                // $scope.look_model_id=id;
+
             }else {
                 swal(data.msg,"","error")
             }
         })
     };
     $scope.color=config_color;
+    // modelId全局变量
+
+    $scope.change_model_id="";
     // 新增信息
-    $scope.submitForm=function (isValid) {
+    $scope.newsubmitForm=function (isValid) {
         $scope.submitted=true;
         if(isValid){
             var obj_car={
@@ -244,10 +255,29 @@ storage_controller.controller("Storage_car_Controller",["$scope","$host","$basic
         })
 
     };
+    // 车辆照片跳转
+    $scope.look_car_img=function () {
+        $('ul.tabs li a').removeClass("active");
+        $(".tab_box").removeClass("active");
+        $(".tab_box").hide();
+        $('ul.tabs li.look_car_img a').addClass("active");
+        $("#look_car_img").addClass("active");
+        $("#look_car_img").show();
+    };
+
+
     // 仓库车辆详情
+
+
+    // 关闭模态按钮
+    // $scope.close_storageCar=function () {
+    //     searchAll();
+    // };
     $scope.lookStorageCar=function (val) {
+        $scope.submitted=false;
         // console.log(val);
         $(".modal").modal({
+            // dismissible: false
         });
         $("#look_StorageCar").modal("open");
         $('ul.tabs li a').removeClass("active");
@@ -256,11 +286,24 @@ storage_controller.controller("Storage_car_Controller",["$scope","$host","$basic
         $('ul.tabs li.look_msg a').addClass("active");
         $("#look_msg").addClass("active");
         $("#look_msg").show();
+        $(".indicator").css({
+            right: "493px",
+            left: "0px"
+        });
         $basic.get($host.api_url+"/user/"+userId+"/car?carId="+val).then(function (data) {
             if(data.success==true){
+
                 console.log(data);
+                $scope.modelId = data.result[0].model_id;
                 $scope.self_car=data.result[0];
-                $scope.changeMakeId($scope.self_car.make_id);
+                console.log(data.result[0]);
+                // modelID赋值
+                $scope.look_make_id=$scope.self_car.make_id,
+                $scope.changeMakeId($scope.look_make_id);
+                $scope.look_model_id=$scope.self_car.model_id,
+                console.log($scope.look_model_id);
+                $("#look_model_name").val($scope.look_model_id);
+                // $scope.changeModelId(data.re)
                 $scope.look_create_time=$baseService.formDate($scope.self_car.created_on);
                 $scope.look_car_color=$scope.self_car.colour;
                 $scope.look_engineNum=$scope.self_car.engine_num;
@@ -278,22 +321,32 @@ storage_controller.controller("Storage_car_Controller",["$scope","$host","$basic
         })
     };
     // 修改仓库详情
-    $scope.changeOperatorForm=function (isValid,id) {
-        if(isValid){
-            
-        }
+    $scope.submitForm=function (isValid,id) {
+        $scope.submitted=true;
         var obj={
             "vin":$scope.self_car.vin,
             "makeId": $scope.self_car.make_id,
-            "makeName":$scope.self_car.make_name,
-            "modelId": 0,
-            "modelName": "string",
+            "makeName":$("#look_makecarName").find("option:selected").text(),
+            "modelId": $scope.self_car.model_id,
+            "modelName":$("#look_model_name").find("option:selected").text() ,
             "proDate":$scope.look_create_time,
             "colour": $scope.look_car_color,
             "engineNum": $scope.look_engineNum,
             "remark": $scope.remark
         };
         console.log(obj,id);
+        if(isValid){
+
+            $basic.put($host.api_url+"/user/"+userId+"/car/"+id,obj).then(function (data) {
+                if(data.success==true){
+                    swal("修改成功","","success")
+                }else {
+                    swal(data.msg,"","error")
+                }
+            });
+
+        }
+
         // $basic.put($host.api_url+"/user/"+userId+"/car/"+id,obj).then(function (data) {
         //
         // })
@@ -421,6 +474,7 @@ storage_controller.controller("storageStoreController",["$scope","$host","$basic
                 $basic.get($host.api_url+"/carMake").then(function (data) {
                     if(data.success==true){
                         $scope.makecarName=data.result;
+                        console.log($scope.makecarName)
                     }else {
                         swal(data.msg,"","error");
                     }
