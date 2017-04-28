@@ -377,6 +377,33 @@ commonDirective.directive("addBrandModel",function () {
         }
     }
 });
+
+// 时间格式过滤指令
+commonDirective.directive("formDate",function () {
+    return{
+        restrict:"A",
+        require:"ngModel",
+        link:function(scope,elem,attr,ngModelCtr) {
+            ngModelCtr.$formatters.push(function(modelValue){
+                var date = new Date(modelValue);
+                var new_date;
+                var Y = date.getFullYear() + '-';
+                var M = (date.getMonth()+1 < 10 ? '0'+(date.getMonth()+1) : date.getMonth()+1) + '-';
+                var D = (date.getDate()<10 ?'0'+(date.getDate())+' ':date.getDate()+' ');
+                var h = date.getHours() + ':';
+                var m = date.getMinutes() + ':';
+                var s = date.getSeconds();
+                new_date=Y+M+D;
+                if(typeof modelValue != "undefined"){
+                    //返回字符串给view,不改变模型值
+                    return new_date;
+                }
+            })
+
+        }
+    }
+
+});
 commonDirective.directive("calendar",function () {
     return{
         restrict:"EA",

@@ -31,7 +31,7 @@
                                     </ul>
                                 </div>
                                 <div id="test1" class="col s12 tab_box">
-                                    <form name="newStorage_carForm" ng-submit="submitForm(newStorage_carForm.$valid)" novalidate>
+                                    <form name="newStorage_carForm" ng-submit="newsubmitForm(newStorage_carForm.$valid)" novalidate>
                                     <div class="row" style="margin-top: 40px">
                                         <div class="row "  >
                                             <div class="col s4 valign-wrapper" ng-class="{ 'has-error':newStorage_carForm.win.$invalid&&submitted }">
@@ -174,7 +174,7 @@
                                                     <!--<img  class="responsive-img" src="" alt="">-->
                                                 </div>
                                                 <div ng-repeat="el in imgArr" class="storage_car_picture col s3 vc-center  p0 grey white-text">
-                                                    <img ng-src="el" class="responsive-img">
+                                                    <img ng-src="{{el.src}}" class="responsive-img">
                                                 </div>
                                                 </form>
                                             </div>
@@ -230,15 +230,16 @@
                                     <div class="row no-marBottom" ul-tabs>
                                         <div class="col s12">
                                             <ul class="tabs">
-                                                <li class="tab col s6  look_msg"><a  class="active " href="#look_msg">基本信息</a></li>
-                                                <li  class="tab  col s6 look_car_img"><a   href="#look_car_img">车辆照片</a></li>
+                                                <li class="tab col s6  look_msg" ng-click="look_msg()"><a  class="active " href="#look_msg">基本信息</a></li>
+                                                <li  class="tab  col s6 look_car_img" ng-click="look_car_img()"><a   href="#look_car_img">车辆照片</a></li>
                                             </ul>
                                         </div>
+
                                         <div id="look_msg" class="col s12 tab_box">
-                                            <form name="change_operatorForm" ng-submit="changeOperatorForm(change_operatorForm.$valid,self_car.id)" novalidate>
+                                            <form name="change_newStorage_carForm" ng-submit="submitForm(change_newStorage_carForm.$valid,self_car.id,self_car.r_id)" novalidate>
                                                 <div class="row" style="margin-top: 40px">
-                                                    <div class="row " ng-class="{ 'has-error':operatorForm.phone.$invalid&&submitted }" >
-                                                        <div class="col s4 valign-wrapper " style="padding: 0">
+                                                    <div class="row "  >
+                                                        <div class="col s4 valign-wrapper " style="padding: 0" ng-class="{ 'has-error':change_newStorage_carForm.look_win.$invalid&&submitted }">
                                                             <h6 class="col s4-0 min-width-2 " style="padding: 0">
                                                                 <span style="color: red">*</span>
                                                                 WIN码:</h6>
@@ -247,7 +248,7 @@
                                                         <div class="col s4 valign-wrapper ">
                                                             <h6 class="col s4-0 min-width-2 ">
                                                                 制造商:</h6>
-                                                            <select material-select watch name="look_makecarName"  class=" col s6-0" ng-change="changeMakeId(self_car.make_id)" ng-model="self_car.make_id" required>
+                                                            <select material-select watch  id="look_makecarName"  class=" col s6-0" ng-change="changeMakeId(look_make_id)" ng-model="self_car.make_id" required>
                                                                 <option value="" disabled selected>请选择</option>
                                                                 <option ng-repeat="el in makecarName" ng-value="el.id" >{{el.make_name}}</option>
                                                             </select>
@@ -255,30 +256,22 @@
                                                         <div class="col s4 valign-wrapper ">
                                                             <h6 class="col s4-0">
                                                                 型号:</h6>
-                                                            <select material-select watch name="look_model_name" class=" col s6-0"  ng-model="self_car.model_id" required>
+                                                            <select material-select watch name="look_model_name" id="look_model_name" class=" col s6-0"  ng-model="self_car.model_id" required >
                                                                 <option value="" disabled selected>请选择</option>
                                                                 <option  ng-repeat="el in carModelName" ng-value="el.id">{{el.model_name}}</option>
                                                             </select>
                                                         </div>
-                                                        <!--<h5 class="col s2-0">-->
-                                                        <!--<span style="color: red">*</span>-->
-                                                        <!--电话:</h5>-->
-                                                        <!--<input  id="phone" name="phone" autocomplete="off" ng-model="newUserName" type="text"   required class=" col s6-0">-->
-                                                        <!--<div class="col s2-0 sexBox" sex-change >-->
-                                                        <!--<i class="mdi mdi-human-male sex" sex="1" ></i>-->
-                                                        <!--<i class="mdi mdi-human-female " sex="0"  ng-class="{ 'sex' : new_companyForm.Tel.$invalid&&submitted }"></i>-->
-                                                        <!--</div>-->
                                                     </div>
-                                                    <div class="row " ng-class="{ 'has-error':operatorForm.phone.$invalid&&submitted }" >
+                                                    <div class="row "  >
                                                         <div class="col s4 valign-wrapper p0" style="position: relative ;">
                                                             <h6 class="col s4-0 min-width-2  p0" >
                                                                 生产日期:</h6>
-                                                            <input type="text" id="look_create_time" name="look_create_time" class="datepicker" autocomplete="off" ng-model="look_create_time" required   date><i class="mdi dataIcon mdi-table-large"></i>
+                                                            <input type="text" id="look_create_time" form-date   name="look_create_time" class="datepicker" autocomplete="off" ng-model="self_car.pro_date" required   date><i class="mdi dataIcon mdi-table-large"></i>
                                                         </div>
                                                         <div class="col s4 valign-wrapper">
                                                             <h6 class="col s4-0 min-width-2 ">
                                                                 颜色:</h6>
-                                                            <select material-select watch name="look_car_color" class=" col s6-0" ng-model="look_car_color" required>
+                                                            <select material-select watch name="look_car_color" class="browser-default col s6-0" ng-model="self_car.colour" required>
                                                                 <option value="" disabled selected>请选择</option>
                                                                 <option ng-repeat="el in color" ng-value="el.colorId" >{{el.colorName}}</option>
                                                             </select>
@@ -286,17 +279,14 @@
                                                         <div class="col s4 valign-wrapper ">
                                                             <h6 class="col s4-0 min-width">
                                                                 发动机号:</h6>
-                                                            <input  id="" name="look_engineNum" autocomplete="off" ng-model="look_engineNum" type="text"   required class=" col s6-0">
+                                                            <input  id="" name="look_engineNum" autocomplete="off" ng-model="self_car.engine_num" type="text"   required class=" col s6-0">
                                                         </div>
                                                     </div>
-                                                    <div class="row " ng-class="{ 'has-error':operatorForm.phone.$invalid&&submitted }" >
+                                                    <div class="row "  >
                                                         <div class="col s4 valign-wrapper p0" >
                                                             <h6 class="col s4-0 min-width-2 p0">
                                                                 <span style="color: red">*</span>
                                                                 存放仓库:</h6>
-                                                            <!--<select car-select name="look_storageName" disabled class="browser-default col s6-0" ng-change="changeStorageId(storage_name.id)" ng-options="o.storage_name for o in storageName" ng-model="look_storageName" required>-->
-                                                            <!--<option value="" disabled selected>请选择</option>-->
-                                                            <!--</select>-->
                                                             <input  id="look_storageName" disabled name="look_storageName" autocomplete="off" ng-model="look_storageName" type="text"   required class=" col s6-0">
                                                         </div>
                                                         <div class="col s8 valign-wrapper ">
@@ -307,22 +297,10 @@
                                                             </div>
                                                             <div class="col s8-0 valign-wrapper p0">
                                                                 <input  id="look_row" disabled name="look_row" autocomplete="off" ng-model="look_row" type="text"   required class="col s4-0">
-
-                                                                <!--<select car-select disabled name="look_col" class="browser-default  col s4-0" ng-model="look_col" required>-->
-                                                                <!--<option value="" disabled selected>请选择</option>-->
-                                                                <!--<option ng-value="1" >车管部</option>-->
-                                                                <!--<option ng-value="2" >仓储部</option>-->
-                                                                <!--</select>-->
                                                                 <span class="col s1-0">
                                                 排
                                             </span>
                                                                 <input  id="look_col" disabled name="look_col" autocomplete="off" ng-model="look_col" type="text"   required class="col s4-0">
-
-                                                                <!--<select car-select disabled name="look_row" class="browser-default col s4-0" ng-model="look_col" required>-->
-                                                                <!--<option value="" disabled selected>请选择</option>-->
-                                                                <!--<option ng-value="1" >车管部</option>-->
-                                                                <!--<option ng-value="2" >仓储部</option>-->
-                                                                <!--</select>-->
                                                                 <span class="col s1-0">
                                                 列
                                             </span>
@@ -330,7 +308,7 @@
 
                                                         </div>
                                                     </div>
-                                                    <div class="row " style="position: relative"  ng-class="{ 'has-error':operatorForm.phone.$invalid&&submitted }" >
+                                                    <div class="row " style="position: relative"  ng-class="{ 'has-error':change_newStorage_carForm.look_plan_out_time.$invalid&&submitted }" >
                                                         <!--<div class="col s6 valign-wrapper" style="position: relative">-->
                                                         <!--<h6 class="col s4-0 min-width ">-->
                                                         <!--<span style="color: red">*</span>-->
@@ -341,60 +319,60 @@
                                                             <h6 class="col s2-0 min-width-2 p0 " >
                                                                 <span style="color: red">*</span>
                                                                 计划出库时间:</h6>
-                                                            <input  id="look_plan_out_time" name="look_plan_out_time" autocomplete="off" ng-model="look_plan_out_time" type="text"   required class="datepicker col s8-0" date><i class="mdi dataIcon mdi-table-large"></i>
+                                                            <input  id="look_plan_out_time" form-date name="look_plan_out_time" autocomplete="off" ng-model="self_car.plan_out_time" type="text"   required class="datepicker col s8-0" date><i class="mdi dataIcon mdi-table-large"></i>
                                                         </div>
-                                                        <div class="col s6 valign-wrapper" style="position: relative">
-                                                            <a class="btn waves-effect waves-light" ng-click="out_storage(self_car.r_id,2,self_car.p_id,self_car.storage_id,self_car.id)" style="margin-right: 10px">立即出库</a>
-                                                            <a class="btn waves-effect waves-light" ng-click="move_box(self_car.storage_id)">移位</a>
-                                                        </div>
-                                                        <div class="col s12 valign-wrapper move_box" flag="true">
-                                                            <div class="col s12 valign-wrapper">
-                                                                <div class="col s3-0">
-                                                                    选择移动的位置:
-                                                                </div>
-                                                                <select material-select watch name="move_row" class=" col s2-0" ng-change="changeStorageRow(move_row,move_parkingArray)" ng-model="move_row" required>
-                                                                    <option value="" disabled selected>请选择</option>
-                                                                    <option ng-repeat="el in move_parkingArray" ng-value="el.row">{{el.row}}</option>
-                                                                </select>
-                                                                <div class="col s0-5">
-                                                                    排
-                                                                </div>
-                                                                <select material-select watch name="move_col_id" class=" col s2-0" ng-model="move_col_id" required>
-                                                                    <option value="" disabled selected>请选择</option>
-                                                                    <option ng-repeat="el in colArr" ng-value="el.id" ng-if="el.carId==0" >{{el.col}}</option>
-                                                                </select>
-                                                                <div class="col s0-5">
-                                                                    位
-                                                                </div>
-                                                                <div class="col s2-0  right-align ">
-                                                                    <i class="mdi mdi-check" ng-click="move_parking(move_col_id,look_car_id)"></i>
-                                                                    <i class="mdi mdi-close" ng-click="close_move_box()"></i>
-                                                                </div>
-                                                            </div>
+                                                        <!--<div class="col s6 valign-wrapper" style="position: relative">-->
+                                                            <!--<a class="btn waves-effect waves-light" ng-click="out_storage(self_car.r_id,2,self_car.p_id,self_car.storage_id,self_car.id)" style="margin-right: 10px">立即出库</a>-->
+                                                            <!--<a class="btn waves-effect waves-light" ng-click="move_box(self_car.storage_id)">移位</a>-->
+                                                        <!--</div>-->
+                                                        <!--<div class="col s12 valign-wrapper move_box" flag="true">-->
+                                                            <!--<div class="col s12 valign-wrapper">-->
+                                                                <!--<div class="col s3-0">-->
+                                                                    <!--选择移动的位置:-->
+                                                                <!--</div>-->
+                                                                <!--<select material-select watch name="move_row" class=" col s2-0" ng-change="changeStorageRow(move_row,move_parkingArray)" ng-model="move_row" required>-->
+                                                                    <!--<option value="" disabled selected>请选择</option>-->
+                                                                    <!--<option ng-repeat="el in move_parkingArray" ng-value="el.row">{{el.row}}</option>-->
+                                                                <!--</select>-->
+                                                                <!--<div class="col s0-5">-->
+                                                                    <!--排-->
+                                                                <!--</div>-->
+                                                                <!--<select material-select watch name="move_col_id" class=" col s2-0" ng-model="move_col_id" required>-->
+                                                                    <!--<option value="" disabled selected>请选择</option>-->
+                                                                    <!--<option ng-repeat="el in colArr" ng-value="el.id" ng-if="el.carId==0" >{{el.col}}</option>-->
+                                                                <!--</select>-->
+                                                                <!--<div class="col s0-5">-->
+                                                                    <!--位-->
+                                                                <!--</div>-->
+                                                                <!--<div class="col s2-0  right-align ">-->
+                                                                    <!--<i class="mdi mdi-check" ng-click="move_parking(move_col_id,look_car_id)"></i>-->
+                                                                    <!--<i class="mdi mdi-close" ng-click="close_move_box()"></i>-->
+                                                                <!--</div>-->
+                                                            <!--</div>-->
 
-                                                        </div>
+                                                        <!--</div>-->
                                                     </div>
 
                                                     <div class="row">
 
-                                                        <div class="col s12 valign-wrapper p0" style="position: relative;">
+                                                        <div ng-repeat="el in comment" class="col s12 valign-wrapper p0" style="position: relative;">
                                                             <p class="col s1-0 min-width-2 left-align p0" >
                                                                 <span style="color: red">*</span>
                                                                 操作记录:</p>
                                                             <p class=" col s9-0 p0" >
                                                         <span class="col s12 p0">
-                                                            <span>2017.04.12</span>
-                                                            <span>入库</span>
+                                                            <span ng-bind="el.timez|formdate"></span>
+                                                            <!--<span>入库</span>-->
                                                             <span>
-                                                                停发位置：
+                                                                操作内容：
                                                             </span>
-                                                            <span>
-                                                                b-13
+                                                            <span ng-bind="el.content">
+
                                                             </span>
                                                             <span>
                                                                 操作员：
                                                             </span>
-                                                            <span>
+                                                            <span ng-bind="el.name">
                                                                 王大锤
                                                             </span>
                                                         </span>
@@ -408,7 +386,7 @@
                                                                 <span style="color: red">*</span>
                                                                 备注:</p>
                                                             <p class=" col s9-0 p0" >
-                                                                <textarea id="look_remark" style="height: 100px" name="remark" class="col s12" ng-model="remark"></textarea>
+                                                                <textarea id="look_remark" style="height: 100px" name="remark" class="col s12" ng-model="self_car.remark"></textarea>
 
                                                             </p>
                                                         </div>
@@ -417,30 +395,46 @@
 
                                                 </div>
 
-
-                                            </form>
                                             <div class="divider" style="background: #00bcd4;height: 2px;"></div>
                                             <div class="modal-footer vc-center">
                                                 <button class="btn waves-light waves-effect" type="submit" name="action" >
                                                     <i class="mdi mdi-check"></i>
                                                 </button>
-                                                <a  class=" modal-action modal-close waves-effect waves-light materialize-red lighten-1 btn" style="margin-left: 10px" >
+                                                <a ng-click="close_storageCar()"  class=" modal-action modal-close waves-effect waves-light materialize-red lighten-1 btn" style="margin-left: 10px" >
                                                     <i class="mdi mdi-close"></i>
                                                 </a>
                                             </div>
+                                            </form>
                                         </div>
                                         <div id="look_car_img" class="col s12 tab_box">
-                                            <div class="row">
-                                                <div class="col s12 valign-wrapper p0" style="position: relative">
+                                            <div class="row no-marBottom">
+                                                <div class="col s12 valign-wrapper " style="position: relative">
                                                     <p class="col s1-0 min-width-2 left-align p0">
                                                         <span style="color: red">*</span>
                                                         车辆照片:</p>
-                                                    <div class=" col s9-0 p0" >
-                                                        <div class="storage_car_picture col s3 vc-center grey white-text">
-                                                            <span>+</span>
-                                                            <!--<img  class="responsive-img" src="" alt="">-->
-                                                        </div>
+                                                    <div class="storage_car_picture_wrap col s9-0 p0" >
+                                                        <form name="uploadImageForm" class="uploadImageForm">
+                                                            <div class="storage_car_picture col s3 vc-center  p0 grey white-text">
+                                                                <input name="image" type="file" onchange="angular.element(this).scope().uploadBrandImage(this)" max_size="4M">
+
+                                                                <!--<input type="file" truck-upload id="img" multiple >-->
+                                                                +
+                                                                <!--<img  class="responsive-img" src="" alt="">-->
+                                                            </div>
+                                                            <div ng-repeat="el in storage_imageBox" class="storage_car_picture col s3 vc-center  p0 grey white-text">
+                                                                <img ng-src="{{el.src}}" class="responsive-img">
+                                                            </div>
+                                                            <div ng-repeat="el in imgArr" class="storage_car_picture col s3 vc-center  p0 grey white-text">
+                                                                <img ng-src="{{el.src}}" class="responsive-img">
+                                                            </div>
+                                                        </form>
                                                     </div>
+                                                </div>
+                                                <div class="divider" style="background: #00bcd4;height: 2px;"></div>
+                                                <div class="modal-footer vc-center">
+                                                    <a  class=" modal-action modal-close waves-effect waves-light materialize-red lighten-1 btn" style="margin-left: 10px" >
+                                                        <i class="mdi mdi-close"></i>
+                                                    </a>
                                                 </div>
                                             </div>
                                         </div>
@@ -449,45 +443,86 @@
 
                         </div>
                         </div>
-                        <span><i class="mdi mdi-lock-open" ng-click="outStorageCar(el.r_id,2,el.p_id,el.storage_id,el.id)"></i></span>
-                        <span><i class="mdi mdi-close" ng-click="changeStorageCar(el.storage_id)"></i></span>
-                        <div id="change_storageCar" class="modal">
-                            <form name="change_moveForm" ng-submit="submit(change_moveForm.$valid)" novalidate>
-                            <div class="modal-content" >
-                                <div class="row">
-                                    <h5 class="col s12">该车辆要转移到：</h5>
-                                </div>
-                                <div class="row ">
-                                        <div class="col s12 valign-wrapper">
-                                            <div class="col s3-0">
-                                                选择移动的位置:
+                        <span><i class="mdi mdi-logout-variant" ng-click="outStorageCar(el.r_id,2,el.p_id,el.storage_id,el.id)"></i></span>
+                        <span><i class="mdi mdi-call-split" ng-click="changeStorageCar(el.storage_id,el.id,el.row,el.col)"></i></span>
+                        <div id="change_storageCar" class="modal ">
+                            <form name="look_garageForm" >
+                                <div class="modal-content">
+                                    <h4 class="center-align">车库仓储信息</h4>
+                                    <div class="divider"></div>
+                                    <div class=" col s12 garageWrapTitle vc-center">
+                                        <div class="col s8">
+                                            <div class="col s4">
+                                                停放车辆
+                                                <i class="mdi mdi-car blue-text"></i>
                                             </div>
-                                            <select material-select watch name="move_row" class=" col s2-0" ng-change="changeStorageRow(move_row,move_parkingArray)" ng-model="move_row" required>
-                                                <option value="" disabled selected>请选择</option>
-                                                <option ng-repeat="el in move_parkingArray" ng-value="el.row">{{el.row}}</option>
-                                            </select>
-                                            <div class="col s0-5">
-                                                排
+                                            <div class="col s4">
+                                                临近出库车辆
+                                                <i class=" mdi mdi-car red-text"></i>
                                             </div>
-                                            <select material-select watch name="move_col_id" class=" col s2-0" ng-model="move_col_id" required>
-                                                <option value="" disabled selected>请选择</option>
-                                                <option ng-repeat="el in colArr" ng-value="el.id" >{{el.col}}</option>
-                                            </select>
-                                            <div class="col s0-5">
-                                                位
+                                            <div class="col s4">
+                                                未停放车辆
+                                                <i class=" mdi mdi-car "></i>
                                             </div>
                                         </div>
+                                        <div class="col s4">
+                                            <div class="col s6">
+                                                当前位置
+                                                <span class="red-text" ng-bind="now_row"></span>
+                                                <span>排</span>
+                                                <span class="red-text" ng-bind="now_col"></span>
+                                                <span>列</span>
+                                            </div>
+                                            <!--<div class=" col s6">-->
+                                            <!--今日出库车辆-->
+                                            <!--<span class="red-text" ng-bind="self_store_storage.exports"></span>-->
+                                            <!--</div>-->
+                                            <!--<div class="">-->
+                                            <!--今日入库车辆-->
+                                            <!--<span></span>-->
+                                            <!--</div>-->
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="garageWrap">
+                                            <div class="garageBox ">
+                                                <!--<div class=" col s12 garageWrapTitle vc-center">-->
+                                                    <!--仓储情况-->
+                                                <!--</div>-->
+
+                                                <div class=" col s12 garage_list p0" >
+                                                    <div class="garage_row vc-center left"></div>
+                                                    <div class="garage_row vc-center left" ng-repeat="el in ageParkingCol">
+                                                        {{el.col}}
+                                                        <!--<i ng-if="getTime(els.plan_time)-newTime<'1000*60*60*24*5'" ng-class="{ 'red-text':newStorage_carForm.win.$invalid&&submitted }" class="red-text mdi mdi-car"></i>-->
+                                                    </div>
+                                                </div>
+                                                <div class="col s12  garage_list p0"  ng-repeat="el in garageParkingArray" >
+
+                                                    <div class="garage_row vc-center left">{{$index+1}}</div>
+                                                    <!--<div class="left" style="display: flex">-->
+                                                    <div class="garage_row vc-center left" ng-repeat="els in el.col track by $index" ng-class="{'present_place':el.row==now_row&&els.col==now_col}">
+                                                        <i ng-show="els.carId!=0&&els.plan_time==true" class=" mdi mdi-car red-text "></i>
+                                                        <i ng-show="els.carId!=0&&els.plan_time==false" class=" mdi mdi-car blue-text"></i>
+                                                        <i ng-show="els.carId==0" class=" mdi mdi-car " ng-click="move_parking(els.id,el.row,els.col)"></i>
+                                                        <!--<i ng-if="getTime(els.plan_time)-newTime<'1000*60*60*24*5'" ng-class="{ 'red-text':newStorage_carForm.win.$invalid&&submitted }" class="red-text mdi mdi-car"></i>-->
+                                                    </div>
+                                                    <!--</div>-->
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="divider" style="background: #00bcd4;height: 2px;"></div>
-                            <div class="modal-footer vc-center">
-                                <button class="btn waves-light waves-effect" type="submit" name="action" >
-                                    <i class="mdi mdi-check"></i>
-                                </button>
-                                <a  class=" modal-action modal-close waves-effect waves-light materialize-red lighten-1 btn" style="margin-left: 10px" >
-                                    <i class="mdi mdi-close"></i>
-                                </a>
-                            </div>
+                                <!--<div class="modal-footer vc-center">-->
+                                <!--<button class="btn waves-light waves-effect" type="submit" name="action" >-->
+                                <!--<i class="mdi mdi-check"></i>-->
+                                <!--</button>-->
+                                <!--<a  class=" modal-action modal-close waves-effect waves-light materialize-red lighten-1 btn" style="margin-left: 10px" >-->
+                                <!--<i class="mdi mdi-close"></i>-->
+                                <!--</a>-->
+
+                                <!--</div>-->
+                            </form>
                             <!--<div class="col s2-0  right-align ">-->
                                 <!--<i class="mdi mdi-check" ng-click="move_parking(move_col_id,look_car_id)"></i>-->
                                 <!--<i class="mdi mdi-close" ng-click="close_move_box()"></i>-->

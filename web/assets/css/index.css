@@ -433,3 +433,64 @@ input[type=text]{
     right: 0;
     cursor: pointer;
 }
+/*车辆仓储信息图*/
+.garageWrap{
+    width: 100%;
+    max-height: 500px;
+    border: 1px solid #00bcd4;
+    border-radius: 5px;
+    overflow-y: auto;
+    overflow-x: auto;
+}
+.garageWrap_storage{
+    width: 100%;
+    border: 1px solid #00bcd4;
+    border-radius: 5px;
+    overflow-y: auto;
+    overflow-x: auto;
+}
+.garageBox{
+     /*width:5050px;*/
+ }
+.garageWrapTitle{
+    height: 50px;
+}
+.garage_list{
+    display: flex;
+    width: auto;
+    height: 50px;
+}
+.garage_row {
+    min-width: 50px;
+    flex: 1;
+    height: 50px;
+    border-bottom: 1px solid #00bcd4;
+    border-right: 1px solid #00bcd4;
+    cursor: pointer;
+}
+.garage_row i{
+    font-size: 25px;
+    margin-right: 0;
+}
+.LookGarage{
+    display: none;
+}
+/*当前位置*/
+.present_place{
+    background:#84ffff;
+}
+.storage_storeTitle{
+    position: relative;
+}
+.storage_goback_btn{
+    position:absolute;
+    left: 0;
+    top: 0;
+}
+/*.garage_row_car{*/
+    /*flex: 1;*/
+    /*height: 50px;*/
+    /*border-bottom: 1px solid #00bcd4;*/
+    /*border-right: 1px solid #00bcd4;*/
+/*}*/
+
