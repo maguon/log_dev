@@ -69,16 +69,17 @@
     <div  class="LookGarage" id="LookGarage" class="modal modal-fixed-footer">
         <form name="look_garageForm"  ng-submit="look_submitForm(look_garageForm.$valid)" novalidate>
             <div class="modal-content">
-                <a class="btn waves-effect waves-light " ng-click="return()">
-                    返回
-                </a>
-                <h4 class="center-align">车库仓储信息</h4>
+                <div class="storage_storeTitle vc-center">
+                    <a class="storage_goback_btn btn waves-effect waves-light " ng-click="return()">
+                        返回
+                    </a>
+                    <h4>车库仓储信息</h4>
+                </div>
                 <div class="divider"></div>
-                <div class="row" style="padding: 0.75rem 0">
-                    <div class="row" >
+                <div class="row" style="padding: 0.75rem 0;margin: 0">
+                    <div class="row">
                         <p class="col s12"><span>仓库名称:</span><span ng-bind="self_store_storage.storage_name"></span></p>
                     </div>
-                    <div class="row">
                         <p class="col s3">
                             <span>车位:</span>
                             <span class="red-text" ng-bind="self_store_storage.row"></span>
@@ -97,52 +98,50 @@
                             <span>剩余车位:</span>
                             <span class="red-text" ng-bind="self_store_storage.pCount">5</span>
                         </p>
-                    </div>
                 </div>
+                <div class="divider" style="background: #00bcd4;height: 2px;"></div>
                 <div class="row">
-                    <div class="garageWrap">
+                    <div class=" col s12 garageWrapTitle vc-center">
+                        <div class="col s8">
+                            <div class="col s4">
+                                停放车辆
+                                <i class="mdi mdi-car blue-text"></i>
+                            </div>
+                            <div class="col s4">
+                                临近出库车辆
+                                <i class=" mdi mdi-car red-text"></i>
+                            </div>
+                            <div class="col s4">
+                                未停放车辆
+                                <i class=" mdi mdi-car "></i>
+                            </div>
+                        </div>
+                        <div class="col s4">
+                            <div class="col s6">
+                                今日入库车辆
+                                <span class="red-text" ng-bind="self_store_storage.imports"></span>
+                            </div>
+                            <div class=" col s6">
+                                今日出库车辆
+                                <span class="red-text" ng-bind="self_store_storage.exports"></span>
+                            </div>
+                            <!--<div class="">-->
+                            <!--今日入库车辆-->
+                            <!--<span></span>-->
+                            <!--</div>-->
+                        </div>
+                    </div>
+                    <div class="garageWrap_storage">
                         <div class="garageBox row " style="display: inline">
-                            <div class=" col s12 garageWrapTitle vc-center">
-                                仓储情况
-                            </div>
-                            <div class=" col s12 garageWrapTitle vc-center">
-                                <div class="col s8">
-                                    <div class="col s4">
-                                        停放车辆
-                                        <i class="mdi mdi-car blue-text"></i>
-                                    </div>
-                                    <div class="col s4">
-                                        临近出库车辆
-                                        <i class=" mdi mdi-car red-text"></i>
-                                    </div>
-                                    <div class="col s4">
-                                        未停放车辆
-                                        <i class=" mdi mdi-car "></i>
-                                    </div>
-                                </div>
-                                <div class="col s4">
-                                    <div class="col s6">
-                                        今日入库车辆
-                                        <span class="red-text" ng-bind="self_store_storage.imports"></span>
-                                    </div>
-                                    <div class=" col s6">
-                                        今日出库车辆
-                                        <span class="red-text" ng-bind="self_store_storage.exports"></span>
-                                    </div>
-                                    <!--<div class="">-->
-                                        <!--今日入库车辆-->
-                                        <!--<span></span>-->
-                                    <!--</div>-->
-                                </div>
-                            </div>
-                            <div class=" col s12 garage_list " >
+
+                            <div class=" col s12 garage_list p0" >
                                 <div class="garage_row vc-center left"></div>
                                 <div class="garage_row vc-center left" ng-repeat="el in ageParkingCol">
                                     {{el.col}}
                                     <!--<i ng-if="getTime(els.plan_time)-newTime<'1000*60*60*24*5'" ng-class="{ 'red-text':newStorage_carForm.win.$invalid&&submitted }" class="red-text mdi mdi-car"></i>-->
                                 </div>
                             </div>
-                            <div class="col s12  garage_list"  ng-repeat="el in garageParkingArray" >
+                            <div class="col s12  garage_list p0"  ng-repeat="el in garageParkingArray" >
 
                                 <div class="garage_row vc-center left">{{$index+1}}</div>
                                 <!--<div class="left" style="display: flex">-->

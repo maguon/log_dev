@@ -261,7 +261,7 @@ storage_controller.controller("Storage_car_Controller",["$scope","$host","$basic
                 $scope.self_storageParking=data.result;
                 $scope.garageParkingArray=service_storage_parking.storage_parking($scope.self_storageParking);
                 $scope.ageParkingCol=$scope.garageParkingArray[0].col
-                // console.log($scope.garageParkingArray)
+                console.log($scope.ageParkingCol,$scope.garageParkingArray)
 
             }
         })
@@ -416,10 +416,11 @@ storage_controller.controller("Storage_car_Controller",["$scope","$host","$basic
         $(".move_box").attr("flag",true);
     };
     // 移动位置
-    $scope.move_parking=function (parkingId) {
+    $scope.move_parking=function (parkingId,row,col) {
         // console.log(parkingId,$scope.move_carId);
+
         swal({
-                title: "该车辆确定移位?",
+                title: "该车辆确定移位到"+row+"排"+col+"列？",
                 text: "",
                 type: "warning",
                 showCancelButton: true,

@@ -445,65 +445,66 @@
                         </div>
                         <span><i class="mdi mdi-logout-variant" ng-click="outStorageCar(el.r_id,2,el.p_id,el.storage_id,el.id)"></i></span>
                         <span><i class="mdi mdi-call-split" ng-click="changeStorageCar(el.storage_id,el.id,el.row,el.col)"></i></span>
-                        <div id="change_storageCar" class="modal">
+                        <div id="change_storageCar" class="modal ">
                             <form name="look_garageForm" >
                                 <div class="modal-content">
                                     <h4 class="center-align">车库仓储信息</h4>
                                     <div class="divider"></div>
+                                    <div class=" col s12 garageWrapTitle vc-center">
+                                        <div class="col s8">
+                                            <div class="col s4">
+                                                停放车辆
+                                                <i class="mdi mdi-car blue-text"></i>
+                                            </div>
+                                            <div class="col s4">
+                                                临近出库车辆
+                                                <i class=" mdi mdi-car red-text"></i>
+                                            </div>
+                                            <div class="col s4">
+                                                未停放车辆
+                                                <i class=" mdi mdi-car "></i>
+                                            </div>
+                                        </div>
+                                        <div class="col s4">
+                                            <div class="col s6">
+                                                当前位置
+                                                <span class="red-text" ng-bind="now_row"></span>
+                                                <span>排</span>
+                                                <span class="red-text" ng-bind="now_col"></span>
+                                                <span>列</span>
+                                            </div>
+                                            <!--<div class=" col s6">-->
+                                            <!--今日出库车辆-->
+                                            <!--<span class="red-text" ng-bind="self_store_storage.exports"></span>-->
+                                            <!--</div>-->
+                                            <!--<div class="">-->
+                                            <!--今日入库车辆-->
+                                            <!--<span></span>-->
+                                            <!--</div>-->
+                                        </div>
+                                    </div>
                                     <div class="row">
                                         <div class="garageWrap">
-                                            <div class="garageBox row " style="display: inline">
-                                                <div class=" col s12 garageWrapTitle vc-center">
-                                                    仓储情况
-                                                </div>
-                                                <div class=" col s12 garageWrapTitle vc-center">
-                                                    <div class="col s8">
-                                                        <div class="col s4">
-                                                            停放车辆
-                                                            <i class="mdi mdi-car blue-text"></i>
-                                                        </div>
-                                                        <div class="col s4">
-                                                            临近出库车辆
-                                                            <i class=" mdi mdi-car red-text"></i>
-                                                        </div>
-                                                        <div class="col s4">
-                                                            未停放车辆
-                                                            <i class=" mdi mdi-car "></i>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col s4">
-                                                        <div class="col s6">
-                                                            当前位置
-                                                            <span class="red-text" ng-bind="now_row"></span>
-                                                            <span>排</span>
-                                                            <span class="red-text" ng-bind="now_col"></span>
-                                                            <span>列</span>
-                                                        </div>
-                                                        <!--<div class=" col s6">-->
-                                                            <!--今日出库车辆-->
-                                                            <!--<span class="red-text" ng-bind="self_store_storage.exports"></span>-->
-                                                        <!--</div>-->
-                                                        <!--<div class="">-->
-                                                        <!--今日入库车辆-->
-                                                        <!--<span></span>-->
-                                                        <!--</div>-->
-                                                    </div>
-                                                </div>
-                                                <div class=" col s12 garage_list " >
+                                            <div class="garageBox ">
+                                                <!--<div class=" col s12 garageWrapTitle vc-center">-->
+                                                    <!--仓储情况-->
+                                                <!--</div>-->
+
+                                                <div class=" col s12 garage_list p0" >
                                                     <div class="garage_row vc-center left"></div>
                                                     <div class="garage_row vc-center left" ng-repeat="el in ageParkingCol">
                                                         {{el.col}}
                                                         <!--<i ng-if="getTime(els.plan_time)-newTime<'1000*60*60*24*5'" ng-class="{ 'red-text':newStorage_carForm.win.$invalid&&submitted }" class="red-text mdi mdi-car"></i>-->
                                                     </div>
                                                 </div>
-                                                <div class="col s12  garage_list"  ng-repeat="el in garageParkingArray" >
+                                                <div class="col s12  garage_list p0"  ng-repeat="el in garageParkingArray" >
 
                                                     <div class="garage_row vc-center left">{{$index+1}}</div>
                                                     <!--<div class="left" style="display: flex">-->
-                                                    <div class="garage_row vc-center left" ng-repeat="els in el.col track by $index ">
-                                                        <i ng-show="els.carId!=0&&els.plan_time==true" class=" mdi mdi-car red-text"></i>
+                                                    <div class="garage_row vc-center left" ng-repeat="els in el.col track by $index" ng-class="{'present_place':el.row==now_row&&els.col==now_col}">
+                                                        <i ng-show="els.carId!=0&&els.plan_time==true" class=" mdi mdi-car red-text "></i>
                                                         <i ng-show="els.carId!=0&&els.plan_time==false" class=" mdi mdi-car blue-text"></i>
-                                                        <i ng-show="els.carId==0" class=" mdi mdi-car" ng-click="move_parking(els.id,els.carId)"></i>
+                                                        <i ng-show="els.carId==0" class=" mdi mdi-car " ng-click="move_parking(els.id,el.row,els.col)"></i>
                                                         <!--<i ng-if="getTime(els.plan_time)-newTime<'1000*60*60*24*5'" ng-class="{ 'red-text':newStorage_carForm.win.$invalid&&submitted }" class="red-text mdi mdi-car"></i>-->
                                                     </div>
                                                     <!--</div>-->
