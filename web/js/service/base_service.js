@@ -58,9 +58,9 @@ baseService.factory("service_storage_parking",function () {
             if(j==parkingArray.length){
 
                 // pk[i].plan_time-
-                parkingArray.push({row:pk[i].row,col:[{col:pk[i].col,carId:pk[i].car_id,id:pk[i].id,status:pk[i].parking_statu,plan_time:expiredFlag}]})
+                parkingArray.push({row:pk[i].row,col:[{col:pk[i].col,carId:pk[i].car_id,id:pk[i].id,status:pk[i].parking_statu,plan_time:expiredFlag,storage_name:pk[i].storage_name,storage_id:pk[i].storage_id}]})
             }else{
-                parkingArray[j].col.push({col:pk[i].col,carId:pk[i].car_id,id:pk[i].id,status:pk[i].parking_status,plan_time:expiredFlag});
+                parkingArray[j].col.push({col:pk[i].col,carId:pk[i].car_id,id:pk[i].id,status:pk[i].parking_status,plan_time:expiredFlag,storage_name:pk[i].storage_name,storage_id:pk[i].storage_id});
             }
 
         }

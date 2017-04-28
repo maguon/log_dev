@@ -1,4 +1,4 @@
-<div class="storage_store_Wrap" ng-controller="storageStoreController" >
+<div class="storage_store_Wrap" ng-controller="storage_store_Controller" >
     <div class="storage_store_subject">
         <div class="row searchBoxWrap ">
             <div class="col s3 valign-wrapper">
@@ -67,7 +67,6 @@
         </div>
     </div>
     <div  class="LookGarage" id="LookGarage" class="modal modal-fixed-footer">
-        <form name="look_garageForm"  ng-submit="look_submitForm(look_garageForm.$valid)" novalidate>
             <div class="modal-content">
                 <div class="storage_storeTitle vc-center">
                     <a class="storage_goback_btn btn waves-effect waves-light " ng-click="return()">
@@ -136,7 +135,7 @@
 
                             <div class=" col s12 garage_list p0" >
                                 <div class="garage_row vc-center left"></div>
-                                <div class="garage_row vc-center left" ng-repeat="el in ageParkingCol">
+                                <div class="garage_col vc-center left" ng-repeat="el in ageParkingCol">
                                     {{el.col}}
                                     <!--<i ng-if="getTime(els.plan_time)-newTime<'1000*60*60*24*5'" ng-class="{ 'red-text':newStorage_carForm.win.$invalid&&submitted }" class="red-text mdi mdi-car"></i>-->
                                 </div>
@@ -148,7 +147,7 @@
                                     <div class="garage_row vc-center left" ng-repeat="els in el.col track by $index ">
                                         <i ng-show="els.carId!=0&&els.plan_time==true" class=" mdi mdi-car red-text"></i>
                                         <i ng-show="els.carId!=0&&els.plan_time==false" class=" mdi mdi-car blue-text"></i>
-                                        <i ng-show="els.carId==0" class=" mdi mdi-car" ng-click="new_garage_parking()"></i>
+                                        <i ng-show="els.carId==0" class=" mdi mdi-car" ng-click="new_garage_parking(els.storage_name,els.storage_id,el.row,els.col,els.id)"></i>
                                         <!--<i ng-if="getTime(els.plan_time)-newTime<'1000*60*60*24*5'" ng-class="{ 'red-text':newStorage_carForm.win.$invalid&&submitted }" class="red-text mdi mdi-car"></i>-->
                                     </div>
                                 <!--</div>-->
@@ -195,14 +194,6 @@
                                                 <option value="" disabled selected>请选择</option>
                                             </select>
                                         </div>
-                                        <!--<h5 class="col s2-0">-->
-                                        <!--<span style="color: red">*</span>-->
-                                        <!--电话:</h5>-->
-                                        <!--<input  id="phone" name="phone" autocomplete="off" ng-model="newUserName" type="text"   required class=" col s6-0">-->
-                                        <!--<div class="col s2-0 sexBox" sex-change >-->
-                                        <!--<i class="mdi mdi-human-male sex" sex="1" ></i>-->
-                                        <!--<i class="mdi mdi-human-female " sex="0"  ng-class="{ 'sex' : new_companyForm.Tel.$invalid&&submitted }"></i>-->
-                                        <!--</div>-->
                                     </div>
                                     <div class="row" >
                                         <div class="col s4 valign-wrapper" style="position: relative" >
@@ -229,9 +220,8 @@
                                             <h6 class="col s4-0 min-width-2 ">
                                                 <span style="color: red">*</span>
                                                 存放仓库:</h6>
-                                            <select  material-select watch name="storageName" class=" col s6-0" ng-change="changeStorageId(storage_name.id)" ng-options="o.storage_name for o in storageName" ng-model="storage_name" required>
-                                                <option value="" disabled selected>请选择</option>
-                                            </select>
+                                            <input  disabled name="storageName" autocomplete="off" ng-model="private_storageName" type="text"   required class=" col s6-0">
+
                                         </div>
                                         <div class="col s8 valign-wrapper ">
                                             <div class="col s2-0 valign-wrapper min-width ">
@@ -240,19 +230,12 @@
                                                     存放车位:</h6>
                                             </div>
                                             <div class="col s8-0 valign-wrapper" style="padding: 0" ng-class="{ 'has-error':(newStorage_carForm.row.$invalid||newStorage_carForm.col_id.$invalid)&&submitted }">
-                                                <select material-select watch name="row" class="  col s4-0" ng-change="changeStorageRow(row,parkingArray)"  ng-model="row" required>
-                                                    <option value="" disabled selected>请选择</option>
-                                                    <option ng-repeat="el in parkingArray" ng-value="el.row" >{{el.row}}</option>
-                                                </select>
+                                                <input  disabled name="row" autocomplete="off" ng-model="private_row" type="text"   required class=" col s4-0">
                                                 <span class="col s1-0">
                                                 排
                                             </span>
-                                                <select material-select watch name="col_id" class=" col s4-0" ng-model="parking_id" required>
-                                                    <option value="" disabled selected>请选择</option>
-                                                    <option ng-repeat="el in colArr" ng-if="el.carId==0" ng-value="el.id" >{{el.col}}</option>
-                                                    <!--<option ng-repeat="el in colArr" ng-if="el.carId==0"   >{{el.col}}</option>-->
+                                                <input  disabled name="col" autocomplete="off" ng-model="private_col" type="text"   required class=" col s4-0">
 
-                                                </select>
                                                 <span class="col s1-0">
                                                 列
                                             </span>
@@ -286,35 +269,34 @@
                                             </p>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="divider" style="background: #00bcd4;height: 2px;"></div>
-                                <div class="modal-footer vc-center">
-                                    <button class="btn waves-light waves-effect" type="submit" name="action" >
-                                        <i class="mdi mdi-trending-neutral"></i>
-                                    </button>
-                                    <a  class=" modal-action modal-close waves-effect waves-light materialize-red lighten-1 btn" style="margin-left: 10px" >
-                                        <i class="mdi mdi-close"></i>
-                                    </a>
-                                </div>
-                            </form>
-                        </div>
-                        <div id="test2" class="col s12 tab_box">
-                            <div class="row no-marBottom">
-                                <div class="col s12 valign-wrapper " style="position: relative">
-                                    <p class="col s1-0 min-width-2 left-align p0">
-                                        <span style="color: red">*</span>
-                                        车辆照片:</p>
-                                    <div class="storage_car_picture_wrap col s9-0 p0" >
-                                        <form name="uploadImageForm" class="uploadImageForm">
-                                            <div class="storage_car_picture col s3 vc-center  p0 grey white-text">
-                                                <input name="image" type="file" onchange="angular.element(this).scope().uploadBrandImage(this)" max_size="4M">
+                                            </div>
+                                            <div class="divider" style="background: #00bcd4;height: 2px;"></div>
+                                            <div class="modal-footer vc-center">
+                                                <button class="btn waves-light waves-effect" type="submit" name="action" >
+                                                    <i class="mdi mdi-trending-neutral"></i>
+                                                </button>
+                                                <a  class=" modal-action modal-close waves-effect waves-light materialize-red lighten-1 btn" style="margin-left: 10px" >
+                                                    <i class="mdi mdi-close"></i>
+                                                </a>
+                                            </div>
+                                        </form>
+                                    </div>
+                                    <div id="test2" class="col s12 tab_box">
+                                        <div class="row no-marBottom">
+                                            <div class="col s12 valign-wrapper " style="position: relative">
+                                                <p class="col s1-0 min-width-2 left-align p0">
+                                                    <span style="color: red">*</span>
+                                                    车辆照片:</p>
+                                                <div class="storage_car_picture_wrap col s9-0 p0" >
+                                                    <form name="uploadImageForm" class="uploadImageForm">
+                                                        <div class="storage_car_picture col s3 vc-center  p0 grey white-text">
+                                                            <input name="image" type="file" onchange="angular.element(this).scope().uploadBrandImage(this)" max_size="4M">
 
-                                                <!--<input type="file" truck-upload id="img" multiple >-->
-                                                +
-                                                <!--<img  class="responsive-img" src="" alt="">-->
+                                                            <!--<input type="file" truck-upload id="img" multiple >-->
+                                                            +
+                                                            <!--<img  class="responsive-img" src="" alt="">-->
                                             </div>
                                             <div ng-repeat="el in imgArr" class="storage_car_picture col s3 vc-center  p0 grey white-text">
-                                                <span>{{el.src}}</span>
                                                 <img ng-src="{{el.src}}" class="responsive-img">
                                             </div>
                                         </form>
@@ -329,22 +311,9 @@
                             </div>
                         </div>
                     </div>
-
-                    <!--</div>-->
                 </div>
-
-
             </div>
-            <!--<div class="modal-footer vc-center">-->
-                <!--<button class="btn waves-light waves-effect" type="submit" name="action" >-->
-                    <!--<i class="mdi mdi-check"></i>-->
-                <!--</button>-->
-                <!--<a  class=" modal-action modal-close waves-effect waves-light materialize-red lighten-1 btn" style="margin-left: 10px" >-->
-                    <!--<i class="mdi mdi-close"></i>-->
-                <!--</a>-->
 
-            <!--</div>-->
-        </form>
 
     </div>
 </div>

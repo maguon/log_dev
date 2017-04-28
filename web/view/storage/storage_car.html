@@ -89,7 +89,7 @@
                                                 <h6 class="col s4-0 min-width-2 ">
                                                     <span style="color: red">*</span>
                                                     存放仓库:</h6>
-                                                <select  material-select watch name="storageName" class=" col s6-0" ng-change="changeStorageId(storage_name.id)" ng-options="o.storage_name for o in storageName" ng-model="storage_name" required>
+                                                <select  material-select watch name="storageName" class=" col s6-0" ng-change="changeStorageId(storage_name.id)" ng-options="o.storage_name for o in storageName|filter:{storage_status:'1'}" ng-model="storage_name" required>
                                                     <option value="" disabled selected>请选择</option>
                                                 </select>
                                             </div>
@@ -102,15 +102,15 @@
                                                 <div class="col s8-0 valign-wrapper" style="padding: 0" ng-class="{ 'has-error':(newStorage_carForm.row.$invalid||newStorage_carForm.col_id.$invalid)&&submitted }">
                                                     <select material-select watch name="row" class="  col s4-0" ng-change="changeStorageRow(row,parkingArray)"  ng-model="row" required>
                                                         <option value="" disabled selected>请选择</option>
-                                                        <option ng-repeat="el in parkingArray" ng-value="el.row" >{{el.row}}</option>
+                                                        <option ng-repeat="el in parkingArray"  ng-value="el.row" >{{el.row}}</option>
                                                     </select>
                                                     <span class="col s1-0">
                                                 排
                                             </span>
                                                     <select material-select watch name="col_id" class=" col s4-0" ng-model="parking_id" required>
                                                         <option value="" disabled selected>请选择</option>
-                                                        <option ng-repeat="el in colArr" ng-if="el.carId==0" ng-value="el.id" >{{el.col}}</option>
-                                                        <!--<option ng-repeat="el in colArr" ng-if="el.carId==0"   >{{el.col}}</option>-->
+                                                        <option ng-repeat="el in colArr" ng-if="el.carId==0"  ng-value="el.id" >{{el.col}}</option>
+                                                        <option ng-repeat="el in colArr" ng-if="el.carId!=0" disabled  >{{el.col}}</option>
 
                                                     </select>
                                                     <span class="col s1-0">
@@ -221,7 +221,7 @@
                     <td >{{el.row}}排{{el.col}}列</td>
                     <td ng-bind="el.plan_out_time|date:'yyyy-MM-dd '"></td>
                     <td class="operation">
-                        <span><i class="mdi mdi-eye look_icon" ng-click="lookStorageCar(el.id)"></i></span>
+                        <span><i class="mdi mdi-eye look_icon" ng-click="lookStorageCar(el.id,el.vin)"></i></span>
                         <div id="look_StorageCar" class="modal ">
                                 <div class="modal-content">
                                     <h4 class="center-align">仓储车辆信息</h4>
@@ -535,6 +535,17 @@
 
                 </tbody>
             </table>
+
+        </div>
+        <div class="paging_box col s12">
+                <div class="right">
+                    <a class="waves-light waves-effect btn "   ng-click="pre_btn()">
+                        上一页
+                    </a>
+                    <a class="waves-light waves-effect btn "  ng-click="next_btn()">
+                        下一页
+                    </a>
+                </div>
 
         </div>
     </div>

@@ -453,23 +453,34 @@ input[type=text]{
      /*width:5050px;*/
  }
 .garageWrapTitle{
-    height: 50px;
+    height: 36px;
 }
 .garage_list{
     display: flex;
     width: auto;
-    height: 50px;
+    height: 36px;
 }
+/*行*/
 .garage_row {
-    min-width: 50px;
+    min-width: 36px;
     flex: 1;
-    height: 50px;
+    height: 36px;
+    border-bottom: 1px solid #00bcd4;
+    border-right: 1px solid #00bcd4;
+    cursor: pointer;
+}
+/*列*/
+.garage_col{
+    min-width: 36px;
+    flex: 1;
+    height: 36px;
+    font-size: 12px;
     border-bottom: 1px solid #00bcd4;
     border-right: 1px solid #00bcd4;
     cursor: pointer;
 }
 .garage_row i{
-    font-size: 25px;
+    font-size: 20px;
     margin-right: 0;
 }
 .LookGarage{
@@ -486,6 +497,13 @@ input[type=text]{
     position:absolute;
     left: 0;
     top: 0;
+}
+/*分页*/
+.paging_box{
+    margin-top: 10px;
+}
+.paging_box a{
+    margin-right: 10px;
 }
 /*.garage_row_car{*/
     /*flex: 1;*/

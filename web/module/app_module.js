@@ -8,4 +8,5 @@ app.config(['$httpProvider',"$cookiesProvider",function($httpProvider,$cookiesPr
         expires:new Date(new Date().getTime()+5000),//有效时间
         secure: true//该cookie只在安全连接中被提供
     };
+
 }]);

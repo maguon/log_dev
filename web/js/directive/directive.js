@@ -165,8 +165,10 @@ commonDirective.directive("date",function () {
         link:function () {
             $('.datepicker').pickadate({
                 format:'yyyy-mm-dd',
-                onSet: function (val) {
-                    $('.picker__close').click();
+                onSet: function( arg ){
+                    if ( 'select' in arg ){
+                        this.close();
+                    }
                 },
                 selectMonths: false, // Creates a dropdown to control month
                 selectYears: 0 // Creates a dropdown of 15 years to control year
