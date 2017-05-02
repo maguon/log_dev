@@ -792,7 +792,7 @@ storage_controller.controller("storage_working_calendar",["$scope","$host","$bas
                         };
                         event_array.push(date)
                     }
-                    $('#calendar').fullCalendar('updateEvents',event_array)
+                    //$('#calendar').fullCalendar('updateEvents',event_array)
 
                 }
         })
@@ -801,11 +801,7 @@ storage_controller.controller("storage_working_calendar",["$scope","$host","$bas
 
     $('#calendar').fullCalendar({
         viewRender:function(view,element){
-            var start = new Date(view.start._d);
-            var end = new Date(view.end._d);
-            $scope.start=moment(start).format('YYYYMMDD');
-            $scope.end=moment(end).format('YYYYMMDD');
-            console.log($scope.start,$scope.end)
+
         },
         aspectRatio:1,
         header:{
@@ -813,16 +809,46 @@ storage_controller.controller("storage_working_calendar",["$scope","$host","$bas
             center: 'title',
             right:  'next'
         },
-        height:800,
+        height:'auto',
+
+        events: function(start,end, timezone,callback) {
+            console.log(start,end);
+            start = moment(start).format('YYYYMMDD');
+            end = moment(end).format('YYYYMMDD');
+            var eventArray  = [];
+
+
+            $basic.get($host.api_url+"/storageDate?storageId="+56+"&dateStart="+start+"&dateEnd="+end).then(function (data) {
+                if(data.success==true){
+                    console.log(data);
+                    $scope.data=data.result;
+                    for(var i  in $scope.data){
+                        var titleHtml = '<div class="row">' +
+                            '<div class="col s4 center-align  cyan-text text-lighten-1" style="font-size: 14px">' +
+                            '<i style="display: block" class="mdi mdi-arrow-right-bold-circle-outline"></i><span >55</span></div>' +
+                            '<div class="col s4 center-align  cyan-text text-lighten-1" style="font-size: 14px">' +
+                            '<i style="display: block" class="mdi mdi-arrow-down-bold-circle-outline"></i><span>55</span></div>' +
+                            '<div class="col s4 center-align red-text text-lighten-2" style="font-size: 14px">' +
+                            '<i style="display: block" class=" mdi mdi-arrow-left-bold-circle-outline "></i><span>55</span></div></div>'
+                        var date={
+                            title  : titleHtml,
+                            start  : $scope.data[i].date_id+'',
+                            color: 'white',     // an option!
+                            textColor: 'grey', // an option!
+                            allDay : true // will make the time show
+                        };
+                        eventArray.push(date);
+                    }
+
+
+                    callback(eventArray)
+
+                }
+            })
+
+        },
         // eventSources:event_event,
-        events : [{
-                   title  : '<div class="row"><div class="col s4 center-align  cyan-text text-lighten-1" style="font-size: 20px"><i style="display: block" class="mdi mdi-arrow-right-bold-circle-outline"></i><span>55</span></div><div class="col s4 center-align  cyan-text text-lighten-1" style="font-size: 20px"><i style="display: block" class="mdi mdi-arrow-down-bold-circle-outline"></i><span>55</span></div><div class="col s4 center-align red-text text-lighten-2" style="font-size: 20px"><i style="display: block" class=" mdi mdi-arrow-left-bold-circle-outline "></i><span>55</span></div></div>',
-                     start  : '20170507',
-                     color: 'white',     // an option!
-                     textColor: 'grey', // an option!
-                     allDay : true // will make the time show
-                 }
-             ],
+
 
         // events:event_event,
         // events: [
@@ -835,13 +861,6 @@ storage_controller.controller("storage_working_calendar",["$scope","$host","$bas
         //     //     start  : '2017-05-02',
         //     //     end    : '2017-05-10'
         //     // },
-        //     {
-        //         title  : '<div class="row"><div class="col s4 center-align  cyan-text text-lighten-1" style="font-size: 20px"><i style="display: block" class="mdi mdi-arrow-right-bold-circle-outline"></i><span>55</span></div><div class="col s4 center-align  cyan-text text-lighten-1" style="font-size: 20px"><i style="display: block" class="mdi mdi-arrow-down-bold-circle-outline"></i><span>55</span></div><div class="col s4 center-align red-text text-lighten-2" style="font-size: 20px"><i style="display: block" class=" mdi mdi-arrow-left-bold-circle-outline "></i><span>55</span></div></div>',
-        //         start  : '20170507',
-        //         color: 'white',     // an option!
-        //         textColor: 'grey', // an option!
-        //         allDay : true // will make the time show
-        //     }
         // ],
         eventRender: function (event, element) {
             element.html(event.title);
