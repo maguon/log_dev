@@ -52,13 +52,13 @@
                     <tr ng-repeat="el in store_storage">
                         <td ng-bind="el.storage_name"></td>
                         <td >{{el.row*el.col}}</td>
-                        <td ng-bind="el.pCount"></td>
+                        <td ng-bind="el.row*el.col-el.balance"></td>
                         <td ng-bind="el.imports"></td>
                         <td ng-bind="el.exports"></td>
                         <td ng-if="el.storage_status==1">在用</td>
                         <td ng-if="el.storage_status==0">停用</td>
                         <td class="operation">
-                            <span><i class="mdi mdi-eye"  ng-click="LookGarage(el.id)"></i></span>
+                            <span><i class="mdi mdi-eye"  ng-click="LookGarage(el.id,el.storage_name,el.row,el.col,el.balance,el.imports,el.exports)"></i></span>
                         </td>
                     </tr>
                     </tbody>
@@ -77,25 +77,25 @@
                 <div class="divider"></div>
                 <div class="row" style="padding: 0.75rem 0;margin: 0">
                     <div class="row">
-                        <p class="col s12"><span>仓库名称:</span><span ng-bind="self_store_storage.storage_name"></span></p>
+                        <p class="col s12"><span>仓库名称:</span><span ng-bind="self_store_storage_name"></span></p>
                     </div>
                         <p class="col s3">
                             <span>车位:</span>
-                            <span class="red-text" ng-bind="self_store_storage.row"></span>
+                            <span class="red-text" ng-bind="self_store_storage_row"></span>
                             <span>排</span>
                         </p>
                         <p class="col s3">
                             <span>每排</span>
-                            <span class="red-text" ng-bind="self_store_storage.col">5</span>
+                            <span class="red-text" ng-bind="self_store_storage_col">5</span>
                             <span>车位</span>
                         </p>
                         <p class="col s3">
                             <span>总车位:</span>
-                            <span class="red-text">{{self_store_storage.row*self_store_storage.col}}</span>
+                            <span class="red-text">{{self_store_storage_row*self_store_storage_col}}</span>
                         </p>
                         <p class="col s3">
                             <span>剩余车位:</span>
-                            <span class="red-text" ng-bind="self_store_storage.pCount">5</span>
+                            <span class="red-text" ng-bind="self_store_storage_pCount">5</span>
                         </p>
                 </div>
                 <div class="divider" style="background: #00bcd4;height: 2px;"></div>
@@ -118,11 +118,11 @@
                         <div class="col s4">
                             <div class="col s6">
                                 今日入库车辆
-                                <span class="red-text" ng-bind="self_store_storage.imports"></span>
+                                <span class="red-text" ng-bind="self_store_storage_imports"></span>
                             </div>
                             <div class=" col s6">
                                 今日出库车辆
-                                <span class="red-text" ng-bind="self_store_storage.exports"></span>
+                                <span class="red-text" ng-bind="self_store_storage_exports"></span>
                             </div>
                             <!--<div class="">-->
                             <!--今日入库车辆-->

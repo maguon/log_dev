@@ -416,26 +416,7 @@ commonDirective.directive("calendar",function () {
             // };
             // $.fullCalendar.formatDate(date, formatString[options])
                 //页面加载完初始化日历
-                $('#calendar').fullCalendar({
-                    height:750,
-                        // monthNames:['一月','二月', '三月', '四月', '五月', '六月', '七月',
-                        //     '八月', '九月', '十月', '十一月', '十二月'],
-                        // dayNames:['星期日', '星期一', '星期二', '星期三',
-                        //     '星期四', '星期五', '星期六'],
-                        // buttonText:{
-                        //     prev:     '上个月',
-                        //     next:     '下个月',
-                        //     prevYear: '去年',
-                        //     nextYear: '明年',
-                        //     today:    '当月',
-                        //     month:    '月',
-                        //     week:     '周',
-                        //     day:      '日'
-                        // }
-                    }
-                    //设置选项和回调
 
-                )
 
         }
     }

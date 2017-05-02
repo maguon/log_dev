@@ -3,12 +3,14 @@ var storage_controller=angular.module("storage_controller",[]);
 storage_controller.controller("Storage_car_Controller",["$scope","$host","$basic","$baseService","service_storage_parking",function ($scope,$host,$basic,$baseService,service_storage_parking) {
     $scope.curruntId=0;
     $scope.start=0;
-    $scope.size=10;
+    $scope.size=11;
     var userId=sessionStorage.getItem("userId");
     var searchAll=function () {
         $basic.get($host.api_url+"/user/"+userId+"/car?start="+$scope.start+"&size="+$scope.size).then(function (data) {
             if(data.success==true){
-                $scope.storage_car=data.result;
+                $scope.storage_car_box=data.result;
+                $scope.storage_car=$scope.storage_car_box.slice(0,10);
+
             }else {
                 swal(data.msg,"","error");
             }
@@ -18,21 +20,18 @@ storage_controller.controller("Storage_car_Controller",["$scope","$host","$basic
     // 上一页
     $scope.pre_btn=function () {
         if($scope.start>0){
-            $scope.start=$scope.start-$scope.size;
+            $scope.start=$scope.start-($scope.size-1);
             searchAll();
         }
-
 
     };
     // 下一页
     $scope.next_btn=function () {
-        if($scope.storage_car.length<$scope.size){
-
+        if($scope.storage_car_box.length<$scope.size){
         }else {
-            $scope.start=$scope.start+$scope.size;
+            $scope.start=$scope.start+($scope.size-1);
             searchAll();
         }
-
     };
     searchAll();
     // 车辆品牌查询
@@ -502,8 +501,10 @@ storage_controller.controller("Storage_car_Controller",["$scope","$host","$basic
 }]);
 storage_controller.controller("storage_store_Controller",["$scope","$host","$basic","$baseService","service_storage_parking",function ($scope,$host,$basic,$baseService,service_storage_parking) {
     var userId=sessionStorage.getItem("userId");
+    var data=new Date();
+    var now_date=moment(data).format('YYYYMMDD');
     var searchAll=function () {
-        $basic.get($host.api_url+"/storageToday").then(function (data) {
+        $basic.get($host.api_url+"/storageDate"+"?dateStart="+now_date+"&dateEnd="+now_date).then(function (data) {
             if(data.success==true){
                 $scope.store_storage=data.result;
             }
@@ -517,19 +518,20 @@ storage_controller.controller("storage_store_Controller",["$scope","$host","$bas
         $(".LookGarage").hide();
         searchAll();
     };
-    $scope.LookGarage=function (val) {
+    $scope.LookGarage=function (val,name,col,row,balance,im,ex) {
         $(".storage_store_subject").hide();
         $(".LookGarage").show();
         // $(".modal").modal();
         // $("#LookGarage").modal("open");
         $scope.newTime=new Date().getTime();
-        // console.log($scope.newTime);
-        $basic.get($host.api_url+"/storageToday?storageId="+val).then(function (data) {
-            if(data.success==true){
-                $scope.self_store_storage=data.result[0];
-            }
+        $scope.self_store_storage_name=name;
+        $scope.self_store_storage_row=row;
+        $scope.self_store_storage_col=col;
+        $scope.self_store_storage_pCount=row*col-balance;
+        $scope.self_store_storage_imports=im;
+        $scope.self_store_storage_exports=ex;
 
-        });
+
         $basic.get($host.api_url+"/storageParking?storageId="+val).then(function (data) {
             if(data.success==true){
                 $scope.self_storageParking=data.result;
@@ -749,4 +751,100 @@ storage_controller.controller("storage_store_Controller",["$scope","$host","$bas
 
 
 
+}]);
+storage_controller.controller("storage_working_calendar",["$scope","$host","$basic",function ($scope,$host,$basic) {
+    var date=new Date();
+    $scope.today_month=date.getFullYear()+"年"+date.getMonth()+"月";
+    $scope.today_d=date.getDate();
+    var weekday=new Array(7);
+    weekday[0]="Sunday";
+    weekday[1]="Monday";
+    weekday[2]="Tuesday";
+    weekday[3]="Wednesday";
+    weekday[4]="Thursday";
+    weekday[5]="Friday";
+    weekday[6]="Saturday";
+    var event_array=[];
+    $scope.today_week=weekday[date.getDay()];
+    $basic.get($host.api_url+"/storageDate").then(function (data) {
+        if(data.success==true){
+            $scope.store_storage=data.result;
+            $scope.storage_id=$scope.store_storage[0].id;
+            search($scope.storage_id,$scope.start,$scope.end)
+        }
+
+    });
+    $scope.get_fullCalendar=function () {
+
+    };
+    var search=function (storage_id,start,end) {
+        $basic.get($host.api_url+"/storageDate?storageId="+storage_id+"&dateStart="+start+"&dateEnd="+end).then(function (data) {
+                if(data.success==true){
+                    console.log(data);
+                    $scope.data=data.result;
+                    for(var i  in $scope.data){
+                        var date={
+                            title  : '<div class="row"><div class="col s4 center-align  cyan-text text-lighten-1" style="font-size: 20px"><i style="display: block" class="mdi mdi-arrow-right-bold-circle-outline"></i><span >55</span></div><div class="col s4 center-align  cyan-text text-lighten-1" style="font-size: 20px"><i style="display: block" class="mdi mdi-arrow-down-bold-circle-outline"></i><span>55</span></div><div class="col s4 center-align red-text text-lighten-2" style="font-size: 20px"><i style="display: block" class=" mdi mdi-arrow-left-bold-circle-outline "></i><span>55</span></div></div>',
+                            start  : $scope.data[i].date_id,
+                            color: 'white',     // an option!
+                            textColor: 'grey', // an option!
+                            allDay : true // will make the time show
+                        };
+                        event_array.push(date)
+                    }
+                    $('#calendar').fullCalendar('updateEvents',event_array)
+
+                }
+        })
+    };
+
+
+    $('#calendar').fullCalendar({
+        viewRender:function(view,element){
+            var start = new Date(view.start._d);
+            var end = new Date(view.end._d);
+            $scope.start=moment(start).format('YYYYMMDD');
+            $scope.end=moment(end).format('YYYYMMDD');
+            console.log($scope.start,$scope.end)
+        },
+        aspectRatio:1,
+        header:{
+            left:   'prev',
+            center: 'title',
+            right:  'next'
+        },
+        height:800,
+        // eventSources:event_event,
+        events : [{
+                   title  : '<div class="row"><div class="col s4 center-align  cyan-text text-lighten-1" style="font-size: 20px"><i style="display: block" class="mdi mdi-arrow-right-bold-circle-outline"></i><span>55</span></div><div class="col s4 center-align  cyan-text text-lighten-1" style="font-size: 20px"><i style="display: block" class="mdi mdi-arrow-down-bold-circle-outline"></i><span>55</span></div><div class="col s4 center-align red-text text-lighten-2" style="font-size: 20px"><i style="display: block" class=" mdi mdi-arrow-left-bold-circle-outline "></i><span>55</span></div></div>',
+                     start  : '20170507',
+                     color: 'white',     // an option!
+                     textColor: 'grey', // an option!
+                     allDay : true // will make the time show
+                 }
+             ],
+
+        // events:event_event,
+        // events: [
+        //     // {
+        //     //     title  : 'event1',
+        //     //     start  : '2017-05-02'
+        //     // },
+        //     // {
+        //     //     title  : 'event2',
+        //     //     start  : '2017-05-02',
+        //     //     end    : '2017-05-10'
+        //     // },
+        //     {
+        //         title  : '<div class="row"><div class="col s4 center-align  cyan-text text-lighten-1" style="font-size: 20px"><i style="display: block" class="mdi mdi-arrow-right-bold-circle-outline"></i><span>55</span></div><div class="col s4 center-align  cyan-text text-lighten-1" style="font-size: 20px"><i style="display: block" class="mdi mdi-arrow-down-bold-circle-outline"></i><span>55</span></div><div class="col s4 center-align red-text text-lighten-2" style="font-size: 20px"><i style="display: block" class=" mdi mdi-arrow-left-bold-circle-outline "></i><span>55</span></div></div>',
+        //         start  : '20170507',
+        //         color: 'white',     // an option!
+        //         textColor: 'grey', // an option!
+        //         allDay : true // will make the time show
+        //     }
+        // ],
+        eventRender: function (event, element) {
+            element.html(event.title);
+        }
+    });
 }]);
