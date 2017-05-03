@@ -421,6 +421,28 @@ commonDirective.directive("calendar",function () {
         }
     }
 });
+commonDirective.directive("view",function () {
+    return{
+        restrict:"EA",
+        link:function () {
+            $('#jq22').viewer();
+        }
+    }
+});
+
+// ng-repeat渲染后的回调
+commonDirective.directive('repeatFinish',function(){
+    return {
+        link: function(scope,element,attr){
+            if(scope.$last == true){
+                console.log('ng-repeat执行完毕')
+                scope.$eval( attr.repeatFinish )
+            }
+        }
+    }
+});
+
+
 // commonDirective.directive("shadeDow",function () {
 //     return{
 //         restrict:"A",

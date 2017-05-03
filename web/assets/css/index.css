@@ -44,7 +44,6 @@ body{
 /*侧边导航样式调整*/
 
 .side-nav{
-    background: #1c2127;
     color: white;
 }
 .side-nav a{
@@ -64,7 +63,7 @@ body{
     margin: 0;
 }
 .side-nav li.active{
-    background: red;
+    background:#212121 ;
 }
 .tabs .active{
     border-bottom: 2px solid #f6b2b5;
@@ -82,11 +81,20 @@ body{
     padding: 0;
 }
 .side-nav .collapsible-body li:hover{
-    background: green;
+    background: #9e9e9e;
+}
+.side-nav .collapsible-body li{
+    border-bottom: 1px solid #212121;
 }
 /*.side-nav>.bold:hover{*/
     /*background: paleturquoise;*/
 /*}*/
+
+/*按钮样式*/
+.common_btn{
+    border-radius: 40px;
+}
+/*分割线*/
 
     /*加载遮罩层*/
 .shadeDowWrap{
@@ -487,7 +495,10 @@ input[type=text]{
 }
 /*当前位置*/
 .present_place{
-    background:#84ffff;
+    background:#ff8a80;
+}
+.present_place i{
+    color: white!important;
 }
 .storage_storeTitle{
     position: relative;

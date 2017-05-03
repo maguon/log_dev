@@ -15,7 +15,7 @@
     <!--</div>-->
     <div class="row">
         <div class="row">
-            <a class="waves-light waves-effect btn right"  ng-click="newStorage_car()">
+            <a class="waves-light waves-effect cyan lighten-1 btn right"  ng-click="newStorage_car()">
                 新增入库车辆
             </a>
             <div id="newStorage_car" class="modal ">
@@ -149,12 +149,13 @@
                                     </div>
                                     <div class="divider" style="background: #00bcd4;height: 2px;"></div>
                                     <div class="modal-footer vc-center">
-                                        <button class="btn waves-light waves-effect" type="submit" name="action" >
-                                            <i class="mdi mdi-trending-neutral"></i>
-                                        </button>
-                                        <a  class=" modal-action modal-close waves-effect waves-light materialize-red lighten-1 btn" style="margin-left: 10px" >
+                                        <a  class=" modal-action modal-close waves-effect  grey lighten-1waves-light  btn" style="margin-right: 10px" >
                                             <i class="mdi mdi-close"></i>
                                         </a>
+                                        <button class="btn waves-light waves-effect cyan lighten-1" type="submit" name="action" >
+                                            <i class="mdi mdi-trending-neutral"></i>
+                                        </button>
+
                                     </div>
                                 </form>
                                 </div>
@@ -181,7 +182,7 @@
                                         </div>
                                         <div class="divider" style="background: #00bcd4;height: 2px;"></div>
                                         <div class="modal-footer vc-center">
-                                            <a  class=" modal-action modal-close waves-effect waves-light materialize-red lighten-1 btn" style="margin-left: 10px" >
+                                            <a  class=" modal-action modal-close waves-effect waves-light grey lighten-1 btn" style="margin-left: 10px" >
                                                 <i class="mdi mdi-close"></i>
                                             </a>
                                         </div>
@@ -195,10 +196,10 @@
 
             </div>
         </div>
-        <div class="divider" style="background: #00bcd4;height: 2px;"></div>
         <div class="col s12" >
-            <table class="highlight bordered">
-                <thead>
+            <div class="divider" style="background: #00bcd4;height: 2px;"></div>
+            <table class=" bordered striped">
+                <thead class="grey lighten-2">
                 <tr>
                     <th data-field="">入库时间</th>
                     <th data-field="">WIN码</th>
@@ -221,8 +222,8 @@
                     <td >{{el.row}}排{{el.col}}列</td>
                     <td ng-bind="el.plan_out_time|date:'yyyy-MM-dd '"></td>
                     <td class="operation">
-                        <span><i class="mdi mdi-eye look_icon" ng-click="lookStorageCar(el.id,el.vin)"></i></span>
-                        <div id="look_StorageCar" class="modal ">
+                        <span class=""><i class="mdi mdi-eye look_icon cyan-text lighten-1  " ng-click="lookStorageCar(el.id,el.vin)"></i></span>
+                        <div id="look_StorageCar" class="modal  ">
                                 <div class="modal-content">
                                     <h4 class="center-align">仓储车辆信息</h4>
                                     <div class="divider" style="background: #00bcd4;height: 2px;"></div>
@@ -237,7 +238,7 @@
 
                                         <div id="look_msg" class="col s12 tab_box">
                                             <form name="change_newStorage_carForm" ng-submit="submitForm(change_newStorage_carForm.$valid,self_car.id,self_car.r_id)" novalidate>
-                                                <div class="row" style="margin-top: 40px">
+                                                <div class="row" style="margin-top: 20px; height: 400px;overflow-y: auto">
                                                     <div class="row "  >
                                                         <div class="col s4 valign-wrapper " style="padding: 0" ng-class="{ 'has-error':change_newStorage_carForm.look_win.$invalid&&submitted }">
                                                             <h6 class="col s4-0 min-width-2 " style="padding: 0">
@@ -396,19 +397,20 @@
                                                 </div>
 
                                             <div class="divider" style="background: #00bcd4;height: 2px;"></div>
-                                            <div class="modal-footer vc-center">
-                                                <button class="btn waves-light waves-effect" type="submit" name="action" >
-                                                    <i class="mdi mdi-check"></i>
-                                                </button>
-                                                <a ng-click="close_storageCar()"  class=" modal-action modal-close waves-effect waves-light materialize-red lighten-1 btn" style="margin-left: 10px" >
+                                            <div class="modal-footer vc-center ">
+                                                <a ng-click="close_storageCar()"  class=" modal-action modal-close waves-effect waves-light  grey lighten-1 btn" style="margin-right: 10px" >
                                                     <i class="mdi mdi-close"></i>
                                                 </a>
+                                                <button class="btn waves-light waves-effect cyan lighten-1" type="submit" name="action" >
+                                                    <i class="mdi mdi-check"></i>
+                                                </button>
+
                                             </div>
                                             </form>
                                         </div>
                                         <div id="look_car_img" class="col s12 tab_box">
                                             <div class="row no-marBottom">
-                                                <div class="col s12 valign-wrapper " style="position: relative">
+                                                <div class="col s12 valign-wrapper " >
                                                     <p class="col s1-0 min-width-2 left-align p0">
                                                         <span style="color: red">*</span>
                                                         车辆照片:</p>
@@ -421,12 +423,18 @@
                                                                 +
                                                                 <!--<img  class="responsive-img" src="" alt="">-->
                                                             </div>
-                                                            <div ng-repeat="el in storage_imageBox" class="storage_car_picture col s3 vc-center  p0 grey white-text">
-                                                                <img ng-src="{{el.src}}" class="responsive-img">
-                                                            </div>
-                                                            <div ng-repeat="el in imgArr" class="storage_car_picture col s3 vc-center  p0 grey white-text">
-                                                                <img ng-src="{{el.src}}" class="responsive-img">
-                                                            </div>
+                                                            <ul id="look_img" >
+
+                                                                <li ng-repeat="el in storage_imageBox"  repeat-finish="renderFinish()" class="storage_car_picture col s3 vc-center  p0 grey white-text">
+                                                                    <img ng-src="{{el.src}}"  class="responsive-img">
+                                                                </li>
+                                                            </ul>
+                                                            <ul id="add_img">
+                                                                <li ng-repeat="el in imgArr" repeat-finish="renderFinish()" class="storage_car_picture col s3 vc-center  p0 grey white-text">
+                                                                    <img ng-src="{{el.src}}"  class="responsive-img">
+                                                                </li>
+                                                            </ul>
+
                                                         </form>
                                                     </div>
                                                 </div>
@@ -443,26 +451,26 @@
 
                         </div>
                         </div>
-                        <span><i class="mdi mdi-logout-variant" ng-click="outStorageCar(el.r_id,2,el.p_id,el.storage_id,el.id)"></i></span>
-                        <span><i class="mdi mdi-call-split" ng-click="changeStorageCar(el.storage_id,el.id,el.row,el.col)"></i></span>
+                        <span><i class="mdi mdi-logout-variant cyan-text lighten-1" ng-click="outStorageCar(el.r_id,2,el.p_id,el.storage_id,el.id)"></i></span>
+                        <span><i class="mdi mdi-call-split cyan-text lighten-1" ng-click="changeStorageCar(el.storage_id,el.id,el.row,el.col)"></i></span>
                         <div id="change_storageCar" class="modal ">
                             <form name="look_garageForm" >
                                 <div class="modal-content">
-                                    <h4 class="center-align">车库仓储信息</h4>
+                                    <h4 class="center-align">车辆移位</h4>
                                     <div class="divider"></div>
                                     <div class=" col s12 garageWrapTitle vc-center">
                                         <div class="col s8">
                                             <div class="col s4">
                                                 停放车辆
-                                                <i class="mdi mdi-car blue-text"></i>
+                                                <i class="mdi mdi-car cyan-text lighten-1"></i>
                                             </div>
                                             <div class="col s4">
                                                 临近出库车辆
-                                                <i class=" mdi mdi-car red-text"></i>
+                                                <i class=" mdi mdi-car red-text accent-1"></i>
                                             </div>
                                             <div class="col s4">
                                                 未停放车辆
-                                                <i class=" mdi mdi-car "></i>
+                                                <i class=" mdi mdi-car  grey-text lighten-1 "></i>
                                             </div>
                                         </div>
                                         <div class="col s4">
@@ -504,7 +512,7 @@
                                                     <div class="garage_row vc-center left" ng-repeat="els in el.col track by $index" ng-class="{'present_place':el.row==now_row&&els.col==now_col}">
                                                         <i ng-show="els.carId!=0&&els.plan_time==true" class=" mdi mdi-car red-text "></i>
                                                         <i ng-show="els.carId!=0&&els.plan_time==false" class=" mdi mdi-car blue-text"></i>
-                                                        <i ng-show="els.carId==0" class=" mdi mdi-car " ng-click="move_parking(els.id,el.row,els.col)"></i>
+                                                        <i ng-show="els.carId==0" class=" mdi mdi-car grey-text lighten-2 " ng-click="move_parking(els.id,el.row,els.col)"></i>
                                                         <!--<i ng-if="getTime(els.plan_time)-newTime<'1000*60*60*24*5'" ng-class="{ 'red-text':newStorage_carForm.win.$invalid&&submitted }" class="red-text mdi mdi-car"></i>-->
                                                     </div>
                                                     <!--</div>-->
@@ -539,10 +547,10 @@
         </div>
         <div class="paging_box col s12">
                 <div class="right">
-                    <a class="waves-light waves-effect btn "   ng-click="pre_btn()">
+                    <a class="waves-light waves-effect cyan lighten-1 btn "   ng-click="pre_btn()">
                         上一页
                     </a>
-                    <a class="waves-light waves-effect btn "  ng-click="next_btn()">
+                    <a class="waves-light waves-effect cyan lighten-1 btn "  ng-click="next_btn()">
                         下一页
                     </a>
                 </div>
