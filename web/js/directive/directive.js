@@ -435,12 +435,23 @@ commonDirective.directive('repeatFinish',function(){
     return {
         link: function(scope,element,attr){
             if(scope.$last == true){
-                console.log('ng-repeat执行完毕')
+                console.log('ng-repeat执行完毕');
                 scope.$eval( attr.repeatFinish )
             }
         }
     }
 });
+commonDirective.directive('addRepeatFinish',function(){
+    return {
+        link: function(scope,element,attr){
+            if(scope.$last == true){
+                console.log('ng-repeat执行完毕');
+                scope.$eval( attr.add_repeatFinish )
+            }
+        }
+    }
+});
+
 
 
 // commonDirective.directive("shadeDow",function () {

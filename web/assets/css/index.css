@@ -65,8 +65,27 @@ body{
 .side-nav li.active{
     background:#212121 ;
 }
+.tabs li{
+    cursor: pointer;
+}
 .tabs .active{
-    border-bottom: 2px solid #f6b2b5;
+    background: #26c6da;
+    color: white;
+}
+/*.test1{*/
+    /*background: #26c6da;*/
+/*}*/
+.tabs .active.tab.disabled a{
+    color: white;
+}
+.tabs .active.tab.disabled a:hover{
+    color: white;
+}
+.tabs .tab.disabled a:hover{
+    color: #26c6da;
+}
+.tabs .tab.disabled a{
+    color: #26c6da;
 }
 /*.side-nav .collapsible-header{*/
 /*padding:0 32px ;*/
@@ -424,11 +443,12 @@ input[type=text]{
 }
 /*车辆照片*/
 .storage_car_picture{
-    height: 100px;
+    height: 200px;
     cursor: pointer;
     position: relative;
     overflow: hidden;
     margin:10px 10px 0 0;
+    font-size: 100px;
 }
 .storage_car_picture input{
     font-size: 200px;
@@ -439,6 +459,7 @@ input[type=text]{
     top: 0;
     right: 0;
     cursor: pointer;
+    z-index: 10;
 }
 /*车辆仓储信息图*/
 .garageWrap{
@@ -469,12 +490,25 @@ input[type=text]{
 }
 /*行*/
 .garage_row {
+    position: relative;
     min-width: 36px;
     flex: 1;
     height: 36px;
     border-bottom: 1px solid #00bcd4;
     border-right: 1px solid #00bcd4;
     cursor: pointer;
+}
+.garage_row_toolbar{
+    width: 80%;
+    position: absolute;
+    left: 10%;
+    bottom: 100%;
+    z-index: 1000;
+    background: #e57373;
+    display: none;
+}
+.garage_row:hover .garage_row_toolbar{
+    display: block;
 }
 /*列*/
 .garage_col{
@@ -508,6 +542,19 @@ input[type=text]{
     left: 0;
     top: 0;
 }
+/*表单*/
+.input-field label{
+    color: #26c6da;
+}
+#test1 .input-field label{
+     color: #9e9e9e;
+}
+/*#test1 .storage_position{*/
+    /*color: white;*/
+/*}*/
+/*#test1 .storage_position .input-field label{*/
+    /*color: white;*/
+/*}*/
 /*分页*/
 .paging_box{
     margin-top: 10px;

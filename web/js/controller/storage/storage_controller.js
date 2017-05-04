@@ -54,10 +54,10 @@ storage_controller.controller("Storage_car_Controller",["$scope","$host","$basic
         });
         $scope.newStorage_car=function () {
             $scope.submitted=false;
-            $('ul.tabs li a').removeClass("active");
+            $('ul.tabs li').removeClass("active");
             $(".tab_box").removeClass("active");
             $(".tab_box").hide();
-            $('ul.tabs li.test1 a').addClass("active");
+            $('ul.tabs li.test1').addClass("active");
             $("#test1").addClass("active");
             $("#test1").show();
             $scope.win="";
@@ -233,10 +233,10 @@ storage_controller.controller("Storage_car_Controller",["$scope","$host","$basic
                     // swal("新增成功","","success");
                     // $("#newStorage_car").modal("close");
                     // $('ul.tabs').tabs('select_tab', 'test2');
-                    $('ul.tabs li a').removeClass("active");
+                    $('ul.tabs li').removeClass("active");
                     $(".tab_box").removeClass("active");
                     $(".tab_box").hide();
-                    $('ul.tabs li.test2 a').addClass("active");
+                    $('ul.tabs li.test2').addClass("active");
                     $("#test2").addClass("active");
                     $("#test2").show();
                     searchAll();
@@ -288,7 +288,7 @@ storage_controller.controller("Storage_car_Controller",["$scope","$host","$basic
                 $scope.self_storageParking=data.result;
                 $scope.garageParkingArray=service_storage_parking.storage_parking($scope.self_storageParking);
                 $scope.ageParkingCol=$scope.garageParkingArray[0].col
-                console.log($scope.ageParkingCol,$scope.garageParkingArray)
+                // console.log($scope.ageParkingCol,$scope.garageParkingArray)
 
             }
         })
@@ -297,12 +297,20 @@ storage_controller.controller("Storage_car_Controller",["$scope","$host","$basic
 
     // 车辆照片跳转
     $scope.look_car_img=function () {
-        $('ul.tabs li a').removeClass("active");
+        $('ul.tabs li').removeClass("active");
         $(".tab_box").removeClass("active");
         $(".tab_box").hide();
-        $('ul.tabs li.look_car_img a').addClass("active");
+        $('ul.tabs li.look_car_img ').addClass("active");
         $("#look_car_img").addClass("active");
         $("#look_car_img").show();
+    };
+    $scope.look_msg=function () {
+        $('ul.tabs li').removeClass("active");
+        $(".tab_box").removeClass("active");
+        $(".tab_box").hide();
+        $('ul.tabs li.look_msg ').addClass("active");
+        $("#look_msg").addClass("active");
+        $("#look_msg").show();
     };
 
 
@@ -315,11 +323,33 @@ storage_controller.controller("Storage_car_Controller",["$scope","$host","$basic
     // };
 
     //controller里对应的处理函数
+    var viewer;
+    var add_viewer;
+    var add_viewerOne;
     $scope.renderFinish = function(){
-        $('#look_img').viewer({
-
+        viewer = new Viewer(document.getElementById('look_img'), {
+            url: 'data-original'
         });
     };
+    $scope.add_repeatFinish= function(){
+        add_viewer = new Viewer(document.getElementById('add_img'), {
+            url: 'data-original'
+        });
+    };
+    // $scope.add_repeatFinishOne= function(){
+    //     console.log(1);
+    //     add_viewerOne = new Viewer(document.getElementById('add_img_one'), {
+    //         url: 'data-original'
+    //     });
+    // };
+
+    // 返回
+    $scope.return=function () {
+        $(".main_storage_car").show();
+        $("#look_StorageCar").hide();
+        viewer.destroy();
+    };
+    // 查看详情
     $scope.lookStorageCar=function (val,vin) {
         $scope.submitted=false;
         // 照片清空
@@ -327,27 +357,26 @@ storage_controller.controller("Storage_car_Controller",["$scope","$host","$basic
         // 预览详情照片
         $scope.storage_imageBox=[];
 
-        console.log(val);
-        $(".modal").modal({
-            // dismissible: false
-        });
-        $("#look_StorageCar").modal("open");
-        $('ul.tabs li a').removeClass("active");
+        // console.log(val);
+        // $(".modal").modal({
+        //     // dismissible: false
+        // });
+        $(".main_storage_car").hide();
+        $("#look_StorageCar").show();
+
+
+        $('ul.tabs li').removeClass("active");
         $(".tab_box").removeClass("active");
         $(".tab_box").hide();
-        $('ul.tabs li.look_msg a').addClass("active");
+        $('ul.tabs li.look_msg').addClass("active");
         $("#look_msg").addClass("active");
         $("#look_msg").show();
-        $(".indicator").css({
-            right: "493px",
-            left: "0px"
-        });
 
         $scope.Picture_carId=val;
         $scope.win=vin;
         $basic.get($host.record_url+"/user/"+userId+"/car/"+val+"/record").then(function (data) {
             if(data.success==true){
-                console.log(data);
+                // console.log(data);
                 $scope.operating_record=data.result[0];
                 $scope.comment=$scope.operating_record.comment;
                 $scope.storage_image=$scope.operating_record.storage_image;
@@ -364,24 +393,15 @@ storage_controller.controller("Storage_car_Controller",["$scope","$host","$basic
                 if(data.success==true){
                     $scope.modelId = data.result[0].model_id;
                     $scope.self_car=data.result[0];
-                    console.log(data.result[0]);
                     // modelID赋值
                     $scope.look_make_id=$scope.self_car.make_id,
-                        $scope.changeMakeId($scope.look_make_id);
+                    console.log($scope.look_make_id);
+                    $scope.changeMakeId($scope.look_make_id);
                     $scope.look_model_id=$scope.self_car.model_id,
-                        console.log($scope.look_model_id);
-                    // $("#look_model_name").val($scope.look_model_id);
-                    // $scope.changeModelId(data.re)
                     $scope.look_create_time=$baseService.formDate($scope.self_car.pro_date);
-                    // $scope.look_car_color=$scope.self_car.colour;
-                    // $scope.look_engineNum=$scope.self_car.engine_num;
-                    $scope.look_storageName=$scope.self_car.storage_name;
-                    $scope.look_row=$scope.self_car.row;
-                    $scope.look_col=$scope.self_car.col;
-                    // $scope.look_plan_out_time=$baseService.formDate($scope.self_car.plan_out_time);
+                    $scope.look_storageName=$scope.self_car.storage_name+$scope.self_car.row+"排"+$scope.self_car.col+"列";
                     // 车辆id
                     $scope.look_car_id=$scope.self_car.id;
-                    // $scope.remark=$scope.self_car.remark;
                 }else {
                     swal(data.msg,"","error")
                 }
@@ -433,16 +453,14 @@ storage_controller.controller("Storage_car_Controller",["$scope","$host","$basic
             $(".move_box").show();
             $(".move_box").attr("flag",false);
             $basic.get($host.api_url+"/storageParking?storageId="+val).then(function (data) {
-                if (data.success == true) {
+                if (data.success == true){
                     $scope.move_storageParking = data.result;
-                    $scope.move_parkingArray=service_storage_parking.storage_parking($scope.move_storageParking );
-
+                    $scope.move_parkingArray=service_storage_parking.storage_parking($scope.move_storageParking);
                 }
             })
         }else {
             $(".move_box").hide();
             $(".move_box").attr("flag",true);
-
         }
     };
     $scope.close_move_box=function () {
@@ -789,10 +807,6 @@ storage_controller.controller("storage_store_Controller",["$scope","$host","$bas
         $('ul.tabs li.look_msg a').addClass("active");
         $("#look_msg").addClass("active");
         $("#look_msg").show();
-        $(".indicator").css({
-            right: "493px",
-            left: "0px"
-        });
 
         $scope.Picture_carId=val;
         // $scope.win=vin;

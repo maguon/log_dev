@@ -2,10 +2,10 @@
     <div class="storage_store_subject">
         <div class="row searchBoxWrap ">
             <div class="col s3 valign-wrapper">
-                <div class="col s3 center-align">
+                <div class="col s4 center-align">
                     仓库名称:
                 </div>
-                <select material-select watch class="col s9  " ng-model="s_type">
+                <select material-select watch class="col s8  " ng-model="s_type">
                     <option value="" disabled selected>请选择</option>
                     <option value="1">自营</option>
                     <option value="2">供方</option>
@@ -121,7 +121,6 @@
                             </div>
                         </div>
                         <div class="col s4">
-
                             <!--<div class="">-->
                             <!--今日入库车辆-->
                             <!--<span></span>-->
@@ -141,11 +140,17 @@
                             <div class="col s12  garage_list p0"  ng-repeat="el in garageParkingArray" >
 
                                 <div class="garage_row vc-center left">{{$index+1}}</div>
-                                <!--<div class="left" style="display: flex">-->
+                                    <!--<div class="left" style="display: flex">-->
                                     <div class="garage_row vc-center left" ng-repeat="els in el.col track by $index ">
+                                        <div class="garage_row_toolbar row " style="margin: 0;padding: 0">
+                                        <i class="col s4  mdi mdi-eye look_icon cyan-text lighten-1"></i>
+                                        <i class="col s4  mdi mdi-logout-variant cyan-text lighten-1"></i>
+                                        <i class="col s4  mdi mdi-call-split cyan-text lighten-1"></i>
+                                    </div>
                                         <i ng-show="els.carId!=0&&els.plan_time==true" class=" mdi mdi-car red-text accent-1"></i>
                                         <i ng-show="els.carId!=0&&els.plan_time==false" class=" mdi mdi-car cyan-text lighten-1" ng-click="lookStorageCar(els.carId)"></i>
                                         <i ng-show="els.carId==0" class=" mdi mdi-car grey-text lighten-1" ng-click="new_garage_parking(els.storage_name,els.storage_id,el.row,els.col,els.id)"></i>
+
                                         <!--<i ng-if="getTime(els.plan_time)-newTime<'1000*60*60*24*5'" ng-class="{ 'red-text':newStorage_carForm.win.$invalid&&submitted }" class="red-text mdi mdi-car"></i>-->
                                     </div>
                                 <!--</div>-->
@@ -542,4 +547,5 @@
 
 
     </div>
+</div>
 </div>
