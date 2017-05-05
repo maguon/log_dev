@@ -1,5 +1,5 @@
 
-var app = angular.module("log_dev", ['ui.materialize','ui.router',"CommonFilter","ngCookies","ngMessages","data_controller","index_controller","loginController","settingController","truckController","CompanyController","userController","Storage_car_Controller","storage_store_Controller","storageCar_details_ctrl","storage_working_calendar","hostService","baseService","commonDirective","CommonService","index_router"]);
+var app = angular.module("log_dev", ['ui.materialize','ui.router',"CommonFilter","ngCookies","ngMessages","data_controller","index_controller","loginController","settingController","truckController","CompanyController","userController","Storage_car_Controller","storage_store_Controller","storage_car_map_controller","storageCar_details_ctrl","storage_working_calendar","hostService","baseService","commonDirective","CommonService","index_router"]);
 
 app.config(['$httpProvider',"$cookiesProvider",function($httpProvider,$cookiesProvider) {
     $cookiesProvider.defaults = {

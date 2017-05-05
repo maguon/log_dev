@@ -222,8 +222,13 @@ storageCar_details_ctrl.controller("storageCar_details_ctrl", ["$baseService", "
 
     // 返回
     $scope.return = function () {
-        $state.go($stateParams.from, {}, {reload: true})
+        if($stateParams.from=="storage_car_map"){
+            $state.go($stateParams.from, {id:$scope.self_car.storage_id,form:"storageStore"}, {reload: true})
+        }else {
+            $state.go($stateParams.from, {}, {reload: true})
+        }
     };
+
     // 查看详情
     $scope.lookStorageCar = function (val, vin) {
         $scope.submitted = false;
@@ -275,6 +280,7 @@ storageCar_details_ctrl.controller("storageCar_details_ctrl", ["$baseService", "
                 $scope.look_model_id = $scope.self_car.model_id,
                     $scope.look_create_time = $baseService.formDate($scope.self_car.pro_date);
                 $scope.look_storageName = $scope.self_car.storage_name + $scope.self_car.row + "排" + $scope.self_car.col + "列";
+
                 // 车辆id
                 $scope.look_car_id = $scope.self_car.id;
             } else {

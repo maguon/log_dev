@@ -10,46 +10,46 @@ storage_store_Controller.controller("storage_store_Controller",["$scope","$host"
         $basic.get($host.api_url+"/storageDate"+"?dateStart="+now_date+"&dateEnd="+now_date).then(function (data) {
             if(data.success==true){
                 $scope.store_storage=data.result;
-                $rootScope.previousState_name="storage";
             }
 
         })
     };
 
     searchAll();
-    // 返回仓库页
-    $scope.return=function () {
-        $(".storage_store_subject").show();
-        $(".LookGarage").hide();
-        searchAll();
-    };
-    // 到仓储车辆图
-    $scope.LookGarage=function (val,name,col,row,balance,im,ex) {
-        $(".storage_store_subject").hide();
-        $(".LookGarage").show();
+    // // 返回仓库页
+    // $scope.return=function () {
+    //     $(".storage_store_subject").show();
+    //     $(".LookGarage").hide();
+    //     searchAll();
+    // };
+    // // 到仓储车辆图
+    // $scope.LookGarage=function (val,name,col,row,balance,im,ex) {
+    //     $(".storage_store_subject").hide();
+    //     $(".LookGarage").show();
+    //
+    //     // $(".modal").modal();
+    //     // $("#LookGarage").modal("open");
+    //     $scope.newTime=new Date().getTime();
+    //     $scope.self_store_storage_name=name;
+    //     $scope.self_store_storage_row=row;
+    //     $scope.self_store_storage_col=col;
+    //     $scope.self_store_storage_pCount=row*col-balance;
+    //     $scope.self_store_storage_imports=im;
+    //     $scope.self_store_storage_exports=ex;
+    //
+    //
+    //     $basic.get($host.api_url+"/storageParking?storageId="+val).then(function (data) {
+    //         if(data.success==true){
+    //             $scope.self_storageParking=data.result;
+    //             $scope.garageParkingArray=service_storage_parking.storage_parking($scope.self_storageParking);
+    //             // console.log($scope.garageParkingArray);
+    //             $scope.ageParkingCol=$scope.garageParkingArray[0].col
+    //
+    //         }
+    //
+    //     })
+    // };
 
-        // $(".modal").modal();
-        // $("#LookGarage").modal("open");
-        $scope.newTime=new Date().getTime();
-        $scope.self_store_storage_name=name;
-        $scope.self_store_storage_row=row;
-        $scope.self_store_storage_col=col;
-        $scope.self_store_storage_pCount=row*col-balance;
-        $scope.self_store_storage_imports=im;
-        $scope.self_store_storage_exports=ex;
-
-
-        $basic.get($host.api_url+"/storageParking?storageId="+val).then(function (data) {
-            if(data.success==true){
-                $scope.self_storageParking=data.result;
-                $scope.garageParkingArray=service_storage_parking.storage_parking($scope.self_storageParking);
-                // console.log($scope.garageParkingArray);
-                $scope.ageParkingCol=$scope.garageParkingArray[0].col
-
-            }
-
-        })
-    };
     // 车辆品牌查询
     $basic.get($host.api_url+"/carMake").then(function (data) {
         if(data.success==true){
@@ -104,14 +104,15 @@ storage_store_Controller.controller("storage_store_Controller",["$scope","$host"
         };
     $scope.new_garage_parking=function (storage_name,storage_id,row ,col,p_id) {
         // 车辆品牌查询
-        $basic.get($host.api_url+"/carMake").then(function (data) {
-            if(data.success==true){
-                $scope.makecarName=data.result;
+        $basic.get($host.api_url + "/carMake").then(function (data) {
+            if (data.success == true) {
+                $scope.makecarName = data.result;
                 // console.log($scope.makecarName)
-            }else {
-                swal(data.msg,"","error");
+            } else {
+                swal(data.msg, "", "error");
             }
         });
+
         // 车库查询
 
         $scope.private_storageName=storage_name;
@@ -239,7 +240,6 @@ storage_store_Controller.controller("storage_store_Controller",["$scope","$host"
         },function(error){
             swal('服务器内部错误',"","error");
         })
-
     };
 
 
@@ -248,7 +248,7 @@ storage_store_Controller.controller("storage_store_Controller",["$scope","$host"
     $scope.lookStorageCar=function (val) {
         console.log(val);
         $state.go("storageCar_details",{},{reload:true})
-    }
+    };
     // $scope.lookStorageCar=function (val) {
     //
     //     $scope.submitted=false;
