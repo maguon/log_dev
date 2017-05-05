@@ -42,6 +42,7 @@ commonDirective.directive('navigator', function() {
                     if (data.success == true) {
                         $scope.userName=data.result[0].user_name;
                         $basic.setSession($basic.USER_NAME,$scope.userName);
+                        $basic.setHeader($basic.USER_NAME,$scope.userName);
                     } else {
                         swal(data.msg, "", "error");
                     }
