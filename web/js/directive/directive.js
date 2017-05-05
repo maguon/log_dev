@@ -5,7 +5,7 @@ commonDirective.directive('header', function() {
         replace: true,
         transclude: false,
         restrict: 'E',
-        controller: function($scope, $element,$rootScope){
+        controller: function($scope, $element,$rootScope,$basic){
             $scope.logOut = function(){
                 swal({
                     title: "注销账号",
@@ -17,8 +17,10 @@ commonDirective.directive('header', function() {
                     cancelButtonText:"取消",
                     closeOnConfirm: false
                 }, function(){
-                   sessionStorage.removeItem("auth-token");
-                    sessionStorage.removeItem("userId");
+                    $basic.removeSession($basic.COMMON_AUTH_NAME);
+                    $basic.removeSession($basic.USER_ID);
+                    $basic.removeSession($basic.USER_TYPE);
+                    $basic.removeSession($basic.USER_NAME);
                     window.location.href='/login.html';
                 });
 
@@ -34,12 +36,12 @@ commonDirective.directive('navigator', function() {
         transclude: false,
         restrict: 'E',
         controller: function($scope,$basic,$host, $element,$rootScope){
-            if(sessionStorage.getItem("auth-token")){
-                $basic.get($host.api_url+"/admin/"+sessionStorage.getItem("userId")).then(function(data) {
+            if($basic.checkUser()){
+                $basic.get($host.api_url+"/admin/"+$basic.getSession($basic.USER_ID)).then(function(data) {
                     // $(".shadeDowWrap").hide();
                     if (data.success == true) {
                         $scope.userName=data.result[0].user_name;
-                        sessionStorage.setItem("userName",$scope.userName)
+                        $basic.setSession($basic.USER_NAME,$scope.userName);
                     } else {
                         swal(data.msg, "", "error");
                     }
@@ -64,11 +66,12 @@ commonDirective.directive('storageNavigator', function() {
         transclude: false,
         restrict: 'E',
         controller: function($scope,$basic,$host, $element,$rootScope){
-            if(sessionStorage.getItem("auth-token")){
-                $basic.get($host.api_url+"/admin/"+sessionStorage.getItem("userId")).then(function(data) {
+            if($basic.checkUser()){
+                $basic.get($host.api_url+"/admin/"+$basic.getSession($basic.USER_ID)).then(function(data) {
                     // $(".shadeDowWrap").hide();
                     if (data.success == true) {
                         $scope.userName=data.result[0].user_name;
+                        $basic.setSession($basic.USER_NAME,$scope.userName);
                     } else {
                         swal(data.msg, "", "error");
                     }
@@ -98,7 +101,7 @@ commonDirective.directive("truckUpload",function () {
     return{
         restrict: 'A',
         controller: function($basic,$upload){
-            var userId=sessionStorage.getItem("userId");
+            var userId=$basic.getSession($basic.USER_ID);
             var arr=[];
             $("#img").on("change",function (e) {
                 // 获取文件列表对象
@@ -300,7 +303,7 @@ commonDirective.directive("addBrand",function () {
     return{
         restrict:"A",
         controller:function ($scope,$host,$basic) {
-            var adminId=sessionStorage.getItem("userId");
+            var adminId=$basic.getSession($basic.USER_ID);
             $scope.add_brand=function (iValid) {
                 $scope.submitted1=true;
                 if(iValid){
@@ -330,7 +333,7 @@ commonDirective.directive("addBrandModel",function () {
     return{
         restrict:"A",
         controller:function ($scope,$host,$basic) {
-            var adminId=sessionStorage.getItem("userId");
+            var adminId=$basic.getSession($basic.USER_ID);
             // 关闭新增型号
             $scope.close_brand_model=function (id) {
                 $(".add_brand_box"+id).fadeIn(500);

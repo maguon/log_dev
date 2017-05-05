@@ -4,6 +4,8 @@ CommonService.factory('$basic',['$http','$location','$q',"$cookies",function($ht
     _this.USER_AUTH_NAME = "auth-token";
     _this.COMMON_AUTH_NAME ='auth-token';
     _this.USER_ID = "user-id";
+    _this.USER_NAME = "user-name";
+    _this.USER_TYPE = "user-type";
     _this.USER_STATUS = "status";
     _this.ADMIN_AUTH_NAME = "admin-token";
     _this.ADMIN_ID = "admin-id";
@@ -22,7 +24,7 @@ CommonService.factory('$basic',['$http','$location','$q',"$cookies",function($ht
             url: url,
             type:'post',
             beforeSend: function(xhr) {
-                xhr.setRequestHeader(_this.COMMON_AUTH_NAME,$cookies.get(_this.COMMON_AUTH_NAME));
+                xhr.setRequestHeader(_this.COMMON_AUTH_NAME,sessionStorage.getItem(_this.COMMON_AUTH_NAME));
                 //xhr.setRequestHeader('Content-Type','multipart/form-data');
             },
             success: function(data) {
@@ -78,6 +80,31 @@ CommonService.factory('$basic',['$http','$location','$q',"$cookies",function($ht
     _this.removeCookie = function (name){
         $cookies(name,"");
     };
+    _this.setSession = function(name,value){
+        sessionStorage.setItem(name,value);
+    }
+    _this.getSession = function(name){
+        return  sessionStorage.getItem(name);
+    }
+    _this.removeSession = function(name){
+        sessionStorage.removeItem(name);
+    }
+
+    _this.checkUser = function(userType){
+        if(!(this.getSession(this.COMMON_AUTH_NAME) && this.getSession(this.USER_ID))){
+            return false;
+        }else{
+            if(userType){
+                if(this.getSession(this.USER_TYPE) != userType){
+                    return false;
+                }else{
+                    return true;
+                }
+            }else{
+                return true;
+            }
+        }
+    }
     _this. getParameter = function(name) {
         var url = document.location.href;
         var start = url.indexOf("?")+1;

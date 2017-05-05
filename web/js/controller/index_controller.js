@@ -2,7 +2,7 @@ var index_controller=angular.module("index_controller",[]);
 index_controller.controller("indexController", ['$rootScope','$scope','$location','$q',"$basic",
     function($rootScope,$scope,$location,$q,$basic) {
     //
-        if(sessionStorage.getItem("auth-token")&&sessionStorage.getItem("userType")=="99"){
+        if($basic.checkUser('99')){
             Highcharts.chart('pie_chart', {
                 chart: {
                     plotBackgroundColor: null,
