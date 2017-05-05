@@ -32,6 +32,7 @@ baseService.factory("$urlMethod",function () {
     };
     return _this
 });
+
 baseService.factory("service_storage_parking",function () {
     var storageParking=function (pk) {
         var parkingArray =[];
@@ -58,9 +59,9 @@ baseService.factory("service_storage_parking",function () {
             if(j==parkingArray.length){
 
                 // pk[i].plan_time-
-                parkingArray.push({row:pk[i].row,col:[{col:pk[i].col,carId:pk[i].car_id,id:pk[i].id,status:pk[i].parking_statu,plan_time:expiredFlag,storage_name:pk[i].storage_name,storage_id:pk[i].storage_id}]})
+                parkingArray.push({row:pk[i].row,col:[{col:pk[i].col,vin:pk[i].vin,carId:pk[i].car_id,id:pk[i].id,status:pk[i].parking_statu,plan_time:expiredFlag,storage_name:pk[i].storage_name,storage_id:pk[i].storage_id}]})
             }else{
-                parkingArray[j].col.push({col:pk[i].col,carId:pk[i].car_id,id:pk[i].id,status:pk[i].parking_status,plan_time:expiredFlag,storage_name:pk[i].storage_name,storage_id:pk[i].storage_id});
+                parkingArray[j].col.push({col:pk[i].col,vin:pk[i].vin,carId:pk[i].car_id,id:pk[i].id,status:pk[i].parking_status,plan_time:expiredFlag,storage_name:pk[i].storage_name,storage_id:pk[i].storage_id});
             }
 
         }
@@ -72,4 +73,101 @@ baseService.factory("service_storage_parking",function () {
     return{
         storage_parking:storageParking
     }
+
+
 });
+baseService.factory("$config_variable",function () {
+    var _this={};
+    _this.rel_status=1;
+    _this.config_color =[
+        {
+            colorName:"白色",
+            colorId:"FFFFFF"
+        },
+        {
+            colorName:"黑色",
+            colorId:"000000"
+        },
+        {
+            colorName:"银色",
+            colorId:"ECECEC"
+        },
+        {
+            colorName:"金色",
+            colorId:"EDB756"
+        },
+        {
+            colorName:"红色",
+            colorId:"D0011B"
+        },
+        {
+            colorName:"蓝色",
+            colorId:"0B7DD5"
+        },
+        {
+            colorName:"灰色",
+            colorId:"9B9B9B"
+        },
+        {
+            colorName:"紫色",
+            colorId:"7C24AB"
+        },
+        {
+            colorName:"桔色",
+            colorId:"FF6600"
+        },
+        {
+            colorName:"黄色",
+            colorId:"FFCC00"
+        },
+        {
+            colorName:"绿色",
+            colorId:"39A23F "
+        },
+        {
+            colorName:"棕色",
+            colorId:"794A21 "
+        },
+        {
+            colorName:"粉色",
+            colorId:"FF9CC3 "
+        },
+        {
+            colorName:"其他",
+            colorId:"CCCCCC "
+        }
+    ];
+
+    return _this
+});
+baseService.factory("$pass_parameter",function () {
+//定义参数对象
+    var myObject = {};
+
+    /**
+     * 定义传递数据的setter函数
+     * @param {type} xxx
+     * @returns {*}
+     * @private
+     */
+    var _setter = function (data) {
+        myObject = data;
+    };
+
+    /**
+     * 定义获取数据的getter函数
+     * @param {type} xxx
+     * @returns {*}
+     * @private
+     */
+    var _getter = function () {
+        return myObject;
+    };
+
+    // Public APIs
+    // 在controller中通过调setter()和getter()方法可实现提交或获取参数的功能
+    return {
+        setter: _setter,
+        getter: _getter
+    };
+})

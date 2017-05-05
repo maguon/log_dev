@@ -130,6 +130,10 @@ index_router.config(['$stateProvider',"$urlRouterProvider",function($stateProvid
         .state("storageStore", {
             url:"/storage_store",
             templateUrl: "/view/storage/storage_store.html",
+        })
+        .state("storageCar_details", {
+            url:"/storageCar_details/{id}/vin/{vin}?from",
+            templateUrl: "/view/storage/storage_details.html",
         });
 
     // $urlRouterProvider.otherwise("/pageTab");
