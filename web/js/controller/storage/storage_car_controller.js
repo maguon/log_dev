@@ -2,12 +2,13 @@
  * Created by ASUS on 2017/5/4.
  */
 var Storage_car_Controller = angular.module("Storage_car_Controller", []);
-Storage_car_Controller.controller("Storage_car_Controller", ["$scope","$rootScope", "$host", "$basic", "$baseService","$config_variable", "service_storage_parking", function ($scope,$rootScope, $host, $basic, $baseService,$config_variable, service_storage_parking) {
+Storage_car_Controller.controller("Storage_car_Controller", ["$scope", "$rootScope", "$host", "$basic", "$baseService", "$config_variable", "service_storage_parking", function ($scope, $rootScope, $host, $basic, $baseService, $config_variable, service_storage_parking) {
     $scope.curruntId = 0;
     $scope.start = 0;
     $scope.size = 11;
-    var userId = sessionStorage.getItem("userId");
-    var searchAll = function (){
+    var userId = $basic.getSession($basic.USER_ID);
+
+    var searchAll = function () {
         $basic.get($host.api_url + "/user/" + userId + "/car?start=" + $scope.start + "&size=" + $scope.size + "&relStatus=" + $config_variable.rel_status).then(function (data) {
             if (data.success == true) {
                 $scope.storage_car_box = data.result;
@@ -123,9 +124,9 @@ Storage_car_Controller.controller("Storage_car_Controller", ["$scope","$rootScop
                 var imageId = data.imageId;
 
                 $basic.post($host.record_url + "/car/" + $scope.Picture_carId + "/vin/" + $scope.win + "/storageImage", {
-                    "username": sessionStorage.getItem("userName"),
+                    "username": $basic.getSession($basic.USER_NAME),
                     "userId": userId,
-                    "userType": sessionStorage.getItem("userType"),
+                    "userType": $basic.getSession($basic.USER_TYPE),
                     "url": imageId
                 }).then(function (data) {
                     if (data.success == true) {

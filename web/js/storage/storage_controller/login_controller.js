@@ -30,9 +30,10 @@ loginController.controller("loginController", ['$rootScope','$scope','$location'
                     $(".shadeDowWrap").hide();
                     if(data.success==true){
                         console.log(data);
-                        sessionStorage.setItem("auth-token",data.result.accessToken);
-                        sessionStorage.setItem("userStatus",data.result.userStatus);
-                        sessionStorage.setItem("userType",data.result.type);
+
+                        $basic.setSession($basic.USER_AUTH_NAME,data.result.accessToken);
+                        $basic.setSession($basic.USER_STATUS,data.result.userStatus);
+                        $basic.setSession($basic.USER_TYPE,data.result.type);
                         window.location.href="storage.html";
                     }else {
                         swal(data.msg,"","error");

@@ -1,8 +1,8 @@
-var index_controller=angular.module("index_controller",[]);
-index_controller.controller("indexController", ['$rootScope','$scope','$location','$q',"$basic",
-    function($rootScope,$scope,$location,$q,$basic) {
-    //
-        if($basic.checkUser('99')){
+var index_controller = angular.module("index_controller", []);
+index_controller.controller("indexController", ['$rootScope', '$scope', '$location', '$q', "$basic",
+    function ($rootScope, $scope, $location, $q, $basic) {
+        //
+        if ($basic.checkUser('99')) {
             Highcharts.chart('pie_chart', {
                 chart: {
                     plotBackgroundColor: null,
@@ -11,7 +11,7 @@ index_controller.controller("indexController", ['$rootScope','$scope','$location
                     type: 'pie'
                 },
                 title: {
-                    text:'Pie Chart'
+                    text: 'Pie Chart'
                 },
                 credits: {
                     text: '',
@@ -123,15 +123,15 @@ index_controller.controller("indexController", ['$rootScope','$scope','$location
 
             console.log('Index Controller Init !')
             $('.datepicker').pickadate({
-                onSet: function( arg ){
-                    if ( 'select' in arg ){
+                onSet: function (arg) {
+                    if ('select' in arg) {
                         this.close();
                     }
                 },
                 selectMonths: false, // Creates a dropdown to control month
                 selectYears: 0 // Creates a dropdown of 15 years to control year
             });
-        }else {
+        } else {
             window.location.href = 'login.html';
 
         }

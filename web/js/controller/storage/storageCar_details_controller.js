@@ -2,9 +2,9 @@
  * Created by ASUS on 2017/5/5.
  */
 var storageCar_details_ctrl = angular.module("storageCar_details_ctrl", []);
-storageCar_details_ctrl.controller("storageCar_details_ctrl", ["$baseService", "$state","$rootScope", "$stateParams", "$config_variable", "service_storage_parking", "$scope", "$host", "$basic", function ($baseService, $state,$rootScope, $stateParams, $config_variable, service_storage_parking, $scope, $host, $basic) {
+storageCar_details_ctrl.controller("storageCar_details_ctrl", ["$baseService", "$state", "$rootScope", "$stateParams", "$config_variable", "service_storage_parking", "$scope", "$host", "$basic", function ($baseService, $state, $rootScope, $stateParams, $config_variable, service_storage_parking, $scope, $host, $basic) {
     // console.log($stateParams.id, $stateParams.vin)
-    var userId = sessionStorage.getItem("userId");
+    var userId = $basic.getSession($basic.USER_ID)
     var val = $stateParams.id;
     var vin = $stateParams.vin;
     // var name= $stateParams.name;
@@ -63,9 +63,9 @@ storageCar_details_ctrl.controller("storageCar_details_ctrl", ["$baseService", "
                 console.log(data, $scope.Picture_carId);
                 var imageId = data.imageId;
                 $basic.post($host.record_url + "/car/" + $scope.Picture_carId + "/vin/" + $scope.win + "/storageImage", {
-                    "username": sessionStorage.getItem("userName"),
+                    "username": $basic.getSession($basic.USER_NAME),
                     "userId": userId,
-                    "userType": sessionStorage.getItem("userType"),
+                    "userType": $basic.getSession($basic.USER_TYPE),
                     "url": imageId
                 }).then(function (data) {
                     if (data.success == true) {
@@ -222,9 +222,9 @@ storageCar_details_ctrl.controller("storageCar_details_ctrl", ["$baseService", "
 
     // 返回
     $scope.return = function () {
-        if($stateParams.from=="storage_car_map"){
-            $state.go($stateParams.from, {id:$scope.self_car.storage_id,form:"storageStore"}, {reload: true})
-        }else {
+        if ($stateParams.from == "storage_car_map") {
+            $state.go($stateParams.from, {id: $scope.self_car.storage_id, form: "storageStore"}, {reload: true})
+        } else {
             $state.go($stateParams.from, {}, {reload: true})
         }
     };
@@ -276,7 +276,7 @@ storageCar_details_ctrl.controller("storageCar_details_ctrl", ["$baseService", "
                 // modelID赋值
                 $scope.look_make_id = $scope.self_car.make_id,
                     // console.log($scope.look_make_id);
-                $scope.changeMakeId($scope.look_make_id);
+                    $scope.changeMakeId($scope.look_make_id);
                 $scope.look_model_id = $scope.self_car.model_id,
                     $scope.look_create_time = $baseService.formDate($scope.self_car.pro_date);
                 $scope.look_storageName = $scope.self_car.storage_name + $scope.self_car.row + "排" + $scope.self_car.col + "列";
