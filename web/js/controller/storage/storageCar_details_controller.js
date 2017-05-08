@@ -1,15 +1,15 @@
 /**
  * Created by ASUS on 2017/5/5.
  */
-var storageCar_details_ctrl = angular.module("storageCar_details_ctrl", []);
-storageCar_details_ctrl.controller("storageCar_details_ctrl", ["$baseService", "$state", "$rootScope", "$stateParams", "$config_variable", "service_storage_parking", "$scope", "$host", "$basic", function ($baseService, $state, $rootScope, $stateParams, $config_variable, service_storage_parking, $scope, $host, $basic) {
+var storageCar_detailsController = angular.module("storageCar_detailsController", []);
+storageCar_detailsController.controller("storageCar_detailsController", ["$baseService", "$state", "$rootScope", "$stateParams", "$config_variable", "service_storage_parking", "$scope", "$host", "$basic", function ($baseService, $state, $rootScope, $stateParams, $config_variable, service_storage_parking, $scope, $host, $basic) {
     // console.log($stateParams.id, $stateParams.vin)
-    var userId = $basic.getSession($basic.USER_ID)
+    var userId = $basic.getSession($basic.USER_ID);
     var val = $stateParams.id;
     var vin = $stateParams.vin;
     // var name= $stateParams.name;
 
-    console.log($stateParams.from);
+    // console.log($stateParams.from);
     // 车辆品牌查询
     $basic.get($host.api_url + "/carMake").then(function (data) {
         if (data.success == true) {
@@ -115,12 +115,10 @@ storageCar_details_ctrl.controller("storageCar_details_ctrl", ["$baseService", "
         } else {
             $scope.curruntId = val;
             $basic.get($host.api_url + "/carMake/" + val + "/carModel").then(function (data) {
-                if (data.success == true) {
+                if (data.success==true) {
                     $scope.carModelName = data.result;
-                    // $scope.self_car.model_id = $scope.modelId;
-                    // setTimeout($scope.look_model_id=id,2000);
 
-                    // console.log(id);
+                    console.log($scope.carModelName);
                     // $scope.look_model_id=id;
 
                 } else {

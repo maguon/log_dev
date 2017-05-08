@@ -1,8 +1,8 @@
 /**
  * Created by ASUS on 2017/5/4.
  */
-var storage_store_Controller = angular.module("storage_store_Controller", []);
-storage_store_Controller.controller("storage_store_Controller", ["$scope", "$host", "$basic", "$state", "$rootScope", "$config_variable", "$baseService", "service_storage_parking", function ($scope, $host, $basic, $state, $rootScope, $config_variable, $baseService, service_storage_parking) {
+var storage_storeController = angular.module("storage_storeController", []);
+storage_storeController.controller("storage_storeController", ["$scope", "$host", "$basic", "$state", "$rootScope", "$config_variable", "$baseService", "service_storage_parking", function ($scope, $host, $basic, $state, $rootScope, $config_variable, $baseService, service_storage_parking) {
     var userId = $basic.getSession($basic.USER_ID);
     var data = new Date();
     var now_date = moment(data).format('YYYYMMDD');

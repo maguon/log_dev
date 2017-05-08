@@ -1,5 +1,6 @@
 
-var app = angular.module("storage_dev", ['ui.router',"ngCookies","ngMessages","index_controller","hostService","baseService","commonDirective","CommonService","storage_router"]);
+// var app = angular.module("storage_dev", ['ui.router',"ngCookies","ngMessages","index_controller","hostService","baseService","commonDirective","CommonService","storage_router"]);
+var app = angular.module("storage_dev", ['ui.router',"ngCookies","ngMessages","index_controller","hostService","baseService","commonDirective","CommonService","CommonFilter","storage_router","Storage_carController","storage_storeController","storage_car_mapController","storageCar_detailsController","storage_working_calendarController"]);
 
 app.config(['$httpProvider',"$cookiesProvider",function($httpProvider,$cookiesProvider) {
     $cookiesProvider.defaults = {
@@ -9,6 +10,3 @@ app.config(['$httpProvider',"$cookiesProvider",function($httpProvider,$cookiesPr
         secure: true//该cookie只在安全连接中被提供
     };
 }]);
-/**
- * Created by ASUS on 2017/4/10.
- */

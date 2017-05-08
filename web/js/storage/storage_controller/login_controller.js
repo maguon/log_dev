@@ -1,19 +1,7 @@
-var loginController=angular.module("loginController",[]);
-loginController.controller("loginController", ['$rootScope','$scope','$location','$q',"$basic","$host",
+var storage_loginController=angular.module("storage_loginController",[]);
+storage_loginController.controller("loginController", ['$rootScope','$scope','$location','$q',"$basic","$host",
 
-    function($rootScope,$scope,$location,$q,$basic,$host) {
-        // if(sessionStorage.getItem("userId")){
-        //     var userId=sessionStorage.getItem("userId");
-        //     console.log(userId);
-        //     $basic.get(DataUrl+"/admin/"+userId).then(function (data) {
-        //         $scope.username=data.data.result[0].user_name;
-        //     }).catch(function (error) {
-        //         sweetAlert("系统异常", "", "error");
-        //     });
-        // }else {
-        //     $scope.username='';
-        // }
-        // console.log(sessionStorage.getItem("userId"));
+    function($rootScope,$scope,$location,$q,$basic,$host){
         $scope.username='';
         $scope.password='';
         $scope.login = function(){

@@ -1,8 +1,8 @@
 /**
  * Created by ASUS on 2017/5/5.
  */
-var storage_car_map_controller = angular.module("storage_car_map_controller", []);
-storage_car_map_controller.controller("storage_car_map_controller", ["$baseService", "$state", "$rootScope", "$stateParams", "$config_variable", "service_storage_parking", "$scope", "$host", "$basic", function ($baseService, $state, $rootScope, $stateParams, $config_variable, service_storage_parking, $scope, $host, $basic) {
+var storage_car_mapController = angular.module("storage_car_mapController", []);
+storage_car_mapController.controller("storage_car_mapController", ["$baseService", "$state", "$rootScope", "$stateParams", "$config_variable", "service_storage_parking", "$scope", "$host", "$basic", function ($baseService, $state, $rootScope, $stateParams, $config_variable, service_storage_parking, $scope, $host, $basic) {
     var val = $stateParams.id;
     var data = new Date();
     var now_date = moment(data).format('YYYYMMDD');
@@ -14,13 +14,13 @@ storage_car_map_controller.controller("storage_car_map_controller", ["$baseServi
     // var balance = $stateParams.balance;
     // var im = $stateParams.imports;
     // var ex = $stateParams.exports;
-    console.log(val);
+    // console.log(val);
     // 到仓储车辆图
     $scope.LookGarage = function (val) {
         $basic.get($host.api_url + "/storageDate?storageId=" + val + "&dateStart=" + now_date + "&dateEnd=" + now_date).then(function (data) {
             if (data.success == true) {
                 $scope.storage = data.result[0];
-                console.log($scope.storage)
+                // console.log($scope.storage)
             }
 
         });
