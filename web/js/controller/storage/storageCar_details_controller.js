@@ -2,11 +2,12 @@
  * Created by ASUS on 2017/5/5.
  */
 var storageCar_detailsController = angular.module("storageCar_detailsController", []);
-storageCar_detailsController.controller("storageCar_detailsController", ["$baseService", "$state", "$rootScope", "$stateParams", "$config_variable", "service_storage_parking", "$scope", "$host", "$basic", function ($baseService, $state, $rootScope, $stateParams, $config_variable, service_storage_parking, $scope, $host, $basic) {
+storageCar_detailsController.controller("storageCar_detailsController", ["$baseService","$state",  "$stateParams", "$config_variable", "service_storage_parking", "$scope", "$host", "$basic", function ($baseService, $state, $stateParams, $config_variable, service_storage_parking, $scope, $host, $basic) {
     // console.log($stateParams.id, $stateParams.vin)
     var userId = $basic.getSession($basic.USER_ID);
     var val = $stateParams.id;
     var vin = $stateParams.vin;
+
     // var name= $stateParams.name;
 
     // console.log($stateParams.from);
@@ -117,16 +118,13 @@ storageCar_detailsController.controller("storageCar_detailsController", ["$baseS
             $basic.get($host.api_url + "/carMake/" + val + "/carModel").then(function (data) {
                 if (data.success==true) {
                     $scope.carModelName = data.result;
-
-                    console.log($scope.carModelName);
+                    // console.log($scope.carModelName);
                     // $scope.look_model_id=id;
-
                 } else {
                     swal(data.msg, "", "error")
                 }
             })
         }
-
 
     };
     // 颜色
@@ -183,18 +181,18 @@ storageCar_detailsController.controller("storageCar_detailsController", ["$baseS
 
     // 车辆照片跳转
     $scope.look_car_img = function () {
-        $('ul.tabs li').removeClass("active");
+        $('ul.tabWrap li').removeClass("active");
         $(".tab_box").removeClass("active");
         $(".tab_box").hide();
-        $('ul.tabs li.look_car_img ').addClass("active");
+        $('ul.tabWrap li.look_car_img ').addClass("active");
         $("#look_car_img").addClass("active");
         $("#look_car_img").show();
     };
     $scope.look_msg = function () {
-        $('ul.tabs li').removeClass("active");
+        $('ul.tabWrap li').removeClass("active");
         $(".tab_box").removeClass("active");
         $(".tab_box").hide();
-        $('ul.tabs li.look_msg ').addClass("active");
+        $('ul.tabWrap li.look_msg ').addClass("active");
         $("#look_msg").addClass("active");
         $("#look_msg").show();
     };
@@ -243,10 +241,10 @@ storageCar_detailsController.controller("storageCar_detailsController", ["$baseS
         $("#look_StorageCar").show();
 
 
-        $('ul.tabs li').removeClass("active");
+        $('ul.tabWrap li').removeClass("active");
         $(".tab_box").removeClass("active");
         $(".tab_box").hide();
-        $('ul.tabs li.look_msg').addClass("active");
+        $('ul.tabWrap li.look_msg').addClass("active");
         $("#look_msg").addClass("active");
         $("#look_msg").show();
 

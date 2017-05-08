@@ -81,7 +81,7 @@ commonDirective.directive('storageNavigator', function () {
             $("#menu_link").sideNav({
                 menuWidth: 280, // Default is 300
                 edge: 'left', // Choose the horizontal origin
-                // closeOnClick: false, // Closes side-nav on <a> clicks, useful for Angular/Meteor
+                closeOnClick: true, // Closes side-nav on <a> clicks, useful for Angular/Meteor
                 // draggable: true // Choose whether you can drag to open on touch screens
             });
             // $(".button-collapse").sideNav();
@@ -199,6 +199,20 @@ commonDirective.directive("dateFilter", ["$filter", function ($filter) {
         }
     }
 }]);
+
+
+
+commonDirective.directive('testDirective',[function () {
+   return{
+       restrict:"ECMA",
+       priority:"",
+       templateUrl:"",
+       replace:true//false,
+   }
+}]);
+
+
+
 commonDirective.directive("addNav", function () {
     return {
         templateUrl: '/view/car/new_truck/new_truck.html',

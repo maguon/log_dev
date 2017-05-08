@@ -2,12 +2,12 @@
  * Created by ASUS on 2017/5/4.
  */
 var Storage_carController = angular.module("Storage_carController", []);
-Storage_carController.controller("Storage_carController", ["$scope", "$rootScope", "$host", "$basic", "$baseService", "$config_variable", "service_storage_parking", function ($scope, $rootScope, $host, $basic, $baseService, $config_variable, service_storage_parking) {
+Storage_carController.controller("Storage_carController", ["$scope", "$rootScope","$pass_parameter", "$host", "$basic", "$baseService", "$config_variable", "service_storage_parking", function ($scope, $rootScope,$pass_parameter,$host, $basic, $baseService, $config_variable, service_storage_parking) {
     $scope.curruntId = 0;
     $scope.start = 0;
     $scope.size = 11;
     var userId = $basic.getSession($basic.USER_ID);
-
+    $pass_parameter.setter("jiangsen");
     var searchAll = function () {
         $basic.get($host.api_url + "/user/" + userId + "/car?start=" + $scope.start + "&size=" + $scope.size + "&relStatus=" + $config_variable.rel_status).then(function (data) {
             if (data.success == true) {
@@ -21,7 +21,7 @@ Storage_carController.controller("Storage_carController", ["$scope", "$rootScope
     };
     // 分页
     // 上一页
-    $scope.pre_btn = function () {
+    $scope.pre_btn = function (){
         if ($scope.start > 0) {
             $scope.start = $scope.start - ($scope.size - 1);
             searchAll();

@@ -11,7 +11,7 @@ userController.controller("usersController", ["$basic", "$host", "$scope", funct
     var searchAll = function () {
         $basic.get($host.api_url + "/admin/" + adminId + "/user").then(function (data) {
             if (data.success == true) {
-                console.log(data)
+                // console.log(data)
                 $scope.operator = data.result;
 
             } else {

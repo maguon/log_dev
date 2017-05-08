@@ -65,26 +65,33 @@ body{
 .side-nav li.active{
     background:#212121 ;
 }
-.tabs li{
+.tabWrap{
+    overflow: hidden;
+    margin: 0;
+    padding: 0;
+
+}
+.tabWrap li{
+    height: 40px;
     cursor: pointer;
 }
-.tabs .active{
+.tabWrap .active{
     background: #26c6da;
     color: white;
 }
 /*.test1{*/
     /*background: #26c6da;*/
 /*}*/
-.tabs .active.tab.disabled a{
+.tabWrap .active.tab.disabled a{
     color: white;
 }
-.tabs .active.tab.disabled a:hover{
+.tabWrap .active.tab.disabled a:hover{
     color: white;
 }
-.tabs .tab.disabled a:hover{
+.tabWrap .tab.disabled a:hover{
     color: #26c6da;
 }
-.tabs .tab.disabled a{
+.tabWrap .tab.disabled a{
     color: #26c6da;
 }
 /*.side-nav .collapsible-header{*/
