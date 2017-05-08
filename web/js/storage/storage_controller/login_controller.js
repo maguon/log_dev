@@ -32,6 +32,7 @@ loginController.controller("loginController", ['$rootScope','$scope','$location'
                         console.log(data);
 
                         $basic.setSession($basic.USER_AUTH_NAME,data.result.accessToken);
+                        $basic.setSession($basic.USER_ID,data.result.userId);
                         $basic.setSession($basic.USER_STATUS,data.result.userStatus);
                         $basic.setSession($basic.USER_TYPE,data.result.type);
                         window.location.href="storage.html";

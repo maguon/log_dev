@@ -4,7 +4,7 @@ login_router.config(['$stateProvider',"$urlRouterProvider",function($stateProvid
     $stateProvider
         .state("login", {  //路由状态
             url: "/login",  //路由路径
-            templateUrl: "/view/login.html",  //路由填充的模板
+            templateUrl: "/view/storage_login.html",  //路由填充的模板
             controller:'loginController'
         })
 }]);

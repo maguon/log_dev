@@ -67,8 +67,8 @@ commonDirective.directive('storageNavigator', function () {
         transclude: false,
         restrict: 'E',
         controller: function ($scope, $basic, $host, $element, $rootScope) {
-            if ($basic.checkUser()) {
-                $basic.get($host.api_url + "/admin/" + $basic.getSession($basic.USER_ID)).then(function (data) {
+            if ($basic.checkUser('2')) {
+                $basic.get($host.api_url + "/user/" + $basic.getSession($basic.USER_ID)).then(function (data) {
                     // $(".shadeDowWrap").hide();
                     if (data.success == true) {
                         $scope.userName = data.result[0].user_name;
