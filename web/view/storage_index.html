@@ -1,29 +1,103 @@
-<div class="row homeWrap">
-    <div class="col s3 homeWrapList ">
-        <div class="red lighten-2">
-            <div class="s8">
-                <div class="s6 s_index_icon white">
-                    <i class="mdi mdi-car"></i>
+<div class="row homeWrap" ng-controller="storage_index_controller">
+    <div class="row ">
+        <div class="col s3 homeWrapList ">
+            <div class="red lighten-2 valign-wrapper">
+                <div class="col s5 offset-s1 ">
+                    <div class=" s_index_icon white lighten-5 vc-center left">
+                        <i class="mdi mdi-car red-text text-lighten-2"></i>
+                    </div>
+                    <div class="right white-text text-lighten-2">
+                        仓储总车位
+                    </div>
                 </div>
-                <div class="s6"></div>
+                <div class="col s4 white-text text-lighten-2">
+                    <h5 ng-bind="storage_allStorage">00</h5>
+                </div>
             </div>
-            <div class="s4"></div>
-
         </div>
-    </div>
-    <div class="col s3 homeWrapList ">
-        <div class="red lighten-2">
+        <div class="col s3 homeWrapList ">
+            <div class="red lighten-2 valign-wrapper">
+                <div class="col s5 offset-s1 ">
+                    <div class=" s_index_icon white lighten-5 vc-center left">
+                        <i class="mdi mdi-car red-text text-lighten-2"></i>
+                    </div>
+                    <div class="right white-text text-lighten-2">
+                        库存总车辆
+                    </div>
+                </div>
+                <div class="col s4 white-text text-lighten-2">
+                    <h5 ng-bind="storage_index_count.sumBalance"></h5>
+                </div>
 
+            </div>
         </div>
-    </div>
-    <div class="col s3 homeWrapList ">
-        <div class="red lighten-2">
-
+        <div class="col s3 homeWrapList ">
+            <div class="red lighten-2 valign-wrapper">
+                <div class="col s5 offset-s1 ">
+                    <div class=" s_index_icon white lighten-5 vc-center left">
+                        <i class="mdi mdi-car red-text text-lighten-2"></i>
+                    </div>
+                    <div class="right white-text text-lighten-2">
+                        今日入库车辆
+                    </div>
+                </div>
+                <div class="col s4 white-text text-lighten-2">
+                    <h5 ng-bind="storage_index_count.sumImports"></h5>
+                </div>
+            </div>
         </div>
-    </div>
-    <div class="col s3 homeWrapList ">
-        <div class="red lighten-2">
+        <div class="col s3 homeWrapList ">
+            <div class="red lighten-2 valign-wrapper">
+                <div class="col s5 offset-s1 ">
+                    <div class=" s_index_icon white lighten-5 vc-center left">
+                        <i class="mdi mdi-car red-text text-lighten-2"></i>
+                    </div>
+                    <div class="right white-text text-lighten-2">
+                        今日出库车辆
+                    </div>
+                </div>
+                <div class="col s4 white-text text-lighten-2">
+                    <h5 ng-bind="storage_index_count.sumExports"></h5>
+                </div>
+            </div>
+        </div>
 
+    </div>
+    <div class="row">
+        <div class="col s3 storage_detailsList " ng-repeat="el in storage_index_list">
+            <div class="storage_details white ">
+                <div class="s_d_data light-blue-text text-accent-3 valign-wrapper">
+                    <div class="col s6 ">
+                        <div class="percentWrap" id="percentWrap" percent-wrap>
+                            <!--<span style="display: block" class="grey-text">使用率:</span>-->
+                            <!--<h5 >-->
+                                <!--{{el.balance/(el.col*el.row)*100|number:0}}%-->
+                            <!--</h5>-->
+                            <!--<div id="percent"></div>-->
+                        </div>
+                    </div>
+                    <div class="col s6">
+                        <h5 ng-bind="el.storage_name"></h5>
+                        <p ><span class="grey-text">总车位:</span><span ng-bind="el.col*el.row"></span></p>
+                        <p><span class="grey-text">可用车位:</span><span ng-bind="el.col*el.row-el.balance"></span></p>
+                    </div>
+                </div>
+                <div class="s_d_data_today valign-wrapper">
+                    <div class="col s4 vc-center  light-blue-text text-accent-3">
+                        <i style="display: block" class="mdi mdi-arrow-right-bold-circle-outline"></i>
+                        <span ng-bind="el.imports"></span>
+                    </div>
+                    <div class="col s4 vc-center  light-blue-text text-accent-3">
+                        <i style="display: block" class="mdi  mdi-arrow-down-bold-circle-outline"></i>
+                        <span ng-bind="el.balance"></span>
+                    </div>
+                    <div class="col s4 vc-center red-text text-lighten-2">
+                        <i style="display: block" class="mdi mdi-arrow-left-bold-circle-outline"></i>
+                        <span ng-bind="el.exports"></span>
+                    </div>
+                </div>
+                <a href="" ui-sref="storage_car_map({id:el.storage_id,form:'storage_index'})" class="s_d_details-btn btn valign-wrapper" >查看详情</a>
+            </div>
         </div>
     </div>
 </div>
