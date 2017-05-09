@@ -2,62 +2,65 @@
     <div class="row ">
         <div class="col s3 homeWrapList ">
             <div class="red lighten-2 valign-wrapper z-depth-2">
-                <div class="col s7 offset-s1 ">
+                <div class="col s3 offset-s1 ">
                     <div class=" s_index_icon red lighten-4 vc-center left ">
                         <i class="mdi mdi-car red-text text-lighten-2 "></i>
                     </div>
-                    <div class="right white-text text-lighten-2">
+                </div>
+                <div class="col s7  white-text  pull-s1 text-lighten-2 right-align">
+                    <div class=" white-text text-lighten-2 left-align">
                         仓储总车位
                     </div>
-                </div>
-                <div class="col s1  white-text  pull-s1 text-lighten-2 right-align">
-                    <h5 ng-bind="storage_allStorage">00</h5>
+                    <h5 ng-bind="storage_allStorage " class="right-align">00</h5>
                 </div>
             </div>
         </div>
         <div class="col s3 homeWrapList ">
             <div class="red lighten-2 valign-wrapper z-depth-2">
-                <div class="col s7 offset-s1 ">
+                <div class="col s3 offset-s1 ">
                     <div class=" s_index_icon red lighten-4 vc-center left">
                         <i class="mdi mdi-car red-text text-lighten-2"></i>
                     </div>
-                    <div class="right white-text text-lighten-2">
+
+                </div>
+                <div class="col s7 white-text  pull-s1 text-lighten-2 ">
+                    <div class=" white-text text-lighten-2 left-align">
                         库存总车辆
                     </div>
-                </div>
-                <div class="col s1 white-text  pull-s1 text-lighten-2 right-align">
-                    <h5 ng-bind="storage_index_count.sumBalance"></h5>
+                    <h5 ng-bind="storage_index_count.sumBalance" class="right-align"></h5>
                 </div>
 
             </div>
         </div>
         <div class="col s3 homeWrapList ">
             <div class="red lighten-2 valign-wrapper z-depth-2">
-                <div class="col s7 offset-s1 ">
+                <div class="col s3 offset-s1 ">
                     <div class=" s_index_icon red lighten-4 vc-center left">
                         <i class="mdi mdi-car red-text text-lighten-2"></i>
                     </div>
-                    <div class="right white-text text-lighten-2">
-                        今日入库车辆
-                    </div>
+
                 </div>
-                <div class="col s1 white-text  pull-s1 text-lighten-2 right-align">
-                    <h5 ng-bind="storage_index_count.sumImports"></h5>
+                <div class="col s7 white-text  pull-s1 text-lighten-2 ">
+                    <div class="white-text text-lighten-2 left-align">
+                        今日入库
+                    </div>
+                    <h5 ng-bind="storage_index_count.sumImports" class="right-align"></h5>
                 </div>
             </div>
         </div>
         <div class="col s3 homeWrapList ">
             <div class="red lighten-2 valign-wrapper z-depth-2">
-                <div class="col s7 offset-s1 ">
+                <div class="col s3 offset-s1 ">
                     <div class=" s_index_icon red lighten-4 vc-center left">
                         <i class="mdi mdi-car red-text text-lighten-2"></i>
                     </div>
-                    <div class="right white-text text-lighten-2">
-                        今日出库车辆
-                    </div>
+
                 </div>
-                <div class="col s1 white-text pull-s1 text-lighten-2  right-align">
-                    <h5 ng-bind="storage_index_count.sumExports"></h5>
+                <div class="col s7 white-text pull-s1 text-lighten-2  ">
+                    <div class=" white-text text-lighten-2 left-align">
+                        今日出库
+                    </div>
+                    <h5 ng-bind="storage_index_count.sumExports" class="right-align"></h5>
                 </div>
             </div>
         </div>
