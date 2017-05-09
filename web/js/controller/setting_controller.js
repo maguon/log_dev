@@ -1,5 +1,6 @@
-var settingController = angular.module("settingController", []);
 
+var settingController = angular.module("settingController", []);
+// 管理员密码设置
 settingController.controller("settingPW_controller", ["$scope", "$host", "$basic", function ($scope, $host, $basic) {
     $scope.settingPswForm = function (isValid) {
         var adminId = $basic.getSession($basic.USER_ID);
@@ -22,6 +23,7 @@ settingController.controller("settingPW_controller", ["$scope", "$host", "$basic
 
     }
 }]);
+// 仓库设置
 settingController.controller("settingWH_controller", ["$scope", "$host", "$basic", function ($scope, $host, $basic) {
     var adminId = $basic.getSession($basic.USER_ID);
 
@@ -106,22 +108,43 @@ settingController.controller("settingWH_controller", ["$scope", "$host", "$basic
     // 修改仓库运营状态
     $scope.changeStorage_status = function (id, status) {
         var st;
+        var str="";
+
         if (status == 0) {
+            str="启用";
             st = 1
         } else {
+            str="停用";
             st = 0
         }
-        $basic.put($host.api_url + "/admin/" + adminId + "/storage/" + id + "/storageStatus/" + st, {}).then(function (data) {
-            if (data.success == true) {
-                swal("修改成功", "", "success");
-                searchAll();
-            } else {
-                swal(data.msg, "", "error");
+        swal({
+                title: "是否"+str+"?",
+                text: "",
+                type: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#DD6B55",
+                confirmButtonText: "确定",
+                cancelButtonText: "取消",
+                closeOnConfirm: false
+            },
+            function () {
+
+                $basic.put($host.api_url + "/admin/" + adminId + "/storage/" + id + "/storageStatus/" + st, {}).then(function (data) {
+                    if (data.success == true) {
+                        swal("修改成功", "", "success");
+                        searchAll();
+                    } else {
+                        swal(data.msg, "", "error");
+                    }
+                })
             }
-        })
+        );
+
+
     }
 }]);
-settingController.controller("settingT_Controller", ["$scope", "$host", "$basic", function ($scope, $host, $basic) {
+// 车辆设置
+settingController.controller("settingT_controller", ["$scope", "$host", "$basic", function ($scope, $host, $basic) {
 
     var adminId = $basic.getSession($basic.USER_ID);
 
@@ -246,4 +269,153 @@ settingController.controller("settingT_Controller", ["$scope", "$host", "$basic"
     // $scope.add_brand=function () {
     //
     // }
+}]);
+settingController.controller("setting_user_controller", ["$basic", "$host", "$scope", function ($basic, $host, $scope) {
+
+    var adminId = $basic.getSession($basic.USER_ID);
+
+
+    // 搜索所有查询
+    var searchAll = function () {
+        $basic.get($host.api_url + "/admin/" + adminId + "/user").then(function (data) {
+            if (data.success == true) {
+                // console.log(data)
+                $scope.operator = data.result;
+
+            } else {
+                swal(data.msg, "", "error");
+            }
+        });
+        // $basic.get($host.api_url+"/admin/"+adminId+"/department").then(function (data) {
+        //     if(data.success==true){
+        //         $scope.department=data.result;
+        //         // console.log($scope.Company);
+        //     }else {
+        //         swal(data.msg,"","error");
+        //     }
+        // })
+    };
+
+    searchAll();
+
+    $scope.newOperator = function () {
+        $scope.submitted = false;
+        $scope.newRealName = "";
+        $scope.newDepId = "";
+        $scope.newUserName = "";
+        $scope.newUserSex = "";
+        $scope.newUserPassword = "";
+
+        $(".modal").modal();
+        $("#newOperator").modal("open");
+
+    };
+    // 提交新增
+    $scope.submitForm = function (isValid) {
+        $scope.submitted = true;
+        if (isValid) {
+            var sex_id = $(".sex").attr("sex");
+            $scope.newUserSex = sex_id;
+            var obj = {
+                mobile: $scope.newUserName,
+                realName: $scope.newRealName,
+                type: $scope.newDepId,
+                gender: $scope.newUserSex,
+                // mobile:$scope.new_userName,
+                password: $scope.newUserPassword
+            };
+
+            $basic.post($host.api_url + "/admin/" + adminId + "/user", obj).then(function (data) {
+                if (data.success == true) {
+                    swal("新增成功", "", "success");
+                    $('#newOperator').modal('close');
+                    searchAll();
+                } else {
+                    swal(data.msg, "", "error");
+                }
+
+            })
+
+        }
+    };
+    // 查看详情
+    $scope.lookOperation = function (id) {
+        $(".modal").modal();
+        $("#look_Operator").modal("open");
+        $basic.get($host.api_url + "/admin/" + adminId + "/user?userId=" + id).then(function (data) {
+            if (data.success == true) {
+                $scope.look_operation = data.result[0];
+                // console.log($scope.look_operation)
+            } else {
+                swal(data.msg, "", "error");
+            }
+
+        })
+    };
+    // 停启用
+    $scope.changeStatus = function (st, id) {
+        var st_txt;
+        if (st == "1") {
+            st_txt = "停用"
+        } else if (st == "0") {
+            st_txt = "启用"
+        }
+        swal({
+                title: "确定" + st_txt + "?",
+                // text: "You will not be able to recover this imaginary file!",
+                type: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#DD6B55",
+                confirmButtonText: st_txt,
+                closeOnConfirm: false,
+                cancelButtonText: "取消",
+            },
+            function () {
+                swal("成功!", "", "success");
+                if (st == "1") {
+                    $scope.changeSt = "0"
+                } else if (st == "0") {
+                    $scope.changeSt = "1"
+                }
+
+                $basic.put($host.api_url + "/admin/" + adminId + "/user/" + id + "/status/" + $scope.changeSt
+                    , {}).then(function (data) {
+                    if (data.success == true) {
+                        searchAll();
+                    } else {
+                        swal(data.msg, "", "error");
+                    }
+
+                })
+            });
+    };
+    // 修改
+    $scope.changeOperatorForm = function (isValid, id) {
+        $scope.submitted = true;
+        if (isValid) {
+            var sex_id = $(".sex").attr("sex");
+            $scope.newUserSex = sex_id;
+            var obj = {
+                mobile: $scope.look_operation.mobile,
+                realName: $scope.look_operation.real_name,
+                type: $scope.look_operation.type,
+                // gender:$scope.look_operation.gender,
+                status: $scope.look_operation.status,
+                gender: $scope.newUserSex
+                // mobile:$scope.new_userName,
+                // password:$scope.look_operation.newUserPassword
+            };
+            $basic.put($host.api_url + "/admin/" + adminId + "/user/" + id, obj).then(function (data) {
+                if (data.success == true) {
+                    swal("修改成功", "", "success");
+                    $('#look_Operator').modal('close');
+                    searchAll();
+                } else {
+                    swal(data.msg, "", "error");
+                }
+
+            })
+        }
+
+    }
 }]);

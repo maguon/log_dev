@@ -11,12 +11,12 @@
         <div class="row addBrand">
             <ul class="collapsible" data-collapsible="accordion" collapsible>
                 <li>
-                    <a href="" class=" collapsible-header btn waves-effect waves-light blue">+品牌</a>
+                    <a href="" class=" collapsible-header btn waves-effect cyan lighten-2 waves-light ">+品牌</a>
                     <div class="collapsible-body row valign-wrapper" add-brand  ng-class="{'has-error':addBrandFrom.brandText.$invalid&&submitted1 }">
                         <form name="addBrandFrom" ng-submit="add_brand(addBrandFrom.$valid)" novalidate>
                             <input class="col s3 Brand_text" name="brandText" id="brandText" type="text" autocomplete="off" ng-model="b_txt" required>
                             <div class="col s1  add_Brand_Icon"  >
-                                <button  class="waves-effect waves-light  lighten-1 btn"  type="submit" name="action" >
+                                <button  class="waves-effect waves-light cyan  lighten-1 btn"  type="submit" name="action" >
                                     <i class="mdi mdi-check add_brand" ></i>
                                 </button>
                                 <!--<a  class="waves-effect waves-light materialize-red  lighten-1 btn" >-->
@@ -34,7 +34,7 @@
             <ul class="collapsible Brand_box" data-collapsible="accordion" collapsible>
                 <!--<brand-list></brand-list>-->
                 <li ng-repeat="el in brand">
-                    <div class="collapsible-header blue-text" flag="true"  ng-click="open_car_model($event,el.id)"><i class="mdi mdi-car blue-text"></i>{{el.make_name}} </div>
+                    <div class="collapsible-header cyan-text text-lighten-2" flag="true"  ng-click="open_car_model($event,el.id)"><i class="mdi mdi-car cyan-text text-lighten-2"></i>{{el.make_name}} </div>
                     <div class="collapsible-body">
                         <!--<div class="row" style="position: relative">-->
                             <!--<div class="fixed-action-btn toolbar">-->
@@ -58,10 +58,10 @@
                             <div class="row change_brand_wrap{{el.id}}" style="margin: 0;display: none;">
                                 <input type="text" class="col s3 change_brand_text"  ng-model="el.make_name">
                                 <div class="col s3 "   style="height: 100%;min-width: 180px">
-                                    <a  class="waves-effect waves-light   lighten-1 btn" ng-click="close_brand(el.id)">
+                                    <a  class="waves-effect waves-light  cyan  lighten-1 btn" ng-click="close_brand(el.id)">
                                         <i class="mdi mdi-close " style="font-size: 25px"></i>
                                     </a>
-                                    <a  class="waves-effect waves-light tooltipped  lighten-1 btn" ng-click="verify_brand(el.id,el.make_name)" tooltipped data-position="top" data-delay="50" data-tooltip="确认修改" >
+                                    <a  class="waves-effect waves-light tooltipped  cyan lighten-1 btn" ng-click="verify_brand(el.id,el.make_name)" tooltipped data-position="top" data-delay="50" data-tooltip="确认修改" >
                                         <i class="mdi mdi-check " style="font-size: 25px"></i>
                                     </a>
                                 </div>
@@ -77,10 +77,10 @@
                                     <form name="addBrandModelFrom" ng-submit="verify_brand_model(addBrandModelFrom.$valid,el.id)" novalidate>
                                         <input type="text" id="brandModelText" name="brandModelText" class="col s3 change_brand_text"  ng-model="brandModelText" required >
                                         <div class="col s3  " style="height: 100%;min-width: 180px">
-                                            <a  class="waves-effect waves-light   lighten-1 btn" ng-click="close_brand_model(el.id)"  >
+                                            <a  class="waves-effect waves-light cyan  lighten-1 btn" ng-click="close_brand_model(el.id)"  >
                                                 <i class="mdi mdi-close " style="font-size: 25px"></i>
                                             </a>
-                                            <button  class="btn waves-light waves-effect" type="submit" name="action" >
+                                            <button  class="btn waves-light cyan lighten-1 waves-effect" type="submit" name="action" >
                                                 <i class="mdi mdi-check " style="font-size: 25px"></i>
                                             </button>
                                         </div>

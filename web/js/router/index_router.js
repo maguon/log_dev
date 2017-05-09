@@ -56,13 +56,13 @@ index_router.config(['$stateProvider',"$urlRouterProvider",function($stateProvid
             url: "/Company",  //路由路径
             templateUrl: "/view/car/company.html", //路由填充的模板
             // abstract:true,
-            controller:CompanyController
+            controller:"Company_controller"
         })
         .state("malfunction", {
             url: "/malfunction",  //路由路径
             templateUrl: "/view/car/malfunction.html", //路由填充的模板
             // abstract:true,
-            // controller:
+            controller:"truck_malfunction_controller"
         })
         .state("refuel", {
             url: "/refuel",  //路由路径
@@ -87,22 +87,12 @@ index_router.config(['$stateProvider',"$urlRouterProvider",function($stateProvid
             templateUrl: "/view/data.html",  //路由填充的模板
             controller:'dataController'
         })
-        .state("users", {
-            url: "/users",  //路由路径
-            templateUrl: "/view/car/user_manager.html", //路由填充的模板
-            // abstract:true,
+
+        .state("setting_users", {
+            url: "/setting_users",  //路由路径
+            templateUrl: "/view/system_settings/user_manager.html", //路由填充的模板
+            controller:'setting_user_controller'
         })
-        // .state("users.operator", {
-        //     url: "/users/operator",  //路由路径
-        //     templateUrl: "/view/car/user_manager/operator.html", //路由填充的模板
-        //     controller:'operator_controller'
-        //     // abstract:true,
-        // })
-        // .state("users.admin", {
-        //     url: "/users/admin",  //路由路径
-        //     templateUrl: "/view/car/user_manager/admin.html", //路由填充的模板
-        //     controller:"admin_controller"
-        // })
         .state("setting_pw", {
             url:"/setting_pw",
             templateUrl: "/view/system_settings/setting_password.html",
@@ -116,7 +106,7 @@ index_router.config(['$stateProvider',"$urlRouterProvider",function($stateProvid
         .state("setting_truck", {
             url:"/setting_truck",
             templateUrl: "/view/system_settings/setting_truck.html",
-            controller:'settingT_Controller'
+            controller:'settingT_controller'
         })
         .state("calendar", {
             url:"/calendar",

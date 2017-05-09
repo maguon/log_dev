@@ -1,8 +1,8 @@
 /**
  * Created by ASUS on 2017/4/1.
  */
-var CompanyController = angular.module("CompanyController", []);
-CompanyController.controller("CompanyController", ['$rootScope', '$scope', '$basic', '$host', '$baseService', '$urlMethod', function ($rootScope, $scope, $basic, $host, $baseService, $urlMethod) {
+var Company_controller = angular.module("Company_controller", []);
+Company_controller.controller("Company_controller", ['$rootScope', '$scope', '$basic', '$host', '$baseService', '$urlMethod', function ($rootScope, $scope, $basic, $host, $baseService, $urlMethod) {
     var userId = $basic.getSession($basic.USER_ID);
     // 单条公司信息
     var companyMsg;

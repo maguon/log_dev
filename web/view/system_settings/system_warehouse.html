@@ -16,7 +16,7 @@
     <div class="row">
         <div class="row">
             <h5>仓库设置</h5>
-            <a class="waves-light waves-effect btn right"  ng-click="newStorage()">
+            <a class="waves-light waves-effect btn right cyan lighten-1"  ng-click="newStorage()">
                 创建新仓库
             </a>
             <div id="newStorage" class="modal">
@@ -67,10 +67,10 @@
                     </div>
                     <div class="divider" style="background: #00bcd4;height: 2px;"></div>
                     <div class="modal-footer vc-center">
-                        <button class="btn waves-light waves-effect" type="submit" name="action" >
+                        <button class="btn waves-light waves-effect cyan lighten-2" type="submit" name="action" >
                             <i class="mdi mdi-check"></i>
                         </button>
-                        <a  class=" modal-action modal-close waves-effect waves-light materialize-red lighten-1 btn" style="margin-left: 10px" >
+                        <a  class=" modal-action modal-close waves-effect waves-light grey lighten-1 btn" style="margin-left: 10px" >
                             <i class="mdi mdi-close"></i>
                         </a>
                     </div>
@@ -82,11 +82,11 @@
         <div class="col s12" >
             <table class="highlight bordered">
                 <thead>
-                <tr>
+                <tr class="table_header">
                     <th class="s4" data-field="">仓库名称</th>
                     <th class="s3" data-field="">总车位</th>
                     <th class="s3" data-field="">状态</th>
-                    <th  class="s2 ">操作</th>
+                    <th  class="s2 table_operation">操作</th>
                 </tr>
                 </thead>
 
@@ -96,9 +96,9 @@
                     <td  ng-bind="el.row*el.col">女</td>
                     <td ng-if="el.storage_status==1">在用</td>
                     <td ng-if="el.storage_status==0">停用</td>
-                    <td class="operation">
-                        <span><i class="mdi mdi-eye" ng-click="lookStorage(el.id)"></i></span>
-                        <span><i class="mdi mdi-key-variant" ng-click="changeStorage_status(el.id,el.storage_status)"></i></span>
+                    <td class="operation table_operation">
+                        <span><i class="mdi mdi-eye cyan-text text-lighten-2" ng-click="lookStorage(el.id)"></i></span>
+                        <span><i class="mdi mdi-paperclip cyan-text text-lighten-2" ng-click="changeStorage_status(el.id,el.storage_status)"></i></span>
                     </td>
                 </tr>
 
@@ -170,10 +170,10 @@
                     </div>
                     <div class="divider" style="background: #00bcd4;height: 2px;"></div>
                     <div class="modal-footer vc-center">
-                        <button class="btn waves-light waves-effect" type="submit" name="action" >
+                        <button class="btn waves-light waves-effect cyan lighten-2" type="submit" name="action" >
                             <i class="mdi mdi-check"></i>
                         </button>
-                        <a  class=" modal-action modal-close waves-effect waves-light materialize-red lighten-1 btn" style="margin-left: 10px" >
+                        <a  class=" modal-action modal-close waves-effect waves-light grey lighten-1 btn" style="margin-left: 10px" >
                             <i class="mdi mdi-close"></i>
                         </a>
                     </div>

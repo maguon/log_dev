@@ -1,4 +1,4 @@
-<div class="usersWrap" ng-controller="usersController" >
+<div class="usersWrap"  >
     <!--<div class="row BoxWrap valign-wrapper" users-tabs>-->
         <!--<div class="col s6">-->
             <!--<div class="chip users_chip active" ui-sref=".operator" >-->
@@ -15,13 +15,13 @@
     <!--</div>-->
     <div class="row">
         <div class="row">
-            <a class="waves-light waves-effect btn right"  ng-click="newOperator()">
+            <a class="waves-light waves-effect btn right  cyan lighten-1"  ng-click="newOperator()">
                 增加操作员
             </a>
             <div id="newOperator" class="modal">
                 <form name="operatorForm" ng-submit="submitForm(operatorForm.$valid)" novalidate>
                     <div class="modal-content">
-                        <h4 class="center-align">增加操作员</h4>
+                        <h4 class="center-align ">增加操作员</h4>
                         <div class="divider" style="background: #00bcd4;height: 2px;"></div>
                         <div class="container">
                             <div class="row" style="margin-top: 40px">
@@ -31,7 +31,7 @@
                                         电话:</h5>
                                     <input  id="phone" name="phone" autocomplete="off" ng-model="newUserName" type="text"   required class=" col s6-0">
                                     <div class="col s2-0 sexBox" sex-change >
-                                        <i class="mdi mdi-human-male sex" sex="1" ></i>
+                                        <i class="mdi mdi-human-male sex " sex="1" ></i>
                                         <i class="mdi mdi-human-female " sex="0"  ng-class="{ 'sex' : new_companyForm.Tel.$invalid&&submitted }"></i>
                                     </div>
                                 </div>
@@ -70,10 +70,10 @@
                     </div>
                     <div class="divider" style="background: #00bcd4;height: 2px;"></div>
                     <div class="modal-footer vc-center">
-                        <button class="btn waves-light waves-effect" type="submit" name="action" >
+                        <button class="btn waves-light waves-effect cyan lighten-2" type="submit" name="action" >
                             <i class="mdi mdi-check"></i>
                         </button>
-                        <a  class=" modal-action modal-close waves-effect waves-light materialize-red lighten-1 btn" style="margin-left: 10px" >
+                        <a  class=" modal-action modal-close waves-effect waves-light grey lighten-1 btn" style="margin-left: 10px" >
                             <i class="mdi mdi-close"></i>
                         </a>
                     </div>
@@ -83,15 +83,15 @@
         </div>
         <div class="divider" style="background: #00bcd4;height: 2px;"></div>
         <div class="col s12" >
-            <table class="highlight bordered">
+            <table class="highlight bordered striped">
                 <thead>
-                <tr>
+                <tr class="table_header">
                     <th data-field="">姓名</th>
                     <th data-field="">性别</th>
                     <th data-field="">部门</th>
                     <th data-field="">手机号</th>
                     <th data-field="">工作状态</th>
-                    <th>操作</th>
+                    <th class="table_operation" >操作</th>
                 </tr>
                 </thead>
 
@@ -105,11 +105,11 @@
                     <td ng-bind="el.mobile"></td>
                     <td ng-if="el.status==1">可用</td>
                     <td ng-if="el.status==0">停用</td>
-                    <td class="operation">
-                        <span><i class="mdi mdi-eye" ng-click="lookOperation(el.uid)"></i></span>
-                        <span><i class="mdi mdi-lock-open" ></i></span>
+                    <td class="operation table_operation" >
+                        <span><i class="mdi mdi-eye cyan-text text-lighten-1" ng-click="lookOperation(el.uid)"></i></span>
+                        <!--<span><i class="mdi mdi-lock-open" ></i></span>-->
                         <span ng-click="changeStatus(el.status,el.uid)">
-                            <i class="mdi mdi-flag" ></i>
+                            <i class="mdi mdi-paperclip cyan-text text-lighten-1" ></i>
                             <!--<i class="mdi mdi-cart-off" ></i>-->
                         </span>
                         <div id="look_Operator" class="modal">
@@ -183,10 +183,10 @@
                                 </div>
                                 <div class="divider" style="background: #00bcd4;height: 2px;"></div>
                                 <div class="modal-footer vc-center">
-                                    <button class="btn waves-light waves-effect" type="submit" name="action" >
+                                    <button class="btn waves-light waves-effect cyan lighten-2" type="submit" name="action" >
                                         <i class="mdi mdi-check"></i>
                                     </button>
-                                    <a  class=" modal-action modal-close waves-effect waves-light materialize-red lighten-1 btn" style="margin-left: 10px" >
+                                    <a  class=" modal-action modal-close waves-effect waves-light grey lighten-1 btn" style="margin-left: 10px" >
                                         <i class="mdi mdi-close"></i>
                                     </a>
                                 </div>

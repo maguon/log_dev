@@ -45,7 +45,7 @@ storage_router.config(['$stateProvider',"$urlRouterProvider",function($stateProv
         .state("setting_truck",{
             url:"/setting_truck",
             templateUrl: "/view/system_settings/setting_truck.html",
-            controller:'settingT_Controller'
+            controller:'settingT_controller'
         });
 }]);
 /**
