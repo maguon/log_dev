@@ -14,12 +14,11 @@ index_router.config(['$stateProvider',"$urlRouterProvider",function($stateProvid
     //     controller:'indexController'
     // });
 
-    $urlRouterProvider.when("","/index");
+    $urlRouterProvider.when("","/storage_index");
     $stateProvider
         .state("index", {  //路由状态
             url: "/index",  //路由路径
             templateUrl: "/view/index.html",  //路由填充的模板
-            controller:'indexController'
         })
         .state("Com", {
             url: "/Com",  //路由路径
@@ -122,6 +121,11 @@ index_router.config(['$stateProvider',"$urlRouterProvider",function($stateProvid
             url:"/calendar",
             templateUrl: "/view/storage/working_calendar.html",
             // controller:'calendar_Controller'
+        })
+        .state("storage_index", {  //路由状态
+            url: "/storage_index",  //路由路径
+            templateUrl: "/view/storage_index.html",  //路由填充的模板
+            controller:'indexController'
         })
         .state("storageCar", {
             url:"/storage_car",

@@ -17,10 +17,10 @@ storage_router.config(['$stateProvider',"$urlRouterProvider",function($stateProv
     $urlRouterProvider.when("","/storage_index");
     $stateProvider
         .state("storage_index", {  //路由状态
-            url: "/storage_index",  //路由路径
-            templateUrl: "/view/storage_index.html",  //路由填充的模板
-            controller:'indexController'
-        })
+        url: "/storage_index",  //路由路径
+        templateUrl: "/view/storage_index.html",  //路由填充的模板
+        controller:'indexController'
+    })
         .state("calendar", {
             url:"/calendar",
             templateUrl: "/view/storage/working_calendar.html",

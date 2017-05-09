@@ -645,3 +645,16 @@ input[type=text]{
 .storage_working_calendar .select-wrapper span.caret{
     color: white;
 }
+/*仓储首页*/
+.homeWrapList{
+    height: 100px;
+    padding:0  10px;
+}
+.homeWrapList div{
+   height: 100%;
+}
+.s_index_icon{
+    height:50px;
+    /*border-radius:100%;*/
+
+}
