@@ -49,21 +49,26 @@ commonDirective.directive('navigator', function () {
                     }
                 });
             };
-        },
-        link:function (scope, element, attr) {
-            if (scope.$last == true) {
-                    $("#menu_link").sideNav({
-                        menuWidth: 280, // Default is 300
-                        edge: 'left', // Choose the horizontal origin
-                        closeOnClick: true, // Closes side-nav on <a> clicks, useful for Angular/Meteor
-                        // draggable: true // Choose whether you can drag to open on touch screens
-                    });
-                // $(".button-collapse").sideNav();
-                $('.collapsible').collapsible();
-            }
+
+
         }
-    };
+        }
 });
+commonDirective.directive("sideNav",function () {
+    return{
+        restrict:"A",
+        link:function () {
+            $("#menu_link").sideNav({
+                menuWidth: 280, // Default is 300
+                edge: 'left', // Choose the horizontal origin
+                closeOnClick: true, // Closes side-nav on <a> clicks, useful for Angular/Meteor
+                // draggable: true // Choose whether you can drag to open on touch screens
+            });
+            // $(".button-collapse").sideNav();
+            $('.collapsible').collapsible();
+        }
+    }
+})
 commonDirective.directive('storageNavigator', function () {
     return {
         templateUrl: '/view/storage_navigator.html',
