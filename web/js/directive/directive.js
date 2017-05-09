@@ -436,7 +436,7 @@ commonDirective.directive('percentWrap', function () {
         link: function (scope, element, attr) {
             var chart = null;
             $(function () {
-                $('#percentWrap').highcharts({
+                $('#percentWrap1').highcharts({
                     chart: {
                         plotBackgroundColor: null,
                         plotBorderWidth: null,
