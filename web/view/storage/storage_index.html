@@ -1,62 +1,62 @@
 <div class="row homeWrap" ng-controller="storage_index_controller">
     <div class="row ">
         <div class="col s3 homeWrapList ">
-            <div class="red lighten-2 valign-wrapper">
-                <div class="col s5 offset-s1 ">
-                    <div class=" s_index_icon white lighten-5 vc-center left">
-                        <i class="mdi mdi-car red-text text-lighten-2"></i>
+            <div class="red lighten-2 valign-wrapper z-depth-2">
+                <div class="col s7 offset-s1 ">
+                    <div class=" s_index_icon red lighten-4 vc-center left ">
+                        <i class="mdi mdi-car red-text text-lighten-2 "></i>
                     </div>
                     <div class="right white-text text-lighten-2">
                         仓储总车位
                     </div>
                 </div>
-                <div class="col s4 white-text text-lighten-2">
+                <div class="col s1  white-text  pull-s1 text-lighten-2 right-align">
                     <h5 ng-bind="storage_allStorage">00</h5>
                 </div>
             </div>
         </div>
         <div class="col s3 homeWrapList ">
-            <div class="red lighten-2 valign-wrapper">
-                <div class="col s5 offset-s1 ">
-                    <div class=" s_index_icon white lighten-5 vc-center left">
+            <div class="red lighten-2 valign-wrapper z-depth-2">
+                <div class="col s7 offset-s1 ">
+                    <div class=" s_index_icon red lighten-4 vc-center left">
                         <i class="mdi mdi-car red-text text-lighten-2"></i>
                     </div>
                     <div class="right white-text text-lighten-2">
                         库存总车辆
                     </div>
                 </div>
-                <div class="col s4 white-text text-lighten-2">
+                <div class="col s1 white-text  pull-s1 text-lighten-2 right-align">
                     <h5 ng-bind="storage_index_count.sumBalance"></h5>
                 </div>
 
             </div>
         </div>
         <div class="col s3 homeWrapList ">
-            <div class="red lighten-2 valign-wrapper">
-                <div class="col s5 offset-s1 ">
-                    <div class=" s_index_icon white lighten-5 vc-center left">
+            <div class="red lighten-2 valign-wrapper z-depth-2">
+                <div class="col s7 offset-s1 ">
+                    <div class=" s_index_icon red lighten-4 vc-center left">
                         <i class="mdi mdi-car red-text text-lighten-2"></i>
                     </div>
                     <div class="right white-text text-lighten-2">
                         今日入库车辆
                     </div>
                 </div>
-                <div class="col s4 white-text text-lighten-2">
+                <div class="col s1 white-text  pull-s1 text-lighten-2 right-align">
                     <h5 ng-bind="storage_index_count.sumImports"></h5>
                 </div>
             </div>
         </div>
         <div class="col s3 homeWrapList ">
-            <div class="red lighten-2 valign-wrapper">
-                <div class="col s5 offset-s1 ">
-                    <div class=" s_index_icon white lighten-5 vc-center left">
+            <div class="red lighten-2 valign-wrapper z-depth-2">
+                <div class="col s7 offset-s1 ">
+                    <div class=" s_index_icon red lighten-4 vc-center left">
                         <i class="mdi mdi-car red-text text-lighten-2"></i>
                     </div>
                     <div class="right white-text text-lighten-2">
                         今日出库车辆
                     </div>
                 </div>
-                <div class="col s4 white-text text-lighten-2">
+                <div class="col s1 white-text pull-s1 text-lighten-2  right-align">
                     <h5 ng-bind="storage_index_count.sumExports"></h5>
                 </div>
             </div>
@@ -64,17 +64,17 @@
 
     </div>
     <div class="row">
-        <div id="percentWrap1" style="width: 150px;height:150px;"></div>
+        <!--<div id="percentWrap1" style="width: 150px;height:150px;"></div>-->
         <div class="col s3 storage_detailsList " ng-repeat="el in storage_index_list">
-            <div class="storage_details white ">
+            <div class="storage_details white z-depth-2">
                 <div class="s_d_data light-blue-text text-accent-3 valign-wrapper">
                     <div class="col s6 ">
-                        <div class="percentWrap" id="percentWrap" percent-wrap>
-                            <!--<span style="display: block" class="grey-text">使用率:</span>-->
-                            <!--<h5 >-->
-                                <!--{{el.balance/(el.col*el.row)*100|number:0}}%-->
-                            <!--</h5>-->
-                            <!--<div id="percent"></div>-->
+                        <div class="percentWrap vc-center"  percent-wrap>
+                            <span style="display: block" class="grey-text">使用率:</span>
+                            <h5 >
+                                {{el.balance/(el.col*el.row)*100|number:0}}%
+                            </h5>
+                            <div id="percent"></div>
                         </div>
                     </div>
                     <div class="col s6">

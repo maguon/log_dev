@@ -20,9 +20,12 @@ body{
     height: 100%;
 }
 .brand-logo img{
-    height: 80%;
+    height: 70%;
     margin-right: 15px;
 }
+/*.cyan-text.text-lighten-1{*/
+    /*font-size: 36px;*/
+/*}*/
 /*固定侧边导航*/
 /*.header,.ConWrap,.footer {*/
     /*padding-left: 280px;*/
@@ -648,16 +651,16 @@ input[type=text]{
 /*仓储首页*/
 .homeWrapList{
     height: 100px;
-    padding:0  10px;
+    padding:0  5px;
 }
 .homeWrapList>div{
    height: 100%;
 }
 .s_index_icon{
-    width: 50px;
-    height:50px;
+    width: 70px;
+    height:70px;
     border-radius:100%;
-    font-size: 25px;
+    font-size: 40px;
 
 }
 .storage_detailsList{
@@ -687,5 +690,5 @@ input[type=text]{
 .percentWrap{
     width: 150px;
     height: 150px;
-    border: 1px solid black;
+    /*border: 1px solid black;*/
 }

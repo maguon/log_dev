@@ -49,7 +49,7 @@ storage_working_calendarController.controller("storage_working_calendarControlle
                         console.log(data);
                         $scope.data = data.result;
                         for (var i  in $scope.data) {
-                            var titleHtml = '<div class="row p0">' +
+                            var titleHtml = '<div class="row p0" style="padding-top: 10px">' +
                                 '<div class="col s4 center-align  cyan-text text-lighten-1" style="font-size: 14px">' +
                                 '<i style="display: block" class="mdi mdi-arrow-right-bold-circle-outline"></i><span>' + $scope.data[i].imports + '</span></div>' +
                                 '<div class="col s4 center-align  cyan-text text-lighten-1" style="font-size: 14px">' +

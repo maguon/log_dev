@@ -15,7 +15,7 @@
                     <div class="collapsible-body row valign-wrapper" add-brand  ng-class="{'has-error':addBrandFrom.brandText.$invalid&&submitted1 }">
                         <form name="addBrandFrom" ng-submit="add_brand(addBrandFrom.$valid)" novalidate>
                             <input class="col s3 Brand_text" name="brandText" id="brandText" type="text" autocomplete="off" ng-model="b_txt" required>
-                            <div class="col s1 offset-s8 add_Brand_Icon"  >
+                            <div class="col s1  add_Brand_Icon"  >
                                 <button  class="waves-effect waves-light  lighten-1 btn"  type="submit" name="action" >
                                     <i class="mdi mdi-check add_brand" ></i>
                                 </button>
@@ -53,11 +53,11 @@
 
                         <div class="row " style="margin: 0;position: relative;height: 70px">
                             <div class="col s12 right-align remark_brand_box{{el.id}}" style="position: absolute">
-                                <a class="btn-floating btn-large waves-effect waves-light red "  ng-click="remark_brand(el.id,el.make_name)"><i class="mdi mdi-marker"></i></a>
+                                <a class="btn-floating btn-large waves-effect waves-light red "  ng-click="remark_brand(el.id,el.make_name)"><i class="mdi mdi-pencil"></i></a>
                             </div>
                             <div class="row change_brand_wrap{{el.id}}" style="margin: 0;display: none;">
                                 <input type="text" class="col s3 change_brand_text"  ng-model="el.make_name">
-                                <div class="col s3 offset-s6"   style="height: 100%;min-width: 180px">
+                                <div class="col s3 "   style="height: 100%;min-width: 180px">
                                     <a  class="waves-effect waves-light   lighten-1 btn" ng-click="close_brand(el.id)">
                                         <i class="mdi mdi-close " style="font-size: 25px"></i>
                                     </a>
@@ -76,7 +76,7 @@
                                 <div class="row add_brand_model_wrap{{el.id}}" style="margin: 0;display: none;" add-brand-model ng-class="{'has-error':addBrandModelFrom.brandModelText.$invalid&&submitted3 }">
                                     <form name="addBrandModelFrom" ng-submit="verify_brand_model(addBrandModelFrom.$valid,el.id)" novalidate>
                                         <input type="text" id="brandModelText" name="brandModelText" class="col s3 change_brand_text"  ng-model="brandModelText" required >
-                                        <div class="col s3 offset-s6 " style="height: 100%;min-width: 180px">
+                                        <div class="col s3  " style="height: 100%;min-width: 180px">
                                             <a  class="waves-effect waves-light   lighten-1 btn" ng-click="close_brand_model(el.id)"  >
                                                 <i class="mdi mdi-close " style="font-size: 25px"></i>
                                             </a>
@@ -85,7 +85,6 @@
                                             </button>
                                         </div>
                                     </form>
-
                                 </div>
                             </div>
                             <div class="row" style="margin: 0">
