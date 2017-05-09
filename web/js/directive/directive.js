@@ -443,7 +443,7 @@ commonDirective.directive('percentWrap', function () {
                         plotShadow: false,
                         spacing : [100, 0 , 40, 0]
                     },
-                    title: {
+                    title:{
                         floating:true,
                         text: '圆心显示的标题'
                     },
