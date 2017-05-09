@@ -21,7 +21,7 @@ commonDirective.directive('header', function () {
                     $basic.removeSession($basic.USER_ID);
                     $basic.removeSession($basic.USER_TYPE);
                     $basic.removeSession($basic.USER_NAME);
-                    window.location.href = '/storage_Login.html';
+                    window.location.href = '/storage_login.html';
                 });
 
             }

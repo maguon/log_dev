@@ -19,6 +19,7 @@ index_router.config(['$stateProvider',"$urlRouterProvider",function($stateProvid
         .state("index", {  //路由状态
             url: "/index",  //路由路径
             templateUrl: "/view/index.html",  //路由填充的模板
+            controller:'index_controller'
         })
         .state("Com", {
             url: "/Com",  //路由路径
@@ -55,7 +56,7 @@ index_router.config(['$stateProvider',"$urlRouterProvider",function($stateProvid
             url: "/Company",  //路由路径
             templateUrl: "/view/car/company.html", //路由填充的模板
             // abstract:true,
-            // controller:
+            controller:CompanyController
         })
         .state("malfunction", {
             url: "/malfunction",  //路由路径

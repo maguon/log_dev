@@ -42,7 +42,7 @@ storage_router.config(['$stateProvider',"$urlRouterProvider",function($stateProv
             url:"/storage_car_map/{id}?form",
             templateUrl: "/view/storage/storage_car_map.html",
         })
-        .state("setting_truck", {
+        .state("setting_truck",{
             url:"/setting_truck",
             templateUrl: "/view/system_settings/setting_truck.html",
             controller:'settingT_Controller'
