@@ -3,7 +3,7 @@ index_controller.controller("indexController", ['$rootScope','$scope','$location
     function($rootScope,$scope,$location,$q,$basic) {
         //
         if(!$basic.checkUser('2')){
-            window.location.href = 'storage_Login.html';
+            window.location.href = 'storage_login.html';
         }
 
 
