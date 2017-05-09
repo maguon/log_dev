@@ -29,37 +29,6 @@ commonDirective.directive('header', function () {
     };
 });
 
-commonDirective.directive('navigator', function () {
-    return {
-        templateUrl: '/view/navigator.html',
-        replace: true,
-        transclude: false,
-        restrict: 'E',
-        controller: function ($scope, $basic, $host, $element, $rootScope) {
-            if ($basic.checkUser()) {
-                $basic.get($host.api_url + "/admin/" + $basic.getSession($basic.USER_ID)).then(function (data) {
-                    // $(".shadeDowWrap").hide();
-                    if (data.success == true) {
-                        $scope.userName = data.result[0].user_name;
-                        $basic.setSession($basic.USER_NAME, $scope.userName);
-                        $basic.setHeader($basic.USER_NAME, $scope.userName);
-                    } else {
-                        swal(data.msg, "", "error");
-                    }
-                });
-            }
-            $("#menu_link").sideNav({
-                menuWidth: 280, // Default is 300
-                edge: 'left', // Choose the horizontal origin
-                closeOnClick: true, // Closes side-nav on <a> clicks, useful for Angular/Meteor
-                // draggable: true // Choose whether you can drag to open on touch screens
-            });
-            // $(".button-collapse").sideNav();
-            $('.collapsible').collapsible();
-
-        }
-    };
-});
 commonDirective.directive('storageNavigator', function () {
     return {
         templateUrl: '/view/storage_navigator.html',
@@ -77,15 +46,18 @@ commonDirective.directive('storageNavigator', function () {
                         swal(data.msg, "", "error");
                     }
                 });
+                $("#menu_link").sideNav({
+                    menuWidth: 280, // Default is 300
+                    edge: 'left', // Choose the horizontal origin
+                    closeOnClick: true, // Closes side-nav on <a> clicks, useful for Angular/Meteor
+                    // draggable: true // Choose whether you can drag to open on touch screens
+                });
+                // $(".button-collapse").sideNav();
+                $('.collapsible').collapsible();
+            }else {
+                window.location="./storage_login.html"
             }
-            $("#menu_link").sideNav({
-                menuWidth: 280, // Default is 300
-                edge: 'left', // Choose the horizontal origin
-                closeOnClick: true, // Closes side-nav on <a> clicks, useful for Angular/Meteor
-                // draggable: true // Choose whether you can drag to open on touch screens
-            });
-            // $(".button-collapse").sideNav();
-            $('.collapsible').collapsible();
+
 
         }
     };

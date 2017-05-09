@@ -37,7 +37,7 @@ commonDirective.directive('navigator', function () {
         transclude: false,
         restrict: 'E',
         controller: function ($scope, $basic, $host, $element, $rootScope) {
-            if ($basic.checkUser()) {
+            if ($basic.checkUser('99')) {
                 $basic.get($host.api_url + "/admin/" + $basic.getSession($basic.USER_ID)).then(function (data) {
                     // $(".shadeDowWrap").hide();
                     if (data.success == true) {
