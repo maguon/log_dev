@@ -1,7 +1,7 @@
 <div class="storage_working_calendar" ng-controller="storage_working_calendarController">
     <div class="container" style="width: 90%;">
         <div class="row" >
-            <div class="col s8 white p0" >
+            <div class="col s8 white p0 z-depth-1" >
                 <div style="height: 50px;padding-left:20px" class="red lighten-2">
                     <select  material-select watch name="" class="col s2 white-text"  ng-model="storage_id" ng-change="get_fullCalendar(storage_id)">
                         <option ng-repeat="el in store_storage" ng-value="el.id">{{el.storage_name}}</option>

@@ -21,12 +21,11 @@ commonDirective.directive('header', function () {
                     $basic.removeSession($basic.USER_ID);
                     $basic.removeSession($basic.USER_TYPE);
                     $basic.removeSession($basic.USER_NAME);
-                    window.location.href = '/login.html';
+                    window.location.href = '/storage_Login.html';
                 });
 
             }
         }
-
     };
 });
 
@@ -48,19 +47,16 @@ commonDirective.directive('navigator', function () {
                         swal(data.msg, "", "error");
                     }
                 });
-            };
-        },
-        link:function (scope, element, attr) {
-            if (scope.$last == true) {
-                    $("#menu_link").sideNav({
-                        menuWidth: 280, // Default is 300
-                        edge: 'left', // Choose the horizontal origin
-                        closeOnClick: true, // Closes side-nav on <a> clicks, useful for Angular/Meteor
-                        // draggable: true // Choose whether you can drag to open on touch screens
-                    });
-                // $(".button-collapse").sideNav();
-                $('.collapsible').collapsible();
             }
+            $("#menu_link").sideNav({
+                menuWidth: 280, // Default is 300
+                edge: 'left', // Choose the horizontal origin
+                closeOnClick: true, // Closes side-nav on <a> clicks, useful for Angular/Meteor
+                // draggable: true // Choose whether you can drag to open on touch screens
+            });
+            // $(".button-collapse").sideNav();
+            $('.collapsible').collapsible();
+
         }
     };
 });
@@ -207,12 +203,12 @@ commonDirective.directive("dateFilter", ["$filter", function ($filter) {
 
 
 commonDirective.directive('testDirective',[function () {
-   return{
-       restrict:"ECMA",
-       priority:"",
-       templateUrl:"",
-       replace:true//false,
-   }
+    return{
+        restrict:"ECMA",
+        priority:"",
+        templateUrl:"",
+        replace:true//false,
+    }
 }]);
 
 
@@ -427,3 +423,6 @@ commonDirective.directive('addRepeatFinish', function () {
     }
 });
 
+/**
+ * Created by ASUS on 2017/5/9.
+ */

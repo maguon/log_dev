@@ -27,6 +27,7 @@ userController.controller("usersController", ["$basic", "$host", "$scope", funct
         //     }
         // })
     };
+
     searchAll();
 
     $scope.newOperator = function () {

@@ -5,29 +5,26 @@
                 <div class="col s4 center-align">
                     仓库名称:
                 </div>
-                <select material-select watch class="col s8  " ng-model="s_type">
-                    <option value="" disabled selected>请选择</option>
-                    <option value="1">自营</option>
-                    <option value="2">供方</option>
-                    <option value="3">外协</option>
-                    <option value="4">承包</option>
+                <select material-select watch class="col s8  " ng-model="s_id">
+                    <option value="" selected>请选择</option>
+                    <option ng-repeat="el in s_storage" ng-value="el.id">{{el.storage_name}}</option>
                 </select>
             </div>
             <div class="col s3 ">
-                <div class="row valign-wrapper">
-                    <div class="col s3-0 center-align" style="padding: 0">
-                        仓储位置:
-                    </div>
-                    <input class="col s7-0" type="text">
-                </div>
+                <!--<div class="row valign-wrapper">-->
+                    <!--<div class="col s3-0 center-align" style="padding: 0">-->
+                        <!--仓储位置:-->
+                    <!--</div>-->
+                    <!--<input class="col s7-0" type="text">-->
+                <!--</div>-->
             </div>
             <div class="col s3 ">
-                <div class="row valign-wrapper">
-                    <div class="col s3-0  center-align">
-                        剩余位置:
-                    </div>
-                    <input class="col s7-0" type="text">
-                </div>
+                <!--<div class="row valign-wrapper">-->
+                    <!--<div class="col s3-0  center-align">-->
+                        <!--剩余位置:-->
+                    <!--</div>-->
+                    <!--<input class="col s7-0" type="text">-->
+                <!--</div>-->
             </div>
             <div class="col s1 offset-s2">
                 <a style="width: 100%;padding:0  1rem" class="waves-effect waves-light cyan lighten-1 btn-large" ng-click="search()">搜索</a>
