@@ -98,7 +98,10 @@
                     <td ng-if="el.storage_status==0">停用</td>
                     <td class="operation table_operation">
                         <span><i class="mdi mdi-eye cyan-text text-lighten-2" ng-click="lookStorage(el.id)"></i></span>
-                        <span><i class="mdi mdi-paperclip cyan-text text-lighten-2" ng-click="changeStorage_status(el.id,el.storage_status)"></i></span>
+                        <span ng-click="changeStorage_status(el.id,el.storage_status)">
+                            <i ng-if="el.storage_status==0" class="mdi mdi-link cyan-text text-lighten-2" ></i>
+                             <i ng-if="el.storage_status==1" class="mdi mdi-link-off cyan-text text-lighten-2" ></i>
+                        </span>
                     </td>
                 </tr>
 

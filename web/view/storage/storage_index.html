@@ -1,4 +1,4 @@
-<div class="row homeWrap" ng-controller="storage_index_controller">
+<div class="row homeWrap">
     <div class="row ">
         <div class="col s3 homeWrapList ">
             <div class="red lighten-2 valign-wrapper z-depth-2">
@@ -69,16 +69,19 @@
     <div class="row">
         <!--<div id="percentWrap1" style="width: 150px;height:150px;"></div>-->
         <div class="col s3 storage_detailsList " ng-repeat="el in storage_index_list">
-            <div class="storage_details white z-depth-2">
+            <div ng-if="el.storage_status==1" class="storage_details white z-depth-2">
                 <div class="s_d_data light-blue-text text-accent-3 valign-wrapper">
                     <div class="col s6 ">
-                        <div class="percentWrap vc-center"  >
+                        <percent value={{el.balance}} total={{el.col*el.row}}>
+                            <div style="width: 150px;height: 150px;"></div>
+                        </percent>
+                        <!--<centWrap vc-center"  >
                             <span style="display: block" class="grey-text">使用率:</span>
                             <h5>
                                 {{el.balance/(el.col*el.row)*100|number:0}}%
                             </h5>
                             <div id="percent"></div>
-                        </div>
+                        </div>-->
                     </div>
                     <div class="col s6">
                         <h5 ng-bind="el.storage_name"></h5>
@@ -100,7 +103,7 @@
                         <span ng-bind="el.exports"></span>
                     </div>
                 </div>
-                <a href="" ui-sref="storage_car_map({id:el.storage_id,form:'storage_index'})" class="s_d_details-btn btn valign-wrapper" >查看详情</a>
+                <a href="" ui-sref="storage_car_map({id:el.storage_id,form:'storage_index'})" class="s_d_details-btn grey lighten-1 btn valign-wrapper" >查看详情</a>
             </div>
         </div>
     </div>

@@ -19,28 +19,37 @@ storage_router.config(['$stateProvider',"$urlRouterProvider",function($stateProv
         .state("storage_index", {  //路由状态
         url: "/storage_index",  //路由路径
         templateUrl: "/view/storage/storage_index.html",  //路由填充的模板
-        // controller:'storage_index_controller'
+        controller:'storage_index_controller'
     })
         .state("calendar", {
             url:"/calendar",
             templateUrl: "/view/storage/working_calendar.html",
-            // controller:'calendar_Controller'
+            controller:'storage_working_calendarController'
         })
         .state("storageCar", {
             url:"/storage_car",
             templateUrl: "/view/storage/storage_car.html",
+            controller:'Storage_carController'
         })
         .state("storageStore", {
             url:"/storage_store",
             templateUrl: "/view/storage/storage_store.html",
+            controller:"storage_storeController"
+        })
+        .state("statistics", {
+            url:"/storage_statistics",
+            templateUrl: "/view/storage/storage_statistics.html",
+            // controller:"storage_statistics"
         })
         .state("storageCar_details", {
             url:"/storageCar_details/{id}/vin/{vin}?from",
             templateUrl: "/view/storage/storage_details.html",
+            controller:"storageCar_detailsController"
         })
         .state("storage_car_map", {
             url:"/storage_car_map/{id}?form",
             templateUrl: "/view/storage/storage_car_map.html",
+            controller:"storage_car_mapController"
         })
         .state("setting_truck",{
             url:"/setting_truck",

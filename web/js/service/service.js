@@ -15,7 +15,6 @@ CommonService.factory('$basic',['$http','$location','$q',"$cookies",function($ht
         $http.defaults.headers.common[name] = value;
     };
 
-
     _this.setHeader('Content-Type','application/json');
 
     _this.formPost = function(dom,url,success,error) {

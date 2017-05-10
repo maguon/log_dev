@@ -442,14 +442,20 @@ commonDirective.directive('percent', function () {
             var percentage = Number.parseInt((val*100/total));
             //Highcharts.chart('percentWrap1', {
             $(element[0].children[0]).highcharts({
-
+                // 表头
                 title: {
                     text:percentage+"%",
                     align: 'center',
                     verticalAlign: 'middle',
-                    y:8
+                    y:8,
+                    style:{
+                        color:"#bdbdbd"
+                    }
+
                 },
+                // 版权信息
                 credits: {
+                    enabled:"false",
                     text: '',
                     href: ''
                 },
@@ -479,9 +485,6 @@ commonDirective.directive('percent', function () {
                 }]
             });
             var chart = null;
-            $(function () {
-
-            })
 
         }
     }

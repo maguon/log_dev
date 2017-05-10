@@ -265,7 +265,7 @@ storageCar_detailsController.controller("storageCar_detailsController", ["$baseS
                 swal(data.msg, "", "error")
             }
         });
-        $basic.get($host.api_url + "/user/" + userId + "/car?carId=" + val).then(function (data) {
+        $basic.get($host.api_url + "/user/" + userId + "/car?carId=" + val+'&active=1').then(function (data) {
             if (data.success == true) {
                 $scope.modelId = data.result[0].model_id;
                 $scope.self_car = data.result[0];

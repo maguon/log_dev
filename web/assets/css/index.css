@@ -49,6 +49,10 @@ body{
 .table_header{
     color: #616161 !important;
 }
+/*文字加粗*/
+.bold{
+    font-weight:bold;
+}
 /*操作栏*/
 .table_operation{
     width: 150px;
