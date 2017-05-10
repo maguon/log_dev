@@ -433,14 +433,18 @@ commonDirective.directive('addRepeatFinish', function () {
         }
     }
 });
-commonDirective.directive('percentWrap', function () {
+commonDirective.directive('percent', function () {
     return {
         link: function (scope, element, attr) {
+            var val = Number.parseInt(attr.value);
 
-            Highcharts.chart('percentWrap1', {
+            var total = Number.parseInt(attr.total);
+            var percentage = Number.parseInt((val*100/total));
+            //Highcharts.chart('percentWrap1', {
+            $(element[0].children[0]).highcharts({
 
                 title: {
-                    text:"40%",
+                    text:percentage+"%",
                     align: 'center',
                     verticalAlign: 'middle',
                     y:8
@@ -469,8 +473,8 @@ commonDirective.directive('percentWrap', function () {
                     name: '',
                     innerSize: '80%',
                     data: [
-                        ['',   0.4],
-                        ['',   0.6]
+                        ['',   percentage],
+                        ['',   (100-percentage)]
                     ]
                 }]
             });
