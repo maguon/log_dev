@@ -48,7 +48,9 @@ commonDirective.directive('navigator', function () {
                         swal(data.msg, "", "error");
                     }
                 });
-            };
+            } else {
+            window.location="./login.html"
+            }
 
 
         }
