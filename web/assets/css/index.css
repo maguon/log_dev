@@ -58,6 +58,13 @@ body{
     width: 150px;
 }
 
+.input-field .prefix.active{
+    color: #4dd0e1;
+}
+/*textarea.materialize-textarea:focus:not([readonly]) {*/
+    /*border-bottom: 1px solid #4dd0e1;*/
+    /*box-shadow: 0 1px 0 0 #4dd0e1;*/
+/*}*/
 /*模态*/
 /*.modal.modal-fixed-footer{*/
     /*height: 90%;*/

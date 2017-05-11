@@ -88,7 +88,7 @@ baseService.factory("service_storage_parking", function () {
         }
         // console.log(parkingArray);
         return parkingArray;
-        return parkingArray;
+        // return parkingArray;
 
     };
     return {
@@ -201,4 +201,18 @@ baseService.factory("$pass_parameter", function () {
         setter: _setter,
         getter: _getter
     };
-})
+});
+
+
+baseService.factory("$http_parameter",function () {
+    var parameter=function (obj) {
+        var str="";
+        for(var i in obj){
+            str=str+i+"="+obj[i]+"&";
+        }
+        return str.substr(0,str.length-1);
+    };
+    return{
+        parameter:parameter
+    }
+});

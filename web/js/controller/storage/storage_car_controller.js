@@ -40,6 +40,7 @@ Storage_carController.controller("Storage_carController", ["$scope", "$rootScope
         //  if(rel_status){
         //      $scope.search_carStatus=rel_status;
         //  }
+
         var reqUrl = $host.api_url + "/user/" + userId + "/car?active="+1+"&start=" + $scope.start + "&size=" + $scope.size
         if($scope.search_relStatus !=null){
             reqUrl= reqUrl+"&relStatus="+$scope.search_relStatus

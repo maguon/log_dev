@@ -6,6 +6,7 @@ commonDirective.directive('header', function () {
         transclude: false,
         restrict: 'E',
         controller: function ($scope, $element, $rootScope, $basic) {
+
             $scope.logOut = function () {
                 swal({
                     title: "注销账号",
@@ -486,6 +487,16 @@ commonDirective.directive('percent', function () {
             });
             var chart = null;
 
+        }
+    }
+});
+commonDirective.directive("amendUser",function () {
+    return{
+        restrict:"EA",
+        link:function (scope,attr,element) {
+            element.onclick=function () {
+                alert(1)
+            }
         }
     }
 });

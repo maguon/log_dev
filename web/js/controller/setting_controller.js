@@ -14,7 +14,6 @@ settingController.controller("settingPW_controller", ["$scope", "$host", "$basic
             $basic.put($host.api_url + "/admin/" + adminId + "/password", obj).then(function (data) {
                 if (data.success == true) {
                     swal("密码重置成功", "", "success");
-
                 } else {
                     swal(data.msg, "", "error");
                 }
@@ -147,7 +146,16 @@ settingController.controller("settingWH_controller", ["$scope", "$host", "$basic
 settingController.controller("settingT_controller", ["$scope", "$host", "$basic", function ($scope, $host, $basic) {
 
     var adminId = $basic.getSession($basic.USER_ID);
-
+    // 打开汽车品牌
+    $scope.car_Brand_box=function ($event) {
+        $($event.target).hide();
+        $(".car_Brand_box").show();
+    };
+    // 关闭汽车品牌
+    $scope.closeBrand=function () {
+        $(".open_car_brand").show();
+        $(".car_Brand_box").hide();
+    }
     // 汽车品牌
     $scope.searchAll = function () {
         $basic.get($host.api_url + "/carMake/").then(function (data) {
@@ -204,21 +212,21 @@ settingController.controller("settingT_controller", ["$scope", "$host", "$basic"
 
     };
 
-    // 打开
-    $scope.open_car_model = function ($event, id) {
-        // console.log($($event.target).attr("flag"));
-        if ($($event.target).attr("flag") == "true") {
-            $scope.search_carModel(id);
-            $($event.target).attr("flag", "false");
-        } else {
-            $($event.target).attr("flag", "true");
-        }
-    };
-    // 打开新增型号
-    $scope.add_brand_model = function (id) {
-        $(".add_brand_box" + id).fadeOut(500);
-        $(".add_brand_model_wrap" + id).fadeIn(500);
-    };
+    // // 打开
+    // $scope.open_car_model = function ($event, id) {
+    //     // console.log($($event.target).attr("flag"));
+    //     if ($($event.target).attr("flag") == "true") {
+    //         $scope.search_carModel(id);
+    //         $($event.target).attr("flag", "false");
+    //     } else {
+    //         $($event.target).attr("flag", "true");
+    //     }
+    // };
+    // // 打开新增型号
+    // $scope.add_brand_model = function (id) {
+    //     $(".add_brand_box" + id).fadeOut(500);
+    //     $(".add_brand_model_wrap" + id).fadeIn(500);
+    // };
     // 修改汽车型号状态
     $scope.changeSelfBrandStatus = function (id, status, makeId) {
         if (status == 0) {
@@ -266,9 +274,9 @@ settingController.controller("settingT_controller", ["$scope", "$host", "$basic"
     // $scope.searchModel=function (id) {
     //
     // };
-    // $scope.add_brand=function () {
-    //
-    // }
+    $scope.add_brand=function () {
+
+    }
 }]);
 settingController.controller("setting_user_controller", ["$basic", "$host", "$scope", function ($basic, $host, $scope) {
 

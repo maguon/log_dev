@@ -2,19 +2,24 @@
  * Created by ASUS on 2017/5/4.
  */
 var storage_storeController = angular.module("storage_storeController", []);
-storage_storeController.controller("storage_storeController", ["$scope", "$host", "$pass_parameter","$basic", "$state", "$rootScope", "$config_variable", "$baseService", "service_storage_parking", function ($scope, $host,$pass_parameter, $basic, $state, $rootScope, $config_variable, $baseService, service_storage_parking) {
+storage_storeController.controller("storage_storeController", ["$scope", "$host", "$pass_parameter","$basic", "$state", "$rootScope", "$config_variable", "$baseService","$http_parameter","service_storage_parking", function ($scope, $host,$pass_parameter, $basic, $state, $rootScope, $config_variable, $baseService,$http_parameter, service_storage_parking) {
     var userId = $basic.getSession($basic.USER_ID);
     var data = new Date();
     var now_date = moment(data).format('YYYYMMDD');
     var searchAll = function () {
-        $basic.get($host.api_url + "/storageDate" + "?dateStart=" + now_date + "&dateEnd=" + now_date).then(function (data) {
+        var obj={
+            dateStart:now_date,
+            dateEnd:now_date
+        };
+
+        $basic.get($host.api_url + "/storageDate?"+$http_parameter.parameter(obj)).then(function (data) {
             if (data.success == true) {
                 $scope.store_storage = data.result;
             }
 
         })
     };
-    console.log($pass_parameter.getter());
+    // console.log($pass_parameter.getter());
 
     searchAll();
     // // 返回仓库页

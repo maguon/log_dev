@@ -5,7 +5,29 @@ commonDirective.directive('header', function () {
         replace: true,
         transclude: false,
         restrict: 'E',
-        controller: function ($scope, $element, $rootScope, $basic) {
+        controller: function ($scope, $element, $rootScope, $basic,$host) {
+            var userid=$basic.getSession($basic.USER_ID);
+            $scope.amend_user=function () {
+                $(".modal").modal();
+                $("#user_modal").modal("open");
+            };
+            $scope.amend_user_submit=function (valid) {
+                $scope.submitted=true;
+                if(valid&&$scope.user_new_password==$scope.user_confirm_password){
+                    var obj={
+                        "originPassword":$scope.user_old_password,
+                        "newPassword": $scope.user_new_password
+                    };
+                    $basic.put($host.api_url + "/user/" + userid + "/password", obj).then(function (data) {
+                        if (data.success == true) {
+                            swal("密码重置成功", "", "success");
+                            $("#user_modal").modal("close");
+                        } else {
+                            swal(data.msg, "", "error");
+                        }
+                    })
+                }
+            };
             $scope.logOut = function () {
                 swal({
                     title: "注销账号",

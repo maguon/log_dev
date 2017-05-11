@@ -272,7 +272,7 @@
                     <td ng-if="el.col!=null">{{el.row}}排{{el.col}}列</td>
                     <td ng-if="el.col==null">无</td>
                     <td ng-bind="el.plan_out_time|date:'yyyy-MM-dd '"></td>
-                    <td ng-bind="el.pro_date|date:'yyyy-MM-dd '"></td>
+                    <td ng-bind="el.real_out_time|date:'yyyy-MM-dd '"></td>
                     <td class="operation">
                         <a href="#" ui-sref="storageCar_details({id:el.id,vin:el.vin,from:'storageCar'})" class=""><i class="mdi mdi-file-find look_icon cyan-text lighten-1  " ></i></a>
                         <span >

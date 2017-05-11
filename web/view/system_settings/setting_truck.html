@@ -9,26 +9,39 @@
             <!--</div>-->
         </div>
         <div class="row addBrand">
-            <ul class="collapsible" data-collapsible="accordion" collapsible>
-                <li>
-                    <a href="" class=" collapsible-header btn waves-effect cyan lighten-2 waves-light ">+品牌</a>
-                    <div class="collapsible-body row valign-wrapper" add-brand  ng-class="{'has-error':addBrandFrom.brandText.$invalid&&submitted1 }">
-                        <form name="addBrandFrom" ng-submit="add_brand(addBrandFrom.$valid)" novalidate>
-                            <input class="col s3 Brand_text" name="brandText" id="brandText" type="text" autocomplete="off" ng-model="b_txt" required>
-                            <div class="col s1  add_Brand_Icon"  >
-                                <button  class="waves-effect waves-light cyan  lighten-1 btn"  type="submit" name="action" >
-                                    <i class="mdi mdi-check add_brand" ></i>
-                                </button>
-                                <!--<a  class="waves-effect waves-light materialize-red  lighten-1 btn" >-->
-                                <!--<i class="mdi mdi-close" style="margin-right: 10px"></i>-->
-                                <!--</a>-->
+            <a href="" class=" col s2 offset-s10  btn waves-effect cyan lighten-2 waves-light vc-center open_car_brand " ng-click="car_Brand_box($event)">+品牌</a>
 
-                            </div>
-                        </form>
+                <form name="addBrandFrom" ng-submit="add_brand(addBrandFrom.$valid)" novalidate>
+                    <div class="col s12 z-depth-2 blue-grey lighten-5 car_Brand_box " style="padding: 0.75rem 0;display: none">
+                        <div class="col s1 vc-center" style="height: 45px">
+                            <h6 class=" bold cyan-text text-lighten-2" >品牌名称:</h6>
+                        </div>
 
+                    <input class="col s3 Brand_text" name="brandText" id="brandText" type="text" autocomplete="off" ng-model="b_txt" required>
+                    <div class="col s2  add_Brand_Icon"  >
+                        <button  class="  btn-floating waves-effect waves-light red lighten-2  btn"  ng-click="closeBrand()" >
+                            <i class="mdi mdi-close add_brand" ></i>
+                        </button>
+                        <button  class="btn-floating waves-effect waves-light cyan  lighten-1 btn"  type="submit" name="action" >
+                            <i class="mdi mdi-check add_brand" ></i>
+                        </button>
+
+                    <!--<a  class="waves-effect waves-light materialize-red  lighten-1 btn" >-->
+                    <!--<i class="mdi mdi-close" style="margin-right: 10px"></i>-->
+                    <!--</a>-->
+
+                </div>
                     </div>
-                </li>
-            </ul>
+            </form>
+
+            <!--<ul class="collapsible" data-collapsible="accordion" collapsible>-->
+                <!--<li>-->
+                    <!--<div class="collapsible-body row valign-wrapper" add-brand  ng-class="{'has-error':addBrandFrom.brandText.$invalid&&submitted1 }">-->
+
+
+                    <!--</div>-->
+                <!--</li>-->
+            <!--</ul>-->
         </div>
         <div class="row">
             <ul class="collapsible Brand_box" data-collapsible="accordion" collapsible>
