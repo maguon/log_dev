@@ -100,6 +100,16 @@ baseService.factory("service_storage_parking", function () {
 baseService.factory("$config_variable", function () {
     var _this = {};
     _this.rel_status = 1;
+    _this.car_rel_status=[
+        {
+            s_num: 1,
+            status_text: "在庫"
+        },
+        {
+            s_num: 2,
+            status_text: "出庫"
+        },
+    ];
     _this.config_color = [
         {
             colorName: "白色",

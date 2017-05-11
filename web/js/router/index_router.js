@@ -131,7 +131,7 @@ index_router.config(['$stateProvider',"$urlRouterProvider",function($stateProvid
         .state("statistics", {
             url:"/storage_statistics",
             templateUrl: "/view/storage/storage_statistics.html",
-            // controller:"storage_statistics"
+            controller:"storage_statistics_controller"
         })
         .state("storageCar_details", {
             url:"/storageCar_details/{id}/vin/{vin}?from",

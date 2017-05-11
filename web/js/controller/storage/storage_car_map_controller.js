@@ -117,7 +117,7 @@ storage_car_mapController.controller("storage_car_mapController", ["$baseService
         $('ul.tabs li.test1').addClass("active");
         $("#test1").addClass("active");
         $("#test1").show();
-        $scope.win = "";
+        $scope.vin = "";
         $scope.make_name = "";
         $scope.model_name = "";
         $scope.create_time = "";
@@ -140,7 +140,7 @@ storage_car_mapController.controller("storage_car_mapController", ["$baseService
         $scope.submitted = true;
         if (isValid) {
             var obj_car = {
-                "vin": $scope.win,
+                "vin": $scope.vin,
                 "makeId": $scope.make_name.id,
                 "makeName": $scope.make_name.make_name,
                 "modelId": $scope.model_name.id,
@@ -214,7 +214,7 @@ storage_car_mapController.controller("storage_car_mapController", ["$baseService
             if (data.success) {
                 console.log(data, $scope.Picture_carId);
                 var imageId = data.imageId;
-                $basic.post($host.record_url + "/car/" + $scope.Picture_carId + "/vin/" + $scope.win + "/storageImage", {
+                $basic.post($host.record_url + "/car/" + $scope.Picture_carId + "/vin/" + $scope.vin + "/storageImage", {
                     "username": $basic.getSession($basic.USER_NAME),
                     "userId": userId,
                     "userType": $basic.getSession($basic.USER_TYPE),

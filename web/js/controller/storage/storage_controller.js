@@ -129,7 +129,7 @@ storage_storeController.controller("storage_storeController", ["$scope", "$host"
         $('ul.tabs li.test1 a').addClass("active");
         $("#test1").addClass("active");
         $("#test1").show();
-        $scope.win = "";
+        $scope.vin = "";
         $scope.make_name = "";
         $scope.model_name = "";
         $scope.create_time = "";
@@ -153,7 +153,7 @@ storage_storeController.controller("storage_storeController", ["$scope", "$host"
 
         if (isValid) {
             var obj_car = {
-                "vin": $scope.win,
+                "vin": $scope.vin,
                 "makeId": $scope.make_name.id,
                 "makeName": $scope.make_name.make_name,
                 "modelId": $scope.model_name.id,
@@ -221,7 +221,7 @@ storage_storeController.controller("storage_storeController", ["$scope", "$host"
             if (data.success) {
                 console.log(data, $scope.Picture_carId);
                 var imageId = data.imageId;
-                $basic.post($host.record_url + "/car/" + $scope.Picture_carId + "/vin/" + $scope.win + "/storageImage", {
+                $basic.post($host.record_url + "/car/" + $scope.Picture_carId + "/vin/" + $scope.vin + "/storageImage", {
                     "username": $basic.getSession($basic.USER_NAME),
                     "userId": userId,
                     "userType": $basic.getSession($basic.USER_TYPE),

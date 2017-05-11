@@ -63,7 +63,7 @@ storageCar_detailsController.controller("storageCar_detailsController", ["$baseS
             if (data.success) {
                 console.log(data, $scope.Picture_carId);
                 var imageId = data.imageId;
-                $basic.post($host.record_url + "/car/" + $scope.Picture_carId + "/vin/" + $scope.win + "/storageImage", {
+                $basic.post($host.record_url + "/car/" + $scope.Picture_carId + "/vin/" + $scope.vin + "/storageImage", {
                     "username": $basic.getSession($basic.USER_NAME),
                     "userId": userId,
                     "userType": $basic.getSession($basic.USER_TYPE),
@@ -249,7 +249,7 @@ storageCar_detailsController.controller("storageCar_detailsController", ["$baseS
         $("#look_msg").show();
 
         $scope.Picture_carId = val;
-        $scope.win = vin;
+        $scope.vin = vin;
         $basic.get($host.record_url + "/user/" + userId + "/car/" + val + "/record").then(function (data) {
             if (data.success == true) {
                 // console.log(data);
@@ -275,7 +275,7 @@ storageCar_detailsController.controller("storageCar_detailsController", ["$baseS
                     $scope.changeMakeId($scope.look_make_id);
                 $scope.look_model_id = $scope.self_car.model_id,
                     $scope.look_create_time = $baseService.formDate($scope.self_car.pro_date);
-                $scope.look_storageName = $scope.self_car.storage_name + $scope.self_car.row + "排" + $scope.self_car.col + "列";
+                $scope.look_storageName = $scope.self_car.storage_name +"  "+ $scope.self_car.row + "排" + $scope.self_car.col + "列";
 
                 // 车辆id
                 $scope.look_car_id = $scope.self_car.id;

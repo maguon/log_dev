@@ -709,3 +709,11 @@ input[type=text]{
     height: 150px;
     /*border: 1px solid black;*/
 }
+/*库存统计*/
+.statisticsTitle{
+    width: 100%;
+    height: 50px;
+}
+.statisticsContent{
+    height: 500px;
+}

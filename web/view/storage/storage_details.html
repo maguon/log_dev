@@ -26,7 +26,7 @@
                                         <div class="input-field col s12">
                                             <input  id="look_win" name="look_win" autocomplete="off" ng-model="self_car.vin" type="text" disabled   required >
                                             <label for="look_win" ><span style="color: red">*</span>
-                                                WIN码</label>
+                                                VIN码</label>
                                         </div>
                                     </div>
                                     <div class="col s4 valign-wrapper ">
@@ -76,7 +76,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="row "  >
+                                <div ng-if="self_car.rel_status==1" class="row ">
                                     <div class="col s4 valign-wrapper p0" >
                                         <div class="input-field col s12">
                                             <input  id="look_storageName"  name="look_storageName"  autocomplete="off" disabled ng-model="look_storageName" class=" red-text text-lighten-2" type="text"   required >

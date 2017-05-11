@@ -35,19 +35,22 @@ Storage_carController.controller("Storage_carController", ["$scope", "$rootScope
 
 
      var searchAll=function () {
-        console.log($scope.search_carStatus,$scope.search_storage,$scope.search_makeId,$scope.search_modelId,$scope.search_win,$scope.search_enterTime_start,$scope.search_enterTime_end,$scope.search_planTime_start,$scope.search_planTime_end,$scope.search_outTime_start,$scope.search_outTime_end)
+        // console.log($scope.search_carStatus,$scope.search_storage,$scope.search_makeId,$scope.search_modelId,$scope.search_vin,$scope.search_enterTime_start,$scope.search_enterTime_end,$scope.search_planTime_start,$scope.search_planTime_end,$scope.search_outTime_start,$scope.search_outTime_end)
         // $socpe.storageStaust = null;
+        //  if(rel_status){
+        //      $scope.search_carStatus=rel_status;
+        //  }
         var reqUrl = $host.api_url + "/user/" + userId + "/car?active="+1+"&start=" + $scope.start + "&size=" + $scope.size
-        if($scope.search_carStatus !=null){
-            reqUrl= reqUrl+"&relStatus="+$scope.search_carStatus
+        if($scope.search_relStatus !=null){
+            reqUrl= reqUrl+"&relStatus="+$scope.search_relStatus
         }if($scope.search_storage !=null){
             reqUrl= reqUrl+"&storageId="+$scope.search_storage
         }if($scope.search_makeId !=null){
             reqUrl= reqUrl+"&makeId="+$scope.search_makeId
         }if($scope.search_modelId !=null){
             reqUrl= reqUrl+"&modelId="+$scope.search_modelId
-        }if($scope.search_win !=null){
-            reqUrl= reqUrl+"&vin="+$scope.search_win
+        }if($scope.search_vin !=null){
+            reqUrl= reqUrl+"&vin="+$scope.search_vin
         }if($scope.search_enterTime_start !=null){
             reqUrl= reqUrl+"&enterStart="+$scope.search_enterTime_start
         }if($scope.search_enterTime_end !=null){
@@ -82,7 +85,7 @@ Storage_carController.controller("Storage_carController", ["$scope", "$rootScope
             }
         });
     };
-    searchAll();
+
     // 条件查询
     $scope.searchStorage_car=function () {
         searchAll();
@@ -112,6 +115,9 @@ Storage_carController.controller("Storage_carController", ["$scope", "$rootScope
         // }
     };
 
+    // 車庫狀態
+    $scope.rel_status=$config_variable.car_rel_status;
+    $scope.search_relStatus=1;
     // 车辆品牌查询
     $basic.get($host.api_url + "/carMake").then(function (data) {
         if (data.success == true) {
@@ -138,7 +144,7 @@ Storage_carController.controller("Storage_carController", ["$scope", "$rootScope
         $('ul.tabs li.test1').addClass("active");
         $("#test1").addClass("active");
         $("#test1").show();
-        $scope.win = "";
+        $scope.vin = "";
         $scope.make_name = "";
         $scope.model_name = "";
         $scope.create_time = "";
@@ -198,7 +204,7 @@ Storage_carController.controller("Storage_carController", ["$scope", "$rootScope
                 console.log(data, $scope.Picture_carId);
                 var imageId = data.imageId;
 
-                $basic.post($host.record_url + "/car/" + $scope.Picture_carId + "/vin/" + $scope.win + "/storageImage", {
+                $basic.post($host.record_url + "/car/" + $scope.Picture_carId + "/vin/" + $scope.vin + "/storageImage", {
                     "username": $basic.getSession($basic.USER_NAME),
                     "userId": userId,
                     "userType": $basic.getSession($basic.USER_TYPE),
@@ -281,7 +287,7 @@ Storage_carController.controller("Storage_carController", ["$scope", "$rootScope
         $scope.submitted = true;
         if (isValid) {
             var obj_car = {
-                "vin": $scope.win,
+                "vin": $scope.vin,
                 "makeId": $scope.make_name.id,
                 "makeName": $scope.make_name.make_name,
                 "modelId": $scope.model_name.id,
@@ -362,13 +368,14 @@ Storage_carController.controller("Storage_carController", ["$scope", "$rootScope
     $scope.loginStorageCar=function () {
         $scope.login_storage_name=" ";
         $scope.login_storageRow=" ";
-        $scope.login_parkingId=" ";
+        $scope.login_parkingId="";
         $scope.login_planOutTime="";
         $(".modal").modal();
         $("#loginStorageCar").modal("open");
 
 
     };
+
     $scope.login_submit=function (valid,vin, carid,id,name,p_id,p_time) {
 
         $scope.submitted=true;
@@ -383,9 +390,11 @@ Storage_carController.controller("Storage_carController", ["$scope", "$rootScope
             };
             $basic.post($host.api_url+"/user/"+userId+"/againCarStorageRel?carId="+carid+"&vin="+vin,obj).then(function (data) {
                 if(data.success==true){
-                    console.log(data);
+                    swal('成功',"","success");
+                    $("#loginStorageCar").modal("close");
+                    searchAll();
                 }else {
-                    swal(data.msg,"",error)
+                    swal(data.msg,"","error")
                 }
             })
         }
@@ -472,4 +481,5 @@ Storage_carController.controller("Storage_carController", ["$scope", "$rootScope
             }
         );
     }
+    searchAll();
 }]);

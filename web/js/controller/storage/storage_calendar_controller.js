@@ -2,7 +2,8 @@ var storage_working_calendarController = angular.module("storage_working_calenda
 storage_working_calendarController.controller("storage_working_calendarController", ["$scope", "$host", "$basic", function ($scope, $host, $basic) {
     var date = new Date();
     var now_date = moment(date).format('YYYYMMDD');
-    $scope.today_month = date.getFullYear() + "年" + date.getMonth() + "月";
+    var month=date.getMonth()+1;
+    $scope.today_month = date.getFullYear() + "年" + month + "月";
     $scope.today_d = date.getDate();
     var weekday = new Array(7);
     weekday[0] = "Sunday";
