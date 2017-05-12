@@ -375,15 +375,13 @@ Storage_carController.controller("Storage_carController", ["$scope", "$rootScope
         $scope.self_car_id=id;
         $(".modal").modal();
         $("#loginStorageCar").modal("open");
-
-
     };
 
     $scope.login_submit=function (valid,id,name,p_id,p_time) {
 
         $scope.submitted=true;
         // console.log(vin, carid,id,name,p_id,p_time);
-console.log( $scope.self_vin,$scope.self_car_id)
+// console.log( $scope.self_vin,$scope.self_car_id)
         if(valid){
             var obj={
                 "parkingId": p_id,

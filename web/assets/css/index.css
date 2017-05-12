@@ -232,11 +232,21 @@ body{
 }
 .car_model_panel{
     border: 1px solid #eceff1;
-
+    background: white;
+}
+.car_model_name{
+    color:#4dd0e1 ;
 }
 .amend_car_model_box{
     width: 30px;
     height: 100%;
+}
+.no_amend_model{
+    background:#cfd8dc ;
+
+}
+.no_amend_model input{
+    color: #eceff1;
 }
 /*.gm1-right div{*/
 /*height: 100%;*/

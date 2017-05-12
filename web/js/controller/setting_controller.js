@@ -219,6 +219,7 @@ settingController.controller("settingT_controller", ["$scope", "$host", "$basic"
             if (data.success == true) {
                 // console.log(data.result);
                 $scope.brand_model = data.result;
+
             } else {
                 swal(data.msg, "", "error");
             }
@@ -234,6 +235,7 @@ settingController.controller("settingT_controller", ["$scope", "$host", "$basic"
             $scope.search_carModel(id);
             $(".brand_box").attr("flag","true");
             $($event.target).attr("flag", "false");
+
         } else {
             $($event.target).attr("flag", "true");
         }
@@ -290,6 +292,23 @@ settingController.controller("settingT_controller", ["$scope", "$host", "$basic"
                 $(".car_model_name" + index).attr("readonly", "readonly");
                 $(".amend_car_model_box" + index).hide();
                 $(".mdi-pencil" + index).show();
+            } else {
+                swal(data.msg, "", "error");
+            }
+        })
+    };
+    // 修改汽车型号状态
+    $scope.amend_car_model_status=function (id,sta,makeId) {
+        if (sta == 0) {
+            sta = 1;
+        } else {
+            sta = 0
+        }
+        $basic.put($host.api_url + "/admin/" + adminId + "/carModel/" + id+"/modelStatus/"+sta,{}).then(function (data) {
+            if (data.success == true) {
+                swal("更改状态", "", "success");
+                $scope.search_carModel(makeId);
+
             } else {
                 swal(data.msg, "", "error");
             }

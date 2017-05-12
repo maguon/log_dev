@@ -72,8 +72,10 @@
                     <div class="collapsible-body" style="padding: 0">
                         <div class="" style="padding: 1rem;overflow: hidden">
                             <div class="add_model_box white add_model_box{{$index}} col s12 p0" ng-click="amend_model_box($event)">
+                                <a href="" class=" col s2 offset-s10  btn waves-effect cyan lighten-2 waves-light vc-center open_car_brand " ng-click="car_Brand_box($event)">+增加类型</a>
+
                                 <form name="add_modelForm" ng-submit="add_model_submit(amend_modelForm.$valid,el.id,el.make_name,$index)">
-                                    <div class="col s6 valign-wrapper p0 vc-center" >
+                                    <div class="col s6 valign-wrapper p0 vc-center add_model_box" style="display: none" >
                                         <h6 class="col s2 bold cyan-text lighten-2">品牌名称</h6>
                                         <input type="text" class="cyan-text lighten-2"  >
                                         <a class="  btn-floating btn-small waves-effect waves-light red lighten-2  btn" style="width: 40px;height: 35px;line-height: 35px;margin-right: 10px"   ng-click="close_amend_brand($index)" >
@@ -89,19 +91,19 @@
                         <div class="divider"></div>
                         <div style="padding: 1rem;overflow: hidden">
                             <div class="col s12 p0">
-                                    <div ng-repeat="el in brand_model" class="col s4 " style=" padding:1rem;">
-                                        <div class="col s12 white car_model_panel valign-wrapper">
+                                    <div ng-repeat="el in brand_model" class="col s4 "  style=" padding:1rem;">
+                                        <div class="col s12  car_model_panel valign-wrapper" ng-class="{'no_amend_model':el.model_status==0}" >
                                             <!--<div class="col s8 cyan-text text-lighten-2">{{el.model_name}}</div>-->
-                                            <input type="text" class="cyan-text car_model_name{{$index}} col s5" ng-model="el.model_name" readonly >
+                                            <input type="text" class="car_model_name  car_model_name{{$index}} col s5" ng-model="el.model_name" readonly >
                                             <div class="amend_car_model_box{{$index}} col s3" style="display: none;cursor: pointer">
                                                 <i class="mdi red-text text-darken-2 mdi-close col s6 " ng-click="close_car_model($index)" ></i>
                                                 <i class="mdi cyan-text text-lighten-2 mdi-check col s6 "  ng-click="amend_car_model_submit(el.id,el.model_name,$index)"></i>
                                             </div>
-                                            <i class="mdi grey-text mdi-pencil mdi-pencil{{$index}} col s1" style="cursor: pointer" ng-click="amend_car_model($index,$event)"></i>
+                                            <i class="mdi grey-text mdi-pencil mdi-pencil{{$index}} col s1" ng-if="el.model_status==1" style="cursor: pointer" ng-click="amend_car_model($index,$event)"></i>
                                             <div class="col s3">
                                                 <div class="switch">
                                                     <label>
-                                                        <input type="checkbox" checked>
+                                                        <input type="checkbox" ng-checked="el.model_status==1" ng-click="amend_car_model_status(el.id,el.model_status,el.make_id)">
                                                         <span class="lever"></span>
                                                     </label>
                                                 </div>
