@@ -51,10 +51,10 @@ storage_router.config(['$stateProvider',"$urlRouterProvider",function($stateProv
             templateUrl: "/view/storage/storage_car_map.html",
             controller:"storage_car_mapController"
         })
-        .state("setting_truck",{
-            url:"/setting_truck",
-            templateUrl: "/view/system_settings/setting_truck.html",
-            controller:'settingT_controller'
+        .state("storage_setting_car",{
+            url:"/storage_setting_car",
+            templateUrl: "/view/storage/storage_setting_car.html",
+            controller:'storage_setting_car_controller'
         });
 }]);
 /**

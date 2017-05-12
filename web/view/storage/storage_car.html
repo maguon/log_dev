@@ -35,7 +35,7 @@
             <div class="col s12 vc-center">
                 <div class="col s10">
                     <div class="col s12 valign-wrapper p0" style="margin-top: 1rem">
-                        <div class="col s1 p0 cyan-text bold" style="min-width: 100px;font-size: 13px"  >车辆WIN码:</div>
+                        <div class="col s1 p0 cyan-text bold" style="min-width: 100px;font-size: 13px"  >车辆VIN码:</div>
                         <div class="input-field col s3 no-mp">
                             <input type="text" ng-model="search_vin" >
                         </div>
@@ -106,9 +106,9 @@
                         <form name="newStorage_carForm" style="color:#616161" ng-submit="newsubmitForm(newStorage_carForm.$valid)" novalidate>
                             <div class="row" style="margin-top: 40px">
                                 <div class="row "  >
-                                    <div class="input-field col s4" ng-class="{ 'has-error':newStorage_carForm.win.$invalid&&submitted }" >
-                                        <input  id="win" name="win" autocomplete="off" ng-model="vin" type="text"   required >
-                                        <label for="win"><span style="color: red">*</span>WIN码</label>
+                                    <div class="input-field col s4" ng-class="{ 'has-error':newStorage_carForm.vin.$invalid&&submitted }" >
+                                        <input  id="vin" name="vin" autocomplete="off" ng-model="vin" type="text"   required >
+                                        <label for="vin"><span style="color: red">*</span>VIN码</label>
                                     </div>
                                     <!--<div class="col s4 valign-wrapper" ng-class="{ 'has-error':newStorage_carForm.win.$invalid&&submitted }">-->
                                     <!--<h6 class="col s4-0 min-width-2 ">-->
@@ -249,7 +249,7 @@
             <table class=" bordered striped">
                 <thead class="blue-grey lighten-5">
                 <tr class="grey-text text-darken-2">
-                    <th data-field="">WIN码</th>
+                    <th data-field="">VIN码</th>
                     <th data-field="">品牌</th>
                     <th data-field="">型号</th>
                     <th data-field="">入库时间</th>

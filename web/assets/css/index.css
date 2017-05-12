@@ -38,6 +38,9 @@ body{
 .no-marBottom{
     margin-bottom: 0;
 }
+.container .row.no-mp{
+    margin: 0;
+}
 .no-mp{
     margin: 0;
 }
@@ -207,6 +210,33 @@ body{
 }
 .gm1-right{
     height: 310px;
+}
+/*车辆品牌设置*/
+.setting_car .collapsible-header{
+    position: relative;
+}
+.amend_brand_make{
+    position: absolute;
+    top: 0;
+    right: 0;
+    z-index: 10;
+}
+.amend_brand_box{
+    display: none;
+    position: absolute;
+    left: 0;
+    top: 0;
+}
+.amend_model_box{
+    height: 50px;
+}
+.car_model_panel{
+    border: 1px solid #eceff1;
+
+}
+.amend_car_model_box{
+    width: 30px;
+    height: 100%;
 }
 /*.gm1-right div{*/
 /*height: 100%;*/

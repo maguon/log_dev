@@ -1,7 +1,7 @@
 var commonDirective = angular.module("commonDirective", []);
 commonDirective.directive('header', function () {
     return {
-        templateUrl: '/view/header.html',
+        templateUrl: '/view/storage/storage_header.html',
         replace: true,
         transclude: false,
         restrict: 'E',
@@ -53,7 +53,7 @@ commonDirective.directive('header', function () {
 
 commonDirective.directive('storageNavigator', function () {
     return {
-        templateUrl: '/view/storage_navigator.html',
+        templateUrl: '/view/storage/storage_navigator.html',
         replace: true,
         transclude: false,
         restrict: 'E',

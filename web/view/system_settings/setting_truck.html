@@ -1,15 +1,19 @@
 <div class="setting_truckWrap container">
     <div class="row">
         <div class="row valign-wrapper">
-            <h5 class="col s12 blue-text left-align">
+            <h5 class="col s12 cyan-text lighten-2  center-align">
                 车辆品牌设置
             </h5>
             <!--<div class="col s8 right-align">-->
                 <!---->
             <!--</div>-->
         </div>
+        <div class="row">
+            <div class="divider"></div>
+
+        </div>
         <div class="row addBrand">
-            <a href="" class=" col s2 offset-s10  btn waves-effect cyan lighten-2 waves-light vc-center open_car_brand " ng-click="car_Brand_box($event)">+品牌</a>
+            <a href="" class=" col s2 offset-s10  btn waves-effect cyan lighten-2 waves-light vc-center open_car_brand " ng-click="car_Brand_box($event)">+增加品牌</a>
 
                 <form name="addBrandFrom" ng-submit="add_brand(addBrandFrom.$valid)" novalidate>
                     <div class="col s12 z-depth-2 blue-grey lighten-5 car_Brand_box " style="padding: 0.75rem 0;display: none">
@@ -19,9 +23,9 @@
 
                     <input class="col s3 Brand_text" name="brandText" id="brandText" type="text" autocomplete="off" ng-model="b_txt" required>
                     <div class="col s2  add_Brand_Icon"  >
-                        <button  class="  btn-floating waves-effect waves-light red lighten-2  btn"  ng-click="closeBrand()" >
+                        <a  class="  btn-floating waves-effect waves-light red lighten-2  btn"  ng-click="closeBrand()" >
                             <i class="mdi mdi-close add_brand" ></i>
-                        </button>
+                        </a>
                         <button  class="btn-floating waves-effect waves-light cyan  lighten-1 btn"  type="submit" name="action" >
                             <i class="mdi mdi-check add_brand" ></i>
                         </button>
@@ -44,11 +48,69 @@
             <!--</ul>-->
         </div>
         <div class="row">
-            <ul class="collapsible Brand_box" data-collapsible="accordion" collapsible>
+            <ul class="collapsible setting_car Brand_box" data-collapsible="accordion" collapsible>
                 <!--<brand-list></brand-list>-->
                 <li ng-repeat="el in brand">
-                    <div class="collapsible-header cyan-text text-lighten-2" flag="true"  ng-click="open_car_model($event,el.id)"><i class="mdi mdi-car cyan-text text-lighten-2"></i>{{el.make_name}} </div>
-                    <div class="collapsible-body">
+                    <div class="collapsible-header grey-text text-darken-1 row no-mp"  >
+                        <div class="amend_brand_box amend_brand_box{{$index}} col s12 p0" ng-click="amend_brand_box($event)">
+                            <form name="amend_brandForm" ng-submit="amend_brand_submit(amend_brandForm.$valid,el.id,el.make_name,$index)">
+                                <div class="col s6 valign-wrapper p0" >
+                                    <i class="mdi mdi-car cyan-text text-lighten-2 "></i>
+                                    <input type="text" class="cyan-text lighten-2"  style="height: 30px"   ng-model="el.make_name">
+                                    <a class="  btn-floating btn-small waves-effect waves-light red lighten-2  btn" style="width: 30px;height: 30px;line-height: 30px;margin-right: 10px"  ng-click="close_amend_brand($index)" >
+                                        <i class="mdi mdi-close add_brand" style="width: 100%;line-height: 30px" ></i>
+                                    </a>
+                                    <button  class="btn-floating waves-effect waves-light cyan  lighten-1 btn" style="width: 30px;height: 30px;line-height: 30px"  type="submit" name="action" >
+                                        <i class="mdi mdi-check add_brand" style="width: 100%;line-height: 30px" ></i>
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="brand_box brand_box{{$index}}" flag="true"  ng-click="open_car_model($event,el.id)"><i class="mdi mdi-car cyan-text text-lighten-2"></i>{{el.make_name}}</div>
+                        <i ng-click="amend_brand_make($event,$index)" class="amend_brand_make mdi mdi-pencil"></i>
+                    </div>
+                    <div class="collapsible-body" style="padding: 0">
+                        <div class="" style="padding: 1rem;overflow: hidden">
+                            <div class="amend_model_box white amend_model_box{{$index}} col s12 p0" ng-click="amend_model_box($event)">
+                                <form name="amend_modelForm" ng-submit="amend_model_submit(amend_modelForm.$valid,el.id,el.make_name,$index)">
+                                    <div class="col s6 valign-wrapper p0 vc-center" >
+                                        <h6 class="col s2 bold cyan-text lighten-2">品牌名称</h6>
+                                        <input type="text" class="cyan-text lighten-2"  >
+                                        <a class="  btn-floating btn-small waves-effect waves-light red lighten-2  btn" style="width: 40px;height: 35px;line-height: 35px;margin-right: 10px"   ng-click="close_amend_brand($index)" >
+                                            <i class="mdi mdi-close " style="width: 100%;line-height: 35px" ></i>
+                                        </a>
+                                        <button  class="btn-floating waves-effect waves-light cyan  lighten-1 btn" style="width: 40px;height: 35px;line-height: 35px;"    type="submit" name="action" >
+                                            <i class="mdi mdi-check add_brand" style="width: 100%;line-height: 35px"  ></i>
+                                        </button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                        <div class="divider"></div>
+                        <div style="padding: 1rem;overflow: hidden">
+                            <div class="col s12 p0">
+                                    <div ng-repeat="el in brand_model" class="col s4 " style="outline: 1px solid red; padding:1rem;">
+                                        <div class="col s12 white car_model_panel valign-wrapper">
+                                            <!--<div class="col s8 cyan-text text-lighten-2">{{el.model_name}}</div>-->
+                                            <input type="text" class="cyan-text car_model_name{{$index}} col s6" ng-model="el.model_name" readonly >
+                                            <div class="amend_car_model_box{{$index}} col s2" style="display: none;cursor: pointer">
+                                                <i class="mdi red-text text-darken-2 mdi-close " ng-click="close_car_model()" ></i>
+                                                <i class="mdi cyan-text text-lighten-2 mdi-check "  ng-click="amend_car_model()"></i>
+                                            </div>
+                                            <i class="mdi grey-text mdi-pencil mdi-pencil{$index} col s1" style="cursor: pointer" ng-click="amend_car_model($index,$event)"></i>
+                                            <div class="col s3">
+                                                <div class="switch">
+                                                    <label>
+                                                        <input type="checkbox" checked>
+                                                        <span class="lever"></span>
+                                                    </label>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                            </div>
+                        </div>
                         <!--<div class="row" style="position: relative">-->
                             <!--<div class="fixed-action-btn toolbar">-->
                                 <!--<a class="btn-floating btn-large red">-->
@@ -64,65 +126,65 @@
                         <!--</div>-->
 
 
-                        <div class="row " style="margin: 0;position: relative;height: 70px">
-                            <div class="col s12 right-align remark_brand_box{{el.id}}" style="position: absolute">
-                                <a class="btn-floating btn-large waves-effect waves-light red "  ng-click="remark_brand(el.id,el.make_name)"><i class="mdi mdi-pencil"></i></a>
-                            </div>
-                            <div class="row change_brand_wrap{{el.id}}" style="margin: 0;display: none;">
-                                <input type="text" class="col s3 change_brand_text"  ng-model="el.make_name">
-                                <div class="col s3 "   style="height: 100%;min-width: 180px">
-                                    <a  class="waves-effect waves-light  cyan  lighten-1 btn" ng-click="close_brand(el.id)">
-                                        <i class="mdi mdi-close " style="font-size: 25px"></i>
-                                    </a>
-                                    <a  class="waves-effect waves-light tooltipped  cyan lighten-1 btn" ng-click="verify_brand(el.id,el.make_name)" tooltipped data-position="top" data-delay="50" data-tooltip="确认修改" >
-                                        <i class="mdi mdi-check " style="font-size: 25px"></i>
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="divider blue_divider "></div>
-                        <div class="row" style="margin:20px 0 0 0 ">
-                            <div class="row " style="margin: 0;position: relative;height: 70px">
-                                <div class="col s12 right-align add_brand_box{{el.id}}" style="position: absolute">
-                                    <a class="btn-floating btn-large waves-effect waves-light red "  ng-click="add_brand_model(el.id)"><i class="mdi mdi-plus"></i></a>
-                                </div>
-                                <div class="row add_brand_model_wrap{{el.id}}" style="margin: 0;display: none;" add-brand-model ng-class="{'has-error':addBrandModelFrom.brandModelText.$invalid&&submitted3 }">
-                                    <form name="addBrandModelFrom" ng-submit="verify_brand_model(addBrandModelFrom.$valid,el.id)" novalidate>
-                                        <input type="text" id="brandModelText" name="brandModelText" class="col s3 change_brand_text"  ng-model="brandModelText" required >
-                                        <div class="col s3  " style="height: 100%;min-width: 180px">
-                                            <a  class="waves-effect waves-light cyan  lighten-1 btn" ng-click="close_brand_model(el.id)"  >
-                                                <i class="mdi mdi-close " style="font-size: 25px"></i>
-                                            </a>
-                                            <button  class="btn waves-light cyan lighten-1 waves-effect" type="submit" name="action" >
-                                                <i class="mdi mdi-check " style="font-size: 25px"></i>
-                                            </button>
-                                        </div>
-                                    </form>
-                                </div>
-                            </div>
-                            <div class="row" style="margin: 0">
-                                <div class="col s3 car_model" ng-class="{'okCar_model':el.model_status==1}" style="margin:10px 10px 0 0" ng-repeat="el in brand_model">
-                                    <div class="row valign-wrapper" style="margin: 0">
-                                        <input type="text" readonly="readonly" class="col s8 remarkSelfBrand{{el.id}}" ng-click="remarkSelfBrandModel($event,el.id)" ng-model="el.model_name">
-                                        <div class="col s4 right-align selfBrand_status{{el.id}}">
-                                            <a  class="waves-effect waves-light lighten-1 small-btn" ng-click="changeSelfBrandStatus(el.id,el.model_status,el.make_id)" >
-                                                <i class="mdi mdi-check-circle"  ng-if="el.model_status==0"></i>
-                                                <i class="mdi mdi-minus-circle red-text"   ng-if="el.model_status==1"></i>
-                                            </a>
-                                        </div>
-                                        <div class="col s4 right-align selfBrand_operation{{el.id}}" style="display: none">
-                                            <a  class="waves-effect waves-light lighten-1 small-btn" ng-click="closeSelfBrandModel(el.id)"  >
-                                                <i class="mdi mdi-close" ></i>
-                                            </a>
-                                            <a  class="waves-effect waves-light  lighten-1 small-btn" ng-click="verifySelfBrandModel(el.id,el.model_name)">
-                                                <i class="mdi mdi-check " ></i>
-                                            </a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                        <!--<div class="row " style="margin: 0;position: relative;height: 70px">-->
+                            <!--<div class="col s12 right-align remark_brand_box{{el.id}}" style="position: absolute">-->
+                                <!--<a class="btn-floating btn-large waves-effect waves-light red "  ng-click="remark_brand(el.id,el.make_name)"><i class="mdi mdi-pencil"></i></a>-->
+                            <!--</div>-->
+                            <!--<div class="row change_brand_wrap{{el.id}}" style="margin: 0;display: none;">-->
+                                <!--<input type="text" class="col s3 change_brand_text"  ng-model="el.make_name">-->
+                                <!--<div class="col s3 "   style="height: 100%;min-width: 180px">-->
+                                    <!--<a  class="waves-effect waves-light  cyan  lighten-1 btn" ng-click="close_brand(el.id)">-->
+                                        <!--<i class="mdi mdi-close " style="font-size: 25px"></i>-->
+                                    <!--</a>-->
+                                    <!--<a  class="waves-effect waves-light tooltipped  cyan lighten-1 btn" ng-click="verify_brand(el.id,el.make_name)" tooltipped data-position="top" data-delay="50" data-tooltip="确认修改" >-->
+                                        <!--<i class="mdi mdi-check " style="font-size: 25px"></i>-->
+                                    <!--</a>-->
+                                <!--</div>-->
+                            <!--</div>-->
+                        <!--</div>-->
+                        <!--<div class="divider blue_divider "></div>-->
+                        <!--<div class="row" style="margin:20px 0 0 0 ">-->
+                            <!--<div class="row " style="margin: 0;position: relative;height: 70px">-->
+                                <!--<div class="col s12 right-align add_brand_box{{el.id}}" style="position: absolute">-->
+                                    <!--<a class="btn-floating btn-large waves-effect waves-light red "  ng-click="add_brand_model(el.id)"><i class="mdi mdi-plus"></i></a>-->
+                                <!--</div>-->
+                                <!--<div class="row add_brand_model_wrap{{el.id}}" style="margin: 0;display: none;" add-brand-model ng-class="{'has-error':addBrandModelFrom.brandModelText.$invalid&&submitted3 }">-->
+                                    <!--<form name="addBrandModelFrom" ng-submit="verify_brand_model(addBrandModelFrom.$valid,el.id)" novalidate>-->
+                                        <!--<input type="text" id="brandModelText" name="brandModelText" class="col s3 change_brand_text"  ng-model="brandModelText" required >-->
+                                        <!--<div class="col s3  " style="height: 100%;min-width: 180px">-->
+                                            <!--<a  class="waves-effect waves-light cyan  lighten-1 btn" ng-click="close_brand_model(el.id)"  >-->
+                                                <!--<i class="mdi mdi-close " style="font-size: 25px"></i>-->
+                                            <!--</a>-->
+                                            <!--<button  class="btn waves-light cyan lighten-1 waves-effect" type="submit" name="action" >-->
+                                                <!--<i class="mdi mdi-check " style="font-size: 25px"></i>-->
+                                            <!--</button>-->
+                                        <!--</div>-->
+                                    <!--</form>-->
+                                <!--</div>-->
+                            <!--</div>-->
+                            <!--<div class="row" style="margin: 0">-->
+                                <!--<div class="col s3 car_model" ng-class="{'okCar_model':el.model_status==1}" style="margin:10px 10px 0 0" ng-repeat="el in brand_model">-->
+                                    <!--<div class="row valign-wrapper" style="margin: 0">-->
+                                        <!--<input type="text" readonly="readonly" class="col s8 remarkSelfBrand{{el.id}}" ng-click="remarkSelfBrandModel($event,el.id)" ng-model="el.model_name">-->
+                                        <!--<div class="col s4 right-align selfBrand_status{{el.id}}">-->
+                                            <!--<a  class="waves-effect waves-light lighten-1 small-btn" ng-click="changeSelfBrandStatus(el.id,el.model_status,el.make_id)" >-->
+                                                <!--<i class="mdi mdi-check-circle"  ng-if="el.model_status==0"></i>-->
+                                                <!--<i class="mdi mdi-minus-circle red-text"   ng-if="el.model_status==1"></i>-->
+                                            <!--</a>-->
+                                        <!--</div>-->
+                                        <!--<div class="col s4 right-align selfBrand_operation{{el.id}}" style="display: none">-->
+                                            <!--<a  class="waves-effect waves-light lighten-1 small-btn" ng-click="closeSelfBrandModel(el.id)"  >-->
+                                                <!--<i class="mdi mdi-close" ></i>-->
+                                            <!--</a>-->
+                                            <!--<a  class="waves-effect waves-light  lighten-1 small-btn" ng-click="verifySelfBrandModel(el.id,el.model_name)">-->
+                                                <!--<i class="mdi mdi-check " ></i>-->
+                                            <!--</a>-->
+                                        <!--</div>-->
+                                    <!--</div>-->
+                                <!--</div>-->
+                            <!--</div>-->
 
-                        </div>
+                        <!--</div>-->
                     </div>
                 </li>
             </ul>
