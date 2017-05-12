@@ -366,22 +366,24 @@ Storage_carController.controller("Storage_carController", ["$scope", "$rootScope
     };
 
     // 车辆重新入库
-    $scope.loginStorageCar=function () {
-        $scope.login_storage_name=" ";
-        $scope.login_storageRow=" ";
-        $scope.login_parkingId="";
-        $scope.login_planOutTime="";
+    $scope.loginStorageCar=function (el, id) {
+        // $scope.login_storage_name=" ";
+        // $scope.login_storageRow=" ";
+        // $scope.login_parkingId="";
+        // $scope.login_planOutTime="";
+        $scope.self_vin=el;
+        $scope.self_car_id=id;
         $(".modal").modal();
         $("#loginStorageCar").modal("open");
 
 
     };
 
-    $scope.login_submit=function (valid,vin, carid,id,name,p_id,p_time) {
+    $scope.login_submit=function (valid,id,name,p_id,p_time) {
 
         $scope.submitted=true;
-        console.log(vin, carid,id,name,p_id,p_time);
-
+        // console.log(vin, carid,id,name,p_id,p_time);
+console.log( $scope.self_vin,$scope.self_car_id)
         if(valid){
             var obj={
                 "parkingId": p_id,
@@ -389,7 +391,7 @@ Storage_carController.controller("Storage_carController", ["$scope", "$rootScope
                 "storageName": name,
                 "planOutTime": p_time
             };
-            $basic.post($host.api_url+"/user/"+userId+"/againCarStorageRel?carId="+carid+"&vin="+vin,obj).then(function (data) {
+            $basic.post($host.api_url+"/user/"+userId+"/againCarStorageRel?carId="+ $scope.self_car_id+"&vin="+$scope.self_vin,obj).then(function (data) {
                 if(data.success==true){
                     swal('成功',"","success");
                     $("#loginStorageCar").modal("close");

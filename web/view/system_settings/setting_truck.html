@@ -71,8 +71,8 @@
                     </div>
                     <div class="collapsible-body" style="padding: 0">
                         <div class="" style="padding: 1rem;overflow: hidden">
-                            <div class="amend_model_box white amend_model_box{{$index}} col s12 p0" ng-click="amend_model_box($event)">
-                                <form name="amend_modelForm" ng-submit="amend_model_submit(amend_modelForm.$valid,el.id,el.make_name,$index)">
+                            <div class="add_model_box white add_model_box{{$index}} col s12 p0" ng-click="amend_model_box($event)">
+                                <form name="add_modelForm" ng-submit="add_model_submit(amend_modelForm.$valid,el.id,el.make_name,$index)">
                                     <div class="col s6 valign-wrapper p0 vc-center" >
                                         <h6 class="col s2 bold cyan-text lighten-2">品牌名称</h6>
                                         <input type="text" class="cyan-text lighten-2"  >
@@ -89,15 +89,15 @@
                         <div class="divider"></div>
                         <div style="padding: 1rem;overflow: hidden">
                             <div class="col s12 p0">
-                                    <div ng-repeat="el in brand_model" class="col s4 " style="outline: 1px solid red; padding:1rem;">
+                                    <div ng-repeat="el in brand_model" class="col s4 " style=" padding:1rem;">
                                         <div class="col s12 white car_model_panel valign-wrapper">
                                             <!--<div class="col s8 cyan-text text-lighten-2">{{el.model_name}}</div>-->
-                                            <input type="text" class="cyan-text car_model_name{{$index}} col s6" ng-model="el.model_name" readonly >
-                                            <div class="amend_car_model_box{{$index}} col s2" style="display: none;cursor: pointer">
-                                                <i class="mdi red-text text-darken-2 mdi-close " ng-click="close_car_model()" ></i>
-                                                <i class="mdi cyan-text text-lighten-2 mdi-check "  ng-click="amend_car_model()"></i>
+                                            <input type="text" class="cyan-text car_model_name{{$index}} col s5" ng-model="el.model_name" readonly >
+                                            <div class="amend_car_model_box{{$index}} col s3" style="display: none;cursor: pointer">
+                                                <i class="mdi red-text text-darken-2 mdi-close col s6 " ng-click="close_car_model($index)" ></i>
+                                                <i class="mdi cyan-text text-lighten-2 mdi-check col s6 "  ng-click="amend_car_model_submit(el.id,el.model_name,$index)"></i>
                                             </div>
-                                            <i class="mdi grey-text mdi-pencil mdi-pencil{$index} col s1" style="cursor: pointer" ng-click="amend_car_model($index,$event)"></i>
+                                            <i class="mdi grey-text mdi-pencil mdi-pencil{{$index}} col s1" style="cursor: pointer" ng-click="amend_car_model($index,$event)"></i>
                                             <div class="col s3">
                                                 <div class="switch">
                                                     <label>

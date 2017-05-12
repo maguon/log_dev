@@ -103,11 +103,11 @@ baseService.factory("$config_variable", function () {
     _this.car_rel_status=[
         {
             s_num: 1,
-            status_text: "在庫"
+            status_text: "在库"
         },
         {
             s_num: 2,
-            status_text: "出庫"
+            status_text: "出库"
         },
     ];
     _this.config_color = [

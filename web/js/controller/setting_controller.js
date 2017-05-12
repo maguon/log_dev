@@ -226,7 +226,7 @@ settingController.controller("settingT_controller", ["$scope", "$host", "$basic"
 
     };
 
-    // 打开
+    // 打开汽车型号界面
     $scope.open_car_model = function ($event, id) {
         // console.log($($event.target).attr("flag"));
 
@@ -275,21 +275,21 @@ settingController.controller("settingT_controller", ["$scope", "$host", "$basic"
 
     };
     // 关闭修改型号界面
-    $scope.closeSelfBrandModel = function (id) {
-        $(".remarkSelfBrand" + id).attr("readonly", "readonly");
-        $(".selfBrand_status" + id).show();
-        $(".selfBrand_operation" + id).hide();
+    $scope.close_car_model = function (index) {
+        $(".car_model_name" + index).attr("readonly", "readonly");
+        $(".amend_car_model_box" + index).hide();
+        $(".mdi-pencil" + index).show();
     };
     // 确认提交修改型号
-    $scope.verifySelfBrandModel = function (id, val) {
+    $scope.amend_car_model_submit = function (id, name,index) {
         $basic.put($host.api_url + "/admin/" + adminId + "/carModel/" + id, {
-            modelName: val
+            modelName: name
         }).then(function (data) {
             if (data.success == true) {
                 // console.log(data.result);
-                $(".remarkSelfBrand" + id).attr("readonly", "readonly");
-                $(".selfBrand_status" + id).show();
-                $(".selfBrand_operation" + id).hide();
+                $(".car_model_name" + index).attr("readonly", "readonly");
+                $(".amend_car_model_box" + index).hide();
+                $(".mdi-pencil" + index).show();
             } else {
                 swal(data.msg, "", "error");
             }
