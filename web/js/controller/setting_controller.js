@@ -226,6 +226,20 @@ settingController.controller("settingT_controller", ["$scope", "$host", "$basic"
         });
 
     };
+    // 增加汽车型号界面
+    $scope.add_car_model_box=function ($event,$index) {
+        $event.stopPropagation();
+        $(".open_car_brand").show();
+        $($event.target).hide();
+
+        $(".add_model_wrap").hide();
+        $(".add_model_wrap"+$index).show();
+    };
+    // 关闭增加型号界面
+    $scope.close_add_car_model=function () {
+        $(".add_model_wrap").hide();
+        $(".open_car_brand").show();
+    };
 
     // 打开汽车型号界面
     $scope.open_car_model = function ($event, id) {
