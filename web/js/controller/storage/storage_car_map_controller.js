@@ -155,8 +155,7 @@ storage_car_mapController.controller("storage_car_mapController", ["$baseService
                 "parkingId": $scope.parking_id,
                 "planOutTime": $scope.plan_out_time
             };
-            console.log(obj_car);
-            $basic.post($host.api_url + "/user/" + userId + "/carStorageRel", obj_car).then(function (data) {
+            $basic.post($host.api_url + "/user/" + userId + "/carStorageRel",$basic.removeNullProps(obj_car)).then(function (data) {
                 if (data.success == true) {
                     // swal("新增成功","","success");
                     // $("#newStorage_car").modal("close");

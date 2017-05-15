@@ -56,10 +56,10 @@
                     <div class="col s4">
                     </div>
                 </div>
-                <div class="garageWrap_storage">
+                <div class="garageWrap_storage white">
                     <div class="garageBox row " style="display: inline">
 
-                        <div class=" col s12 garage_list p0 grey lighten-1 white-text " >
+                        <div class=" col s12 garage_list p0 grey lighten-4 white-text " >
                             <div class="garage_row vc-center left"></div>
                             <div class="garage_col vc-center left" ng-repeat="el in ageParkingCol">
                                 {{el.col}}
@@ -105,7 +105,7 @@
                                         <!--:</h6>-->
                                         <!--</div>-->
                                         <div class="input-field col s4">
-                                            <select material-select watch id="makecarName" name="makecarName" ng-options="o.make_name for o in makecarName" ng-change="changeMakeId(make_name.id)" ng-model="make_name" required>
+                                            <select material-select watch id="makecarName" name="makecarName" ng-options="o.make_name for o in makecarName" ng-change="changeMakeId(make_name.id)" ng-model="make_name" >
                                                 <option value="" disabled selected>请选择</option>
                                                 <!--<option ng-repeat="el in makecarName" ng-value="el.id" >{{el.make_name}}</option>-->
                                             </select>
@@ -117,7 +117,7 @@
 
                                         <!--</div>-->
                                         <div class="input-field col s4">
-                                            <select material-select watch id="model_name" name="model_name"  ng-options="o.model_name for o in carModelName" ng-model="model_name" required>
+                                            <select material-select watch id="model_name" name="model_name"  ng-options="o.model_name for o in carModelName" ng-model="model_name" >
                                                 <option value="" disabled selected>请选择</option>
                                             </select>
                                             <label for="model_name">型号</label>
@@ -125,18 +125,18 @@
                                     </div>
                                     <div class="row" >
                                         <div class="input-field col s4">
-                                            <input type="text" id="create_time" name="create_time" class="datepicker" autocomplete="off" ng-model="create_time" required   date><i class="mdi dataIcon mdi-table-large"></i>
+                                            <input type="text" id="create_time" name="create_time" class="datepicker" autocomplete="off" ng-model="create_time"    date><i class="mdi dataIcon mdi-table-large"></i>
                                             <label for="create_time">生产日期</label>
                                         </div>
                                         <div class="input-field col s4">
-                                            <select material-select watch id="car_color" name="car_color"  ng-model="car_color" required>
+                                            <select material-select watch id="car_color" name="car_color"  ng-model="car_color" >
                                                 <option value="" disabled selected>请选择</option>
                                                 <option ng-repeat="el in color" ng-value="el.colorId" >{{el.colorName}}</option>
                                             </select>
                                             <label for="car_color">颜色</label>
                                         </div>
                                         <div class="input-field col s4">
-                                            <input  id="engineNum" id="engineNum" name="engineNum" autocomplete="off" ng-model="engineNum" type="text"   required >
+                                            <input  id="engineNum" id="engineNum" name="engineNum" autocomplete="off" ng-model="engineNum" type="text"    >
                                             <label for="engineNum">发动机号</label>
                                         </div>
                                     </div>
@@ -166,7 +166,6 @@
                                     </div>
                                     <div class="row">
                                         <p class="col 12 min-width-2 left-align  grey-text darken-2">
-                                            <span style="color: red">*</span>
                                             备注:</p>
                                         <div class="col s12 valign-wrapper" style="position: relative">
                                             <p class=" col s12 p0">

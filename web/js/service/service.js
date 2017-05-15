@@ -136,6 +136,22 @@ CommonService.factory('$basic',['$http','$location','$q',"$cookies",function($ht
         }
         return str.substring(start+1);
     }
+    _this.removeNullProps= function(obj){
+        var tempObj={};
+            for(var i in obj){
+                if(obj[i]!=""&&obj[i]!=null){
+                    tempObj[i]=obj[i]
+                }
+            }
+            return tempObj
+    };
+    _this.objToUrl=function(obj){
+        var str="";
+        for(var i in obj){
+            str=str+i+"="+obj[i]+"&";
+        }
+        return str.substr(0,str.length-1);
+    };
     return _this;
 }]);
 
