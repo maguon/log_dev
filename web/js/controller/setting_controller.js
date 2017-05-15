@@ -236,10 +236,9 @@ settingController.controller("settingT_controller", ["$scope", "$host", "$basic"
         $event.stopPropagation();
         $(".open_car_brand").show();
         $($event.target).hide();
-
         $(".add_model_wrap").hide();
         $(".add_model_wrap"+$index).show();
-        $("#add_car_model").val("");
+        $scope.add_car_model_text="";
     };
     // 关闭增加型号界面
     $scope.close_add_car_model=function () {
@@ -251,10 +250,10 @@ settingController.controller("settingT_controller", ["$scope", "$host", "$basic"
     $scope.add_car_model_submit=function (iValid,id) {
         $scope.submitted=true;
         // var xt="add_car_model_text"+index;
-        // console.log($("#add_car_model").val());
+        console.log($scope.add_car_model_text);
         if(iValid){
             $basic.post($host.api_url + "/admin/" + adminId + "/carMake/" + id+"/carModel", {
-                modelName: $("#add_car_model").val()
+                modelName:$scope.add_car_model_text
             }).then(function (data) {
                 if (data.success == true) {
                     $(".add_model_wrap").hide();
@@ -262,6 +261,7 @@ settingController.controller("settingT_controller", ["$scope", "$host", "$basic"
                     $scope.submitted=false;
                     $scope.search_carModel(id);
                     swal("新增成功","","success");
+
                 } else {
                     swal(data.msg, "", "error");
                 }
