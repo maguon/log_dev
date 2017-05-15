@@ -68,7 +68,7 @@ storageDirective.directive('storageNavigator', function () {
                 $basic.get($host.api_url + "/user/" + $basic.getSession($basic.USER_ID)).then(function (data) {
                     // $(".shadeDowWrap").hide();
                     if (data.success == true) {
-                        $scope.userName = data.result[0].real_name;
+                        $scope.userName = data.result[0].mobile;
                         $basic.setSession($basic.USER_NAME, $scope.userName);
                         $basic.setHeader($basic.USER_NAME, $scope.userName);
                     } else {
