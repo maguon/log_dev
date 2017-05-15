@@ -15,6 +15,12 @@ body{
     padding: 0 5px;
 }
 
+/*登录页面*/
+/*.login_btn{*/
+    /*letter-spacing: 15px;*/
+    /*height: 45px;*/
+    /*font-size: 18px*/
+/*}*/
 /*logo*/
 .brand-logo{
     height: 100%;
@@ -733,7 +739,7 @@ input[type=text]{
 }
 .storage_details{
     height: 100%;
-    border-top:3px solid #00b0ff;
+    border-top:3px solid #4dd0e1;
     padding: 10px;
 }
 .s_d_data{
@@ -742,9 +748,14 @@ input[type=text]{
 }
 .s_d_data_today{
     width: 100%;
-    height: 100px;
+    height: 50px;
     font-size: 30px;
     border-top: 1px solid grey;
+}
+.s_d_data_today_number{
+    width: 100%;
+    height: 50px;
+    font-size: 30px;
 }
 .s_d_details-btn{
     width: 100%;

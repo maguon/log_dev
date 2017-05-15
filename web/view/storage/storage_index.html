@@ -84,22 +84,36 @@
                         </div>-->
                     </div>
                     <div class="col s6">
-                        <h5 ng-bind="el.storage_name"></h5>
-                        <p ><span class="grey-text"><i class="mdi mdi-checkbox-blank-circle-outline cyan-text text-lighten-2 "></i>总车位:</span><span ng-bind="el.col*el.row"></span></p>
-                        <p><span class="grey-text"><i class="mdi mdi-checkbox-blank-circle cyan-text text-lighten-2 "></i>可用车位:</span><span ng-bind="el.col*el.row-el.balance"></span></p>
+                        <h5 class="cyan-text text-lighten-2" ng-bind="el.storage_name"></h5>
+                        <p ><span class="grey-text"><i class="mdi mdi-checkbox-blank-circle-outline cyan-text text-lighten-2 "></i>总车位:</span><span class="cyan-text text-lighten-2" ng-bind="el.col*el.row"></span></p>
+                        <p><span class="grey-text"><i class="mdi mdi-checkbox-blank-circle cyan-text text-lighten-2 "></i>可用车位:</span><span class="cyan-text text-lighten-2" ng-bind="el.col*el.row-el.balance"></span></p>
                     </div>
                 </div>
                 <div class="s_d_data_today valign-wrapper">
-                    <div class="col s4 vc-center  light-blue-text text-accent-3">
+                    <div class="col s4 vc-center  cyan-text text-lighten-2">
                         <i style="display: block" class="mdi mdi-arrow-right-bold-circle-outline"></i>
-                        <span ng-bind="el.imports"></span>
+                        <!--<span style="display: block" ng-bind="el.imports"></span>-->
                     </div>
-                    <div class="col s4 vc-center  light-blue-text text-accent-3">
+                    <div class="col s4 vc-center  cyan-text text-lighten-2">
                         <i style="display: block" class="mdi  mdi-arrow-down-bold-circle-outline"></i>
+                        <!--<span ng-bind="el.balance"></span>-->
+                    </div>
+                    <div class="col s4 vc-center red-text text-lighten-2 text-lighten-2">
+                        <i style="display: block" class="mdi mdi-arrow-left-bold-circle-outline"></i>
+                        <!--<span ng-bind="el.exports"></span>-->
+                    </div>
+                </div>
+                <div class="s_d_data_today_number valign-wrapper">
+                    <div class="col s4 vc-center  cyan-text text-lighten-2">
+
+                        <span style="display: block" ng-bind="el.imports"></span>
+                    </div>
+                    <div class="col s4 vc-center  cyan-text text-lighten-2">
+
                         <span ng-bind="el.balance"></span>
                     </div>
-                    <div class="col s4 vc-center red-text text-lighten-2">
-                        <i style="display: block" class="mdi mdi-arrow-left-bold-circle-outline"></i>
+                    <div class="col s4 vc-center red-text text-lighten-2 text-lighten-2">
+
                         <span ng-bind="el.exports"></span>
                     </div>
                 </div>

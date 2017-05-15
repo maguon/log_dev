@@ -22,6 +22,10 @@ publicDirective.directive('percent', function () {
                     }
 
                 },
+                colors:[
+                    "#4dd0e1",
+                    "#cfd8dc"
+                ],
                 // 版权信息
                 credits: {
                     enabled:"false",

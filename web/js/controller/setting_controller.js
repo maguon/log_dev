@@ -14,6 +14,10 @@ settingController.controller("settingPW_controller", ["$scope", "$host", "$basic
             $basic.put($host.api_url + "/admin/" + adminId + "/password", obj).then(function (data) {
                 if (data.success == true) {
                     swal("密码重置成功", "", "success");
+                    $scope.primaryCode="";
+                    $scope.newCode="";
+                    $scope.confirmPsw="";
+                    $scope.submitted = false;
                 } else {
                     swal(data.msg, "", "error");
                 }
@@ -300,7 +304,6 @@ settingController.controller("settingT_controller", ["$scope", "$host", "$basic"
         }
         $basic.put($host.api_url + "/admin/" + adminId + "/carModel/" + id + "/modelStatus/" + status, {}).then(function (data) {
             if (data.success == true) {
-                swal("更改状态", "", "success");
                 $scope.search_carModel(makeId);
             } else {
                 swal(data.msg, "", "error");
