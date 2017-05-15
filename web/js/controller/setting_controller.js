@@ -214,6 +214,7 @@ settingController.controller("settingT_controller", ["$scope", "$host", "$basic"
     };
 
     // 汽车型号
+
     $scope.search_carModel = function (id) {
         $basic.get($host.api_url + "/carMake/" + id + "/carModel").then(function (data) {
             if (data.success == true) {
@@ -239,8 +240,29 @@ settingController.controller("settingT_controller", ["$scope", "$host", "$basic"
     $scope.close_add_car_model=function () {
         $(".add_model_wrap").hide();
         $(".open_car_brand").show();
+        $scope.submitted=false;
     };
+     // 增加汽车型号接口
+    $scope.add_car_model_submit=function (valid,id,name) {
+        $scope.submitted=true;
+        console.log(name)
+        if(valid){
+            $basic.post($host.api_url + "/admin/" + adminId + "/carMake/" + id+"/carModel", {
+                modelName: name
+            }).then(function (data) {
+                if (data.success == true) {
+                    $(".add_model_wrap").hide();
+                    $(".open_car_brand").show();
+                    $scope.submitted=false;
+                    $scope.search_carModel(id);
+                    swal("新增成功","","success");
+                } else {
+                    swal(data.msg, "", "error");
+                }
+            })
+        }
 
+    };
     // 打开汽车型号界面
     $scope.open_car_model = function ($event, id) {
         // console.log($($event.target).attr("flag"));

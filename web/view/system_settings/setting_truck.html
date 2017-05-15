@@ -74,15 +74,15 @@
                             <div class="add_model_box  add_model_box{{$index}} col s12 p0" ng-click="amend_model_box($event)">
                                 <a href="" class=" col s2 offset-s10  btn waves-effect cyan lighten-2 waves-light vc-center open_car_brand " ng-click="add_car_model_box($event,$index)">+增加类型</a>
 <div class="add_model_wrap add_model_wrap{{$index}} col white s12" style="display: none">
-    <form name="add_modelForm" ng-submit="add_model_submit(amend_modelForm.$valid,el.id,el.make_name,$index)">
-        <div class="col s6 valign-wrapper p0 vc-center add_model_box" >
-            <h6 class="col s3 bold cyan-text lighten-2" style="min-width: 90px">品牌名称</h6>
-            <input type="text" class="cyan-text lighten-2"  >
-            <a class="  btn-floating btn-small waves-effect waves-light red lighten-2  btn" style="width: 40px;height: 35px;line-height: 35px;margin-right: 10px"   ng-click="close_add_car_model($index)" >
-                <i class="mdi mdi-close " style="width: 100%;line-height: 35px" ></i>
+    <form name="add_modelForm" ng-submit="add_car_model_submit(add_modelForm.$valid,el.id,$index)" novalidate>
+        <div class="col s6 valign-wrapper p0 vc-center add_model_box" ng-class="{'has-error':add_modelForm.add_car_model.$invalid&&submitted}" >
+            <h6 class="col s3 bold cyan-text lighten-2" style="min-width: 90px">型号名称:</h6>
+            <input type="text" class="cyan-text lighten-2" ng-model="add_car_model" autocomplete="off"  name="add_car_model"  required>
+            <a class="  btn-floating btn-small waves-effect waves-light red lighten-2  btn" style="width: 35px;height: 30px;line-height: 30px;margin-right: 10px"   ng-click="close_add_car_model($index)" >
+                <i class="mdi mdi-close " style="width: 100%;line-height: 30px" ></i>
             </a>
-            <button  class="btn-floating waves-effect waves-light cyan  lighten-1 btn" style="width: 40px;height: 35px;line-height: 35px;"    type="submit" name="action" >
-                <i class="mdi mdi-check add_brand" style="width: 100%;line-height: 35px"  ></i>
+            <button  class="btn-floating waves-effect waves-light cyan  lighten-1 btn" style="width: 35px;height: 30px;line-height: 30px;"    type="submit" name="action" >
+                <i class="mdi mdi-check add_brand" style="width: 100%;line-height: 30px"  ></i>
             </button>
         </div>
     </form>

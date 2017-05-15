@@ -1,3 +1,6 @@
+/**
+ * Created by ASUS on 2017/5/9.
+ */
 var commonDirective = angular.module("commonDirective", []);
 commonDirective.directive('header', function () {
     return {
@@ -417,6 +420,4 @@ commonDirective.directive('addRepeatFinish', function () {
     }
 });
 
-/**
- * Created by ASUS on 2017/5/9.
- */
+

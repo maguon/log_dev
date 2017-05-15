@@ -1,6 +1,6 @@
 
 // var app = angular.module("storage_dev", ['ui.router',"ngCookies","ngMessages","index_controller","hostService","baseService","commonDirective","CommonService","storage_router"]);
-var app = angular.module("storage_dev", ['ui.materialize','ui.router',"ngCookies","ngMessages","storage_index_controller","settingController","storage_router","Storage_carController","storage_storeController","storage_car_mapController","storageCar_detailsController","storage_working_calendarController","hostService","baseService","commonDirective","CommonService","CommonFilter"]);
+var app = angular.module("storage_dev", ['ui.materialize','ui.router',"ngCookies","ngMessages","storage_index_controller","settingController","storage_router","Storage_carController","storage_storeController","storage_car_mapController","storageCar_detailsController","storage_working_calendarController","hostService","baseService","commonDirective","publicDirective","CommonService","CommonFilter"]);
 
 app.config(['$httpProvider',"$cookiesProvider",function($httpProvider,$cookiesProvider) {
     $cookiesProvider.defaults = {
