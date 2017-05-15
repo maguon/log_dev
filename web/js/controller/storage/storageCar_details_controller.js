@@ -2,7 +2,7 @@
  * Created by ASUS on 2017/5/5.
  */
 var storageCar_detailsController = angular.module("storageCar_detailsController", []);
-storageCar_detailsController.controller("storageCar_detailsController", ["$baseService","$state",  "$stateParams", "$config_variable", "service_storage_parking", "$scope", "$host", "$basic", function ($baseService, $state, $stateParams, $config_variable, service_storage_parking, $scope, $host, $basic) {
+storageCar_detailsController.controller("storageCar_detailsController", ["$baseService", "$state", "$stateParams", "$config_variable", "service_storage_parking", "$scope", "$host", "$basic", function ($baseService, $state, $stateParams, $config_variable, service_storage_parking, $scope, $host, $basic) {
     // console.log($stateParams.id, $stateParams.vin)
     var userId = $basic.getSession($basic.USER_ID);
     var val = $stateParams.id;
@@ -116,7 +116,7 @@ storageCar_detailsController.controller("storageCar_detailsController", ["$baseS
         } else {
             $scope.curruntId = val;
             $basic.get($host.api_url + "/carMake/" + val + "/carModel").then(function (data) {
-                if (data.success==true) {
+                if (data.success == true) {
                     $scope.carModelName = data.result;
                     // console.log($scope.carModelName);
                     // $scope.look_model_id=id;
@@ -265,7 +265,7 @@ storageCar_detailsController.controller("storageCar_detailsController", ["$baseS
                 swal(data.msg, "", "error")
             }
         });
-        $basic.get($host.api_url + "/user/" + userId + "/car?carId=" + val+'&active=1').then(function (data) {
+        $basic.get($host.api_url + "/user/" + userId + "/car?carId=" + val + '&active=1').then(function (data) {
             if (data.success == true) {
                 $scope.modelId = data.result[0].model_id;
                 $scope.self_car = data.result[0];
@@ -275,7 +275,7 @@ storageCar_detailsController.controller("storageCar_detailsController", ["$baseS
                     $scope.changeMakeId($scope.look_make_id);
                 $scope.look_model_id = $scope.self_car.model_id,
                     $scope.look_create_time = $baseService.formDate($scope.self_car.pro_date);
-                $scope.look_storageName = $scope.self_car.storage_name +"  "+ $scope.self_car.row + "排" + $scope.self_car.col + "列";
+                $scope.look_storageName = $scope.self_car.storage_name + "  " + $scope.self_car.row + "排" + $scope.self_car.col + "列";
 
                 // 车辆id
                 $scope.look_car_id = $scope.self_car.id;

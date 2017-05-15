@@ -1,20 +1,20 @@
 /**
  * Created by ASUS on 2017/5/12.
  */
-var storage_setting_car_controller=angular.module("storage_setting_car_controller",[]);
+var storage_setting_car_controller = angular.module("storage_setting_car_controller", []);
 storage_setting_car_controller.controller("storage_setting_car_controller", ["$scope", "$host", "$basic", function ($scope, $host, $basic) {
 
     var userId = $basic.getSession($basic.USER_ID);
     // 打开汽车品牌
-    $scope.car_Brand_box=function ($event) {
+    $scope.car_Brand_box = function ($event) {
         $($event.target).hide();
         $(".car_Brand_box").show();
     };
     // 关闭汽车品牌
-    $scope.closeBrand=function () {
+    $scope.closeBrand = function () {
         $(".open_car_brand").show();
         $(".car_Brand_box").hide();
-        $scope.b_txt="";
+        $scope.b_txt = "";
     };
     // 汽车品牌
     $scope.searchAll = function () {
@@ -28,75 +28,121 @@ storage_setting_car_controller.controller("storage_setting_car_controller", ["$s
         })
     };
     $scope.searchAll();
-    // 显示修改
-    $scope.remark_brand = function (id, val) {
-        $(".remark_brand_box" + id).fadeOut(500);
-        $(".change_brand_wrap" + id).fadeIn(500);
-        $scope.make_name = val;
-        console.log($scope.make_name);
+    // 显示修改汽车品牌
+    $scope.amend_brand_make = function ($event, $index) {
+        $event.stopPropagation();
+        $(".brand_box" + $index).hide();
+        $(".amend_brand_box" + $index).show();
     };
-    // 关闭修改
-    $scope.close_brand = function (id) {
-        $(".remark_brand_box" + id).fadeIn(500);
-        $(".change_brand_wrap" + id).fadeOut(500);
-        // $scope.el.make_name=$scope.make_name;
-        $scope.searchAll();
+    $scope.amend_brand_box = function ($event) {
+        $event.stopPropagation();
+    };
+    // 关闭修改汽车品牌
+    $scope.close_amend_brand = function ($index) {
+        $(".brand_box" + $index).show();
+        $(".amend_brand_box" + $index).hide();
     };
 
-    // 修改
-    $scope.verify_brand = function (id, val) {
+    // 修改汽车品牌
+    $scope.amend_brand_submit = function (iValid, id, name, $index) {
+        if (iValid) {
+            $basic.put($host.api_url + "/user/" + userId + "/carMake/" + id, {
+                "makeName": name
+            }).then(function (data) {
+                if (data.success == true) {
+                    $(".brand_box" + $index).show();
+                    $(".amend_brand_box" + $index).hide();
+                } else {
+                    swal(data.msg, "", "error");
+                }
+            })
+        }
 
-        $basic.put($host.api_url + "/user/" + userId + "/carMake/" + id, {
-            "makeName": val
-        }).then(function (data) {
-            if (data.success == true) {
-                // swal("修改成功","","error");
-                $(".remark_brand_box" + id).fadeIn(500);
-                $(".change_brand_wrap" + id).fadeOut(500);
-            } else {
-                swal(data.msg, "", "error");
-            }
-        })
+
     };
 
     // 汽车型号
+
     $scope.search_carModel = function (id) {
         $basic.get($host.api_url + "/carMake/" + id + "/carModel").then(function (data) {
             if (data.success == true) {
                 // console.log(data.result);
                 $scope.brand_model = data.result;
+
             } else {
                 swal(data.msg, "", "error");
             }
         });
 
     };
+    // 增加汽车型号界面
+    $scope.add_car_model_box = function ($event, $index) {
+        $event.stopPropagation();
+        $(".open_car_brand").show();
+        $($event.target).hide();
+        $(".add_model_wrap").hide();
+        $(".add_model_wrap" + $index).show();
+        $scope.add_car_model_text = "";
+    };
+    // 关闭增加型号界面
+    $scope.close_add_car_model = function () {
+        $(".add_model_wrap").hide();
+        $(".open_car_brand").show();
+        $scope.submitted = false;
+    };
+    // 增加汽车型号接口
+    $scope.add_car_model_submit = function (iValid, id) {
+        $scope.submitted = true;
+        // var xt="add_car_model_text"+index;
+        console.log($scope.add_car_model_text);
+        if (iValid) {
+            $basic.post($host.api_url + "/user/" + userId + "/carMake/" + id + "/carModel", {
+                modelName: $scope.add_car_model_text
+            }).then(function (data) {
+                if (data.success == true) {
+                    $(".add_model_wrap").hide();
+                    $(".open_car_brand").show();
+                    $scope.submitted = false;
+                    $scope.search_carModel(id);
+                    swal("新增成功", "", "success");
 
-    // // 打开
-    // $scope.open_car_model = function ($event, id) {
-    //     // console.log($($event.target).attr("flag"));
-    //     if ($($event.target).attr("flag") == "true") {
-    //         $scope.search_carModel(id);
-    //         $($event.target).attr("flag", "false");
-    //     } else {
-    //         $($event.target).attr("flag", "true");
-    //     }
-    // };
-    // // 打开新增型号
-    // $scope.add_brand_model = function (id) {
-    //     $(".add_brand_box" + id).fadeOut(500);
-    //     $(".add_brand_model_wrap" + id).fadeIn(500);
-    // };
+                } else {
+                    swal(data.msg, "", "error");
+                }
+            })
+        }
+
+    };
+    // 打开汽车型号界面
+    $scope.open_car_model = function ($event, id) {
+        // console.log($($event.target).attr("flag"));
+
+        if ($($event.target).attr("flag") == "true") {
+            $scope.search_carModel(id);
+            $(".brand_box").attr("flag", "true");
+            $($event.target).attr("flag", "false");
+
+        } else {
+            $($event.target).attr("flag", "true");
+        }
+    };
     // 修改汽车型号状态
+    // 打开修改面板
+    $scope.amend_car_model = function ($index, $event) {
+        console.log($index);
+        $($event.target).hide();
+        $(".car_model_name" + $index).removeAttr("readonly");
+        $(".amend_car_model_box" + $index).show();
+    };
+
     $scope.changeSelfBrandStatus = function (id, status, makeId) {
         if (status == 0) {
             status = 1;
         } else {
             status = 0
         }
-        $basic.put($host.api_url + "/admin/" + userId + "/carModel/" + id + "/modelStatus/" + status, {}).then(function (data) {
+        $basic.put($host.api_url + "/user/" + userId + "/carModel/" + id + "/modelStatus/" + status, {}).then(function (data) {
             if (data.success == true) {
-                swal("更改状态", "", "success");
                 $scope.search_carModel(makeId);
             } else {
                 swal(data.msg, "", "error");
@@ -111,21 +157,38 @@ storage_setting_car_controller.controller("storage_setting_car_controller", ["$s
 
     };
     // 关闭修改型号界面
-    $scope.closeSelfBrandModel = function (id) {
-        $(".remarkSelfBrand" + id).attr("readonly", "readonly");
-        $(".selfBrand_status" + id).show();
-        $(".selfBrand_operation" + id).hide();
+    $scope.close_car_model = function (index) {
+        $(".car_model_name" + index).attr("readonly", "readonly");
+        $(".amend_car_model_box" + index).hide();
+        $(".mdi-pencil" + index).show();
     };
     // 确认提交修改型号
-    $scope.verifySelfBrandModel = function (id, val) {
+    $scope.amend_car_model_submit = function (id, name, index) {
         $basic.put($host.api_url + "/user/" + userId + "/carModel/" + id, {
-            modelName: val
+            modelName: name
         }).then(function (data) {
             if (data.success == true) {
                 // console.log(data.result);
-                $(".remarkSelfBrand" + id).attr("readonly", "readonly");
-                $(".selfBrand_status" + id).show();
-                $(".selfBrand_operation" + id).hide();
+                $(".car_model_name" + index).attr("readonly", "readonly");
+                $(".amend_car_model_box" + index).hide();
+                $(".mdi-pencil" + index).show();
+            } else {
+                swal(data.msg, "", "error");
+            }
+        })
+    };
+    // 修改汽车型号状态
+    $scope.amend_car_model_status = function (id, sta, makeId) {
+        if (sta == 0) {
+            sta = 1;
+        } else {
+            sta = 0
+        }
+        $basic.put($host.api_url + "/user/" + userId + "/carModel/" + id + "/modelStatus/" + sta, {}).then(function (data) {
+            if (data.success == true) {
+                swal("更改状态", "", "success");
+                $scope.search_carModel(makeId);
+
             } else {
                 swal(data.msg, "", "error");
             }
@@ -134,19 +197,21 @@ storage_setting_car_controller.controller("storage_setting_car_controller", ["$s
     // $scope.searchModel=function (id) {
     //
     // };
-    $scope.add_brand=function () {
-        $basic.post($host.api_url + "/user/" +userId + "/carMake/", {
-            makeName: $scope.b_txt
-        }).then(function (data) {
-            if (data.success == true) {
-                $scope.searchAll();
-                $(".open_car_brand").show();
-                $(".car_Brand_box").hide();
-                $scope.b_txt="";
+    $scope.add_brand = function (iValid) {
+        if (iValid) {
+            $basic.post($host.api_url + "/user/" + userId + "/carMake/", {
+                makeName: $scope.b_txt
+            }).then(function (data) {
+                if (data.success == true) {
+                    $scope.searchAll();
+                    $scope.b_txt = "";
+                    $(".open_car_brand").show();
+                    $(".car_Brand_box").hide();
+                } else {
+                    swal(data.msg, "", "error");
+                }
+            })
+        }
 
-            } else {
-                swal(data.msg, "", "error");
-            }
-        })
     }
 }]);

@@ -7,14 +7,6 @@ storage_car_mapController.controller("storage_car_mapController", ["$baseService
     var data = new Date();
     var now_date = moment(data).format('YYYYMMDD');
     var userId = $basic.getSession($basic.USER_NAME);
-    // console.log(userId);
-    // var name = $stateParams.storage_name;
-    // var col = $stateParams.col;
-    // var row = $stateParams.row;
-    // var balance = $stateParams.balance;
-    // var im = $stateParams.imports;
-    // var ex = $stateParams.exports;
-    // console.log(val);
     // 到仓储车辆图
     $scope.LookGarage = function (val) {
         $basic.get($host.api_url + "/storageDate?storageId=" + val + "&dateStart=" + now_date + "&dateEnd=" + now_date).then(function (data) {
@@ -155,7 +147,7 @@ storage_car_mapController.controller("storage_car_mapController", ["$baseService
                 "parkingId": $scope.parking_id,
                 "planOutTime": $scope.plan_out_time
             };
-            $basic.post($host.api_url + "/user/" + userId + "/carStorageRel",$basic.removeNullProps(obj_car)).then(function (data) {
+            $basic.post($host.api_url + "/user/" + userId + "/carStorageRel", $basic.removeNullProps(obj_car)).then(function (data) {
                 if (data.success == true) {
                     // swal("新增成功","","success");
                     // $("#newStorage_car").modal("close");

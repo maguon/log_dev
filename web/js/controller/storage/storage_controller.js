@@ -2,17 +2,17 @@
  * Created by ASUS on 2017/5/4.
  */
 var storage_storeController = angular.module("storage_storeController", []);
-storage_storeController.controller("storage_storeController", ["$scope", "$host", "$pass_parameter","$basic", "$state", "$rootScope", "$config_variable", "$baseService","service_storage_parking", function ($scope, $host,$pass_parameter, $basic, $state, $rootScope, $config_variable, $baseService, service_storage_parking) {
+storage_storeController.controller("storage_storeController", ["$scope", "$host", "$pass_parameter", "$basic", "$state", "$rootScope", "$config_variable", "$baseService", "service_storage_parking", function ($scope, $host, $pass_parameter, $basic, $state, $rootScope, $config_variable, $baseService, service_storage_parking) {
     var userId = $basic.getSession($basic.USER_ID);
     var data = new Date();
     var now_date = moment(data).format('YYYYMMDD');
     var searchAll = function () {
-        var obj={
-            dateStart:now_date,
-            dateEnd:now_date
+        var obj = {
+            dateStart: now_date,
+            dateEnd: now_date
         };
 
-        $basic.get($host.api_url + "/storageDate?"+$basic.objToUrl(obj)).then(function (data) {
+        $basic.get($host.api_url + "/storageDate?" + $basic.objToUrl(obj)).then(function (data) {
             if (data.success == true) {
                 $scope.store_storage = data.result;
             }
@@ -22,39 +22,6 @@ storage_storeController.controller("storage_storeController", ["$scope", "$host"
     // console.log($pass_parameter.getter());
 
     searchAll();
-    // // 返回仓库页
-    // $scope.return=function () {
-    //     $(".storage_store_subject").show();
-    //     $(".LookGarage").hide();
-    //     searchAll();
-    // };
-    // // 到仓储车辆图
-    // $scope.LookGarage=function (val,name,col,row,balance,im,ex) {
-    //     $(".storage_store_subject").hide();
-    //     $(".LookGarage").show();
-    //
-    //     // $(".modal").modal();
-    //     // $("#LookGarage").modal("open");
-    //     $scope.newTime=new Date().getTime();
-    //     $scope.self_store_storage_name=name;
-    //     $scope.self_store_storage_row=row;
-    //     $scope.self_store_storage_col=col;
-    //     $scope.self_store_storage_pCount=row*col-balance;
-    //     $scope.self_store_storage_imports=im;
-    //     $scope.self_store_storage_exports=ex;
-    //
-    //
-    //     $basic.get($host.api_url+"/storageParking?storageId="+val).then(function (data) {
-    //         if(data.success==true){
-    //             $scope.self_storageParking=data.result;
-    //             $scope.garageParkingArray=service_storage_parking.storage_parking($scope.self_storageParking);
-    //             // console.log($scope.garageParkingArray);
-    //             $scope.ageParkingCol=$scope.garageParkingArray[0].col
-    //
-    //         }
-    //
-    //     })
-    // };
 
     // 车辆品牌查询
     $basic.get($host.api_url + "/carMake").then(function (data) {
@@ -176,9 +143,6 @@ storage_storeController.controller("storage_storeController", ["$scope", "$host"
             console.log(obj_car);
             $basic.post($host.api_url + "/user/" + userId + "/carStorageRel", obj_car).then(function (data) {
                 if (data.success == true) {
-                    // swal("新增成功","","success");
-                    // $("#newStorage_car").modal("close");
-                    // $('ul.tabs').tabs('select_tab', 'test2');
                     $('ul.tabs li a').removeClass("active");
                     $(".tab_box").removeClass("active");
                     $(".tab_box").hide();
@@ -188,8 +152,6 @@ storage_storeController.controller("storage_storeController", ["$scope", "$host"
                     // searchAll();
                     $scope.LookGarage($scope.private_storageId);
                     $scope.Picture_carId = data.id;
-                    // $scope.carPicture_vin=data.win;
-                    // console.log($scope.win);
                 } else {
                     swal(data.msg, "", "error")
                 }
@@ -252,109 +214,4 @@ storage_storeController.controller("storage_storeController", ["$scope", "$host"
         console.log(val);
         $state.go("storageCar_details", {}, {reload: true})
     };
-    // $scope.lookStorageCar=function (val) {
-    //
-    //     $scope.submitted=false;
-    //     // 照片清空
-    //     $scope.imgArr=[];
-    //     // 预览详情照片
-    //     $scope.storage_imageBox=[];
-    //
-    //     // console.log(val);
-    //     $(".storage_store_subject").hide();
-    //     $(".LookGarage").hide();
-    //     $("#look_StorageCar").show();
-    //     // $(".modal").modal({
-    //     //     // dismissible: false
-    //     // });
-    //     // $("#look_StorageCar").modal("open");
-    //
-    //     $('ul.tabs li').removeClass("active");
-    //     $(".tab_box").removeClass("active");
-    //     $(".tab_box").hide();
-    //     $('ul.tabs li.look_msg').addClass("active");
-    //     $("#look_msg").addClass("active");
-    //     $("#look_msg").show();
-    //
-    //     $scope.Picture_carId=val;
-    //     $basic.get($host.api_url+"/user/"+userId+"/car?carId="+val).then(function (data) {
-    //         if(data.success==true){
-    //             $scope.modelId = data.result[0].model_id;
-    //             $scope.self_car=data.result[0];
-    //             // console.log(data.result[0]);
-    //             // modelID赋值
-    //             $scope.look_make_id=$scope.self_car.make_id,
-    //                 $scope.changeMakeId($scope.look_make_id);
-    //             $scope.look_model_id=$scope.self_car.model_id,
-    //                 // console.log($scope.look_model_id);
-    //                 $scope.look_create_time=$baseService.formDate($scope.self_car.pro_date);
-    //             $scope.look_storageName=$scope.self_car.storage_name+$scope.self_car.row+"排"+$scope.self_car.col+"排";
-    //             $scope.look_row=$scope.self_car.row;
-    //             $scope.look_col=$scope.self_car.col;
-    //             // 车辆id
-    //             $scope.look_car_id=$scope.self_car.id;
-    //
-    //             // 该汽车的图片
-    //             $basic.get($host.record_url+"/user/"+userId+"/car/"+val+"/record").then(function (data) {
-    //                 if(data.success==true){
-    //                     // console.log(data);
-    //                     $scope.operating_record=data.result[0];
-    //                     $scope.comment=$scope.operating_record.comment;
-    //                     $scope.storage_image=$scope.operating_record.storage_image;
-    //                     for(var  i in $scope.storage_image ){
-    //                         $scope.storage_imageBox.push({src:$host.file_url+'/image/'+$scope.storage_image[i].url});
-    //                     }
-    //
-    //                     // $scope.imgArr.push({src:$host.file_url+'/image/'+imageId});
-    //                 }else {
-    //                     swal(data.msg,"","error")
-    //                 }
-    //             });
-    //         }else {
-    //             swal(data.msg,"","error")
-    //         }
-    //     })
-    //
-    // };
-    // // 修改仓库详情
-    // $scope.changesubmitForm=function (isValid,id,r_id) {
-    //     $scope.submitted=true;
-    //     var obj={
-    //         "vin":$scope.self_car.vin,
-    //         "makeId": $scope.self_car.make_id,
-    //         "makeName":$("#look_makecarName").find("option:selected").text(),
-    //         "modelId": $scope.self_car.model_id,
-    //         "modelName":$("#look_model_name").find("option:selected").text() ,
-    //         "proDate":$scope.self_car.pro_date,
-    //         "colour":$scope.self_car.colour,
-    //         "engineNum": $scope.self_car.engine_num,
-    //         "remark": $scope.self_car.remark
-    //     };
-    //     console.log(obj,id);
-    //     if(isValid){
-    //         // 修改计划出库时间
-    //         $basic.put($host.api_url+"/user/"+userId+"/carStorageRel/"+r_id+"/planOutTime",{
-    //             "planOutTime": $scope.self_car.plan_out_time
-    //         }).then(function (data) {
-    //             console.log(data)
-    //         });
-    //         // 修改仓库信息
-    //         $basic.put($host.api_url+"/user/"+userId+"/car/"+id,obj).then(function (data) {
-    //             if(data.success==true){
-    //                 swal("修改成功","","success");
-    //                 $("#look_StorageCar").modal("close");
-    //                 searchAll();
-    //             }else {
-    //                 swal(data.msg,"","error")
-    //             }
-    //         });
-    //
-    //     }
-    //
-    //     // $basic.put($host.api_url+"/user/"+userId+"/car/"+id,obj).then(function (data) {
-    //     //
-    //     // })
-    // };
-
-
 }]);

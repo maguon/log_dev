@@ -1,51 +1,46 @@
 /**
  * Created by ASUS on 2017/5/11.
  */
-var storage_statistics_controller=angular.module("storage_statistics_controller",[]);
-storage_statistics_controller.controller("storage_statistics_controller", ['$rootScope','$scope',"$host",'$location','$q',"$basic",function ($rootScope,$scope,$host,$location,$q,$basic) {
+var storage_statistics_controller = angular.module("storage_statistics_controller", []);
+storage_statistics_controller.controller("storage_statistics_controller", ['$rootScope', '$scope', "$host", '$location', '$q', "$basic", function ($rootScope, $scope, $host, $location, $q, $basic) {
     var date = new Date();
-    var month_size=12;
-    var day_size=30;
+    var month_size = 12;
+    var day_size = 30;
     var now_date = moment(date).format('YYYYMMDD');
-    var day=[];
-    var month=[];
-    var day_date_array=[
+    var day = [];
+    var month = [];
+    var day_date_array = [
         {
-            name:"入库统计",
-            data:[],
-            color:"#4dd0e1"
-        },{
-            name:"出库统计",
-            data:[],
-            color:"#ff5252"
+            name: "入库统计",
+            data: [],
+            color: "#4dd0e1"
+        }, {
+            name: "出库统计",
+            data: [],
+            color: "#ff5252"
         }
     ];
-    var month_date_array=[{
-        name:"入库统计",
-        data:[],
-        color:"#4dd0e1"
-    },{
-        name:"出库统计",
-        data:[],
-        color:"#ff5252"
+    var month_date_array = [{
+        name: "入库统计",
+        data: [],
+        color: "#4dd0e1"
+    }, {
+        name: "出库统计",
+        data: [],
+        color: "#ff5252"
     }];
-    // $basic.get($host.api_url+"/storageTotalMonth?storageId="+"").then(function (data) {
-    //     if (data.success == true) {
-    //         $scope.storage_index_list = data.result;
-    //     }
-    // })
-    $scope.change_statistics=function () {
+    $scope.change_statistics = function () {
         searchAll();
     };
-    var searchAll=function () {
-        day=[];
-        month=[];
-        day_date_array[0].data=[];
-        day_date_array[1].data=[];
-        month_date_array[0].data=[];
-        month_date_array[1].data=[];
+    var searchAll = function () {
+        day = [];
+        month = [];
+        day_date_array[0].data = [];
+        day_date_array[1].data = [];
+        month_date_array[0].data = [];
+        month_date_array[1].data = [];
         // 月份数据读取
-        $basic.get($host.api_url+"/storageTotalMonth?storageId="+$scope.storage_id.id+"&start=0&size="+month_size).then(function (data) {
+        $basic.get($host.api_url + "/storageTotalMonth?storageId=" + $scope.storage_id.id + "&start=0&size=" + month_size).then(function (data) {
             if (data.success == true) {
                 for (var i in data.result) {
                     month.push(data.result[data.result.length - 1 - i].y_month);
@@ -102,11 +97,11 @@ storage_statistics_controller.controller("storage_statistics_controller", ['$roo
         });
 
         // 近几日查询
-        $basic.get($host.api_url+"/storageTotalDay?storageId="+$scope.storage_id.id+"&start=0&size="+day_size).then(function (data) {
+        $basic.get($host.api_url + "/storageTotalDay?storageId=" + $scope.storage_id.id + "&start=0&size=" + day_size).then(function (data) {
             if (data.success == true) {
                 for (var i in data.result) {
                     // day.push(data.result[data.result.length - 1 - i].date_id.substr(4,6));
-                    var day_filter=data.result[data.result.length - 1 - i].date_id.toString().substr(4,4);
+                    var day_filter = data.result[data.result.length - 1 - i].date_id.toString().substr(4, 4);
                     day.push(day_filter)
                     day_date_array[0].data.push(data.result[data.result.length - 1 - i].total_imports);
                     day_date_array[1].data.push(data.result[data.result.length - 1 - i].total_exports)
@@ -165,7 +160,7 @@ storage_statistics_controller.controller("storage_statistics_controller", ['$roo
         if (data.success == true) {
             $scope.storageName = data.result;
             console.log($scope.storageName);
-            $scope.storage_id=$scope.storageName[0];
+            $scope.storage_id = $scope.storageName[0];
             searchAll();
 
 

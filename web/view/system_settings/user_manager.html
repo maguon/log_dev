@@ -1,18 +1,5 @@
 <div class="usersWrap"  >
-    <!--<div class="row BoxWrap valign-wrapper" users-tabs>-->
-        <!--<div class="col s6">-->
-            <!--<div class="chip users_chip active" ui-sref=".operator" >-->
-                <!--<i class="mdi mdi-account"></i>-->
-                <!--操作员设置-->
-            <!--</div>-->
-        <!--</div>-->
-        <!--<div class="col s6">-->
-            <!--<div class="chip users_chip right" ui-sref=".admin" >-->
-                <!--<i class="mdi mdi-wrench"></i>-->
-                <!--管理员设置-->
-            <!--</div>-->
-        <!--</div>-->
-    <!--</div>-->
+
     <div class="row">
         <div class="row">
             <a class="waves-light waves-effect btn right  cyan lighten-1"  ng-click="newOperator()">
@@ -151,16 +138,6 @@
                                                     <input  id="look_phone" name="phone" ng-model="look_operation.mobile" autocomplete="off" type="text" required class=" col s6-0">
                                                 </div>
                                             </div>
-                                            <!--<div class="row" ng-class="{ 'has-error':change_operatorForm.password.$invalid&&submitted }">-->
-                                                <!--<h5 class="col s2-0">-->
-                                                    <!--<span style="color: red">*</span>-->
-                                                    <!--权限:-->
-                                                <!--</h5>-->
-                                                <!--<select car-select name="dep" class="browser-default col s4-0" ng-model="look_operation.dept_id" required>-->
-                                                    <!--<option value="" disabled selected>请选择</option>-->
-                                                    <!--<option ng-value="{{op.dept_id}}" ng-repeat="op in department">{{op.dept_name}}</option>-->
-                                                <!--</select>-->
-                                            <!--</div>-->
                                             <div class="row" ng-class="{ 'has-error':change_operatorForm.password.$invalid&&submitted }">
                                                 <div class="col s6">
                                                     工作状态:
@@ -168,16 +145,7 @@
                                                     <span ng-if="look_operation.status==1">可用</span>
                                                 </div>
                                             </div>
-                                            <!--<div class="row" ng-class="{ 'has-error':change_operatorForm.password.$invalid&&submitted }">-->
-                                                <!--&lt;!&ndash;<div class="col s6">&ndash;&gt;-->
-                                                    <!--&lt;!&ndash;<a  class=" modal-action    white-text waves-effect waves-white btn" style="margin-left: 10px" >重置密码</a>&ndash;&gt;-->
 
-                                                <!--&lt;!&ndash;</div>&ndash;&gt;-->
-                                                <!--<div class="col s6" ng-click="changeStatus(look_operation.status,look_operation.uid)">-->
-                                                    <!--<a  class=" modal-action   white-text waves-effect waves-white btn" style="margin-left: 10px" ng-if="look_operation.status==0" >启用</a>-->
-                                                    <!--<a  class=" modal-action   white-text waves-effect waves-white btn" style="margin-left: 10px" ng-if="look_operation.status==1" >停用</a>-->
-                                                <!--</div>-->
-                                            <!--</div>-->
                                         </div>
                                     </div>
                                 </div>
