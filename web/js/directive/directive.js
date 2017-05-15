@@ -38,6 +38,8 @@ adminDirective.directive('navigator', function () {
         restrict: 'E',
         controller: function ($scope, $basic, $host, $element, $rootScope) {
             if ($basic.checkUser('99')) {
+                $basic.setHeader($basic.USER_TYPE, $basic.getSession($basic.USER_TYPE));
+                $basic.setHeader($basic.COMMON_AUTH_NAME,  $basic.getSession($basic.COMMON_AUTH_NAME) );
                 $basic.get($host.api_url + "/admin/" + $basic.getSession($basic.USER_ID)).then(function (data) {
                     // $(".shadeDowWrap").hide();
                     if (data.success == true) {

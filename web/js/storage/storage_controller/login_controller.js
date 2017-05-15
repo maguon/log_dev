@@ -23,6 +23,8 @@ storage_loginController.controller("loginController", ['$rootScope','$scope','$l
                         $basic.setSession($basic.USER_ID,data.result.userId);
                         $basic.setSession($basic.USER_STATUS,data.result.userStatus);
                         $basic.setSession($basic.USER_TYPE,data.result.type);
+                        $basic.setHeader($basic.USER_TYPE, data.result.type);
+                        $basic.setHeader($basic.COMMON_AUTH_NAME, data.result.accessToken);
                         window.location.href="storage.html";
                     }else {
                         swal(data.msg,"","error");

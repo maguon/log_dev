@@ -62,11 +62,15 @@ storageDirective.directive('storageNavigator', function () {
         restrict: 'E',
         controller: function ($scope, $basic, $host, $element, $rootScope) {
             if ($basic.checkUser('2')) {
+
+                $basic.setHeader($basic.USER_TYPE, $basic.getSession($basic.USER_TYPE));
+                $basic.setHeader($basic.COMMON_AUTH_NAME,  $basic.getSession($basic.COMMON_AUTH_NAME) );
                 $basic.get($host.api_url + "/user/" + $basic.getSession($basic.USER_ID)).then(function (data) {
                     // $(".shadeDowWrap").hide();
                     if (data.success == true) {
                         $scope.userName = data.result[0].real_name;
                         $basic.setSession($basic.USER_NAME, $scope.userName);
+                        $basic.setHeader($basic.USER_NAME, $scope.userName);
                     } else {
                         swal(data.msg, "", "error");
                     }
