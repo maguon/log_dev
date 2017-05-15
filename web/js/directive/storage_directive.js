@@ -1,8 +1,8 @@
 /**
  * Created by ASUS on 2017/5/9.
  */
-var commonDirective = angular.module("commonDirective", []);
-commonDirective.directive('header', function () {
+var storageDirective = angular.module("storageDirective", []);
+storageDirective.directive('header', function () {
     return {
         templateUrl: '/view/storage/storage_header.html',
         replace: true,
@@ -54,7 +54,7 @@ commonDirective.directive('header', function () {
     };
 });
 
-commonDirective.directive('storageNavigator', function () {
+storageDirective.directive('storageNavigator', function () {
     return {
         templateUrl: '/view/storage/storage_navigator.html',
         replace: true,
@@ -87,7 +87,7 @@ commonDirective.directive('storageNavigator', function () {
         }
     };
 });
-commonDirective.directive("carMsg", function () {
+storageDirective.directive("carMsg", function () {
     return {
         restrict: 'A',
         link: function (ele, attr) {
@@ -95,7 +95,7 @@ commonDirective.directive("carMsg", function () {
         }
     }
 });
-commonDirective.directive("truckUpload", function () {
+storageDirective.directive("truckUpload", function () {
     return {
         restrict: 'A',
         controller: function ($basic, $upload) {
@@ -144,7 +144,7 @@ commonDirective.directive("truckUpload", function () {
         // }
     }
 });
-commonDirective.directive("carSelect", function () {
+storageDirective.directive("carSelect", function () {
     return {
         restrict: "A",
         link: function () {
@@ -152,7 +152,7 @@ commonDirective.directive("carSelect", function () {
         }
     }
 });
-commonDirective.directive('myRepeatDirective', function () {
+storageDirective.directive('myRepeatDirective', function () {
     return function (scope, element, attrs) {
         angular.element(element).css('color', 'blue');
         if (scope.$last) {
@@ -160,7 +160,7 @@ commonDirective.directive('myRepeatDirective', function () {
         }
     };
 })
-commonDirective.directive("date", function () {
+storageDirective.directive("date", function () {
     return {
         restrict: "A",
         link: function () {
@@ -177,7 +177,7 @@ commonDirective.directive("date", function () {
         }
     }
 });
-commonDirective.directive("dateFilter", ["$filter", function ($filter) {
+storageDirective.directive("dateFilter", ["$filter", function ($filter) {
     var dateFilter = $filter("date");
     return {
         restrict: "A",
@@ -199,7 +199,7 @@ commonDirective.directive("dateFilter", ["$filter", function ($filter) {
 
 
 
-commonDirective.directive('testDirective',[function () {
+storageDirective.directive('testDirective',[function () {
     return{
         restrict:"ECMA",
         priority:"",
@@ -210,14 +210,14 @@ commonDirective.directive('testDirective',[function () {
 
 
 
-commonDirective.directive("addNav", function () {
+storageDirective.directive("addNav", function () {
     return {
         templateUrl: '/view/car/new_truck/new_truck.html',
         restrict: "EA",
         replace: true,
     }
 });
-commonDirective.directive("truckNav", function () {
+storageDirective.directive("truckNav", function () {
     return {
         restrict: "EA",
         link: function () {
@@ -231,14 +231,14 @@ commonDirective.directive("truckNav", function () {
     }
 });
 
-commonDirective.directive("basicTruck", function () {
+storageDirective.directive("basicTruck", function () {
     return {
         templateUrl: '/view/car/new_truck/basic.html',
         restrict: "EA",
         replace: true
     }
 });
-commonDirective.directive("carInspection", function () {
+storageDirective.directive("carInspection", function () {
     return {
         templateUrl: '/view/car/new_truck/car_inspection.html',
         restrict: "EA",
@@ -246,7 +246,7 @@ commonDirective.directive("carInspection", function () {
     }
 });
 
-commonDirective.directive("usersTabs", function () {
+storageDirective.directive("usersTabs", function () {
     return {
         restrict: "A",
         link: function () {
@@ -257,7 +257,7 @@ commonDirective.directive("usersTabs", function () {
         }
     }
 });
-commonDirective.directive("sexChange", function () {
+storageDirective.directive("sexChange", function () {
     return {
         restrict: "A",
         link: function () {
@@ -269,7 +269,7 @@ commonDirective.directive("sexChange", function () {
     }
 });
 
-commonDirective.directive("ulTabs", function () {
+storageDirective.directive("ulTabs", function () {
     return {
         restrict: "A",
         link: function () {
@@ -277,7 +277,7 @@ commonDirective.directive("ulTabs", function () {
         }
     }
 });
-commonDirective.directive("collapsible", function () {
+storageDirective.directive("collapsible", function () {
     return {
         restrict: "A",
         link: function () {
@@ -287,7 +287,7 @@ commonDirective.directive("collapsible", function () {
 });
 
 
-commonDirective.directive("tooltipped", function () {
+storageDirective.directive("tooltipped", function () {
     return {
         restrict: "A",
         link: function () {
@@ -296,7 +296,7 @@ commonDirective.directive("tooltipped", function () {
     }
 });
 
-commonDirective.directive("addBrand", function () {
+storageDirective.directive("addBrand", function () {
     return {
         restrict: "A",
         controller: function ($scope, $host, $basic) {
@@ -325,7 +325,7 @@ commonDirective.directive("addBrand", function () {
         }
     }
 });
-commonDirective.directive("addBrandModel", function () {
+storageDirective.directive("addBrandModel", function () {
     return {
         restrict: "A",
         controller: function ($scope, $host, $basic) {
@@ -363,7 +363,7 @@ commonDirective.directive("addBrandModel", function () {
 });
 
 // 时间格式过滤指令
-commonDirective.directive("formDate", function () {
+storageDirective.directive("formDate", function () {
     return {
         restrict: "A",
         require: "ngModel",
@@ -389,7 +389,7 @@ commonDirective.directive("formDate", function () {
 
 });
 
-commonDirective.directive("view", function () {
+storageDirective.directive("view", function () {
     return {
         restrict: "EA",
         link: function () {
@@ -399,7 +399,7 @@ commonDirective.directive("view", function () {
 });
 
 // ng-repeat渲染后的回调
-commonDirective.directive('repeatFinish', function () {
+storageDirective.directive('repeatFinish', function () {
     return {
         link: function (scope, element, attr) {
             if (scope.$last == true) {
@@ -409,7 +409,7 @@ commonDirective.directive('repeatFinish', function () {
         }
     }
 });
-commonDirective.directive('addRepeatFinish', function () {
+storageDirective.directive('addRepeatFinish', function () {
     return {
         link: function (scope, element, attr) {
             if (scope.$last == true) {

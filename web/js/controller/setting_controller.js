@@ -235,6 +235,7 @@ settingController.controller("settingT_controller", ["$scope", "$host", "$basic"
 
         $(".add_model_wrap").hide();
         $(".add_model_wrap"+$index).show();
+        $("#add_car_model").val("");
     };
     // 关闭增加型号界面
     $scope.close_add_car_model=function () {
@@ -243,12 +244,13 @@ settingController.controller("settingT_controller", ["$scope", "$host", "$basic"
         $scope.submitted=false;
     };
      // 增加汽车型号接口
-    $scope.add_car_model_submit=function (valid,id,name) {
+    $scope.add_car_model_submit=function (iValid,id) {
         $scope.submitted=true;
-        console.log(name)
-        if(valid){
+        // var xt="add_car_model_text"+index;
+        // console.log($("#add_car_model").val());
+        if(iValid){
             $basic.post($host.api_url + "/admin/" + adminId + "/carMake/" + id+"/carModel", {
-                modelName: name
+                modelName: $("#add_car_model").val()
             }).then(function (data) {
                 if (data.success == true) {
                     $(".add_model_wrap").hide();
