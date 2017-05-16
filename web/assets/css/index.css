@@ -118,6 +118,8 @@ body{
 .tabWrap li{
     height: 40px;
     cursor: pointer;
+    color: #4dd0e1;
+    background: #e0e0e0;
 }
 .tabWrap .active{
     background: #26c6da;
@@ -405,7 +407,7 @@ input[type=text]{
 }
 .dataIcon{
     position: absolute;
-    right: 0;
+    right: 12px;
     bottom: 10px;
 }
 
@@ -585,8 +587,8 @@ input[type=text]{
     min-width: 36px;
     flex: 1;
     height: 46px;
-    border-bottom: 1px solid #00bcd4;
-    border-right: 1px solid #00bcd4;
+    border-bottom: 1px solid #e0e0e0 ;
+    border-right: 1px solid #e0e0e0 ;
     cursor: pointer;
 }
 .garage_row_toolbar{
@@ -613,14 +615,20 @@ input[type=text]{
     min-width: 36px;
     flex: 1;
     height: 46px;
-    font-size: 12px;
-    border-bottom: 1px solid #00bcd4;
-    border-right: 1px solid #00bcd4;
+    /*font-size: 12px;*/
+    border-bottom: 1px solid #e0e0e0;
+    border-right: 1px solid #e0e0e0;
     cursor: pointer;
 }
 .garage_row i{
-    font-size: 20px;
+    font-size: 25px;
     margin-right: 0;
+}
+.garage_row_index{
+    width: 30px;
+    height: 30px;
+    border-radius: 100%;
+    background: #4dd0e1;
 }
 .LookGarage{
     display: none;
@@ -783,4 +791,22 @@ input[type=text]{
 }
 .statisticsContent{
     height: 500px;
+}
+/*弹出层*/
+.modal_title{
+    height: 50px;
+    font-size: 24px;
+    line-height: 50px;
+}
+.switch label input[type=checkbox]:checked + .lever{
+    background-color:#26c6da
+}
+.switch label input[type=checkbox]:checked + .lever:after{
+    background-color:#ffffff
+}
+.addBrand .btn{
+    border-radius: 20px;
+}
+.add_model_box .btn{
+    border-radius: 20px;
 }

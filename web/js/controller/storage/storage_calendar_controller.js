@@ -52,11 +52,11 @@ storage_working_calendarController.controller("storage_working_calendarControlle
                         for (var i  in $scope.data) {
                             var titleHtml = '<div class="row p0" style="padding-top: 10px">' +
                                 '<div class="col s4 center-align  cyan-text text-lighten-1" style="font-size: 14px">' +
-                                '<i style="display: block" class="mdi mdi-arrow-right-bold-circle-outline"></i><span>' + $scope.data[i].imports + '</span></div>' +
+                                '<i style="display: block" class="mdi mdi-login"></i><span>' + $scope.data[i].imports + '</span></div>' +
                                 '<div class="col s4 center-align  cyan-text text-lighten-1" style="font-size: 14px">' +
                                 '<i style="display: block" class="mdi mdi-arrow-down-bold-circle-outline"></i><span >' + $scope.data[i].balance + '</span></div>' +
                                 '<div class="col s4 center-align red-text text-lighten-2" style="font-size: 14px">' +
-                                '<i style="display: block" class=" mdi mdi-arrow-left-bold-circle-outline "></i><span >' + $scope.data[i].exports + '</span></div></div>'
+                                '<i style="display: block" class=" mdi mdi-logout"></i><span >' + $scope.data[i].exports + '</span></div></div>'
                             var date = {
                                 title: titleHtml,
                                 start: $scope.data[i].date_id + '',

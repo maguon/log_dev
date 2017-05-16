@@ -1,23 +1,22 @@
-<div class="setting_truckWrap container">
+<div class="setting_truckWrap ">
     <div class="row">
         <div class="row valign-wrapper">
-            <h5 class="col s12 cyan-text lighten-2  center-align">
+            <h5 class="col s12 cyan-text lighten-1  center-align">
                 车辆品牌设置
             </h5>
         </div>
         <div class="row">
             <div class="divider"></div>
-
         </div>
         <div class="row addBrand">
-            <a href="" class=" col s2 offset-s10  btn waves-effect cyan lighten-2 waves-light vc-center open_car_brand "
+            <a href="" class=" col s2 offset-s10  btn waves-effect cyan lighten-1 waves-light vc-center open_car_brand "
                ng-click="car_Brand_box($event)">+增加品牌</a>
 
             <form name="addBrandFrom" ng-submit="add_brand(addBrandFrom.$valid)" novalidate>
                 <div class="col s12 z-depth-2 blue-grey lighten-5 car_Brand_box "
                      style="padding: 0.75rem 0;display: none">
                     <div class="col s1 vc-center" style="height: 45px">
-                        <h6 class=" bold cyan-text text-lighten-2" style="min-width: 88px;margin-left: 10px">品牌名称:</h6>
+                        <h6 class=" bold cyan-text text-lighten-1" style="min-width: 88px;margin-left: 10px">品牌名称:</h6>
                     </div>
 
                     <input class="col s3 Brand_text" name="brandText" id="brandText" type="text" autocomplete="off"
@@ -45,8 +44,8 @@
                             <form name="amend_brandForm"
                                   ng-submit="amend_brand_submit(amend_brandForm.$valid,el.id,el.make_name,$index)">
                                 <div class="col s6 valign-wrapper p0">
-                                    <i class="mdi mdi-car cyan-text text-lighten-2 "></i>
-                                    <input type="text" class="cyan-text lighten-2" style="height: 30px"
+                                    <i class="mdi mdi-car cyan-text text-lighten-1 "></i>
+                                    <input type="text" class="cyan-text lighten-1" style="height: 30px"
                                            ng-model="el.make_name">
                                     <a class="  btn-floating btn-small waves-effect waves-light red lighten-2  btn"
                                        style="width: 35px;height: 30px;line-height: 30px;margin-right: 10px"
@@ -70,9 +69,8 @@
                         <div class="" style="padding: 1rem;overflow: hidden">
                             <div class="add_model_box  add_model_box{{$index}} col s12 p0"
                                  ng-click="amend_model_box($event)">
-                                <a href=""
-                                   class=" col s2 offset-s10  btn waves-effect cyan lighten-2 waves-light vc-center open_car_brand "
-                                   ng-click="add_car_model_box($event,$index)">+增加类型</a>
+                                <a href="" class=" col s2 offset-s10  btn waves-effect cyan lighten-2 waves-light vc-center open_car_brand "
+                                   ng-click="add_car_model_box($event,$index)" >+增加类型</a>
                                 <div class="add_model_wrap add_model_wrap{{$index}} col white s12"
                                      style="display: none">
                                     <form name="add_modelForm"
