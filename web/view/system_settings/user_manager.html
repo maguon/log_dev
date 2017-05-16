@@ -73,7 +73,7 @@
         <div class="col s12" >
             <table class="highlight bordered striped">
                 <thead>
-                <tr class="table_header">
+                <tr class="table_header blue-grey lighten-5 grey-text text-darken-1">
                     <th data-field="">姓名</th>
                     <th data-field="">性别</th>
                     <th data-field="">部门</th>
@@ -84,7 +84,7 @@
                 </thead>
 
                 <tbody>
-                <tr ng-repeat="el in operator">
+                <tr ng-repeat="el in operator" class="grey-text text-darken-1">
                     <td ng-bind="el.real_name"></td>
                     <td  ng-if="el.gender==0">女</td>
                     <td  ng-if="el.gender==1">男</td>

@@ -67,8 +67,8 @@
         <div class="divider" style="background: #00bcd4;height: 2px;"></div>
         <div class="col s12" >
             <table class="highlight bordered">
-                <thead>
-                <tr class="table_header">
+                <thead class="blue-grey lighten-5">
+                <tr class="table_header grey-text text-darken-1">
                     <th class="s4" data-field="">仓库名称</th>
                     <th class="s3" data-field="">总车位</th>
                     <th class="s3" data-field="">状态</th>
@@ -77,9 +77,9 @@
                 </thead>
 
                 <tbody>
-                <tr ng-repeat="el in storage">
+                <tr ng-repeat="el in storage" class="grey-text text-darken-1">
                     <td ng-bind="el.storage_name"></td>
-                    <td  ng-bind="el.row*el.col">女</td>
+                    <td  ng-bind="el.row*el.col"></td>
                     <td ng-if="el.storage_status==1">在用</td>
                     <td ng-if="el.storage_status==0">停用</td>
                     <td class="operation table_operation vc-center">

@@ -798,6 +798,13 @@ input[type=text]{
     font-size: 24px;
     line-height: 50px;
 }
+.storage_position .select-wrapper span.caret{
+    color: white;
+    right: 6px;
+}
+.storage_position .select-wrapper input.select-dropdown{
+    text-indent: 10px;
+}
 .switch label input[type=checkbox]:checked + .lever{
     background-color:#26c6da
 }

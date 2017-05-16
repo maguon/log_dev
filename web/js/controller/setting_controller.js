@@ -111,26 +111,26 @@ settingController.controller("settingWH_controller", ["$scope", "$host", "$basic
     // 修改仓库运营状态
     $scope.changeStorage_status = function (id, status) {
         var st;
-        var str="";
-
+        // var str="";
+        //
         if (status == 0) {
-            str="启用";
+            // str="启用";
             st = 1
         } else {
-            str="停用";
+            // str="停用";
             st = 0
         }
-        swal({
-                title: "是否"+str+"?",
-                text: "",
-                type: "warning",
-                showCancelButton: true,
-                confirmButtonColor: "#DD6B55",
-                confirmButtonText: "确定",
-                cancelButtonText: "取消",
-                closeOnConfirm: false
-            },
-            function () {
+        // swal({
+        //         title: "是否"+str+"?",
+        //         text: "",
+        //         type: "warning",
+        //         showCancelButton: true,
+        //         confirmButtonColor: "#DD6B55",
+        //         confirmButtonText: "确定",
+        //         cancelButtonText: "取消",
+        //         closeOnConfirm: false
+        //     },
+        //     function () {
 
                 $basic.put($host.api_url + "/admin/" + adminId + "/storage/" + id + "/storageStatus/" + st, {}).then(function (data) {
                     if (data.success == true) {
@@ -138,13 +138,14 @@ settingController.controller("settingWH_controller", ["$scope", "$host", "$basic
                         searchAll();
                     } else {
                         swal(data.msg, "", "error");
+                        searchAll();
                     }
                 })
             }
-        );
+        // );
 
 
-    }
+    // }
 }]);
 // 车辆设置
 settingController.controller("settingT_controller", ["$scope", "$host", "$basic", function ($scope, $host, $basic) {
@@ -460,24 +461,24 @@ settingController.controller("setting_user_controller", ["$basic", "$host", "$sc
     };
     // 停启用
     $scope.changeStatus = function (st, id) {
-        var st_txt;
-        if (st == "1") {
-            st_txt = "停用"
-        } else if (st == "0") {
-            st_txt = "启用"
-        }
-        swal({
-                title: "确定" + st_txt + "?",
-                // text: "You will not be able to recover this imaginary file!",
-                type: "warning",
-                showCancelButton: true,
-                confirmButtonColor: "#DD6B55",
-                confirmButtonText: st_txt,
-                closeOnConfirm: false,
-                cancelButtonText: "取消",
-            },
-            function () {
-                swal("成功!", "", "success");
+        // var st_txt;
+        // if (st == "1") {
+        //     st_txt = "停用"
+        // } else if (st == "0") {
+        //     st_txt = "启用"
+        // }
+        // swal({
+        //         title: "确定" + st_txt + "?",
+        //         // text: "You will not be able to recover this imaginary file!",
+        //         type: "warning",
+        //         showCancelButton: true,
+        //         confirmButtonColor: "#DD6B55",
+        //         confirmButtonText: st_txt,
+        //         closeOnConfirm: false,
+        //         cancelButtonText: "取消",
+        //     },
+        //     function () {
+        //         swal("成功!", "", "success");
                 if (st == "1") {
                     $scope.changeSt = "0"
                 } else if (st == "0") {
@@ -493,7 +494,7 @@ settingController.controller("setting_user_controller", ["$basic", "$host", "$sc
                     }
 
                 })
-            });
+            // });
     };
     // 修改
     $scope.changeOperatorForm = function (isValid, id) {

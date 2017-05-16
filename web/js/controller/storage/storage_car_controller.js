@@ -266,12 +266,13 @@ Storage_carController.controller("Storage_carController", ["$scope", "$rootScope
                 "parkingId": $scope.parking_id,
                 "planOutTime": $scope.plan_out_time
             };
-            $basic.post($host.api_url + "/user/" + userId + "/carStorageRel", obj_car).then(function (data) {
+
+            $basic.post($host.api_url + "/user/" + userId + "/carStorageRel", $basic.removeNullProps(obj_car)).then(function (data) {
                 if (data.success == true) {
-                    $('ul.tabs li').removeClass("active");
-                    $(".tab_box").removeClass("active");
-                    $(".tab_box").hide();
-                    $('ul.tabs li.test2').addClass("active");
+                    $('.tabWrap .tab').removeClass("active");
+                    $(".tab_box ").removeClass("active");
+                    $(".tab_box ").hide();
+                    $('.tabWrap .test2').addClass("active");
                     $("#test2").addClass("active");
                     $("#test2").show();
                     searchAll();

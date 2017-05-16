@@ -152,10 +152,10 @@ storage_car_mapController.controller("storage_car_mapController", ["$baseService
                     // swal("新增成功","","success");
                     // $("#newStorage_car").modal("close");
                     // $('ul.tabs').tabs('select_tab', 'test2');
-                    $('ul.tabs li').removeClass("active");
-                    $(".tab_box").removeClass("active");
-                    $(".tab_box").hide();
-                    $('ul.tabs li.test2').addClass("active");
+                    $('.tabWrap .tab').removeClass("active");
+                    $(".tab_box ").removeClass("active");
+                    $(".tab_box ").hide();
+                    $('.tabWrap .test2').addClass("active");
                     $("#test2").addClass("active");
                     $("#test2").show();
                     // searchAll();
