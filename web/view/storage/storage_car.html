@@ -4,42 +4,44 @@
             <div class="col s12">
                 <div class="input-field col s3">
                     <select material-select watch ng-model="search_relStatus">
-                        <option value=""  >请选择</option>
+                        <option value=""  >车辆状态</option>
                         <option ng-repeat="el in rel_status" ng-value="el.s_num">{{el.status_text}}</option>
                     </select>
-                    <label >车辆状态</label>
+                    <!--<label ></label>-->
                 </div>
 
                 <div class="input-field col s3">
                     <select material-select watch ng-model="search_storage" ng-change="changeStorageId(search_storage)">
-                        <option value=""  selected>请选择</option>
+                        <option value=""  selected>所在仓库</option>
                         <option ng-if="el.storage_status==1" ng-repeat="el in storageName" ng-value="el.id">{{el.storage_name}}</option>
                     </select>
-                    <label >所在仓库</label>
+                    <!--<label ></label>-->
                 </div>
                 <div class="input-field col s3">
                     <select material-select watch ng-model="search_makeId" ng-change="changeMakeId(search_makeId)">
-                        <option value=""  selected>请选择</option>
+                        <option value=""  selected>车辆品牌</option>
                         <option ng-repeat="el in makecarName" ng-value="el.id">{{el.make_name}}</option>
                     </select>
-                    <label >车辆品牌</label>
+                    <!--<label ></label>-->
                 </div>
                 <div class="input-field col s3">
                     <select material-select watch ng-model="search_modelId" >
-                        <option ng-value=""  selected>请选择</option>
+                        <option ng-value=""  selected>车辆型号</option>
                         <option ng-repeat="el in carModelName" ng-value="el.id">{{el.model_name}}</option>
                     </select>
-                    <label >车辆型号</label>
+                    <!--<label ></label>-->
                 </div>
             </div>
             <div class="col s12 vc-center">
                 <div class="col s10">
                     <div class="col s12 valign-wrapper p0" style="margin-top: 1rem">
-                        <div class="col s1 p0 cyan-text text-lighten-1 bold" style="min-width: 100px;font-size: 13px"  >车辆VIN码:</div>
-                        <div class="input-field col s3 no-mp">
-                            <input type="text" ng-model="search_vin" >
+                        <div class=" col s6 vc-center p0">
+                            <div class="col s2 p0 cyan-text text-lighten-1 bold" style="min-width: 100px;font-size: 13px"  >车辆VIN码:</div>
+                            <div class="input-field col s10 no-mp">
+                                <input type="text" ng-model="search_vin" >
+                            </div>
                         </div>
-                        <div class=" col s8 vc-center">
+                        <div class=" col s6 vc-center">
                             <div class="col s1 p0 cyan-text text-lighten-1 bold" style="min-width: 100px;font-size: 13px"  >入库时间:</div>
                             <div class="col input-field s5 no-mp">
                                 <input type="text" ng-model="search_enterTime_start"  class="datepicker" autocomplete="off" required   date><i class="mdi dataIcon mdi-table-large"></i>
@@ -52,15 +54,17 @@
                         </div>
                     </div>
                     <div class="col s12 p0" style="margin-top: 1rem">
-                        <div class=" col s6 vc-center p0">
-                            <div class="col s1 p0 cyan-text text-lighten-1 bold" style="min-width: 100px;font-size: 13px"  >计划出库时间</div>
-                            <div class="col input-field s5 no-mp p0">
-                                <input type="text" ng-model="search_planTime_start" class="datepicker" autocomplete="off"  required   date><i class="mdi dataIcon mdi-table-large"></i>
+                        <div class=" col s6  p0">
+                            <div class="col s2 p0 cyan-text text-lighten-1 bold" style="min-width: 100px;font-size: 13px"  >计划出库时间:</div>
+                            <div class="col s10 vc-center">
+                                <div class="col input-field s5 no-mp p0">
+                                    <input type="text" ng-model="search_planTime_start" class="datepicker" autocomplete="off"  required   date><i class="mdi dataIcon mdi-table-large"></i>
 
-                            </div>
-                            <div class="col s1 center-align">——</div>
-                            <div class="col input-field s5 no-mp">
-                                <input type="text" ng-model="search_planTime_end"  class="datepicker" autocomplete="off"  required   date><i class="mdi dataIcon mdi-table-large"></i>
+                                </div>
+                                <div class="col s1 center-align">——</div>
+                                <div class="col input-field s6 no-mp">
+                                    <input type="text" ng-model="search_planTime_end"  class="datepicker" autocomplete="off"  required   date><i class="mdi dataIcon mdi-table-large"></i>
+                                </div>
                             </div>
                             <!--<label >车辆状态</label>-->
                         </div>
