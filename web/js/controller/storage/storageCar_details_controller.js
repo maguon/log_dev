@@ -2,7 +2,7 @@
  * Created by ASUS on 2017/5/5.
  */
 var storageCar_detailsController = angular.module("storageCar_detailsController", []);
-storageCar_detailsController.controller("storageCar_detailsController", ["$baseService", "$state", "$stateParams", "$config_variable", "service_storage_parking", "$scope", "$host", "$basic", function ($baseService, $state, $stateParams, $config_variable, service_storage_parking, $scope, $host, $basic) {
+storageCar_detailsController.controller("storageCar_detailsController", [ "$state", "$stateParams", "$config_variable", "service_storage_parking", "$scope", "$host", "$basic", function ( $state, $stateParams, $config_variable, service_storage_parking, $scope, $host, $basic) {
     // console.log($stateParams.id, $stateParams.vin)
     var userId = $basic.getSession($basic.USER_ID);
     var val = $stateParams.id;
@@ -274,7 +274,7 @@ storageCar_detailsController.controller("storageCar_detailsController", ["$baseS
                     // console.log($scope.look_make_id);
                     $scope.changeMakeId($scope.look_make_id);
                 $scope.look_model_id = $scope.self_car.model_id,
-                    $scope.look_create_time = $baseService.formDate($scope.self_car.pro_date);
+                $scope.look_create_time = moment($scope.self_car.pro_date).format('YYYY-MM-DD');
                 $scope.look_storageName = $scope.self_car.storage_name + "  " + $scope.self_car.row + "排" + $scope.self_car.col + "列";
 
                 // 车辆id

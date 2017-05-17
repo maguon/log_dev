@@ -46,7 +46,7 @@ storageDirective.directive('header', function () {
                     $basic.removeSession($basic.USER_ID);
                     $basic.removeSession($basic.USER_TYPE);
                     $basic.removeSession($basic.USER_NAME);
-                    window.location.href = '/storage_login.html';
+                    window.location.href = '/common_login.html';
                 });
 
             }
@@ -60,8 +60,8 @@ storageDirective.directive('storageNavigator', function () {
         replace: true,
         transclude: false,
         restrict: 'E',
-        controller: function ($scope, $basic, $host, $element, $rootScope) {
-            if ($basic.checkUser('2')) {
+        controller: function ($scope, $basic,$config_variable, $host, $element, $rootScope) {
+            if ($basic.checkUser($config_variable.userTypes.storageUser.type)) {
 
                 $basic.setHeader($basic.USER_TYPE, $basic.getSession($basic.USER_TYPE));
                 $basic.setHeader($basic.COMMON_AUTH_NAME,  $basic.getSession($basic.COMMON_AUTH_NAME) );
@@ -84,7 +84,7 @@ storageDirective.directive('storageNavigator', function () {
                 // $(".button-collapse").sideNav();
                 $('.collapsible').collapsible();
             }else {
-                window.location="./storage_login.html"
+                window.location="./common_login.html"
             }
 
 

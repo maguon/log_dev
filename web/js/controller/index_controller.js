@@ -1,8 +1,8 @@
 var index_controller = angular.module("index_controller", []);
-index_controller.controller("indexController", ['$rootScope', '$scope', '$location', '$q', "$basic",
-    function ($rootScope, $scope, $location, $q, $basic) {
+index_controller.controller("indexController", ['$rootScope', '$scope', '$location', '$q', "$basic","$config_variable",
+    function ($rootScope, $scope, $location, $q, $basic,$config_variable) {
         //
-        if ($basic.checkUser('99')) {
+        if ($basic.checkUser($config_variable.user_type.admin_type)) {
             Highcharts.chart('pie_chart', {
                 chart: {
                     plotBackgroundColor: null,

@@ -2,11 +2,10 @@
  * Created by ASUS on 2017/4/1.
  */
 var Company_controller = angular.module("Company_controller", []);
-Company_controller.controller("Company_controller", ['$rootScope', '$scope', '$basic', '$host', '$baseService', '$urlMethod', function ($rootScope, $scope, $basic, $host, $baseService, $urlMethod) {
+Company_controller.controller("Company_controller", ['$rootScope', '$scope', '$basic', '$host',  '$urlMethod', function ($rootScope, $scope, $basic, $host,  $urlMethod) {
     var userId = $basic.getSession($basic.USER_ID);
     // 单条公司信息
     var companyMsg;
-
 
     // 搜索查询
     $scope.search = function () {
@@ -118,7 +117,7 @@ Company_controller.controller("Company_controller", ['$rootScope', '$scope', '$b
                 // console.log($scope.company.cooperation_time)
                 companyMsg = $scope.company;
                 console.log($scope.company, $scope.company.cooperation_time);
-                $scope.look_cooperation_time = $baseService.formDate($scope.company.cooperation_time)
+                $scope.look_cooperation_time = moment($scope.company.cooperation_time).format("YYYY-DD-MM")
             } else {
                 swal(data.msg, "", "error");
             }

@@ -1,5 +1,5 @@
 var loginController = angular.module("loginController", []);
-loginController.controller("loginController", ['$rootScope', '$scope', '$location', '$q', "$basic", "$host",
+loginController.controller("loginController", ['$rootScope', '$scope', '$location','$q', "$basic", "$host",
 
     function ($rootScope, $scope, $location, $q, $basic, $host) {
         $scope.username = '';

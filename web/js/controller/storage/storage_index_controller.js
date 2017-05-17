@@ -22,9 +22,8 @@ storage_index_controller.controller("storage_index_controller", ['$rootScope', '
             } else {
 
             }
-        })
+        });
 
-        // }
 
 
     }]);

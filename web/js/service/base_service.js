@@ -2,22 +2,6 @@
  * Created by ASUS on 2017/4/6.
  */
 var baseService = angular.module("baseService", []);
-baseService.factory("$baseService", function () {
-    var _this = {};
-    _this.formDate = function (d) {
-        var date = new Date(d);
-        var new_date;
-        var Y = date.getFullYear() + '-';
-        var M = (date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1) + '-';
-        var D = (date.getDate() < 10 ? '0' + (date.getDate()) + ' ' : date.getDate() + ' ');
-        var h = date.getHours() + ':';
-        var m = date.getMinutes() + ':';
-        var s = date.getSeconds();
-        new_date = Y + M + D;
-        return new_date;
-    };
-    return _this
-});
 
 baseService.factory("$urlMethod", function () {
     var _this = {};
@@ -32,6 +16,8 @@ baseService.factory("$urlMethod", function () {
     };
     return _this
 });
+
+
 
 baseService.factory("service_storage_parking", function () {
     var storageParking = function (pk) {
@@ -89,16 +75,29 @@ baseService.factory("service_storage_parking", function () {
         // console.log(parkingArray);
         return parkingArray;
         // return parkingArray;
-
     };
     return {
         storage_parking: storageParking
     }
 
-
 });
+
+// 公共数据
 baseService.factory("$config_variable", function () {
     var _this = {};
+    _this.userTypes = {
+        storageUser : {type:2,name:"仓储部"},
+        dispatch : {type:3,name:"调度部"},
+        international_trade : {type:4,name:"国贸部"}
+    };
+
+
+
+    // ]
+    _this.user_type={
+        storage_type:"2",
+        admin_type:"99"
+    };
     _this.rel_status = 1;
     _this.car_rel_status=[
         {
@@ -171,6 +170,8 @@ baseService.factory("$config_variable", function () {
 
     return _this
 });
+
+// 页面之间数据传递
 baseService.factory("$pass_parameter", function () {
 //定义参数对象
     var myObject = {};
@@ -201,18 +202,4 @@ baseService.factory("$pass_parameter", function () {
         setter: _setter,
         getter: _getter
     };
-});
-
-
-baseService.factory("$http_parameter",function () {
-    var parameter=function (obj) {
-        var str="";
-        for(var i in obj){
-            str=str+i+"="+obj[i]+"&";
-        }
-        return str.substr(0,str.length-1);
-    };
-    return{
-        parameter:parameter
-    }
 });

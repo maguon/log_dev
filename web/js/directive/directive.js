@@ -24,7 +24,6 @@ adminDirective.directive('header', function () {
                     $basic.removeSession($basic.USER_NAME);
                     window.location.href = '/login.html';
                 });
-
             }
         }
     };
@@ -33,11 +32,12 @@ adminDirective.directive('header', function () {
 adminDirective.directive('navigator', function () {
     return {
         templateUrl: '/view/navigator.html',
+        priority:10,
         replace: true,
         transclude: false,
         restrict: 'E',
         controller: function ($scope, $basic, $host, $element, $rootScope) {
-            if ($basic.checkUser('99')) {
+            if ($basic.checkUser("99")) {
                 $basic.setHeader($basic.USER_TYPE, $basic.getSession($basic.USER_TYPE));
                 $basic.setHeader($basic.COMMON_AUTH_NAME,  $basic.getSession($basic.COMMON_AUTH_NAME) );
                 $basic.get($host.api_url + "/admin/" + $basic.getSession($basic.USER_ID)).then(function (data) {
@@ -61,6 +61,7 @@ adminDirective.directive('navigator', function () {
 adminDirective.directive("sideNav",function () {
     return{
         restrict:"A",
+        priority:5,
         link:function () {
             $("#menu_link").sideNav({
                 menuWidth: 280, // Default is 300
@@ -73,36 +74,7 @@ adminDirective.directive("sideNav",function () {
         }
     }
 })
-adminDirective.directive('storageNavigator', function () {
-    return {
-        templateUrl: '/view/storage_navigator.html',
-        replace: true,
-        transclude: false,
-        restrict: 'E',
-        controller: function ($scope, $basic, $host, $element, $rootScope) {
-            if ($basic.checkUser('2')) {
-                $basic.get($host.api_url + "/user/" + $basic.getSession($basic.USER_ID)).then(function (data) {
-                    // $(".shadeDowWrap").hide();
-                    if (data.success == true) {
-                        $scope.userName = data.result[0].user_name;
-                        $basic.setSession($basic.USER_NAME, $scope.userName);
-                    } else {
-                        swal(data.msg, "", "error");
-                    }
-                });
-            }
-            $("#menu_link").sideNav({
-                menuWidth: 280, // Default is 300
-                edge: 'left', // Choose the horizontal origin
-                closeOnClick: true, // Closes side-nav on <a> clicks, useful for Angular/Meteor
-                // draggable: true // Choose whether you can drag to open on touch screens
-            });
-            // $(".button-collapse").sideNav();
-            $('.collapsible').collapsible();
 
-        }
-    };
-});
 adminDirective.directive("carMsg", function () {
     return {
         restrict: 'A',

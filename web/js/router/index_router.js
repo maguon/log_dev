@@ -142,6 +142,11 @@ index_router.config(['$stateProvider',"$urlRouterProvider",function($stateProvid
             url:"/storage_car_map/{id}?form",
             templateUrl: "/view/storage/storage_car_map.html",
             controller:"storage_car_mapController"
+        })
+        .state("user_info",{
+            url:"/user_info",
+            templateUrl: "/view/userinfo.html",
+            controller:'user_info_controller'
         });
         // .state("calendar", {
         //     url:"/calendar",

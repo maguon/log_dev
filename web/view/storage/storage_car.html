@@ -54,7 +54,7 @@
                         </div>
                     </div>
                     <div class="col s12 p0" style="margin-top: 1rem">
-                        <div class=" col s6  p0">
+                        <div class=" col s6  p0 valign-wrapper">
                             <div class="col s2 p0 cyan-text text-lighten-1 bold" style="min-width: 100px;font-size: 13px"  >计划出库时间:</div>
                             <div class="col s10 vc-center">
                                 <div class="col input-field s5 no-mp p0">
@@ -273,9 +273,8 @@
                     <th>操作</th>
                 </tr>
                 </thead>
-
                 <tbody>
-                <tr ng-repeat="el in storage_car">
+                <tr ng-repeat="el in storage_car" class="grey-text text-darken-1">
                     <td  ng-bind="el.vin"></td>
                     <td ng-bind="el.make_name"></td>
                     <td ng-bind="el.model_name"></td>

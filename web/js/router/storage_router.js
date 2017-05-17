@@ -55,6 +55,11 @@ storage_router.config(['$stateProvider',"$urlRouterProvider",function($stateProv
             url:"/storage_setting_car",
             templateUrl: "/view/storage/storage_setting_car.html",
             controller:'storage_setting_car_controller'
+        })
+        .state("user_info",{
+            url:"/user_info",
+            templateUrl: "/view/userinfo.html",
+            controller:'user_info_controller'
         });
 }]);
 /**

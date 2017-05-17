@@ -40,7 +40,7 @@
                                             <select car-select name="dep" class="browser-default col s6-0" ng-model="newDepId" required>
                                                 <option value="" disabled selected>请选择</option>
                                                 <!--<option ng-value="1" >车管部</option>-->
-                                                <option ng-value="2" >仓储部</option>
+                                                <option ng-repeat="el in user_info_section" ng-value="el.type">{{el.name}}</option>
                                             </select>
                                         </div>
                                     </div>
@@ -88,8 +88,10 @@
                     <td ng-bind="el.real_name"></td>
                     <td  ng-if="el.gender==0">女</td>
                     <td  ng-if="el.gender==1">男</td>
-                    <td ng-if="el.type==1">车管部</td>
+                    <!--<td ng-if="el.type==1">车管部</td>-->
                     <td ng-if="el.type==2">仓储部</td>
+                    <td ng-if="el.type==3">调度部</td>
+                    <td ng-if="el.type==4">国贸部</td>
                     <td ng-bind="el.mobile"></td>
                     <td ng-if="el.status==1">可用</td>
                     <td ng-if="el.status==0">停用</td>

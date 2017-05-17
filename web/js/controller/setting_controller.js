@@ -377,11 +377,19 @@ settingController.controller("settingT_controller", ["$scope", "$host", "$basic"
 
     }
 }]);
-settingController.controller("setting_user_controller", ["$basic", "$host", "$scope", function ($basic, $host, $scope) {
+settingController.controller("setting_user_controller", ["$basic","$config_variable", "$host", "$scope", function ($basic,$config_variable,$host, $scope) {
 
     var adminId = $basic.getSession($basic.USER_ID);
 
-
+    var user_info_obj=$config_variable.userTypes;
+    var user_info_fun=function () {
+        $scope.user_info_section=[];
+        for(var i in user_info_obj){
+            $scope.user_info_section.push(user_info_obj[i])
+        }
+        return $scope.user_info_section
+    };
+    user_info_fun();
     // 搜索所有查询
     var searchAll = function () {
         $basic.get($host.api_url + "/admin/" + adminId + "/user").then(function (data) {
@@ -393,6 +401,7 @@ settingController.controller("setting_user_controller", ["$basic", "$host", "$sc
                 swal(data.msg, "", "error");
             }
         });
+
         // $basic.get($host.api_url+"/admin/"+adminId+"/department").then(function (data) {
         //     if(data.success==true){
         //         $scope.department=data.result;

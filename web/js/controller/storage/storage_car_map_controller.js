@@ -2,7 +2,7 @@
  * Created by ASUS on 2017/5/5.
  */
 var storage_car_mapController = angular.module("storage_car_mapController", []);
-storage_car_mapController.controller("storage_car_mapController", ["$baseService", "$state", "$rootScope", "$stateParams", "$config_variable", "service_storage_parking", "$scope", "$host", "$basic", function ($baseService, $state, $rootScope, $stateParams, $config_variable, service_storage_parking, $scope, $host, $basic) {
+storage_car_mapController.controller("storage_car_mapController", ["$state", "$rootScope", "$stateParams", "$config_variable", "service_storage_parking", "$scope", "$host", "$basic", function ( $state, $rootScope, $stateParams, $config_variable, service_storage_parking, $scope, $host, $basic) {
     var val = $stateParams.id;
     var data = new Date();
     var now_date = moment(data).format('YYYYMMDD');
