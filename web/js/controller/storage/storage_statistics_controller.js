@@ -7,8 +7,9 @@ storage_statistics_controller.controller("storage_statistics_controller", ['$roo
     var month_size = 12;
     var day_size = 30;
     var now_date = moment(date).format('YYYYMMDD');
-    var day = [];
-    var month = [];
+    var day;
+    var month;
+    // 入库每日统计
     var day_date_array = [
         {
             name: "入库统计",
@@ -20,6 +21,8 @@ storage_statistics_controller.controller("storage_statistics_controller", ['$roo
             color: "#ff5252"
         }
     ];
+
+    // 入库每月统计
     var month_date_array = [{
         name: "入库统计",
         data: [],
@@ -29,6 +32,7 @@ storage_statistics_controller.controller("storage_statistics_controller", ['$roo
         data: [],
         color: "#ff5252"
     }];
+
     $scope.change_statistics = function () {
         searchAll();
     };

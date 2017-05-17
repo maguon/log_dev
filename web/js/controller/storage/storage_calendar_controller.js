@@ -14,22 +14,23 @@ storage_working_calendarController.controller("storage_working_calendarControlle
     weekday[5] = "Friday";
     weekday[6] = "Saturday";
     $scope.today_week = weekday[date.getDay()];
+
     $basic.get($host.api_url + "/storageDate" + "?dateStart=" + now_date + "&dateEnd=" + now_date).then(function (data) {
         if (data.success == true) {
             $scope.store_storage = data.result;
             $scope.storage_id = $scope.store_storage[0].id;
             search($scope.storage_id)
         }
-
     });
     $scope.get_fullCalendar = function (storage_id) {
         search(storage_id);
     };
+
+    // 日历信息
     var search = function (storage_id) {
         $('#calendar').fullCalendar('destroy');
         $('#calendar').fullCalendar({
             viewRender: function (view, element) {
-
             },
             aspectRatio: 1,
             header: {
@@ -50,7 +51,7 @@ storage_working_calendarController.controller("storage_working_calendarControlle
                         console.log(data);
                         $scope.data = data.result;
                         for (var i  in $scope.data) {
-                            var titleHtml = '<div class="row p0" style="padding-top: 10px">' +
+                            var titleHtml = '<div class=" p0" style="padding-top: 10px">' +
                                 '<div class="col s4 center-align  cyan-text text-lighten-1" style="font-size: 14px">' +
                                 '<i style="display: block" class="mdi mdi-login"></i><span>' + $scope.data[i].imports + '</span></div>' +
                                 '<div class="col s4 center-align  cyan-text text-lighten-1" style="font-size: 14px">' +
@@ -77,7 +78,6 @@ storage_working_calendarController.controller("storage_working_calendarControlle
             }
         });
         // 当天仓库信息
-
 
         $basic.get($host.api_url + "/storageDate?storageId=" + storage_id + "&dateStart=" + now_date + "&dateEnd=" + now_date).then(function (data) {
             if (data.success == true) {

@@ -61,7 +61,7 @@ adminDirective.directive('navigator', function () {
 adminDirective.directive("sideNav",function () {
     return{
         restrict:"A",
-        priority:5,
+        // priority:5,
         link:function () {
             $("#menu_link").sideNav({
                 menuWidth: 280, // Default is 300

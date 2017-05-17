@@ -108,6 +108,11 @@ index_router.config(['$stateProvider',"$urlRouterProvider",function($stateProvid
             templateUrl: "/view/system_settings/setting_truck.html",
             controller:'settingT_controller'
         })
+        .state("setting_amend_vin",{
+            url:"/setting_amend_vin",
+            templateUrl: "/view/system_settings/setting_amend_vin.html",
+            controller:'setting_amend_vin_controller'
+        })
         .state("storage_index", {  //路由状态
             url: "/storage_index",  //路由路径
             templateUrl: "/view/storage/storage_index.html",  //路由填充的模板
@@ -147,6 +152,16 @@ index_router.config(['$stateProvider',"$urlRouterProvider",function($stateProvid
             url:"/user_info",
             templateUrl: "/view/userinfo.html",
             controller:'user_info_controller'
+        })
+        .state("car_demand",{
+            url:"/car_demand",
+            templateUrl: "/view/car_demand/car_demand.html",
+            controller:'car_demand_controller'
+        })
+        .state("demand_Car_details",{
+            url:"/demand_Car_details/{id}/vin/{vin}?from",
+            templateUrl: "/view/car_demand/demand_Car_details.html",
+            controller:'demand_Car_details_controller'
         });
         // .state("calendar", {
         //     url:"/calendar",

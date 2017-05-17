@@ -14,6 +14,15 @@ body{
 .containerBox{
     padding: 0 5px;
 }
+.mp-10{
+    margin-top: 10px;
+}
+.mp-20{
+    margin-top: 20px;
+}
+.mp-30{
+    margin-top: 30px;
+}
 
 /*登录页面*/
 /*.login_btn{*/
@@ -549,6 +558,16 @@ input[type=text]{
     margin:10px 10px 0 0;
     font-size: 100px;
 }
+
+.img_date{
+    width: 100%;
+    height: 20px;
+    background: rgba(0,0,0,0.5);
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    font-size: 15px;
+}
 .storage_car_picture input{
     font-size: 200px;
     position: absolute;
@@ -686,7 +705,9 @@ input[type=text]{
     width: 100%;
     /*height: 300px;*/
     border-bottom: 1px solid white;
-
+}
+.fc-row .fc-content-skeleton tbody td, .fc-row .fc-helper-skeleton tbody td{
+    height: 50px;
 }
 .fc-toolbar.fc-header-toolbar{
     background:#eeeeee  ;
@@ -831,6 +852,6 @@ input[type=text]{
 .user_info_list.active i{
     color: white;
 }
-.user_info_list i{
+.user_info_list i {
     color: #4dd0e1;
 }

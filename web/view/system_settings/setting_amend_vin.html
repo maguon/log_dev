@@ -1,0 +1,43 @@
+<div id="setting_amend_vin" >
+    <div class="grey-text text-darken-2" >
+        <!--<div class="modal-content ">-->
+            <!--<div class="" style="width: 95%;margin: 0 auto">-->
+            <div class=" vc-center ">
+                <h4 class="center-align cyan-text text-lighten-1">Vin码查询</h4>
+            </div>
+            <div class="divider" style="background: #00bcd4;height: 2px;"></div>
+            <div class="row no-marBottom">
+                <div class="row " style="width: 600px;margin: 0 auto">
+                    <form name="demand_car_form" ng-submit="demand_car(demand_car_form.$valid)" novalidate>
+                        <div class="input-field col s12 mp-30" ng-class="{'has-error':demand_car_form.demand_vin.$invalid&&submitted}">
+                            <input type="text" id="demand_vin" name="demand_vin" ng-model="demand_vin"   required minlength="17" maxlength="17">
+                            <label for="demand_vin" style="font-size: 20px">请输入17位vin码</label>
+                        </div>
+                        <div  class="col s12 vc-center mp-30" >
+                            <button class=" btn btn-floating btn-large waves-effect cyan lighten-1" ><i style="font-size: 40px" class="mdi white-text mdi-magnify"></i></button>
+                        </div>
+                    </form>
+
+                </div>
+                <div class="row  mp-30" >
+                    <div style="width: 90%;height: 30ex;margin: 0 auto">
+                        <div class="row">
+                            <div class="input-field col s12 mp-30" >
+                                <h5 class="col s1">vin码:</h5>
+                                <input class="col s10" type="text" id="amend_vin" name="search_vin">
+                                <div class="col s1">
+                                    <a class="btn  btn-large btn-floating waves-effect cyan"> <i class="mdi mdi-check "></i></a>
+
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="row"></div>
+                    </div>
+                </div>
+            </div>
+        <!--</div>-->
+
+
+    </div>
+</div>

@@ -257,7 +257,7 @@ storageCar_detailsController.controller("storageCar_detailsController", [ "$stat
                 $scope.comment = $scope.operating_record.comment;
                 $scope.storage_image = $scope.operating_record.storage_image;
                 for (var i in $scope.storage_image) {
-                    $scope.storage_imageBox.push({src: $host.file_url + '/image/' + $scope.storage_image[i].url});
+                    $scope.storage_imageBox.push({src: $host.file_url + '/image/' + $scope.storage_image[i].url,time:$scope.storage_image[i].timez,user:$scope.storage_image[i].name});
                 }
 
                 // $scope.imgArr.push({src:$host.file_url+'/image/'+imageId});
