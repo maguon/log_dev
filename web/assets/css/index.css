@@ -23,6 +23,18 @@ body{
 .mp-30{
     margin-top: 30px;
 }
+.mp-40{
+    margin-top: 40px;
+}
+.mp-50{
+    margin-top: 50px;
+}
+.mp-60{
+    margin-top: 60px;
+}
+.mp-70{
+    margin-top: 70px;
+}
 
 /*登录页面*/
 /*.login_btn{*/

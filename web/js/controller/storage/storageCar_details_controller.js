@@ -30,6 +30,15 @@ storageCar_detailsController.controller("storageCar_detailsController", [ "$stat
         }
     });
 
+    //controller里对应的处理函数
+    var viewer;
+    // var add_viewer;
+    $scope.renderFinish = function () {
+        viewer = new Viewer(document.getElementById('look_img'), {
+            url: 'data-original'
+        });
+    };
+
     // 图片上传
     $scope.imgArr = [];
     // 预览详情照片
@@ -69,9 +78,15 @@ storageCar_detailsController.controller("storageCar_detailsController", [ "$stat
                     "userType": $basic.getSession($basic.USER_TYPE),
                     "url": imageId
                 }).then(function (data) {
+
                     if (data.success == true) {
-                        viewer.destroy();
+                        if($scope.storage_imageBox.length!=0){
+                            viewer.destroy();
+                        }
                         $scope.storage_imageBox.push({src: $host.file_url + '/image/' + imageId});
+
+
+
                         // console.log($scope.storage_imageBox);
                     }
                 });
@@ -154,7 +169,7 @@ storageCar_detailsController.controller("storageCar_detailsController", [ "$stat
                 }).then(function (data) {
                     if (data.success = true) {
                         swal("出库成功!", "", "success");
-                        searchAll();
+                        // searchAll();
                     }
                 });
             }
@@ -206,14 +221,6 @@ storageCar_detailsController.controller("storageCar_detailsController", [ "$stat
     //     searchAll();
     // };
 
-    //controller里对应的处理函数
-    var viewer;
-    // var add_viewer;
-    $scope.renderFinish = function () {
-        viewer = new Viewer(document.getElementById('look_img'), {
-            url: 'data-original'
-        });
-    };
 
 
     // 返回

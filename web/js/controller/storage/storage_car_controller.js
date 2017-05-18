@@ -25,7 +25,7 @@ Storage_carController.controller("Storage_carController", ["$scope", "$rootScope
             reqUrl = reqUrl + "&modelId=" + $scope.search_modelId
         }
         if ($scope.search_vin != null) {
-            reqUrl = reqUrl + "&vin=" + $scope.search_vin
+            reqUrl = reqUrl + "&vinCode=" + $scope.search_vin
         }
         if ($scope.search_enterTime_start != null) {
             reqUrl = reqUrl + "&enterStart=" + $scope.search_enterTime_start
