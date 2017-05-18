@@ -10,7 +10,7 @@
                 <div class="row " style="width: 600px;margin: 0 auto">
                     <form name="demand_car_form" ng-submit="demand_car(demand_car_form.$valid)" novalidate>
                         <div class="input-field col s12 mp-30" ng-class="{'has-error':demand_car_form.demand_vin.$invalid&&submitted}">
-                            <input type="text" id="demand_vin" name="demand_vin" ng-model="demand_vin"   required minlength="17" maxlength="17">
+                            <input type="text" id="demand_vin" name="demand_vin" ng-model="demand_vin"  autocomplete="off"  required minlength="17" maxlength="17">
                             <label for="demand_vin" style="font-size: 20px">请输入17位vin码</label>
                         </div>
                         <div  class="col s12 vc-center mp-30" >
@@ -24,27 +24,41 @@
                         <div class="row">
                             <div class="input-field col s12 mp-30" >
                                 <h5 class="col s1 cyan-text text-lighten-1">Vin码:</h5>
-                                <input class="col s10" type="text" id="amend_vin" name="search_vin">
+                                <input class="col s10 grey-text" style="font-size: 30px" type="text" id="amend_vin" ng-model="vin" name="search_vin">
                                 <div class="col s1">
-                                    <a class="btn  btn-large btn-floating waves-effect cyan"> <i class="mdi mdi-check "></i></a>
+                                    <a class="btn  btn-large btn-floating waves-effect cyan" ng-click="amend_vin(car_details.id)"> <i class="mdi mdi-check "></i></a>
                                 </div>
 
                             </div>
                         </div>
-                        <div class="divider"></div>
+                        <div class="divider" style="margin: 30px 0 30px 0"></div>
                         <div class="row">
                             <div class="col s4">
-                                <span>发动机号:</span>
-                                <span>4652346523</span>
+                                <span class="cyan-text text-lighten-1 bold">发动机号:</span>
+                                <span ng-cloak>{{car_details.engine_num}}</span>
                             </div>
                             <div class="col s4">
-                                <span>发动机号:</span>
-                                <span>4652346523</span>
+                                <span class="cyan-text text-lighten-1 bold">品牌:</span>
+                                <span ng-cloak>{{car_details.make_name}}</span>
                             </div>
                             <div class="col s4">
-                                <span>发动机号:</span>
-                                <span>4652346523</span>
+                                <span class="cyan-text text-lighten-1 bold">型号:</span>
+                                <span ng-cloak>{{car_details.model_name}}</span>
                             </div>
+                        </div>
+                        <div class="row" style="margin-top: 50px">
+                            <div class="col s4">
+                                <span class="cyan-text text-lighten-1 bold">生产日期:</span>
+                                <span ng-cloak>{{car_details.pro_date|date:"yyyy-MM-dd"}}</span>
+                            </div>
+                            <div class="col s4">
+                                <span class="cyan-text text-lighten-1 bold">颜色:</span>
+                                <span ng-cloak>{{color}}</span>
+                            </div>
+                            <!--<div class="col s4">-->
+                                <!--<span class="cyan-text text-lighten-1 bold">型号:</span>-->
+                                <!--<span>4652346523</span>-->
+                            <!--</div>-->
                         </div>
                     </div>
                 </div>
