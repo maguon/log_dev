@@ -3,19 +3,7 @@
  */
 var international_trade_router=angular.module("international_trade_router",[]);
 international_trade_router.config(['$stateProvider',"$urlRouterProvider",function($stateProvider,$urlRouterProvider) {
-    // $routeProvider.when('/', {
-    //     templateUrl: '/view/index.html',
-    //     controller:'indexController'
-    // }).when('/data', {
-    //     templateUrl: '/view/data.html',
-    //     controller:'dataController'
-    // }).when('/setting', {
-    //     templateUrl: '/view/setting.html',
-    //     controller:'settingController'
-    // }).otherwise({
-    //     templateUrl: '/view/index.html',
-    //     controller:'indexController'
-    // });
+
 
     $urlRouterProvider.when("","/user_info");
     $stateProvider

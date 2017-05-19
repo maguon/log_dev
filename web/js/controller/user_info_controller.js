@@ -19,9 +19,8 @@ user_info_controller.controller("user_info_controller",["$scope","$basic","$conf
                 }
                 for(var k in $scope.user_info_section){
                     for(var j in $scope.user_info_list){
-                    if($scope.user_info_list[j].type==$scope.user_info_section[k].user_type){
+                    if($scope.user_info_list[j].type==$scope.user_info_section[k].user_type&&$scope.user_info_list[j].status==1){
                         $scope.user_info_section[k].user_info_list_array.push({
-                            status:$scope.user_info_list[j].status,
                             real_name:$scope.user_info_list[j].real_name,
                             mobile:$scope.user_info_list[j].mobile,
                             gender:$scope.user_info_list[j].gender,
@@ -31,8 +30,7 @@ user_info_controller.controller("user_info_controller",["$scope","$basic","$conf
             }
 
 
-                console.log($scope.user_info_section);
-                // console.log($scope.user_info_array)
+                // console.log($scope.user_info_section);
             }else {
                 swal(data.msg,"","error")
             }
