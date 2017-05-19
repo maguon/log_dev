@@ -4,6 +4,7 @@
 var setting_amend_vin_controller=angular.module("setting_amend_vin_controller",[]);
 setting_amend_vin_controller.controller("setting_amend_vin_controller",["$scope","$basic","$config_variable","$host",function ($scope,$basic,$config_variable,$host){
     var admin=$basic.getSession($basic.USER_ID);
+    $scope.flag=true;
     // 查询vin码
     $scope.demand_car=function ($iValid) {
         $scope.submitted=true;
@@ -37,8 +38,17 @@ setting_amend_vin_controller.controller("setting_amend_vin_controller",["$scope"
         }
     };
     
+    // 打开修改vin码
+    $scope.open_vin_amend=function () {
+        $scope.flag=false;
+    };
+    // 关闭修改vin码
+    $scope.close_vin_amend=function () {
+        $scope.flag=true;
+    };
     // 修改vin码
     $scope.amend_vin=function (id) {
+        $scope.flag=true;
         var obj={
             "vin":$scope.vin
         };
