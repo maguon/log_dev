@@ -4,6 +4,8 @@
 var storage_car_mapController = angular.module("storage_car_mapController", []);
 storage_car_mapController.controller("storage_car_mapController", ["$state", "$rootScope", "$stateParams", "$config_variable", "service_storage_parking", "$scope", "$host", "$basic", function ( $state, $rootScope, $stateParams, $config_variable, service_storage_parking, $scope, $host, $basic) {
     var val = $stateParams.id;
+    // console.log($stateParams.form);
+    $scope._form=$stateParams.form;
     var data = new Date();
     var now_date = moment(data).format('YYYYMMDD');
     var userId = $basic.getSession($basic.USER_NAME);

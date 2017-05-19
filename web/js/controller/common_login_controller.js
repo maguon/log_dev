@@ -30,6 +30,12 @@ common_login_controller.controller("common_login_controller", ['$rootScope','$sc
                         if(data.result.type==$config_variable.userTypes.storageUser.type){
                             window.location.href="storage.html";
                         }
+                        if(data.result.type==$config_variable.userTypes.dispatch.type){
+                            window.location.href="dispatch.html";
+                        }
+                        if(data.result.type==$config_variable.userTypes.international_trade.type){
+                            window.location.href="international_trade.html";
+                        }
 
                     }else {
                         swal(data.msg,"","error");

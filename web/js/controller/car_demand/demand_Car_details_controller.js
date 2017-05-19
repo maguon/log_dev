@@ -93,7 +93,7 @@ demand_Car_details_controller.controller("demand_Car_details_controller", [ "$st
                 for (var i in $scope.storage_image) {
                     $scope.storage_imageBox.push({src: $host.file_url + '/image/' + $scope.storage_image[i].url,time:$scope.storage_image[i].timez,user:$scope.storage_image[i].name});
                 }
-                console.log($scope.storage_imageBox);
+                // console.log($scope.storage_imageBox);
                 // $scope.imgArr.push({src:$host.file_url+'/image/'+imageId});
             } else {
                 swal(data.msg, "", "error")

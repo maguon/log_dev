@@ -13,7 +13,6 @@ storage_router.config(['$stateProvider',"$urlRouterProvider",function($stateProv
     //     templateUrl: '/view/index.html',
     //     controller:'indexController'
     // });
-
     $urlRouterProvider.when("","/storage_index");
     $stateProvider
         .state("storage_index", {  //路由状态

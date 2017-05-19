@@ -225,11 +225,7 @@ storageCar_detailsController.controller("storageCar_detailsController", [ "$stat
 
     // 返回
     $scope.return = function () {
-        if ($stateParams.from == "storage_car_map") {
-            $state.go($stateParams.from, {id: $scope.self_car.storage_id, form: "storageStore"}, {reload: true})
-        } else {
-            $state.go($stateParams.from, {}, {reload: true})
-        }
+            $state.go($stateParams.from, {id: $scope.self_car.storage_id, form: $stateParams._form}, {reload: true})
     };
 
     // 查看详情
