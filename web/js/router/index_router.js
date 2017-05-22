@@ -143,6 +143,11 @@ index_router.config(['$stateProvider',"$urlRouterProvider",function($stateProvid
             templateUrl: "/view/storage/storage_details.html",
             controller:"storageCar_detailsController"
         })
+        .state("storageCar_details_", {
+            url:"/storageCar_details/{id}/vin/{vin}?from",
+            templateUrl: "/view/storage/storage_details.html",
+            controller:"storageCar_detailsController"
+        })
         .state("storage_car_map", {
             url:"/storage_car_map/{id}?form",
             templateUrl: "/view/storage/storage_car_map.html",
