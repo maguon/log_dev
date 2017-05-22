@@ -144,9 +144,6 @@ international_trade_directive.directive("truckUpload", function () {
                 }
             })
         }
-        // link:function (ele,attr) {
-        //
-        // }
     }
 });
 international_trade_directive.directive("carSelect", function () {

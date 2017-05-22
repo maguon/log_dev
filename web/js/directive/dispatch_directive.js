@@ -146,9 +146,6 @@ dispatchDirective.directive("truckUpload", function () {
                 }
             })
         }
-        // link:function (ele,attr) {
-        //
-        // }
     }
 });
 dispatchDirective.directive("carSelect", function () {

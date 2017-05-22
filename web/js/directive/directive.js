@@ -127,9 +127,6 @@ adminDirective.directive("truckUpload", function () {
                 }
             })
         }
-        // link:function (ele,attr) {
-        //
-        // }
     }
 });
 adminDirective.directive("carSelect", function () {
@@ -144,7 +141,7 @@ adminDirective.directive('myRepeatDirective', function () {
     return function (scope, element, attrs) {
         angular.element(element).css('color', 'blue');
         if (scope.$last) {
-            window.alert("im the last!");
+
         }
     };
 })
