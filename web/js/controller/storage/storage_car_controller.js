@@ -106,10 +106,10 @@ Storage_carController.controller("Storage_carController", ["$scope", "$rootScope
     });
     $scope.newStorage_car = function () {
         $scope.submitted = false;
-        $('ul.tabs li').removeClass("active");
-        $(".tab_box").removeClass("active");
-        $(".tab_box").hide();
-        $('ul.tabs li.test1').addClass("active");
+        $('.tabWrap .tab').removeClass("active");
+        $(".tab_box ").removeClass("active");
+        $(".tab_box ").hide();
+        $('.tabWrap .test1').addClass("active");
         $("#test1").addClass("active");
         $("#test1").show();
         $scope.vin = "";

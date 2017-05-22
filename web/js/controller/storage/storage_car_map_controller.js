@@ -105,10 +105,11 @@ storage_car_mapController.controller("storage_car_mapController", ["$state", "$r
         $scope.private_col = col;
         $scope.parking_id = p_id;
         $scope.submitted = false;
-        $('ul.tabs li').removeClass("active");
-        $(".tab_box").removeClass("active");
-        $(".tab_box").hide();
-        $('ul.tabs li.test1').addClass("active");
+
+        $('.tabWrap .tab').removeClass("active");
+        $(".tab_box ").removeClass("active");
+        $(".tab_box ").hide();
+        $('.tabWrap .test1').addClass("active");
         $("#test1").addClass("active");
         $("#test1").show();
         $scope.vin = "";

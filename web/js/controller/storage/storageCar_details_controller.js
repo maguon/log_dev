@@ -83,8 +83,9 @@ storageCar_detailsController.controller("storageCar_detailsController", [ "$stat
                         if($scope.storage_imageBox.length!=0){
                             viewer.destroy();
                         }
-                        $scope.storage_imageBox.push({src: $host.file_url + '/image/' + imageId});
-
+                        var nowDate=moment(new Date()).format("YYYY-DD-MM hh:ss");
+                        // $scope.storage_imageBox.push({src: $host.file_url + '/image/' + imageId});
+                        $scope.storage_imageBox.push({src: $host.file_url + '/image/' + imageId,time:nowDate,user:$basic.getSession($basic.USER_NAME)});
 
 
                         // console.log($scope.storage_imageBox);
