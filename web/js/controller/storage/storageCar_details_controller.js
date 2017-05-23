@@ -270,7 +270,7 @@ storageCar_detailsController.controller("storageCar_detailsController", [ "$stat
             }
         });
         $basic.get($host.api_url + "/user/" + userId + "/car?carId=" + val + '&active=1').then(function (data) {
-            if (data.success == true) {
+            if (data.success == true && data.result.length>0) {
                 $scope.modelId = data.result[0].model_id;
                 $scope.self_car = data.result[0];
                 // modelID赋值
@@ -278,6 +278,7 @@ storageCar_detailsController.controller("storageCar_detailsController", [ "$stat
                     // console.log($scope.look_make_id);
                     $scope.changeMakeId($scope.look_make_id);
                 $scope.look_model_id = $scope.self_car.model_id,
+                    // console.log($scope.self_car.pro_date);
                 $scope.look_create_time = moment($scope.self_car.pro_date).format('YYYY-MM-DD');
                 $scope.look_storageName = $scope.self_car.storage_name + "  " + $scope.self_car.row + "排" + $scope.self_car.col + "列";
 
@@ -304,7 +305,7 @@ storageCar_detailsController.controller("storageCar_detailsController", [ "$stat
             "engineNum": $scope.self_car.engine_num,
             "remark": $scope.self_car.remark
         };
-        console.log(obj, id);
+        // console.log(obj, id);
         if (isValid) {
             // 修改计划出库时间
             $basic.put($host.api_url + "/user/" + userId + "/carStorageRel/" + r_id + "/planOutTime", {
@@ -313,7 +314,7 @@ storageCar_detailsController.controller("storageCar_detailsController", [ "$stat
                 console.log(data)
             });
             // 修改仓库信息
-            $basic.put($host.api_url + "/user/" + userId + "/car/" + id, obj).then(function (data) {
+            $basic.put($host.api_url + "/user/" + userId + "/car/" + id, $basic.removeNullProps(obj)).then(function (data) {
                 if (data.success == true) {
                     swal("修改成功", "", "success");
                     // $("#look_StorageCar").modal("close");
