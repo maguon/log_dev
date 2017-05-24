@@ -33,7 +33,7 @@ settingController.controller("settingWH_controller", ["$scope", "$host", "$basic
     // 整体查询
     var searchAll = function () {
         $basic.get($host.api_url + "/storage").then(function (data) {
-            if (data.success == true) {
+            if (data.success == true&&data.result.length>0) {
                 $scope.storage = data.result;
             } else {
                 swal(data.msg, "", "error");
@@ -80,7 +80,7 @@ settingController.controller("settingWH_controller", ["$scope", "$host", "$basic
         $(".modal").modal();
         $("#look_Storage").modal("open");
         $basic.get($host.api_url + "/storage?storageId=" + id).then(function (data) {
-            if (data.success == true) {
+            if (data.success == true&&data.result.length>0) {
                 $scope.selfStorage = data.result[0];
             } else {
                 swal(data.msg, "", "error");
@@ -165,7 +165,7 @@ settingController.controller("settingT_controller", ["$scope", "$host", "$basic"
     // 汽车品牌
     $scope.searchAll = function () {
         $basic.get($host.api_url + "/carMake/").then(function (data) {
-            if (data.success == true) {
+            if (data.success == true&&data.result.length>0) {
                 // console.log(data.result);
                 $scope.brand = data.result;
             } else {
@@ -222,7 +222,7 @@ settingController.controller("settingT_controller", ["$scope", "$host", "$basic"
 
     $scope.search_carModel = function (id) {
         $basic.get($host.api_url + "/carMake/" + id + "/carModel").then(function (data) {
-            if (data.success == true) {
+            if (data.success == true&&data.result.length>0) {
                 // console.log(data.result);
                 $scope.brand_model = data.result;
 
@@ -393,7 +393,7 @@ settingController.controller("setting_user_controller", ["$basic","$config_varia
     // 搜索所有查询
     var searchAll = function () {
         $basic.get($host.api_url + "/admin/" + adminId + "/user").then(function (data) {
-            if (data.success == true) {
+            if (data.success == true&&data.result.length>0) {
                 // console.log(data)
                 $scope.operator = data.result;
 
@@ -459,7 +459,7 @@ settingController.controller("setting_user_controller", ["$basic","$config_varia
         $(".modal").modal();
         $("#look_Operator").modal("open");
         $basic.get($host.api_url + "/admin/" + adminId + "/user?userId=" + id).then(function (data) {
-            if (data.success == true) {
+            if (data.success == true&&data.result.length>0) {
                 $scope.look_operation = data.result[0];
                 // console.log($scope.look_operation)
             } else {

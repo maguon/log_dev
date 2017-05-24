@@ -19,7 +19,7 @@ storage_setting_car_controller.controller("storage_setting_car_controller", ["$s
     // 汽车品牌
     $scope.searchAll = function () {
         $basic.get($host.api_url + "/carMake/").then(function (data) {
-            if (data.success == true) {
+            if (data.success == true&&data.result.length>0) {
                 // console.log(data.result);
                 $scope.brand = data.result;
             } else {
@@ -65,7 +65,7 @@ storage_setting_car_controller.controller("storage_setting_car_controller", ["$s
 
     $scope.search_carModel = function (id) {
         $basic.get($host.api_url + "/carMake/" + id + "/carModel").then(function (data) {
-            if (data.success == true) {
+            if (data.success == true&&data.result.length>0) {
                 // console.log(data.result);
                 $scope.brand_model = data.result;
 

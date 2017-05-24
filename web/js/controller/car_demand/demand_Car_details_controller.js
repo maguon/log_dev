@@ -85,7 +85,7 @@ demand_Car_details_controller.controller("demand_Car_details_controller", [ "$st
         $scope.Picture_carId = val;
         $scope.vin = vin;
         $basic.get($host.record_url + "/user/" + userId + "/car/" + val + "/record").then(function (data) {
-            if (data.success == true) {
+            if (data.success == true&&data.result.length>0) {
                 // console.log(data);
                 $scope.operating_record = data.result[0];
                 $scope.comment = $scope.operating_record.comment;
@@ -100,7 +100,7 @@ demand_Car_details_controller.controller("demand_Car_details_controller", [ "$st
             }
         });
         $basic.get($host.api_url + "/user/" + userId + "/car?carId=" + val + '&active=1').then(function (data) {
-            if (data.success == true) {
+            if (data.success == true&&data.result.length>0) {
                 $scope.modelId = data.result[0].model_id;
                 $scope.self_car = data.result[0];
                 // modelID赋值

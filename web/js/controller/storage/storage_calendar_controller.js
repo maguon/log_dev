@@ -16,7 +16,7 @@ storage_working_calendarController.controller("storage_working_calendarControlle
     $scope.today_week = weekday[date.getDay()];
 
     $basic.get($host.api_url + "/storageDate" + "?dateStart=" + now_date + "&dateEnd=" + now_date).then(function (data) {
-        if (data.success == true) {
+        if (data.success == true&&data.result.length>0) {
             $scope.store_storage = data.result;
             $scope.storage_id = $scope.store_storage[0].id;
             search($scope.storage_id)
@@ -47,7 +47,7 @@ storage_working_calendarController.controller("storage_working_calendarControlle
                 var eventArray = [];
 
                 $basic.get($host.api_url + "/storageDate?storageId=" + storage_id + "&dateStart=" + start + "&dateEnd=" + end).then(function (data) {
-                    if (data.success == true) {
+                    if (data.success == true&&data.result.length>0) {
                         console.log(data);
                         $scope.data = data.result;
                         for (var i  in $scope.data) {
@@ -80,7 +80,7 @@ storage_working_calendarController.controller("storage_working_calendarControlle
         // 当天仓库信息
 
         $basic.get($host.api_url + "/storageDate?storageId=" + storage_id + "&dateStart=" + now_date + "&dateEnd=" + now_date).then(function (data) {
-            if (data.success == true) {
+            if (data.success == true&&data.result.length>0) {
                 $scope.today_data = data.result[0];
 
 

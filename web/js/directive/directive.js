@@ -42,7 +42,7 @@ adminDirective.directive('navigator', function () {
                 $basic.setHeader($basic.COMMON_AUTH_NAME,  $basic.getSession($basic.COMMON_AUTH_NAME) );
                 $basic.get($host.api_url + "/admin/" + $basic.getSession($basic.USER_ID)).then(function (data) {
                     // $(".shadeDowWrap").hide();
-                    if (data.success == true) {
+                    if (data.success == true&&data.result.length>0) {
                         $scope.userName = data.result[0].user_name;
                         $basic.setSession($basic.USER_NAME, $scope.userName);
                         $basic.setHeader($basic.USER_NAME, $scope.userName);

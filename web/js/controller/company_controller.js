@@ -23,10 +23,9 @@ Company_controller.controller("Company_controller", ['$rootScope', '$scope', '$b
 
         $basic.get($host.api_url + "/user/" + userId + "/company" + $urlMethod.urlMethod(obj)).then(function (data) {
             // $(".shadeDowWrap").hide();
-            if (data.success == true) {
-                console.log(data.result);
+            if (data.success == true&&data.result.length>0) {
+                // console.log(data.result);
                 $scope.Company = data.result;
-                // console.log($scope.Company);
             } else {
                 swal(data.msg, "", "error");
             }
@@ -36,9 +35,8 @@ Company_controller.controller("Company_controller", ['$rootScope', '$scope', '$b
     var searchAll = function () {
         $basic.get($host.api_url + "/user/" + userId + "/company", {}).then(function (data) {
             // $(".shadeDowWrap").hide();
-            if (data.success == true) {
+            if (data.success == true&&data.result.length>0) {
                 $scope.Company = data.result;
-                // console.log($scope.Company);
             } else {
                 swal(data.msg, "", "error");
             }
@@ -47,8 +45,7 @@ Company_controller.controller("Company_controller", ['$rootScope', '$scope', '$b
         // 获取城市信息
         $basic.get($host.api_url + "/user/" + userId + "/city", {}).then(function (data) {
             // $(".shadeDowWrap").hide();
-            if (data.success == true) {
-                // console.log(data);
+            if (data.success == true&&data.result.length>0) {
                 $scope.citys = data.result;
             } else {
                 swal(data.msg, "", "error");
@@ -112,7 +109,7 @@ Company_controller.controller("Company_controller", ['$rootScope', '$scope', '$b
 
         $basic.get($host.api_url + "/user/" + userId + "/company?companyId=" + id, {}).then(function (data) {
             // $(".shadeDowWrap").hide();
-            if (data.success == true) {
+            if (data.success == true&&data.result.length>0) {
                 $scope.company = data.result[0];
                 // console.log($scope.company.cooperation_time)
                 companyMsg = $scope.company;
@@ -125,7 +122,7 @@ Company_controller.controller("Company_controller", ['$rootScope', '$scope', '$b
         // 头车数量
         $basic.get($host.api_url + "/user/" + userId + "/company/" + id + "/firstCount", {}).then(function (data) {
             // $(".shadeDowWrap").hide();
-            if (data.success == true) {
+            if (data.success == true&&data.result.length>0) {
                 $scope.firstCount = data.result[0].firstCount;
             } else {
                 swal(data.msg, "", "error");

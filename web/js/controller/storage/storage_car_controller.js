@@ -47,7 +47,7 @@ Storage_carController.controller("Storage_carController", ["$scope", "$rootScope
         }
         // console.log(reqUrl);
         $basic.get(reqUrl).then(function (data) {
-            if (data.success == true) {
+            if (data.success == true&&data.result.length>0) {
                 $scope.storage_car_box = data.result;
                 $scope.storage_car = $scope.storage_car_box.slice(0, 10);
                 if ($scope.start > 0) {
@@ -90,7 +90,7 @@ Storage_carController.controller("Storage_carController", ["$scope", "$rootScope
     $scope.search_relStatus = 1;
     // 车辆品牌查询
     $basic.get($host.api_url + "/carMake").then(function (data) {
-        if (data.success == true) {
+        if (data.success == true&&data.result.length>0) {
             $scope.makecarName = data.result;
         } else {
             swal(data.msg, "", "error");
@@ -98,7 +98,7 @@ Storage_carController.controller("Storage_carController", ["$scope", "$rootScope
     });
     // 车库查询
     $basic.get($host.api_url + "/storage").then(function (data) {
-        if (data.success == true) {
+        if (data.success == true&&data.result.length>0) {
             $scope.storageName = data.result;
         } else {
             swal(data.msg, "", "error");
@@ -194,7 +194,7 @@ Storage_carController.controller("Storage_carController", ["$scope", "$rootScope
     $scope.changeStorageId = function (val) {
         if (val) {
             $basic.get($host.api_url + "/storageParking?storageId=" + val).then(function (data) {
-                if (data.success == true) {
+                if (data.success == true&&data.result.length>0) {
                     $scope.storageParking = data.result;
 
                     $scope.parkingArray = service_storage_parking.storage_parking($scope.storageParking);
@@ -228,7 +228,7 @@ Storage_carController.controller("Storage_carController", ["$scope", "$rootScope
             } else {
                 $scope.curruntId = val;
                 $basic.get($host.api_url + "/carMake/" + val + "/carModel").then(function (data) {
-                    if (data.success == true) {
+                    if (data.success == true&&data.result.length>0) {
                         $scope.carModelName = data.result;
 
                     } else {
@@ -319,7 +319,7 @@ Storage_carController.controller("Storage_carController", ["$scope", "$rootScope
         $scope.now_col = col;
         $scope.move_carId = id;
         $basic.get($host.api_url + "/storageParking?storageId=" + val).then(function (data) {
-            if (data.success == true) {
+            if (data.success == true&&data.result.length>0) {
                 $scope.self_storageParking = data.result;
                 $scope.garageParkingArray = service_storage_parking.storage_parking($scope.self_storageParking);
                 $scope.ageParkingCol = $scope.garageParkingArray[0].col
@@ -365,7 +365,7 @@ Storage_carController.controller("Storage_carController", ["$scope", "$rootScope
             $(".move_box").show();
             $(".move_box").attr("flag", false);
             $basic.get($host.api_url + "/storageParking?storageId=" + val).then(function (data) {
-                if (data.success == true) {
+                if (data.success == true&&data.result.length>0) {
                     $scope.move_storageParking = data.result;
                     $scope.move_parkingArray = service_storage_parking.storage_parking($scope.move_storageParking);
                 }

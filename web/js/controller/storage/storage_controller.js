@@ -13,7 +13,7 @@ storage_storeController.controller("storage_storeController", ["$scope", "$host"
         };
 
         $basic.get($host.api_url + "/storageDate?" + $basic.objToUrl(obj)).then(function (data) {
-            if (data.success == true) {
+            if (data.success == true&&data.result.length>0) {
                 $scope.store_storage = data.result;
             }
 
@@ -23,7 +23,7 @@ storage_storeController.controller("storage_storeController", ["$scope", "$host"
 
     // 车辆品牌查询
     $basic.get($host.api_url + "/carMake").then(function (data) {
-        if (data.success == true) {
+        if (data.success == true&&data.result.length>0) {
             $scope.makecarName = data.result;
         } else {
             swal(data.msg, "", "error");
@@ -39,7 +39,7 @@ storage_storeController.controller("storage_storeController", ["$scope", "$host"
         } else {
             $scope.curruntId = val;
             $basic.get($host.api_url + "/carMake/" + val + "/carModel").then(function (data) {
-                if (data.success == true) {
+                if (data.success == true&&data.result.length>0) {
                     $scope.carModelName = data.result;
 
                 } else {
@@ -56,7 +56,7 @@ storage_storeController.controller("storage_storeController", ["$scope", "$host"
     // 存放位置联动查询--行
     $scope.changeStorageId = function (val) {
         $basic.get($host.api_url + "/storageParking?storageId=" + val).then(function (data) {
-            if (data.success == true) {
+            if (data.success == true&&data.result.length>0) {
                 $scope.storageParking = data.result;
 
                 $scope.parkingArray = service_storage_parking.storage_parking($scope.storageParking);
@@ -76,7 +76,7 @@ storage_storeController.controller("storage_storeController", ["$scope", "$host"
     $scope.new_garage_parking = function (storage_name, storage_id, row, col, p_id) {
         // 车辆品牌查询
         $basic.get($host.api_url + "/carMake").then(function (data) {
-            if (data.success == true) {
+            if (data.success == true&&data.result.length>0) {
                 $scope.makecarName = data.result;
                 // console.log($scope.makecarName)
             } else {
@@ -194,7 +194,7 @@ storage_storeController.controller("storage_storeController", ["$scope", "$host"
                 }).then(function (data) {
                     if (data.success == true) {
                         $scope.imgArr.push({src: $host.file_url + '/image/' + imageId});
-                        console.log($scope.imgArr);
+                        // console.log($scope.imgArr);
                     }
                 });
                 // .appendChild(div)
