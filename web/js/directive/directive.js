@@ -6,7 +6,14 @@ adminDirective.directive('header', function () {
         transclude: false,
         restrict: 'E',
         controller: function ($scope, $element, $rootScope, $basic) {
-
+            $("#menu_link").sideNav({
+                menuWidth: 280, // Default is 300
+                edge: 'left', // Choose the horizontal origin
+                closeOnClick: true, // Closes side-nav on <a> clicks, useful for Angular/Meteor
+                // draggable: true // Choose whether you can drag to open on touch screens
+            });
+            // $(".button-collapse").sideNav();
+            $('.collapsible').collapsible();
             $scope.logOut = function () {
                 swal({
                     title: "注销账号",
@@ -58,22 +65,22 @@ adminDirective.directive('navigator', function () {
         }
         }
 });
-adminDirective.directive("sideNav",function () {
-    return{
-        restrict:"A",
-        // priority:5,
-        link:function () {
-            $("#menu_link").sideNav({
-                menuWidth: 280, // Default is 300
-                edge: 'left', // Choose the horizontal origin
-                closeOnClick: true, // Closes side-nav on <a> clicks, useful for Angular/Meteor
-                // draggable: true // Choose whether you can drag to open on touch screens
-            });
-            // $(".button-collapse").sideNav();
-            $('.collapsible').collapsible();
-        }
-    }
-})
+// adminDirective.directive("sideNav",function () {
+//     return{
+//         restrict:"A",
+//         // priority:5,
+//         link:function () {
+//             $("#menu_link").sideNav({
+//                 menuWidth: 280, // Default is 300
+//                 edge: 'left', // Choose the horizontal origin
+//                 closeOnClick: true, // Closes side-nav on <a> clicks, useful for Angular/Meteor
+//                 // draggable: true // Choose whether you can drag to open on touch screens
+//             });
+//             // $(".button-collapse").sideNav();
+//             $('.collapsible').collapsible();
+//         }
+//     }
+// })
 
 adminDirective.directive("carMsg", function () {
     return {

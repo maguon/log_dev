@@ -9,6 +9,14 @@ storageDirective.directive('header', function () {
         transclude: false,
         restrict: 'E',
         controller: function ($scope, $element, $rootScope, $basic,$host) {
+            $("#menu_link").sideNav({
+                menuWidth: 280, // Default is 300
+                edge: 'left', // Choose the horizontal origin
+                closeOnClick: true, // Closes side-nav on <a> clicks, useful for Angular/Meteor
+                // draggable: true // Choose whether you can drag to open on touch screens
+            });
+            // $(".button-collapse").sideNav();
+            $('.collapsible').collapsible();
             var userid=$basic.getSession($basic.USER_ID);
             $scope.amend_user=function () {
                 $(".modal").modal();
@@ -75,14 +83,7 @@ storageDirective.directive('storageNavigator', function () {
                         swal(data.msg, "", "error");
                     }
                 });
-                $("#menu_link").sideNav({
-                    menuWidth: 280, // Default is 300
-                    edge: 'left', // Choose the horizontal origin
-                    closeOnClick: true, // Closes side-nav on <a> clicks, useful for Angular/Meteor
-                    // draggable: true // Choose whether you can drag to open on touch screens
-                });
-                // $(".button-collapse").sideNav();
-                $('.collapsible').collapsible();
+
             }else {
                 window.location="./common_login.html"
             }
