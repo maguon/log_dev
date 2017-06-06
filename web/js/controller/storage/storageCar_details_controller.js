@@ -43,10 +43,12 @@ storageCar_detailsController.controller("storageCar_detailsController", [ "$stat
     $scope.imgArr = [];
     // 预览详情照片
     $scope.storage_imageBox = [];
+    // 照片索引
+    $scope.storage_image_i = [];
 
     $scope.uploadBrandImage = function (dom) {
         var filename = $(dom).val();
-        console.log($(dom).val());
+        // console.log($(dom).val());
         if ((/\.(jpe?g|png|gif|svg|bmp|tiff?)$/i).test(filename)) {
             //check size
             //$file_input[0].files[0].size
@@ -58,7 +60,7 @@ storageCar_detailsController.controller("storageCar_detailsController", [ "$stat
             }
 
             if ($(dom)[0].files[0].size > max_size) {
-                swal('图片文件最大: ' + max_size_str, "", "error");
+                swal('图片文件最大:' + max_size_str, "", "error");
                 return false;
             }
 
@@ -70,7 +72,7 @@ storageCar_detailsController.controller("storageCar_detailsController", [ "$stat
         $basic.formPost($(dom).parent().parent(), $host.file_url + '/user/' + userId + '/image?imageType=4', function (data) {
 
             if (data.success) {
-                console.log(data, $scope.Picture_carId);
+                // console.log(data, $scope.Picture_carId);
                 var imageId = data.imageId;
                 $basic.post($host.record_url + "/car/" + $scope.Picture_carId + "/vin/" + $scope.vin + "/storageImage", {
                     "username": $basic.getSession($basic.USER_NAME),
@@ -80,12 +82,15 @@ storageCar_detailsController.controller("storageCar_detailsController", [ "$stat
                 }).then(function (data) {
 
                     if (data.success == true) {
+                        $scope._id=data.result._id;
+                        // console.log($scope._id);
                         if($scope.storage_imageBox.length!=0){
                             viewer.destroy();
                         }
                         var nowDate=moment(new Date()).format("YYYY-DD-MM hh:ss");
+                        $scope.storage_image_i.push($host.file_url + '/image/' + imageId);
                         // $scope.storage_imageBox.push({src: $host.file_url + '/image/' + imageId});
-                        $scope.storage_imageBox.push({src: $host.file_url + '/image/' + imageId,time:nowDate,user:$basic.getSession($basic.USER_NAME)});
+                        $scope.storage_imageBox.push({src: $host.file_url + '/image/' + imageId,record_id:$scope._id,time:nowDate,user:$basic.getSession($basic.USER_NAME)});
 
 
                         // console.log($scope.storage_imageBox);
@@ -203,6 +208,7 @@ storageCar_detailsController.controller("storageCar_detailsController", [ "$stat
         $('ul.tabWrap li.look_car_img ').addClass("active");
         $("#look_car_img").addClass("active");
         $("#look_car_img").show();
+
     };
     $scope.look_msg = function () {
         $('ul.tabWrap li').removeClass("active");
@@ -236,7 +242,8 @@ storageCar_detailsController.controller("storageCar_detailsController", [ "$stat
         $scope.imgArr = [];
         // 预览详情照片
         $scope.storage_imageBox = [];
-
+        // 照片索引
+        $scope.storage_image_i = [];
         // console.log(val);
         // $(".modal").modal({
         //     // dismissible: false
@@ -260,8 +267,10 @@ storageCar_detailsController.controller("storageCar_detailsController", [ "$stat
                 $scope.operating_record = data.result[0];
                 $scope.comment = $scope.operating_record.comment;
                 $scope.storage_image = $scope.operating_record.storage_image;
+                $scope.record_id=$scope.operating_record._id;
                 for (var i in $scope.storage_image) {
-                    $scope.storage_imageBox.push({src: $host.file_url + '/image/' + $scope.storage_image[i].url,time:$scope.storage_image[i].timez,user:$scope.storage_image[i].name});
+                    $scope.storage_image_i.push($host.file_url + '/image/' + $scope.storage_image[i].url);
+                    $scope.storage_imageBox.push({src: $host.file_url + '/image/' + $scope.storage_image[i].url,record_id:$scope.record_id,time:$scope.storage_image[i].timez,user:$scope.storage_image[i].name});
                 }
 
                 // $scope.imgArr.push({src:$host.file_url+'/image/'+imageId});
@@ -269,6 +278,7 @@ storageCar_detailsController.controller("storageCar_detailsController", [ "$stat
                 swal(data.msg, "", "error")
             }
         });
+        
         $basic.get($host.api_url + "/user/" + userId + "/car?carId=" + val + '&active=1').then(function (data) {
             if (data.success == true && data.result.length>0) {
                 $scope.modelId = data.result[0].model_id;
@@ -286,7 +296,7 @@ storageCar_detailsController.controller("storageCar_detailsController", [ "$stat
                     }
 
 
-                $scope.look_storageName = $scope.self_car.storage_name + "  " + $scope.self_car.row + "排" + $scope.self_car.col + "列";
+                $scope.look_storageName = $scope.self_car.storage_name + "" + $scope.self_car.row + "排" + $scope.self_car.col + "列";
 
                 // 车辆id
                 $scope.look_car_id = $scope.self_car.id;
@@ -294,6 +304,36 @@ storageCar_detailsController.controller("storageCar_detailsController", [ "$stat
                 swal(data.msg, "", "error")
             }
         })
+
+    };
+    // 删除照片
+    $scope.delete_img=function (record_id,src) {
+        swal({
+                title: "确认删除该照片？",
+                text: "",
+                type: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#DD6B55",
+                confirmButtonText: "确定",
+                cancelButtonText: "取消",
+                closeOnConfirm: false
+            },
+            function () {
+            // console.log(src);
+                var url_array=src.split("/");
+                var url=url_array[url_array.length-1];
+                $basic.delete($host.record_url+"/user/"+userId+"/record/"+record_id+"/image/"+url).then(function (data) {
+                    if(data.success==true){
+                        var i=$scope.storage_image_i.indexOf(src);
+                        // console.log(i);
+                        $scope.storage_imageBox.splice(i,1);
+                        $scope.storage_image_i.splice(i,1);
+                        swal("删除成功!", "", "success");
+                        // $scope.lookStorageCar(data.result.id,data.result.vin)
+                    }
+                })
+            }
+        )
 
     };
     $scope.lookStorageCar(val, vin);

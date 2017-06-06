@@ -2,6 +2,8 @@
  * Created by ASUS on 2017/5/15.
  */
 var publicDirective = angular.module("publicDirective", []);
+
+
 publicDirective.directive('percent', function () {
     return {
         link: function (scope, element, attr) {

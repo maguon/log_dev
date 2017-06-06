@@ -8,69 +8,57 @@ storageDirective.directive('header', function () {
         replace: true,
         transclude: false,
         restrict: 'E',
-        controller: function ($scope, $element, $rootScope, $basic,$host) {
-            $("#menu_link").sideNav({
-                menuWidth: 280, // Default is 300
-                edge: 'left', // Choose the horizontal origin
-                closeOnClick: true, // Closes side-nav on <a> clicks, useful for Angular/Meteor
-                // draggable: true // Choose whether you can drag to open on touch screens
-            });
-            // $(".button-collapse").sideNav();
-            $('.collapsible').collapsible();
-            var userid=$basic.getSession($basic.USER_ID);
-            $scope.amend_user=function () {
-                $(".modal").modal();
-                $("#user_modal").modal("open");
-            };
-            $scope.amend_user_submit=function (valid) {
-                $scope.submitted=true;
-                if(valid&&$scope.user_new_password==$scope.user_confirm_password){
-                    var obj={
-                        "originPassword":$scope.user_old_password,
-                        "newPassword": $scope.user_new_password
-                    };
-                    $basic.put($host.api_url + "/user/" + userid + "/password", obj).then(function (data) {
-                        if (data.success == true) {
-                            swal("密码重置成功", "", "success");
-                            $("#user_modal").modal("close");
-                        } else {
-                            swal(data.msg, "", "error");
-                        }
-                    })
-                }
-            };
-            $scope.logOut = function () {
-                swal({
-                    title: "注销账号",
-                    text: "是否确认退出登录",
-                    type: "warning",
-                    showCancelButton: true,
-                    confirmButtonColor: "#DD6B55",
-                    confirmButtonText: "确认",
-                    cancelButtonText: "取消",
-                    closeOnConfirm: false
-                }, function () {
-                    $basic.removeSession($basic.COMMON_AUTH_NAME);
-                    $basic.removeSession($basic.USER_ID);
-                    $basic.removeSession($basic.USER_TYPE);
-                    $basic.removeSession($basic.USER_NAME);
-                    window.location.href = '/common_login.html';
-                });
-
-            }
-        }
-    };
-});
-
-storageDirective.directive('storageNavigator', function () {
-    return {
-        templateUrl: '/view/storage/storage_navigator.html',
-        replace: true,
-        transclude: false,
-        restrict: 'E',
-        controller: function ($scope, $basic,$config_variable, $host, $element, $rootScope) {
+        controller: function ($scope, $element, $rootScope, $basic,$host,$config_variable) {
             if ($basic.checkUser($config_variable.userTypes.storageUser.type)) {
+                $("#menu_link").sideNav({
+                    menuWidth: 280, // Default is 300
+                    edge: 'left', // Choose the horizontal origin
+                    closeOnClick: true, // Closes side-nav on <a> clicks, useful for Angular/Meteor
+                    // draggable: true // Choose whether you can drag to open on touch screens
+                });
+                // $(".button-collapse").sideNav();
+                $('.collapsible').collapsible();
+                var userid=$basic.getSession($basic.USER_ID);
+                $scope.amend_user=function () {
+                    $(".modal").modal();
+                    $("#user_modal").modal("open");
+                };
+                $scope.amend_user_submit=function (valid) {
+                    $scope.submitted=true;
+                    if(valid&&$scope.user_new_password==$scope.user_confirm_password){
+                        var obj={
+                            "originPassword":$scope.user_old_password,
+                            "newPassword": $scope.user_new_password
+                        };
+                        $basic.put($host.api_url + "/user/" + userid + "/password", obj).then(function (data) {
+                            if (data.success == true) {
+                                swal("密码重置成功", "", "success");
+                                $("#user_modal").modal("close");
+                            } else {
+                                swal(data.msg, "", "error");
+                            }
+                        })
+                    }
+                };
+                $scope.logOut = function () {
+                    swal({
+                        title: "注销账号",
+                        text: "是否确认退出登录",
+                        type: "warning",
+                        showCancelButton: true,
+                        confirmButtonColor: "#DD6B55",
+                        confirmButtonText: "确认",
+                        cancelButtonText: "取消",
+                        closeOnConfirm: false
+                    }, function () {
+                        $basic.removeSession($basic.COMMON_AUTH_NAME);
+                        $basic.removeSession($basic.USER_ID);
+                        $basic.removeSession($basic.USER_TYPE);
+                        $basic.removeSession($basic.USER_NAME);
+                        window.location.href = '/common_login.html';
+                    });
 
+                }
                 $basic.setHeader($basic.USER_TYPE, $basic.getSession($basic.USER_TYPE));
                 $basic.setHeader($basic.COMMON_AUTH_NAME,  $basic.getSession($basic.COMMON_AUTH_NAME) );
                 $basic.get($host.api_url + "/user/" + $basic.getSession($basic.USER_ID)).then(function (data) {
@@ -88,10 +76,10 @@ storageDirective.directive('storageNavigator', function () {
                 window.location="./common_login.html"
             }
 
-
         }
     };
 });
+
 storageDirective.directive("carMsg", function () {
     return {
         restrict: 'A',
