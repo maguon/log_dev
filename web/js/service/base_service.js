@@ -91,9 +91,6 @@ baseService.factory("$config_variable", function () {
         international_trade : {type:4,name:"国贸部"}
     };
 
-
-
-    // ]
     _this.user_type={
         storage_type:"2",
         admin_type:"99"

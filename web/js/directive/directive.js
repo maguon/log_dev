@@ -5,44 +5,39 @@ adminDirective.directive('header', function () {
         replace: true,
         transclude: false,
         restrict: 'E',
-        controller: function ($scope, $element, $rootScope, $basic) {
-
-            $scope.logOut = function () {
-                swal({
-                    title: "注销账号",
-                    text: "是否确认退出登录",
-                    type: "warning",
-                    showCancelButton: true,
-                    confirmButtonColor: "#DD6B55",
-                    confirmButtonText: "确认",
-                    cancelButtonText: "取消",
-                    closeOnConfirm: false
-                }, function () {
-                    $basic.removeSession($basic.COMMON_AUTH_NAME);
-                    $basic.removeSession($basic.USER_ID);
-                    $basic.removeSession($basic.USER_TYPE);
-                    $basic.removeSession($basic.USER_NAME);
-                    window.location.href = '/login.html';
-                });
-            }
-        }
-    };
-});
-
-adminDirective.directive('navigator', function () {
-    return {
-        templateUrl: '/view/navigator.html',
-        priority:10,
-        replace: true,
-        transclude: false,
-        restrict: 'E',
-        controller: function ($scope, $basic, $host, $element, $rootScope) {
+        controller: function ($scope, $element, $rootScope, $basic,$host) {
             if ($basic.checkUser("99")) {
+                $("#menu_link").sideNav({
+                    menuWidth: 280, // Default is 300
+                    edge: 'left', // Choose the horizontal origin
+                    closeOnClick: true, // Closes side-nav on <a> clicks, useful for Angular/Meteor
+                    // draggable: true // Choose whether you can drag to open on touch screens
+                });
+                // $(".button-collapse").sideNav();
+                $('.collapsible').collapsible();
+                $scope.logOut = function () {
+                    swal({
+                        title: "注销账号",
+                        text: "是否确认退出登录",
+                        type: "warning",
+                        showCancelButton: true,
+                        confirmButtonColor: "#DD6B55",
+                        confirmButtonText: "确认",
+                        cancelButtonText: "取消",
+                        closeOnConfirm: false
+                    }, function () {
+                        $basic.removeSession($basic.COMMON_AUTH_NAME);
+                        $basic.removeSession($basic.USER_ID);
+                        $basic.removeSession($basic.USER_TYPE);
+                        $basic.removeSession($basic.USER_NAME);
+                        window.location.href = '/login.html';
+                    });
+                }
                 $basic.setHeader($basic.USER_TYPE, $basic.getSession($basic.USER_TYPE));
                 $basic.setHeader($basic.COMMON_AUTH_NAME,  $basic.getSession($basic.COMMON_AUTH_NAME) );
                 $basic.get($host.api_url + "/admin/" + $basic.getSession($basic.USER_ID)).then(function (data) {
                     // $(".shadeDowWrap").hide();
-                    if (data.success == true) {
+                    if (data.success == true&&data.result.length>0) {
                         $scope.userName = data.result[0].user_name;
                         $basic.setSession($basic.USER_NAME, $scope.userName);
                         $basic.setHeader($basic.USER_NAME, $scope.userName);
@@ -50,30 +45,31 @@ adminDirective.directive('navigator', function () {
                         swal(data.msg, "", "error");
                     }
                 });
+
             } else {
-            window.location="./login.html"
+                window.location="./login.html"
             }
 
-
         }
-        }
+    };
 });
-adminDirective.directive("sideNav",function () {
-    return{
-        restrict:"A",
-        // priority:5,
-        link:function () {
-            $("#menu_link").sideNav({
-                menuWidth: 280, // Default is 300
-                edge: 'left', // Choose the horizontal origin
-                closeOnClick: true, // Closes side-nav on <a> clicks, useful for Angular/Meteor
-                // draggable: true // Choose whether you can drag to open on touch screens
-            });
-            // $(".button-collapse").sideNav();
-            $('.collapsible').collapsible();
-        }
-    }
-})
+
+// adminDirective.directive("sideNav",function () {
+//     return{
+//         restrict:"A",
+//         // priority:5,
+//         link:function () {
+//             $("#menu_link").sideNav({
+//                 menuWidth: 280, // Default is 300
+//                 edge: 'left', // Choose the horizontal origin
+//                 closeOnClick: true, // Closes side-nav on <a> clicks, useful for Angular/Meteor
+//                 // draggable: true // Choose whether you can drag to open on touch screens
+//             });
+//             // $(".button-collapse").sideNav();
+//             $('.collapsible').collapsible();
+//         }
+//     }
+// })
 
 adminDirective.directive("carMsg", function () {
     return {
@@ -127,9 +123,6 @@ adminDirective.directive("truckUpload", function () {
                 }
             })
         }
-        // link:function (ele,attr) {
-        //
-        // }
     }
 });
 adminDirective.directive("carSelect", function () {
@@ -144,7 +137,7 @@ adminDirective.directive('myRepeatDirective', function () {
     return function (scope, element, attrs) {
         angular.element(element).css('color', 'blue');
         if (scope.$last) {
-            window.alert("im the last!");
+
         }
     };
 })

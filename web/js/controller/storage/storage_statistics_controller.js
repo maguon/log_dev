@@ -45,7 +45,7 @@ storage_statistics_controller.controller("storage_statistics_controller", ['$roo
         month_date_array[1].data = [];
         // 月份数据读取
         $basic.get($host.api_url + "/storageTotalMonth?storageId=" + $scope.storage_id.id + "&start=0&size=" + month_size).then(function (data) {
-            if (data.success == true) {
+            if (data.success == true&&data.result.length>0) {
                 for (var i in data.result) {
                     month.push(data.result[data.result.length - 1 - i].y_month);
                     month_date_array[0].data.push(data.result[data.result.length - 1 - i].total_imports);
@@ -102,7 +102,7 @@ storage_statistics_controller.controller("storage_statistics_controller", ['$roo
 
         // 近几日查询
         $basic.get($host.api_url + "/storageTotalDay?storageId=" + $scope.storage_id.id + "&start=0&size=" + day_size).then(function (data) {
-            if (data.success == true) {
+            if (data.success == true&&data.result.length>0) {
                 for (var i in data.result) {
                     // day.push(data.result[data.result.length - 1 - i].date_id.substr(4,6));
                     var day_filter = data.result[data.result.length - 1 - i].date_id.toString().substr(4, 4);
@@ -161,7 +161,7 @@ storage_statistics_controller.controller("storage_statistics_controller", ['$roo
     }
     // 车库查询
     $basic.get($host.api_url + "/storage").then(function (data) {
-        if (data.success == true) {
+        if (data.success == true&&data.result.length>0) {
             $scope.storageName = data.result;
             console.log($scope.storageName);
             $scope.storage_id = $scope.storageName[0];

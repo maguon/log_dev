@@ -4,13 +4,15 @@
 var storage_car_mapController = angular.module("storage_car_mapController", []);
 storage_car_mapController.controller("storage_car_mapController", ["$state", "$rootScope", "$stateParams", "$config_variable", "service_storage_parking", "$scope", "$host", "$basic", function ( $state, $rootScope, $stateParams, $config_variable, service_storage_parking, $scope, $host, $basic) {
     var val = $stateParams.id;
+    // console.log($stateParams.form);
+    $scope._form=$stateParams.form;
     var data = new Date();
     var now_date = moment(data).format('YYYYMMDD');
     var userId = $basic.getSession($basic.USER_NAME);
     // 到仓储车辆图
     $scope.LookGarage = function (val) {
         $basic.get($host.api_url + "/storageDate?storageId=" + val + "&dateStart=" + now_date + "&dateEnd=" + now_date).then(function (data) {
-            if (data.success == true) {
+            if (data.success == true&&data.result.length>0) {
                 $scope.storage = data.result[0];
                 // console.log($scope.storage)
             }
@@ -18,7 +20,7 @@ storage_car_mapController.controller("storage_car_mapController", ["$state", "$r
         });
 
         $basic.get($host.api_url + "/storageParking?storageId=" + val).then(function (data) {
-            if (data.success == true) {
+            if (data.success == true&&data.result.length>0) {
                 $scope.self_storageParking = data.result;
                 $scope.garageParkingArray = service_storage_parking.storage_parking($scope.self_storageParking);
                 // console.log($scope.garageParkingArray);
@@ -32,7 +34,7 @@ storage_car_mapController.controller("storage_car_mapController", ["$state", "$r
 
     // 车辆品牌查询
     $basic.get($host.api_url + "/carMake").then(function (data) {
-        if (data.success == true) {
+        if (data.success == true&&data.result.length>0) {
             $scope.makecarName = data.result;
         } else {
             swal(data.msg, "", "error");
@@ -48,7 +50,7 @@ storage_car_mapController.controller("storage_car_mapController", ["$state", "$r
         } else {
             $scope.curruntId = val;
             $basic.get($host.api_url + "/carMake/" + val + "/carModel").then(function (data) {
-                if (data.success == true) {
+                if (data.success == true&&data.result.length>0) {
                     $scope.carModelName = data.result;
 
                 } else {
@@ -65,7 +67,7 @@ storage_car_mapController.controller("storage_car_mapController", ["$state", "$r
     // 存放位置联动查询--行
     $scope.changeStorageId = function (val) {
         $basic.get($host.api_url + "/storageParking?storageId=" + val).then(function (data) {
-            if (data.success == true) {
+            if (data.success == true&&data.result.length>0) {
                 $scope.storageParking = data.result;
 
                 $scope.parkingArray = service_storage_parking.storage_parking($scope.storageParking);
@@ -87,7 +89,7 @@ storage_car_mapController.controller("storage_car_mapController", ["$state", "$r
     $scope.new_garage_parking = function (storage_name, storage_id, row, col, p_id) {
         // 车辆品牌查询
         $basic.get($host.api_url + "/carMake").then(function (data) {
-            if (data.success == true) {
+            if (data.success == true&&data.result.length>0) {
                 $scope.makecarName = data.result;
                 // console.log($scope.makecarName)
             } else {
@@ -103,10 +105,11 @@ storage_car_mapController.controller("storage_car_mapController", ["$state", "$r
         $scope.private_col = col;
         $scope.parking_id = p_id;
         $scope.submitted = false;
-        $('ul.tabs li').removeClass("active");
-        $(".tab_box").removeClass("active");
-        $(".tab_box").hide();
-        $('ul.tabs li.test1').addClass("active");
+
+        $('.tabWrap .tab').removeClass("active");
+        $(".tab_box ").removeClass("active");
+        $(".tab_box ").hide();
+        $('.tabWrap .test1').addClass("active");
         $("#test1").addClass("active");
         $("#test1").show();
         $scope.vin = "";
@@ -213,7 +216,7 @@ storage_car_mapController.controller("storage_car_mapController", ["$state", "$r
                 }).then(function (data) {
                     if (data.success == true) {
                         $scope.imgArr.push({src: $host.file_url + '/image/' + imageId});
-                        console.log($scope.imgArr);
+                        // console.log($scope.imgArr);
                     }
                 });
                 // .appendChild(div)

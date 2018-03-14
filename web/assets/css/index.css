@@ -23,6 +23,18 @@ body{
 .mp-30{
     margin-top: 30px;
 }
+.mp-40{
+    margin-top: 40px;
+}
+.mp-50{
+    margin-top: 50px;
+}
+.mp-60{
+    margin-top: 60px;
+}
+.mp-70{
+    margin-top: 70px;
+}
 
 /*登录页面*/
 /*.login_btn{*/
@@ -566,6 +578,15 @@ input[type=text]{
     position: absolute;
     left: 0;
     bottom: 0;
+    font-size: 15px;
+}
+.img_close{
+    width: 20px;
+    height: 20px;
+    background: rgba(0,0,0,0.5);
+    position: absolute;
+    right: 0;
+    top: 0;
     font-size: 15px;
 }
 .storage_car_picture input{

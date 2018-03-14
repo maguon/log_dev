@@ -6,7 +6,7 @@
                 <a class="storage_goback_btn btn-floating btn waves-effect cyan lighten-1 waves-light " ng-click="return()">
                     <i class="mdi mdi-arrow-left-bold"></i>
                 </a>
-                <h5><span ng-bind="storage.storage_name"class="grey-text text-darken-1"></span></h5>
+                <h5><span ng-bind="storage.storage_name" class="grey-text text-darken-1"></span></h5>
             </div>
             <div class="divider"></div>
             <div class="row cyan lighten-1 white-text" style="padding: 0.75rem 0;margin: 0">
@@ -73,8 +73,8 @@
                                 </div>
                             </div>
                             <div class="garage_row vc-center left" ng-repeat="els in el.col track by $index ">
-                                <a href="#" ui-sref="storageCar_details({id:els.carId,vin:els.vin,from:'storage_car_map'})"><i ng-show="els.carId!=0&&els.plan_time==true" class=" mdi mdi-car red-text text-lighten-2" ></i></a>
-                                <a href="#" ui-sref="storageCar_details({id:els.carId,vin:els.vin,from:'storage_car_map'})"><i ng-show="els.carId!=0&&els.plan_time==false" class=" mdi mdi-car cyan-text lighten-1" ></i></a>
+                                <a href="#" ui-sref="storageCar_details({id:els.carId,vin:els.vin,_form:_form,from:'storage_car_map'})"><i ng-show="els.carId!=0&&els.plan_time==true" class=" mdi mdi-car red-text text-lighten-2" ></i></a>
+                                <a href="#" ui-sref="storageCar_details({id:els.carId,vin:els.vin,_form:_form,from:'storage_car_map'})"><i ng-show="els.carId!=0&&els.plan_time==false" class=" mdi mdi-car cyan-text lighten-1" ></i></a>
                                 <i ng-show="els.carId==0" class=" mdi mdi-car grey-text text-lighten-2" ng-click="new_garage_parking(els.storage_name,els.storage_id,el.row,els.col,els.id)"></i>
                             </div>
                         </div>
