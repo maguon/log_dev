@@ -222,7 +222,7 @@ settingController.controller("settingT_controller", ["$scope", "$host", "$basic"
 
     $scope.search_carModel = function (id) {
         $basic.get($host.api_url + "/carMake/" + id + "/carModel").then(function (data) {
-            if (data.success == true&&data.result.length>0) {
+            if (data.success == true) {
                 // console.log(data.result);
                 $scope.brand_model = data.result;
 
