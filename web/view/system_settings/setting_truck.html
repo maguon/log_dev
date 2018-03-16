@@ -4,19 +4,14 @@
             <h5 class="col s12 cyan-text lighten-1  center-align">
                 车辆品牌设置
             </h5>
-            <!--<div class="col s8 right-align">-->
-            <!---->
-            <!--</div>-->
         </div>
         <div class="row">
             <div class="divider"></div>
-
         </div>
         <div style="width: 75%;margin: 0 auto">
             <div class="row addBrand">
                 <a href="" class=" col s2 offset-s10  btn waves-effect cyan lighten-1 waves-light vc-center open_car_brand "
                    ng-click="car_Brand_box($event)">+增加品牌</a>
-
                 <form name="addBrandFrom" ng-submit="add_brand(addBrandFrom.$valid)" novalidate>
                     <div class="col s12 z-depth-2 white car_Brand_box "
                          style="padding: 0.75rem 0;display: none">
@@ -41,7 +36,6 @@
             </div>
             <div class="row">
                 <ul class="collapsible setting_car Brand_box" data-collapsible="accordion" collapsible>
-                    <!--<brand-list></brand-list>-->
                     <li ng-repeat="el in brand" >
                         <div class="collapsible-header grey-text text-darken-1 row no-mp">
                             <div class="amend_brand_box amend_brand_box{{$index}} col s12 p0"
@@ -143,7 +137,6 @@
                 </ul>
             </div>
         </div>
-
     </div>
     <div></div>
 </div>

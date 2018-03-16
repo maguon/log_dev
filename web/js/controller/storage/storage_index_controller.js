@@ -4,12 +4,11 @@ storage_index_controller.controller("storage_index_controller", ['$rootScope', '
         var date = new Date();
         var now_date = moment(date).format('YYYYMMDD');
         $scope.storage_allStorage = 0;
-        // if($basic.checkUser("2")){
         $basic.get($host.api_url + "/storageCount?dateStart=" + now_date + "&dateEnd=" + now_date).then(function (data) {
             if (data.success == true&&data.result.length>0) {
                 $scope.storage_index_count = data.result[0];
             } else {
-
+                swal(data.msg, "", "error");
             }
         });
         $basic.get($host.api_url + "/storageDate?dateStart=" + now_date + "&dateEnd=" + now_date).then(function (data) {
@@ -20,10 +19,7 @@ storage_index_controller.controller("storage_index_controller", ['$rootScope', '
                 }
                 return $scope.storage_allStorage;
             } else {
-
+                swal(data.msg, "", "error");
             }
         });
-
-
-
     }]);

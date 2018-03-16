@@ -7,9 +7,6 @@ Storage_carController.controller("Storage_carController", ["$scope", "$rootScope
     $scope.start = 0;
     $scope.size = 11;
     var userId = $basic.getSession($basic.USER_ID);
-    $pass_parameter.setter("jiangsen");
-
-
     var searchAll = function () {
         var reqUrl = $host.api_url + "/user/" + userId + "/car?active=" + 1 + "&start=" + $scope.start + "&size=" + $scope.size
         if ($scope.search_relStatus != null) {
@@ -45,7 +42,6 @@ Storage_carController.controller("Storage_carController", ["$scope", "$rootScope
         if ($scope.search_outTime_end != null) {
             reqUrl = reqUrl + "&realEnd=" + $scope.search_outTime_end
         }
-        // console.log(reqUrl);
         $basic.get(reqUrl).then(function (data) {
             if (data.success == true&&data.result.length>0) {
                 $scope.storage_car_box = data.result;
@@ -70,21 +66,17 @@ Storage_carController.controller("Storage_carController", ["$scope", "$rootScope
     $scope.searchStorage_car = function () {
         searchAll();
     };
-
-
     // 分页
     // 上一页
     $scope.pre_btn = function () {
         $scope.start = $scope.start - ($scope.size - 1);
         searchAll();
-
     };
     // 下一页
     $scope.next_btn = function () {
         $scope.start = $scope.start + ($scope.size - 1);
         searchAll();
     };
-
     // 車庫狀態
     $scope.rel_status = $config_variable.car_rel_status;
     $scope.search_relStatus = 1;
@@ -164,13 +156,10 @@ Storage_carController.controller("Storage_carController", ["$scope", "$rootScope
             $(dom).val('');
             swal('支持的图片类型为. (jpeg,jpg,png,gif,svg,bmp,tiff)', "", "error");
         }
-        // $currentDom = $(dom).prev();
         $basic.formPost($(dom).parent().parent(), $host.file_url + '/user/' + userId + '/image?imageType=4', function (data) {
-
             if (data.success) {
                 console.log(data, $scope.Picture_carId);
                 var imageId = data.imageId;
-
                 $basic.post($host.record_url + "/car/" + $scope.Picture_carId + "/vin/" + $scope.vin + "/storageImage", {
                     "username": $basic.getSession($basic.USER_NAME),
                     "userId": userId,
@@ -187,7 +176,6 @@ Storage_carController.controller("Storage_carController", ["$scope", "$rootScope
         }, function (error) {
             swal('服务器内部错误', "", "error");
         })
-
     };
 
     // 存放位置联动查询--行

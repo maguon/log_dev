@@ -1,18 +1,13 @@
 /**
- * Created by ASUS on 2017/5/17.
- */
-/**
  * Created by jiangsen on 2017/5/17.
  */
 var car_demand_controller = angular.module("car_demand_controller", []);
-car_demand_controller.controller("car_demand_controller", ["$scope", "$rootScope", "$pass_parameter", "$host", "$basic", "$config_variable", "service_storage_parking", function ($scope, $rootScope, $pass_parameter, $host, $basic,  $config_variable, service_storage_parking) {
+car_demand_controller.controller("car_demand_controller", ["$scope", "$rootScope", "$host", "$basic", "$config_variable", "service_storage_parking", function ($scope, $rootScope, $host, $basic,  $config_variable, service_storage_parking) {
     $scope.curruntId = 0;
     $scope.start = 0;
     $scope.size = 11;
+    $scope.change_model_id = "";
     var userId = $basic.getSession($basic.USER_ID);
-    $pass_parameter.setter("jiangsen");
-
-
     var searchAll = function () {
         var reqUrl = $host.api_url + "/user/" + userId + "/car?active=" + 1 + "&start=" + $scope.start + "&size=" + $scope.size
         if ($scope.search_relStatus != null) {
@@ -48,7 +43,6 @@ car_demand_controller.controller("car_demand_controller", ["$scope", "$rootScope
         if ($scope.search_outTime_end != null) {
             reqUrl = reqUrl + "&realEnd=" + $scope.search_outTime_end
         }
-        // console.log(reqUrl);
         $basic.get(reqUrl).then(function (data) {
             if (data.success == true&&data.result.length>0) {
                 $scope.storage_car_box = data.result;
@@ -68,27 +62,22 @@ car_demand_controller.controller("car_demand_controller", ["$scope", "$rootScope
             }
         });
     };
-
     // 条件查询
     $scope.searchStorage_car = function () {
         searchAll();
     };
-
-
     // 分页
     // 上一页
     $scope.pre_btn = function () {
         $scope.start = $scope.start - ($scope.size - 1);
         searchAll();
-
     };
     // 下一页
     $scope.next_btn = function () {
         $scope.start = $scope.start + ($scope.size - 1);
         searchAll();
     };
-
-    // 車庫狀態
+    // 车库状态
     $scope.rel_status = $config_variable.car_rel_status;
     $scope.search_relStatus = 1;
     // 车辆品牌查询
@@ -107,15 +96,12 @@ car_demand_controller.controller("car_demand_controller", ["$scope", "$rootScope
             swal(data.msg, "", "error");
         }
     });
-
-
     // 存放位置联动查询--行
     $scope.changeStorageId = function (val) {
         if (val) {
             $basic.get($host.api_url + "/storageParking?storageId=" + val).then(function (data) {
                 if (data.success == true&&data.result.length>0) {
                     $scope.storageParking = data.result;
-
                     $scope.parkingArray = service_storage_parking.storage_parking($scope.storageParking);
                     // console.log($scope.parkingArray)
 
@@ -124,43 +110,30 @@ car_demand_controller.controller("car_demand_controller", ["$scope", "$rootScope
                 }
             });
         }
-
     },
-        // 存放位置联动查询--列
-        $scope.changeStorageRow = function (val, array) {
-
-            if (val) {
-                // console.log(val);
-                $scope.colArr = array[val - 1].col;
-                // console.log($scope.colArr)
-            }
-
-
-        };
-
+    // 存放位置联动查询--列
+    $scope.changeStorageRow = function (val, array) {
+        if (val) {
+            $scope.colArr = array[val - 1].col;
+        }
+    };
     // 车辆型号联动查询
     $scope.changeMakeId = function (val) {
-        // console.log(val);
         if (val) {
             if ($scope.curruntId == val) {
-
             } else {
                 $scope.curruntId = val;
                 $basic.get($host.api_url + "/carMake/" + val + "/carModel").then(function (data) {
                     if (data.success == true&&data.result.length>0) {
                         $scope.carModelName = data.result;
-
                     } else {
                         swal(data.msg, "", "error")
                     }
                 })
             }
         }
-
-
     };
     // modelId全局变量
-    $scope.change_model_id = "";
     searchAll();
 }]);
 

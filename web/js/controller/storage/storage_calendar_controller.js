@@ -82,8 +82,6 @@ storage_working_calendarController.controller("storage_working_calendarControlle
         $basic.get($host.api_url + "/storageDate?storageId=" + storage_id + "&dateStart=" + now_date + "&dateEnd=" + now_date).then(function (data) {
             if (data.success == true&&data.result.length>0) {
                 $scope.today_data = data.result[0];
-
-
             }
         })
     };

@@ -15,22 +15,19 @@
 </head>
 <body>
 <header></header>
-<!--<navigator></navigator>-->
-<ul id="slide-out" side-nav class="side-nav blue-grey darken-4">
+<ul id="slide-out" class="side-nav blue-grey darken-4">
     <li class="nav-logo valign-wrapper " style="border-bottom: 1px solid #182024">
         <div class="userBox ">
-            <img src="../assets/images/office.jpg" alt="" class="logo_img responsive-img left" style="height: 50px"> <!-- notice the "circle" class -->
+            <img src="../assets/images/office.jpg" alt="" class="logo_img responsive-img left" style="height: 50px">
             <div class=" userBoxMsg left">
               <span class="white-text">
                 操作员:
               </span>
                 <span class="white-text" ng-bind="userName">
-
                 </span>
             </div>
         </div>
     </li>
-    <!--<li class="divider grey lighten-2"></li>-->
     <li class="bold side_navigator" >
         <!--<a class="waves-effect waves-purple" href="#!/"  onclick="Materialize.toast('收到即时消息', 4000,'rounded');"><i class="mdi mdi-view-dashboard "></i>主页</a>-->
         <!--<a class="waves-effect waves-light first-N" ui-sref="index" onclick="Materialize.toast('收到即时消息', 4000,'rounded');"><i class="white-text mdi mdi-crop-free "></i>主页</a>-->
@@ -82,24 +79,24 @@
     <div class="containerBox" >
         <div ui-view></div>
     </div>
-    </h1>
 </div>
-
-    <div class="footer blue-grey darken-1">
-        <h5 class="footer-msg right">洺源信息技术</h5>
-        <h5 class="footer-msg right">物流系统1.0</h5>
-    </div>
+<div class="footer blue-grey darken-1">
+    <h5 class="footer-msg right">洺源信息技术</h5>
+    <h5 class="footer-msg right">物流系统1.0</h5>
+</div>
 <div class="shadeDowWrap" >
     <div class="shadeDow vc-center">
         <div class="preloader-wrapper big active ">
             <div class="spinner-layer spinner-blue-only">
                 <div class="circle-clipper left">
                     <div class="circle"></div>
-                </div><div class="gap-patch">
-                <div class="circle"></div>
-            </div><div class="circle-clipper right">
-                <div class="circle"></div>
-            </div>
+                </div>
+                <div class="gap-patch">
+                    <div class="circle"></div>
+                </div>
+                <div class="circle-clipper right">
+                    <div class="circle"></div>
+                </div>
             </div>
         </div>
     </div>
@@ -116,10 +113,10 @@
 <script src="/lib/fullcalendar-3.3.0/fullcalendar.min.js"></script>
 <script src="/lib/highcharts.js"></script>
 <script src="/lib/parse.min.js"></script>
+<script src="/module/app_module.js"></script>
 <script src="/js/controller/data_controller.js"></script>
 <script src="/js/controller/index_controller.js"></script>
 <script src="/js/controller/login_controller.js"></script>
-<!--<script src="/js/controller/setting_controller.js"></script>-->
 <script src="/js/controller/truck_controller.js"></script>
 <script src="/js/controller/company_controller.js"></script>
 <script src="/js/controller/setting/setting_controller.js"></script>
@@ -145,6 +142,4 @@
 <script src="/lib/angular/angular-ui-router.min.js"></script>
 <script src="/lib/angular/angular-cookies.min.js"></script>
 <script src="/lib/angular/angular-messages.min.js"></script>
-<script src="/module/app_module.js"></script>
-<!--<script src="/config.js"></script>-->
 </html>

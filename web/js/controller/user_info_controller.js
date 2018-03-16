@@ -3,7 +3,6 @@
  */
 var user_info_controller=angular.module("user_info_controller",[]);
 user_info_controller.controller("user_info_controller",["$scope","$basic","$config_variable","$host",function ($scope,$basic,$config_variable,$host) {
-
     var user_info_obj=$config_variable.userTypes;
     $scope.user_info_section=[];
     var user_info_fun=function () {
@@ -28,16 +27,10 @@ user_info_controller.controller("user_info_controller",["$scope","$basic","$conf
                     }
                 }
             }
-
-
-                // console.log($scope.user_info_section);
             }else {
                 swal(data.msg,"","error")
             }
         });
-
-        // return $scope.user_info_section
     };
     user_info_fun();
-
 }]);

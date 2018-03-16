@@ -148,7 +148,12 @@ CommonService.factory('$basic',['$http','$location','$q',"$cookies",function($ht
     _this.objToUrl=function(obj){
         var str="";
         for(var i in obj){
-            str=str+i+"="+obj[i]+"&";
+            if (obj[i] == 0 && obj[i] != "") {
+                str = str + i + "=" + 0 + "&";
+            }
+            else if (obj[i] != null && obj[i] != "") {
+                str = str + i + "=" + obj[i] + "&";
+            }
         }
         return str.substr(0,str.length-1);
     };
