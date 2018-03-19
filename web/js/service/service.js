@@ -1,5 +1,5 @@
 var CommonService=angular.module("CommonService",[]);
-CommonService.factory('$basic',['$http','$location','$q',"$cookies",function($http,$location,$q,$cookies){
+CommonService.factory('_basic',['$http','$location','$q',"$cookies",function($http,$location,$q,$cookies){
     var _this = {};
     _this.USER_AUTH_NAME = "auth-token";
     _this.COMMON_AUTH_NAME ='auth-token';

@@ -1,9 +1,9 @@
 
 var settingController = angular.module("settingController", []);
 // 管理员密码设置
-settingController.controller("settingPW_controller", ["$scope", "$host", "$basic", function ($scope, $host, $basic) {
+settingController.controller("settingPW_controller", ["$scope", "$host", "_basic", function ($scope, $host, _basic) {
     $scope.settingPswForm = function (isValid) {
-        var adminId = $basic.getSession($basic.USER_ID);
+        var adminId = _basic.getSession(_basic.USER_ID);
 
         $scope.submitted = true;
         if (isValid && $scope.newCode == $scope.confirmPsw) {
@@ -11,7 +11,7 @@ settingController.controller("settingPW_controller", ["$scope", "$host", "$basic
                 originPassword: $scope.primaryCode,
                 newPassword: $scope.newCode
             };
-            $basic.put($host.api_url + "/admin/" + adminId + "/password", obj).then(function (data) {
+            _basic.put($host.api_url + "/admin/" + adminId + "/password", obj).then(function (data) {
                 if (data.success == true) {
                     swal("密码重置成功", "", "success");
                     $scope.primaryCode="";
@@ -27,12 +27,12 @@ settingController.controller("settingPW_controller", ["$scope", "$host", "$basic
     }
 }]);
 // 仓库设置
-settingController.controller("settingWH_controller", ["$scope", "$host", "$basic", function ($scope, $host, $basic) {
-    var adminId = $basic.getSession($basic.USER_ID);
+settingController.controller("settingWH_controller", ["$scope", "$host", "_basic", function ($scope, $host, _basic) {
+    var adminId = _basic.getSession(_basic.USER_ID);
 
     // 整体查询
     var searchAll = function () {
-        $basic.get($host.api_url + "/storage").then(function (data) {
+        _basic.get($host.api_url + "/storage").then(function (data) {
             if (data.success == true&&data.result.length>0) {
                 $scope.storage = data.result;
             } else {
@@ -64,7 +64,7 @@ settingController.controller("settingWH_controller", ["$scope", "$host", "$basic
                 col: Number($scope.newStorageRoad),
                 remark: $scope.newStorageRemark
             };
-            $basic.post($host.api_url + "/admin/" + adminId + "/storage", obj).then(function (data) {
+            _basic.post($host.api_url + "/admin/" + adminId + "/storage", obj).then(function (data) {
                 if (data.success == true) {
                     swal("新增成功", "", "success");
                     searchAll();
@@ -79,7 +79,7 @@ settingController.controller("settingWH_controller", ["$scope", "$host", "$basic
     $scope.lookStorage = function (id) {
         $(".modal").modal();
         $("#look_Storage").modal("open");
-        $basic.get($host.api_url + "/storage?storageId=" + id).then(function (data) {
+        _basic.get($host.api_url + "/storage?storageId=" + id).then(function (data) {
             if (data.success == true&&data.result.length>0) {
                 $scope.selfStorage = data.result[0];
             } else {
@@ -97,7 +97,7 @@ settingController.controller("settingWH_controller", ["$scope", "$host", "$basic
                 remark: $scope.selfStorage.remark
             };
             console.log(obj)
-            $basic.put($host.api_url + "/admin/" + adminId + "/storage/" + id, obj).then(function (data) {
+            _basic.put($host.api_url + "/admin/" + adminId + "/storage/" + id, obj).then(function (data) {
                 if (data.success == true) {
                     swal("修改成功", "", "success");
                     searchAll();
@@ -132,7 +132,7 @@ settingController.controller("settingWH_controller", ["$scope", "$host", "$basic
         //     },
         //     function () {
 
-                $basic.put($host.api_url + "/admin/" + adminId + "/storage/" + id + "/storageStatus/" + st, {}).then(function (data) {
+                _basic.put($host.api_url + "/admin/" + adminId + "/storage/" + id + "/storageStatus/" + st, {}).then(function (data) {
                     if (data.success == true) {
                         swal("修改成功", "", "success");
                         searchAll();
@@ -148,9 +148,9 @@ settingController.controller("settingWH_controller", ["$scope", "$host", "$basic
     // }
 }]);
 // 车辆设置
-settingController.controller("settingT_controller", ["$scope", "$host", "$basic", function ($scope, $host, $basic) {
+settingController.controller("settingT_controller", ["$scope", "$host", "_basic", function ($scope, $host, _basic) {
 
-    var adminId = $basic.getSession($basic.USER_ID);
+    var adminId = _basic.getSession(_basic.USER_ID);
     // 打开汽车品牌
     $scope.car_Brand_box=function ($event) {
         $($event.target).hide();
@@ -164,7 +164,7 @@ settingController.controller("settingT_controller", ["$scope", "$host", "$basic"
     };
     // 汽车品牌
     $scope.searchAll = function () {
-        $basic.get($host.api_url + "/carMake/").then(function (data) {
+        _basic.get($host.api_url + "/carMake/").then(function (data) {
             if (data.success == true&&data.result.length>0) {
                 // console.log(data.result);
                 $scope.brand = data.result;
@@ -200,7 +200,7 @@ settingController.controller("settingT_controller", ["$scope", "$host", "$basic"
     // 修改汽车品牌
     $scope.amend_brand_submit = function (iValid,id,name,$index) {
         if(iValid){
-            $basic.put($host.api_url + "/admin/" + adminId + "/carMake/" + id, {
+            _basic.put($host.api_url + "/admin/" + adminId + "/carMake/" + id, {
                 "makeName": name
             }).then(function (data) {
                 if (data.success == true) {
@@ -221,7 +221,7 @@ settingController.controller("settingT_controller", ["$scope", "$host", "$basic"
     // 汽车型号
 
     $scope.search_carModel = function (id) {
-        $basic.get($host.api_url + "/carMake/" + id + "/carModel").then(function (data) {
+        _basic.get($host.api_url + "/carMake/" + id + "/carModel").then(function (data) {
             if (data.success == true) {
                 // console.log(data.result);
                 $scope.brand_model = data.result;
@@ -253,7 +253,7 @@ settingController.controller("settingT_controller", ["$scope", "$host", "$basic"
         // var xt="add_car_model_text"+index;
         console.log($scope.add_car_model_text);
         if(iValid){
-            $basic.post($host.api_url + "/admin/" + adminId + "/carMake/" + id+"/carModel", {
+            _basic.post($host.api_url + "/admin/" + adminId + "/carMake/" + id+"/carModel", {
                 modelName:$scope.add_car_model_text
             }).then(function (data) {
                 if (data.success == true) {
@@ -303,7 +303,7 @@ settingController.controller("settingT_controller", ["$scope", "$host", "$basic"
         } else {
             status = 0
         }
-        $basic.put($host.api_url + "/admin/" + adminId + "/carModel/" + id + "/modelStatus/" + status, {}).then(function (data) {
+        _basic.put($host.api_url + "/admin/" + adminId + "/carModel/" + id + "/modelStatus/" + status, {}).then(function (data) {
             if (data.success == true) {
                 $scope.search_carModel(makeId);
             } else {
@@ -326,7 +326,7 @@ settingController.controller("settingT_controller", ["$scope", "$host", "$basic"
     };
     // 确认提交修改型号
     $scope.amend_car_model_submit = function (id, name,index) {
-        $basic.put($host.api_url + "/admin/" + adminId + "/carModel/" + id, {
+        _basic.put($host.api_url + "/admin/" + adminId + "/carModel/" + id, {
             modelName: name
         }).then(function (data) {
             if (data.success == true) {
@@ -346,7 +346,7 @@ settingController.controller("settingT_controller", ["$scope", "$host", "$basic"
         } else {
             sta = 0
         }
-        $basic.put($host.api_url + "/admin/" + adminId + "/carModel/" + id+"/modelStatus/"+sta,{}).then(function (data) {
+        _basic.put($host.api_url + "/admin/" + adminId + "/carModel/" + id+"/modelStatus/"+sta,{}).then(function (data) {
             if (data.success == true) {
                 swal("更改状态", "", "success");
                 $scope.search_carModel(makeId);
@@ -361,7 +361,7 @@ settingController.controller("settingT_controller", ["$scope", "$host", "$basic"
     // };
     $scope.add_brand=function (iValid) {
         if(iValid){
-            $basic.post($host.api_url + "/admin/" + adminId + "/carMake/", {
+            _basic.post($host.api_url + "/admin/" + adminId + "/carMake/", {
                 makeName: $scope.b_txt
             }).then(function (data) {
                 if (data.success == true) {
@@ -377,11 +377,11 @@ settingController.controller("settingT_controller", ["$scope", "$host", "$basic"
 
     }
 }]);
-settingController.controller("setting_user_controller", ["$basic","$config_variable", "$host", "$scope", function ($basic,$config_variable,$host, $scope) {
+settingController.controller("setting_user_controller", ["_basic","_config", "$host", "$scope", function (_basic,_config,$host, $scope) {
 
-    var adminId = $basic.getSession($basic.USER_ID);
+    var adminId = _basic.getSession(_basic.USER_ID);
 
-    var user_info_obj=$config_variable.userTypes;
+    var user_info_obj=_config.userTypes;
     var user_info_fun=function () {
         $scope.user_info_section=[];
         for(var i in user_info_obj){
@@ -392,7 +392,7 @@ settingController.controller("setting_user_controller", ["$basic","$config_varia
     user_info_fun();
     // 搜索所有查询
     var searchAll = function () {
-        $basic.get($host.api_url + "/admin/" + adminId + "/user").then(function (data) {
+        _basic.get($host.api_url + "/admin/" + adminId + "/user").then(function (data) {
             if (data.success == true&&data.result.length>0) {
                 // console.log(data)
                 $scope.operator = data.result;
@@ -402,7 +402,7 @@ settingController.controller("setting_user_controller", ["$basic","$config_varia
             }
         });
 
-        // $basic.get($host.api_url+"/admin/"+adminId+"/department").then(function (data) {
+        // _basic.get($host.api_url+"/admin/"+adminId+"/department").then(function (data) {
         //     if(data.success==true){
         //         $scope.department=data.result;
         //         // console.log($scope.Company);
@@ -441,7 +441,7 @@ settingController.controller("setting_user_controller", ["$basic","$config_varia
                 password: $scope.newUserPassword
             };
 
-            $basic.post($host.api_url + "/admin/" + adminId + "/user", obj).then(function (data) {
+            _basic.post($host.api_url + "/admin/" + adminId + "/user", obj).then(function (data) {
                 if (data.success == true) {
                     swal("新增成功", "", "success");
                     $('#newOperator').modal('close');
@@ -458,7 +458,7 @@ settingController.controller("setting_user_controller", ["$basic","$config_varia
     $scope.lookOperation = function (id) {
         $(".modal").modal();
         $("#look_Operator").modal("open");
-        $basic.get($host.api_url + "/admin/" + adminId + "/user?userId=" + id).then(function (data) {
+        _basic.get($host.api_url + "/admin/" + adminId + "/user?userId=" + id).then(function (data) {
             if (data.success == true&&data.result.length>0) {
                 $scope.look_operation = data.result[0];
                 // console.log($scope.look_operation)
@@ -494,7 +494,7 @@ settingController.controller("setting_user_controller", ["$basic","$config_varia
                     $scope.changeSt = "1"
                 }
 
-                $basic.put($host.api_url + "/admin/" + adminId + "/user/" + id + "/status/" + $scope.changeSt
+                _basic.put($host.api_url + "/admin/" + adminId + "/user/" + id + "/status/" + $scope.changeSt
                     , {}).then(function (data) {
                     if (data.success == true) {
                         searchAll();
@@ -521,7 +521,7 @@ settingController.controller("setting_user_controller", ["$basic","$config_varia
                 // mobile:$scope.new_userName,
                 // password:$scope.look_operation.newUserPassword
             };
-            $basic.put($host.api_url + "/admin/" + adminId + "/user/" + id, obj).then(function (data) {
+            _basic.put($host.api_url + "/admin/" + adminId + "/user/" + id, obj).then(function (data) {
                 if (data.success == true) {
                     swal("修改成功", "", "success");
                     $('#look_Operator').modal('close');

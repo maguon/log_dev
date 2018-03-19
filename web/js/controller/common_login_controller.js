@@ -2,9 +2,9 @@
  * Created by jiangsen on 2017/4/11.
  */
 var common_login_controller=angular.module("common_login_controller",[]);
-common_login_controller.controller("common_login_controller", ['$rootScope','$scope','$location','$q',"$basic","$host","$config_variable",
+common_login_controller.controller("common_login_controller", ['$rootScope','$scope','$location','$q',"_basic","$host","_config",
 
-    function($rootScope,$scope,$location,$q,$basic,$host,$config_variable){
+    function($rootScope,$scope,$location,$q,_basic,$host,_config){
             $scope.username='';
             $scope.password='';
             $scope.login = function(){
@@ -14,26 +14,26 @@ common_login_controller.controller("common_login_controller", ['$rootScope','$sc
                 swal("账号或密码不能为空", "", "error");
             } else {
                 $(".shadeDowWrap").show();
-                $basic.post($host.api_url+"/userLogin", {
+                _basic.post($host.api_url+"/userLogin", {
                     "mobile": $scope.username,
                     "password": $scope.password
                 }).then(function(data){
                     $(".shadeDowWrap").hide();
                     if(data.success==true){
-                        $basic.setSession($basic.USER_AUTH_NAME,data.result.accessToken);
-                        $basic.setSession($basic.USER_ID,data.result.userId);
-                        $basic.setSession($basic.USER_STATUS,data.result.userStatus);
-                        $basic.setSession($basic.USER_TYPE,data.result.type);
-                        $basic.setHeader($basic.USER_TYPE, data.result.type);
-                        $basic.setHeader($basic.COMMON_AUTH_NAME, data.result.accessToken);
+                        _basic.setSession(_basic.USER_AUTH_NAME,data.result.accessToken);
+                        _basic.setSession(_basic.USER_ID,data.result.userId);
+                        _basic.setSession(_basic.USER_STATUS,data.result.userStatus);
+                        _basic.setSession(_basic.USER_TYPE,data.result.type);
+                        _basic.setHeader(_basic.USER_TYPE, data.result.type);
+                        _basic.setHeader(_basic.COMMON_AUTH_NAME, data.result.accessToken);
                         // 判断user_type控制页面调到某个模块
-                        if(data.result.type==$config_variable.userTypes.storageUser.type){
+                        if(data.result.type==_config.userTypes.storageUser.type){
                             window.location.href="storage.html";
                         }
-                        if(data.result.type==$config_variable.userTypes.dispatch.type){
+                        if(data.result.type==_config.userTypes.dispatch.type){
                             window.location.href="dispatch.html";
                         }
-                        if(data.result.type==$config_variable.userTypes.international_trade.type){
+                        if(data.result.type==_config.userTypes.international_trade.type){
                             window.location.href="/view/international_trade/international_trade_home.html";
                         }
 

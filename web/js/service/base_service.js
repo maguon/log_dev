@@ -83,7 +83,7 @@ baseService.factory("service_storage_parking", function () {
 });
 
 // 公共数据
-baseService.factory("$config_variable", function () {
+baseService.factory("_config", function () {
     var _this = {};
     _this.userTypes = {
         storageUser : {type:2,name:"仓储部"},

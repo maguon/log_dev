@@ -5,7 +5,7 @@
                 <div class="input-field col s3">
                     <select material-select watch ng-model="search_relStatus">
                         <option value=""  >车辆状态</option>
-                        <option ng-repeat="el in rel_status" ng-value="el.s_num">{{el.status_text}}</option>
+                        <option ng-repeat="el in relStatus" ng-value="el.s_num">{{el.status_text}}</option>
                     </select>
                 </div>
                 <div class="input-field col s3">
@@ -76,7 +76,7 @@
                     <div class="col s12"></div>
                 </div>
                 <div class="col s2  flex flex-round">
-                    <a class="btn-floating btn-large waves-light waves-effect red lighten-2  btn vc-center" style="margin-right: 10px"  ng-click="searchStorage_car()">
+                    <a class="btn-floating btn-large waves-light waves-effect red lighten-2  btn vc-center" style="margin-right: 10px"  ng-click="readStorageCar()">
                         <i class="mdi mdi-magnify"></i>
                     </a>
                 </div>
@@ -99,7 +99,7 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr ng-repeat="el in storage_car" class="grey-text text-darken-1">
+                <tr ng-repeat="el in storageCar" class="grey-text text-darken-1">
                     <td  ng-bind="el.vin"></td>
                     <td ng-bind="el.make_name"></td>
                     <td ng-bind="el.model_name"></td>
@@ -119,10 +119,10 @@
         </div>
         <div class="paging_box col s12">
             <div class="right">
-                <a class="waves-light waves-effect cyan lighten-1 btn  "  id="pre"   ng-click="pre_btn()">
+                <a class="waves-light waves-effect cyan lighten-1 btn  "  id="pre"   ng-click="preBtn()">
                     上一页
                 </a>
-                <a class="waves-light waves-effect cyan lighten-1 btn " id="next"  ng-click="next_btn()">
+                <a class="waves-light waves-effect cyan lighten-1 btn " id="next"  ng-click="nextBtn()">
                     下一页
                 </a>
             </div>

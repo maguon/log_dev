@@ -5,8 +5,8 @@ adminDirective.directive('header', function () {
         replace: true,
         transclude: false,
         restrict: 'E',
-        controller: function ($scope, $element, $rootScope, $basic,$host) {
-            if ($basic.checkUser("99")) {
+        controller: function ($scope, $element, $rootScope, _basic,$host) {
+            if (_basic.checkUser("99")) {
                 $("#menu_link").sideNav({
                     menuWidth: 280, // Default is 300
                     edge: 'left', // Choose the horizontal origin
@@ -26,21 +26,21 @@ adminDirective.directive('header', function () {
                         cancelButtonText: "取消",
                         closeOnConfirm: false
                     }, function () {
-                        $basic.removeSession($basic.COMMON_AUTH_NAME);
-                        $basic.removeSession($basic.USER_ID);
-                        $basic.removeSession($basic.USER_TYPE);
-                        $basic.removeSession($basic.USER_NAME);
+                        _basic.removeSession(_basic.COMMON_AUTH_NAME);
+                        _basic.removeSession(_basic.USER_ID);
+                        _basic.removeSession(_basic.USER_TYPE);
+                        _basic.removeSession(_basic.USER_NAME);
                         window.location.href = '/login.html';
                     });
                 }
-                $basic.setHeader($basic.USER_TYPE, $basic.getSession($basic.USER_TYPE));
-                $basic.setHeader($basic.COMMON_AUTH_NAME,  $basic.getSession($basic.COMMON_AUTH_NAME) );
-                $basic.get($host.api_url + "/admin/" + $basic.getSession($basic.USER_ID)).then(function (data) {
+                _basic.setHeader(_basic.USER_TYPE, _basic.getSession(_basic.USER_TYPE));
+                _basic.setHeader(_basic.COMMON_AUTH_NAME,  _basic.getSession(_basic.COMMON_AUTH_NAME) );
+                _basic.get($host.api_url + "/admin/" + _basic.getSession(_basic.USER_ID)).then(function (data) {
                     // $(".shadeDowWrap").hide();
                     if (data.success == true&&data.result.length>0) {
                         $scope.userName = data.result[0].user_name;
-                        $basic.setSession($basic.USER_NAME, $scope.userName);
-                        $basic.setHeader($basic.USER_NAME, $scope.userName);
+                        _basic.setSession(_basic.USER_NAME, $scope.userName);
+                        _basic.setHeader(_basic.USER_NAME, $scope.userName);
                     } else {
                         swal(data.msg, "", "error");
                     }
@@ -82,8 +82,8 @@ adminDirective.directive("carMsg", function () {
 adminDirective.directive("truckUpload", function () {
     return {
         restrict: 'A',
-        controller: function ($basic, $upload) {
-            var userId = $basic.getSession($basic.USER_ID);
+        controller: function (_basic, $upload) {
+            var userId = _basic.getSession(_basic.USER_ID);
             var arr = [];
             $("#img").on("change", function (e) {
                 // 获取文件列表对象
@@ -109,7 +109,7 @@ adminDirective.directive("truckUpload", function () {
                             reader.readAsDataURL(file);
                             var fd = new FormData();
                             fd.append("truck_picture", file);
-                            $basic.post($upload.api_url_upload + "/user/" + userId + "/image?imageType=" + 2, {
+                            _basic.post($upload.api_url_upload + "/user/" + userId + "/image?imageType=" + 2, {
                                 image: fd
                             }).then(function (data) {
 
@@ -280,13 +280,13 @@ adminDirective.directive("tooltipped", function () {
 adminDirective.directive("addBrand", function () {
     return {
         restrict: "A",
-        controller: function ($scope, $host, $basic) {
-            var adminId = $basic.getSession($basic.USER_ID);
+        controller: function ($scope, $host, _basic) {
+            var adminId = _basic.getSession(_basic.USER_ID);
             $scope.add_brand = function (iValid) {
                 $scope.submitted1 = true;
                 if (iValid) {
                     // $(".add_Brand_Icon button").attr("disabled",true);
-                    $basic.post($host.api_url + "/admin/" + adminId + "/carMake/", {
+                    _basic.post($host.api_url + "/admin/" + adminId + "/carMake/", {
                         makeName: $scope.b_txt
                     }).then(function (data) {
                         if (data.success == true) {
@@ -309,8 +309,8 @@ adminDirective.directive("addBrand", function () {
 adminDirective.directive("addBrandModel", function () {
     return {
         restrict: "A",
-        controller: function ($scope, $host, $basic) {
-            var adminId = $basic.getSession($basic.USER_ID);
+        controller: function ($scope, $host, _basic) {
+            var adminId = _basic.getSession(_basic.USER_ID);
             // 关闭新增型号
             $scope.close_brand_model = function (id) {
                 $(".add_brand_box" + id).fadeIn(500);
@@ -322,7 +322,7 @@ adminDirective.directive("addBrandModel", function () {
                 if (iValid) {
                     console.log($scope.brandModelText);
                     // console.log($scope.brand_model_text)
-                    $basic.post($host.api_url + "/admin/" + adminId + "/carMake/" + id + "/carModel", {
+                    _basic.post($host.api_url + "/admin/" + adminId + "/carMake/" + id + "/carModel", {
                         modelName: $scope.brandModelText
                     }).then(function (data) {
                         if (data.success == true) {

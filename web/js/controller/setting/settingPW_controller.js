@@ -3,9 +3,9 @@
  */
 // 管理员密码设置
 
-settingPW_controller.controller("settingPW_controller", ["$scope", "$host", "$basic", function ($scope, $host, $basic) {
+settingPW_controller.controller("settingPW_controller", ["$scope", "$host", "_basic", function ($scope, $host, _basic) {
     $scope.settingPswForm = function (isValid) {
-        var adminId = $basic.getSession($basic.USER_ID);
+        var adminId = _basic.getSession(_basic.USER_ID);
 
         $scope.submitted = true;
         if (isValid && $scope.newCode == $scope.confirmPsw) {
@@ -13,7 +13,7 @@ settingPW_controller.controller("settingPW_controller", ["$scope", "$host", "$ba
                 originPassword: $scope.primaryCode,
                 newPassword: $scope.newCode
             };
-            $basic.put($host.api_url + "/admin/" + adminId + "/password", obj).then(function (data) {
+            _basic.put($host.api_url + "/admin/" + adminId + "/password", obj).then(function (data) {
                 if (data.success == true) {
                     swal("密码重置成功", "", "success");
                     $scope.primaryCode="";

@@ -2,8 +2,8 @@
  * Created by ASUS on 2017/4/1.
  */
 var Company_controller = angular.module("Company_controller", []);
-Company_controller.controller("Company_controller", ['$rootScope', '$scope', '$basic', '$host',  '$urlMethod', function ($rootScope, $scope, $basic, $host,  $urlMethod) {
-    var userId = $basic.getSession($basic.USER_ID);
+Company_controller.controller("Company_controller", ['$rootScope', '$scope', '_basic', '$host',  '$urlMethod', function ($rootScope, $scope, _basic, $host,  $urlMethod) {
+    var userId = _basic.getSession(_basic.USER_ID);
     // 单条公司信息
     var companyMsg;
 
@@ -21,7 +21,7 @@ Company_controller.controller("Company_controller", ['$rootScope', '$scope', '$b
         // };
 
 
-        $basic.get($host.api_url + "/user/" + userId + "/company" + $urlMethod.urlMethod(obj)).then(function (data) {
+        _basic.get($host.api_url + "/user/" + userId + "/company" + $urlMethod.urlMethod(obj)).then(function (data) {
             // $(".shadeDowWrap").hide();
             if (data.success == true&&data.result.length>0) {
                 // console.log(data.result);
@@ -33,7 +33,7 @@ Company_controller.controller("Company_controller", ['$rootScope', '$scope', '$b
     };
     // 整体查询读取
     var searchAll = function () {
-        $basic.get($host.api_url + "/user/" + userId + "/company", {}).then(function (data) {
+        _basic.get($host.api_url + "/user/" + userId + "/company", {}).then(function (data) {
             // $(".shadeDowWrap").hide();
             if (data.success == true&&data.result.length>0) {
                 $scope.Company = data.result;
@@ -43,7 +43,7 @@ Company_controller.controller("Company_controller", ['$rootScope', '$scope', '$b
         });
 
         // 获取城市信息
-        $basic.get($host.api_url + "/user/" + userId + "/city", {}).then(function (data) {
+        _basic.get($host.api_url + "/user/" + userId + "/city", {}).then(function (data) {
             // $(".shadeDowWrap").hide();
             if (data.success == true&&data.result.length>0) {
                 $scope.citys = data.result;
@@ -81,7 +81,7 @@ Company_controller.controller("Company_controller", ['$rootScope', '$scope', '$b
             // var t=time.pattern("yyyy-MM-dd hh:mm:ss");
 
             // var CooperationTime=t.getFullYear()+"-"+t.getMonth()+1+"-"+t.getDate();
-            $basic.post($host.api_url + "/user/" + userId + "/company", {
+            _basic.post($host.api_url + "/user/" + userId + "/company", {
                 "companyName": $scope.addCompanyName,
                 "operateType": $scope.addOperateType,
                 "cooperationTime": $scope.addCooperationTime,
@@ -107,7 +107,7 @@ Company_controller.controller("Company_controller", ['$rootScope', '$scope', '$b
         $('.modal').modal();
         $('#LookCompany').modal('open');
 
-        $basic.get($host.api_url + "/user/" + userId + "/company?companyId=" + id, {}).then(function (data) {
+        _basic.get($host.api_url + "/user/" + userId + "/company?companyId=" + id, {}).then(function (data) {
             // $(".shadeDowWrap").hide();
             if (data.success == true&&data.result.length>0) {
                 $scope.company = data.result[0];
@@ -120,7 +120,7 @@ Company_controller.controller("Company_controller", ['$rootScope', '$scope', '$b
             }
         });
         // 头车数量
-        $basic.get($host.api_url + "/user/" + userId + "/company/" + id + "/firstCount", {}).then(function (data) {
+        _basic.get($host.api_url + "/user/" + userId + "/company/" + id + "/firstCount", {}).then(function (data) {
             // $(".shadeDowWrap").hide();
             if (data.success == true&&data.result.length>0) {
                 $scope.firstCount = data.result[0].firstCount;
@@ -130,7 +130,7 @@ Company_controller.controller("Company_controller", ['$rootScope', '$scope', '$b
         });
 
         // 挂车数量
-        $basic.get($host.api_url + "/user/" + userId + "/company/" + id + "/trailerCount", {}).then(function (data) {
+        _basic.get($host.api_url + "/user/" + userId + "/company/" + id + "/trailerCount", {}).then(function (data) {
             // $(".shadeDowWrap").hide();
             if (data.success == true) {
                 $scope.trailerCount = data.result[0].firstCount;
@@ -141,7 +141,7 @@ Company_controller.controller("Company_controller", ['$rootScope', '$scope', '$b
         });
 
         // 司机数量
-        $basic.get($host.api_url + "/user/" + userId + "/company/" + id + "/driveCount", {}).then(function (data) {
+        _basic.get($host.api_url + "/user/" + userId + "/company/" + id + "/driveCount", {}).then(function (data) {
             // $(".shadeDowWrap").hide();
             if (data.success == true) {
                 $scope.driveCount = data.result[0].driveCount;
@@ -167,7 +167,7 @@ Company_controller.controller("Company_controller", ['$rootScope', '$scope', '$b
                 "remark": companyMsg.remark
             }
 
-            $basic.put($host.api_url + "/user/" + userId + "/company/" + id, subParam).then(function (data) {
+            _basic.put($host.api_url + "/user/" + userId + "/company/" + id, subParam).then(function (data) {
                 // $(".shadeDowWrap").hide();
                 if (data.success == true) {
                     // console.log(data);

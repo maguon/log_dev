@@ -1,7 +1,7 @@
 var data_controller = angular.module("data_controller", []);
-data_controller.controller("dataController", ['$rootScope', '$scope', '$location', '$q', '$basic', "$host",
+data_controller.controller("dataController", ['$rootScope', '$scope', '$location', '$q', '_basic', "$host",
 
-    function ($rootScope, $scope, $location, $q, $basic, $host) {
+    function ($rootScope, $scope, $location, $q, _basic, $host) {
         //$scope.selectArray =[{id:1,name:'a'},{id:2,name:'b'}];
         $scope.selectArray = [];
 
@@ -12,7 +12,7 @@ data_controller.controller("dataController", ['$rootScope', '$scope', '$location
             console.log($scope.csvFile);
         };
         $scope.update = function () {
-            $basic.setCookie('url', "jiangsen");
+            _basic.setCookie('url', "jiangsen");
         };
         $scope.update();
         $scope.tableHeader = [];
@@ -67,7 +67,7 @@ data_controller.controller("dataController", ['$rootScope', '$scope', '$location
                 }
             }
         };
-        $basic.get($host.api_url + "/storage").then(function (data) {
+        _basic.get($host.api_url + "/storage").then(function (data) {
             if (data.success = true) {
                 $scope.selectArray = data.result;
             } else {

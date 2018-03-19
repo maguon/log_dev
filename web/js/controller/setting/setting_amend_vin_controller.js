@@ -2,8 +2,8 @@
  * Created by ASUS on 2017/5/17.
  */
 var setting_amend_vin_controller=angular.module("setting_amend_vin_controller",[]);
-setting_amend_vin_controller.controller("setting_amend_vin_controller",["$scope","$basic","$config_variable","$host",function ($scope,$basic,$config_variable,$host){
-    var admin=$basic.getSession($basic.USER_ID);
+setting_amend_vin_controller.controller("setting_amend_vin_controller",["$scope","_basic","_config","$host",function ($scope,_basic,_config,$host){
+    var admin=_basic.getSession(_basic.USER_ID);
     $scope.flag=true;
     // 查询vin码
     $scope.demand_car=function ($iValid) {
@@ -14,7 +14,7 @@ setting_amend_vin_controller.controller("setting_amend_vin_controller",["$scope"
                 active:1
             };
 
-            $basic.get($host.api_url+"/admin/"+admin+"/car?"+$basic.objToUrl(obj)).then(function (data) {
+            _basic.get($host.api_url+"/admin/"+admin+"/car?"+_basic.objToUrl(obj)).then(function (data) {
                 if(data.success=true){
                     if(data.result.length==0){
                         $(".no_car_detail").show();
@@ -25,9 +25,9 @@ setting_amend_vin_controller.controller("setting_amend_vin_controller",["$scope"
                         $scope.car_details=data.result[0];
                         $scope.vin= $scope.car_details.vin;
 
-                        for(var i in $config_variable.config_color){
-                            if($config_variable.config_color[i].colorId==$scope.car_details.colour){
-                                $scope.color=$config_variable.config_color[i].colorName;
+                        for(var i in _config.config_color){
+                            if(_config.config_color[i].colorId==$scope.car_details.colour){
+                                $scope.color=_config.config_color[i].colorName;
                             }
                         }
                     }
@@ -53,7 +53,7 @@ setting_amend_vin_controller.controller("setting_amend_vin_controller",["$scope"
             "vin":$scope.vin
         };
         if($scope.vin.length==17){
-            $basic.put($host.api_url+"/admin/"+admin+"/car/"+id+"/vin",obj).then(function (data) {
+            _basic.put($host.api_url+"/admin/"+admin+"/car/"+id+"/vin",obj).then(function (data) {
                 if(data.success==true){
                     swal("修改成功","","success");
                     $scope.demand_vin="";

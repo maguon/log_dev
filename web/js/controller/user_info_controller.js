@@ -2,11 +2,11 @@
  * Created by ASUS on 2017/5/16.
  */
 var user_info_controller=angular.module("user_info_controller",[]);
-user_info_controller.controller("user_info_controller",["$scope","$basic","$config_variable","$host",function ($scope,$basic,$config_variable,$host) {
-    var user_info_obj=$config_variable.userTypes;
+user_info_controller.controller("user_info_controller",["$scope","_basic","_config","$host",function ($scope,_basic,_config,$host) {
+    var user_info_obj=_config.userTypes;
     $scope.user_info_section=[];
     var user_info_fun=function () {
-        $basic.get($host.api_url+"/user").then(function (data) {
+        _basic.get($host.api_url+"/user").then(function (data) {
             if(data.success==true){
                 $scope.user_info_list=data.result;
                 for(var i in user_info_obj){

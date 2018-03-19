@@ -2,7 +2,7 @@
  * Created by ASUS on 2017/5/11.
  */
 var storage_statistics_controller = angular.module("storage_statistics_controller", []);
-storage_statistics_controller.controller("storage_statistics_controller", ['$rootScope', '$scope', "$host", '$location', '$q', "$basic", function ($rootScope, $scope, $host, $location, $q, $basic) {
+storage_statistics_controller.controller("storage_statistics_controller", ['$rootScope', '$scope', "$host", '$location', '$q', "_basic", function ($rootScope, $scope, $host, $location, $q, _basic) {
     var date = new Date();
     var month_size = 12;
     var day_size = 30;
@@ -44,7 +44,7 @@ storage_statistics_controller.controller("storage_statistics_controller", ['$roo
         month_date_array[0].data = [];
         month_date_array[1].data = [];
         // 月份数据读取
-        $basic.get($host.api_url + "/storageTotalMonth?storageId=" + $scope.storage_id.id + "&start=0&size=" + month_size).then(function (data) {
+        _basic.get($host.api_url + "/storageTotalMonth?storageId=" + $scope.storage_id.id + "&start=0&size=" + month_size).then(function (data) {
             if (data.success == true&&data.result.length>0) {
                 for (var i in data.result) {
                     month.push(data.result[data.result.length - 1 - i].y_month);
@@ -101,7 +101,7 @@ storage_statistics_controller.controller("storage_statistics_controller", ['$roo
         });
 
         // 近几日查询
-        $basic.get($host.api_url + "/storageTotalDay?storageId=" + $scope.storage_id.id + "&start=0&size=" + day_size).then(function (data) {
+        _basic.get($host.api_url + "/storageTotalDay?storageId=" + $scope.storage_id.id + "&start=0&size=" + day_size).then(function (data) {
             if (data.success == true&&data.result.length>0) {
                 for (var i in data.result) {
                     // day.push(data.result[data.result.length - 1 - i].date_id.substr(4,6));
@@ -160,7 +160,7 @@ storage_statistics_controller.controller("storage_statistics_controller", ['$roo
         });
     }
     // 车库查询
-    $basic.get($host.api_url + "/storage").then(function (data) {
+    _basic.get($host.api_url + "/storage").then(function (data) {
         if (data.success == true&&data.result.length>0) {
             $scope.storageName = data.result;
             console.log($scope.storageName);

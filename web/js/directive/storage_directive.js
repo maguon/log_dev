@@ -8,8 +8,8 @@ storageDirective.directive('header', function () {
         replace: true,
         transclude: false,
         restrict: 'E',
-        controller: function ($scope, $element, $rootScope, $basic,$host,$config_variable) {
-            if ($basic.checkUser($config_variable.userTypes.storageUser.type)) {
+        controller: function ($scope, $element, $rootScope, _basic,$host,_config) {
+            if (_basic.checkUser(_config.userTypes.storageUser.type)) {
                 $("#menu_link").sideNav({
                     menuWidth: 280, // Default is 300
                     edge: 'left', // Choose the horizontal origin
@@ -18,7 +18,7 @@ storageDirective.directive('header', function () {
                 });
                 // $(".button-collapse").sideNav();
                 $('.collapsible').collapsible();
-                var userid=$basic.getSession($basic.USER_ID);
+                var userid=_basic.getSession(_basic.USER_ID);
                 $scope.amend_user=function () {
                     $(".modal").modal();
                     $("#user_modal").modal("open");
@@ -30,7 +30,7 @@ storageDirective.directive('header', function () {
                             "originPassword":$scope.user_old_password,
                             "newPassword": $scope.user_new_password
                         };
-                        $basic.put($host.api_url + "/user/" + userid + "/password", obj).then(function (data) {
+                        _basic.put($host.api_url + "/user/" + userid + "/password", obj).then(function (data) {
                             if (data.success == true) {
                                 swal("密码重置成功", "", "success");
                                 $("#user_modal").modal("close");
@@ -51,22 +51,22 @@ storageDirective.directive('header', function () {
                         cancelButtonText: "取消",
                         closeOnConfirm: false
                     }, function () {
-                        $basic.removeSession($basic.COMMON_AUTH_NAME);
-                        $basic.removeSession($basic.USER_ID);
-                        $basic.removeSession($basic.USER_TYPE);
-                        $basic.removeSession($basic.USER_NAME);
+                        _basic.removeSession(_basic.COMMON_AUTH_NAME);
+                        _basic.removeSession(_basic.USER_ID);
+                        _basic.removeSession(_basic.USER_TYPE);
+                        _basic.removeSession(_basic.USER_NAME);
                         window.location.href = '/common_login.html';
                     });
 
                 }
-                $basic.setHeader($basic.USER_TYPE, $basic.getSession($basic.USER_TYPE));
-                $basic.setHeader($basic.COMMON_AUTH_NAME,  $basic.getSession($basic.COMMON_AUTH_NAME) );
-                $basic.get($host.api_url + "/user/" + $basic.getSession($basic.USER_ID)).then(function (data) {
+                _basic.setHeader(_basic.USER_TYPE, _basic.getSession(_basic.USER_TYPE));
+                _basic.setHeader(_basic.COMMON_AUTH_NAME,  _basic.getSession(_basic.COMMON_AUTH_NAME) );
+                _basic.get($host.api_url + "/user/" + _basic.getSession(_basic.USER_ID)).then(function (data) {
                     // $(".shadeDowWrap").hide();
                     if (data.success == true) {
                         $scope.userName = data.result[0].mobile;
-                        $basic.setSession($basic.USER_NAME, $scope.userName);
-                        $basic.setHeader($basic.USER_NAME, $scope.userName);
+                        _basic.setSession(_basic.USER_NAME, $scope.userName);
+                        _basic.setHeader(_basic.USER_NAME, $scope.userName);
                     } else {
                         swal(data.msg, "", "error");
                     }
@@ -91,8 +91,8 @@ storageDirective.directive("carMsg", function () {
 storageDirective.directive("truckUpload", function () {
     return {
         restrict: 'A',
-        controller: function ($basic, $upload) {
-            var userId = $basic.getSession($basic.USER_ID);
+        controller: function (_basic, $upload) {
+            var userId = _basic.getSession(_basic.USER_ID);
             var arr = [];
             $("#img").on("change", function (e) {
                 // 获取文件列表对象
@@ -118,7 +118,7 @@ storageDirective.directive("truckUpload", function () {
                             reader.readAsDataURL(file);
                             var fd = new FormData();
                             fd.append("truck_picture", file);
-                            $basic.post($upload.api_url_upload + "/user/" + userId + "/image?imageType=" + 2, {
+                            _basic.post($upload.api_url_upload + "/user/" + userId + "/image?imageType=" + 2, {
                                 image: fd
                             }).then(function (data) {
 
@@ -289,13 +289,13 @@ storageDirective.directive("tooltipped", function () {
 storageDirective.directive("addBrand", function () {
     return {
         restrict: "A",
-        controller: function ($scope, $host, $basic) {
-            var adminId = $basic.getSession($basic.USER_ID);
+        controller: function ($scope, $host, _basic) {
+            var adminId = _basic.getSession(_basic.USER_ID);
             $scope.add_brand = function (iValid) {
                 $scope.submitted1 = true;
                 if (iValid) {
                     // $(".add_Brand_Icon button").attr("disabled",true);
-                    $basic.post($host.api_url + "/admin/" + adminId + "/carMake/", {
+                    _basic.post($host.api_url + "/admin/" + adminId + "/carMake/", {
                         makeName: $scope.b_txt
                     }).then(function (data) {
                         if (data.success == true) {
@@ -318,8 +318,8 @@ storageDirective.directive("addBrand", function () {
 storageDirective.directive("addBrandModel", function () {
     return {
         restrict: "A",
-        controller: function ($scope, $host, $basic) {
-            var adminId = $basic.getSession($basic.USER_ID);
+        controller: function ($scope, $host, _basic) {
+            var adminId = _basic.getSession(_basic.USER_ID);
             // 关闭新增型号
             $scope.close_brand_model = function (id) {
                 $(".add_brand_box" + id).fadeIn(500);
@@ -331,7 +331,7 @@ storageDirective.directive("addBrandModel", function () {
                 if (iValid) {
                     console.log($scope.brandModelText);
                     // console.log($scope.brand_model_text)
-                    $basic.post($host.api_url + "/admin/" + adminId + "/carMake/" + id + "/carModel", {
+                    _basic.post($host.api_url + "/admin/" + adminId + "/carMake/" + id + "/carModel", {
                         modelName: $scope.brandModelText
                     }).then(function (data) {
                         if (data.success == true) {

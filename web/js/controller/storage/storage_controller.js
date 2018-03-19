@@ -2,8 +2,8 @@
  * Created by ASUS on 2017/5/4.
  */
 var storage_storeController = angular.module("storage_storeController", []);
-storage_storeController.controller("storage_storeController", ["$scope", "$host", "$pass_parameter", "$basic", "$state", "$rootScope", "$config_variable",  "service_storage_parking", function ($scope, $host, $pass_parameter, $basic, $state, $rootScope, $config_variable, service_storage_parking) {
-    var userId = $basic.getSession($basic.USER_ID);
+storage_storeController.controller("storage_storeController", ["$scope", "$host", "$pass_parameter", "_basic", "$state", "$rootScope", "_config",  "service_storage_parking", function ($scope, $host, $pass_parameter, _basic, $state, $rootScope, _config, service_storage_parking) {
+    var userId = _basic.getSession(_basic.USER_ID);
     var data = new Date();
     var now_date = moment(data).format('YYYYMMDD');
     var searchAll = function () {
@@ -12,7 +12,7 @@ storage_storeController.controller("storage_storeController", ["$scope", "$host"
             dateEnd: now_date
         };
 
-        $basic.get($host.api_url + "/storageDate?" + $basic.objToUrl(obj)).then(function (data) {
+        _basic.get($host.api_url + "/storageDate?" + _basic.objToUrl(obj)).then(function (data) {
             if (data.success == true&&data.result.length>0) {
                 $scope.store_storage = data.result;
             }
@@ -22,7 +22,7 @@ storage_storeController.controller("storage_storeController", ["$scope", "$host"
     searchAll();
 
     // 车辆品牌查询
-    $basic.get($host.api_url + "/carMake").then(function (data) {
+    _basic.get($host.api_url + "/carMake").then(function (data) {
         if (data.success == true&&data.result.length>0) {
             $scope.makecarName = data.result;
         } else {
@@ -38,7 +38,7 @@ storage_storeController.controller("storage_storeController", ["$scope", "$host"
 
         } else {
             $scope.curruntId = val;
-            $basic.get($host.api_url + "/carMake/" + val + "/carModel").then(function (data) {
+            _basic.get($host.api_url + "/carMake/" + val + "/carModel").then(function (data) {
                 if (data.success == true&&data.result.length>0) {
                     $scope.carModelName = data.result;
 
@@ -51,11 +51,11 @@ storage_storeController.controller("storage_storeController", ["$scope", "$host"
 
     };
     // 颜色
-    $scope.color = $config_variable.config_color;
+    $scope.color = _config.config_color;
 
     // 存放位置联动查询--行
     $scope.changeStorageId = function (val) {
-        $basic.get($host.api_url + "/storageParking?storageId=" + val).then(function (data) {
+        _basic.get($host.api_url + "/storageParking?storageId=" + val).then(function (data) {
             if (data.success == true&&data.result.length>0) {
                 $scope.storageParking = data.result;
 
@@ -75,7 +75,7 @@ storage_storeController.controller("storage_storeController", ["$scope", "$host"
         };
     $scope.new_garage_parking = function (storage_name, storage_id, row, col, p_id) {
         // 车辆品牌查询
-        $basic.get($host.api_url + "/carMake").then(function (data) {
+        _basic.get($host.api_url + "/carMake").then(function (data) {
             if (data.success == true&&data.result.length>0) {
                 $scope.makecarName = data.result;
                 // console.log($scope.makecarName)
@@ -139,7 +139,7 @@ storage_storeController.controller("storage_storeController", ["$scope", "$host"
                 "planOutTime": $scope.plan_out_time
             };
             console.log(obj_car);
-            $basic.post($host.api_url + "/user/" + userId + "/carStorageRel", obj_car).then(function (data) {
+            _basic.post($host.api_url + "/user/" + userId + "/carStorageRel", obj_car).then(function (data) {
                 if (data.success == true) {
                     $('ul.tabs li a').removeClass("active");
                     $(".tab_box").removeClass("active");
@@ -181,15 +181,15 @@ storage_storeController.controller("storage_storeController", ["$scope", "$host"
             $(dom).val('');
             swal('支持的图片类型为. (jpeg,jpg,png,gif,svg,bmp,tiff)', "", "error");
         }
-        $basic.formPost($(dom).parent().parent(), $host.file_url + '/user/' + userId + '/image?imageType=4', function (data) {
+        _basic.formPost($(dom).parent().parent(), $host.file_url + '/user/' + userId + '/image?imageType=4', function (data) {
 
             if (data.success) {
                 console.log(data, $scope.Picture_carId);
                 var imageId = data.imageId;
-                $basic.post($host.record_url + "/car/" + $scope.Picture_carId + "/vin/" + $scope.vin + "/storageImage", {
-                    "username": $basic.getSession($basic.USER_NAME),
+                _basic.post($host.record_url + "/car/" + $scope.Picture_carId + "/vin/" + $scope.vin + "/storageImage", {
+                    "username": _basic.getSession(_basic.USER_NAME),
                     "userId": userId,
-                    "userType": $basic.getSession($basic.USER_TYPE),
+                    "userType": _basic.getSession(_basic.USER_TYPE),
                     "url": imageId
                 }).then(function (data) {
                     if (data.success == true) {

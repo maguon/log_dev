@@ -2,9 +2,9 @@
  * Created by ASUS on 2017/5/12.
  */
 var storage_setting_car_controller = angular.module("storage_setting_car_controller", []);
-storage_setting_car_controller.controller("storage_setting_car_controller", ["$scope", "$host", "$basic", function ($scope, $host, $basic) {
+storage_setting_car_controller.controller("storage_setting_car_controller", ["$scope", "$host", "_basic", function ($scope, $host, _basic) {
 
-    var userId = $basic.getSession($basic.USER_ID);
+    var userId = _basic.getSession(_basic.USER_ID);
     // 打开汽车品牌
     $scope.car_Brand_box = function ($event) {
         $($event.target).hide();
@@ -18,7 +18,7 @@ storage_setting_car_controller.controller("storage_setting_car_controller", ["$s
     };
     // 汽车品牌
     $scope.searchAll = function () {
-        $basic.get($host.api_url + "/carMake/").then(function (data) {
+        _basic.get($host.api_url + "/carMake/").then(function (data) {
             if (data.success == true&&data.result.length>0) {
                 // console.log(data.result);
                 $scope.brand = data.result;
@@ -46,7 +46,7 @@ storage_setting_car_controller.controller("storage_setting_car_controller", ["$s
     // 修改汽车品牌
     $scope.amend_brand_submit = function (iValid, id, name, $index) {
         if (iValid) {
-            $basic.put($host.api_url + "/user/" + userId + "/carMake/" + id, {
+            _basic.put($host.api_url + "/user/" + userId + "/carMake/" + id, {
                 "makeName": name
             }).then(function (data) {
                 if (data.success == true) {
@@ -64,7 +64,7 @@ storage_setting_car_controller.controller("storage_setting_car_controller", ["$s
     // 汽车型号
 
     $scope.search_carModel = function (id) {
-        $basic.get($host.api_url + "/carMake/" + id + "/carModel").then(function (data) {
+        _basic.get($host.api_url + "/carMake/" + id + "/carModel").then(function (data) {
             if (data.success == true&&data.result.length>0) {
                 // console.log(data.result);
                 $scope.brand_model = data.result;
@@ -96,7 +96,7 @@ storage_setting_car_controller.controller("storage_setting_car_controller", ["$s
         // var xt="add_car_model_text"+index;
         console.log($scope.add_car_model_text);
         if (iValid) {
-            $basic.post($host.api_url + "/user/" + userId + "/carMake/" + id + "/carModel", {
+            _basic.post($host.api_url + "/user/" + userId + "/carMake/" + id + "/carModel", {
                 modelName: $scope.add_car_model_text
             }).then(function (data) {
                 if (data.success == true) {
@@ -141,7 +141,7 @@ storage_setting_car_controller.controller("storage_setting_car_controller", ["$s
         } else {
             status = 0
         }
-        $basic.put($host.api_url + "/user/" + userId + "/carModel/" + id + "/modelStatus/" + status, {}).then(function (data) {
+        _basic.put($host.api_url + "/user/" + userId + "/carModel/" + id + "/modelStatus/" + status, {}).then(function (data) {
             if (data.success == true) {
                 $scope.search_carModel(makeId);
             } else {
@@ -164,7 +164,7 @@ storage_setting_car_controller.controller("storage_setting_car_controller", ["$s
     };
     // 确认提交修改型号
     $scope.amend_car_model_submit = function (id, name, index) {
-        $basic.put($host.api_url + "/user/" + userId + "/carModel/" + id, {
+        _basic.put($host.api_url + "/user/" + userId + "/carModel/" + id, {
             modelName: name
         }).then(function (data) {
             if (data.success == true) {
@@ -184,7 +184,7 @@ storage_setting_car_controller.controller("storage_setting_car_controller", ["$s
         } else {
             sta = 0
         }
-        $basic.put($host.api_url + "/user/" + userId + "/carModel/" + id + "/modelStatus/" + sta, {}).then(function (data) {
+        _basic.put($host.api_url + "/user/" + userId + "/carModel/" + id + "/modelStatus/" + sta, {}).then(function (data) {
             if (data.success == true) {
                 swal("更改状态", "", "success");
                 $scope.search_carModel(makeId);
@@ -199,7 +199,7 @@ storage_setting_car_controller.controller("storage_setting_car_controller", ["$s
     // };
     $scope.add_brand = function (iValid) {
         if (iValid) {
-            $basic.post($host.api_url + "/user/" + userId + "/carMake/", {
+            _basic.post($host.api_url + "/user/" + userId + "/carMake/", {
                 makeName: $scope.b_txt
             }).then(function (data) {
                 if (data.success == true) {

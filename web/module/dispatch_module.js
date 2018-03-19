@@ -2,7 +2,7 @@
  * Created by ASUS on 2017/5/19.
  */
 
-var app = angular.module("dispatch_dev", ['ui.materialize','ui.router',"ngCookies","ngMessages","user_info_controller","car_demand_controller","demand_Car_details_controller","hostService","baseService","dispatchDirective","publicDirective","CommonService","CommonFilter","dispatch_router"]);
+var app = angular.module("dispatch_dev", ['ui.materialize','ui.router',"ngCookies","ngMessages","user_info_controller","demand_Car_details_controller","hostService","baseService","dispatchDirective","publicDirective","CommonService","CommonFilter","dispatch_router"]);
 
 app.config(['$httpProvider',"$cookiesProvider",function($httpProvider,$cookiesProvider) {
     $cookiesProvider.defaults = {
