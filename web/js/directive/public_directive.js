@@ -2,16 +2,12 @@
  * Created by ASUS on 2017/5/15.
  */
 var publicDirective = angular.module("publicDirective", []);
-
-
 publicDirective.directive('percent', function () {
     return {
         link: function (scope, element, attr) {
             var val = Number.parseInt(attr.value);
-
             var total = Number.parseInt(attr.total);
             var percentage = Number.parseInt((val*100/total));
-            //Highcharts.chart('percentWrap1', {
             $(element[0].children[0]).highcharts({
                 // 表头
                 title: {
@@ -22,7 +18,6 @@ publicDirective.directive('percent', function () {
                     style:{
                         color:"#bdbdbd"
                     }
-
                 },
                 colors:[
                     "#4dd0e1",
@@ -60,7 +55,6 @@ publicDirective.directive('percent', function () {
                 }]
             });
             var chart = null;
-
         }
     }
 });

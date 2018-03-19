@@ -291,8 +291,6 @@ adminDirective.directive("addBrand", function () {
                     }).then(function (data) {
                         if (data.success == true) {
                             swal("新增成功", "", "success");
-                            // $("<li>").html(str).appendTo($(".Brand_box"));
-                            // $(".add_Brand_Icon button").removeAttr("disabled");
                             $scope.b_txt = "";
                             $scope.searchAll();
                         } else {
@@ -300,8 +298,6 @@ adminDirective.directive("addBrand", function () {
                         }
                     })
                 }
-
-
             }
         }
     }
@@ -335,14 +331,10 @@ adminDirective.directive("addBrandModel", function () {
                         }
                     })
                 }
-
-
             };
-
         }
     }
 });
-
 // 时间格式过滤指令
 adminDirective.directive("formDate", function () {
     return {
@@ -364,10 +356,8 @@ adminDirective.directive("formDate", function () {
                     return new_date;
                 }
             })
-
         }
     }
-
 });
 
 adminDirective.directive("view", function () {

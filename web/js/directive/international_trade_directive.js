@@ -49,12 +49,10 @@ international_trade_directive.directive('header', function () {
                     _basic.removeSession(_basic.USER_NAME);
                     window.location.href = '/common_login.html';
                 });
-
             }
         }
     };
 });
-
 international_trade_directive.directive('dispatchNavigator', function () {
     return {
         templateUrl: '/view/dispatch/dispatch_navigator.html',
@@ -63,11 +61,9 @@ international_trade_directive.directive('dispatchNavigator', function () {
         restrict: 'E',
         controller: function ($scope, _basic,_config, $host, $element, $rootScope) {
             if (_basic.checkUser(_config.userTypes.international_trade.type)) {
-
                 _basic.setHeader(_basic.USER_TYPE, _basic.getSession(_basic.USER_TYPE));
                 _basic.setHeader(_basic.COMMON_AUTH_NAME,  _basic.getSession(_basic.COMMON_AUTH_NAME) );
                 _basic.get($host.api_url + "/user/" + _basic.getSession(_basic.USER_ID)).then(function (data) {
-                    // $(".shadeDowWrap").hide();
                     if (data.success == true&&data.result.length>0) {
                         $scope.userName = data.result[0].mobile;
                         _basic.setSession(_basic.USER_NAME, $scope.userName);
@@ -80,15 +76,11 @@ international_trade_directive.directive('dispatchNavigator', function () {
                     menuWidth: 280, // Default is 300
                     edge: 'left', // Choose the horizontal origin
                     closeOnClick: true, // Closes side-nav on <a> clicks, useful for Angular/Meteor
-                    // draggable: true // Choose whether you can drag to open on touch screens
                 });
-                // $(".button-collapse").sideNav();
                 $('.collapsible').collapsible();
             }else {
                 window.location="./common_login.html"
             }
-
-
         }
     };
 });
@@ -116,16 +108,12 @@ international_trade_directive.directive("truckUpload", function () {
                         } else {
                             var reader = new FileReader();
                             reader.onload = function (e) {
-                                // var imgB=document.getElementById("imgBox");
                                 var div = $("<div>").addClass("storage_car_picture col s3 vc-center  p0 grey white-text");
                                 var imgEle = $("<img>");
                                 imgEle.addClass("responsive-img");
                                 imgEle.attr("src", e.target.result);
-                                // imgEle.setAttribute("src",e.target.result);
                                 imgEle.appendTo(div);
-                                // div.appendChild(imgEle);
                                 div.appendTo($(".storage_car_picture_wrap"));
-                                // .appendChild(div)
                             };
                             reader.readAsDataURL(file);
                             var fd = new FormData();
@@ -136,7 +124,6 @@ international_trade_directive.directive("truckUpload", function () {
 
                             });
                             arr.push(file);
-                            console.log(arr);
                         }
                     } else {
                         alert('文件"' + file.name + '"不是图片。');
@@ -150,7 +137,6 @@ international_trade_directive.directive("carSelect", function () {
     return {
         restrict: "A",
         link: function () {
-
         }
     }
 });
@@ -192,15 +178,11 @@ international_trade_directive.directive("dateFilter", ["$filter", function ($fil
             function parser() {
                 return ctrl.$modelValue;
             }
-
             ctrl.$formatters.push(formatter);
             ctrl.$parsers.unshift(parser);
         }
     }
 }]);
-
-
-
 international_trade_directive.directive('testDirective',[function () {
     return{
         restrict:"ECMA",
@@ -209,9 +191,6 @@ international_trade_directive.directive('testDirective',[function () {
         replace:true//false,
     }
 }]);
-
-
-
 international_trade_directive.directive("addNav", function () {
     return {
         templateUrl: '/view/car/new_truck/new_truck.html',
@@ -232,7 +211,6 @@ international_trade_directive.directive("truckNav", function () {
         }
     }
 });
-
 international_trade_directive.directive("basicTruck", function () {
     return {
         templateUrl: '/view/car/new_truck/basic.html',
@@ -247,7 +225,6 @@ international_trade_directive.directive("carInspection", function () {
         replace: true
     }
 });
-
 international_trade_directive.directive("usersTabs", function () {
     return {
         restrict: "A",
@@ -270,7 +247,6 @@ international_trade_directive.directive("sexChange", function () {
         }
     }
 });
-
 international_trade_directive.directive("ulTabs", function () {
     return {
         restrict: "A",
@@ -287,8 +263,6 @@ international_trade_directive.directive("collapsible", function () {
         }
     }
 });
-
-
 international_trade_directive.directive("tooltipped", function () {
     return {
         restrict: "A",
@@ -297,7 +271,6 @@ international_trade_directive.directive("tooltipped", function () {
         }
     }
 });
-
 international_trade_directive.directive("addBrand", function () {
     return {
         restrict: "A",
@@ -321,8 +294,6 @@ international_trade_directive.directive("addBrand", function () {
                         }
                     })
                 }
-
-
             }
         }
     }
@@ -356,14 +327,10 @@ international_trade_directive.directive("addBrandModel", function () {
                         }
                     })
                 }
-
-
             };
-
         }
     }
 });
-
 // 时间格式过滤指令
 international_trade_directive.directive("formDate", function () {
     return {
@@ -385,12 +352,9 @@ international_trade_directive.directive("formDate", function () {
                     return new_date;
                 }
             })
-
         }
     }
-
 });
-
 international_trade_directive.directive("view", function () {
     return {
         restrict: "EA",
@@ -399,7 +363,6 @@ international_trade_directive.directive("view", function () {
         }
     }
 });
-
 // ng-repeat渲染后的回调
 international_trade_directive.directive('repeatFinish', function () {
     return {

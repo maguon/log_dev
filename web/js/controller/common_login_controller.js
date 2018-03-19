@@ -3,14 +3,11 @@
  */
 var common_login_controller=angular.module("common_login_controller",[]);
 common_login_controller.controller("common_login_controller", ['$rootScope','$scope','$location','$q',"_basic","$host","_config",
-
     function($rootScope,$scope,$location,$q,_basic,$host,_config){
             $scope.username='';
             $scope.password='';
             $scope.login = function(){
-
             if($scope.username==''||$scope.username==''){
-
                 swal("账号或密码不能为空", "", "error");
             } else {
                 $(".shadeDowWrap").show();
@@ -36,7 +33,6 @@ common_login_controller.controller("common_login_controller", ['$rootScope','$sc
                         if(data.result.type==_config.userTypes.international_trade.type){
                             window.location.href="/view/international_trade/international_trade_home.html";
                         }
-
                     }else {
                         swal(data.msg,"","error");
                     }
@@ -45,7 +41,5 @@ common_login_controller.controller("common_login_controller", ['$rootScope','$sc
                     console.log(error)
                 });
             }
-
         };
-        console.log('Login Controller Init !');
     }]);

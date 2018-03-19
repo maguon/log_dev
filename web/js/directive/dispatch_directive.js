@@ -51,12 +51,10 @@ dispatchDirective.directive('header', function () {
                     _basic.removeSession(_basic.USER_NAME);
                     window.location.href = '/common_login.html';
                 });
-
             }
         }
     };
 });
-
 dispatchDirective.directive('dispatchNavigator', function () {
     return {
         templateUrl: '/view/dispatch/dispatch_navigator.html',
@@ -89,8 +87,6 @@ dispatchDirective.directive('dispatchNavigator', function () {
             }else {
                 window.location="./common_login.html"
             }
-
-
         }
     };
 });
@@ -190,19 +186,14 @@ dispatchDirective.directive("dateFilter", ["$filter", function ($filter) {
             function formatter(value) {
                 return dateFilter(value, "yyyy-MM-dd");
             }
-
             function parser() {
                 return ctrl.$modelValue;
             }
-
             ctrl.$formatters.push(formatter);
             ctrl.$parsers.unshift(parser);
         }
     }
 }]);
-
-
-
 dispatchDirective.directive('testDirective',[function () {
     return{
         restrict:"ECMA",
@@ -211,9 +202,6 @@ dispatchDirective.directive('testDirective',[function () {
         replace:true//false,
     }
 }]);
-
-
-
 dispatchDirective.directive("addNav", function () {
     return {
         templateUrl: '/view/car/new_truck/new_truck.html',
@@ -234,7 +222,6 @@ dispatchDirective.directive("truckNav", function () {
         }
     }
 });
-
 dispatchDirective.directive("basicTruck", function () {
     return {
         templateUrl: '/view/car/new_truck/basic.html',
@@ -249,7 +236,6 @@ dispatchDirective.directive("carInspection", function () {
         replace: true
     }
 });
-
 dispatchDirective.directive("usersTabs", function () {
     return {
         restrict: "A",
@@ -272,7 +258,6 @@ dispatchDirective.directive("sexChange", function () {
         }
     }
 });
-
 dispatchDirective.directive("ulTabs", function () {
     return {
         restrict: "A",
@@ -289,8 +274,6 @@ dispatchDirective.directive("collapsible", function () {
         }
     }
 });
-
-
 dispatchDirective.directive("tooltipped", function () {
     return {
         restrict: "A",
@@ -299,7 +282,6 @@ dispatchDirective.directive("tooltipped", function () {
         }
     }
 });
-
 dispatchDirective.directive("addBrand", function () {
     return {
         restrict: "A",
@@ -308,14 +290,11 @@ dispatchDirective.directive("addBrand", function () {
             $scope.add_brand = function (iValid) {
                 $scope.submitted1 = true;
                 if (iValid) {
-                    // $(".add_Brand_Icon button").attr("disabled",true);
                     _basic.post($host.api_url + "/admin/" + adminId + "/carMake/", {
                         makeName: $scope.b_txt
                     }).then(function (data) {
                         if (data.success == true) {
                             swal("新增成功", "", "success");
-                            // $("<li>").html(str).appendTo($(".Brand_box"));
-                            // $(".add_Brand_Icon button").removeAttr("disabled");
                             $scope.b_txt = "";
                             $scope.searchAll();
                         } else {
@@ -323,8 +302,6 @@ dispatchDirective.directive("addBrand", function () {
                         }
                     })
                 }
-
-
             }
         }
     }
@@ -343,14 +320,10 @@ dispatchDirective.directive("addBrandModel", function () {
             $scope.verify_brand_model = function (iValid, id) {
                 $scope.submitted3 = true;
                 if (iValid) {
-                    console.log($scope.brandModelText);
-                    // console.log($scope.brand_model_text)
                     _basic.post($host.api_url + "/admin/" + adminId + "/carMake/" + id + "/carModel", {
                         modelName: $scope.brandModelText
                     }).then(function (data) {
                         if (data.success == true) {
-                            // $(".add_brand_box").fadeIn(500);
-                            // $(".add_brand_model_wrap"+id).fadeOut(500);
                             $scope.search_carModel(id);
                             $scope.brandModelText = "";
                         } else {
@@ -358,14 +331,10 @@ dispatchDirective.directive("addBrandModel", function () {
                         }
                     })
                 }
-
-
             };
-
         }
     }
 });
-
 // 时间格式过滤指令
 dispatchDirective.directive("formDate", function () {
     return {
@@ -387,12 +356,9 @@ dispatchDirective.directive("formDate", function () {
                     return new_date;
                 }
             })
-
         }
     }
-
 });
-
 dispatchDirective.directive("view", function () {
     return {
         restrict: "EA",
@@ -401,7 +367,6 @@ dispatchDirective.directive("view", function () {
         }
     }
 });
-
 // ng-repeat渲染后的回调
 dispatchDirective.directive('repeatFinish', function () {
     return {

@@ -3,7 +3,6 @@
  */
 
 var Login_model = angular.module("log_dev", ['ui.router',"ngCookies","common_login_controller","CommonService","baseService","hostService"]);
-
 Login_model.config(['$httpProvider',"$cookiesProvider",function($httpProvider,$cookiesProvider) {
     $cookiesProvider.defaults = {
         path: "/",

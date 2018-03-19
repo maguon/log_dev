@@ -14,9 +14,7 @@ storageDirective.directive('header', function () {
                     menuWidth: 280, // Default is 300
                     edge: 'left', // Choose the horizontal origin
                     closeOnClick: true, // Closes side-nav on <a> clicks, useful for Angular/Meteor
-                    // draggable: true // Choose whether you can drag to open on touch screens
                 });
-                // $(".button-collapse").sideNav();
                 $('.collapsible').collapsible();
                 var userid=_basic.getSession(_basic.USER_ID);
                 $scope.amend_user=function () {
@@ -75,11 +73,9 @@ storageDirective.directive('header', function () {
             }else {
                 window.location="./common_login.html"
             }
-
         }
     };
 });
-
 storageDirective.directive("carMsg", function () {
     return {
         restrict: 'A',
@@ -104,16 +100,12 @@ storageDirective.directive("truckUpload", function () {
                         } else {
                             var reader = new FileReader();
                             reader.onload = function (e) {
-                                // var imgB=document.getElementById("imgBox");
                                 var div = $("<div>").addClass("storage_car_picture col s3 vc-center  p0 grey white-text");
                                 var imgEle = $("<img>");
                                 imgEle.addClass("responsive-img");
                                 imgEle.attr("src", e.target.result);
-                                // imgEle.setAttribute("src",e.target.result);
                                 imgEle.appendTo(div);
-                                // div.appendChild(imgEle);
                                 div.appendTo($(".storage_car_picture_wrap"));
-                                // .appendChild(div)
                             };
                             reader.readAsDataURL(file);
                             var fd = new FormData();
@@ -121,10 +113,8 @@ storageDirective.directive("truckUpload", function () {
                             _basic.post($upload.api_url_upload + "/user/" + userId + "/image?imageType=" + 2, {
                                 image: fd
                             }).then(function (data) {
-
                             });
                             arr.push(file);
-                            console.log(arr);
                         }
                     } else {
                         alert('文件"' + file.name + '"不是图片。');
@@ -176,19 +166,14 @@ storageDirective.directive("dateFilter", ["$filter", function ($filter) {
             function formatter(value) {
                 return dateFilter(value, "yyyy-MM-dd");
             }
-
             function parser() {
                 return ctrl.$modelValue;
             }
-
             ctrl.$formatters.push(formatter);
             ctrl.$parsers.unshift(parser);
         }
     }
 }]);
-
-
-
 storageDirective.directive('testDirective',[function () {
     return{
         restrict:"ECMA",
@@ -197,9 +182,6 @@ storageDirective.directive('testDirective',[function () {
         replace:true//false,
     }
 }]);
-
-
-
 storageDirective.directive("addNav", function () {
     return {
         templateUrl: '/view/car/new_truck/new_truck.html',
@@ -220,7 +202,6 @@ storageDirective.directive("truckNav", function () {
         }
     }
 });
-
 storageDirective.directive("basicTruck", function () {
     return {
         templateUrl: '/view/car/new_truck/basic.html',
@@ -235,7 +216,6 @@ storageDirective.directive("carInspection", function () {
         replace: true
     }
 });
-
 storageDirective.directive("usersTabs", function () {
     return {
         restrict: "A",
@@ -258,7 +238,6 @@ storageDirective.directive("sexChange", function () {
         }
     }
 });
-
 storageDirective.directive("ulTabs", function () {
     return {
         restrict: "A",
@@ -275,8 +254,6 @@ storageDirective.directive("collapsible", function () {
         }
     }
 });
-
-
 storageDirective.directive("tooltipped", function () {
     return {
         restrict: "A",
@@ -285,7 +262,6 @@ storageDirective.directive("tooltipped", function () {
         }
     }
 });
-
 storageDirective.directive("addBrand", function () {
     return {
         restrict: "A",
@@ -300,8 +276,6 @@ storageDirective.directive("addBrand", function () {
                     }).then(function (data) {
                         if (data.success == true) {
                             swal("新增成功", "", "success");
-                            // $("<li>").html(str).appendTo($(".Brand_box"));
-                            // $(".add_Brand_Icon button").removeAttr("disabled");
                             $scope.b_txt = "";
                             $scope.searchAll();
                         } else {
@@ -309,8 +283,6 @@ storageDirective.directive("addBrand", function () {
                         }
                     })
                 }
-
-
             }
         }
     }
@@ -330,13 +302,10 @@ storageDirective.directive("addBrandModel", function () {
                 $scope.submitted3 = true;
                 if (iValid) {
                     console.log($scope.brandModelText);
-                    // console.log($scope.brand_model_text)
                     _basic.post($host.api_url + "/admin/" + adminId + "/carMake/" + id + "/carModel", {
                         modelName: $scope.brandModelText
                     }).then(function (data) {
                         if (data.success == true) {
-                            // $(".add_brand_box").fadeIn(500);
-                            // $(".add_brand_model_wrap"+id).fadeOut(500);
                             $scope.search_carModel(id);
                             $scope.brandModelText = "";
                         } else {
@@ -344,14 +313,10 @@ storageDirective.directive("addBrandModel", function () {
                         }
                     })
                 }
-
-
             };
-
         }
     }
 });
-
 // 时间格式过滤指令
 storageDirective.directive("formDate", function () {
     return {
@@ -373,12 +338,9 @@ storageDirective.directive("formDate", function () {
                     return new_date;
                 }
             })
-
         }
     }
-
 });
-
 storageDirective.directive("view", function () {
     return {
         restrict: "EA",
@@ -387,7 +349,6 @@ storageDirective.directive("view", function () {
         }
     }
 });
-
 // ng-repeat渲染后的回调
 storageDirective.directive('repeatFinish', function () {
     return {

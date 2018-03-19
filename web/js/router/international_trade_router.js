@@ -3,8 +3,6 @@
  */
 var international_trade_router=angular.module("international_trade_router",[]);
 international_trade_router.config(['$stateProvider',"$urlRouterProvider",function($stateProvider,$urlRouterProvider) {
-
-
     $urlRouterProvider.when("","/user_info");
     $stateProvider
         .state("car_demand",{

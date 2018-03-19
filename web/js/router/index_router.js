@@ -1,19 +1,5 @@
 var index_router=angular.module("index_router",[]);
 index_router.config(['$stateProvider',"$urlRouterProvider",function($stateProvider,$urlRouterProvider) {
-    // $routeProvider.when('/', {
-    //     templateUrl: '/view/index.html',
-    //     controller:'indexController'
-    // }).when('/data', {
-    //     templateUrl: '/view/data.html',
-    //     controller:'dataController'
-    // }).when('/setting', {
-    //     templateUrl: '/view/setting.html',
-    //     controller:'settingController'
-    // }).otherwise({
-    //     templateUrl: '/view/index.html',
-    //     controller:'indexController'
-    // });
-
     $urlRouterProvider.when("","/storage_index");
     $stateProvider
         .state("index", {  //路由状态
@@ -24,7 +10,6 @@ index_router.config(['$stateProvider',"$urlRouterProvider",function($stateProvid
         .state("Com", {
             url: "/Com",  //路由路径
             templateUrl: "/view/car/truck_statistics.html",  //路由填充的模板
-            // controller:'dataController'
         })
         .state("CarMsg", {
             url: "/CarMsg",  //路由路径
@@ -33,7 +18,6 @@ index_router.config(['$stateProvider',"$urlRouterProvider",function($stateProvid
             controller:function ($state) {
                 $('.modal').modal();
                 $state.go("CarMsg.truck");
-                // console.log($state);
             }
         })
         .state("CarMsg.truck", {
@@ -46,16 +30,9 @@ index_router.config(['$stateProvider',"$urlRouterProvider",function($stateProvid
             templateUrl: "/view/car/truck/truck_hand.html",  //路由填充的模板
             controller:'truck_hand_controller'
         })
-        // .state("Driver", {
-        //     url: "/Driver",  //路由路径
-        //     templateUrl: "/view/car/Driver.html", //路由填充的模板
-        //     // abstract:true,
-        //     // controller:
-        // })
         .state("Company", {
             url: "/Company",  //路由路径
             templateUrl: "/view/car/company.html", //路由填充的模板
-            // abstract:true,
             controller:"Company_controller"
         })
         .state("malfunction", {
@@ -67,8 +44,6 @@ index_router.config(['$stateProvider',"$urlRouterProvider",function($stateProvid
         .state("refuel", {
             url: "/refuel",  //路由路径
             templateUrl: "/view/car/refuel.html", //路由填充的模板
-            // abstract:true,
-            // controller:
         })
         .state("refuel.carRefuel", {
             url: "/refuel",  //路由路径
@@ -79,8 +54,6 @@ index_router.config(['$stateProvider',"$urlRouterProvider",function($stateProvid
         .state("refuel.oilMass", {
             url: "/refuel",  //路由路径
             templateUrl: "/view/car/refuel.html", //路由填充的模板
-            // abstract:true,
-            // controller:
         })
         .state("data", {
             url: "/data",  //路由路径
@@ -168,48 +141,4 @@ index_router.config(['$stateProvider',"$urlRouterProvider",function($stateProvid
             templateUrl: "/view/car_demand/demand_Car_details.html",
             controller:'demand_Car_details_controller'
         });
-        // .state("calendar", {
-        //     url:"/calendar",
-        //     templateUrl: "/view/storage/working_calendar.html",
-        //     // controller:'calendar_Controller'
-        // })
-        // .state("storage_index", {  //路由状态
-        //     url: "/storage_index",  //路由路径
-        //     templateUrl: "/view/storage/storage_index.html",  //路由填充的模板
-        //     controller:'storage_index_controller'
-        // })
-        // .state("storageCar", {
-        //     url:"/storage_car",
-        //     templateUrl: "/view/storage/storage_car.html",
-        // })
-        // .state("storageStore", {
-        //     url:"/storage_store",
-        //     templateUrl: "/view/storage/storage_store.html",
-        // })
-        // .state("storageCar_details", {
-        //     url:"/storageCar_details/{id}/vin/{vin}?from",
-        //     templateUrl: "/view/storage/storage_details.html",
-        // })
-        // .state("storage_car_map", {
-        //     url:"/storage_car_map/{id}?form",
-        //     templateUrl: "/view/storage/storage_car_map.html",
-        // });
-
-    // $urlRouterProvider.otherwise("/pageTab");
-
-    // $urlRouterProvider.when("","/report")
-    // $stateProvider
-    //     .state("report",{
-    //         url:"/report",
-    //         views:{
-    //             "PageTab":{
-    //                 // url: "/pageTab",  //路由路径
-    //                 templateUrl: "PageTab.html"  //路由填充的模板
-    //             },
-    //             "content":{
-    //                 // url: "/content",  //路由路径
-    //                 templateUrl: "content.html"  //路由填充的模板
-    //             }
-    //         }
-    //     });
 }]);

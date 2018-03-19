@@ -1,6 +1,5 @@
 
 var app = angular.module("log_dev", ['ui.materialize','ui.router',"CommonFilter","ngCookies","ngMessages","data_controller","index_controller","loginController","storage_index_controller","truckController","Company_controller","Storage_carController","settingController","storage_storeController","storage_car_mapController","storageCar_detailsController","storage_statistics_controller","storage_working_calendarController","user_info_controller","hostService","baseService","adminDirective","publicDirective","CommonService","index_router"]);
-
 app.config(['$httpProvider',"$cookiesProvider",function($httpProvider,$cookiesProvider) {
     $cookiesProvider.defaults = {
         path: "/",

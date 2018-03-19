@@ -3,7 +3,6 @@
  */
 
 var app = angular.module("dispatch_dev", ['ui.materialize','ui.router',"ngCookies","ngMessages","user_info_controller","hostService","baseService","dispatchDirective","publicDirective","CommonService","CommonFilter","dispatch_router"]);
-
 app.config(['$httpProvider',"$cookiesProvider",function($httpProvider,$cookiesProvider) {
     $cookiesProvider.defaults = {
         path: "/",

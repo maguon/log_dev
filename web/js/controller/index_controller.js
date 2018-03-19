@@ -1,7 +1,6 @@
 var index_controller = angular.module("index_controller", []);
 index_controller.controller("indexController", ['$rootScope', '$scope', '$location', '$q', "_basic","_config",
     function ($rootScope, $scope, $location, $q, _basic,_config) {
-        //
         if (_basic.checkUser(_config.user_type.admin_type)) {
             Highcharts.chart('pie_chart', {
                 chart: {
@@ -133,8 +132,5 @@ index_controller.controller("indexController", ['$rootScope', '$scope', '$locati
             });
         } else {
             window.location.href = 'login.html';
-
         }
-
-
     }])

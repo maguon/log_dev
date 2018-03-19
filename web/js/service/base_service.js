@@ -72,16 +72,13 @@ baseService.factory("service_storage_parking", function () {
             }
 
         }
-        // console.log(parkingArray);
         return parkingArray;
-        // return parkingArray;
     };
     return {
         storage_parking: storageParking
     }
 
 });
-
 // 公共数据
 baseService.factory("_config", function () {
     var _this = {};
@@ -90,7 +87,6 @@ baseService.factory("_config", function () {
         dispatch : {type:3,name:"调度部"},
         international_trade : {type:4,name:"国贸部"}
     };
-
     _this.user_type={
         storage_type:"2",
         admin_type:"99"
@@ -164,15 +160,12 @@ baseService.factory("_config", function () {
             colorId: "CCCCCC "
         }
     ];
-
     return _this
 });
-
 // 页面之间数据传递
 baseService.factory("$pass_parameter", function () {
 //定义参数对象
     var myObject = {};
-
     /**
      * 定义传递数据的setter函数
      * @param {type} xxx
@@ -182,7 +175,6 @@ baseService.factory("$pass_parameter", function () {
     var _setter = function (data) {
         myObject = data;
     };
-
     /**
      * 定义获取数据的getter函数
      * @param {type} xxx
@@ -192,9 +184,6 @@ baseService.factory("$pass_parameter", function () {
     var _getter = function () {
         return myObject;
     };
-
-    // Public APIs
-    // 在controller中通过调setter()和getter()方法可实现提交或获取参数的功能
     return {
         setter: _setter,
         getter: _getter

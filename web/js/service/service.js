@@ -10,21 +10,16 @@ CommonService.factory('_basic',['$http','$location','$q',"$cookies",function($ht
     _this.ADMIN_AUTH_NAME = "admin-token";
     _this.ADMIN_ID = "admin-id";
     _this.ADMIN_STATUS = "admin-status";
-
     _this.setHeader = function(name,value) {
         $http.defaults.headers.common[name] = value;
     };
-
     _this.setHeader('Content-Type','application/json');
-
     _this.formPost = function(dom,url,success,error) {
-        // url = '/api' + (url[0]==='/'?'':'/') + url;
         var options = {
             url: url,
             type:'post',
             beforeSend: function(xhr) {
                 xhr.setRequestHeader(_this.COMMON_AUTH_NAME,sessionStorage.getItem(_this.COMMON_AUTH_NAME));
-                //xhr.setRequestHeader('Content-Type','multipart/form-data');
             },
             success: function(data) {
                 if($.isFunction(success)) {
@@ -40,35 +35,28 @@ CommonService.factory('_basic',['$http','$location','$q',"$cookies",function($ht
         };
         $(dom).ajaxSubmit(options);
     };
-
     var fnArray = ['get','delete','jsonp','head','post','put'];
     for(var i in fnArray) {
         (function(fn) {
             _this[fn] = function(url,param) {
                 $(".shadeDowWrap").show();
-                // url = '/api' + (url[0]==='/'?'':'/') + url;
                 var deferred = $q.defer();
-                //only 'post,put' need 2nd parameter
                 $http[fn](url,param).then(function(success){
                     $(".shadeDowWrap").hide();
                     deferred.resolve(success.data);
-
                 }).catch(function(data){
-                    // checkAuthorizedStatus(data);
                     deferred.reject(data);
                 });
                 return deferred.promise;
             };
         })(fnArray[i]);
     }
-
     function checkAuthorizedStatus(data) {
         if(!angular.isUndefined(data.outMsg) && data.outMsg=="Access token error ,the Api can't be accessed") {
             $cookies.get(_this.ADMIN_AUTH_NAME,"");
             window.location.href="admin_login.html";
         }
     }
-
     _this.setCookie = function (name,value) {
         $cookies.put(name, value);
 
@@ -88,7 +76,6 @@ CommonService.factory('_basic',['$http','$location','$q',"$cookies",function($ht
     _this.removeSession = function(name){
         sessionStorage.removeItem(name);
     }
-
     _this.checkUser = function(userType){
         if(!(this.getSession(this.COMMON_AUTH_NAME) && this.getSession(this.USER_ID))){
             return false;
@@ -120,7 +107,6 @@ CommonService.factory('_basic',['$http','$location','$q',"$cookies",function($ht
         }
         return value;
     };
-
     function getParameterName(str) {
         var start = str.indexOf("=");
         if (start==-1) {
@@ -128,7 +114,6 @@ CommonService.factory('_basic',['$http','$location','$q',"$cookies",function($ht
         }
         return str.substring(0,start);
     }
-
     function getParameterValue(str) {
         var start = str.indexOf("=");
         if (start==-1) {
