@@ -1,5 +1,4 @@
 <div class="usersWrap"  >
-
     <div class="row">
         <div class="row">
             <a class="waves-light btn-floating waves-effect btn right  cyan lighten-1"  ng-click="newOperator()">
@@ -88,7 +87,6 @@
                     <td ng-bind="el.real_name"></td>
                     <td  ng-if="el.gender==0">女</td>
                     <td  ng-if="el.gender==1">男</td>
-                    <!--<td ng-if="el.type==1">车管部</td>-->
                     <td ng-if="el.type==2">仓储部</td>
                     <td ng-if="el.type==3">调度部</td>
                     <td ng-if="el.type==4">国贸部</td>
@@ -97,16 +95,11 @@
                     <td ng-if="el.status==0">停用</td>
                     <td class="operation table_operation vc-center" >
                         <span><i class="mdi mdi-eye cyan-text text-lighten-1" ng-click="lookOperation(el.uid)"></i></span>
-                        <!--<span><i class="mdi mdi-lock-open" ></i></span>-->
                         <span class="switch" ng-click="changeStatus(el.status,el.uid)" style="height: 30px;">
-                            <!--<i class="mdi mdi-paperclip cyan-text text-lighten-1" ></i>-->
-                             <!--<div class="switch">-->
                                 <label>
                                   <input type="checkbox" ng-checked="el.status==1">
                                   <span class="lever"></span>
                                 </label>
-                              <!--</div>-->
-                            <!--<i class="mdi mdi-cart-off" ></i>-->
                         </span>
                         <div id="look_Operator" class="modal">
                             <form name="change_operatorForm" ng-submit="changeOperatorForm(change_operatorForm.$valid,look_operation.uid)" novalidate>
@@ -167,15 +160,11 @@
                                     </a>
                                 </div>
                             </form>
-
                         </div>
                     </td>
                 </tr>
-
                 </tbody>
             </table>
-
         </div>
     </div>
-
 </div>

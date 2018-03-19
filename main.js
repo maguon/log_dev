@@ -17,16 +17,16 @@ var restify = require('restify');
         ip: true
     }));
     restify.CORS.ALLOW_HEADERS.push('Access-Control-Allow-Origin');
-    restify.CORS.ALLOW_HEADERS.push("Access-Control-Allow-Methods","GET");
-    restify.CORS.ALLOW_HEADERS.push("Access-Control-Allow-Methods","POST");
-    restify.CORS.ALLOW_HEADERS.push("Access-Control-Allow-Methods","PUT");
-    restify.CORS.ALLOW_HEADERS.push("Access-Control-Allow-Methods","DELETE");
-    restify.CORS.ALLOW_HEADERS.push("Access-Control-Allow-Headers","x-requested-with,content-type");
+    restify.CORS.ALLOW_HEADERS.push("Access-Control-Allow-Methods", "GET");
+    restify.CORS.ALLOW_HEADERS.push("Access-Control-Allow-Methods", "POST");
+    restify.CORS.ALLOW_HEADERS.push("Access-Control-Allow-Methods", "PUT");
+    restify.CORS.ALLOW_HEADERS.push("Access-Control-Allow-Methods", "DELETE");
+    restify.CORS.ALLOW_HEADERS.push("Access-Control-Allow-Headers", "x-requested-with,content-type");
     server.use(restify.CORS());
 
     // Use the common stuff you probably want
     //hard code the upload folder for now
-    server.use(restify.bodyParser({uploadDir:__dirname+'/../uploads/'}));
+    server.use(restify.bodyParser({uploadDir: __dirname + '/../uploads/'}));
     server.use(restify.acceptParser(server.acceptable));
     server.use(restify.dateParser());
     server.use(restify.authorizationParser());
@@ -34,17 +34,19 @@ var restify = require('restify');
     server.use(restify.gzipResponse());
 
     var STATIS_FILE_RE = /\.(css|js|jpe?g|png|gif|less|eot|svg|bmp|tiff|ttf|otf|woff|pdf|ico|json|wav|ogg|mp3?|xml|woff2|map|apk)$/i;
-    server.get(STATIS_FILE_RE, restify.serveStatic({ directory: './web', default: 'index.html', maxAge: 0 }));
+    server.get(STATIS_FILE_RE, restify.serveStatic({directory: './web', default: 'index.html', maxAge: 0}));
 
 
-    server.get(/\.html$/i,restify.serveStatic({
+    server.get(/\.html$/i, restify.serveStatic({
         directory: './web',
-        maxAge: 0}));
-    server.get(/\.html\?/i,restify.serveStatic({
+        maxAge: 0
+    }));
+    server.get(/\.html\?/i, restify.serveStatic({
         directory: './web',
-        maxAge: 0}));
+        maxAge: 0
+    }));
     server.listen(9000, function onListening() {
-        server.get('/',restify.serveStatic({
+        server.get('/', restify.serveStatic({
             directory: './web',
             default: 'index.html',
             maxAge: 0

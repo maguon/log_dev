@@ -1,21 +1,18 @@
 <div id="look_StorageCar" >
     <div class="" >
         <div class="modal-content grey-text text-darken-2">
-            <!--<div class="" style="width: 95%;margin: 0 auto">-->
                 <div class="storage_storeTitle vc-center ">
                     <a class=" storage_goback_btn btn-floating btn waves-effect cyan lighten-1 waves-light " ng-click="return()">
                         <i class="mdi mdi-arrow-left-bold"></i>
                     </a>
                     <h4 class="center-align cyan-text text-lighten-1">仓储车辆信息</h4>
                 </div>
-                <!--<div class="divider" style="background: #00bcd4;height: 2px;"></div>-->
                 <div class="row no-marBottom" ul-tabs>
                     <div class="col s12 p0">
                         <ul class="tabWrap grey lighten-4 ">
                             <li class="tab col s6  look_msg vc-center" ng-click="look_msg()">基本信息</li>
                             <li  class="tab  col s6 look_car_img vc-center" ng-click="look_car_img()">车辆照片</li>
                         </ul>
-                        <!--<div class="divider" style="background: #00bcd4;height: 2px;"></div>-->
                     </div>
                     <div id="look_msg" class="col s12 tab_box" style="width: 95%; margin:0 2% ">
                         <form name="change_newStorage_carForm" style="color:#616161" ng-submit="submitForm(change_newStorage_carForm.$valid,self_car.id,self_car.r_id)" novalidate>
@@ -116,21 +113,21 @@
                                         操作记录:</p>
                                     <div ng-repeat="el in comment" class="col s12 valign-wrapper " style="position: relative">
                                         <p class=" col s12 p0" >
-                                                        <span class="col s12 p0">
-                                                            <span ng-bind="el.timez|formdate"></span>
-                                                            <span>
-                                                                操作内容：
-                                                            </span>
-                                                            <span ng-bind="el.content">
+                                            <span class="col s12 p0">
+                                                <span ng-bind="el.timez|formdate"></span>
+                                                <span>
+                                                    操作内容：
+                                                </span>
+                                                <span ng-bind="el.content">
 
-                                                            </span>
-                                                            <span>
-                                                                操作员：
-                                                            </span>
-                                                            <span ng-bind="el.name">
-                                                                王大锤
-                                                            </span>
-                                                        </span>
+                                                </span>
+                                                <span>
+                                                    操作员：
+                                                </span>
+                                                <span ng-bind="el.name">
+                                                    王大锤
+                                                </span>
+                                            </span>
                                         </p>
                                     </div>
                                 </div>
@@ -198,13 +195,11 @@
                                                 </div>
                                             </div>
                                         </form>
-
                                     </div>
                                     <a class="btn btn-floating  btn-large waves-light waves-effect red lighten-2" ng-click="out_storage(self_car.r_id,self_car.p_id,self_car.storage_id,self_car.id)">
                                         <i class="mdi mdi-logout "></i>
                                     </a>
                                 </div>
-
                             </div>
                         </form>
                     </div>
@@ -234,9 +229,6 @@
                     </div>
                 </div>
             </div>
-
-
         </div>
     </div>
-
 </div>

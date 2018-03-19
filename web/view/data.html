@@ -1,15 +1,15 @@
 <div>
-
     <div class="row">
         <div class="col s6">
             <div class="row">
                 <div class="file-field input-field">
                     <div class="btn purple darken-3">
                         <span>文件</span>
-                        <input type="file" accept="text/csv" onchange='angular.element(this).scope().fileChange(this)' >
+                        <input type="file" accept="text/csv" onchange='angular.element(this).scope().fileChange(this)'>
                     </div>
                     <div class="file-path-wrapper">
-                        <input class="file-path validate" ng-change="upload(dom,val)" placeholder="请选择csv文件上传" ng-model="csvFile" type="text">
+                        <input class="file-path validate" ng-change="upload(dom,val)" placeholder="请选择csv文件上传"
+                               ng-model="csvFile" type="text">
                     </div>
                 </div>
             </div>
@@ -40,14 +40,13 @@
     <div class="row">
         <div class="col s6">
             <div class="input-field col s12">
-                <select  ng-model="select"  material-select watch>
+                <select ng-model="select" material-select watch>
                     <option value="" disabled selected>Choose your option</option>
-                    <option ng-value="{{op.id}}" ng-repeat="op in selectArray">{{op.storage_name}} </option>
-                </select >
+                    <option ng-value="{{op.id}}" ng-repeat="op in selectArray">{{op.storage_name}}</option>
+                </select>
                 <label>Materialize Select</label>
             </div>
             <div class="col s6">{{select}}</div>
         </div>
-
     </div>
 </div>

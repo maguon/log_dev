@@ -29,16 +29,13 @@
                                             <input  id="storageCol" name="storageCol" autocomplete="off" ng-model="newStorageCol" type="text" required class="col s9-0">
                                             <h5 class="col s1-0">排</h5>
                                         </div>
-
                                     </div>
                                     <div class=" col s4-0" ng-class="{ 'has-error':StorageForm.storageRoad.$invalid&&submitted }">
                                         <div class="row">
                                             <input  id="storageRoad" name="storageRoad" autocomplete="off" ng-model="newStorageRoad" type="text" required class="col s9-0">
                                             <h5 class="col s1-0">位</h5>
                                         </div>
-
                                     </div>
-
                                 </div>
                                 <div class="row" ng-class="{ 'has-error' : StorageForm.storage_remark.$invalid&&submitted }">
                                     <h5 class="col s2-0 ">
@@ -47,7 +44,6 @@
                                     </h5>
                                     <textarea  id="storage_remark"  style="height: 100px" name="storage_remark" type="text" autocomplete="off"  ng-model="newStorageRemark" required  class="col s8-0"></textarea>
                                 </div>
-
                             </div>
                         </div>
                     </div>
@@ -61,7 +57,6 @@
                         </a>
                     </div>
                 </form>
-
             </div>
         </div>
         <div class="divider" style="background: #00bcd4;height: 2px;"></div>
@@ -75,7 +70,6 @@
                     <th  class="s2 table_operation">操作</th>
                 </tr>
                 </thead>
-
                 <tbody>
                 <tr ng-repeat="el in storage" class="grey-text text-darken-1">
                     <td ng-bind="el.storage_name"></td>
@@ -85,14 +79,10 @@
                     <td class="operation table_operation vc-center">
                         <span><i class="mdi mdi-eye cyan-text text-lighten-1" ng-click="lookStorage(el.id)"></i></span>
                         <span class="switch" ng-click="changeStorage_status(el.id,el.storage_status)" style="height: 30px">
-                              <!--<span class="switch">-->
                                 <label>
                                   <input type="checkbox" ng-checked="el.storage_status==1">
                                   <span class="lever"></span>
                                 </label>
-                              <!--</span>-->
-                            <!--<i ng-if="el.storage_status==0" class="mdi mdi-link cyan-text text-lighten-1" ></i>-->
-                             <!--<i ng-if="el.storage_status==1" class="mdi mdi-link-off cyan-text text-lighten-1" ></i>-->
                         </span>
                     </td>
                 </tr>
@@ -143,15 +133,6 @@
                                     </div>
 
                                 </div>
-                                <!--<div class="row valign-wrapper">-->
-                                    <!--<h5 class="col s2-0 ">-->
-                                        <!--<span style="color: red">*</span>-->
-                                        <!--运营记录:-->
-                                    <!--</h5>-->
-                                    <!--<div class="col s8-0 ">-->
-                                       <!--交电话费假大空弗兰克电视剧咖啡几点开始你发-->
-                                    <!--</div>-->
-                                <!--</div>-->
                                 <div class="row" ng-class="{ 'has-error' : selfStorageForm.selfStorage_remark.$invalid&&submitted }">
                                     <h5 class="col s2-0 ">
                                         <span style="color: red">*</span>
@@ -173,10 +154,7 @@
                         </a>
                     </div>
                 </form>
-
-
             </div>
         </div>
     </div>
-
 </div>

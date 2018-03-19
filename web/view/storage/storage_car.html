@@ -7,29 +7,24 @@
                         <option value=""  >车辆状态</option>
                         <option ng-repeat="el in rel_status" ng-value="el.s_num">{{el.status_text}}</option>
                     </select>
-                    <!--<label ></label>-->
                 </div>
-
                 <div class="input-field col s3">
                     <select material-select watch ng-model="search_storage" ng-change="changeStorageId(search_storage)">
                         <option value=""  selected>所在仓库</option>
                         <option ng-if="el.storage_status==1" ng-repeat="el in storageName" ng-value="el.id">{{el.storage_name}}</option>
                     </select>
-                    <!--<label ></label>-->
                 </div>
                 <div class="input-field col s3">
                     <select material-select watch ng-model="search_makeId" ng-change="changeMakeId(search_makeId)">
                         <option value=""  selected>车辆品牌</option>
                         <option ng-repeat="el in makecarName" ng-value="el.id">{{el.make_name}}</option>
                     </select>
-                    <!--<label ></label>-->
                 </div>
                 <div class="input-field col s3">
                     <select material-select watch ng-model="search_modelId" >
                         <option ng-value=""  selected>车辆型号</option>
                         <option ng-repeat="el in carModelName" ng-value="el.id">{{el.model_name}}</option>
                     </select>
-                    <!--<label ></label>-->
                 </div>
             </div>
             <div class="col s12 vc-center">
@@ -45,7 +40,6 @@
                             <div class="col s1 p0 cyan-text text-lighten-1 bold" style="min-width: 100px;font-size: 13px"  >入库时间:</div>
                             <div class="col input-field s5 no-mp">
                                 <input type="text" ng-model="search_enterTime_start"  class="datepicker" autocomplete="off" required   date><i class="mdi dataIcon mdi-table-large"></i>
-
                             </div>
                             <div class="col s1 center-align">——</div>
                             <div class="col input-field s5 no-mp">
@@ -66,7 +60,6 @@
                                     <input type="text" ng-model="search_planTime_end"  class="datepicker" autocomplete="off"  required   date><i class="mdi dataIcon mdi-table-large"></i>
                                 </div>
                             </div>
-                            <!--<label >车辆状态</label>-->
                         </div>
                         <div class=" col s6 vc-center">
                             <div class="col s1 p0 cyan-text text-lighten-1 bold " style="min-width:100px;font-size: 13px">实际出库时间:</div>
@@ -77,7 +70,6 @@
                             <div class="col input-field s5 no-mp">
                                 <input type="text" ng-model="search_outTime_end" class="datepicker" autocomplete="off" required   date><i class="mdi dataIcon mdi-table-large"></i>
                             </div>
-                            <!--<label >车辆状态</label>-->
                         </div>
                     </div>
                     <div class="col s12"></div>
@@ -91,15 +83,9 @@
                     </a>
                 </div>
             </div>
-
-
             <div id="newStorage_car" class="modal ">
-
             <div class="cyan lighten-1 white-text center-align modal_title" >新增入库车辆</div>
             <div class="modal-content">
-
-
-                <!--<div class="container">-->
                 <div class="row no-marBottom" ul-tabs>
                     <div class="col s12 p0">
                         <ul class="tabWrap grey lighten-4 ">
@@ -115,23 +101,12 @@
                                         <input  id="vin" name="vin" autocomplete="off" ng-model="vin" type="text"   required >
                                         <label for="vin"><span style="color: red;margin-right: 5px">*</span>VIN码</label>
                                     </div>
-                                    <!--<div class="col s4 valign-wrapper" ng-class="{ 'has-error':newStorage_carForm.win.$invalid&&submitted }">-->
-                                    <!--<h6 class="col s4-0 min-width-2 ">-->
-
-                                    <!--:</h6>-->
-                                    <!--</div>-->
                                     <div class="input-field col s4">
                                         <select material-select watch id="makecarName" name="makecarName" ng-options="o.make_name for o in makecarName" ng-change="changeMakeId(make_name.id)" ng-model="make_name" >
                                             <option value="" disabled selected>请选择</option>
-                                            <!--<option ng-repeat="el in makecarName" ng-value="el.id" >{{el.make_name}}</option>-->
                                         </select>
                                         <label for="makecarName">制造商</label>
                                     </div>
-                                    <!--<div class="col s4 valign-wrapper" ng-class="{ 'has-error':newStorage_carForm.makecarName.$invalid&&submitted }" >-->
-                                    <!--<h6 class="col s4-0 min-width ">-->
-                                    <!--制造商:</h6>-->
-
-                                    <!--</div>-->
                                     <div class="input-field col s4">
                                         <select material-select watch id="model_name" name="model_name"  ng-options="o.model_name for o in carModelName" ng-model="model_name" >
                                             <option value="" disabled selected>请选择</option>
@@ -163,8 +138,6 @@
                                                 <option value=""  selected style="padding-left: 5px;">存放仓库</option>
                                             </select>
                                         </div>
-
-                                        <!--<label for="storageName">存放仓库</label>-->
                                     </div>
                                     <div class="col s4">
                                         <div class="input-field  valign-wrapper cyan white-text" >
@@ -172,8 +145,6 @@
                                                 <option value=""  selected>存放排数</option>
                                                 <option ng-repeat="el in parkingArray"  ng-value="el.row" >{{el.row}}排</option>
                                             </select>
-                                            <!--<label for="row">存放排数</label>-->
-                                            <!--<span class="col s1">排</span>-->
                                         </div>
                                     </div>
                                     <div class="col s4">
@@ -183,12 +154,8 @@
                                                 <option ng-repeat="el in colArr" ng-if="el.carId==0"  ng-value="el.id" >{{el.col}}列</option>
                                                 <option ng-repeat="el in colArr" ng-if="el.carId!=0" disabled  >{{el.col}}列</option>
                                             </select>
-                                            <!--<label for="col"></label>-->
-                                            <!--<span class="col s1">列</span>-->
                                         </div>
                                     </div>
-
-
                                 </div>
                                 <div class="row">
                                     <div class="input-field col s4" ng-class="{ 'has-error':newStorage_carForm.plan_out_time.$invalid&&submitted }">
@@ -202,7 +169,6 @@
                                     <div class="col s12 valign-wrapper" style="position: relative">
                                         <p class=" col s12 p0">
                                             <textarea id="remark" style="height: 100px" name="remark" class="col s12 " ng-model="remark" ></textarea>
-
                                         </p>
                                     </div>
                                 </div>
@@ -211,13 +177,10 @@
                             <div class="modal-footer right-align">
                                 <button class="btn btn-floating waves-light waves-effect  cyan lighten-1" type="submit" name="action" >
                                     <i class="mdi mdi-trending-neutral"></i>
-                                    <!--下一步-->
                                 </button>
                                 <a  class=" modal-action btn-floating modal-close waves-effect  grey lighten-1waves-light   btn" style="margin-right: 10px" >
                                     <i class="mdi mdi-close"></i>
-                                    <!--取消-->
                                 </a>
-
                             </div>
                         </form>
                     </div>
@@ -238,14 +201,12 @@
                                                 <img ng-src="{{el.src}}" class="responsive-img">
                                             </li>
                                         </ul>
-
                                     </form>
                                 </div>
                             </div>
                             <div class="divider" style="background: #00bcd4;height: 2px;"></div>
                             <div class="modal-footer vc-center">
                                 <a  class=" modal-action modal-close waves-effect waves-light grey lighten-1 btn" style="margin-left: 10px" >
-                                    <!--<i class="mdi mdi-close"></i>-->
                                     关闭
                                 </a>
                             </div>
@@ -253,8 +214,6 @@
                     </div>
                 </div>
             </div>
-
-
         </div>
         </div>
         <div class="col s12" >
@@ -312,7 +271,6 @@
                                         <div class="input-field col s4">
                                             <select material-select watch ng-model="login_parkingId"  name="login_parkingId" required>
                                                 <option value=""  selected>请选择</option>
-                                                <!--<option ng-repeat="el in colArr" ng-value="el.id">{{el.col}}</option>-->
                                                 <option ng-repeat="el in colArr" ng-if="el.carId==0"  ng-value="el.id" >{{el.col}}</option>
                                                 <option ng-repeat="el in colArr" ng-if="el.carId!=0" disabled  >{{el.col}}</option>
                                             </select>
@@ -322,26 +280,20 @@
                                              <div class="col s4 p0 cyan-text text-lighten-1 bold" style="min-width: 100px;font-size: 13px"  >计划出库时间:</div>
                                             <div class="col input-field s8 no-mp" ng-class="{'has-error':login_garageForm.login_planOutTime.$invalid&&submitted }">
                                                 <input type="text" name="login_planOutTime" ng-model="login_planOutTime"  class="datepicker" autocomplete="off" required   date><i class="mdi dataIcon mdi-table-large"></i>
-
                                             </div>
                                         </div>
-
                                     </div>
-
                                  <div class="divider" style="background: #00bcd4;height: 2px;"></div>
                                 </div>
                                  <div class="modal-footer vc-center">
                                     <a  class=" modal-action modal-close waves-effect  grey lighten-1waves-light   btn" style="margin-right: 10px" >
-                                        <!--<i class="mdi mdi-close"></i>-->
                                         取消
                                     </a>
                                     <button class="btn waves-light waves-effect  cyan lighten-1" type="submit" name="action" >
-                                        <!--<i class="mdi mdi-trending-neutral"></i>-->
                                         确定
                                     </button>
                                 </div>
                             </form>
-
                         </div>
                         </span>
                         <span>
@@ -393,34 +345,27 @@
                                                         <i ng-show="els.carId!=0&&els.plan_time==false" class=" mdi mdi-car cyan-text lighten-1"></i>
                                                         <i ng-show="els.carId==0" class=" mdi mdi-car grey-text lighten-2 " ng-click="move_parking(els.id,el.row,els.col)"></i>
                                                     </div>
-
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </form>
-
                         </div>
-
                     </td>
                 </tr>
-
                 </tbody>
             </table>
-
         </div>
         <div class="paging_box col s12">
-                <div class="right">
-                    <a class="waves-light waves-effect cyan lighten-1 btn  "  id="pre"   ng-click="pre_btn()">
-                        上一页
-                    </a>
-                    <a class="waves-light waves-effect cyan lighten-1 btn " id="next"  ng-click="next_btn()">
-                        下一页
-                    </a>
-                </div>
-
+            <div class="right">
+                <a class="waves-light waves-effect cyan lighten-1 btn  "  id="pre"   ng-click="pre_btn()">
+                    上一页
+                </a>
+                <a class="waves-light waves-effect cyan lighten-1 btn " id="next"  ng-click="next_btn()">
+                    下一页
+                </a>
+            </div>
         </div>
     </div>
-
 </div>

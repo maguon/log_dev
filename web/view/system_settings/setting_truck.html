@@ -18,7 +18,6 @@
                         <div class="col s1 vc-center" style="height: 45px">
                             <h6 class=" bold cyan-text text-lighten-1" style="min-width: 88px;margin-left: 10px">品牌名称:</h6>
                         </div>
-
                         <input class="col s3 Brand_text" name="brandText" id="brandText" type="text" autocomplete="off"
                                ng-model="b_txt" required>
                         <div class="col s2  add_Brand_Icon">
@@ -29,7 +28,6 @@
                                     name="action">
                                 <i class="mdi mdi-check add_brand"></i>
                             </button>
-
                         </div>
                     </div>
                 </form>
@@ -96,7 +94,6 @@
                                             </div>
                                         </form>
                                     </div>
-
                                 </div>
                             </div>
                             <div class="divider"></div>
@@ -105,7 +102,6 @@
                                     <div ng-repeat="el in brand_model" class="col s4 " style=" padding:1rem;">
                                         <div class="col s12  car_model_panel valign-wrapper"
                                              ng-class="{'no_amend_model':el.model_status==0}">
-                                            <!--<div class="col s8 cyan-text text-lighten-2">{{el.model_name}}</div>-->
                                             <input type="text" class="car_model_name cyan-text text-lighten-1  car_model_name{{$index}} col s5"
                                                    ng-model="el.model_name" readonly>
                                             <div class="amend_car_model_box{{$index}} col s3"
@@ -127,7 +123,6 @@
                                                     </label>
                                                 </div>
                                             </div>
-
                                         </div>
                                     </div>
                                 </div>
@@ -138,5 +133,4 @@
             </div>
         </div>
     </div>
-    <div></div>
 </div>

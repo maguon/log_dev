@@ -28,45 +28,55 @@
             </div>
         </div>
     </li>
-    <li class="bold side_navigator" >
-        <!--<a class="waves-effect waves-purple" href="#!/"  onclick="Materialize.toast('收到即时消息', 4000,'rounded');"><i class="mdi mdi-view-dashboard "></i>主页</a>-->
-        <!--<a class="waves-effect waves-light first-N" ui-sref="index" onclick="Materialize.toast('收到即时消息', 4000,'rounded');"><i class="white-text mdi mdi-crop-free "></i>主页</a>-->
-        <a class="waves-effect waves-light first-N" ui-sref="storage_index" ><i class="white-text mdi mdi-crop-free "></i>主控面板</a>
+    <li class="bold side_navigator">
+        <a class="waves-effect waves-light first-N" ui-sref="storage_index"><i
+                class="white-text mdi mdi-crop-free "></i>主控面板</a>
     </li>
     <li class="bold side_navigator">
-        <a href="#!" ui-sref="user_info" class=" waves-effect waves-light first-N" ><i class="white-text mdi mdi-account-card-details"></i>用户信息</a>
+        <a href="#!" ui-sref="user_info" class=" waves-effect waves-light first-N"><i
+                class="white-text mdi mdi-account-card-details"></i>用户信息</a>
     </li>
     <li class="bold side_navigator">
-        <a href="#!" ui-sref="car_demand" class=" waves-effect waves-light first-N" ><i class="white-text mdi mdi-magnify"></i>车辆查询</a>
+        <a href="#!" ui-sref="car_demand" class=" waves-effect waves-light first-N"><i
+                class="white-text mdi mdi-magnify"></i>车辆查询</a>
     </li>
     <li class="bold side_navigator">
         <ul class="collapsible collapsible-accordion">
             <li class="bold">
-                <a class="collapsible-header waves-effect waves-light first-N" ><i class="white-text mdi mdi-home-variant "></i>仓储管理</a>
+                <a class="collapsible-header waves-effect waves-light first-N"><i
+                        class="white-text mdi mdi-home-variant "></i>仓储管理</a>
                 <div class="collapsible-body slider_nav_box blue-grey darken-3" style="padding: 0;">
                     <ul>
-                        <!--<li><a href="#!" ui-sref="index"><i class="mdi mdi-chevron-right white-text "></i>仓储首页</a></li>-->
-                        <li><a href="#!" ui-sref="calendar"><i class="mdi mdi-chevron-right white-text "></i>工作日历</a></li>
-                        <li><a href="#!" ui-sref="statistics"  ><i class="white-text mdi mdi-chevron-right"></i>仓储统计</a></li>
-                        <li><a href="#!" ui-sref="storageStore"  ><i class="white-text mdi mdi-chevron-right"></i>仓储存放</a></li>
-                        <li><a href="#!" ui-sref="storageCar"  ><i class="white-text mdi mdi-chevron-right"></i>仓储车辆</a></li>
+                        <li><a href="#!" ui-sref="calendar"><i class="mdi mdi-chevron-right white-text "></i>工作日历</a>
+                        </li>
+                        <li><a href="#!" ui-sref="statistics"><i class="white-text mdi mdi-chevron-right"></i>仓储统计</a>
+                        </li>
+                        <li><a href="#!" ui-sref="storageStore"><i class="white-text mdi mdi-chevron-right"></i>仓储存放</a>
+                        </li>
+                        <li><a href="#!" ui-sref="storageCar"><i class="white-text mdi mdi-chevron-right"></i>仓储车辆</a>
+                        </li>
                     </ul>
                 </div>
             </li>
         </ul>
     </li>
-    <!--<li class="divider grey lighten-2"></li>-->
     <li class="bold side_navigator">
         <ul class="collapsible collapsible-accordion">
             <li class="bold">
-                <a class="collapsible-header waves-effect waves-light first-N" ><i class="white-text mdi mdi-account-settings-variant "></i>管理员设置</a>
+                <a class="collapsible-header waves-effect waves-light first-N"><i
+                        class="white-text mdi mdi-account-settings-variant "></i>管理员设置</a>
                 <div class="collapsible-body blue-grey darken-3" style="padding: 0;">
-                    <ul >
-                        <li><a href="#!" ui-sref="setting_wh"><i class="mdi mdi-chevron-right white-text "></i>仓库设置</a></li>
-                        <li><a href="#!" ui-sref="setting_truck"><i class="mdi mdi-chevron-right white-text "></i>车辆设置</a></li>
-                        <li><a href="#!" ui-sref="setting_pw"><i class="mdi mdi-chevron-right white-text "></i>管理员设置</a></li>
-                        <li><a href="#!" ui-sref="setting_users"><i class="mdi mdi-chevron-right white-text"></i>用户管理</a></li>
-                        <li><a href="#!" ui-sref="setting_amend_vin"  ><i class="white-text mdi mdi-chevron-right"></i>修改VIN</a></li>
+                    <ul>
+                        <li><a href="#!" ui-sref="setting_wh"><i class="mdi mdi-chevron-right white-text "></i>仓库设置</a>
+                        </li>
+                        <li><a href="#!" ui-sref="setting_truck"><i
+                                class="mdi mdi-chevron-right white-text "></i>车辆设置</a></li>
+                        <li><a href="#!" ui-sref="setting_pw"><i class="mdi mdi-chevron-right white-text "></i>管理员设置</a>
+                        </li>
+                        <li><a href="#!" ui-sref="setting_users"><i
+                                class="mdi mdi-chevron-right white-text"></i>用户管理</a></li>
+                        <li><a href="#!" ui-sref="setting_amend_vin"><i class="white-text mdi mdi-chevron-right"></i>修改VIN</a>
+                        </li>
                     </ul>
                 </div>
             </li>
@@ -76,7 +86,7 @@
 
 </ul>
 <div class="ConWrap ">
-    <div class="containerBox" >
+    <div class="containerBox">
         <div ui-view></div>
     </div>
 </div>
@@ -84,7 +94,7 @@
     <h5 class="footer-msg right">洺源信息技术</h5>
     <h5 class="footer-msg right">物流系统1.0</h5>
 </div>
-<div class="shadeDowWrap" >
+<div class="shadeDowWrap">
     <div class="shadeDow vc-center">
         <div class="preloader-wrapper big active ">
             <div class="spinner-layer spinner-blue-only">

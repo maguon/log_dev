@@ -12,14 +12,12 @@
             <div class="row addBrand">
                 <a href="" class=" col s2 offset-s10  btn waves-effect cyan lighten-1 waves-light vc-center open_car_brand "
                    ng-click="car_Brand_box($event)">+增加品牌</a>
-
                 <form name="addBrandFrom" ng-submit="add_brand(addBrandFrom.$valid)" novalidate>
                     <div class="col s12 z-depth-2 blue-grey lighten-5 car_Brand_box "
                          style="padding: 0.75rem 0;display: none">
                         <div class="col s1 vc-center" style="height: 45px">
                             <h6 class=" bold cyan-text text-lighten-1" style="min-width: 88px;margin-left: 10px">品牌名称:</h6>
                         </div>
-
                         <input class="col s3 Brand_text" name="brandText" id="brandText" type="text" autocomplete="off"
                                ng-model="b_txt" required>
                         <div class="col s2  add_Brand_Icon">
@@ -30,14 +28,12 @@
                                     name="action">
                                 <i class="mdi mdi-check add_brand"></i>
                             </button>
-
                         </div>
                     </div>
                 </form>
             </div>
             <div class="row">
                 <ul class="collapsible setting_car Brand_box" data-collapsible="accordion" collapsible>
-                    <!--<brand-list></brand-list>-->
                     <li ng-repeat="el in brand" >
                         <div class="collapsible-header grey-text text-darken-1 row no-mp">
                             <div class="amend_brand_box amend_brand_box{{$index}} col s12 p0"
@@ -46,7 +42,7 @@
                                       ng-submit="amend_brand_submit(amend_brandForm.$valid,el.id,el.make_name,$index)">
                                     <div class="col s6 valign-wrapper p0">
                                         <i class="mdi mdi-car cyan-text text-lighten-1 "></i>
-                                        <input type="text" class="cyan-text lighten-1" style="height: 30px"
+                                         <input type="text" class="cyan-text lighten-1" style="height: 30px"
                                                ng-model="el.make_name">
                                         <a class="  btn-floating btn-small waves-effect waves-light red lighten-2  btn"
                                            style="width: 35px;height: 30px;line-height: 30px;margin-right: 10px"

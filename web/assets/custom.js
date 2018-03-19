@@ -6,7 +6,6 @@ var toggleFullScreen = function(){
             document.documentElement.webkitRequestFullScreen&&document.documentElement.webkitRequestFullScreen(Element.ALLOW_KEYBOARD_INPUT):
         document.cancelFullScreen?document.cancelFullScreen():document.mozCancelFullScreen?document.mozCancelFullScreen():
         document.webkitCancelFullScreen&&document.webkitCancelFullScreen()
-
 };
 $(document).ready(function() {
     jQuery.extend( jQuery.fn.pickadate.defaults, {
@@ -22,19 +21,6 @@ $(document).ready(function() {
         format: 'yyyy 年 mm 月 dd 日',
         formatSubmit: 'yyyy/mm/dd'
     });
-
-    /*jQuery.extend( jQuery.fn.pickatime.defaults, {
-     clear: '清除'
-     });*/
-
-        // $('.datepicker').pickadate({
-        //     onSet: function () {
-        //         $('.picker__close').click();
-        //     },
-        //     selectMonths: false, // Creates a dropdown to control month
-        //     selectYears: 0 // Creates a dropdown of 15 years to control year
-        // });
-
     $('select').material_select();
     $('.tooltipped').tooltip();
 });
