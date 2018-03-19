@@ -12,7 +12,7 @@ storage_index_controller.controller("storage_index_controller", ['$rootScope', '
             }
         });
         _basic.get($host.api_url + "/storageDate?dateStart=" + now_date + "&dateEnd=" + now_date).then(function (data) {
-            if (data.success == true&&data.result.length>0) {
+            if (data.success == true) {
                 $scope.storage_index_list = data.result;
                 for (var i in $scope.storage_index_list) {
                     $scope.storage_allStorage = $scope.storage_allStorage + $scope.storage_index_list[i].col * $scope.storage_index_list[i].row

@@ -138,7 +138,6 @@ settingController.controller("settingT_controller", ["$scope", "$host", "_basic"
     $scope.searchAll = function () {
         _basic.get($host.api_url + "/carMake/").then(function (data) {
             if (data.success == true&&data.result.length>0) {
-                // console.log(data.result);
                 $scope.brand = data.result;
             } else {
                 swal(data.msg, "", "error");
