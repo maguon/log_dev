@@ -114,6 +114,9 @@
                         <a href="#" ui-sref="demand_Car_details({id:el.id,vin:el.vin,from:'car_demand'})" class=""><i class="mdi mdi-file-outline look_icon cyan-text lighten-1  " ></i></a>
                     </td>
                 </tr>
+                <tr class="grey-text text-darken-1" ng-if="storageCar.length == 0">
+                    <td colspan="9" style="letter-spacing: 2px;text-align: center;">暂无数据</td>
+                </tr>
                 </tbody>
             </table>
         </div>

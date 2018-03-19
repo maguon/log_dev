@@ -6,7 +6,7 @@
             <div class="divider" style="background: #00bcd4;height: 2px;"></div>
             <div class="row no-marBottom">
                 <div class="row " style="width: 900px;margin: 0 auto">
-                    <form name="demand_car_form" ng-submit="demand_car(demand_car_form.$valid)" novalidate>
+                    <form name="demand_car_form" ng-submit="readDemandCar(demand_car_form.$valid)" novalidate>
                         <div class="mp-30 valign-wrapper" style="overflow: hidden">
                             <div class="col s1 cyan-text text-lighten-1" style="font-size: 25px;min-width: 90px">vin码:</div>
                             <div class="input-field col s10 " ng-class="{'has-error':demand_car_form.demand_vin.$invalid&&submitted}">
@@ -31,9 +31,9 @@
                                     <span class="col s9 grey-text" ng-show="flag==true" style="font-size: 30px">{{vin}}</span>
                                     <input class="col s9 grey-text" ng-show="flag==false"  style="font-size: 30px" type="text" id="amend_vin" ng-model="vin" name="search_vin">
                                     <div class="col s2">
-                                        <a class="btn  btn-large btn-floating waves-effect cyan" ng-show="flag==true"  ng-click="open_vin_amend()"> <i class="mdi mdi-pencil "></i></a>
-                                        <a class="btn  btn-large btn-floating waves-effect cyan" ng-show="flag==false" ng-click="close_vin_amend()" style="margin-right: 10px"> <i class="mdi mdi-close " ></i></a>
-                                        <a class="btn  btn-large btn-floating waves-effect cyan" ng-show="flag==false" ng-click="amend_vin(car_details.id,flag)"> <i class="mdi mdi-check "></i></a>
+                                        <a class="btn  btn-large btn-floating waves-effect cyan" ng-show="flag==true"  ng-click="openVinAmend()"> <i class="mdi mdi-pencil "></i></a>
+                                        <a class="btn  btn-large btn-floating waves-effect cyan" ng-show="flag==false" ng-click="closeVinAmend()" style="margin-right: 10px"> <i class="mdi mdi-close " ></i></a>
+                                        <a class="btn  btn-large btn-floating waves-effect cyan" ng-show="flag==false" ng-click="pdateAmendVin(car_details.id,flag)"> <i class="mdi mdi-check "></i></a>
                                     </div>
                                 </div>
                             </div>

@@ -2,11 +2,11 @@
     <div class="row">
         <div class="row">
             <h5 class="cyan-text text-lighten-1 center-align">仓库设置</h5>
-            <a class="waves-light btn-floating btn-large waves-effect btn right cyan lighten-1"  ng-click="newStorage()">
+            <a class="waves-light btn-floating btn-large waves-effect btn right cyan lighten-1"  ng-click="addNewStorageItem()">
                 <i class="mdi mdi-plus"></i>
             </a>
             <div id="newStorage" class="modal">
-                <form name="StorageForm" ng-submit="newStorageForm(StorageForm.$valid)" novalidate>
+                <form name="StorageForm" ng-submit="addNewStorageForm(StorageForm.$valid)" novalidate>
                     <div class="modal-content">
                         <h4 class="center-align">创建新仓库</h4>
                         <div class="divider a1_divider" ></div>
@@ -78,7 +78,7 @@
                     <td ng-if="el.storage_status==0">停用</td>
                     <td class="operation table_operation vc-center">
                         <span><i class="mdi mdi-eye cyan-text text-lighten-1" ng-click="lookStorage(el.id)"></i></span>
-                        <span class="switch" ng-click="changeStorage_status(el.id,el.storage_status)" style="height: 30px">
+                        <span class="switch" ng-click="changeStorageStatus(el.id,el.storage_status)" style="height: 30px">
                                 <label>
                                   <input type="checkbox" ng-checked="el.storage_status==1">
                                   <span class="lever"></span>
@@ -86,7 +86,6 @@
                         </span>
                     </td>
                 </tr>
-
                 </tbody>
             </table>
             <div id="look_Storage" class="modal">

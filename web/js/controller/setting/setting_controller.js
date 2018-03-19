@@ -1,10 +1,9 @@
 
 var settingController = angular.module("settingController", []);
-// 管理员密码设置
+// 管理员密码重置设置
 settingController.controller("settingPW_controller", ["$scope", "$host", "_basic", function ($scope, $host, _basic) {
     $scope.settingPswForm = function (isValid) {
         var adminId = _basic.getSession(_basic.USER_ID);
-
         $scope.submitted = true;
         if (isValid && $scope.newCode == $scope.confirmPsw) {
             var obj = {
@@ -23,15 +22,13 @@ settingController.controller("settingPW_controller", ["$scope", "$host", "_basic
                 }
             })
         }
-
     }
 }]);
 // 仓库设置
 settingController.controller("settingWH_controller", ["$scope", "$host", "_basic", function ($scope, $host, _basic) {
     var adminId = _basic.getSession(_basic.USER_ID);
-
     // 整体查询
-    var searchAll = function () {
+    function readStorgeList() {
         _basic.get($host.api_url + "/storage").then(function (data) {
             if (data.success == true&&data.result.length>0) {
                 $scope.storage = data.result;
@@ -40,22 +37,19 @@ settingController.controller("settingWH_controller", ["$scope", "$host", "_basic
             }
         });
     };
-    searchAll();
-
-    $scope.newStorage = function () {
+    readStorgeList();
+    $scope.addNewStorageItem = function () {
         $scope.submitted = false;
         $scope.newStorageName = "";
         $scope.newStorageCol = "";
         $scope.newStorageRoad = "";
         $scope.newStorageRemark = "";
-
         $(".modal").modal();
         $("#newStorage").modal("open");
 
     };
-
     // 新增
-    $scope.newStorageForm = function (isValid) {
+    $scope.addNewStorageForm = function (isValid) {
         $scope.submitted = true;
         if (isValid) {
             var obj = {
@@ -67,7 +61,7 @@ settingController.controller("settingWH_controller", ["$scope", "$host", "_basic
             _basic.post($host.api_url + "/admin/" + adminId + "/storage", obj).then(function (data) {
                 if (data.success == true) {
                     swal("新增成功", "", "success");
-                    searchAll();
+                    readStorgeList();
                     $("#newStorage").modal("close");
                 } else {
                     swal(data.msg, "", "error");
@@ -90,17 +84,15 @@ settingController.controller("settingWH_controller", ["$scope", "$host", "_basic
     // 修改
     $scope.lookStorageForm = function (isValid, id) {
         $scope.submitted = true;
-        console.log(id);
         if (isValid) {
             var obj = {
                 storageName: $scope.selfStorage.storage_name,
                 remark: $scope.selfStorage.remark
             };
-            console.log(obj)
             _basic.put($host.api_url + "/admin/" + adminId + "/storage/" + id, obj).then(function (data) {
                 if (data.success == true) {
                     swal("修改成功", "", "success");
-                    searchAll();
+                    readStorgeList();
                     $("#look_Storage").modal("close");
                 } else {
                     swal(data.msg, "", "error");
@@ -109,47 +101,27 @@ settingController.controller("settingWH_controller", ["$scope", "$host", "_basic
         }
     };
     // 修改仓库运营状态
-    $scope.changeStorage_status = function (id, status) {
-        var st;
-        // var str="";
-        //
+    $scope.changeStorageStatus = function (id, status) {
         if (status == 0) {
             // str="启用";
-            st = 1
+            status = 1
         } else {
             // str="停用";
-            st = 0
+            status = 0
         }
-        // swal({
-        //         title: "是否"+str+"?",
-        //         text: "",
-        //         type: "warning",
-        //         showCancelButton: true,
-        //         confirmButtonColor: "#DD6B55",
-        //         confirmButtonText: "确定",
-        //         cancelButtonText: "取消",
-        //         closeOnConfirm: false
-        //     },
-        //     function () {
-
-                _basic.put($host.api_url + "/admin/" + adminId + "/storage/" + id + "/storageStatus/" + st, {}).then(function (data) {
-                    if (data.success == true) {
-                        swal("修改成功", "", "success");
-                        searchAll();
-                    } else {
-                        swal(data.msg, "", "error");
-                        searchAll();
-                    }
-                })
+        _basic.put($host.api_url + "/admin/" + adminId + "/storage/" + id + "/storageStatus/" + status, {}).then(function (data) {
+            if (data.success == true) {
+                swal("修改成功", "", "success");
+                readStorgeList();
+            } else {
+                swal(data.msg, "", "error");
+                readStorgeList();
             }
-        // );
-
-
-    // }
+        })
+    }
 }]);
 // 车辆设置
 settingController.controller("settingT_controller", ["$scope", "$host", "_basic", function ($scope, $host, _basic) {
-
     var adminId = _basic.getSession(_basic.USER_ID);
     // 打开汽车品牌
     $scope.car_Brand_box=function ($event) {
@@ -179,24 +151,15 @@ settingController.controller("settingT_controller", ["$scope", "$host", "_basic"
         $event.stopPropagation();
         $(".brand_box"+$index).hide();
         $(".amend_brand_box"+$index).show();
-        // $(".remark_brand_box" + id).fadeOut(500);
-        // $(".change_brand_wrap" + id).fadeIn(500);
-        // $scope.make_name = val;
-        // console.log($scope.make_name);
     };
     $scope.amend_brand_box=function ($event) {
         $event.stopPropagation();
     };
     // 关闭修改汽车品牌
     $scope.close_amend_brand = function ($index) {
-        // $(".remark_brand_box" + id).fadeIn(500);
-        // $(".change_brand_wrap" + id).fadeOut(500);
-        // // $scope.el.make_name=$scope.make_name;
-        // $scope.searchAll();
         $(".brand_box"+$index).show();
         $(".amend_brand_box"+$index).hide();
     };
-
     // 修改汽车品牌
     $scope.amend_brand_submit = function (iValid,id,name,$index) {
         if(iValid){
@@ -206,31 +169,22 @@ settingController.controller("settingT_controller", ["$scope", "$host", "_basic"
                 if (data.success == true) {
                     $(".brand_box"+$index).show();
                     $(".amend_brand_box"+$index).hide();
-                    // swal("修改成功","","error");
-                    // $(".remark_brand_box" + id).fadeIn(500);
-                    // $(".change_brand_wrap" + id).fadeOut(500);
                 } else {
                     swal(data.msg, "", "error");
                 }
             })
         }
-
-
     };
-
     // 汽车型号
-
     $scope.search_carModel = function (id) {
         _basic.get($host.api_url + "/carMake/" + id + "/carModel").then(function (data) {
             if (data.success == true) {
-                // console.log(data.result);
                 $scope.brand_model = data.result;
 
             } else {
                 swal(data.msg, "", "error");
             }
         });
-
     };
     // 增加汽车型号界面
     $scope.add_car_model_box=function ($event,$index) {
@@ -250,8 +204,6 @@ settingController.controller("settingT_controller", ["$scope", "$host", "_basic"
      // 增加汽车型号接口
     $scope.add_car_model_submit=function (iValid,id) {
         $scope.submitted=true;
-        // var xt="add_car_model_text"+index;
-        console.log($scope.add_car_model_text);
         if(iValid){
             _basic.post($host.api_url + "/admin/" + adminId + "/carMake/" + id+"/carModel", {
                 modelName:$scope.add_car_model_text
@@ -268,26 +220,17 @@ settingController.controller("settingT_controller", ["$scope", "$host", "_basic"
                 }
             })
         }
-
     };
     // 打开汽车型号界面
     $scope.open_car_model = function ($event, id) {
-        // console.log($($event.target).attr("flag"));
-
         if ($($event.target).attr("flag") == "true") {
             $scope.search_carModel(id);
             $(".brand_box").attr("flag","true");
             $($event.target).attr("flag", "false");
-
         } else {
             $($event.target).attr("flag", "true");
         }
     };
-    // // 打开新增型号
-    // $scope.add_brand_model = function (id) {
-    //     $(".add_brand_box" + id).fadeOut(500);
-    //     $(".add_brand_model_wrap" + id).fadeIn(500);
-    // };
     // 修改汽车型号状态
     // 打开修改面板
     $scope.amend_car_model=function ($index,$event) {
@@ -296,7 +239,6 @@ settingController.controller("settingT_controller", ["$scope", "$host", "_basic"
             $(".car_model_name"+$index).removeAttr("readonly");
             $(".amend_car_model_box"+$index).show();
     };
-
     $scope.changeSelfBrandStatus = function (id, status, makeId) {
         if (status == 0) {
             status = 1;
@@ -316,7 +258,6 @@ settingController.controller("settingT_controller", ["$scope", "$host", "_basic"
         $($event.target).removeAttr("readonly");
         $(".selfBrand_status" + id).hide();
         $(".selfBrand_operation" + id).show();
-
     };
     // 关闭修改型号界面
     $scope.close_car_model = function (index) {
@@ -356,9 +297,6 @@ settingController.controller("settingT_controller", ["$scope", "$host", "_basic"
             }
         })
     };
-    // $scope.searchModel=function (id) {
-    //
-    // };
     $scope.add_brand=function (iValid) {
         if(iValid){
             _basic.post($host.api_url + "/admin/" + adminId + "/carMake/", {
@@ -374,13 +312,10 @@ settingController.controller("settingT_controller", ["$scope", "$host", "_basic"
                 }
             })
         }
-
     }
 }]);
 settingController.controller("setting_user_controller", ["_basic","_config", "$host", "$scope", function (_basic,_config,$host, $scope) {
-
     var adminId = _basic.getSession(_basic.USER_ID);
-
     var user_info_obj=_config.userTypes;
     var user_info_fun=function () {
         $scope.user_info_section=[];

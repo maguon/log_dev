@@ -1,19 +1,18 @@
 /**
  * Created by ASUS on 2017/5/17.
  */
-var setting_amend_vin_controller=angular.module("setting_amend_vin_controller",[]);
-setting_amend_vin_controller.controller("setting_amend_vin_controller",["$scope","_basic","_config","$host",function ($scope,_basic,_config,$host){
+//var setting_amend_vin_controller=angular.module("setting_amend_vin_controller",[]);
+app.controller("setting_amend_vin_controller",["$scope","_basic","_config","$host",function ($scope,_basic,_config,$host){
     var admin=_basic.getSession(_basic.USER_ID);
     $scope.flag=true;
     // 查询vin码
-    $scope.demand_car=function ($iValid) {
+    $scope.readDemandCar=function ($iValid) {
         $scope.submitted=true;
         if($iValid&&$scope.demand_vin.length==17){
             var obj={
                 vin:$scope.demand_vin,
                 active:1
             };
-
             _basic.get($host.api_url+"/admin/"+admin+"/car?"+_basic.objToUrl(obj)).then(function (data) {
                 if(data.success=true){
                     if(data.result.length==0){
@@ -31,23 +30,20 @@ setting_amend_vin_controller.controller("setting_amend_vin_controller",["$scope"
                             }
                         }
                     }
-
-
                 }
             })
         }
     };
-    
     // 打开修改vin码
-    $scope.open_vin_amend=function () {
+    $scope.openVinAmend=function () {
         $scope.flag=false;
     };
     // 关闭修改vin码
-    $scope.close_vin_amend=function () {
+    $scope.closeVinAmend=function () {
         $scope.flag=true;
     };
     // 修改vin码
-    $scope.amend_vin=function (id) {
+    $scope.updateAmendVin=function (id) {
         $scope.flag=true;
         var obj={
             "vin":$scope.vin

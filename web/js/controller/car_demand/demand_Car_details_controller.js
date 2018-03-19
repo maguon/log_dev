@@ -1,21 +1,14 @@
 /**
- * Created by ASUS on 2017/5/17.
- */
-/**
  * Created by ASUS on 2017/5/5.
  */
-var demand_Car_details_controller = angular.module("demand_Car_details_controller", []);
-demand_Car_details_controller.controller("demand_Car_details_controller", [ "$state", "$stateParams", "_config", "service_storage_parking", "$scope", "$host", "_basic", function ( $state, $stateParams, _config, service_storage_parking, $scope, $host, _basic) {
-    // console.log($stateParams.id, $stateParams.vin)
+app.controller("demand_Car_details_controller", [ "$state", "$stateParams", "_config", "service_storage_parking", "$scope", "$host", "_basic", function ( $state, $stateParams, _config, service_storage_parking, $scope, $host, _basic) {
     var userId = _basic.getSession(_basic.USER_ID);
     var val = $stateParams.id;
     var vin = $stateParams.vin;
     // 颜色
     $scope.color = _config.config_color;
-    // modelId全局变量
-    $scope.change_model_id = "";
     // 车辆照片跳转
-    $scope.look_car_img = function () {
+    $scope.lookCarImg = function () {
         $('ul.tabWrap li').removeClass("active");
         $(".tab_box").removeClass("active");
         $(".tab_box").hide();
@@ -23,7 +16,7 @@ demand_Car_details_controller.controller("demand_Car_details_controller", [ "$st
         $("#look_car_img").addClass("active");
         $("#look_car_img").show();
     };
-    $scope.look_msg = function () {
+    $scope.lookMsg = function () {
         $('ul.tabWrap li').removeClass("active");
         $(".tab_box").removeClass("active");
         $(".tab_box").hide();
@@ -31,10 +24,8 @@ demand_Car_details_controller.controller("demand_Car_details_controller", [ "$st
         $("#look_msg").addClass("active");
         $("#look_msg").show();
     };
-    // 仓库车辆详情
-    //controller里对应的处理函数
+    // 看大图
     var viewer;
-    // var add_viewer;
     $scope.renderFinish = function () {
         viewer = new Viewer(document.getElementById('look_img'), {
             url: 'data-original'
@@ -67,7 +58,6 @@ demand_Car_details_controller.controller("demand_Car_details_controller", [ "$st
         $scope.vin = vin;
         _basic.get($host.record_url + "/user/" + userId + "/car/" + val + "/record").then(function (data) {
             if (data.success == true&&data.result.length>0) {
-                // console.log(data);
                 $scope.operating_record = data.result[0];
                 $scope.comment = $scope.operating_record.comment;
                 $scope.storage_image = $scope.operating_record.storage_image;
@@ -92,7 +82,6 @@ demand_Car_details_controller.controller("demand_Car_details_controller", [ "$st
                 swal(data.msg, "", "error")
             }
         })
-
     };
     $scope.lookStorageCar(val, vin);
   }]);

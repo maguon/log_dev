@@ -100,7 +100,7 @@ app.controller("car_demand_controller", ["$scope", "$rootScope", "$host", "_basi
             reqUrl = reqUrl + "&realEnd=" + $scope.search_outTime_end
         }
         _basic.get(reqUrl).then(function (data) {
-            if (data.success == true&&data.result.length>0) {
+            if (data.success == true) {
                 $scope.storageCarList = data.result;
                 $scope.storageCar = $scope.storageCarList.slice(0, 10);
                 if ($scope.start > 0) {
