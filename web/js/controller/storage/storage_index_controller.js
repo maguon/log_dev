@@ -1,5 +1,4 @@
-var storage_index_controller = angular.module("storage_index_controller", []);
-storage_index_controller.controller("storage_index_controller", ['$rootScope', '$scope', "$host", '$location', '$q', "_basic",
+app.controller("storage_index_controller", ['$rootScope', '$scope', "$host", '$location', '$q', "_basic",
     function ($rootScope, $scope, $host, $location, $q, _basic) {
         var date = new Date();
         var now_date = moment(date).format('YYYYMMDD');

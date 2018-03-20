@@ -9,13 +9,13 @@ storage_router.config(['$stateProvider',"$urlRouterProvider",function($stateProv
     })
         .state("calendar", {
             url:"/calendar",
-            templateUrl: "/view/storage/working_calendar.html",
-            controller:'storage_working_calendarController'
+            templateUrl: "/view/storage/storage_calendar.html",
+            controller:'storage_calendar_controller'
         })
         .state("storageCar", {
             url:"/storage_car",
             templateUrl: "/view/storage/storage_car.html",
-            controller:'Storage_carController'
+            controller:'storage_car_controller'
         })
         .state("storageStore", {
             url:"/storage_store",
@@ -30,26 +30,16 @@ storage_router.config(['$stateProvider',"$urlRouterProvider",function($stateProv
         .state("storageCar_details", {
             url:"/storageCar_details/{id}/vin/{vin}/_form/{_form}?from",
             templateUrl: "/view/storage/storage_details.html",
-            controller:"storageCar_detailsController"
+            controller:"storage_car_details_controller"
         })
         .state("storageCar_details_", {
             url:"/storageCar_details/{id}/vin/{vin}?from",
             templateUrl: "/view/storage/storage_details.html",
-            controller:"storageCar_detailsController"
-        })
-        .state("storage_car_map", {
-            url:"/storage_car_map/{id}?form",
-            templateUrl: "/view/storage/storage_car_map.html",
-            controller:"storage_car_mapController"
-        })
-        .state("storage_setting_car",{
-            url:"/storage_setting_car",
-            templateUrl: "/view/storage/storage_setting_car.html",
-            controller:'storage_setting_car_controller'
+            controller:"storage_car_details_controller"
         })
         .state("user_info",{
             url:"/user_info",
-            templateUrl: "/view/userinfo.html",
+            templateUrl: "/view/user/user_info.html",
             controller:'user_info_controller'
         });
 }]);

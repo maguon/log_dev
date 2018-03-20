@@ -7,16 +7,6 @@ hostService.factory("$host", function () {
         api_url: "http://stg.myxxjs.com:8001/api",
         file_url: "http://stg.myxxjs.com:9002/api",
         record_url: "http://stg.myxxjs.com:9004/api"
-
     };
     return _this;
-
 });
-// hostService.factory("$upload",function () {
-//     var _this={
-//         api_url_upload:"http://stg.myxxjs.com:9002/api"
-//
-//     };
-//     return _this;
-//
-// });

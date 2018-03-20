@@ -1,7 +1,6 @@
 /**
  * Created by ASUS on 2017/5/17.
  */
-//var setting_amend_vin_controller=angular.module("setting_amend_vin_controller",[]);
 app.controller("setting_amend_vin_controller",["$scope","_basic","_config","$host",function ($scope,_basic,_config,$host){
     var admin=_basic.getSession(_basic.USER_ID);
     $scope.flag=true;

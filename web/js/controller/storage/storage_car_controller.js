@@ -1,8 +1,7 @@
 /**
  * Created by ASUS on 2017/5/4.
  */
-var Storage_carController = angular.module("Storage_carController", []);
-Storage_carController.controller("Storage_carController", ["$scope", "$rootScope", "$pass_parameter", "$host", "_basic", "_config", "service_storage_parking", function ($scope, $rootScope, $pass_parameter, $host, _basic,  _config, service_storage_parking) {
+app.controller("storage_car_controller", ["$scope", "$rootScope", "$pass_parameter", "$host", "_basic", "_config", "service_storage_parking", function ($scope, $rootScope, $pass_parameter, $host, _basic,  _config, service_storage_parking) {
     $scope.curruntId = 0;
     $scope.start = 0;
     $scope.size = 11;

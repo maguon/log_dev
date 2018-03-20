@@ -17,7 +17,7 @@ dispatch_router.config(['$stateProvider',"$urlRouterProvider",function($statePro
         })
         .state("user_info",{
             url:"/user_info",
-            templateUrl: "/view/userinfo.html",
+            templateUrl: "/view/user/user_info.html",
             controller:'user_info_controller'
         });
 }]);

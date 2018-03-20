@@ -17,7 +17,7 @@ international_trade_router.config(['$stateProvider',"$urlRouterProvider",functio
         })
         .state("user_info",{
             url:"/user_info",
-            templateUrl: "/view/userinfo.html",
+            templateUrl: "/view/user/user_info.html",
             controller:'user_info_controller'
         });
 }]);

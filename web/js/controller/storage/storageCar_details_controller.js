@@ -1,8 +1,7 @@
 /**
  * Created by ASUS on 2017/5/5.
  */
-var storageCar_detailsController = angular.module("storageCar_detailsController", []);
-storageCar_detailsController.controller("storageCar_detailsController", [ "$state", "$stateParams", "_config", "service_storage_parking", "$scope", "$host", "_basic", function ( $state, $stateParams, _config, service_storage_parking, $scope, $host, _basic) {
+app.controller("storage_car_details_controller", [ "$state", "$stateParams", "_config", "service_storage_parking", "$scope", "$host", "_basic", function ( $state, $stateParams, _config, service_storage_parking, $scope, $host, _basic) {
     var userId = _basic.getSession(_basic.USER_ID);
     var val = $stateParams.id;
     var vin = $stateParams.vin;

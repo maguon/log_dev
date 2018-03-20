@@ -2,7 +2,6 @@
  * Created by ASUS on 2017/4/6.
  */
 var baseService = angular.module("baseService", []);
-
 baseService.factory("$urlMethod", function () {
     var _this = {};
     _this.urlMethod = function (obj) {
@@ -16,9 +15,6 @@ baseService.factory("$urlMethod", function () {
     };
     return _this
 });
-
-
-
 baseService.factory("service_storage_parking", function () {
     var storageParking = function (pk) {
         var parkingArray = [];
@@ -27,7 +23,6 @@ baseService.factory("service_storage_parking", function () {
             var time;
             var date = new Date(pk[i].plan_out_time);
             var plan_time = date.getTime();
-
             var new_time = new Date().getTime();
             time = plan_time - new_time - 1000 * 60 * 60 * 24 * 5;
             if (time > 0) {
@@ -43,8 +38,6 @@ baseService.factory("service_storage_parking", function () {
                 }
             }
             if (j == parkingArray.length) {
-
-                // pk[i].plan_time-
                 parkingArray.push({
                     row: pk[i].row,
                     col: [{
@@ -70,14 +63,12 @@ baseService.factory("service_storage_parking", function () {
                     storage_id: pk[i].storage_id
                 });
             }
-
         }
         return parkingArray;
     };
     return {
         storage_parking: storageParking
     }
-
 });
 // 公共数据
 baseService.factory("_config", function () {

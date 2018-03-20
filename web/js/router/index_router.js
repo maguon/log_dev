@@ -1,5 +1,5 @@
-var index_router=angular.module("index_router",[]);
-index_router.config(['$stateProvider',"$urlRouterProvider",function($stateProvider,$urlRouterProvider) {
+
+app.config(['$stateProvider',"$urlRouterProvider",function($stateProvider,$urlRouterProvider) {
     $urlRouterProvider.when("","/storage_index");
     $stateProvider
         .state("index", {  //路由状态
@@ -30,10 +30,10 @@ index_router.config(['$stateProvider',"$urlRouterProvider",function($stateProvid
             templateUrl: "/view/car/truck/truck_hand.html",  //路由填充的模板
             controller:'truck_hand_controller'
         })
-        .state("Company", {
-            url: "/Company",  //路由路径
+        .state("company", {
+            url: "/company",  //路由路径
             templateUrl: "/view/car/company.html", //路由填充的模板
-            controller:"Company_controller"
+            controller:"company_controller"
         })
         .state("malfunction", {
             url: "/malfunction",  //路由路径
@@ -57,8 +57,8 @@ index_router.config(['$stateProvider',"$urlRouterProvider",function($stateProvid
         })
         .state("data", {
             url: "/data",  //路由路径
-            templateUrl: "/view/data.html",  //路由填充的模板
-            controller:'dataController'
+            templateUrl: "/view/data/data.html",  //路由填充的模板
+            controller:'data_controller'
         })
 
         .state("setting_users", {
@@ -66,20 +66,20 @@ index_router.config(['$stateProvider',"$urlRouterProvider",function($stateProvid
             templateUrl: "/view/system_settings/user_manager.html", //路由填充的模板
             controller:'setting_user_controller'
         })
-        .state("setting_pw", {
-            url:"/setting_pw",
+        .state("setting_password", {
+            url:"/setting_password",
             templateUrl: "/view/system_settings/setting_password.html",
-            controller:'settingPW_controller'
+            controller:'setting_password_controller'
         })
-        .state("setting_wh", {
-            url:"/setting_wh",
+        .state("system_warehouse", {
+            url:"/system_warehouse",
             templateUrl: "/view/system_settings/system_warehouse.html",
-            controller:'settingWH_controller'
+            controller:'system_warehouse_controller'
         })
         .state("setting_truck", {
             url:"/setting_truck",
             templateUrl: "/view/system_settings/setting_truck.html",
-            controller:'settingT_controller'
+            controller:'setting_truck_controller'
         })
         .state("setting_amend_vin",{
             url:"/setting_amend_vin",
@@ -93,18 +93,18 @@ index_router.config(['$stateProvider',"$urlRouterProvider",function($stateProvid
         })
         .state("calendar", {
             url:"/calendar",
-            templateUrl: "/view/storage/working_calendar.html",
-            controller:'storage_working_calendarController'
+            templateUrl: "/view/storage/storage_calendar.html",
+            controller:'storage_calendar_controller'
         })
         .state("storageCar", {
             url:"/storage_car",
             templateUrl: "/view/storage/storage_car.html",
-            controller:'Storage_carController'
+            controller:'storage_car_controller'
         })
-        .state("storageStore", {
+        .state("storage_store", {
             url:"/storage_store",
             templateUrl: "/view/storage/storage_store.html",
-            controller:"storage_storeController"
+            controller:"storage_store_controller"
         })
         .state("statistics", {
             url:"/storage_statistics",
@@ -114,12 +114,12 @@ index_router.config(['$stateProvider',"$urlRouterProvider",function($stateProvid
         .state("storageCar_details", {
             url:"/storageCar_details/{id}/vin/{vin}/_form/{_form}?from",
             templateUrl: "/view/storage/storage_details.html",
-            controller:"storageCar_detailsController"
+            controller:"storage_car_detailsController"
         })
         .state("storageCar_details_", {
             url:"/storageCar_details/{id}/vin/{vin}?from",
             templateUrl: "/view/storage/storage_details.html",
-            controller:"storageCar_detailsController"
+            controller:"storage_car_details_controller"
         })
         .state("storage_car_map", {
             url:"/storage_car_map/{id}?form",
@@ -128,7 +128,7 @@ index_router.config(['$stateProvider',"$urlRouterProvider",function($stateProvid
         })
         .state("user_info",{
             url:"/user_info",
-            templateUrl: "/view/userinfo.html",
+            templateUrl: "/view/user/user_info.html",
             controller:'user_info_controller'
         })
         .state("car_demand",{

@@ -1,5 +1,4 @@
-var storage_working_calendarController = angular.module("storage_working_calendarController", []);
-storage_working_calendarController.controller("storage_working_calendarController", ["$scope", "$host", "_basic", function ($scope, $host, _basic) {
+app.controller("storage_calendar_controller", ["$scope", "$host", "_basic", function ($scope, $host, _basic) {
     var date = new Date();
     var now_date = moment(date).format('YYYYMMDD');
     var month = date.getMonth() + 1;
@@ -14,7 +13,6 @@ storage_working_calendarController.controller("storage_working_calendarControlle
     weekday[5] = "Friday";
     weekday[6] = "Saturday";
     $scope.today_week = weekday[date.getDay()];
-
     _basic.get($host.api_url + "/storageDate" + "?dateStart=" + now_date + "&dateEnd=" + now_date).then(function (data) {
         if (data.success == true&&data.result.length>0) {
             $scope.store_storage = data.result;
@@ -25,7 +23,6 @@ storage_working_calendarController.controller("storage_working_calendarControlle
     $scope.get_fullCalendar = function (storage_id) {
         search(storage_id);
     };
-
     // 日历信息
     var search = function (storage_id) {
         $('#calendar').fullCalendar('destroy');
@@ -39,13 +36,10 @@ storage_working_calendarController.controller("storage_working_calendarControlle
                 right: 'next'
             },
             height: 'auto',
-
             events: function (start, end, timezone, callback) {
-                console.log(start, end);
                 start = moment(start).format('YYYYMMDD');
                 end = moment(end).format('YYYYMMDD');
                 var eventArray = [];
-
                 _basic.get($host.api_url + "/storageDate?storageId=" + storage_id + "&dateStart=" + start + "&dateEnd=" + end).then(function (data) {
                     if (data.success == true&&data.result.length>0) {
                         console.log(data);
@@ -71,20 +65,16 @@ storage_working_calendarController.controller("storage_working_calendarControlle
 
                     }
                 })
-
             },
             eventRender: function (event, element) {
                 element.html(event.title);
             }
         });
         // 当天仓库信息
-
         _basic.get($host.api_url + "/storageDate?storageId=" + storage_id + "&dateStart=" + now_date + "&dateEnd=" + now_date).then(function (data) {
             if (data.success == true&&data.result.length>0) {
                 $scope.today_data = data.result[0];
             }
         })
     };
-
-
 }]);
