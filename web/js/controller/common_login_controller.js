@@ -38,7 +38,6 @@ common_login_controller.controller("common_login_controller", ['$rootScope','$sc
                     }
                 }).catch(function(error){
                     swal("登录异常", "", "error");
-                    console.log(error)
                 });
             }
         };

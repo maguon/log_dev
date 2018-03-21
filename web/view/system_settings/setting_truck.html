@@ -12,7 +12,7 @@
             <div class="row addBrand">
                 <a href="" class=" col s2 offset-s10  btn waves-effect cyan lighten-1 waves-light vc-center open_car_brand "
                    ng-click="car_Brand_box($event)">+增加品牌</a>
-                <form name="addBrandFrom" ng-submit="add_brand(addBrandFrom.$valid)" novalidate>
+                <form name="addBrandFrom" ng-click="addBrand(addBrandFrom.$valid)" novalidate>
                     <div class="col s12 z-depth-2 white car_Brand_box "
                          style="padding: 0.75rem 0;display: none">
                         <div class="col s1 vc-center" style="height: 45px">
@@ -39,7 +39,7 @@
                             <div class="amend_brand_box amend_brand_box{{$index}} col s12 p0"
                                  ng-click="amend_brand_box($event)">
                                 <form name="amend_brandForm"
-                                      ng-submit="amend_brand_submit(amend_brandForm.$valid,el.id,el.make_name,$index)">
+                                      ng-submit="updateCarBrand(amend_brandForm.$valid,el.id,el.make_name,$index)">
                                     <div class="col s6 valign-wrapper p0">
                                         <i class="mdi mdi-car cyan-text text-lighten-1 "></i>
                                         <input type="text" class="cyan-text lighten-1" style="height: 30px"
@@ -72,7 +72,7 @@
                                     <div class="add_model_wrap add_model_wrap{{$index}} col white s12"
                                          style="display: none">
                                         <form name="add_modelForm"
-                                              ng-submit="add_car_model_submit(add_modelForm.$valid,el.id,$index)"
+                                              ng-submit="addCarModel(add_modelForm.$valid,el.id,$index)"
                                               novalidate>
                                             <div class="col s6 valign-wrapper p0 vc-center add_model_box"
                                                  ng-class="{'has-error':add_modelForm.add_car_model.$invalid&&submitted}">

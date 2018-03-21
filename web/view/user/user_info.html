@@ -10,8 +10,8 @@
         </div>
         <div style="width: 75%;margin: 0 auto">
             <ul class="collapsible" data-collapsible="accordion" collapsible>
-                <li style="border-bottom: 1px solid #4dd0e1" ng-repeat="el in user_info_section">
-                    <div class="collapsible-header user_info_list " flag="true"
+                <li style="border-bottom: 1px solid #4dd0e1" ng-repeat="el in userInfoArray">
+                    <div class="collapsible-header userInfoList " flag="true"
                          ng-click="get_userInfo($event,el.user_type)"><i class="mdi  mdi-account"></i><span>{{el.type_name}}</span>
                     </div>
                     <div class="collapsible-body" style="padding: 0">
@@ -25,7 +25,7 @@
                                 </tr>
                                 </thead>
                                 <tbody class="grey-text text-darken-1">
-                                <tr ng-repeat="els in el.user_info_list_array">
+                                <tr ng-repeat="els in el.userInfoListArray">
                                     <td class="center-align" ng-bind="els.real_name"></td>
                                     <td class="center-align" ng-if="els.gender==1">男</td>
                                     <td class="center-align" ng-if="els.gender==0">女</td>

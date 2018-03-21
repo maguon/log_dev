@@ -2,26 +2,26 @@
  * Created by ASUS on 2017/5/16.
  */
 app.controller("user_info_controller",["$scope","_basic","_config","$host",function ($scope,_basic,_config,$host) {
-    var user_info_obj=_config.userTypes;
-    $scope.user_info_section=[];
-    var user_info_fun=function () {
+    var userInfoItem=_config.userTypes;
+    $scope.userInfoArray=[];
+    function userInfo() {
         _basic.get($host.api_url+"/user").then(function (data) {
             if(data.success==true){
-                $scope.user_info_list=data.result;
-                for(var i in user_info_obj){
-                    $scope.user_info_section.push({
-                        user_type:user_info_obj[i].type,
-                        type_name:user_info_obj[i].name,
-                        user_info_list_array:[]
+                $scope.userInfoList=data.result;
+                for(var i in userInfoItem){
+                    $scope.userInfoArray.push({
+                        user_type:userInfoItem[i].type,
+                        type_name:userInfoItem[i].name,
+                        userInfoListArray:[]
                     });
                 }
-                for(var k in $scope.user_info_section){
-                    for(var j in $scope.user_info_list){
-                    if($scope.user_info_list[j].type==$scope.user_info_section[k].user_type&&$scope.user_info_list[j].status==1){
-                        $scope.user_info_section[k].user_info_list_array.push({
-                            real_name:$scope.user_info_list[j].real_name,
-                            mobile:$scope.user_info_list[j].mobile,
-                            gender:$scope.user_info_list[j].gender,
+                for(var k in $scope.userInfoArray){
+                    for(var j in $scope.userInfoList){
+                    if($scope.userInfoList[j].type==$scope.userInfoArray[k].user_type&&$scope.userInfoList[j].status==1){
+                        $scope.userInfoArray[k].userInfoListArray.push({
+                            real_name:$scope.userInfoList[j].real_name,
+                            mobile:$scope.userInfoList[j].mobile,
+                            gender:$scope.userInfoList[j].gender,
                         })
                     }
                 }
@@ -31,5 +31,5 @@ app.controller("user_info_controller",["$scope","_basic","_config","$host",funct
             }
         });
     };
-    user_info_fun();
+    userInfo();
 }]);

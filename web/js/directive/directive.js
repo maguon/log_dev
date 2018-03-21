@@ -383,4 +383,11 @@ adminDirective.directive("amendUser",function () {
         }
     }
 });
-
+adminDirective.directive('footer', function () {
+    return {
+        templateUrl: '/view/footer.html',
+        replace: true,
+        transclude: false,
+        restrict: 'E'
+    };
+});

@@ -1,13 +1,13 @@
 
 app.controller("setting_user_controller", ["_basic","_config", "$host", "$scope", function (_basic,_config,$host, $scope) {
     var adminId = _basic.getSession(_basic.USER_ID);
-    var user_info_obj=_config.userTypes;
+    var userInfoItem=_config.userTypes;
     var user_info_fun=function () {
-        $scope.user_info_section=[];
-        for(var i in user_info_obj){
-            $scope.user_info_section.push(user_info_obj[i])
+        $scope.userInfoArray=[];
+        for(var i in userInfoItem){
+            $scope.userInfoArray.push(userInfoItem[i])
         }
-        return $scope.user_info_section
+        return $scope.userInfoArray
     };
     user_info_fun();
     // 搜索所有查询

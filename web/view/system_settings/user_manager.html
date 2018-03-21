@@ -39,7 +39,7 @@
                                             <select car-select name="dep" class="browser-default col s6-0" ng-model="newDepId" required>
                                                 <option value="" disabled selected>请选择</option>
                                                 <!--<option ng-value="1" >车管部</option>-->
-                                                <option ng-repeat="el in user_info_section" ng-value="el.type">{{el.name}}</option>
+                                                <option ng-repeat="el in userInfoArray" ng-value="el.type">{{el.name}}</option>
                                             </select>
                                         </div>
                                     </div>
@@ -127,7 +127,7 @@
                                                         </h5>
                                                         <select car-select name="dep" class="browser-default col s6-0" ng-model="look_operation.type" required>
                                                             <!--<option value="" disabled selected>请选择</option>-->
-                                                            <option ng-repeat="el in user_info_section" ng-value="el.type">{{el.name}}</option>
+                                                            <option ng-repeat="el in userInfoArray" ng-value="el.type">{{el.name}}</option>
                                                         </select>
                                                     </div>
                                                 </div>

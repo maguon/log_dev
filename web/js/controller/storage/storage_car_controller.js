@@ -347,27 +347,27 @@ app.controller("storage_car_controller", ["$scope", "$rootScope", "$pass_paramet
 
     };
     // 仓库移位
-    $scope.move_box = function (val) {
-        if ($(".move_box").attr("flag") == 'true') {
-            $(".move_box").show();
-            $(".move_box").attr("flag", false);
+    $scope.moveBox = function (val) {
+        if ($(".moveBox").attr("flag") == 'true') {
+            $(".moveBox").show();
+            $(".moveBox").attr("flag", false);
             _basic.get($host.api_url + "/storageParking?storageId=" + val).then(function (data) {
                 if (data.success == true&&data.result.length>0) {
                     $scope.move_storageParking = data.result;
-                    $scope.move_parkingArray = service_storage_parking.storage_parking($scope.move_storageParking);
+                    $scope.moveParkingArray = service_storage_parking.storage_parking($scope.move_storageParking);
                 }
             })
         } else {
-            $(".move_box").hide();
-            $(".move_box").attr("flag", true);
+            $(".moveBox").hide();
+            $(".moveBox").attr("flag", true);
         }
     };
-    $scope.close_move_box = function () {
-        $(".move_box").hide();
-        $(".move_box").attr("flag", true);
+    $scope.closeMoveBox = function () {
+        $(".moveBox").hide();
+        $(".moveBox").attr("flag", true);
     };
     // 移动位置
-    $scope.move_parking = function (parkingId, row, col) {
+    $scope.moveParking = function (parkingId, row, col) {
 
         swal({
                 title: "该车辆确定移位到" + row + "排" + col + "列？",

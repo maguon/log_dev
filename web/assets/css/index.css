@@ -544,7 +544,7 @@ input[type=text]{
 .min-width-2{
     min-width: 130px;
 }
-.col.move_box{
+.col.moveBox{
     position: absolute;
     left: 0;
     top:100%;
@@ -555,7 +555,7 @@ input[type=text]{
     display: none;
     background: white;
 }
-.move_box i{
+.moveBox i{
     cursor: pointer;
 }
 .look_StorageCar .row.col{
@@ -867,12 +867,12 @@ input[type=text]{
 }
 
 /*用户信息*/
-.user_info_list.active{
+.userInfoList.active{
     background:#4dd0e1 ;
 }
-.user_info_list.active i{
+.userInfoList.active i{
     color: white;
 }
-.user_info_list i {
+.userInfoList i {
     color: #4dd0e1;
 }

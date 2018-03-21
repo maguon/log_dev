@@ -343,7 +343,7 @@
                                                     <div class="garage_row vc-center left" ng-repeat="els in el.col track by $index" ng-class="{'present_place':el.row==now_row&&els.col==now_col}">
                                                         <i ng-show="els.carId!=0&&els.plan_time==true" class=" mdi mdi-car red-text accent-1 "></i>
                                                         <i ng-show="els.carId!=0&&els.plan_time==false" class=" mdi mdi-car cyan-text lighten-1"></i>
-                                                        <i ng-show="els.carId==0" class=" mdi mdi-car grey-text lighten-2 " ng-click="move_parking(els.id,el.row,els.col)"></i>
+                                                        <i ng-show="els.carId==0" class=" mdi mdi-car grey-text lighten-2 " ng-click="moveParking(els.id,el.row,els.col)"></i>
                                                     </div>
                                                 </div>
                                             </div>

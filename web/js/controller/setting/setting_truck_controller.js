@@ -38,7 +38,7 @@ app.controller("setting_truck_controller", ["$scope", "$host", "_basic", functio
         $(".amend_brand_box"+$index).hide();
     };
     // 修改汽车品牌
-    $scope.amend_brand_submit = function (iValid,id,name,$index) {
+    $scope.updateCarBrand = function (iValid,id,name,$index) {
         if(iValid){
             _basic.put($host.api_url + "/admin/" + adminId + "/carMake/" + id, {
                 "makeName": name
@@ -79,7 +79,7 @@ app.controller("setting_truck_controller", ["$scope", "$host", "_basic", functio
         $scope.submitted=false;
     };
     // 增加汽车型号接口
-    $scope.add_car_model_submit=function (iValid,id) {
+    $scope.addCarModel=function (iValid,id) {
         $scope.submitted=true;
         if(iValid){
             _basic.post($host.api_url + "/admin/" + adminId + "/carMake/" + id+"/carModel", {
@@ -174,7 +174,7 @@ app.controller("setting_truck_controller", ["$scope", "$host", "_basic", functio
             }
         })
     };
-    $scope.add_brand=function (iValid) {
+    $scope.addBrand=function (iValid) {
         if(iValid){
             _basic.post($host.api_url + "/admin/" + adminId + "/carMake/", {
                 makeName: $scope.b_txt

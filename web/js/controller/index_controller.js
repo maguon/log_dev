@@ -119,8 +119,6 @@ index_controller.controller("indexController", ['$rootScope', '$scope', '$locati
 
                 }]
             });
-
-            console.log('Index Controller Init !')
             $('.datepicker').pickadate({
                 onSet: function (arg) {
                     if ('select' in arg) {

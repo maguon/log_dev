@@ -30,7 +30,6 @@ app.controller("storage_car_details_controller", [ "$state", "$stateParams", "_c
             url: 'data-original'
         });
     };
-
     // 图片上传
     $scope.imgArr = [];
     // 预览详情照片
@@ -39,7 +38,6 @@ app.controller("storage_car_details_controller", [ "$state", "$stateParams", "_c
     $scope.storage_image_i = [];
     $scope.uploadBrandImage = function (dom) {
         var filename = $(dom).val();
-        // console.log($(dom).val());
         if ((/\.(jpe?g|png|gif|svg|bmp|tiff?)$/i).test(filename)) {
             //check size
             //$file_input[0].files[0].size
@@ -49,7 +47,6 @@ app.controller("storage_car_details_controller", [ "$state", "$stateParams", "_c
             if (re.test(max_size_str)) {
                 max_size = parseInt(max_size_str.substring(0, max_size_str.length - 1)) * 1024 * 1024;
             }
-
             if ($(dom)[0].files[0].size > max_size) {
                 swal('图片文件最大:' + max_size_str, "", "error");
                 return false;
@@ -61,7 +58,6 @@ app.controller("storage_car_details_controller", [ "$state", "$stateParams", "_c
         }
         _basic.formPost($(dom).parent().parent(), $host.file_url + '/user/' + userId + '/image?imageType=4', function (data) {
             if (data.success) {
-                // console.log(data, $scope.Picture_carId);
                 var imageId = data.imageId;
                 _basic.post($host.record_url + "/car/" + $scope.Picture_carId + "/vin/" + $scope.vin + "/storageImage", {
                     "username": _basic.getSession(_basic.USER_NAME),
@@ -251,7 +247,6 @@ app.controller("storage_car_details_controller", [ "$state", "$stateParams", "_c
                 closeOnConfirm: false
             },
             function () {
-            // console.log(src);
                 var url_array=src.split("/");
                 var url=url_array[url_array.length-1];
                 _basic.delete($host.record_url+"/user/"+userId+"/record/"+record_id+"/image/"+url).then(function (data) {
@@ -283,55 +278,44 @@ app.controller("storage_car_details_controller", [ "$state", "$stateParams", "_c
             "engineNum": $scope.self_car.engine_num,
             "remark": $scope.self_car.remark
         };
-        // console.log(obj, id);
         if (isValid) {
             // 修改计划出库时间
             _basic.put($host.api_url + "/user/" + userId + "/carStorageRel/" + r_id + "/planOutTime", {
                 "planOutTime": $scope.self_car.plan_out_time
             }).then(function (data) {
-                console.log(data)
             });
             // 修改仓库信息
             _basic.put($host.api_url + "/user/" + userId + "/car/" + id, _basic.removeNullProps(obj)).then(function (data) {
                 if (data.success == true) {
                     swal("修改成功", "", "success");
-                    // $("#look_StorageCar").modal("close");
-                    // searchAll();
                 } else {
                     swal(data.msg, "", "error")
                 }
             });
-
         }
-
-        // _basic.put($host.api_url+"/user/"+userId+"/car/"+id,obj).then(function (data) {
-        //
-        // })
     };
     // 仓库移位
-    $scope.move_box = function (val) {
-        if ($(".move_box").attr("flag") == 'true') {
-            $(".move_box").show();
-            $(".move_box").attr("flag", false);
+    $scope.moveBox = function (val) {
+        if ($(".moveBox").attr("flag") == 'true') {
+            $(".moveBox").show();
+            $(".moveBox").attr("flag", false);
             _basic.get($host.api_url + "/storageParking?storageId=" + val).then(function (data) {
                 if (data.success == true&&data.result.length>0) {
                     $scope.move_storageParking = data.result;
-                    $scope.move_parkingArray = service_storage_parking.storage_parking($scope.move_storageParking);
+                    $scope.moveParkingArray = service_storage_parking.storage_parking($scope.move_storageParking);
                 }
             })
         } else {
-            $(".move_box").hide();
-            $(".move_box").attr("flag", true);
+            $(".moveBox").hide();
+            $(".moveBox").attr("flag", true);
         }
     };
-    $scope.close_move_box = function () {
-        $(".move_box").hide();
-        $(".move_box").attr("flag", true);
+    $scope.closeMoveBox = function () {
+        $(".moveBox").hide();
+        $(".moveBox").attr("flag", true);
     };
     // 移动位置
-    $scope.move_parking = function (parkingId, row, col) {
-        // console.log(parkingId,$scope.move_carId);
-
+    $scope.moveParking = function (parkingId, row, col) {
         swal({
                 title: "该车辆确定移位到" + row + "排" + col + "列？",
                 text: "",
@@ -358,8 +342,6 @@ app.controller("storage_car_details_controller", [ "$state", "$stateParams", "_c
                 }
             }
         )
-
-
     };
     // 车辆出库
     $scope.out_storage = function (rel_id, p_id, s_id, car_id) {
@@ -374,7 +356,6 @@ app.controller("storage_car_details_controller", [ "$state", "$stateParams", "_c
                 closeOnConfirm: false
             },
             function () {
-
                 _basic.put($host.api_url + "/user/" + userId + "/carStorageRel/" + rel_id + "/relStatus/" + 2, {
                     parkingId: p_id,
                     storageId: s_id,
@@ -383,8 +364,6 @@ app.controller("storage_car_details_controller", [ "$state", "$stateParams", "_c
                     if (data.success = true) {
                         swal("出库成功!", "", "success");
                         $scope.self_car.rel_status = 2;
-                        // searchAll();
-                        // $("#look_StorageCar").modal("close");
                     }
                 });
             }
