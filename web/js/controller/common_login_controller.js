@@ -1,9 +1,10 @@
 /**
  * Created by jiangsen on 2017/4/11.
  */
-var common_login_controller=angular.module("common_login_controller",[]);
-common_login_controller.controller("common_login_controller", ['$rootScope','$scope','$location','$q',"_basic","$host","_config",
+/*
+Login_model.controller("common_login_controller", ['$rootScope','$scope','$location','$q',"_basic","$host","_config",
     function($rootScope,$scope,$location,$q,_basic,$host,_config){
+    console.log(aaaa)
             $scope.username='';
             $scope.password='';
             $scope.login = function(){
@@ -25,13 +26,13 @@ common_login_controller.controller("common_login_controller", ['$rootScope','$sc
                         _basic.setHeader(_basic.COMMON_AUTH_NAME, data.result.accessToken);
                         // 判断user_type控制页面调到某个模块
                         if(data.result.type==_config.userTypes.storageUser.type){
-                            window.location.href="storage.html";
+                            window.location.href="/view/storage.html";
                         }
                         if(data.result.type==_config.userTypes.dispatch.type){
-                            window.location.href="dispatch.html";
+                            window.location.href="/view/dispatch.html";
                         }
                         if(data.result.type==_config.userTypes.international_trade.type){
-                            window.location.href="/view/international_trade/international_trade_home.html";
+                            window.location.href="/view/international_trade.html";
                         }
                     }else {
                         swal(data.msg,"","error");
@@ -42,3 +43,4 @@ common_login_controller.controller("common_login_controller", ['$rootScope','$sc
             }
         };
     }]);
+*/

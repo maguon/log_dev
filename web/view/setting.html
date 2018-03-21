@@ -1,56 +1,69 @@
-<div>
-    <div class="row">
-        <div class="col s12 m6">
-            <div class="z-depth-1 blue-grey darken-1">
-                <form class="col s12 z-depth-5  darken-1">
-                    <div class="row">
-                        <nav class="z-depth-0 purple darken-3">
-                            <div class="nav-wrapper">
-                                <span style="padding-left: 20px;">个人设置</span>
-                            </div>
-                        </nav>
-                    </div>
-                    <div class="row">
-                        <div class="input-field col s12">
-                            <i class="mdi mdi-email prefix"></i>
-                            <input disabled id="email" type="email" class="validate" ng-model="email">
-                            <label for="email" class={{email!=null?'active':'inactive'}}>邮箱</label>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="input-field col s12">
-                            <i class="mdi mdi-phone prefix"></i>
-                            <input id="phone" type="text" ng-model="phone" class="validate">
-                            <label for="phone" class={{phone!=null?'active':'inactive'}}>电话</label>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="input-field col s12">
-                            <i class="mdi mdi-cake-layered prefix"></i>
-                            <label for="birth" style="text-decoration: none;">生日</label>
-                            <input type="date" class="datepicker" id="birth">
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="input-field col s12">
-                            <i class="mdi mdi-gender-transgender prefix"></i>
-                            <input name="gender" value="1" type="radio" id="male" ng-checked={{gender==1}}
-                                   ng-model="gender">
-                            <label for="male" style="width: calc(3% - 3rem - 1.5rem);">男</label>
-                            <input name="gender" value="0" type="radio" id="female" ng-checked={{gender==0}}
-                                   ng-model="gender">
-                            <label for="female" style="width: calc(30% - 3rem - 1.5rem);">女</label>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="input-field col s12">
-                            <button class="btn waves-effect waves-light col s12 purple darken-3"
-                                    ng-click="updateUser()">确定
-                            </button>
-                        </div>
-                    </div>
-                </form>
+<ul id="slide-out" side-nav class="side-nav blue-grey darken-4">
+    <li class="nav-logo valign-wrapper " style="border-bottom: 1px solid #182024">
+        <div class="userBox ">
+            <img src="../assets/images/office.jpg" alt="" class="logo_img responsive-img left" style="height: 50px">
+            <div class=" userBoxMsg left">
+              <span class="white-text">
+                操作员:
+              </span>
+                <span class="white-text" ng-bind="userName">
+
+                </span>
             </div>
         </div>
-    </div>
-</div>
+    </li>
+    <li class="bold side_navigator">
+        <a class="waves-effect waves-light first-N" ui-sref="storage_index"><i
+                class="white-text mdi mdi-crop-free "></i>主控面板</a>
+    </li>
+    <li class="bold side_navigator">
+        <a href="#!" ui-sref="user_info" class=" waves-effect waves-light first-N"><i
+                class="white-text mdi mdi-account-card-details"></i>用户信息</a>
+    </li>
+    <li class="bold side_navigator">
+        <a href="#!" ui-sref="car_demand" class=" waves-effect waves-light first-N"><i
+                class="white-text mdi mdi-magnify"></i>车辆查询</a>
+    </li>
+    <li class="bold side_navigator">
+        <ul class="collapsible collapsible-accordion">
+            <li class="bold">
+                <a class="collapsible-header waves-effect waves-light first-N"><i
+                        class="white-text mdi mdi-home-variant "></i>仓储管理</a>
+                <div class="collapsible-body slider_nav_box blue-grey darken-3" style="padding: 0;">
+                    <ul>
+                        <li><a href="#!" ui-sref="calendar"><i class="mdi mdi-chevron-right white-text "></i>工作日历</a>
+                        </li>
+                        <li><a href="#!" ui-sref="statistics"><i class="white-text mdi mdi-chevron-right"></i>仓储统计</a>
+                        </li>
+                        <li><a href="#!" ui-sref="storageStore"><i class="white-text mdi mdi-chevron-right"></i>仓储存放</a>
+                        </li>
+                        <li><a href="#!" ui-sref="storageCar"><i class="white-text mdi mdi-chevron-right"></i>仓储车辆</a>
+                        </li>
+                    </ul>
+                </div>
+            </li>
+        </ul>
+    </li>
+    <li class="bold side_navigator">
+        <ul class="collapsible collapsible-accordion">
+            <li class="bold">
+                <a class="collapsible-header waves-effect waves-light first-N"><i
+                        class="white-text mdi mdi-account-settings-variant "></i>管理员设置</a>
+                <div class="collapsible-body blue-grey darken-3" style="padding: 0;">
+                    <ul>
+                        <li><a href="#!" ui-sref="setting_wh"><i class="mdi mdi-chevron-right white-text "></i>仓库设置</a>
+                        </li>
+                        <li><a href="#!" ui-sref="setting_truck"><i
+                                class="mdi mdi-chevron-right white-text "></i>车辆设置</a></li>
+                        <li><a href="#!" ui-sref="setting_pw"><i class="mdi mdi-chevron-right white-text "></i>管理员设置</a>
+                        </li>
+                        <li><a href="#!" ui-sref="setting_users"><i
+                                class="mdi mdi-chevron-right white-text"></i>用户管理</a></li>
+                        <li><a href="#!" ui-sref="setting_amend_vin"><i class="white-text mdi mdi-chevron-right"></i>修改VIN</a>
+                        </li>
+                    </ul>
+                </div>
+            </li>
+        </ul>
+    </li>
+</ul>

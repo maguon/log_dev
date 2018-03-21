@@ -1,9 +1,9 @@
 /**
- * Created by 姜森 on 2017/3/14.
+ * Created by ASUS on 2017/5/26.
  */
 
-var Login_model = angular.module("login_dev", ['ui.router',"ngCookies","loginController","login_router","CommonService","hostService"]);
-Login_model.config(['$httpProvider',"$cookiesProvider",function($httpProvider,$cookiesProvider) {
+var app = angular.module("log_dev", ['ui.materialize','ui.router',"CommonFilter","ngCookies","ngMessages","hostService","baseService","adminDirective"]);
+app.config(['$httpProvider',"$cookiesProvider",function($httpProvider,$cookiesProvider) {
     $cookiesProvider.defaults = {
         path: "/",
         domain: "",//cookie 作用域， cookies只在这个域和其子域有效

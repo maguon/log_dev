@@ -1,8 +1,7 @@
 /**
  * Created by ASUS on 2017/5/19.
  */
-var dispatch_router=angular.module("dispatch_router",[]);
-dispatch_router.config(['$stateProvider',"$urlRouterProvider",function($stateProvider,$urlRouterProvider) {
+app.config(['$stateProvider',"$urlRouterProvider",function($stateProvider,$urlRouterProvider) {
     $urlRouterProvider.when("","/user_info");
     $stateProvider
         .state("car_demand",{

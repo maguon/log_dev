@@ -1,5 +1,4 @@
-var storage_router=angular.module("storage_router",[]);
-storage_router.config(['$stateProvider',"$urlRouterProvider",function($stateProvider,$urlRouterProvider) {
+app.config(['$stateProvider',"$urlRouterProvider",function($stateProvider,$urlRouterProvider) {
     $urlRouterProvider.when("","/storage_index");
     $stateProvider
         .state("storage_index", {  //路由状态
@@ -20,7 +19,7 @@ storage_router.config(['$stateProvider',"$urlRouterProvider",function($stateProv
         .state("storageStore", {
             url:"/storage_store",
             templateUrl: "/view/storage/storage_store.html",
-            controller:"storage_storeController"
+            controller:"storage_store_controller"
         })
         .state("statistics", {
             url:"/storage_statistics",

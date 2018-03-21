@@ -1,5 +1,5 @@
-var loginController = angular.module("loginController", []);
-loginController.controller("loginController", ['$rootScope', '$scope', '$location','$q', "_basic", "$host",
+var admin_login_controller = angular.module("admin_login_controller", []);
+admin_login_controller.controller("admin_login_controller", ['$rootScope', '$scope', '$location','$q', "_basic", "$host",
     function ($rootScope, $scope, $location, $q, _basic, $host) {
         $scope.username = '';
         $scope.password = '';

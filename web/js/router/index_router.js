@@ -14,7 +14,6 @@ app.config(['$stateProvider',"$urlRouterProvider",function($stateProvider,$urlRo
         .state("CarMsg", {
             url: "/CarMsg",  //路由路径
             templateUrl: "/view/car/truck_manager.html", //路由填充的模板
-            // abstract:true,
             controller:function ($state) {
                 $('.modal').modal();
                 $state.go("CarMsg.truck");

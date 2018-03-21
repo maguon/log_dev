@@ -1,7 +1,7 @@
 /**
  * Created by jiangsen on 2017/5/17.
  */
-app.controller("car_demand_controller", ["$scope", "$rootScope", "$host", "_basic", "_config", "service_storage_parking", function ($scope, $rootScope, $host, _basic,  _config, service_storage_parking) {
+app.controller("car_demand_controller", ["$scope", "$rootScope", "$host", "_basic", "_config", function ($scope, $rootScope, $host, _basic,  _config) {
     $scope.curruntId = 0;
     $scope.start = 0;
     $scope.size = 11;

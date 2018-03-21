@@ -11,9 +11,7 @@ adminDirective.directive('header', function () {
                     menuWidth: 280, // Default is 300
                     edge: 'left', // Choose the horizontal origin
                     closeOnClick: true, // Closes side-nav on <a> clicks, useful for Angular/Meteor
-                    // draggable: true // Choose whether you can drag to open on touch screens
                 });
-                // $(".button-collapse").sideNav();
                 $('.collapsible').collapsible();
                 $scope.logOut = function () {
                     swal({
@@ -30,7 +28,7 @@ adminDirective.directive('header', function () {
                         _basic.removeSession(_basic.USER_ID);
                         _basic.removeSession(_basic.USER_TYPE);
                         _basic.removeSession(_basic.USER_NAME);
-                        window.location.href = '/login.html';
+                        window.location.href = '/admin_login.html';
                     });
                 }
                 _basic.setHeader(_basic.USER_TYPE, _basic.getSession(_basic.USER_TYPE));
@@ -47,13 +45,12 @@ adminDirective.directive('header', function () {
                 });
 
             } else {
-                window.location="./login.html"
+                window.location="./admin_login.html"
             }
 
         }
     };
 });
-
 adminDirective.directive("carMsg", function () {
     return {
         restrict: 'A',
@@ -160,9 +157,6 @@ adminDirective.directive("dateFilter", ["$filter", function ($filter) {
         }
     }
 }]);
-
-
-
 adminDirective.directive('testDirective',[function () {
    return{
        restrict:"ECMA",
@@ -171,9 +165,6 @@ adminDirective.directive('testDirective',[function () {
        replace:true//false,
    }
 }]);
-
-
-
 adminDirective.directive("addNav", function () {
     return {
         templateUrl: '/view/car/new_truck/new_truck.html',
@@ -194,7 +185,6 @@ adminDirective.directive("truckNav", function () {
         }
     }
 });
-
 adminDirective.directive("basicTruck", function () {
     return {
         templateUrl: '/view/car/new_truck/basic.html',
@@ -209,7 +199,6 @@ adminDirective.directive("carInspection", function () {
         replace: true
     }
 });
-
 adminDirective.directive("usersTabs", function () {
     return {
         restrict: "A",
@@ -232,7 +221,6 @@ adminDirective.directive("sexChange", function () {
         }
     }
 });
-
 adminDirective.directive("ulTabs", function () {
     return {
         restrict: "A",
@@ -249,8 +237,6 @@ adminDirective.directive("collapsible", function () {
         }
     }
 });
-
-
 adminDirective.directive("tooltipped", function () {
     return {
         restrict: "A",
@@ -259,7 +245,6 @@ adminDirective.directive("tooltipped", function () {
         }
     }
 });
-
 adminDirective.directive("addBrand", function () {
     return {
         restrict: "A",
@@ -342,7 +327,6 @@ adminDirective.directive("formDate", function () {
         }
     }
 });
-
 adminDirective.directive("view", function () {
     return {
         restrict: "EA",
@@ -351,7 +335,6 @@ adminDirective.directive("view", function () {
         }
     }
 });
-
 // ng-repeat渲染后的回调
 adminDirective.directive('repeatFinish', function () {
     return {

@@ -1,7 +1,7 @@
 /**
  * Created by ASUS on 2017/5/4.
  */
-app.controller("storage_car_controller", ["$scope", "$rootScope", "$pass_parameter", "$host", "_basic", "_config", "service_storage_parking", function ($scope, $rootScope, $pass_parameter, $host, _basic,  _config, service_storage_parking) {
+app.controller("storage_car_controller", ["$scope", "$rootScope", "$stateParams", "$host", "_basic", "_config", function ($scope, $rootScope, $stateParams, $host, _basic,  _config ) {
     $scope.curruntId = 0;
     $scope.start = 0;
     $scope.size = 11;
@@ -42,7 +42,7 @@ app.controller("storage_car_controller", ["$scope", "$rootScope", "$pass_paramet
             reqUrl = reqUrl + "&realEnd=" + $scope.search_outTime_end
         }
         _basic.get(reqUrl).then(function (data) {
-            if (data.success == true&&data.result.length>0) {
+            if (data.success == true) {
                 $scope.storage_car_box = data.result;
                 $scope.storage_car = $scope.storage_car_box.slice(0, 10);
                 if ($scope.start > 0) {

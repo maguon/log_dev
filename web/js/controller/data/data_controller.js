@@ -1,5 +1,5 @@
 
-app.controller("dataController", ['$rootScope', '$scope', '$location', '$q', '_basic', "$host",
+app.controller("data_controller", ['$rootScope', '$scope', '$location', '$q', '_basic', "$host",
     function ($rootScope, $scope, $location, $q, _basic, $host) {
         $scope.selectArray = [];
         $scope.csvFile = null;

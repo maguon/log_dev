@@ -129,6 +129,6 @@ index_controller.controller("indexController", ['$rootScope', '$scope', '$locati
                 selectYears: 0 // Creates a dropdown of 15 years to control year
             });
         } else {
-            window.location.href = 'login.html';
+           /* window.location.href = 'admin_login.html';*/
         }
     }])
