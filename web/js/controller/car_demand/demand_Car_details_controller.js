@@ -1,22 +1,18 @@
 /**
  * Created by ASUS on 2017/5/5.
+ * 主菜单：车辆查询 -> 仓储车辆信息 画面
  */
 app.controller("demand_Car_details_controller", [ "$state", "$stateParams", "_config", "$scope", "$host", "_basic", function ( $state, $stateParams, _config, $scope, $host, _basic) {
     var userId = _basic.getSession(_basic.USER_ID);
     var val = $stateParams.id;
     var vin = $stateParams.vin;
-    // 颜色
+    // 颜色列表
     $scope.color = _config.config_color;
-    // 车辆照片跳转
-    $scope.lookCarImg = function () {
-        $('ul.tabWrap li').removeClass("active");
-        $(".tab_box").removeClass("active");
-        $(".tab_box").hide();
-        $('ul.tabWrap li.look_car_img ').addClass("active");
-        $("#look_car_img").addClass("active");
-        $("#look_car_img").show();
-    };
-    $scope.lookMsg = function () {
+
+    /**
+     * 显示仓储车辆基本信息。
+     */
+    $scope.showCarInfo = function () {
         $('ul.tabWrap li').removeClass("active");
         $(".tab_box").removeClass("active");
         $(".tab_box").hide();
@@ -24,6 +20,19 @@ app.controller("demand_Car_details_controller", [ "$state", "$stateParams", "_co
         $("#look_msg").addClass("active");
         $("#look_msg").show();
     };
+
+    /**
+     * 显示仓储车辆照片。
+     */
+    $scope.showCarImg = function () {
+        $('ul.tabWrap li').removeClass("active");
+        $(".tab_box").removeClass("active");
+        $(".tab_box").hide();
+        $('ul.tabWrap li.look_car_img ').addClass("active");
+        $("#look_car_img").addClass("active");
+        $("#look_car_img").show();
+    };
+
     // 看大图
     var viewer;
     $scope.renderFinish = function () {
@@ -31,7 +40,10 @@ app.controller("demand_Car_details_controller", [ "$state", "$stateParams", "_co
             url: 'data-original'
         });
     };
-    // 返回
+
+    /**
+     * 返回到前画面（车辆查询）。
+     */
     $scope.return = function () {
         if ($stateParams.from == "storage_car_map") {
             $state.go($stateParams.from, {id: $scope.self_car.storage_id, form: "storageStore"}, {reload: true})
@@ -40,6 +52,12 @@ app.controller("demand_Car_details_controller", [ "$state", "$stateParams", "_co
         }
     };
     // 查看详情
+
+    /**
+     *
+     * @param val
+     * @param vin
+     */
     $scope.lookStorageCar = function (val, vin) {
         $scope.submitted = false;
         // 照片清空
@@ -54,8 +72,11 @@ app.controller("demand_Car_details_controller", [ "$state", "$stateParams", "_co
         $('ul.tabWrap li.look_msg').addClass("active");
         $("#look_msg").addClass("active");
         $("#look_msg").show();
+        // TODO 无效声明
         $scope.Picture_carId = val;
         $scope.vin = vin;
+
+        //
         _basic.get($host.record_url + "/user/" + userId + "/car/" + val + "/record").then(function (data) {
             if (data.success == true&&data.result.length>0) {
                 $scope.operating_record = data.result[0];
@@ -68,6 +89,8 @@ app.controller("demand_Car_details_controller", [ "$state", "$stateParams", "_co
                 swal(data.msg, "", "error")
             }
         });
+
+        //
         _basic.get($host.api_url + "/user/" + userId + "/car?carId=" + val + '&active=1').then(function (data) {
             if (data.success == true&&data.result.length>0) {
                 $scope.modelId = data.result[0].model_id;

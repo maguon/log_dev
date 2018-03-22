@@ -338,6 +338,7 @@ adminDirective.directive("view", function () {
 adminDirective.directive('addRepeatFinish', function () {
     return {
         link: function (scope, element, attr) {
+            console.log(13333)
             if (scope.$last == true) {
                 console.log('ng-repeat执行完毕');
                 scope.$eval(attr.add_repeatFinish)

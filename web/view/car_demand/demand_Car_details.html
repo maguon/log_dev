@@ -1,19 +1,27 @@
+<!-- 主菜单：车辆查询 -> 仓储车辆信息 画面 -->
 <div id="demand_Car_details" >
     <div class="" >
         <div class="modal-content grey-text text-darken-2">
+
+            <!-- 返回前画面 按钮 -->
             <div class="storage_storeTitle vc-center ">
                 <a class=" storage_goback_btn btn-floating btn waves-effect cyan lighten-1 waves-light " ng-click="return()">
                     <i class="mdi mdi-arrow-left-bold"></i>
                 </a>
                 <h4 class="center-align cyan-text text-lighten-1">仓储车辆信息</h4>
             </div>
+
+            <!-- 车辆信息画面 主体内容 -->
             <div class="row no-marBottom" ul-tabs>
+                <!-- 功能选项卡 -->
                 <div class="col s12 p0">
                     <ul class="tabWrap grey lighten-4 ">
-                        <li class="tab col s6  look_msg vc-center" ng-click="lookMsg()">基本信息</li>
-                        <li  class="tab  col s6 look_car_img vc-center" ng-click="lookCarImg()">车辆照片</li>
+                        <li class="tab col s6  look_msg vc-center" ng-click="showCarInfo()">基本信息</li>
+                        <li  class="tab  col s6 look_car_img vc-center" ng-click="showCarImg()">车辆照片</li>
                     </ul>
                 </div>
+
+                <!-- 车辆基本信息 显示区域 -->
                 <div id="look_msg" class="col s12 tab_box" style="width: 95%; margin:0 2% ">
                     <form name="change_newStorage_carForm" style="color:#616161" ng-submit="submitForm(change_newStorage_carForm.$valid,self_car.id,self_car.r_id)" novalidate>
                         <div class="row" style="margin-top: 20px;">
@@ -126,6 +134,8 @@
                         </div>
                     </form>
                 </div>
+
+                <!-- 车辆照片 显示区域 -->
                 <div id="look_car_img" class="col s12 tab_box">
                     <div class="row no-marBottom">
                         <div class="col s12 valign-wrapper " >
