@@ -4,7 +4,6 @@
 app.controller("truck_controller", ["$scope", function ($scope) {
     var count = 1;
     $scope.search = function () {
-        console.log($scope.carType, $scope.beToType, $scope.carNum, $scope.driver, $scope.carState, $scope.insurance)
     };
     $scope.addTruck = function () {
         count = 1;

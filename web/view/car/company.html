@@ -43,7 +43,7 @@
         <div class="col s2">
             <a style="width: 100%" class="waves-effect waves-light  red lighten-2 btn-large " ng-click="addCompany()">增加公司</a>
             <div id="addCompany" class="modal">
-                <form name="new_companyForm" ng-submit="submitForm(new_companyForm.$valid)" novalidate>
+                <form name="new_companyForm" novalidate>
                     <div class="modal-content">
                         <h4 class="center-align">增加公司</h4>
                         <div class="divider"></div>
@@ -107,7 +107,7 @@
                     </div>
                     <div class="divider"></div>
                     <div class="modal-footer vc-center">
-                        <button class="btn waves-light waves-effect" type="submit" name="action" >
+                        <button class="btn waves-light waves-effect"  ng-click="addCompanyItem(new_companyForm.$valid)" name="action" >
                             <i class="mdi mdi-check"></i>
                         </button>
                         <a  class=" modal-action modal-close waves-effect waves-light materialize-red lighten-1 btn" style="margin-left: 10px" >
@@ -154,7 +154,7 @@
         </div>
     </div>
     <div id="LookCompany" class="modal">
-        <form name="look_companyForm"  ng-submit="look_submitForm(company.id,look_companyForm.$valid)" novalidate>
+        <form name="look_companyForm"  novalidate>
             <div class="modal-content">
                 <h4 class="center-align">公司信息</h4>
                 <div class="divider"></div>
@@ -231,7 +231,7 @@
             </div>
             <div class="divider"></div>
             <div class="modal-footer vc-center">
-                <button class="btn waves-light waves-effect" type="submit" name="action" >
+                <button class="btn waves-light waves-effect" ng-click="updateCompanyItem(company.id,look_companyForm.$valid)"  name="action" >
                     <i class="mdi mdi-check"></i>
                 </button>
                 <a  class=" modal-action modal-close waves-effect waves-light materialize-red lighten-1 btn" style="margin-left: 10px" >

@@ -6,7 +6,6 @@ app.controller("company_controller", ['$rootScope', '$scope', '_basic', '$host',
     var userId = _basic.getSession(_basic.USER_ID);
     // 单条公司信息
     var companyMsg;
-
     /**
      * 画面初期显示时，用来获取画面必要信息的初期方法。
      */
@@ -28,12 +27,7 @@ app.controller("company_controller", ['$rootScope', '$scope', '_basic', '$host',
             }
         });
     };
-
-    /**
-     * 取得画面初期数据
-     */
     initData();
-
     /**
      * 画面【搜索】按钮，根据画面检索条件输入情况，进行查询公司信息列表。
      * TODO 因为没有数据，所以没有测试。
@@ -53,7 +47,6 @@ app.controller("company_controller", ['$rootScope', '$scope', '_basic', '$host',
             }
         });
     };
-
     /**
      * 画面【增加公司】按钮，用于显示追加公司机能画面。
      * TODO 暂时无法动作。
@@ -73,16 +66,10 @@ app.controller("company_controller", ['$rootScope', '$scope', '_basic', '$host',
         $scope.submitted = false;
         $('#addCompany').modal('open');
     };
-
-    /**
-     * 根据公司ID，查看公司详细信息。
-     * @param id 公司ID
-     */
     $scope.getCompanyInfo = function (id) {
         // 显示公司详细信息画面
         $('.modal').modal();
         $('#LookCompany').modal('open');
-
         // 根据公司ID，取得公司详细信息
         _basic.get($host.api_url + "/user/" + userId + "/company?companyId=" + id, {}).then(function (data) {
             if (data.success == true&&data.result.length>0) {
@@ -94,7 +81,6 @@ app.controller("company_controller", ['$rootScope', '$scope', '_basic', '$host',
                 swal(data.msg, "", "error");
             }
         });
-
         // 头车数量
         _basic.get($host.api_url + "/user/" + userId + "/company/" + id + "/firstCount", {}).then(function (data) {
             if (data.success == true&&data.result.length>0) {
@@ -120,15 +106,8 @@ app.controller("company_controller", ['$rootScope', '$scope', '_basic', '$host',
             }
         });
     };
-
-
-
-    /*********** TODO 修正分割线 下面代码修改后，删除此行 **********/
-
-
     // 提交新增公司信息
-    $scope.submitForm = function (isValid) {
-        $scope.submitted = true;
+    $scope.addCompanyItem = function (isValid) {
         if (isValid) {
             _basic.post($host.api_url + "/user/" + userId + "/company", {
                 "companyName": $scope.addCompanyName,
@@ -151,8 +130,7 @@ app.controller("company_controller", ['$rootScope', '$scope', '_basic', '$host',
     };
 
     // 修改公司详情
-    $scope.look_submitForm = function (id, isValid) {
-        $scope.look_submitted = true;
+    $scope.updateCompanyItem = function (id, isValid) {
         if (isValid) {
             var subParam = {
                 "companyName": companyMsg.company_name,
