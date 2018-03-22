@@ -4,8 +4,10 @@
  */
 app.controller("demand_Car_details_controller", [ "$state", "$stateParams", "_config", "$scope", "$host", "_basic", function ( $state, $stateParams, _config, $scope, $host, _basic) {
     var userId = _basic.getSession(_basic.USER_ID);
+    // 通过url中的信息取得 车辆id 和 VIN码
     var val = $stateParams.id;
     var vin = $stateParams.vin;
+
     // 颜色列表
     $scope.color = _config.config_color;
 
@@ -33,9 +35,12 @@ app.controller("demand_Car_details_controller", [ "$state", "$stateParams", "_co
         $("#look_car_img").show();
     };
 
-    // 看大图
     var viewer;
-    $scope.renderFinish = function () {
+
+    /**
+     * 显示车辆照片大图。
+     */
+    $scope.showImgByViewer = function () {
         viewer = new Viewer(document.getElementById('look_img'), {
             url: 'data-original'
         });
@@ -51,14 +56,14 @@ app.controller("demand_Car_details_controller", [ "$state", "$stateParams", "_co
             $state.go($stateParams.from, {}, {reload: true})
         }
     };
-    // 查看详情
 
     /**
+     * 通过车辆ID，取得仓储车辆信息。
      *
-     * @param val
-     * @param vin
+     * @param val 车辆ID
+     * @param vin VIN码
      */
-    $scope.lookStorageCar = function (val, vin) {
+    $scope.getStorageCarInfo = function (val, vin) {
         $scope.submitted = false;
         // 照片清空
         $scope.imgArr = [];
@@ -72,7 +77,7 @@ app.controller("demand_Car_details_controller", [ "$state", "$stateParams", "_co
         $('ul.tabWrap li.look_msg').addClass("active");
         $("#look_msg").addClass("active");
         $("#look_msg").show();
-        // TODO 无效声明
+        // TODO 暂时无效声明
         $scope.Picture_carId = val;
         $scope.vin = vin;
 
@@ -106,5 +111,5 @@ app.controller("demand_Car_details_controller", [ "$state", "$stateParams", "_co
             }
         })
     };
-    $scope.lookStorageCar(val, vin);
+    $scope.getStorageCarInfo(val, vin);
   }]);
