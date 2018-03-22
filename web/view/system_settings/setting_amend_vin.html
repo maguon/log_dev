@@ -1,3 +1,4 @@
+<!-- 主菜单：修改VIN -->
 <div id="setting_amend_vin" >
     <div class="grey-text text-darken-2" >
             <div class=" vc-center ">
@@ -14,7 +15,7 @@
                                 <input type="text" id="demand_vin" name="demand_vin" ng-model="demand_vin" placeholder="请输入17位vin码"  autocomplete="off"  required minlength="17" maxlength="17">
                             </div>
                             <div  class="col s1 vc-center " >
-                                <button class=" btn btn-floating btn-large waves-effect cyan lighten-1"  ng-click="readDemandCar(demand_car_form.$valid)"><i style="font-size: 40px" class="mdi white-text mdi-magnify"></i></button>
+                                <button class=" btn btn-floating btn-large waves-effect cyan lighten-1"  ng-click="getCarInfoByVin(demand_car_form.$valid)"><i style="font-size: 40px" class="mdi white-text mdi-magnify"></i></button>
                             </div>
                         </div>
                     </form>

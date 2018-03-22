@@ -1,6 +1,13 @@
-// 管理员密码重置设置
+/**
+ * 主菜单：管理员设置（管理员密码修改）
+ */
 app.controller("setting_password_controller", ["$scope", "_host", "_basic", function ($scope, _host, _basic) {
-    $scope.settingPswForm = function (isValid) {
+    /**
+     * 修改管理员密码。
+     *
+     * @param isValid 是否有效
+     */
+    $scope.updateAdminPsw = function (isValid) {
         var adminId = _basic.getSession(_basic.USER_ID);
         $scope.submitted = true;
         if (isValid && $scope.newCode == $scope.confirmPsw) {

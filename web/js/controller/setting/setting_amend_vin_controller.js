@@ -1,11 +1,17 @@
 /**
  * Created by ASUS on 2017/5/17.
+ * 主菜单：修改VIN
  */
 app.controller("setting_amend_vin_controller",["$scope","_basic","_config","_host",function ($scope,_basic,_config,_host){
-    var admin=_basic.getSession(_basic.USER_ID);
-    $scope.flag=true;
-    // 查询vin码
-    $scope.readDemandCar=function ($iValid) {
+    var admin = _basic.getSession(_basic.USER_ID);
+    $scope.flag = true;
+
+    /**
+     * 根据画面输入的vin码进行查询车辆信息。
+     *
+     * @param $iValid 是否有效
+     */
+    $scope.getCarInfoByVin=function ($iValid) {
         $scope.submitted=true;
         if($iValid&&$scope.demand_vin.length==17){
             var obj={
@@ -33,6 +39,7 @@ app.controller("setting_amend_vin_controller",["$scope","_basic","_config","_hos
             })
         }
     };
+
     // 打开修改vin码
     $scope.openVinAmend=function () {
         $scope.flag=false;
