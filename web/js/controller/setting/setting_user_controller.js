@@ -85,7 +85,7 @@ app.controller("setting_user_controller", ["_basic", "_config", "_host", "$scope
      *
      * @param id 用户ID
      */
-    $scope.lookOperation = function (id) {
+    $scope.queryOperator = function (id) {
         $(".modal").modal();
         $("#look_Operator").modal("open");
         _basic.get(_host.api_url + "/admin/" + adminId + "/user?userId=" + id).then(function (data) {
