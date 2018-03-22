@@ -1,7 +1,7 @@
 /**
  * Created by ASUS on 2017/5/17.
  */
-app.controller("setting_amend_vin_controller",["$scope","_basic","_config","$host",function ($scope,_basic,_config,$host){
+app.controller("setting_amend_vin_controller",["$scope","_basic","_config","_host",function ($scope,_basic,_config,_host){
     var admin=_basic.getSession(_basic.USER_ID);
     $scope.flag=true;
     // 查询vin码
@@ -12,7 +12,7 @@ app.controller("setting_amend_vin_controller",["$scope","_basic","_config","$hos
                 vin:$scope.demand_vin,
                 active:1
             };
-            _basic.get($host.api_url+"/admin/"+admin+"/car?"+_basic.objToUrl(obj)).then(function (data) {
+            _basic.get(_host.api_url+"/admin/"+admin+"/car?"+_basic.objToUrl(obj)).then(function (data) {
                 if(data.success=true){
                     if(data.result.length==0){
                         $(".no_car_detail").show();
@@ -48,7 +48,7 @@ app.controller("setting_amend_vin_controller",["$scope","_basic","_config","$hos
             "vin":$scope.vin
         };
         if($scope.vin.length==17){
-            _basic.put($host.api_url+"/admin/"+admin+"/car/"+id+"/vin",obj).then(function (data) {
+            _basic.put(_host.api_url+"/admin/"+admin+"/car/"+id+"/vin",obj).then(function (data) {
                 if(data.success==true){
                     swal("修改成功","","success");
                     $scope.demand_vin="";

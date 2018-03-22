@@ -1,5 +1,5 @@
 
-app.controller("setting_user_controller", ["_basic","_config", "$host", "$scope", function (_basic,_config,$host, $scope) {
+app.controller("setting_user_controller", ["_basic","_config", "_host", "$scope", function (_basic,_config,_host, $scope) {
     var adminId = _basic.getSession(_basic.USER_ID);
     var userInfoItem=_config.userTypes;
     var user_info_fun=function () {
@@ -12,7 +12,7 @@ app.controller("setting_user_controller", ["_basic","_config", "$host", "$scope"
     user_info_fun();
     // 搜索所有查询
     var searchAll = function () {
-        _basic.get($host.api_url + "/admin/" + adminId + "/user").then(function (data) {
+        _basic.get(_host.api_url + "/admin/" + adminId + "/user").then(function (data) {
             if (data.success == true&&data.result.length>0) {
                 // console.log(data)
                 $scope.operator = data.result;
@@ -47,7 +47,7 @@ app.controller("setting_user_controller", ["_basic","_config", "$host", "$scope"
                 // mobile:$scope.new_userName,
                 password: $scope.newUserPassword
             };
-            _basic.post($host.api_url + "/admin/" + adminId + "/user", obj).then(function (data) {
+            _basic.post(_host.api_url + "/admin/" + adminId + "/user", obj).then(function (data) {
                 if (data.success == true) {
                     swal("新增成功", "", "success");
                     $('#newOperator').modal('close');
@@ -62,7 +62,7 @@ app.controller("setting_user_controller", ["_basic","_config", "$host", "$scope"
     $scope.lookOperation = function (id) {
         $(".modal").modal();
         $("#look_Operator").modal("open");
-        _basic.get($host.api_url + "/admin/" + adminId + "/user?userId=" + id).then(function (data) {
+        _basic.get(_host.api_url + "/admin/" + adminId + "/user?userId=" + id).then(function (data) {
             if (data.success == true&&data.result.length>0) {
                 $scope.look_operation = data.result[0];
             } else {
@@ -78,7 +78,7 @@ app.controller("setting_user_controller", ["_basic","_config", "$host", "$scope"
                     $scope.changeSt = "1"
                 }
 
-                _basic.put($host.api_url + "/admin/" + adminId + "/user/" + id + "/status/" + $scope.changeSt
+                _basic.put(_host.api_url + "/admin/" + adminId + "/user/" + id + "/status/" + $scope.changeSt
                     , {}).then(function (data) {
                     if (data.success == true) {
                         searchAll();
@@ -101,7 +101,7 @@ app.controller("setting_user_controller", ["_basic","_config", "$host", "$scope"
                 status: $scope.look_operation.status,
                 gender: $scope.newUserSex
             };
-            _basic.put($host.api_url + "/admin/" + adminId + "/user/" + id, obj).then(function (data) {
+            _basic.put(_host.api_url + "/admin/" + adminId + "/user/" + id, obj).then(function (data) {
                 if (data.success == true) {
                     swal("修改成功", "", "success");
                     $('#look_Operator').modal('close');

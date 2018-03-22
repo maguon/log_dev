@@ -1,4 +1,4 @@
-app.controller("storage_calendar_controller", ["$scope", "$host", "_basic", function ($scope, $host, _basic) {
+app.controller("storage_calendar_controller", ["$scope", "_host", "_basic", function ($scope, _host, _basic) {
     var date = new Date();
     var now_date = moment(date).format('YYYYMMDD');
     var month = date.getMonth() + 1;
@@ -13,7 +13,7 @@ app.controller("storage_calendar_controller", ["$scope", "$host", "_basic", func
     weekday[5] = "Friday";
     weekday[6] = "Saturday";
     $scope.today_week = weekday[date.getDay()];
-    _basic.get($host.api_url + "/storageDate" + "?dateStart=" + now_date + "&dateEnd=" + now_date).then(function (data) {
+    _basic.get(_host.api_url + "/storageDate" + "?dateStart=" + now_date + "&dateEnd=" + now_date).then(function (data) {
         if (data.success == true&&data.result.length>0) {
             $scope.store_storage = data.result;
             $scope.storage_id = $scope.store_storage[0].id;
@@ -40,7 +40,7 @@ app.controller("storage_calendar_controller", ["$scope", "$host", "_basic", func
                 start = moment(start).format('YYYYMMDD');
                 end = moment(end).format('YYYYMMDD');
                 var eventArray = [];
-                _basic.get($host.api_url + "/storageDate?storageId=" + storage_id + "&dateStart=" + start + "&dateEnd=" + end).then(function (data) {
+                _basic.get(_host.api_url + "/storageDate?storageId=" + storage_id + "&dateStart=" + start + "&dateEnd=" + end).then(function (data) {
                     if (data.success == true&&data.result.length>0) {
                         console.log(data);
                         $scope.data = data.result;
@@ -71,7 +71,7 @@ app.controller("storage_calendar_controller", ["$scope", "$host", "_basic", func
             }
         });
         // 当天仓库信息
-        _basic.get($host.api_url + "/storageDate?storageId=" + storage_id + "&dateStart=" + now_date + "&dateEnd=" + now_date).then(function (data) {
+        _basic.get(_host.api_url + "/storageDate?storageId=" + storage_id + "&dateStart=" + now_date + "&dateEnd=" + now_date).then(function (data) {
             if (data.success == true&&data.result.length>0) {
                 $scope.today_data = data.result[0];
             }

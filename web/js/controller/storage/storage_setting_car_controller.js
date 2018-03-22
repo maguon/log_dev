@@ -1,7 +1,7 @@
 /**
  * Created by ASUS on 2017/5/12.
  */
-app.controller("storage_setting_car_controller", ["$scope", "$host", "_basic", function ($scope, $host, _basic) {
+app.controller("storage_setting_car_controller", ["$scope", "_basic", function ($scope, _basic) {
 
     var userId = _basic.getSession(_basic.USER_ID);
     // 打开汽车品牌
@@ -17,7 +17,7 @@ app.controller("storage_setting_car_controller", ["$scope", "$host", "_basic", f
     };
     // 汽车品牌
     $scope.searchAll = function () {
-        _basic.get($host.api_url + "/carMake/").then(function (data) {
+        _basic.get(_host.api_url + "/carMake/").then(function (data) {
             if (data.success == true&&data.result.length>0) {
                 // console.log(data.result);
                 $scope.brand = data.result;
@@ -45,7 +45,7 @@ app.controller("storage_setting_car_controller", ["$scope", "$host", "_basic", f
     // 修改汽车品牌
     $scope.amend_brand_submit = function (iValid, id, name, $index) {
         if (iValid) {
-            _basic.put($host.api_url + "/user/" + userId + "/carMake/" + id, {
+            _basic.put(_host.api_url + "/user/" + userId + "/carMake/" + id, {
                 "makeName": name
             }).then(function (data) {
                 if (data.success == true) {
@@ -63,7 +63,7 @@ app.controller("storage_setting_car_controller", ["$scope", "$host", "_basic", f
     // 汽车型号
 
     $scope.search_carModel = function (id) {
-        _basic.get($host.api_url + "/carMake/" + id + "/carModel").then(function (data) {
+        _basic.get(_host.api_url + "/carMake/" + id + "/carModel").then(function (data) {
             if (data.success == true) {
                 $scope.brand_model = data.result;
             } else {
@@ -93,7 +93,7 @@ app.controller("storage_setting_car_controller", ["$scope", "$host", "_basic", f
         // var xt="add_car_model_text"+index;
         console.log($scope.add_car_model_text);
         if (iValid) {
-            _basic.post($host.api_url + "/user/" + userId + "/carMake/" + id + "/carModel", {
+            _basic.post(_host.api_url + "/user/" + userId + "/carMake/" + id + "/carModel", {
                 modelName: $scope.add_car_model_text
             }).then(function (data) {
                 if (data.success == true) {
@@ -138,7 +138,7 @@ app.controller("storage_setting_car_controller", ["$scope", "$host", "_basic", f
         } else {
             status = 0
         }
-        _basic.put($host.api_url + "/user/" + userId + "/carModel/" + id + "/modelStatus/" + status, {}).then(function (data) {
+        _basic.put(_host.api_url + "/user/" + userId + "/carModel/" + id + "/modelStatus/" + status, {}).then(function (data) {
             if (data.success == true) {
                 $scope.search_carModel(makeId);
             } else {
@@ -161,7 +161,7 @@ app.controller("storage_setting_car_controller", ["$scope", "$host", "_basic", f
     };
     // 确认提交修改型号
     $scope.amend_car_model_submit = function (id, name, index) {
-        _basic.put($host.api_url + "/user/" + userId + "/carModel/" + id, {
+        _basic.put(_host.api_url + "/user/" + userId + "/carModel/" + id, {
             modelName: name
         }).then(function (data) {
             if (data.success == true) {
@@ -181,7 +181,7 @@ app.controller("storage_setting_car_controller", ["$scope", "$host", "_basic", f
         } else {
             sta = 0
         }
-        _basic.put($host.api_url + "/user/" + userId + "/carModel/" + id + "/modelStatus/" + sta, {}).then(function (data) {
+        _basic.put(_host.api_url + "/user/" + userId + "/carModel/" + id + "/modelStatus/" + sta, {}).then(function (data) {
             if (data.success == true) {
                 swal("更改状态", "", "success");
                 $scope.search_carModel(makeId);
@@ -196,7 +196,7 @@ app.controller("storage_setting_car_controller", ["$scope", "$host", "_basic", f
     // };
     $scope.add_brand = function (iValid) {
         if (iValid) {
-            _basic.post($host.api_url + "/user/" + userId + "/carMake/", {
+            _basic.post(_host.api_url + "/user/" + userId + "/carMake/", {
                 makeName: $scope.b_txt
             }).then(function (data) {
                 if (data.success == true) {

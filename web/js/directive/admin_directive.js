@@ -5,7 +5,7 @@ adminDirective.directive('header', function () {
         replace: true,
         transclude: false,
         restrict: 'E',
-        controller: function ($scope, $element, $rootScope, _basic,$host) {
+        controller: function ($scope, $element, $rootScope, _basic,_host) {
             if (_basic.checkUser("99")) {
                 $("#menu_link").sideNav({
                     menuWidth: 280, // Default is 300
@@ -33,7 +33,7 @@ adminDirective.directive('header', function () {
                 }
                 _basic.setHeader(_basic.USER_TYPE, _basic.getSession(_basic.USER_TYPE));
                 _basic.setHeader(_basic.COMMON_AUTH_NAME,  _basic.getSession(_basic.COMMON_AUTH_NAME) );
-                _basic.get($host.api_url + "/admin/" + _basic.getSession(_basic.USER_ID)).then(function (data) {
+                _basic.get(_host.api_url + "/admin/" + _basic.getSession(_basic.USER_ID)).then(function (data) {
                     // $(".shadeDowWrap").hide();
                     if (data.success == true&&data.result.length>0) {
                         $scope.userName = data.result[0].user_name;
@@ -248,13 +248,13 @@ adminDirective.directive("tooltipped", function () {
 adminDirective.directive("addBrand", function () {
     return {
         restrict: "A",
-        controller: function ($scope, $host, _basic) {
+        controller: function ($scope, _host, _basic) {
             var adminId = _basic.getSession(_basic.USER_ID);
             $scope.add_brand = function (iValid) {
                 $scope.submitted1 = true;
                 if (iValid) {
                     // $(".add_Brand_Icon button").attr("disabled",true);
-                    _basic.post($host.api_url + "/admin/" + adminId + "/carMake/", {
+                    _basic.post(_host.api_url + "/admin/" + adminId + "/carMake/", {
                         makeName: $scope.b_txt
                     }).then(function (data) {
                         if (data.success == true) {
@@ -273,7 +273,7 @@ adminDirective.directive("addBrand", function () {
 adminDirective.directive("addBrandModel", function () {
     return {
         restrict: "A",
-        controller: function ($scope, $host, _basic) {
+        controller: function ($scope, _host, _basic) {
             var adminId = _basic.getSession(_basic.USER_ID);
             // 关闭新增型号
             $scope.close_brand_model = function (id) {
@@ -286,7 +286,7 @@ adminDirective.directive("addBrandModel", function () {
                 if (iValid) {
                     console.log($scope.brandModelText);
                     // console.log($scope.brand_model_text)
-                    _basic.post($host.api_url + "/admin/" + adminId + "/carMake/" + id + "/carModel", {
+                    _basic.post(_host.api_url + "/admin/" + adminId + "/carMake/" + id + "/carModel", {
                         modelName: $scope.brandModelText
                     }).then(function (data) {
                         if (data.success == true) {

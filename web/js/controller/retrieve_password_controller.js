@@ -1,7 +1,7 @@
 /**
  * Created by ASUS on 2017/9/25.
  */
-Login_model.controller("retrieve_password_controller", ["$state", "$scope", "$q", "$interval", "_basic", "$host", function ($state, $scope, $q, $interval, _basic, $host) {
+Login_model.controller("retrieve_password_controller", ["$state", "$scope", "$q", "$interval", "_basic", "_host", function ($state, $scope, $q, $interval, _basic, _host) {
     $scope.mobileRegx = "^1(3[0-9]|4[57]|5[0-35-9]|7[01678]|8[0-9])\\d{8}$";
 
     // 返回上一级
@@ -18,7 +18,7 @@ Login_model.controller("retrieve_password_controller", ["$state", "$scope", "$q"
     $scope.sendVerificationCode = function () {
         if (/^1(3[0-9]|4[57]|5[0-35-9]|7[01678]|8[0-9])\d{8}$/.test($scope.phoneNum)) {
             var timeCount = 60;
-            _basic.post($host.api_url + "/phone/" + $scope.phoneNum + "/passwordSms", {}).then(function (data) {
+            _basic.post(_host.api_url + "/phone/" + $scope.phoneNum + "/passwordSms", {}).then(function (data) {
                 if (data.success === true) {
                     swal("验证码已发送", "", "success");
                     $("#sendVerification").attr("disabled", true);
@@ -55,7 +55,7 @@ Login_model.controller("retrieve_password_controller", ["$state", "$scope", "$q"
                     captcha:$scope.verificationCode,
                     password:$scope.confirmNewPsw
                 };
-                _basic.put($host.api_url + "/phone/" + $scope.phoneNum + "/password", obj).then(function (data) {
+                _basic.put(_host.api_url + "/phone/" + $scope.phoneNum + "/password", obj).then(function (data) {
                     if (data.success == true) {
                         swal("密码重置成功", "", "success");
                         $scope.phoneNum = "";

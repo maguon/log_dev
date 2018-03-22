@@ -1,6 +1,6 @@
 
-app.controller("data_controller", ['$rootScope', '$scope', '$location', '$q', '_basic', "$host",
-    function ($rootScope, $scope, $location, $q, _basic, $host) {
+app.controller("data_controller", ['$rootScope', '$scope', '$location', '$q', '_basic', "_host",
+    function ($rootScope, $scope, $location, $q, _basic, _host) {
         $scope.selectArray = [];
         $scope.csvFile = null;
         $scope.rightNumber = 0;
@@ -61,7 +61,7 @@ app.controller("data_controller", ['$rootScope', '$scope', '$location', '$q', '_
             }
         };
         // 取得仓库列表
-        _basic.get($host.api_url + "/storage").then(function (data) {
+        _basic.get(_host.api_url + "/storage").then(function (data) {
             if (data.success = true) {
                 $scope.selectArray = data.result;
             } else {

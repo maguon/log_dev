@@ -2,7 +2,7 @@
  * Created by ASUS on 2017/5/5.
  * 主菜单：车辆查询 -> 仓储车辆信息 画面
  */
-app.controller("demand_Car_details_controller", [ "$state", "$stateParams", "_config", "$scope", "$host", "_basic", function ( $state, $stateParams, _config, $scope, $host, _basic) {
+app.controller("demand_Car_details_controller", [ "$state", "$stateParams", "_config", "$scope", "_host", "_basic", function ( $state, $stateParams, _config, $scope, _host, _basic) {
     var userId = _basic.getSession(_basic.USER_ID);
     // 通过url中的信息取得 车辆id 和 VIN码
     var val = $stateParams.id;
@@ -82,13 +82,13 @@ app.controller("demand_Car_details_controller", [ "$state", "$stateParams", "_co
         $scope.vin = vin;
 
         //
-        _basic.get($host.record_url + "/user/" + userId + "/car/" + val + "/record").then(function (data) {
+        _basic.get(_host.record_url + "/user/" + userId + "/car/" + val + "/record").then(function (data) {
             if (data.success == true&&data.result.length>0) {
                 $scope.operating_record = data.result[0];
                 $scope.comment = $scope.operating_record.comment;
                 $scope.storage_image = $scope.operating_record.storage_image;
                 for (var i in $scope.storage_image) {
-                    $scope.storage_imageBox.push({src: $host.file_url + '/image/' + $scope.storage_image[i].url,time:$scope.storage_image[i].timez,user:$scope.storage_image[i].name});
+                    $scope.storage_imageBox.push({src: _host.file_url + '/image/' + $scope.storage_image[i].url,time:$scope.storage_image[i].timez,user:$scope.storage_image[i].name});
                 }
             } else {
                 swal(data.msg, "", "error")
@@ -96,7 +96,7 @@ app.controller("demand_Car_details_controller", [ "$state", "$stateParams", "_co
         });
 
         //
-        _basic.get($host.api_url + "/user/" + userId + "/car?carId=" + val + '&active=1').then(function (data) {
+        _basic.get(_host.api_url + "/user/" + userId + "/car?carId=" + val + '&active=1').then(function (data) {
             if (data.success == true&&data.result.length>0) {
                 $scope.modelId = data.result[0].model_id;
                 $scope.self_car = data.result[0];

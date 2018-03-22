@@ -22,9 +22,9 @@ app.controller("truck_controller", ["$scope", function ($scope) {
         }
     }
 }]);
-app.controller("truck_head_controller", ["$scope", "$host", "_basic", function ($scope, $host, _basic) {
+app.controller("truck_head_controller", ["$scope", "_host", "_basic", function ($scope, _host, _basic) {
     var userId = _basic.getSession(_basic.USER_ID);
-    _basic.get($host.api_url + "/user/" + userId + "truck", {
+    _basic.get(_host.api_url + "/user/" + userId + "truck", {
         truckType: 1
     }).then(function (data) {
         if (data.success == true) {
@@ -33,9 +33,9 @@ app.controller("truck_head_controller", ["$scope", "$host", "_basic", function (
         }
     })
 }]);
-app.controller("truck_hand_controller", ["$scope", "$host", "_basic", function ($scope, $host, _basic) {
+app.controller("truck_hand_controller", ["$scope", "_host", "_basic", function ($scope, _host, _basic) {
     var userId = _basic.getSession(_basic.USER_ID);
-    _basic.get($host.api_url + "/user/" + userId + "truck", {
+    _basic.get(_host.api_url + "/user/" + userId + "truck", {
         truckType: 2
     }).then(function (data) {
         if (data.success == true) {
@@ -44,5 +44,5 @@ app.controller("truck_hand_controller", ["$scope", "$host", "_basic", function (
         }
     })
 }]);
-app.controller("new_truck_controller", ["$scope", "$host", "_basic", function ($scope, $host, _basic) {
+app.controller("new_truck_controller", ["$scope", "_basic", function ($scope, _basic) {
 }]);

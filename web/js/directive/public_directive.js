@@ -8,7 +8,7 @@ publicDirective.directive('header', function () {
         replace: true,
         transclude: false,
         restrict: 'E',
-        controller: function ($scope, $element, $rootScope, _basic, _config, $host) {
+        controller: function ($scope, $element, $rootScope, _basic, _config, _host) {
 
 
            /* $scope.pwdReg = _config.pwdRegx;
@@ -68,7 +68,7 @@ publicDirective.directive('header', function () {
                 }
                 _basic.setHeader(_basic.USER_TYPE, userType);
                 _basic.setHeader(_basic.COMMON_AUTH_NAME, _basic.getSession(_basic.COMMON_AUTH_NAME));
-                _basic.get($host.api_url + "/user/" + userId).then(function (data) {
+                _basic.get(_host.api_url + "/user/" + userId).then(function (data) {
                     // $(".shadeDowWrap").hide();
                     if (data.success == true) {
                         $scope.userName = data.result[0].user_name;
