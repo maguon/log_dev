@@ -59,6 +59,68 @@ adminDirective.directive("carMsg", function () {
         }
     }
 });
+adminDirective.directive("truckUpload", function () {
+    return {
+        restrict: 'A',
+        controller: function (_basic, $upload) {
+            var userId = _basic.getSession(_basic.USER_ID);
+            var arr = [];
+            $("#img").on("change", function (e) {
+                // 获取文件列表对象
+                var files = e.target.files || e.dataTransfer.files;
+                for (var i = 0, file; file = files[i]; i++) {
+                    if (file.type.indexOf("image") == 0) {
+                        if (file.size >= 512000) {
+                            alert('您这张"' + file.name + '"图片大小过大，应小于500k');
+                        } else {
+                            var reader = new FileReader();
+                            reader.onload = function (e) {
+                                // var imgB=document.getElementById("imgBox");
+                                var div = $("<div>").addClass("storage_car_picture col s3 vc-center  p0 grey white-text");
+                                var imgEle = $("<img>");
+                                imgEle.addClass("responsive-img");
+                                imgEle.attr("src", e.target.result);
+                                // imgEle.setAttribute("src",e.target.result);
+                                imgEle.appendTo(div);
+                                // div.appendChild(imgEle);
+                                div.appendTo($(".storage_car_picture_wrap"));
+                                // .appendChild(div)
+                            };
+                            reader.readAsDataURL(file);
+                            var fd = new FormData();
+                            fd.append("truck_picture", file);
+                            _basic.post($upload.api_url_upload + "/user/" + userId + "/image?imageType=" + 2, {
+                                image: fd
+                            }).then(function (data) {
+
+                            });
+                            arr.push(file);
+                            console.log(arr);
+                        }
+                    } else {
+                        alert('文件"' + file.name + '"不是图片。');
+                    }
+                }
+            })
+        }
+    }
+});
+adminDirective.directive("carSelect", function () {
+    return {
+        restrict: "A",
+        link: function () {
+
+        }
+    }
+});
+adminDirective.directive('myRepeatDirective', function () {
+    return function (scope, element, attrs) {
+        angular.element(element).css('color', 'blue');
+        if (scope.$last) {
+
+        }
+    };
+})
 adminDirective.directive("date", function () {
     return {
         restrict: "A",
@@ -95,6 +157,59 @@ adminDirective.directive("dateFilter", ["$filter", function ($filter) {
         }
     }
 }]);
+adminDirective.directive('testDirective',[function () {
+   return{
+       restrict:"ECMA",
+       priority:"",
+       templateUrl:"",
+       replace:true//false,
+   }
+}]);
+adminDirective.directive("addNav", function () {
+    return {
+        templateUrl: '/view/car/new_truck/new_truck.html',
+        restrict: "EA",
+        replace: true,
+    }
+});
+adminDirective.directive("truckNav", function () {
+    return {
+        restrict: "EA",
+        link: function () {
+            $(this).on("click", function () {
+
+                $(".PublicTabs").children().removeClass("active");
+                $(this).addClass("active");
+                $(".add_Truck_view").load($(this).attr("data-url"))
+            })
+        }
+    }
+});
+adminDirective.directive("basicTruck", function () {
+    return {
+        templateUrl: '/view/car/new_truck/basic.html',
+        restrict: "EA",
+        replace: true
+    }
+});
+adminDirective.directive("carInspection", function () {
+    return {
+        templateUrl: '/view/car/new_truck/car_inspection.html',
+        restrict: "EA",
+        replace: true
+    }
+});
+adminDirective.directive("usersTabs", function () {
+    return {
+        restrict: "A",
+        link: function () {
+            $(".users_chip").on("click", function () {
+                $(".users_chip").removeClass("active");
+                $(this).addClass("active")
+            })
+        }
+    }
+});
 adminDirective.directive("sexChange", function () {
     return {
         restrict: "A",
@@ -103,6 +218,30 @@ adminDirective.directive("sexChange", function () {
                 $(".sexBox i").removeClass("sex");
                 $(this).addClass("sex")
             })
+        }
+    }
+});
+adminDirective.directive("ulTabs", function () {
+    return {
+        restrict: "A",
+        link: function () {
+            $('ul.tabs').tabs();
+        }
+    }
+});
+adminDirective.directive("collapsible", function () {
+    return {
+        restrict: "A",
+        link: function () {
+            $('.collapsible').collapsible();
+        }
+    }
+});
+adminDirective.directive("tooltipped", function () {
+    return {
+        restrict: "A",
+        link: function () {
+            $('.tooltipped').tooltip({delay: 50});
         }
     }
 });
@@ -131,6 +270,39 @@ adminDirective.directive("addBrand", function () {
         }
     }
 });
+adminDirective.directive("addBrandModel", function () {
+    return {
+        restrict: "A",
+        controller: function ($scope, $host, _basic) {
+            var adminId = _basic.getSession(_basic.USER_ID);
+            // 关闭新增型号
+            $scope.close_brand_model = function (id) {
+                $(".add_brand_box" + id).fadeIn(500);
+                $(".add_brand_model_wrap" + id).fadeOut(500);
+            };
+            // 新增型号
+            $scope.verify_brand_model = function (iValid, id) {
+                $scope.submitted3 = true;
+                if (iValid) {
+                    console.log($scope.brandModelText);
+                    // console.log($scope.brand_model_text)
+                    _basic.post($host.api_url + "/admin/" + adminId + "/carMake/" + id + "/carModel", {
+                        modelName: $scope.brandModelText
+                    }).then(function (data) {
+                        if (data.success == true) {
+                            // $(".add_brand_box").fadeIn(500);
+                            // $(".add_brand_model_wrap"+id).fadeOut(500);
+                            $scope.search_carModel(id);
+                            $scope.brandModelText = "";
+                        } else {
+                            swal(data.msg, "", "error");
+                        }
+                    })
+                }
+            };
+        }
+    }
+});
 // 时间格式过滤指令
 adminDirective.directive("formDate", function () {
     return {
@@ -152,6 +324,34 @@ adminDirective.directive("formDate", function () {
                     return new_date;
                 }
             })
+        }
+    }
+});
+adminDirective.directive("view", function () {
+    return {
+        restrict: "EA",
+        link: function () {
+            $('#jq22').viewer();
+        }
+    }
+});
+adminDirective.directive('addRepeatFinish', function () {
+    return {
+        link: function (scope, element, attr) {
+            if (scope.$last == true) {
+                console.log('ng-repeat执行完毕');
+                scope.$eval(attr.add_repeatFinish)
+            }
+        }
+    }
+});
+adminDirective.directive("amendUser",function () {
+    return{
+        restrict:"EA",
+        link:function (scope,attr,element) {
+            element.onclick=function () {
+                alert(1)
+            }
         }
     }
 });
