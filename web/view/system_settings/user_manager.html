@@ -6,7 +6,7 @@
                 <i class="mdi mdi-plus"></i>
             </a>
             <div id="newOperator" class="modal">
-                <form name="operatorForm" ng-submit="submitForm(operatorForm.$valid)" novalidate>
+                <form name="operatorForm" novalidate>
                     <div class="modal-content">
                         <h4 class="center-align ">增加操作员</h4>
                         <div class="divider" style="background: #00bcd4;height: 2px;"></div>
@@ -57,7 +57,7 @@
                     </div>
                     <div class="divider" style="background: #00bcd4;height: 2px;"></div>
                     <div class="modal-footer vc-center">
-                        <button class="btn waves-light waves-effect cyan lighten-2" type="submit" name="action" >
+                        <button class="btn waves-light waves-effect cyan lighten-2"  ng-click="submitForm(operatorForm.$valid)" name="action" >
                             <i class="mdi mdi-check"></i>
                         </button>
                         <a  class=" modal-action modal-close waves-effect waves-light grey lighten-1 btn" style="margin-left: 10px" >
@@ -102,7 +102,7 @@
                                 </label>
                         </span>
                         <div id="look_Operator" class="modal">
-                            <form name="change_operatorForm" ng-submit="changeOperatorForm(change_operatorForm.$valid,look_operation.uid)" novalidate>
+                            <form name="change_operatorForm" novalidate>
                                 <div class="modal-content">
                                     <h4 class="center-align">操作员信息</h4>
                                     <div class="divider" style="background: #00bcd4;height: 2px;"></div>
@@ -152,7 +152,7 @@
                                 </div>
                                 <div class="divider" style="background: #00bcd4;height: 2px;"></div>
                                 <div class="modal-footer vc-center">
-                                    <button class="btn waves-light waves-effect cyan lighten-1" type="submit" name="action" >
+                                    <button class="btn waves-light waves-effect cyan lighten-1"  ng-click="changeOperatorForm(change_operatorForm.$valid,look_operation.uid)" name="action" >
                                         <i class="mdi mdi-check"></i>
                                     </button>
                                     <a  class=" modal-action modal-close waves-effect waves-light grey lighten-1 btn" style="margin-left: 10px" >

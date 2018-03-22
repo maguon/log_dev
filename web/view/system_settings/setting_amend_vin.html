@@ -6,7 +6,7 @@
             <div class="divider" style="background: #00bcd4;height: 2px;"></div>
             <div class="row no-marBottom">
                 <div class="row " style="width: 900px;margin: 0 auto">
-                    <form name="demand_car_form" ng-submit="readDemandCar(demand_car_form.$valid)" novalidate>
+                    <form name="demand_car_form" novalidate>
                         <div class="mp-30 valign-wrapper" style="overflow: hidden">
                             <div class="col s1 cyan-text text-lighten-1" style="font-size: 25px;min-width: 90px">vin码:</div>
                             <div class="input-field col s10 " ng-class="{'has-error':demand_car_form.demand_vin.$invalid&&submitted}">
@@ -14,7 +14,7 @@
                                 <input type="text" id="demand_vin" name="demand_vin" ng-model="demand_vin" placeholder="请输入17位vin码"  autocomplete="off"  required minlength="17" maxlength="17">
                             </div>
                             <div  class="col s1 vc-center " >
-                                <button class=" btn btn-floating btn-large waves-effect cyan lighten-1" ><i style="font-size: 40px" class="mdi white-text mdi-magnify"></i></button>
+                                <button class=" btn btn-floating btn-large waves-effect cyan lighten-1"  ng-click="readDemandCar(demand_car_form.$valid)"><i style="font-size: 40px" class="mdi white-text mdi-magnify"></i></button>
                             </div>
                         </div>
                     </form>

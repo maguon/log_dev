@@ -32,7 +32,7 @@
 
     </nav>
     <div id="user_modal" class="modal">
-        <form name="amend_userFrom" ng-submit="amend_user_submit(amend_userFrom.$valid)" novalidate>
+        <form name="amend_userFrom" novalidate>
             <div class="modal-content">
                 <h5 class="center-align grey-text">修改个人密码</h5>
                 <div class="divider cyan lighten-1" style="height: 2px"></div>
@@ -61,7 +61,7 @@
                 </div>
             </div>
             <div class="modal-footer vc-center">
-                <button class="btn btn-floating waves-light waves-effect  cyan lighten-1" type="submit" name="action" >
+                <button class="btn btn-floating waves-light waves-effect  cyan lighten-1" ng-click="amend_user_submit(amend_userFrom.$valid)"  name="action" >
                     <i  class="mdi mdi-check"></i>
                 </button>
             </div>
