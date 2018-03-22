@@ -4,7 +4,7 @@
 app.controller("setting_truck_controller", ["$scope", "_host", "_basic", function ($scope, _host, _basic) {
     var adminId = _basic.getSession(_basic.USER_ID);
     // 打开汽车品牌
-    $scope.car_Brand_box = function ($event) {
+    $scope.openBrand = function ($event) {
         $($event.target).hide();
         $(".car_Brand_box").show();
     };
