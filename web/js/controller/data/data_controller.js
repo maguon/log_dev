@@ -7,10 +7,10 @@ app.controller("data_controller", ['$rootScope', '$scope', '$location', '$q', '_
         $scope.errorNumber = 0;
         $scope.upload = function (dom, val) {
         };
-        $scope.update = function () {
-            _basic.setCookie('url', "jiangsen");
-        };
-        $scope.update();
+        // $scope.update = function () {
+        //     _basic.setCookie('url', "jiangsen");
+        // };
+        // $scope.update();
         $scope.tableHeader = [];
         $scope.fileType = "";
         // 表头原始数据
@@ -46,7 +46,7 @@ app.controller("data_controller", ['$rootScope', '$scope', '$location', '$q', '_
 
         };
         // 主体条件判断
-        $scope.ContentFilter = function (contentArray) {
+        $scope.contentFilter = function (contentArray) {
             for (var i = 0; i < contentArray.length; i++) {
                 for (var j = 0; j < contentArray[i].length; j++) {
                     if (colObjs[j].type != typeof contentArray[i][j] || colObjs[j].length != contentArray[j].length) {
@@ -60,6 +60,7 @@ app.controller("data_controller", ['$rootScope', '$scope', '$location', '$q', '_
                 }
             }
         };
+        // 取得仓库列表
         _basic.get($host.api_url + "/storage").then(function (data) {
             if (data.success = true) {
                 $scope.selectArray = data.result;
@@ -67,6 +68,7 @@ app.controller("data_controller", ['$rootScope', '$scope', '$location', '$q', '_
                 swal(data.msg, "", "error");
             }
         });
+        // 选择文件变更时触发
         $scope.fileChange = function (file) {
             $(file).parse({
                 config: {
@@ -80,7 +82,7 @@ app.controller("data_controller", ['$rootScope', '$scope', '$location', '$q', '_
                                 // 表头校验
                                 //  if($scope.titleFilter($scope.tableHeadeArray)){
                                 // 主体内容校验
-                                $scope.ContentFilter(result.data.slice(1, result.data.length));
+                                $scope.contentFilter(result.data.slice(1, result.data.length));
                                 $scope.tableHeader = result.data[0];
                                 $scope.tableContent = tableContentFilter;
                             }

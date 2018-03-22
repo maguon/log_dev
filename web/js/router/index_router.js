@@ -12,8 +12,9 @@ app.config(['$stateProvider',"$urlRouterProvider",function($stateProvider,$urlRo
             templateUrl: "/view/car/refuel.html", //路由填充的模板
         })
         .state("data", {
-            url: "/data",  //路由路径
-            templateUrl: "/view/data/data.html",  //路由填充的模板
+            url: "/data",
+            // 无菜单：文件上传 画面
+            templateUrl: "/view/data/data.html",
             controller:'data_controller'
         })
 
@@ -84,11 +85,13 @@ app.config(['$stateProvider',"$urlRouterProvider",function($stateProvider,$urlRo
         })
         .state("car_demand",{
             url:"/car_demand",
+            // 主菜单：车辆查询 画面
             templateUrl: "/view/car_demand/car_demand.html",
             controller:'car_demand_controller'
         })
         .state("demand_Car_details",{
             url:"/demand_Car_details/{id}/vin/{vin}?from",
+            // 主菜单：车辆查询 -> 仓储车辆信息 画面
             templateUrl: "/view/car_demand/demand_Car_details.html",
             controller:'demand_Car_details_controller'
         })
