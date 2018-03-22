@@ -1,7 +1,7 @@
 /**
  * Created by ASUS on 2017/5/5.
  */
-app.controller("demand_Car_details_controller", [ "$state", "$stateParams", "_config", "service_storage_parking", "$scope", "$host", "_basic", function ( $state, $stateParams, _config, service_storage_parking, $scope, $host, _basic) {
+app.controller("demand_Car_details_controller", [ "$state", "$stateParams", "_config", "baseService", "$scope", "$host", "_basic", function ( $state, $stateParams, _config, baseService, $scope, $host, _basic) {
     var userId = _basic.getSession(_basic.USER_ID);
     var val = $stateParams.id;
     var vin = $stateParams.vin;

@@ -110,11 +110,6 @@ app.config(['$stateProvider',"$urlRouterProvider",function($stateProvider,$urlRo
             templateUrl: "/view/storage/storage_statistics.html",
             controller:"storage_statistics_controller"
         })
-        .state("storageCar_details", {
-            url:"/storageCar_details/{id}/vin/{vin}/_form/{_form}?from",
-            templateUrl: "/view/storage/storage_details.html",
-            controller:"storage_car_detailsController"
-        })
         .state("storageCar_details_", {
             url:"/storageCar_details/{id}/vin/{vin}?from",
             templateUrl: "/view/storage/storage_details.html",

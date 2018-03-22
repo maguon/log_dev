@@ -335,17 +335,6 @@ adminDirective.directive("view", function () {
         }
     }
 });
-// ng-repeat渲染后的回调
-adminDirective.directive('repeatFinish', function () {
-    return {
-        link: function (scope, element, attr) {
-            if (scope.$last == true) {
-                console.log('ng-repeat执行完毕');
-                scope.$eval(attr.repeatFinish)
-            }
-        }
-    }
-});
 adminDirective.directive('addRepeatFinish', function () {
     return {
         link: function (scope, element, attr) {

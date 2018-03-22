@@ -1,7 +1,7 @@
 /**
  * Created by ASUS on 2017/5/4.
  */
-app.controller("storage_car_controller", ["$scope", "$rootScope", "$stateParams", "$host", "_basic", "_config", function ($scope, $rootScope, $stateParams, $host, _basic,  _config ) {
+app.controller("storage_car_controller", ["$scope", "$rootScope", "$stateParams", "$host", "_basic", "_config", "baseService",function ($scope, $rootScope, $stateParams, $host, _basic,  _config ,baseService) {
     $scope.curruntId = 0;
     $scope.start = 0;
     $scope.size = 11;
@@ -184,7 +184,7 @@ app.controller("storage_car_controller", ["$scope", "$rootScope", "$stateParams"
                 if (data.success == true&&data.result.length>0) {
                     $scope.storageParking = data.result;
 
-                    $scope.parkingArray = service_storage_parking.storage_parking($scope.storageParking);
+                    $scope.parkingArray =  baseService.storageParking($scope.storageParking);
                     // console.log($scope.parkingArray)
 
                 } else {
@@ -299,7 +299,6 @@ app.controller("storage_car_controller", ["$scope", "$rootScope", "$stateParams"
     };
     // 车位转移
     $scope.changeStorageCar = function (val, id, row, col) {
-        console.log(val, id, row, col);
         $(".modal").modal();
         $("#change_storageCar").modal("open");
         $scope.now_row = row;
@@ -308,14 +307,11 @@ app.controller("storage_car_controller", ["$scope", "$rootScope", "$stateParams"
         _basic.get($host.api_url + "/storageParking?storageId=" + val).then(function (data) {
             if (data.success == true&&data.result.length>0) {
                 $scope.self_storageParking = data.result;
-                $scope.garageParkingArray = service_storage_parking.storage_parking($scope.self_storageParking);
+                $scope.garageParkingArray =baseService.storageParking($scope.self_storageParking);
                 $scope.ageParkingCol = $scope.garageParkingArray[0].col
-                // console.log($scope.ageParkingCol,$scope.garageParkingArray)
-
             }
         })
     };
-
     // 车辆重新入库
     $scope.loginStorageCar = function (el, id) {
         $scope.self_vin = el;
@@ -354,7 +350,7 @@ app.controller("storage_car_controller", ["$scope", "$rootScope", "$stateParams"
             _basic.get($host.api_url + "/storageParking?storageId=" + val).then(function (data) {
                 if (data.success == true&&data.result.length>0) {
                     $scope.move_storageParking = data.result;
-                    $scope.moveParkingArray = service_storage_parking.storage_parking($scope.move_storageParking);
+                    $scope.moveParkingArray = baseService.storageParking($scope.move_storageParking);
                 }
             })
         } else {
