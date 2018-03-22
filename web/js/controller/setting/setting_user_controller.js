@@ -1,17 +1,29 @@
-
+/**
+ * 主菜单：用户管理 控制器
+ */
 app.controller("setting_user_controller", ["_basic","_config", "_host", "$scope", function (_basic,_config,_host, $scope) {
     var adminId = _basic.getSession(_basic.USER_ID);
-    var userInfoItem=_config.userTypes;
-    var user_info_fun=function () {
+
+    // 部门信息列表
+    var userInfoItem = _config.userTypes;
+
+    /**
+     *  画面初期显示时，取得部门信息列表。
+     * @returns {Array}
+     */
+    var getDepartmentInfoList = function () {
         $scope.userInfoArray=[];
         for(var i in userInfoItem){
             $scope.userInfoArray.push(userInfoItem[i])
         }
         return $scope.userInfoArray
     };
-    user_info_fun();
-    // 搜索所有查询
-    var searchAll = function () {
+    getDepartmentInfoList();
+
+    /**
+     * 画面初期显示时，查询所有用户信息列表。
+     */
+    var getUserInfoList = function () {
         _basic.get(_host.api_url + "/admin/" + adminId + "/user").then(function (data) {
             if (data.success == true&&data.result.length>0) {
                 // console.log(data)
@@ -22,8 +34,12 @@ app.controller("setting_user_controller", ["_basic","_config", "_host", "$scope"
             }
         });
     };
-    searchAll();
-    $scope.newOperator = function () {
+    getUserInfoList();
+
+    /**
+     * 点击增加操作员按钮，显示追加用户dialog画面。
+     */
+    $scope.addOperator = function () {
         $scope.submitted = false;
         $scope.newRealName = "";
         $scope.newDepId = "";
@@ -33,8 +49,13 @@ app.controller("setting_user_controller", ["_basic","_config", "_host", "$scope"
         $(".modal").modal();
         $("#newOperator").modal("open");
     };
-    // 提交新增
-    $scope.submitForm = function (isValid) {
+
+    /**
+     * 提交追加用户请求到后台处理。
+     *
+     * @param isValid 是否有输入错误
+     */
+    $scope.createOperator = function (isValid) {
         $scope.submitted = true;
         if (isValid) {
             var sex_id = $(".sex").attr("sex");
@@ -58,7 +79,12 @@ app.controller("setting_user_controller", ["_basic","_config", "_host", "$scope"
             })
         }
     };
-    // 查看详情
+
+    /**
+     * 根据用户ID查看用户信息（打开用户编辑画面）。
+     *
+     * @param id 用户ID
+     */
     $scope.lookOperation = function (id) {
         $(".modal").modal();
         $("#look_Operator").modal("open");
@@ -70,26 +96,38 @@ app.controller("setting_user_controller", ["_basic","_config", "_host", "$scope"
             }
         })
     };
-    // 停启用
+
+    /**
+     * 修改单一用户的使用状态。
+     *
+     * @param st 状态：停/启用
+     * @param id 用户ID
+     */
     $scope.changeStatus = function (st, id) {
-                if (st == "1") {
-                    $scope.changeSt = "0"
-                } else if (st == "0") {
-                    $scope.changeSt = "1"
-                }
+        if (st == "1") {
+            $scope.changeSt = "0"
+        } else if (st == "0") {
+            $scope.changeSt = "1"
+        }
 
-                _basic.put(_host.api_url + "/admin/" + adminId + "/user/" + id + "/status/" + $scope.changeSt
-                    , {}).then(function (data) {
-                    if (data.success == true) {
-                        searchAll();
-                    } else {
-                        swal(data.msg, "", "error");
-                    }
+        _basic.put(_host.api_url + "/admin/" + adminId + "/user/" + id + "/status/" + $scope.changeSt
+            , {}).then(function (data) {
+            if (data.success == true) {
+                searchAll();
+            } else {
+                swal(data.msg, "", "error");
+            }
 
-                })
+        })
     };
-    // 修改
-    $scope.changeOperatorForm = function (isValid, id) {
+
+    /**
+     * 修改用户信息。
+     *
+     * @param isValid 是否有输入错误
+     * @param id 用户ID
+     */
+    $scope.updateOperatorInfo = function (isValid, id) {
         $scope.submitted = true;
         if (isValid) {
             var sex_id = $(".sex").attr("sex");
