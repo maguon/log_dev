@@ -6,7 +6,7 @@
                 <i class="mdi mdi-plus"></i>
             </a>
             <div id="newStorage" class="modal">
-                <form name="StorageForm" ng-submit="addNewStorageForm(StorageForm.$valid)" novalidate>
+                <form name="StorageForm"  novalidate>
                     <div class="modal-content">
                         <h4 class="center-align">创建新仓库</h4>
                         <div class="divider a1_divider" ></div>
@@ -49,7 +49,7 @@
                     </div>
                     <div class="divider" style="background: #00bcd4;height: 2px;"></div>
                     <div class="modal-footer right-align">
-                        <button class="btn btn-floating waves-light waves-effect cyan lighten-1" type="submit" name="action" style="margin-left: 10px" >
+                        <button class="btn btn-floating waves-light waves-effect cyan lighten-1" ng-click="addNewStorageForm(StorageForm.$valid)" name="action" style="margin-left: 10px" >
                             <i class="mdi mdi-check"></i>
                         </button>
                         <a  class=" btn-floating modal-action modal-close waves-effect waves-light grey lighten-1 btn"  >
@@ -89,7 +89,7 @@
                 </tbody>
             </table>
             <div id="look_Storage" class="modal">
-                <form name="selfStorageForm" ng-submit="lookStorageForm(selfStorageForm.$valid,selfStorage.id)" novalidate>
+                <form name="selfStorageForm"  novalidate>
                     <div class="modal-content">
                         <h4 class="center-align">查看仓库详情</h4>
                         <div class="divider a1_divider" ></div>
@@ -145,7 +145,7 @@
                     </div>
                     <div class="divider" style="background: #00bcd4;height: 2px;"></div>
                     <div class="modal-footer vc-center">
-                        <button class="btn waves-light waves-effect cyan lighten-1" type="submit" name="action" >
+                        <button class="btn waves-light waves-effect cyan lighten-1" ng-click="lookStorageForm(selfStorageForm.$valid,selfStorage.id)" name="action" >
                             <i class="mdi mdi-check"></i>
                         </button>
                         <a  class=" modal-action modal-close waves-effect waves-light grey lighten-1 btn" style="margin-left: 10px" >

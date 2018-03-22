@@ -38,8 +38,7 @@
                         <div class="collapsible-header grey-text text-darken-1 row no-mp">
                             <div class="amend_brand_box amend_brand_box{{$index}} col s12 p0"
                                  ng-click="amend_brand_box($event)">
-                                <form name="amend_brandForm"
-                                      ng-submit="updateCarBrand(amend_brandForm.$valid,el.id,el.make_name,$index)">
+                                <form name="amend_brandForm">
                                     <div class="col s6 valign-wrapper p0">
                                         <i class="mdi mdi-car cyan-text text-lighten-1 "></i>
                                         <input type="text" class="cyan-text lighten-1" style="height: 30px"
@@ -50,7 +49,7 @@
                                             <i class="mdi mdi-close add_brand" style="width: 100%;line-height: 30px"></i>
                                         </a>
                                         <button class="btn-floating waves-effect waves-light cyan  lighten-1 btn"
-                                                style="width: 35px;height: 30px;line-height: 30px" type="submit"
+                                                style="width: 35px;height: 30px;line-height: 30px"  ng-click="updateCarBrand(amend_brandForm.$valid,el.id,el.make_name,$index)"
                                                 name="action">
                                             <i class="mdi mdi-check add_brand" style="width: 100%;line-height: 30px"></i>
                                         </button>
@@ -71,9 +70,7 @@
                                        ng-click="add_car_model_box($event,$index)">+增加类型</a>
                                     <div class="add_model_wrap add_model_wrap{{$index}} col white s12"
                                          style="display: none">
-                                        <form name="add_modelForm"
-                                              ng-submit="addCarModel(add_modelForm.$valid,el.id,$index)"
-                                              novalidate>
+                                        <form name="add_modelForm" novalidate>
                                             <div class="col s6 valign-wrapper p0 vc-center add_model_box"
                                                  ng-class="{'has-error':add_modelForm.add_car_model.$invalid&&submitted}">
                                                 <h6 class="col s3 bold cyan-text lighten-1" style="min-width: 90px">
@@ -86,7 +83,7 @@
                                                     <i class="mdi mdi-close " style="width: 100%;line-height: 28px"></i>
                                                 </a>
                                                 <button class="btn-floating waves-effect waves-light cyan  lighten-1 btn"
-                                                        style="width: 35px;height: 28px;line-height: 28px;" type="submit"
+                                                        style="width: 35px;height: 28px;line-height: 28px;" ng-click="addCarModel(add_modelForm.$valid,el.id,$index)"
                                                         name="action">
                                                     <i class="mdi mdi-check add_brand"
                                                        style="width: 100%;line-height: 28px"></i>
