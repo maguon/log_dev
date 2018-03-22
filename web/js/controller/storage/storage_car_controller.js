@@ -77,7 +77,7 @@ app.controller("storage_car_controller", ["$scope", "$rootScope", "$stateParams"
         searchAll();
     };
     // 車庫狀態
-    $scope.rel_status = _config.car_rel_status;
+    $scope.rel_status = _config.carRelStatus;
     $scope.search_relStatus = 1;
     // 车辆品牌查询
     _basic.get($host.api_url + "/carMake").then(function (data) {
