@@ -2,7 +2,7 @@
  * Created by jiangsen on 2017/5/17.
  * 主菜单：车辆查询
  */
-app.controller("car_demand_controller", ["$scope", "$rootScope", "$host", "_basic", "_config", function ($scope, $rootScope, $host, _basic,  _config) {
+app.controller("car_demand_controller", ["$scope", "$rootScope", "$host", "_basic", "_config","baseService", function ($scope, $rootScope, $host, _basic,  _config, baseService) {
     $scope.curruntId = 0;
     $scope.start = 0;
     $scope.size = 11;
@@ -45,7 +45,7 @@ app.controller("car_demand_controller", ["$scope", "$rootScope", "$host", "_basi
             _basic.get($host.api_url + "/storageParking?storageId=" + val).then(function (data) {
                 if (data.success == true&&data.result.length>0) {
                     $scope.storageParking = data.result;
-                    $scope.parkingArray = service_storage_parking.storage_parking($scope.storageParking);
+                    $scope.parkingArray = baseService.storageParking($scope.storageParking);
                 } else {
                     swal(data.msg, "", "error");
                 }
