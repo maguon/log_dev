@@ -30,7 +30,7 @@ baseService.factory("_config", function () {
         admin_type:"99"
     };
     _this.rel_status = 1;
-    _this.car_rel_status=[
+    _this.carRelStatus=[
         {
             s_num: 1,
             status_text: "在库"

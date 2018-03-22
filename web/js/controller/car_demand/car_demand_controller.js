@@ -1,5 +1,6 @@
 /**
  * Created by jiangsen on 2017/5/17.
+ * 主菜单：车辆查询
  */
 app.controller("car_demand_controller", ["$scope", "$rootScope", "$host", "_basic", "_config", function ($scope, $rootScope, $host, _basic,  _config) {
     $scope.curruntId = 0;
@@ -7,10 +8,13 @@ app.controller("car_demand_controller", ["$scope", "$rootScope", "$host", "_basi
     $scope.size = 11;
     var userId = _basic.getSession(_basic.USER_ID);
     // 车库状态
-    $scope.relStatus = _config.car_rel_status;
-    $scope.search_relStatus = 1;
-    // 车辆品牌查询
-    function makecarName(){
+    $scope.relStatus = _config.carRelStatus;
+    $scope.searchRelStatus = 1;
+
+    /**
+     * 车辆品牌列表查询，用来填充查询条件：车辆品牌
+     */
+    function makeCarName(){
         _basic.get($host.api_url + "/carMake").then(function (data) {
             if (data.success == true&&data.result.length>0) {
                 $scope.makecarName = data.result;
@@ -19,7 +23,10 @@ app.controller("car_demand_controller", ["$scope", "$rootScope", "$host", "_basi
             }
         });
     }
-    // 车库查询
+
+    /**
+     * 仓库列表查询，用来填充查询条件：所在仓库
+     */
     function storageName(){
         _basic.get($host.api_url + "/storage").then(function (data) {
             if (data.success == true&&data.result.length>0) {
@@ -29,7 +36,10 @@ app.controller("car_demand_controller", ["$scope", "$rootScope", "$host", "_basi
             }
         });
     }
-    // 存放位置联动查询--行
+
+    /**
+     * 存放位置联动查询--行
+     */
     $scope.changeStorageId = function (val) {
         if (val) {
             _basic.get($host.api_url + "/storageParking?storageId=" + val).then(function (data) {
@@ -48,7 +58,11 @@ app.controller("car_demand_controller", ["$scope", "$rootScope", "$host", "_basi
             $scope.colArr = array[val - 1].col;
         }
     };
-    // 车辆型号联动查询
+
+    /**
+     * 当车辆品牌变更时，车辆型号要进行联动刷新。
+     * @param val 车辆品牌ID
+     */
     $scope.changeMakeId = function (val) {
         if (val) {
             if ($scope.curruntId == val) {
@@ -64,10 +78,14 @@ app.controller("car_demand_controller", ["$scope", "$rootScope", "$host", "_basi
             }
         }
     };
-     function readcarDemandData() {
+
+    /**
+     * 根据画面输入的查询条件，进行数据查询。
+     */
+    function queryCarDemandData() {
         var reqUrl = $host.api_url + "/user/" + userId + "/car?active=" + 1 + "&start=" + $scope.start + "&size=" + $scope.size
-        if ($scope.search_relStatus != null) {
-            reqUrl = reqUrl + "&relStatus=" + $scope.search_relStatus
+        if ($scope.searchRelStatus != null) {
+            reqUrl = reqUrl + "&relStatus=" + $scope.searchRelStatus
         }
         if ($scope.search_storage != null) {
             reqUrl = reqUrl + "&storageId=" + $scope.search_storage
@@ -118,26 +136,38 @@ app.controller("car_demand_controller", ["$scope", "$rootScope", "$host", "_basi
             }
         });
     };
-    // 条件查询
+
+    /**
+     * 点击：查询按钮，进行数据查询
+     */
     $scope.readStorageCar = function () {
-        readcarDemandData();
+        queryCarDemandData();
     };
-    // 上一页
+
+    /**
+     * 上一页
+     */
     $scope.preBtn = function () {
         $scope.start = $scope.start - ($scope.size - 1);
-        readcarDemandData();
+        queryCarDemandData();
     };
-    // 下一页
+
+    /**
+     * 下一页
+     */
     $scope.nextBtn = function () {
         $scope.start = $scope.start + ($scope.size - 1);
-        readcarDemandData();
+        queryCarDemandData();
     };
-    // 获取所有数据
-    $scope.queryData = function () {
-        readcarDemandData();
-        makecarName();
+
+    /**
+     * 画面初期显示时，用来获取画面必要信息的初期方法。
+     */
+    $scope.initData = function () {
+        queryCarDemandData();
+        makeCarName();
         storageName();
     };
-    $scope.queryData();
+    $scope.initData();
 }]);
 
