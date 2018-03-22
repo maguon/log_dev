@@ -14,7 +14,7 @@ app.controller("car_demand_controller", ["$scope", "$rootScope", "$host", "_basi
     /**
      * 车辆品牌列表查询，用来填充查询条件：车辆品牌
      */
-    function makeCarName(){
+    function getCarMakerList(){
         _basic.get($host.api_url + "/carMake").then(function (data) {
             if (data.success == true&&data.result.length>0) {
                 $scope.makecarName = data.result;
@@ -27,7 +27,7 @@ app.controller("car_demand_controller", ["$scope", "$rootScope", "$host", "_basi
     /**
      * 仓库列表查询，用来填充查询条件：所在仓库
      */
-    function storageName(){
+    function getStorageList(){
         _basic.get($host.api_url + "/storage").then(function (data) {
             if (data.success == true&&data.result.length>0) {
                 $scope.storageName = data.result;
@@ -63,7 +63,7 @@ app.controller("car_demand_controller", ["$scope", "$rootScope", "$host", "_basi
      * 当车辆品牌变更时，车辆型号要进行联动刷新。
      * @param val 车辆品牌ID
      */
-    $scope.changeMakeId = function (val) {
+    $scope.changeMakerId = function (val) {
         if (val) {
             if ($scope.curruntId == val) {
             } else {
@@ -140,7 +140,7 @@ app.controller("car_demand_controller", ["$scope", "$rootScope", "$host", "_basi
     /**
      * 点击：查询按钮，进行数据查询
      */
-    $scope.readStorageCar = function () {
+    $scope.queryCarList = function () {
         queryCarDemandData();
     };
 
@@ -165,8 +165,8 @@ app.controller("car_demand_controller", ["$scope", "$rootScope", "$host", "_basi
      */
     $scope.initData = function () {
         queryCarDemandData();
-        makeCarName();
-        storageName();
+        getCarMakerList();
+        getStorageList();
     };
     $scope.initData();
 }]);

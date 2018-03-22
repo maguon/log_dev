@@ -23,7 +23,7 @@
 
                 <!-- 查询条件：车辆品牌 -->
                 <div class="input-field col s3">
-                    <select material-select watch ng-model="search_makeId" ng-change="changeMakeId(search_makeId)">
+                    <select material-select watch ng-model="search_makeId" ng-change="changeMakerId(search_makeId)">
                         <option value=""  selected>车辆品牌</option>
                         <option ng-repeat="el in makecarName" ng-value="el.id">{{el.make_name}}</option>
                     </select>
@@ -97,7 +97,7 @@
 
                 <!-- 查询按钮 -->
                 <div class="col s2  flex flex-round">
-                    <a class="btn-floating btn-large waves-light waves-effect red lighten-2  btn vc-center" style="margin-right: 10px"  ng-click="readStorageCar()">
+                    <a class="btn-floating btn-large waves-light waves-effect red lighten-2  btn vc-center" style="margin-right: 10px"  ng-click="queryCarList()">
                         <i class="mdi mdi-magnify"></i>
                     </a>
                 </div>
