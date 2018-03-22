@@ -1,7 +1,7 @@
 /**
  * Created by lingxue on 2017/6/5.
  */
-baseService.factory('_socket',['$http','$location','$q',"$cookies","$host","_basic",function($http,$location,$q,$cookies,$host,_basic){
+baseService.factory('_socket',['$http','$location','$q',"$cookies","_host","_basic",function($http,$location,$q,$cookies,_host,_basic){
     var _this = {};
     var ws = null ;
     var uploadResHandler ;
@@ -114,7 +114,7 @@ baseService.factory('_socket',['$http','$location','$q',"$cookies","$host","_bas
         if(ws){
             return;
         }else{
-            ws =  new WebSocket($host.socket_url);
+            ws =  new WebSocket(_host.socket_url);
 
             ws.onmessage = function(message){
                 _this.dispatchMsg(message);

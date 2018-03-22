@@ -1,13 +1,13 @@
 var admin_login_controller = angular.module("admin_login_controller", []);
-admin_login_controller.controller("admin_login_controller", ['$rootScope', '$scope', '$location','$q', "_basic", "$host",
-    function ($rootScope, $scope, $location, $q, _basic, $host) {
+admin_login_controller.controller("admin_login_controller", ['$rootScope', '$scope', '$location','$q', "_basic", "_host",
+    function ($rootScope, $scope, $location, $q, _basic, _host) {
         $scope.username = '';
         $scope.password = '';
         $scope.login = function () {
             if ($scope.username == '' || $scope.username == '') {
                 swal("账号或密码不能为空", "", "error");
             } else {
-                _basic.post($host.api_url + "/admin/do/login", {
+                _basic.post(_host.api_url + "/admin/do/login", {
                     "userName": $scope.username,
                     "password": $scope.password
                 }).then(function (data) {

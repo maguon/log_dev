@@ -1,5 +1,5 @@
 // 车辆设置
-app.controller("setting_truck_controller", ["$scope", "$host", "_basic", function ($scope, $host, _basic) {
+app.controller("setting_truck_controller", ["$scope", "_host", "_basic", function ($scope, _host, _basic) {
     var adminId = _basic.getSession(_basic.USER_ID);
     // 打开汽车品牌
     $scope.car_Brand_box=function ($event) {
@@ -14,7 +14,7 @@ app.controller("setting_truck_controller", ["$scope", "$host", "_basic", functio
     };
     // 汽车品牌
     $scope.searchAll = function () {
-        _basic.get($host.api_url + "/carMake/").then(function (data) {
+        _basic.get(_host.api_url + "/carMake/").then(function (data) {
             if (data.success == true&&data.result.length>0) {
                 $scope.brand = data.result;
             } else {
@@ -40,7 +40,7 @@ app.controller("setting_truck_controller", ["$scope", "$host", "_basic", functio
     // 修改汽车品牌
     $scope.updateCarBrand = function (iValid,id,name,$index) {
         if(iValid){
-            _basic.put($host.api_url + "/admin/" + adminId + "/carMake/" + id, {
+            _basic.put(_host.api_url + "/admin/" + adminId + "/carMake/" + id, {
                 "makeName": name
             }).then(function (data) {
                 if (data.success == true) {
@@ -54,7 +54,7 @@ app.controller("setting_truck_controller", ["$scope", "$host", "_basic", functio
     };
     // 汽车型号
     $scope.search_carModel = function (id) {
-        _basic.get($host.api_url + "/carMake/" + id + "/carModel").then(function (data) {
+        _basic.get(_host.api_url + "/carMake/" + id + "/carModel").then(function (data) {
             if (data.success == true) {
                 $scope.brand_model = data.result;
 
@@ -82,7 +82,7 @@ app.controller("setting_truck_controller", ["$scope", "$host", "_basic", functio
     $scope.addCarModel=function (iValid,id) {
         $scope.submitted=true;
         if(iValid){
-            _basic.post($host.api_url + "/admin/" + adminId + "/carMake/" + id+"/carModel", {
+            _basic.post(_host.api_url + "/admin/" + adminId + "/carMake/" + id+"/carModel", {
                 modelName:$scope.add_car_model_text
             }).then(function (data) {
                 if (data.success == true) {
@@ -122,7 +122,7 @@ app.controller("setting_truck_controller", ["$scope", "$host", "_basic", functio
         } else {
             status = 0
         }
-        _basic.put($host.api_url + "/admin/" + adminId + "/carModel/" + id + "/modelStatus/" + status, {}).then(function (data) {
+        _basic.put(_host.api_url + "/admin/" + adminId + "/carModel/" + id + "/modelStatus/" + status, {}).then(function (data) {
             if (data.success == true) {
                 $scope.search_carModel(makeId);
             } else {
@@ -144,7 +144,7 @@ app.controller("setting_truck_controller", ["$scope", "$host", "_basic", functio
     };
     // 确认提交修改型号
     $scope.amend_car_model_submit = function (id, name,index) {
-        _basic.put($host.api_url + "/admin/" + adminId + "/carModel/" + id, {
+        _basic.put(_host.api_url + "/admin/" + adminId + "/carModel/" + id, {
             modelName: name
         }).then(function (data) {
             if (data.success == true) {
@@ -164,7 +164,7 @@ app.controller("setting_truck_controller", ["$scope", "$host", "_basic", functio
         } else {
             sta = 0
         }
-        _basic.put($host.api_url + "/admin/" + adminId + "/carModel/" + id+"/modelStatus/"+sta,{}).then(function (data) {
+        _basic.put(_host.api_url + "/admin/" + adminId + "/carModel/" + id+"/modelStatus/"+sta,{}).then(function (data) {
             if (data.success == true) {
                 swal("更改状态", "", "success");
                 $scope.search_carModel(makeId);
@@ -176,7 +176,7 @@ app.controller("setting_truck_controller", ["$scope", "$host", "_basic", functio
     };
     $scope.addBrand=function (iValid) {
         if(iValid){
-            _basic.post($host.api_url + "/admin/" + adminId + "/carMake/", {
+            _basic.post(_host.api_url + "/admin/" + adminId + "/carMake/", {
                 makeName: $scope.b_txt
             }).then(function (data) {
                 if (data.success == true) {

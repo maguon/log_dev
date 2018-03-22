@@ -1,9 +1,9 @@
 // 仓库设置
-app.controller("system_warehouse_controller", ["$scope", "$host", "_basic", function ($scope, $host, _basic) {
+app.controller("system_warehouse_controller", ["$scope", "_host", "_basic", function ($scope, _host, _basic) {
     var adminId = _basic.getSession(_basic.USER_ID);
     // 整体查询
     function readStorgeList() {
-        _basic.get($host.api_url + "/storage").then(function (data) {
+        _basic.get(_host.api_url + "/storage").then(function (data) {
             if (data.success == true&&data.result.length>0) {
                 $scope.storage = data.result;
             } else {
@@ -32,7 +32,7 @@ app.controller("system_warehouse_controller", ["$scope", "$host", "_basic", func
                 col: Number($scope.newStorageRoad),
                 remark: $scope.newStorageRemark
             };
-            _basic.post($host.api_url + "/admin/" + adminId + "/storage", obj).then(function (data) {
+            _basic.post(_host.api_url + "/admin/" + adminId + "/storage", obj).then(function (data) {
                 if (data.success == true) {
                     swal("新增成功", "", "success");
                     readStorgeList();
@@ -47,7 +47,7 @@ app.controller("system_warehouse_controller", ["$scope", "$host", "_basic", func
     $scope.lookStorage = function (id) {
         $(".modal").modal();
         $("#look_Storage").modal("open");
-        _basic.get($host.api_url + "/storage?storageId=" + id).then(function (data) {
+        _basic.get(_host.api_url + "/storage?storageId=" + id).then(function (data) {
             if (data.success == true&&data.result.length>0) {
                 $scope.selfStorage = data.result[0];
             } else {
@@ -63,7 +63,7 @@ app.controller("system_warehouse_controller", ["$scope", "$host", "_basic", func
                 storageName: $scope.selfStorage.storage_name,
                 remark: $scope.selfStorage.remark
             };
-            _basic.put($host.api_url + "/admin/" + adminId + "/storage/" + id, obj).then(function (data) {
+            _basic.put(_host.api_url + "/admin/" + adminId + "/storage/" + id, obj).then(function (data) {
                 if (data.success == true) {
                     swal("修改成功", "", "success");
                     readStorgeList();
@@ -83,7 +83,7 @@ app.controller("system_warehouse_controller", ["$scope", "$host", "_basic", func
             // str="停用";
             status = 0
         }
-        _basic.put($host.api_url + "/admin/" + adminId + "/storage/" + id + "/storageStatus/" + status, {}).then(function (data) {
+        _basic.put(_host.api_url + "/admin/" + adminId + "/storage/" + id + "/storageStatus/" + status, {}).then(function (data) {
             if (data.success == true) {
                 swal("修改成功", "", "success");
                 readStorgeList();
