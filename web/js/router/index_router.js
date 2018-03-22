@@ -7,49 +7,6 @@ app.config(['$stateProvider',"$urlRouterProvider",function($stateProvider,$urlRo
             templateUrl: "/view/index.html",  //路由填充的模板
             controller:'index_controller'
         })
-        .state("Com", {
-            url: "/Com",  //路由路径
-            templateUrl: "/view/car/truck_statistics.html",  //路由填充的模板
-        })
-        .state("CarMsg", {
-            url: "/CarMsg",  //路由路径
-            templateUrl: "/view/car/truck_manager.html", //路由填充的模板
-            controller:function ($state) {
-                $('.modal').modal();
-                $state.go("CarMsg.truck");
-            }
-        })
-        .state("CarMsg.truck", {
-            url: "/truck",  //路由路径
-            templateUrl: "/view/car/truck/truck_head.html",  //路由填充的模板
-            controller:'truck_head_controller'
-        })
-        .state("CarMsg.hand", {
-            url: "/hand",  //路由路径
-            templateUrl: "/view/car/truck/truck_hand.html",  //路由填充的模板
-            controller:'truck_hand_controller'
-        })
-        .state("company", {
-            url: "/company",  //路由路径
-            templateUrl: "/view/car/company.html", //路由填充的模板
-            controller:"company_controller"
-        })
-        .state("malfunction", {
-            url: "/malfunction",  //路由路径
-            templateUrl: "/view/car/malfunction.html", //路由填充的模板
-            // abstract:true,
-            controller:"truck_malfunction_controller"
-        })
-        .state("refuel", {
-            url: "/refuel",  //路由路径
-            templateUrl: "/view/car/refuel.html", //路由填充的模板
-        })
-        .state("refuel.carRefuel", {
-            url: "/refuel",  //路由路径
-            templateUrl: "/view/car/refuel.html", //路由填充的模板
-            // abstract:true,
-            // controller:
-        })
         .state("refuel.oilMass", {
             url: "/refuel",  //路由路径
             templateUrl: "/view/car/refuel.html", //路由填充的模板
@@ -134,5 +91,49 @@ app.config(['$stateProvider',"$urlRouterProvider",function($stateProvider,$urlRo
             url:"/demand_Car_details/{id}/vin/{vin}?from",
             templateUrl: "/view/car_demand/demand_Car_details.html",
             controller:'demand_Car_details_controller'
-        });
+        })
+        .state("company", {
+            url: "/company",  //路由路径
+            templateUrl: "/view/car/company.html", //路由填充的模板
+            controller:"company_controller"
+        })
+ /*       .state("Com", {
+            url: "/Com",  //路由路径
+            templateUrl: "/view/car/truck_statistics.html",  //路由填充的模板
+        })
+        .state("CarMsg", {
+            url: "/CarMsg",  //路由路径
+            templateUrl: "/view/car/truck_manager.html", //路由填充的模板
+            controller:function ($state) {
+                $('.modal').modal();
+                $state.go("CarMsg.truck");
+            }
+        })
+        .state("CarMsg.truck", {
+            url: "/truck",  //路由路径
+            templateUrl: "/view/car/truck/truck_head.html",  //路由填充的模板
+            controller:'truck_head_controller'
+        })
+        .state("CarMsg.hand", {
+            url: "/hand",  //路由路径
+            templateUrl: "/view/car/truck/truck_hand.html",  //路由填充的模板
+            controller:'truck_hand_controller'
+        })
+        .state("malfunction", {
+            url: "/malfunction",  //路由路径
+            templateUrl: "/view/car/malfunction.html", //路由填充的模板
+            // abstract:true,
+            controller:"truck_malfunction_controller"
+        })
+        .state("refuel", {
+            url: "/refuel",  //路由路径
+            templateUrl: "/view/car/refuel.html", //路由填充的模板
+        })
+        .state("refuel.carRefuel", {
+            url: "/refuel",  //路由路径
+            templateUrl: "/view/car/refuel.html", //路由填充的模板
+            // abstract:true,
+            // controller:
+        })*/
+    ;
 }]);
