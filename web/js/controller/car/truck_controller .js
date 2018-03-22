@@ -1,10 +1,7 @@
 /**
  * Created by ASUS on 2017/3/31.
  */
-/**
- * Created by ASUS on 2017/3/31.
- */
-app.controller("truckController", ["$scope", function ($scope) {
+app.controller("truck_controller", ["$scope", function ($scope) {
     var count = 1;
     $scope.search = function () {
         console.log($scope.carType, $scope.beToType, $scope.carNum, $scope.driver, $scope.carState, $scope.insurance)
@@ -27,8 +24,8 @@ app.controller("truckController", ["$scope", function ($scope) {
     }
 }]);
 app.controller("truck_head_controller", ["$scope", "$host", "_basic", function ($scope, $host, _basic) {
-    var userid = _basic.getSession(_basic.USER_ID);
-    _basic.get($host.api_url + "/user/" + userid + "truck", {
+    var userId = _basic.getSession(_basic.USER_ID);
+    _basic.get($host.api_url + "/user/" + userId + "truck", {
         truckType: 1
     }).then(function (data) {
         if (data.success == true) {
@@ -38,8 +35,8 @@ app.controller("truck_head_controller", ["$scope", "$host", "_basic", function (
     })
 }]);
 app.controller("truck_hand_controller", ["$scope", "$host", "_basic", function ($scope, $host, _basic) {
-    var userid = _basic.getSession(_basic.USER_ID);
-    _basic.get($host.api_url + "/user/" + userid + "truck", {
+    var userId = _basic.getSession(_basic.USER_ID);
+    _basic.get($host.api_url + "/user/" + userId + "truck", {
         truckType: 2
     }).then(function (data) {
         if (data.success == true) {
