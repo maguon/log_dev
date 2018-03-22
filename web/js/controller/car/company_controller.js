@@ -1,12 +1,44 @@
 /**
  * Created by ASUS on 2017/4/1.
+ * TODO 没有相关的菜单入口。
  */
 app.controller("company_controller", ['$rootScope', '$scope', '_basic', '$host',  '$urlMethod', function ($rootScope, $scope, _basic, $host,  $urlMethod) {
     var userId = _basic.getSession(_basic.USER_ID);
     // 单条公司信息
     var companyMsg;
-    // 搜索查询
-    $scope.search = function () {
+
+    /**
+     * 画面初期显示时，用来获取画面必要信息的初期方法。
+     */
+    var initData = function () {
+        // 画面初期时，无条件查询公司信息列表
+        _basic.get($host.api_url + "/user/" + userId + "/company", {}).then(function (data) {
+            if (data.success == true&&data.result.length>0) {
+                $scope.Company = data.result;
+            } else {
+                swal(data.msg, "", "error");
+            }
+        });
+        // 获取城市信息列表
+        _basic.get($host.api_url + "/user/" + userId + "/city", {}).then(function (data) {
+            if (data.success == true&&data.result.length>0) {
+                $scope.citys = data.result;
+            } else {
+                swal(data.msg, "", "error");
+            }
+        });
+    };
+
+    /**
+     * 取得画面初期数据
+     */
+    initData();
+
+    /**
+     * 画面【搜索】按钮，根据画面检索条件输入情况，进行查询公司信息列表。
+     * TODO 因为没有数据，所以没有测试。
+     */
+    $scope.getCompanyList = function () {
         var obj = {
             companyName: $scope.s_computer,
             operateType: $scope.s_type,
@@ -21,26 +53,11 @@ app.controller("company_controller", ['$rootScope', '$scope', '_basic', '$host',
             }
         });
     };
-    // 整体查询读取
-    var searchAll = function () {
-        _basic.get($host.api_url + "/user/" + userId + "/company", {}).then(function (data) {
-            if (data.success == true&&data.result.length>0) {
-                $scope.Company = data.result;
-            } else {
-                swal(data.msg, "", "error");
-            }
-        });
-        // 获取城市信息
-        _basic.get($host.api_url + "/user/" + userId + "/city", {}).then(function (data) {
-            if (data.success == true&&data.result.length>0) {
-                $scope.citys = data.result;
-            } else {
-                swal(data.msg, "", "error");
-            }
-        });
-    };
-    searchAll();
-    // 新增公司
+
+    /**
+     * 画面【增加公司】按钮，用于显示追加公司机能画面。
+     * TODO 暂时无法动作。
+     */
     $scope.addCompany = function () {
         $('.modal').modal({
             complete: function () {
@@ -56,33 +73,17 @@ app.controller("company_controller", ['$rootScope', '$scope', '_basic', '$host',
         $scope.submitted = false;
         $('#addCompany').modal('open');
     };
-    // 提交新增公司信息
-    $scope.submitForm = function (isValid) {
-        $scope.submitted = true;
-        if (isValid) {
-            _basic.post($host.api_url + "/user/" + userId + "/company", {
-                "companyName": $scope.addCompanyName,
-                "operateType": $scope.addOperateType,
-                "cooperationTime": $scope.addCooperationTime,
-                "contacts": $scope.addContacts,
-                "tel": $scope.addTel,
-                "cityId": $scope.addCityId,
-                "remark": $scope.addMark
-            }).then(function (data) {
-                if (data.success == true) {
-                    $('#addCompany').modal('close');
-                    swal("新增成功", "", "success");
-                    searchAll();
-                } else {
-                    swal(data.msg, "", "error");
-                }
-            })
-        }
-    };
-    // 查看公司详情
-    $scope.LookCompany = function (id) {
+
+    /**
+     * 根据公司ID，查看公司详细信息。
+     * @param id 公司ID
+     */
+    $scope.getCompanyInfo = function (id) {
+        // 显示公司详细信息画面
         $('.modal').modal();
         $('#LookCompany').modal('open');
+
+        // 根据公司ID，取得公司详细信息
         _basic.get($host.api_url + "/user/" + userId + "/company?companyId=" + id, {}).then(function (data) {
             if (data.success == true&&data.result.length>0) {
                 $scope.company = data.result[0];
@@ -93,6 +94,7 @@ app.controller("company_controller", ['$rootScope', '$scope', '_basic', '$host',
                 swal(data.msg, "", "error");
             }
         });
+
         // 头车数量
         _basic.get($host.api_url + "/user/" + userId + "/company/" + id + "/firstCount", {}).then(function (data) {
             if (data.success == true&&data.result.length>0) {
@@ -118,6 +120,36 @@ app.controller("company_controller", ['$rootScope', '$scope', '_basic', '$host',
             }
         });
     };
+
+
+
+    /*********** TODO 修正分割线 下面代码修改后，删除此行 **********/
+
+
+    // 提交新增公司信息
+    $scope.submitForm = function (isValid) {
+        $scope.submitted = true;
+        if (isValid) {
+            _basic.post($host.api_url + "/user/" + userId + "/company", {
+                "companyName": $scope.addCompanyName,
+                "operateType": $scope.addOperateType,
+                "cooperationTime": $scope.addCooperationTime,
+                "contacts": $scope.addContacts,
+                "tel": $scope.addTel,
+                "cityId": $scope.addCityId,
+                "remark": $scope.addMark
+            }).then(function (data) {
+                if (data.success == true) {
+                    $('#addCompany').modal('close');
+                    swal("新增成功", "", "success");
+                    searchAll();
+                } else {
+                    swal(data.msg, "", "error");
+                }
+            })
+        }
+    };
+
     // 修改公司详情
     $scope.look_submitForm = function (id, isValid) {
         $scope.look_submitted = true;
