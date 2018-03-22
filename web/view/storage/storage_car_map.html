@@ -94,7 +94,7 @@
                             </ul>
                         </div>
                         <div id="test1" class="col s12 tab_box">
-                            <form name="newStorage_carForm" style="color:#616161" ng-submit="submitForm(newStorage_carForm.$valid)" novalidate>
+                            <form name="newStorage_carForm" style="color:#616161"  novalidate>
                                 <div class="row" style="margin-top: 40px">
                                     <div class="row "  >
                                         <div class="input-field col s4" ng-class="{ 'has-error':newStorage_carForm.vin.$invalid&&submitted }" >
@@ -168,7 +168,7 @@
                                 </div>
                                 <div class="divider grey lighten-1" style="height: 2px;"></div>
                                 <div class="modal-footer right-align">
-                                    <button class="btn waves-light btn-floating waves-effect  cyan lighten-1" type="submit" name="action" >
+                                    <button class="btn waves-light btn-floating waves-effect  cyan lighten-1" ng-click="getNewStorageItem(newStorage_carForm.$valid)" name="action" >
                                         <i class="mdi mdi-trending-neutral"></i>
                                         <!--下一步-->
                                     </button>
