@@ -2,7 +2,7 @@
  * Created by jiangsen on 2017/5/17.
  * 主菜单：车辆查询
  */
-app.controller("car_demand_controller", ["$scope", "$rootScope", "_host", "_basic", "_config","_baseService", function ($scope, $rootScope, _host, _basic,  _config, _baseService) {
+app.controller("car_demand_controller", ["$scope", "$rootScope", "_host", "_basic", "_config", "_baseService", function ($scope, $rootScope, _host, _basic, _config, _baseService) {
     $scope.curruntId = 0;
     $scope.start = 0;
     $scope.size = 11;
@@ -14,9 +14,9 @@ app.controller("car_demand_controller", ["$scope", "$rootScope", "_host", "_basi
     /**
      * 车辆品牌列表查询，用来填充查询条件：车辆品牌
      */
-    function getCarMakerList(){
+    function getCarMakerList() {
         _basic.get(_host.api_url + "/carMake").then(function (data) {
-            if (data.success == true&&data.result.length>0) {
+            if (data.success == true && data.result.length > 0) {
                 $scope.makecarName = data.result;
             } else {
                 swal(data.msg, "", "error");
@@ -27,9 +27,9 @@ app.controller("car_demand_controller", ["$scope", "$rootScope", "_host", "_basi
     /**
      * 仓库列表查询，用来填充查询条件：所在仓库
      */
-    function getStorageList(){
+    function getStorageList() {
         _basic.get(_host.api_url + "/storage").then(function (data) {
-            if (data.success == true&&data.result.length>0) {
+            if (data.success == true && data.result.length > 0) {
                 $scope.storageName = data.result;
             } else {
                 swal(data.msg, "", "error");
@@ -40,24 +40,24 @@ app.controller("car_demand_controller", ["$scope", "$rootScope", "_host", "_basi
     /**
      * 存放位置联动查询--行
      */
-/*    $scope.changeStorageId = function (val) {
-        if (val) {
-            _basic.get(_host.api_url + "/storageParking?storageId=" + val).then(function (data) {
-                if (data.success == true&&data.result.length>0) {
-                    $scope.storageParking = data.result;
-                    $scope.parkingArray = _baseService.storageParking($scope.storageParking);
-                } else {
-                    swal(data.msg, "", "error");
-                }
-            });
-        }
-    },
-    // 存放位置联动查询--列
-    $scope.changeStorageRow = function (val, array) {
-        if (val) {
-            $scope.colArr = array[val - 1].col;
-        }
-    };*/
+    /*    $scope.changeStorageId = function (val) {
+            if (val) {
+                _basic.get(_host.api_url + "/storageParking?storageId=" + val).then(function (data) {
+                    if (data.success == true&&data.result.length>0) {
+                        $scope.storageParking = data.result;
+                        $scope.parkingArray = _baseService.storageParking($scope.storageParking);
+                    } else {
+                        swal(data.msg, "", "error");
+                    }
+                });
+            }
+        },
+        // 存放位置联动查询--列
+        $scope.changeStorageRow = function (val, array) {
+            if (val) {
+                $scope.colArr = array[val - 1].col;
+            }
+        };*/
 
     /**
      * 当车辆品牌变更时，车辆型号要进行联动刷新。
@@ -69,7 +69,7 @@ app.controller("car_demand_controller", ["$scope", "$rootScope", "_host", "_basi
             } else {
                 $scope.curruntId = val;
                 _basic.get(_host.api_url + "/carMake/" + val + "/carModel").then(function (data) {
-                    if (data.success == true&&data.result.length>0) {
+                    if (data.success == true && data.result.length > 0) {
                         $scope.carModelName = data.result;
                     } else {
                         swal(data.msg, "", "error")

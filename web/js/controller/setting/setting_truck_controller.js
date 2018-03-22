@@ -1,21 +1,23 @@
-// 车辆设置
+/**
+ * 主菜单：车辆设置
+ */
 app.controller("setting_truck_controller", ["$scope", "_host", "_basic", function ($scope, _host, _basic) {
     var adminId = _basic.getSession(_basic.USER_ID);
     // 打开汽车品牌
-    $scope.car_Brand_box=function ($event) {
+    $scope.car_Brand_box = function ($event) {
         $($event.target).hide();
         $(".car_Brand_box").show();
     };
     // 关闭汽车品牌
-    $scope.closeBrand=function () {
+    $scope.closeBrand = function () {
         $(".open_car_brand").show();
         $(".car_Brand_box").hide();
-        $scope.b_txt="";
+        $scope.b_txt = "";
     };
     // 汽车品牌
     $scope.searchAll = function () {
         _basic.get(_host.api_url + "/carMake/").then(function (data) {
-            if (data.success == true&&data.result.length>0) {
+            if (data.success == true && data.result.length > 0) {
                 $scope.brand = data.result;
             } else {
                 swal(data.msg, "", "error");
@@ -24,28 +26,28 @@ app.controller("setting_truck_controller", ["$scope", "_host", "_basic", functio
     };
     $scope.searchAll();
     // 显示修改汽车品牌
-    $scope.amend_brand_make = function ($event,$index) {
+    $scope.amend_brand_make = function ($event, $index) {
         $event.stopPropagation();
-        $(".brand_box"+$index).hide();
-        $(".amend_brand_box"+$index).show();
+        $(".brand_box" + $index).hide();
+        $(".amend_brand_box" + $index).show();
     };
-    $scope.amend_brand_box=function ($event) {
+    $scope.amend_brand_box = function ($event) {
         $event.stopPropagation();
     };
     // 关闭修改汽车品牌
     $scope.close_amend_brand = function ($index) {
-        $(".brand_box"+$index).show();
-        $(".amend_brand_box"+$index).hide();
+        $(".brand_box" + $index).show();
+        $(".amend_brand_box" + $index).hide();
     };
     // 修改汽车品牌
-    $scope.updateCarBrand = function (iValid,id,name,$index) {
-        if(iValid){
+    $scope.updateCarBrand = function (iValid, id, name, $index) {
+        if (iValid) {
             _basic.put(_host.api_url + "/admin/" + adminId + "/carMake/" + id, {
                 "makeName": name
             }).then(function (data) {
                 if (data.success == true) {
-                    $(".brand_box"+$index).show();
-                    $(".amend_brand_box"+$index).hide();
+                    $(".brand_box" + $index).show();
+                    $(".amend_brand_box" + $index).hide();
                 } else {
                     swal(data.msg, "", "error");
                 }
@@ -64,33 +66,33 @@ app.controller("setting_truck_controller", ["$scope", "_host", "_basic", functio
         });
     };
     // 增加汽车型号界面
-    $scope.add_car_model_box=function ($event,$index) {
+    $scope.add_car_model_box = function ($event, $index) {
         $event.stopPropagation();
         $(".open_car_brand").show();
         $($event.target).hide();
         $(".add_model_wrap").hide();
-        $(".add_model_wrap"+$index).show();
-        $scope.add_car_model_text="";
+        $(".add_model_wrap" + $index).show();
+        $scope.add_car_model_text = "";
     };
     // 关闭增加型号界面
-    $scope.close_add_car_model=function () {
+    $scope.close_add_car_model = function () {
         $(".add_model_wrap").hide();
         $(".open_car_brand").show();
-        $scope.submitted=false;
+        $scope.submitted = false;
     };
     // 增加汽车型号接口
-    $scope.addCarModel=function (iValid,id) {
-        $scope.submitted=true;
-        if(iValid){
-            _basic.post(_host.api_url + "/admin/" + adminId + "/carMake/" + id+"/carModel", {
-                modelName:$scope.add_car_model_text
+    $scope.addCarModel = function (iValid, id) {
+        $scope.submitted = true;
+        if (iValid) {
+            _basic.post(_host.api_url + "/admin/" + adminId + "/carMake/" + id + "/carModel", {
+                modelName: $scope.add_car_model_text
             }).then(function (data) {
                 if (data.success == true) {
                     $(".add_model_wrap").hide();
                     $(".open_car_brand").show();
-                    $scope.submitted=false;
+                    $scope.submitted = false;
                     $scope.search_carModel(id);
-                    swal("新增成功","","success");
+                    swal("新增成功", "", "success");
 
                 } else {
                     swal(data.msg, "", "error");
@@ -102,7 +104,7 @@ app.controller("setting_truck_controller", ["$scope", "_host", "_basic", functio
     $scope.open_car_model = function ($event, id) {
         if ($($event.target).attr("flag") == "true") {
             $scope.search_carModel(id);
-            $(".brand_box").attr("flag","true");
+            $(".brand_box").attr("flag", "true");
             $($event.target).attr("flag", "false");
         } else {
             $($event.target).attr("flag", "true");
@@ -110,11 +112,11 @@ app.controller("setting_truck_controller", ["$scope", "_host", "_basic", functio
     };
     // 修改汽车型号状态
     // 打开修改面板
-    $scope.amend_car_model=function ($index,$event) {
+    $scope.amend_car_model = function ($index, $event) {
         console.log($index);
         $($event.target).hide();
-        $(".car_model_name"+$index).removeAttr("readonly");
-        $(".amend_car_model_box"+$index).show();
+        $(".car_model_name" + $index).removeAttr("readonly");
+        $(".amend_car_model_box" + $index).show();
     };
     $scope.changeSelfBrandStatus = function (id, status, makeId) {
         if (status == 0) {
@@ -143,7 +145,7 @@ app.controller("setting_truck_controller", ["$scope", "_host", "_basic", functio
         $(".mdi-pencil" + index).show();
     };
     // 确认提交修改型号
-    $scope.amend_car_model_submit = function (id, name,index) {
+    $scope.amend_car_model_submit = function (id, name, index) {
         _basic.put(_host.api_url + "/admin/" + adminId + "/carModel/" + id, {
             modelName: name
         }).then(function (data) {
@@ -158,13 +160,13 @@ app.controller("setting_truck_controller", ["$scope", "_host", "_basic", functio
         })
     };
     // 修改汽车型号状态
-    $scope.amend_car_model_status=function (id,sta,makeId) {
+    $scope.amend_car_model_status = function (id, sta, makeId) {
         if (sta == 0) {
             sta = 1;
         } else {
             sta = 0
         }
-        _basic.put(_host.api_url + "/admin/" + adminId + "/carModel/" + id+"/modelStatus/"+sta,{}).then(function (data) {
+        _basic.put(_host.api_url + "/admin/" + adminId + "/carModel/" + id + "/modelStatus/" + sta, {}).then(function (data) {
             if (data.success == true) {
                 swal("更改状态", "", "success");
                 $scope.search_carModel(makeId);
@@ -174,14 +176,14 @@ app.controller("setting_truck_controller", ["$scope", "_host", "_basic", functio
             }
         })
     };
-    $scope.addBrand=function (iValid) {
-        if(iValid){
+    $scope.addBrand = function (iValid) {
+        if (iValid) {
             _basic.post(_host.api_url + "/admin/" + adminId + "/carMake/", {
                 makeName: $scope.b_txt
             }).then(function (data) {
                 if (data.success == true) {
                     $scope.searchAll();
-                    $scope.b_txt="";
+                    $scope.b_txt = "";
                     $(".open_car_brand").show();
                     $(".car_Brand_box").hide();
                 } else {

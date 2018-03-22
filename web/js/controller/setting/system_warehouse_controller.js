@@ -1,10 +1,11 @@
 // 仓库设置
 app.controller("system_warehouse_controller", ["$scope", "_host", "_basic", function ($scope, _host, _basic) {
     var adminId = _basic.getSession(_basic.USER_ID);
+
     // 整体查询
     function readStorgeList() {
         _basic.get(_host.api_url + "/storage").then(function (data) {
-            if (data.success == true&&data.result.length>0) {
+            if (data.success == true && data.result.length > 0) {
                 $scope.storage = data.result;
             } else {
                 swal(data.msg, "", "error");
@@ -48,7 +49,7 @@ app.controller("system_warehouse_controller", ["$scope", "_host", "_basic", func
         $(".modal").modal();
         $("#look_Storage").modal("open");
         _basic.get(_host.api_url + "/storage?storageId=" + id).then(function (data) {
-            if (data.success == true&&data.result.length>0) {
+            if (data.success == true && data.result.length > 0) {
                 $scope.selfStorage = data.result[0];
             } else {
                 swal(data.msg, "", "error");

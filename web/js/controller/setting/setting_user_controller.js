@@ -1,7 +1,7 @@
 /**
  * 主菜单：用户管理 控制器
  */
-app.controller("setting_user_controller", ["_basic","_config", "_host", "$scope", function (_basic,_config,_host, $scope) {
+app.controller("setting_user_controller", ["_basic", "_config", "_host", "$scope", function (_basic, _config, _host, $scope) {
     var adminId = _basic.getSession(_basic.USER_ID);
 
     // 部门信息列表
@@ -12,8 +12,8 @@ app.controller("setting_user_controller", ["_basic","_config", "_host", "$scope"
      * @returns {Array}
      */
     var getDepartmentInfoList = function () {
-        $scope.userInfoArray=[];
-        for(var i in userInfoItem){
+        $scope.userInfoArray = [];
+        for (var i in userInfoItem) {
             $scope.userInfoArray.push(userInfoItem[i])
         }
         return $scope.userInfoArray
@@ -25,7 +25,7 @@ app.controller("setting_user_controller", ["_basic","_config", "_host", "$scope"
      */
     var getUserInfoList = function () {
         _basic.get(_host.api_url + "/admin/" + adminId + "/user").then(function (data) {
-            if (data.success == true&&data.result.length>0) {
+            if (data.success == true && data.result.length > 0) {
                 // console.log(data)
                 $scope.operator = data.result;
 
@@ -89,7 +89,7 @@ app.controller("setting_user_controller", ["_basic","_config", "_host", "$scope"
         $(".modal").modal();
         $("#look_Operator").modal("open");
         _basic.get(_host.api_url + "/admin/" + adminId + "/user?userId=" + id).then(function (data) {
-            if (data.success == true&&data.result.length>0) {
+            if (data.success == true && data.result.length > 0) {
                 $scope.look_operation = data.result[0];
             } else {
                 swal(data.msg, "", "error");

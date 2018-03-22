@@ -1,4 +1,3 @@
-
 app.controller("data_controller", ['$rootScope', '$scope', '$location', '$q', '_basic', "_host",
     function ($rootScope, $scope, $location, $q, _basic, _host) {
         $scope.selectArray = [];

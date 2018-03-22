@@ -2,7 +2,7 @@
  * Created by ASUS on 2017/4/1.
  * TODO 没有相关的菜单入口。
  */
-app.controller("company_controller", ['$rootScope', '$scope', '_basic', '_host',  '$urlMethod', function ($rootScope, $scope, _basic, _host,  $urlMethod) {
+app.controller("company_controller", ['$rootScope', '$scope', '_basic', '_host', '$urlMethod', function ($rootScope, $scope, _basic, _host, $urlMethod) {
     var userId = _basic.getSession(_basic.USER_ID);
     // 单条公司信息
     var companyMsg;
@@ -12,7 +12,7 @@ app.controller("company_controller", ['$rootScope', '$scope', '_basic', '_host',
     var initData = function () {
         // 画面初期时，无条件查询公司信息列表
         _basic.get(_host.api_url + "/user/" + userId + "/company", {}).then(function (data) {
-            if (data.success == true&&data.result.length>0) {
+            if (data.success == true && data.result.length > 0) {
                 $scope.Company = data.result;
             } else {
                 swal(data.msg, "", "error");
@@ -20,7 +20,7 @@ app.controller("company_controller", ['$rootScope', '$scope', '_basic', '_host',
         });
         // 获取城市信息列表
         _basic.get(_host.api_url + "/user/" + userId + "/city", {}).then(function (data) {
-            if (data.success == true&&data.result.length>0) {
+            if (data.success == true && data.result.length > 0) {
                 $scope.citys = data.result;
             } else {
                 swal(data.msg, "", "error");
@@ -39,7 +39,7 @@ app.controller("company_controller", ['$rootScope', '$scope', '_basic', '_host',
             cityId: $scope.s_city
         };
         _basic.get(_host.api_url + "/user/" + userId + "/company" + $urlMethod.urlMethod(obj)).then(function (data) {
-            if (data.success == true&&data.result.length>0) {
+            if (data.success == true && data.result.length > 0) {
                 // console.log(data.result);
                 $scope.Company = data.result;
             } else {
@@ -72,7 +72,7 @@ app.controller("company_controller", ['$rootScope', '$scope', '_basic', '_host',
         $('#LookCompany').modal('open');
         // 根据公司ID，取得公司详细信息
         _basic.get(_host.api_url + "/user/" + userId + "/company?companyId=" + id, {}).then(function (data) {
-            if (data.success == true&&data.result.length>0) {
+            if (data.success == true && data.result.length > 0) {
                 $scope.company = data.result[0];
                 companyMsg = $scope.company;
                 console.log($scope.company, $scope.company.cooperation_time);
@@ -83,7 +83,7 @@ app.controller("company_controller", ['$rootScope', '$scope', '_basic', '_host',
         });
         // 头车数量
         _basic.get(_host.api_url + "/user/" + userId + "/company/" + id + "/firstCount", {}).then(function (data) {
-            if (data.success == true&&data.result.length>0) {
+            if (data.success == true && data.result.length > 0) {
                 $scope.firstCount = data.result[0].firstCount;
             } else {
                 swal(data.msg, "", "error");

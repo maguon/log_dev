@@ -2,7 +2,7 @@
  * Created by ASUS on 2017/5/5.
  * 主菜单：车辆查询 -> 仓储车辆信息 画面
  */
-app.controller("demand_Car_details_controller", [ "$state", "$stateParams", "_config", "$scope", "_host", "_basic", function ( $state, $stateParams, _config, $scope, _host, _basic) {
+app.controller("demand_Car_details_controller", ["$state", "$stateParams", "_config", "$scope", "_host", "_basic", function ($state, $stateParams, _config, $scope, _host, _basic) {
     var userId = _basic.getSession(_basic.USER_ID);
     // 通过url中的信息取得 车辆id 和 VIN码
     var val = $stateParams.id;
@@ -83,12 +83,16 @@ app.controller("demand_Car_details_controller", [ "$state", "$stateParams", "_co
 
         //
         _basic.get(_host.record_url + "/user/" + userId + "/car/" + val + "/record").then(function (data) {
-            if (data.success == true&&data.result.length>0) {
+            if (data.success == true && data.result.length > 0) {
                 $scope.operating_record = data.result[0];
                 $scope.comment = $scope.operating_record.comment;
                 $scope.storage_image = $scope.operating_record.storage_image;
                 for (var i in $scope.storage_image) {
-                    $scope.storage_imageBox.push({src: _host.file_url + '/image/' + $scope.storage_image[i].url,time:$scope.storage_image[i].timez,user:$scope.storage_image[i].name});
+                    $scope.storage_imageBox.push({
+                        src: _host.file_url + '/image/' + $scope.storage_image[i].url,
+                        time: $scope.storage_image[i].timez,
+                        user: $scope.storage_image[i].name
+                    });
                 }
             } else {
                 swal(data.msg, "", "error")
@@ -97,12 +101,12 @@ app.controller("demand_Car_details_controller", [ "$state", "$stateParams", "_co
 
         //
         _basic.get(_host.api_url + "/user/" + userId + "/car?carId=" + val + '&active=1').then(function (data) {
-            if (data.success == true&&data.result.length>0) {
+            if (data.success == true && data.result.length > 0) {
                 $scope.modelId = data.result[0].model_id;
                 $scope.self_car = data.result[0];
                 // modelID赋值
                 $scope.look_make_id = $scope.self_car.make_id,
-                $scope.look_model_id = $scope.self_car.model_id, $scope.look_create_time = moment($scope.self_car.pro_date).format('YYYY-MM-DD');
+                    $scope.look_model_id = $scope.self_car.model_id, $scope.look_create_time = moment($scope.self_car.pro_date).format('YYYY-MM-DD');
                 $scope.look_storageName = $scope.self_car.storage_name + "  " + $scope.self_car.row + "排" + $scope.self_car.col + "列";
                 // 车辆id
                 $scope.look_car_id = $scope.self_car.id;
@@ -112,4 +116,4 @@ app.controller("demand_Car_details_controller", [ "$state", "$stateParams", "_co
         })
     };
     $scope.getStorageCarInfo(val, vin);
-  }]);
+}]);
