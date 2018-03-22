@@ -87,6 +87,17 @@ adminDirective.directive("dateFilter", ["$filter", function ($filter) {
         }
     }
 }]);
+adminDirective.directive("sexChange", function () {
+    return {
+        restrict: "A",
+        link: function () {
+            $(".sexBox i").on("click", function () {
+                $(".sexBox i").removeClass("sex");
+                $(this).addClass("sex")
+            })
+        }
+    }
+});
 adminDirective.directive("addBrand", function () {
     return {
         restrict: "A",
