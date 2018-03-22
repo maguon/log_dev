@@ -1,8 +1,8 @@
 /**
  * Created by jiangsen on 2017/4/11.
  */
-Login_model.controller("common_login_view_controller", ['$rootScope','$scope','$location','$q',"_basic","$host","_config",
-    function($rootScope,$scope,$location,$q,_basic,$host,_config){
+Login_model.controller("common_login_view_controller", ['$rootScope','$scope','$location','$q',"_basic","_host","_config",
+    function($rootScope,$scope,$location,$q,_basic,_host,_config){
         $scope.username='';
         $scope.password='';
         $scope.login = function(){
@@ -10,7 +10,7 @@ Login_model.controller("common_login_view_controller", ['$rootScope','$scope','$
                 swal("账号或密码不能为空", "", "error");
             } else {
                 $(".shadeDowWrap").show();
-                _basic.post($host.api_url+"/userLogin", {
+                _basic.post(_host.api_url+"/userLogin", {
                     "mobile": $scope.username,
                     "password": $scope.password
                 }).then(function(data){

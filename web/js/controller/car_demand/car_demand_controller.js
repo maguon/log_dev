@@ -2,7 +2,7 @@
  * Created by jiangsen on 2017/5/17.
  * 主菜单：车辆查询
  */
-app.controller("car_demand_controller", ["$scope", "$rootScope", "$host", "_basic", "_config","_baseService", function ($scope, $rootScope, $host, _basic,  _config, _baseService) {
+app.controller("car_demand_controller", ["$scope", "$rootScope", "_host", "_basic", "_config","_baseService", function ($scope, $rootScope, _host, _basic,  _config, _baseService) {
     $scope.curruntId = 0;
     $scope.start = 0;
     $scope.size = 11;
@@ -15,7 +15,7 @@ app.controller("car_demand_controller", ["$scope", "$rootScope", "$host", "_basi
      * 车辆品牌列表查询，用来填充查询条件：车辆品牌
      */
     function getCarMakerList(){
-        _basic.get($host.api_url + "/carMake").then(function (data) {
+        _basic.get(_host.api_url + "/carMake").then(function (data) {
             if (data.success == true&&data.result.length>0) {
                 $scope.makecarName = data.result;
             } else {
@@ -28,7 +28,7 @@ app.controller("car_demand_controller", ["$scope", "$rootScope", "$host", "_basi
      * 仓库列表查询，用来填充查询条件：所在仓库
      */
     function getStorageList(){
-        _basic.get($host.api_url + "/storage").then(function (data) {
+        _basic.get(_host.api_url + "/storage").then(function (data) {
             if (data.success == true&&data.result.length>0) {
                 $scope.storageName = data.result;
             } else {
@@ -42,7 +42,7 @@ app.controller("car_demand_controller", ["$scope", "$rootScope", "$host", "_basi
      */
 /*    $scope.changeStorageId = function (val) {
         if (val) {
-            _basic.get($host.api_url + "/storageParking?storageId=" + val).then(function (data) {
+            _basic.get(_host.api_url + "/storageParking?storageId=" + val).then(function (data) {
                 if (data.success == true&&data.result.length>0) {
                     $scope.storageParking = data.result;
                     $scope.parkingArray = _baseService.storageParking($scope.storageParking);
@@ -68,7 +68,7 @@ app.controller("car_demand_controller", ["$scope", "$rootScope", "$host", "_basi
             if ($scope.curruntId == val) {
             } else {
                 $scope.curruntId = val;
-                _basic.get($host.api_url + "/carMake/" + val + "/carModel").then(function (data) {
+                _basic.get(_host.api_url + "/carMake/" + val + "/carModel").then(function (data) {
                     if (data.success == true&&data.result.length>0) {
                         $scope.carModelName = data.result;
                     } else {
@@ -83,7 +83,7 @@ app.controller("car_demand_controller", ["$scope", "$rootScope", "$host", "_basi
      * 根据画面输入的查询条件，进行数据查询。
      */
     function queryCarDemandData() {
-        var reqUrl = $host.api_url + "/user/" + userId + "/car?active=" + 1 + "&start=" + $scope.start + "&size=" + $scope.size
+        var reqUrl = _host.api_url + "/user/" + userId + "/car?active=" + 1 + "&start=" + $scope.start + "&size=" + $scope.size
         if ($scope.searchRelStatus != null) {
             reqUrl = reqUrl + "&relStatus=" + $scope.searchRelStatus
         }

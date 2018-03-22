@@ -1,12 +1,12 @@
 /**
  * Created by ASUS on 2017/5/5.
  */
-app.controller("storage_car_details_controller", [ "$state", "$stateParams", "_config", "_baseService", "$scope", "$host", "_basic", function ( $state, $stateParams, _config, _baseService, $scope, $host, _basic) {
+app.controller("storage_car_details_controller", [ "$state", "$stateParams", "_config", "_baseService", "$scope", "_host", "_basic", function ( $state, $stateParams, _config, _baseService, $scope, _host, _basic) {
     var userId = _basic.getSession(_basic.USER_ID);
     var val = $stateParams.id;
     var vin = $stateParams.vin;
     // 车辆品牌查询
-    _basic.get($host.api_url + "/carMake").then(function (data) {
+    _basic.get(_host.api_url + "/carMake").then(function (data) {
         if (data.success == true&&data.result.length>0) {
             $scope.makecarName = data.result;
         } else {
@@ -14,7 +14,7 @@ app.controller("storage_car_details_controller", [ "$state", "$stateParams", "_c
         }
     });
     // 车库查询
-    _basic.get($host.api_url + "/storage").then(function (data) {
+    _basic.get(_host.api_url + "/storage").then(function (data) {
         if (data.success == true&&data.result.length>0) {
             $scope.storageName = data.result;
 
@@ -56,10 +56,10 @@ app.controller("storage_car_details_controller", [ "$state", "$stateParams", "_c
             $(dom).val('');
             swal('支持的图片类型为. (jpeg,jpg,png,gif,svg,bmp,tiff)', "", "error");
         }
-        _basic.formPost($(dom).parent().parent(), $host.file_url + '/user/' + userId + '/image?imageType=4', function (data) {
+        _basic.formPost($(dom).parent().parent(), _host.file_url + '/user/' + userId + '/image?imageType=4', function (data) {
             if (data.success) {
                 var imageId = data.imageId;
-                _basic.post($host.record_url + "/car/" + $scope.Picture_carId + "/vin/" + $scope.vin + "/storageImage", {
+                _basic.post(_host.record_url + "/car/" + $scope.Picture_carId + "/vin/" + $scope.vin + "/storageImage", {
                     "username": _basic.getSession(_basic.USER_NAME),
                     "userId": userId,
                     "userType": _basic.getSession(_basic.USER_TYPE),
@@ -72,8 +72,8 @@ app.controller("storage_car_details_controller", [ "$state", "$stateParams", "_c
                             viewer.destroy();
                         }
                         var nowDate=moment(new Date()).format("YYYY-DD-MM hh:ss");
-                        $scope.storage_image_i.push($host.file_url + '/image/' + imageId);
-                        $scope.storage_imageBox.push({src: $host.file_url + '/image/' + imageId,record_id:$scope._id,time:nowDate,user:_basic.getSession(_basic.USER_NAME)});
+                        $scope.storage_image_i.push(_host.file_url + '/image/' + imageId);
+                        $scope.storage_imageBox.push({src: _host.file_url + '/image/' + imageId,record_id:$scope._id,time:nowDate,user:_basic.getSession(_basic.USER_NAME)});
                     }
                 });
             } else {
@@ -85,7 +85,7 @@ app.controller("storage_car_details_controller", [ "$state", "$stateParams", "_c
     };
     // 存放位置联动查询--行
     $scope.changeStorageId = function (val) {
-        _basic.get($host.api_url + "/storageParking?storageId=" + val).then(function (data) {
+        _basic.get(_host.api_url + "/storageParking?storageId=" + val).then(function (data) {
             if (data.success == true&&data.result.length>0) {
                 $scope.storageParking = data.result;
                 $scope.parkingArray =  _baseService.storageParking($scope.storageParking);
@@ -103,7 +103,7 @@ app.controller("storage_car_details_controller", [ "$state", "$stateParams", "_c
         if ($scope.curruntId == val) {
         } else {
             $scope.curruntId = val;
-            _basic.get($host.api_url + "/carMake/" + val + "/carModel").then(function (data) {
+            _basic.get(_host.api_url + "/carMake/" + val + "/carModel").then(function (data) {
                 if (data.success == true&&data.result.length>0) {
                     $scope.carModelName = data.result;
                 } else {
@@ -129,7 +129,7 @@ app.controller("storage_car_details_controller", [ "$state", "$stateParams", "_c
                 closeOnConfirm: false
             },
             function () {
-                _basic.put($host.api_url + "/user/" + userId + "/carStorageRel/" + rel_id + "/relStatus/" + relSta, {
+                _basic.put(_host.api_url + "/user/" + userId + "/carStorageRel/" + rel_id + "/relStatus/" + relSta, {
                     parkingId: p_id,
                     storageId: s_id,
                     carId: car_id
@@ -149,7 +149,7 @@ app.controller("storage_car_details_controller", [ "$state", "$stateParams", "_c
         $scope.now_row = row;
         $scope.now_col = col;
         $scope.move_carId = id;
-        _basic.get($host.api_url + "/storageParking?storageId=" + val).then(function (data) {
+        _basic.get(_host.api_url + "/storageParking?storageId=" + val).then(function (data) {
             if (data.success == true&&data.result.length>0) {
                 $scope.self_storageParking = data.result;
                 $scope.garageParkingArray = _baseService.storageParking($scope.self_storageParking);
@@ -199,21 +199,21 @@ app.controller("storage_car_details_controller", [ "$state", "$stateParams", "_c
         $("#look_msg").show();
         $scope.Picture_carId = val;
         $scope.vin = vin;
-        _basic.get($host.record_url + "/user/" + userId + "/car/" + val + "/record").then(function (data) {
+        _basic.get(_host.record_url + "/user/" + userId + "/car/" + val + "/record").then(function (data) {
             if (data.success == true&&data.result.length>0) {
                 $scope.operating_record = data.result[0];
                 $scope.comment = $scope.operating_record.comment;
                 $scope.storage_image = $scope.operating_record.storage_image;
                 $scope.record_id=$scope.operating_record._id;
                 for (var i in $scope.storage_image) {
-                    $scope.storage_image_i.push($host.file_url + '/image/' + $scope.storage_image[i].url);
-                    $scope.storage_imageBox.push({src: $host.file_url + '/image/' + $scope.storage_image[i].url,record_id:$scope.record_id,time:$scope.storage_image[i].timez,user:$scope.storage_image[i].name});
+                    $scope.storage_image_i.push(_host.file_url + '/image/' + $scope.storage_image[i].url);
+                    $scope.storage_imageBox.push({src: _host.file_url + '/image/' + $scope.storage_image[i].url,record_id:$scope.record_id,time:$scope.storage_image[i].timez,user:$scope.storage_image[i].name});
                 }
             } else {
                 swal(data.msg, "", "error")
             }
         });
-        _basic.get($host.api_url + "/user/" + userId + "/car?carId=" + val + '&active=1').then(function (data) {
+        _basic.get(_host.api_url + "/user/" + userId + "/car?carId=" + val + '&active=1').then(function (data) {
             if (data.success == true && data.result.length>0) {
                 $scope.modelId = data.result[0].model_id;
                 $scope.self_car = data.result[0];
@@ -249,7 +249,7 @@ app.controller("storage_car_details_controller", [ "$state", "$stateParams", "_c
             function () {
                 var url_array=src.split("/");
                 var url=url_array[url_array.length-1];
-                _basic.delete($host.record_url+"/user/"+userId+"/record/"+record_id+"/image/"+url).then(function (data) {
+                _basic.delete(_host.record_url+"/user/"+userId+"/record/"+record_id+"/image/"+url).then(function (data) {
                     if(data.success==true){
                         var i=$scope.storage_image_i.indexOf(src);
                         // console.log(i);
@@ -280,12 +280,12 @@ app.controller("storage_car_details_controller", [ "$state", "$stateParams", "_c
         };
         if (isValid) {
             // 修改计划出库时间
-            _basic.put($host.api_url + "/user/" + userId + "/carStorageRel/" + r_id + "/planOutTime", {
+            _basic.put(_host.api_url + "/user/" + userId + "/carStorageRel/" + r_id + "/planOutTime", {
                 "planOutTime": $scope.self_car.plan_out_time
             }).then(function (data) {
             });
             // 修改仓库信息
-            _basic.put($host.api_url + "/user/" + userId + "/car/" + id, _basic.removeNullProps(obj)).then(function (data) {
+            _basic.put(_host.api_url + "/user/" + userId + "/car/" + id, _basic.removeNullProps(obj)).then(function (data) {
                 if (data.success == true) {
                     swal("修改成功", "", "success");
                 } else {
@@ -299,7 +299,7 @@ app.controller("storage_car_details_controller", [ "$state", "$stateParams", "_c
         if ($(".moveBox").attr("flag") == 'true') {
             $(".moveBox").show();
             $(".moveBox").attr("flag", false);
-            _basic.get($host.api_url + "/storageParking?storageId=" + val).then(function (data) {
+            _basic.get(_host.api_url + "/storageParking?storageId=" + val).then(function (data) {
                 if (data.success == true&&data.result.length>0) {
                     $scope.move_storageParking = data.result;
                     $scope.moveParkingArray =  _baseService.storageParking($scope.move_storageParking);
@@ -328,7 +328,7 @@ app.controller("storage_car_details_controller", [ "$state", "$stateParams", "_c
             },
             function () {
                 if (parkingId != null) {
-                    _basic.put($host.api_url + "/user/" + userId + "/storageParking/" + parkingId, {
+                    _basic.put(_host.api_url + "/user/" + userId + "/storageParking/" + parkingId, {
                         carId: $scope.move_carId
                     }).then(function (data) {
                         if (data.success == true) {
@@ -356,7 +356,7 @@ app.controller("storage_car_details_controller", [ "$state", "$stateParams", "_c
                 closeOnConfirm: false
             },
             function () {
-                _basic.put($host.api_url + "/user/" + userId + "/carStorageRel/" + rel_id + "/relStatus/" + 2, {
+                _basic.put(_host.api_url + "/user/" + userId + "/carStorageRel/" + rel_id + "/relStatus/" + 2, {
                     parkingId: p_id,
                     storageId: s_id,
                     carId: car_id
