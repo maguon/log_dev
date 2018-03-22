@@ -26,7 +26,17 @@ app.config(['$stateProvider',"$urlRouterProvider",function($stateProvider,$urlRo
             templateUrl: "/view/storage/storage_statistics.html",
             controller:"storage_statistics_controller"
         })
-        .state("storageCar_details", {
+        .state("storage_setting_car", {
+            url:"/storage_setting_car",
+            templateUrl: "/view/storage/storage_setting_car.html",
+            controller:"storage_setting_car_controller"
+        })
+        .state("storageCar_details_", {
+            url:"/storageCar_details/{id}/vin/{vin}?from",
+            templateUrl: "/view/storage/storage_details.html",
+            controller:"storage_car_details_controller"
+        })
+        /*.state("storageCar_details", {
             url:"/storageCar_details/{id}/vin/{vin}/_form/{_form}?from",
             templateUrl: "/view/storage/storage_details.html",
             controller:"storage_car_details_controller"
@@ -35,7 +45,7 @@ app.config(['$stateProvider',"$urlRouterProvider",function($stateProvider,$urlRo
             url:"/storageCar_details/{id}/vin/{vin}?from",
             templateUrl: "/view/storage/storage_details.html",
             controller:"storage_car_details_controller"
-        })
+        })*/
         .state("user_info",{
             url:"/user_info",
             templateUrl: "/view/user/user_info.html",

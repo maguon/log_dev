@@ -1,8 +1,7 @@
 /**
  * Created by ASUS on 2017/5/12.
  */
-var storage_setting_car_controller = angular.module("storage_setting_car_controller", []);
-storage_setting_car_controller.controller("storage_setting_car_controller", ["$scope", "$host", "_basic", function ($scope, $host, _basic) {
+app.controller("storage_setting_car_controller", ["$scope", "$host", "_basic", function ($scope, $host, _basic) {
 
     var userId = _basic.getSession(_basic.USER_ID);
     // 打开汽车品牌
@@ -65,10 +64,8 @@ storage_setting_car_controller.controller("storage_setting_car_controller", ["$s
 
     $scope.search_carModel = function (id) {
         _basic.get($host.api_url + "/carMake/" + id + "/carModel").then(function (data) {
-            if (data.success == true&&data.result.length>0) {
-                // console.log(data.result);
+            if (data.success == true) {
                 $scope.brand_model = data.result;
-
             } else {
                 swal(data.msg, "", "error");
             }
