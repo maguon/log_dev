@@ -2,7 +2,7 @@
  * Created by ASUS on 2017/4/6.
  */
 var baseService = angular.module("baseService", []);
-baseService.factory('baseService',function(){
+baseService.factory('_baseService',function(){
     var _this = {};
     _this.urlMethod = function (obj) {
         var str = "?";

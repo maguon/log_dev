@@ -1,7 +1,7 @@
 /**
  * Created by ASUS on 2017/5/4.
  */
-app.controller("storage_car_controller", ["$scope", "$rootScope", "$stateParams", "$host", "_basic", "_config", "baseService",function ($scope, $rootScope, $stateParams, $host, _basic,  _config ,baseService) {
+app.controller("storage_car_controller", ["$scope", "$rootScope", "$stateParams", "$host", "_basic", "_config", "_baseService",function ($scope, $rootScope, $stateParams, $host, _basic,  _config ,_baseService) {
     $scope.curruntId = 0;
     $scope.start = 0;
     $scope.size = 11;
@@ -184,7 +184,7 @@ app.controller("storage_car_controller", ["$scope", "$rootScope", "$stateParams"
                 if (data.success == true&&data.result.length>0) {
                     $scope.storageParking = data.result;
 
-                    $scope.parkingArray =  baseService.storageParking($scope.storageParking);
+                    $scope.parkingArray =  _baseService.storageParking($scope.storageParking);
                     // console.log($scope.parkingArray)
 
                 } else {
@@ -307,7 +307,7 @@ app.controller("storage_car_controller", ["$scope", "$rootScope", "$stateParams"
         _basic.get($host.api_url + "/storageParking?storageId=" + val).then(function (data) {
             if (data.success == true&&data.result.length>0) {
                 $scope.self_storageParking = data.result;
-                $scope.garageParkingArray =baseService.storageParking($scope.self_storageParking);
+                $scope.garageParkingArray =_baseService.storageParking($scope.self_storageParking);
                 $scope.ageParkingCol = $scope.garageParkingArray[0].col
             }
         })
@@ -350,7 +350,7 @@ app.controller("storage_car_controller", ["$scope", "$rootScope", "$stateParams"
             _basic.get($host.api_url + "/storageParking?storageId=" + val).then(function (data) {
                 if (data.success == true&&data.result.length>0) {
                     $scope.move_storageParking = data.result;
-                    $scope.moveParkingArray = baseService.storageParking($scope.move_storageParking);
+                    $scope.moveParkingArray = _baseService.storageParking($scope.move_storageParking);
                 }
             })
         } else {
