@@ -1,7 +1,7 @@
 /**
  * Created by ASUS on 2017/5/4.
  */
-app.controller("storage_store_controller", ["$scope", "$host", "$stateParams", "_basic", "$state", "$rootScope", "_config",  function ($scope, $host, $stateParams, _basic, $state, $rootScope, _config ) {
+app.controller("storage_store_controller", ["$scope", "_host", "$stateParams", "_basic", "$state", "$rootScope", "_config",  function ($scope, _host, $stateParams, _basic, $state, $rootScope, _config ) {
     var userId = _basic.getSession(_basic.USER_ID);
     var data = new Date();
     var now_date = moment(data).format('YYYYMMDD');
@@ -11,7 +11,7 @@ app.controller("storage_store_controller", ["$scope", "$host", "$stateParams", "
             dateEnd: now_date
         };
 
-        _basic.get($host.api_url + "/storageDate?" + _basic.objToUrl(obj)).then(function (data) {
+        _basic.get(_host.api_url + "/storageDate?" + _basic.objToUrl(obj)).then(function (data) {
             if (data.success == true&&data.result.length>0) {
                 $scope.store_storage = data.result;
             }
@@ -21,7 +21,7 @@ app.controller("storage_store_controller", ["$scope", "$host", "$stateParams", "
     searchAll();
 
     // 车辆品牌查询
-    _basic.get($host.api_url + "/carMake").then(function (data) {
+    _basic.get(_host.api_url + "/carMake").then(function (data) {
         if (data.success == true&&data.result.length>0) {
             $scope.makecarName = data.result;
         } else {
@@ -37,7 +37,7 @@ app.controller("storage_store_controller", ["$scope", "$host", "$stateParams", "
 
         } else {
             $scope.curruntId = val;
-            _basic.get($host.api_url + "/carMake/" + val + "/carModel").then(function (data) {
+            _basic.get(_host.api_url + "/carMake/" + val + "/carModel").then(function (data) {
                 if (data.success == true&&data.result.length>0) {
                     $scope.carModelName = data.result;
 
@@ -54,7 +54,7 @@ app.controller("storage_store_controller", ["$scope", "$host", "$stateParams", "
 
     // 存放位置联动查询--行
     $scope.changeStorageId = function (val) {
-        _basic.get($host.api_url + "/storageParking?storageId=" + val).then(function (data) {
+        _basic.get(_host.api_url + "/storageParking?storageId=" + val).then(function (data) {
             if (data.success == true&&data.result.length>0) {
                 $scope.storageParking = data.result;
 
@@ -74,7 +74,7 @@ app.controller("storage_store_controller", ["$scope", "$host", "$stateParams", "
         };
     $scope.new_garage_parking = function (storage_name, storage_id, row, col, p_id) {
         // 车辆品牌查询
-        _basic.get($host.api_url + "/carMake").then(function (data) {
+        _basic.get(_host.api_url + "/carMake").then(function (data) {
             if (data.success == true&&data.result.length>0) {
                 $scope.makecarName = data.result;
                 // console.log($scope.makecarName)
@@ -138,7 +138,7 @@ app.controller("storage_store_controller", ["$scope", "$host", "$stateParams", "
                 "planOutTime": $scope.plan_out_time
             };
             console.log(obj_car);
-            _basic.post($host.api_url + "/user/" + userId + "/carStorageRel", obj_car).then(function (data) {
+            _basic.post(_host.api_url + "/user/" + userId + "/carStorageRel", obj_car).then(function (data) {
                 if (data.success == true) {
                     $('ul.tabs li a').removeClass("active");
                     $(".tab_box").removeClass("active");
@@ -180,19 +180,19 @@ app.controller("storage_store_controller", ["$scope", "$host", "$stateParams", "
             $(dom).val('');
             swal('支持的图片类型为. (jpeg,jpg,png,gif,svg,bmp,tiff)', "", "error");
         }
-        _basic.formPost($(dom).parent().parent(), $host.file_url + '/user/' + userId + '/image?imageType=4', function (data) {
+        _basic.formPost($(dom).parent().parent(), _host.file_url + '/user/' + userId + '/image?imageType=4', function (data) {
 
             if (data.success) {
                 console.log(data, $scope.Picture_carId);
                 var imageId = data.imageId;
-                _basic.post($host.record_url + "/car/" + $scope.Picture_carId + "/vin/" + $scope.vin + "/storageImage", {
+                _basic.post(_host.record_url + "/car/" + $scope.Picture_carId + "/vin/" + $scope.vin + "/storageImage", {
                     "username": _basic.getSession(_basic.USER_NAME),
                     "userId": userId,
                     "userType": _basic.getSession(_basic.USER_TYPE),
                     "url": imageId
                 }).then(function (data) {
                     if (data.success == true) {
-                        $scope.imgArr.push({src: $host.file_url + '/image/' + imageId});
+                        $scope.imgArr.push({src: _host.file_url + '/image/' + imageId});
                         // console.log($scope.imgArr);
                     }
                 });

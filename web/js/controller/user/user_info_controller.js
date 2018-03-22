@@ -1,11 +1,11 @@
 /**
  * Created by ASUS on 2017/5/16.
  */
-app.controller("user_info_controller",["$scope","_basic","_config","$host",function ($scope,_basic,_config,$host) {
+app.controller("user_info_controller",["$scope","_basic","_config","_host",function ($scope,_basic,_config,_host) {
     var userInfoItem=_config.userTypes;
     $scope.userInfoArray=[];
     function userInfo() {
-        _basic.get($host.api_url+"/user").then(function (data) {
+        _basic.get(_host.api_url+"/user").then(function (data) {
             if(data.success==true){
                 $scope.userInfoList=data.result;
                 for(var i in userInfoItem){
