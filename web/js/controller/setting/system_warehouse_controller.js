@@ -1,9 +1,13 @@
-// 仓库设置
+/**
+ * 主菜单：仓库设置 控制器
+ */
 app.controller("system_warehouse_controller", ["$scope", "_host", "_basic", function ($scope, _host, _basic) {
     var adminId = _basic.getSession(_basic.USER_ID);
 
-    // 整体查询
-    function readStorgeList() {
+    /**
+     * 取得仓库信息列表。
+     */
+    function getStorgeList() {
         _basic.get(_host.api_url + "/storage").then(function (data) {
             if (data.success == true && data.result.length > 0) {
                 $scope.storage = data.result;
@@ -12,8 +16,12 @@ app.controller("system_warehouse_controller", ["$scope", "_host", "_basic", func
             }
         });
     };
-    readStorgeList();
-    $scope.addNewStorageItem = function () {
+    getStorgeList();
+
+    /**
+     * 显示追加新仓库画面。
+     */
+    $scope.showNewStoragePage = function () {
         $scope.submitted = false;
         $scope.newStorageName = "";
         $scope.newStorageCol = "";
@@ -23,8 +31,12 @@ app.controller("system_warehouse_controller", ["$scope", "_host", "_basic", func
         $("#newStorage").modal("open");
 
     };
-    // 新增
-    $scope.addNewStorageForm = function (isValid) {
+
+    /**
+     * 创建新仓库。
+     * @param isValid
+     */
+    $scope.addStorageInfo = function (isValid) {
         $scope.submitted = true;
         if (isValid) {
             var obj = {
@@ -36,7 +48,7 @@ app.controller("system_warehouse_controller", ["$scope", "_host", "_basic", func
             _basic.post(_host.api_url + "/admin/" + adminId + "/storage", obj).then(function (data) {
                 if (data.success == true) {
                     swal("新增成功", "", "success");
-                    readStorgeList();
+                    getStorgeList();
                     $("#newStorage").modal("close");
                 } else {
                     swal(data.msg, "", "error");
@@ -44,8 +56,12 @@ app.controller("system_warehouse_controller", ["$scope", "_host", "_basic", func
             })
         }
     };
-    // 查看
-    $scope.lookStorage = function (id) {
+
+    /**
+     * 根据仓库ID取得仓库信息，并显示到详情画面。
+     * @param id
+     */
+    $scope.getStorageInfo = function (id) {
         $(".modal").modal();
         $("#look_Storage").modal("open");
         _basic.get(_host.api_url + "/storage?storageId=" + id).then(function (data) {
@@ -56,8 +72,13 @@ app.controller("system_warehouse_controller", ["$scope", "_host", "_basic", func
             }
         })
     };
-    // 修改
-    $scope.lookStorageForm = function (isValid, id) {
+
+    /**
+     * 根据仓库ID更新仓库信息，并刷新一览画面。
+     * @param isValid
+     * @param id
+     */
+    $scope.updateStorageInfo = function (isValid, id) {
         $scope.submitted = true;
         if (isValid) {
             var obj = {
@@ -67,7 +88,7 @@ app.controller("system_warehouse_controller", ["$scope", "_host", "_basic", func
             _basic.put(_host.api_url + "/admin/" + adminId + "/storage/" + id, obj).then(function (data) {
                 if (data.success == true) {
                     swal("修改成功", "", "success");
-                    readStorgeList();
+                    getStorgeList();
                     $("#look_Storage").modal("close");
                 } else {
                     swal(data.msg, "", "error");
@@ -75,7 +96,12 @@ app.controller("system_warehouse_controller", ["$scope", "_host", "_basic", func
             })
         }
     };
-    // 修改仓库运营状态
+
+    /**
+     * 根据仓库ID修改仓库运营状态，并刷新一览画面。
+     * @param id
+     * @param status
+     */
     $scope.changeStorageStatus = function (id, status) {
         if (status == 0) {
             // str="启用";
@@ -87,10 +113,10 @@ app.controller("system_warehouse_controller", ["$scope", "_host", "_basic", func
         _basic.put(_host.api_url + "/admin/" + adminId + "/storage/" + id + "/storageStatus/" + status, {}).then(function (data) {
             if (data.success == true) {
                 swal("修改成功", "", "success");
-                readStorgeList();
+                getStorgeList();
             } else {
                 swal(data.msg, "", "error");
-                readStorgeList();
+                getStorgeList();
             }
         })
     }
