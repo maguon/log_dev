@@ -3,13 +3,13 @@
  */
 app.controller("storage_statistics_controller", ['$rootScope', '$scope', "_host", '$location', '$q', "_basic", function ($rootScope, $scope, _host, $location, $q, _basic) {
     var date = new Date();
-    var month_size = 12;
-    var day_size = 30;
+    var monthSize = 12;
+    var daySize = 30;
     var now_date = moment(date).format('YYYYMMDD');
     var day;
     var month;
     // 入库每日统计
-    var day_date_array = [
+    var dayDateArray = [
         {
             name: "入库统计",
             data: [],
@@ -21,34 +21,37 @@ app.controller("storage_statistics_controller", ['$rootScope', '$scope', "_host"
         }
     ];
     // 入库每月统计
-    var month_date_array = [{
+    var monthDateArray = [
+        {
         name: "入库统计",
         data: [],
         color: "#4dd0e1"
-    }, {
+        },
+        {
         name: "出库统计",
         data: [],
         color: "#ff5252"
-    }];
-    $scope.change_statistics = function () {
-        searchAll();
+        }
+    ];
+    $scope.changeStatistics = function () {
+        getAllStorgeStatistics();
     };
-    var searchAll = function () {
+    var getAllStorgeStatistics = function () {
         day = [];
         month = [];
-        day_date_array[0].data = [];
-        day_date_array[1].data = [];
-        month_date_array[0].data = [];
-        month_date_array[1].data = [];
+        dayDateArray[0].data = [];
+        dayDateArray[1].data = [];
+        monthDateArray[0].data = [];
+        monthDateArray[1].data = [];
         // 月份数据读取
-        _basic.get(_host.api_url + "/storageTotalMonth?storageId=" + $scope.storage_id.id + "&start=0&size=" + month_size).then(function (data) {
-            if (data.success == true&&data.result.length>0) {
+        _basic.get(_host.api_url + "/storageTotalMonth?storageId=" + $scope.storageId.id + "&start=0&size=" + monthSize).then(function (data) {
+            if (data.success == true) {
                 for (var i in data.result) {
                     month.push(data.result[data.result.length - 1 - i].y_month);
-                    month_date_array[0].data.push(data.result[data.result.length - 1 - i].total_imports);
-                    month_date_array[1].data.push(data.result[data.result.length - 1 - i].total_exports)
+                    monthDateArray[0].data.push(data.result[data.result.length - 1 - i].total_imports);
+                    monthDateArray[1].data.push(data.result[data.result.length - 1 - i].total_exports)
                 }
-                $("#statistics_month").highcharts({
+                $("#statisticsMonth").highcharts({
                     title: {
                         text: '仓储统计(月)',
                         align: "left",
@@ -87,20 +90,20 @@ app.controller("storage_statistics_controller", ['$rootScope', '$scope', "_host"
                         verticalAlign: 'middle',
                         borderWidth: 0
                     },
-                    series: month_date_array
+                    series: monthDateArray
                 });
             }
         });
         // 近几日查询
-        _basic.get(_host.api_url + "/storageTotalDay?storageId=" + $scope.storage_id.id + "&start=0&size=" + day_size).then(function (data) {
+        _basic.get(_host.api_url + "/storageTotalDay?storageId=" + $scope.storageId.id + "&start=0&size=" + daySize).then(function (data) {
             if (data.success == true&&data.result.length>0) {
                 for (var i in data.result) {
                     var day_filter = data.result[data.result.length - 1 - i].date_id.toString().substr(4, 4);
                     day.push(day_filter)
-                    day_date_array[0].data.push(data.result[data.result.length - 1 - i].total_imports);
-                    day_date_array[1].data.push(data.result[data.result.length - 1 - i].total_exports)
+                    dayDateArray[0].data.push(data.result[data.result.length - 1 - i].total_imports);
+                    dayDateArray[1].data.push(data.result[data.result.length - 1 - i].total_exports)
                 }
-                $("#statistics_day").highcharts({
+                $("#statisticsDay").highcharts({
                     title: {
                         text: '仓储统计(日)',
                         align: "left",
@@ -138,7 +141,7 @@ app.controller("storage_statistics_controller", ['$rootScope', '$scope', "_host"
                         verticalAlign: 'middle',
                         borderWidth: 0
                     },
-                    series: day_date_array
+                    series: dayDateArray
                 });
             }
         });
@@ -147,8 +150,8 @@ app.controller("storage_statistics_controller", ['$rootScope', '$scope', "_host"
     _basic.get(_host.api_url + "/storage").then(function (data) {
         if (data.success == true&&data.result.length>0) {
             $scope.storageName = data.result;
-            $scope.storage_id = $scope.storageName[0];
-            searchAll();
+            $scope.storageId = $scope.storageName[0];
+            getAllStorgeStatistics();
         } else {
             swal(data.msg, "", "error");
         }

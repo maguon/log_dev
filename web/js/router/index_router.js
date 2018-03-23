@@ -9,7 +9,7 @@ app.config(['$stateProvider',"$urlRouterProvider",function($stateProvider,$urlRo
         })
         .state("refuel.oilMass", {
             url: "/refuel",  //路由路径
-            templateUrl: "/view/car/refuel.html", //路由填充的模板
+            templateUrl: "/view/car/refuel.html" //路由填充的模板
         })
         .state("data", {
             url: "/data",
@@ -70,7 +70,7 @@ app.config(['$stateProvider',"$urlRouterProvider",function($stateProvider,$urlRo
         })
         .state("storageCar_details_", {
             url:"/storageCar_details/{id}/vin/{vin}?from",
-            templateUrl: "/view/storage/storage_details.html",
+            templateUrl: "/view/storage/storage_car_details.html",
             controller:"storage_car_details_controller"
         })
         .state("storage_car_map", {

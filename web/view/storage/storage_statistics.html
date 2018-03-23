@@ -2,14 +2,14 @@
     <div style="width: 95%;margin: 0 auto">
         <div class="row z-depth-2">
             <div class="col s12 blue-grey input-field lighten-4  bold grey-text text-darken-1   statisticsTitle no-mp">
-                <select class="col s2 grey-text text-darken-1  " material-select watch name="login_storage_name" ng-change="change_statistics()" ng-options="storageBox.storage_name for storageBox in storageName|filter:{storage_status:'1'}" ng-model="storage_id" required>
+                <select class="col s2 grey-text text-darken-1  " material-select watch name="login_storage_name" ng-change="changeStatistics()" ng-options="storageBox.storage_name for storageBox in storageName|filter:{storage_status:'1'}" ng-model="storageId" required>
                     <option value=""  selected>请选择</option>
                 </select>
             </div>
             <div class="col s12" >
-                <div class="col s6 statisticsContent" id="statistics_month" >
+                <div class="col s6 statisticsContent" id="statisticsMonth" >
                 </div>
-                <div class="col s6 statisticsContent" id="statistics_day" >
+                <div class="col s6 statisticsContent" id="statisticsDay" >
                 </div>
             </div>
         </div>
