@@ -1,3 +1,4 @@
+<!--主菜单：仓储管理-->
 <div class="row homeWrap">
     <div class="row ">
         <div class="col s3 homeWrapList ">
@@ -11,7 +12,7 @@
                     <div class=" white-text text-lighten-2 left-align">
                         仓储总车位
                     </div>
-                    <h5 ng-bind="storage_allStorage " class="right-align">00</h5>
+                    <h5 ng-bind="storageAllStorage " class="right-align"></h5>
                 </div>
             </div>
         </div>
@@ -26,7 +27,7 @@
                     <div class=" white-text text-lighten-2 left-align">
                         库存总车辆
                     </div>
-                    <h5 ng-bind="storage_index_count.sumBalance" class="right-align"></h5>
+                    <h5 ng-bind="storageIndexCount.sumBalance" class="right-align"></h5>
                 </div>
             </div>
         </div>
@@ -41,7 +42,7 @@
                     <div class="white-text text-lighten-2 left-align">
                         今日入库
                     </div>
-                    <h5 ng-bind="storage_index_count.sumImports" class="right-align"></h5>
+                    <h5 ng-bind="storageIndexCount.sumImports" class="right-align"></h5>
                 </div>
             </div>
         </div>
@@ -56,13 +57,14 @@
                     <div class=" white-text text-lighten-2 left-align">
                         今日出库
                     </div>
-                    <h5 ng-bind="storage_index_count.sumExports" class="right-align"></h5>
+                    <h5 ng-bind="storageIndexCount.sumExports" class="right-align"></h5>
                 </div>
             </div>
         </div>
     </div>
+    <!--仓储站详情-->
     <div class="row">
-        <div class="col s3 storage_detailsList " ng-repeat="el in storage_index_list">
+        <div class="col s3 storage_detailsList " ng-repeat="el in storageIndexList">
             <div ng-if="el.storage_status==1" class="storage_details white z-depth-2">
                 <div class="s_d_data light-blue-text text-accent-3 valign-wrapper">
                     <div class="col s6 ">

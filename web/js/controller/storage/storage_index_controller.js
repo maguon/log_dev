@@ -1,22 +1,22 @@
 app.controller("storage_index_controller", ['$rootScope', '$scope', "_host", '$location', '$q', "_basic",
     function ($rootScope, $scope, _host, $location, $q, _basic) {
         var date = new Date();
-        var now_date = moment(date).format('YYYYMMDD');
-        $scope.storage_allStorage = 0;
-        _basic.get(_host.api_url + "/storageCount?dateStart=" + now_date + "&dateEnd=" + now_date).then(function (data) {
+        var nowDate = moment(date).format('YYYYMMDD');
+        $scope.storageAllStorage = 0;
+        _basic.get(_host.api_url + "/storageCount?dateStart=" + nowDate + "&dateEnd=" + nowDate).then(function (data) {
             if (data.success == true&&data.result.length>0) {
-                $scope.storage_index_count = data.result[0];
+                $scope.storageIndexCount = data.result[0];
             } else {
                 swal(data.msg, "", "error");
             }
         });
-        _basic.get(_host.api_url + "/storageDate?dateStart=" + now_date + "&dateEnd=" + now_date).then(function (data) {
+        _basic.get(_host.api_url + "/storageDate?dateStart=" + nowDate + "&dateEnd=" + nowDate).then(function (data) {
             if (data.success == true) {
-                $scope.storage_index_list = data.result;
-                for (var i in $scope.storage_index_list) {
-                    $scope.storage_allStorage = $scope.storage_allStorage + $scope.storage_index_list[i].col * $scope.storage_index_list[i].row
+                $scope.storageIndexList = data.result;
+                for (var i in $scope.storageIndexList) {
+                    $scope.storageAllStorage = $scope.storageAllStorage + $scope.storageIndexList[i].col * $scope.storageIndexList[i].row
                 }
-                return $scope.storage_allStorage;
+                return $scope.storageAllStorage;
             } else {
                 swal(data.msg, "", "error");
             }
