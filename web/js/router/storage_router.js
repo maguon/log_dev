@@ -33,17 +33,17 @@ app.config(['$stateProvider',"$urlRouterProvider",function($stateProvider,$urlRo
         })
         .state("storageCar_details_", {
             url:"/storageCar_details/{id}/vin/{vin}?from",
-            templateUrl: "/view/storage/storage_details.html",
+            templateUrl: "/view/storage/storage_car_details.html",
             controller:"storage_car_details_controller"
         })
         /*.state("storageCar_details", {
             url:"/storageCar_details/{id}/vin/{vin}/_form/{_form}?from",
-            templateUrl: "/view/storage/storage_details.html",
+            templateUrl: "/view/storage/storage_car_details.html",
             controller:"storage_car_details_controller"
         })
         .state("storageCar_details_", {
             url:"/storageCar_details/{id}/vin/{vin}?from",
-            templateUrl: "/view/storage/storage_details.html",
+            templateUrl: "/view/storage/storage_car_details.html",
             controller:"storage_car_details_controller"
         })*/
         .state("user_info",{
