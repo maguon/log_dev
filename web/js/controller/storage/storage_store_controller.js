@@ -169,12 +169,10 @@ app.controller("storage_store_controller", ["$scope", "_host", "$stateParams", "
             if (re.test(max_size_str)) {
                 max_size = parseInt(max_size_str.substring(0, max_size_str.length - 1)) * 1024 * 1024;
             }
-
             if ($(dom)[0].files[0].size > max_size) {
                 swal('图片文件最大: ' + max_size_str, "", "error");
                 return false;
             }
-
         }
         else if (filename && filename.length > 0) {
             $(dom).val('');
