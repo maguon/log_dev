@@ -2,8 +2,8 @@ app.controller("storage_calendar_controller", ["$scope", "_host", "_basic", func
     var date = new Date();
     var now_date = moment(date).format('YYYYMMDD');
     var month = date.getMonth() + 1;
-    $scope.today_month = date.getFullYear() + "年" + month + "月";
-    $scope.today_d = date.getDate();
+    $scope.todayMonth = date.getFullYear() + "年" + month + "月";
+    $scope.todayDay = date.getDate();
     var weekday = new Array(7);
     weekday[0] = "Sunday";
     weekday[1] = "Monday";
@@ -12,19 +12,19 @@ app.controller("storage_calendar_controller", ["$scope", "_host", "_basic", func
     weekday[4] = "Thursday";
     weekday[5] = "Friday";
     weekday[6] = "Saturday";
-    $scope.today_week = weekday[date.getDay()];
+    $scope.todayWeek = weekday[date.getDay()];
     _basic.get(_host.api_url + "/storageDate" + "?dateStart=" + now_date + "&dateEnd=" + now_date).then(function (data) {
         if (data.success == true&&data.result.length>0) {
-            $scope.store_storage = data.result;
-            $scope.storage_id = $scope.store_storage[0].id;
-            search($scope.storage_id)
+            $scope.storeStorage = data.result;
+            $scope.storageId = $scope.storeStorage[0].id;
+            search($scope.storageId)
         }
     });
-    $scope.get_fullCalendar = function (storage_id) {
-        search(storage_id);
-    };
+   /* $scope.getFullCalendar = function (storage_id) {
+        getCalendarData(storage_id);
+    };*/
     // 日历信息
-    var search = function (storage_id) {
+    $scope.getFullCalendar= function (storage_id) {
         $('#calendar').fullCalendar('destroy');
         $('#calendar').fullCalendar({
             viewRender: function (view, element) {
@@ -62,7 +62,6 @@ app.controller("storage_calendar_controller", ["$scope", "_host", "_basic", func
                             eventArray.push(date);
                         }
                         callback(eventArray)
-
                     }
                 })
             },
