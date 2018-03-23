@@ -1,3 +1,6 @@
+/**
+ * 主菜单：仓储管理 -> 工作日历 控制器
+ */
 app.controller("storage_calendar_controller", ["$scope", "_host", "_basic", function ($scope, _host, _basic) {
     var date = new Date();
     var now_date = moment(date).format('YYYYMMDD');
