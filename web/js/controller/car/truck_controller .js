@@ -15,7 +15,6 @@ app.controller("truck_controller", ["$scope", function ($scope) {
     $scope.next = function () {
         count++;
         if (count < 5) {
-            console.log(count);
             $(".PublicTabs").children().removeClass("active");
             $(".basic" + count).addClass("active");
             $(".add_Truck_view").load($(".basic" + count).attr("data-url"))
@@ -28,7 +27,6 @@ app.controller("truck_head_controller", ["$scope", "_host", "_basic", function (
         truckType: 1
     }).then(function (data) {
         if (data.success == true) {
-            console.log(data)
         } else {
         }
     })
@@ -39,7 +37,6 @@ app.controller("truck_hand_controller", ["$scope", "_host", "_basic", function (
         truckType: 2
     }).then(function (data) {
         if (data.success == true) {
-            console.log(data)
         } else {
         }
     })

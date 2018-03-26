@@ -4,7 +4,6 @@
 /*
 Login_model.controller("common_login_controller", ['$rootScope','$scope','$location','$q',"_basic","_host","_config",
     function($rootScope,$scope,$location,$q,_basic,_host,_config){
-    console.log(aaaa)
             $scope.username='';
             $scope.password='';
             $scope.login = function(){

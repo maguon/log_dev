@@ -106,7 +106,8 @@ app.controller("demand_Car_details_controller", ["$state", "$stateParams", "_con
                 $scope.self_car = data.result[0];
                 // modelID赋值
                 $scope.look_make_id = $scope.self_car.make_id,
-                    $scope.look_model_id = $scope.self_car.model_id, $scope.look_create_time = moment($scope.self_car.pro_date).format('YYYY-MM-DD');
+                $scope.look_model_id = $scope.self_car.model_id,
+                $scope.look_create_time = moment($scope.self_car.pro_date).format('YYYY-MM-DD');
                 $scope.look_storageName = $scope.self_car.storage_name + "  " + $scope.self_car.row + "排" + $scope.self_car.col + "列";
                 // 车辆id
                 $scope.look_car_id = $scope.self_car.id;

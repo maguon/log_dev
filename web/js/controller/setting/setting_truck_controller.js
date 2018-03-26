@@ -172,7 +172,6 @@ app.controller("setting_truck_controller", ["$scope", "_host", "_basic", functio
      * @param $event
      */
     $scope.showCarModel = function ($index, $event) {
-        console.log($index);
         $($event.target).hide();
         $(".car_model_name" + $index).removeAttr("readonly");
         $(".amend_car_model_box" + $index).show();
@@ -222,7 +221,6 @@ app.controller("setting_truck_controller", ["$scope", "_host", "_basic", functio
             modelName: name
         }).then(function (data) {
             if (data.success == true) {
-                // console.log(data.result);
                 $(".car_model_name" + index).attr("readonly", "readonly");
                 $(".amend_car_model_box" + index).hide();
                 $(".mdi-pencil" + index).show();

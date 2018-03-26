@@ -131,4 +131,4 @@ index_controller.controller("indexController", ['$rootScope', '$scope', '$locati
         } else {
            /* window.location.href = 'admin_login.html';*/
         }
-    }])
+    }]);

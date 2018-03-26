@@ -40,7 +40,6 @@ app.controller("company_controller", ['$rootScope', '$scope', '_basic', '_host',
         };
         _basic.get(_host.api_url + "/user/" + userId + "/company" + $urlMethod.urlMethod(obj)).then(function (data) {
             if (data.success == true && data.result.length > 0) {
-                // console.log(data.result);
                 $scope.Company = data.result;
             } else {
                 swal(data.msg, "", "error");
@@ -75,7 +74,6 @@ app.controller("company_controller", ['$rootScope', '$scope', '_basic', '_host',
             if (data.success == true && data.result.length > 0) {
                 $scope.company = data.result[0];
                 companyMsg = $scope.company;
-                console.log($scope.company, $scope.company.cooperation_time);
                 $scope.look_cooperation_time = moment($scope.company.cooperation_time).format("YYYY-DD-MM")
             } else {
                 swal(data.msg, "", "error");
@@ -121,7 +119,7 @@ app.controller("company_controller", ['$rootScope', '$scope', '_basic', '_host',
                 if (data.success == true) {
                     $('#addCompany').modal('close');
                     swal("新增成功", "", "success");
-                    searchAll();
+                    $scope.getCompanyList();
                 } else {
                     swal(data.msg, "", "error");
                 }
@@ -140,14 +138,12 @@ app.controller("company_controller", ['$rootScope', '$scope', '_basic', '_host',
                 "tel": companyMsg.tel,
                 "cityId": companyMsg.city_id,
                 "remark": companyMsg.remark
-            }
+            };
             _basic.put(_host.api_url + "/user/" + userId + "/company/" + id, subParam).then(function (data) {
-                // $(".shadeDowWrap").hide();
                 if (data.success == true) {
-                    // console.log(data);
                     $('#LookCompany').modal('close');
                     swal("修改成功", "", "success");
-                    searchAll();
+                    $scope.getCompanyList();
                 } else {
                     swal(data.msg, "", "error");
                 }

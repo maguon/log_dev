@@ -83,7 +83,7 @@ app.controller("car_demand_controller", ["$scope", "$rootScope", "_host", "_basi
      * 根据画面输入的查询条件，进行数据查询。
      */
     function queryCarDemandData() {
-        var reqUrl = _host.api_url + "/user/" + userId + "/car?active=" + 1 + "&start=" + $scope.start + "&size=" + $scope.size
+        var reqUrl = _host.api_url + "/user/" + userId + "/car?active=" + 1 + "&start=" + $scope.start + "&size=" + $scope.size;
         if ($scope.searchRelStatus != null) {
             reqUrl = reqUrl + "&relStatus=" + $scope.searchRelStatus
         }

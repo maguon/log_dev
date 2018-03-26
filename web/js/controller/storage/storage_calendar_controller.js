@@ -154,7 +154,7 @@ app.controller("storage_calendar_controller", ["$scope", "_host", "_basic", func
                                 '<div class="col s4 center-align  cyan-text text-lighten-1" style="font-size: 14px">' +
                                 '<i style="display: block" class="mdi mdi-arrow-down-bold-circle-outline"></i><span >' + $scope.data[i].balance + '</span></div>' +
                                 '<div class="col s4 center-align red-text text-lighten-2" style="font-size: 14px">' +
-                                '<i style="display: block" class=" mdi mdi-logout"></i><span >' + $scope.data[i].exports + '</span></div></div>'
+                                '<i style="display: block" class=" mdi mdi-logout"></i><span >' + $scope.data[i].exports + '</span></div></div>';
                             var date = {
                                 title: titleHtml,
                                 start: $scope.data[i].date_id + '',

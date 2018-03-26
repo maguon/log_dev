@@ -144,7 +144,6 @@ app.controller("storage_car_map_controller", ["$state", "$rootScope", "$statePar
     $scope.imgArr = [];
     $scope.uploadBrandImage = function (dom) {
         var filename = $(dom).val();
-        console.log($(dom).val());
         if ((/\.(jpe?g|png|gif|svg|bmp|tiff?)$/i).test(filename)) {
             var max_size_str = $(dom).attr('max_size');
             var max_size = 4 * 1024 * 1024; //default: 4M

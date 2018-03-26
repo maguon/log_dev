@@ -37,7 +37,6 @@ app.controller("data_controller", ['$rootScope', '$scope', '$location', '$q', '_
             } else {
                 for (var i in headerArray) {
                     if (colObjs[i].name != headerArray[i]) {
-                        console.log(headerArray[i]);
                         return false
                     }
                 }
@@ -50,7 +49,7 @@ app.controller("data_controller", ['$rootScope', '$scope', '$location', '$q', '_
                 for (var j = 0; j < contentArray[i].length; j++) {
                     if (colObjs[j].type != typeof contentArray[i][j] || colObjs[j].length != contentArray[j].length) {
                         $scope.errorNumber = $scope.errorNumber + 1;
-                        tableContentFilter.push(contentArray[i])
+                        tableContentFilter.push(contentArray[i]);
                         swal("错误条数" + tableContentFilter.length)
                     } else {
                         $scope.rightNumber = $scope.rightNumber + 1;
@@ -72,7 +71,6 @@ app.controller("data_controller", ['$rootScope', '$scope', '$location', '$q', '_
             $(file).parse({
                 config: {
                     complete: function (result) {
-                        console.log(result);
                         $scope.$apply(function () {
                             if ($scope.fileType != "application/vnd.ms-excel") {
                                 swal("文件类型错误");
@@ -97,4 +95,4 @@ app.controller("data_controller", ['$rootScope', '$scope', '$location', '$q', '_
                 }
             })
         }
-    }])
+    }]);

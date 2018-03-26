@@ -67,7 +67,6 @@ app.controller("storage_car_details_controller", [ "$state", "$stateParams", "_c
                 }).then(function (data) {
                     if (data.success == true) {
                         $scope._id=data.result._id;
-                        // console.log($scope._id);
                         if($scope.storage_imageBox.length!=0){
                             viewer.destroy();
                         }
@@ -154,8 +153,6 @@ app.controller("storage_car_details_controller", [ "$state", "$stateParams", "_c
                 $scope.self_storageParking = data.result;
                 $scope.garageParkingArray = _baseService.storageParking($scope.self_storageParking);
                 $scope.ageParkingCol = $scope.garageParkingArray[0].col
-                // console.log($scope.ageParkingCol,$scope.garageParkingArray)
-
             }
         })
     };

@@ -5,12 +5,11 @@ baseService.factory('_socket',['$http','$location','$q',"$cookies","_host","_bas
     var _this = {};
     var ws = null ;
     var uploadResHandler ;
-    _this.carInfoArray = []
+    _this.carInfoArray = [];
     _this.msgToJson = function (message) {
         try {
             return JSON.parse(message);
         } catch(error) {
-            console.log('method:msgToJson,error:' + error);
             return null;
         }
     };
@@ -23,7 +22,6 @@ baseService.factory('_socket',['$http','$location','$q',"$cookies","_host","_bas
         }
     };
     _this.processSystem = function(msgContentObj) {
-        // var type=_basic.getSession(_basic.USER_TYPE);
         if(msgContentObj.status ==0){
             swal({
                 title: "错误",
@@ -36,21 +34,18 @@ baseService.factory('_socket',['$http','$location','$q',"$cookies","_host","_bas
             },function(){
                 window.location.href = '/common_login.html';
             });
-            //
         }
-
     };
     _this.acknowledgeUpload = function(msgObj){
         uploadResHandler(msgObj);
-    }
+    };
     _this.dispatchMsg = function (message){
         var msgObj = _this.msgToJson(message.data);
-        // console.log(msgObj);
         switch (msgObj.mtype){
-            case 0 ://system leve message
+            case 0 :
                 _this.processSystem(msgObj.mcontent);
                 break;
-            case 4 : //upload repeat list
+            case 4 :
                 _this.acknowledgeUpload(msgObj);
                 break;
             default :
@@ -58,12 +53,6 @@ baseService.factory('_socket',['$http','$location','$q',"$cookies","_host","_bas
         }
     };
     _this.getConnectMsg = function(user) {
-        /*user object example
-        user = {
-            id : 10001,
-            name: "user2",
-            type :2
-        }*/
         var msg ={
             mid : user.id+"_"+ new Date().getTime(),
             mtype : 2,
@@ -79,11 +68,11 @@ baseService.factory('_socket',['$http','$location','$q',"$cookies","_host","_bas
             mcontent : uploadObj
         };
         return msg;
-    }
+    };
 
     _this.uploadCarInfoArray = function(fileId,carInfoArray){
         _this.carInfoArray = carInfoArray;
-    }
+    };
 
 
     _this.uploadCarInfo = function (fileId,carParamArray,index,callback) {
@@ -102,7 +91,7 @@ baseService.factory('_socket',['$http','$location','$q',"$cookies","_host","_bas
         };
 
         ws.send(JSON.stringify(this.getUploadMsg(fileId,carParams,index)));
-    }
+    };
 
     _this.sendMsg = function(msgObj){
         var msgString = JSON.stringify(msgObj);
@@ -115,10 +104,8 @@ baseService.factory('_socket',['$http','$location','$q',"$cookies","_host","_bas
             return;
         }else{
             ws =  new WebSocket(_host.socket_url);
-
             ws.onmessage = function(message){
                 _this.dispatchMsg(message);
-
             };
             ws.onopen = function(event) {
                 var msgObj = _this.getConnectMsg(user);
@@ -126,7 +113,6 @@ baseService.factory('_socket',['$http','$location','$q',"$cookies","_host","_bas
                 return;
             };
             return;
-
         }
     };
     return _this;

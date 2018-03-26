@@ -5,7 +5,7 @@ var toggleFullScreen = function(){
                 document.documentElement.mozRequestFullScreen():
             document.documentElement.webkitRequestFullScreen&&document.documentElement.webkitRequestFullScreen(Element.ALLOW_KEYBOARD_INPUT):
         document.cancelFullScreen?document.cancelFullScreen():document.mozCancelFullScreen?document.mozCancelFullScreen():
-        document.webkitCancelFullScreen&&document.webkitCancelFullScreen()
+        document.webkitCancelFullScreen&&document.webkitCancelFullScreen();
         document.getElementsByClassName("ConWrap")[0].style.height=window.innerHeight +"px";
 };
 $(document).ready(function() {

@@ -24,8 +24,7 @@ var restify = require('restify');
     restify.CORS.ALLOW_HEADERS.push("Access-Control-Allow-Headers", "x-requested-with,content-type");
     server.use(restify.CORS());
 
-    // Use the common stuff you probably want
-    //hard code the upload folder for now
+
     server.use(restify.bodyParser({uploadDir: __dirname + '/../uploads/'}));
     server.use(restify.acceptParser(server.acceptable));
     server.use(restify.dateParser());

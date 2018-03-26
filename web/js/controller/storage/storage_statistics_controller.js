@@ -103,7 +103,7 @@ app.controller("storage_statistics_controller", ['$rootScope', '$scope', "_host"
                 if (data.success == true&&data.result.length>0) {
                     for (var i in data.result) {
                         var day_filter = data.result[data.result.length - 1 - i].date_id.toString().substr(4, 4);
-                        day.push(day_filter)
+                        day.push(day_filter);
                         dayDateArray[0].data.push(data.result[data.result.length - 1 - i].total_imports);
                         dayDateArray[1].data.push(data.result[data.result.length - 1 - i].total_exports)
                     }
@@ -150,7 +150,7 @@ app.controller("storage_statistics_controller", ['$rootScope', '$scope', "_host"
                 }
             });
         }
-    }
+    };
     // 车库查询
     _basic.get(_host.api_url + "/storage").then(function (data) {
         if (data.success == true&&data.result.length>0) {

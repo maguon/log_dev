@@ -26,7 +26,6 @@ app.controller("setting_user_controller", ["_basic", "_config", "_host", "$scope
     var getUserInfoList = function () {
         _basic.get(_host.api_url + "/admin/" + adminId + "/user").then(function (data) {
             if (data.success == true && data.result.length > 0) {
-                // console.log(data)
                 $scope.operator = data.result;
 
             } else {

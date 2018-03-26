@@ -32,7 +32,7 @@ app.controller("storage_car_controller", ["$scope", "$rootScope", "$stateParams"
     });
     /**查询列表*/
     var getCarDataList = function () {
-        var reqUrl = _host.api_url + "/user/" + userId + "/car?active=" + 1 + "&start=" + $scope.start + "&size=" + $scope.size
+        var reqUrl = _host.api_url + "/user/" + userId + "/car?active=" + 1 + "&start=" + $scope.start + "&size=" + $scope.size;
         if ($scope.getRelStatus != null) {
             reqUrl = reqUrl + "&relStatus=" + $scope.getRelStatus
         }

@@ -68,13 +68,13 @@ baseService.factory('_basic',['$http','$location','$q',"$cookies",function($http
     };
     _this.setSession = function(name,value){
         sessionStorage.setItem(name,value);
-    }
+    };
     _this.getSession = function(name){
         return  sessionStorage.getItem(name);
-    }
+    };
     _this.removeSession = function(name){
         sessionStorage.removeItem(name);
-    }
+    };
     _this.checkUser = function(userType){
         if(!(this.getSession(this.COMMON_AUTH_NAME) && this.getSession(this.USER_ID))){
             return false;
@@ -89,7 +89,7 @@ baseService.factory('_basic',['$http','$location','$q',"$cookies",function($http
                 return true;
             }
         }
-    }
+    };
     _this. getParameter = function(name) {
         var url = document.location.href;
         var start = url.indexOf("?")+1;

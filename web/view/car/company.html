@@ -31,7 +31,7 @@
                         </div>
                         <select car-select class="col s7-0 browser-default" ng-model="s_city">
                             <option value="" disabled selected>请选择</option>
-                            <option ng-value="{{op.id}}" ng-repeat="op in citys">{{op.city_name}}</option>
+                            <option  ng-repeat="op in citys" ng-value="{{op.id}}">{{op.city_name}}</option>
                         </select>
                     </div>
                 </div>
@@ -86,7 +86,7 @@
                                     <div class="col s6">
                                         <div class="row form_box valign-wrapper no-marBottom" ng-class="{ 'has-error' : new_companyForm.Tel.$invalid&&submitted }">
                                             <p class="col s4-0"><span class="red-text">*</span><span >联系电话:</span></p>
-                                            <input name="Tel"  type="text" ng-model="addTel"v autocomplete="off" class="col s6-0 " required>
+                                            <input name="Tel"  type="text" ng-model="addTel" autocomplete="off" class="col s6-0 " required>
                                         </div>
                                     </div>
                                 </div>

@@ -30,7 +30,7 @@ adminDirective.directive('header', function () {
                         _basic.removeSession(_basic.USER_NAME);
                         window.location.href = '/admin_login.html';
                     });
-                }
+                };
                 _basic.setHeader(_basic.USER_TYPE, _basic.getSession(_basic.USER_TYPE));
                 _basic.setHeader(_basic.COMMON_AUTH_NAME,  _basic.getSession(_basic.COMMON_AUTH_NAME) );
                 _basic.get(_host.api_url + "/admin/" + _basic.getSession(_basic.USER_ID)).then(function (data) {
@@ -106,14 +106,13 @@ adminDirective.directive("addBrand", function () {
             $scope.add_brand = function (iValid) {
                 $scope.submitted1 = true;
                 if (iValid) {
-                    // $(".add_Brand_Icon button").attr("disabled",true);
                     _basic.post(_host.api_url + "/admin/" + adminId + "/carMake/", {
                         makeName: $scope.b_txt
                     }).then(function (data) {
                         if (data.success == true) {
                             swal("新增成功", "", "success");
                             $scope.b_txt = "";
-                            $scope.searchAll();
+                           /* $scope.searchAll();*/
                         } else {
                             swal(data.msg, "", "error");
                         }
