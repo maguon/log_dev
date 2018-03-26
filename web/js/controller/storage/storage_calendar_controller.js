@@ -177,10 +177,10 @@ app.controller("storage_calendar_controller", ["$scope", "_host", "_basic", func
         // 当天仓库信息
         _basic.get(_host.api_url + "/storageDate?storageId=" + storage_id + "&dateStart=" + nowDate + "&dateEnd=" + nowDate).then(function (data) {
             if (data.success == true && data.result.length > 0) {
-                $scope.today_data = data.result[0];
+                $scope.todayData = data.result[0];
             } else {
                 // 取得数据失败时，画面显示的默认数据
-                $scope.today_data = {
+                $scope.todayData = {
                     "storage_id": 0,
                     "imports": 0,
                     "exports": 0,

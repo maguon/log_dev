@@ -41,12 +41,12 @@
                         <div class="col s6 calendar_data_box_side center-align">
                             <p style="margin: 10px 0" class="col s12 white-text ">使用率</p>
                             <h5 class="s12 white-text center-align">
-                                <span>{{today_data.row == 0 ? '0.00' : (today_data.balance /today_data.row*today_data.col * 100).toFixed(2)}}%</span>
+                                <span>{{todayData.row == 0 ? '0.00' : (todayData.balance /todayData.row*todayData.col * 100).toFixed(2)}}%</span>
                             </h5>
                         </div>
                         <div class="col s6 calendar_data_box_side center-align">
                             <p style="margin: 10px 0" class="col s12 white-text">总车位</p>
-                            <h5 class="s12 white-text" ng-bind="today_data.row*today_data.col"></h5>
+                            <h5 class="s12 white-text" ng-bind="todayData.row*todayData.col"></h5>
                         </div>
                     </div>
 
@@ -54,11 +54,11 @@
                     <div class="calendar_data_box">
                         <div class="col s6 calendar_data_box_side center-align">
                             <p style="margin: 10px 0" class="col s12 white-text">库存车辆</p>
-                            <h5 class="s12 white-text" ng-bind="today_data.balance">0</h5>
+                            <h5 class="s12 white-text" ng-bind="todayData.balance">0</h5>
                         </div>
                         <div class="col s6 calendar_data_box_side center-align">
                             <p style="margin: 10px 0" class="col s12 white-text">剩余车位</p>
-                            <h5 class="s12 white-text" ng-bind="today_data.row*today_data.col-today_data.balance">0</h5>
+                            <h5 class="s12 white-text" ng-bind="todayData.row*todayData.col-todayData.balance">0</h5>
                         </div>
                     </div>
 
@@ -66,11 +66,11 @@
                     <div class="calendar_data_box">
                         <div class="col s6 calendar_data_box_side center-align">
                             <p style="margin: 10px 0" class="col s12 white-text">入库车辆</p>
-                            <h5 class="s12 white-text" ng-bind="today_data.imports">0</h5>
+                            <h5 class="s12 white-text" ng-bind="todayData.imports">0</h5>
                         </div>
                         <div class="col s6 calendar_data_box_side center-align">
                             <p style="margin: 10px 0" class="col s12 white-text">出库车辆</p>
-                            <h5 class="s12 white-text" ng-bind="today_data.exports">0</h5>
+                            <h5 class="s12 white-text" ng-bind="todayData.exports">0</h5>
                         </div>
                     </div>
                 </div>
