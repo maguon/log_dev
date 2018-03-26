@@ -2,7 +2,7 @@
  * Created by ASUS on 2017/5/5.
  * 主菜单：车辆查询 -> 仓储车辆信息 画面
  */
-app.controller("demand_Car_details_controller", ["$state", "$stateParams", "_config", "$scope", "_host", "_basic", function ($state, $stateParams, _config, $scope, _host, _basic) {
+app.controller("car_demand_details_controller", ["$state", "$stateParams", "_config", "$scope", "_host", "_basic", function ($state, $stateParams, _config, $scope, _host, _basic) {
     var userId = _basic.getSession(_basic.USER_ID);
     // 通过url中的信息取得 车辆id 和 VIN码
     var val = $stateParams.id;

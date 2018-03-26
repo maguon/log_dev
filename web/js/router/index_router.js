@@ -89,11 +89,11 @@ app.config(['$stateProvider',"$urlRouterProvider",function($stateProvider,$urlRo
             templateUrl: "/view/car_demand/car_demand.html",
             controller:'car_demand_controller'
         })
-        .state("demand_Car_details",{
-            url:"/demand_Car_details/{id}/vin/{vin}?from",
+        .state("car_demand_details",{
+            url:"/car_demand_details/{id}/vin/{vin}?from",
             // 主菜单：车辆查询 -> 仓储车辆信息 画面
-            templateUrl: "/view/car_demand/demand_Car_details.html",
-            controller:'demand_Car_details_controller'
+            templateUrl: "/view/car_demand/car_demand_details.html",
+            controller:'car_demand_details_controller'
         })
         .state("company", {
             url: "/company",  //路由路径
