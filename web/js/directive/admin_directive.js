@@ -37,10 +37,10 @@ adminDirective.directive('header', function () {
                  */
                 $scope.updatePassword = function (valid) {
                     $scope.submitted = true;
-                    if (valid && $scope.user_new_password == $scope.user_confirm_password) {
+                    if (valid && $scope.newPassword == $scope.confirmPassword) {
                         var obj = {
-                            "originPassword": $scope.user_old_password,
-                            "newPassword": $scope.user_new_password
+                            "originPassword": $scope.oldPassword,
+                            "newPassword": $scope.newPassword
                         };
                         // TODO 管理员修改的话，API 是 PUT /admin/{adminId}/password ？？
                         _basic.put(_host.api_url + "/user/" + userId + "/password", obj).then(function (data) {
