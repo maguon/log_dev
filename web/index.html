@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<!-- 主画面 -->
 <html lang="zh-cn" ng-app="log_dev">
 <head>
     <meta charset="UTF-8">
@@ -14,7 +15,10 @@
     <link rel="icon" href="/assets/images/ico/storage_32.ico">
 </head>
 <body>
+<!-- 画面头部 -->
 <header></header>
+
+<!-- 左侧：导航 -->
 <ul id="slide-out" class="side-nav blue-grey darken-4">
     <li class="nav-logo valign-wrapper " style="border-bottom: 1px solid #182024">
         <div class="userBox ">
@@ -51,7 +55,8 @@
                         </li>
                         <li><a href="#!" ui-sref="statistics"><i class="white-text mdi mdi-chevron-right"></i>仓储统计</a>
                         </li>
-                        <li><a href="#!" ui-sref="storage_store"><i class="white-text mdi mdi-chevron-right"></i>仓储存放</a>
+                        <li><a href="#!" ui-sref="storage_store"><i
+                                class="white-text mdi mdi-chevron-right"></i>仓储存放</a>
                         </li>
                         <li><a href="#!" ui-sref="storageCar"><i class="white-text mdi mdi-chevron-right"></i>仓储车辆</a>
                         </li>
@@ -82,15 +87,19 @@
             </li>
         </ul>
     </li>
-
-
 </ul>
+
+<!-- 画面主体，路由视图 -->
 <div class="ConWrap ">
     <div class="containerBox">
         <div ui-view></div>
     </div>
 </div>
+
+<!-- 画面底部 -->
 <footer></footer>
+
+<!-- 画面底部，固定显示内容 -->
 <div class="shadeDowWrap">
     <div class="shadeDow vc-center">
         <div class="preloader-wrapper big active ">
@@ -108,12 +117,13 @@
         </div>
     </div>
 </div>
+
 </body>
 <script>
     //  动态求出主体内容高度，防止遮罩层溢出
-    document.getElementsByClassName("ConWrap")[0].style.height=document.body.scrollHeight-70-70+"px";
-    window.onresize=function () {
-        document.getElementsByClassName("ConWrap")[0].style.height=document.body.scrollHeight-70-70+"px";
+    document.getElementsByClassName("ConWrap")[0].style.height = document.body.scrollHeight - 70 - 70 + "px";
+    window.onresize = function () {
+        document.getElementsByClassName("ConWrap")[0].style.height = document.body.scrollHeight - 70 - 70 + "px";
     }
 </script>
 <script src="/lib/jquery.min.js"></script>
@@ -158,6 +168,4 @@
 <script src="/js/controller/user/user_info_controller.js"></script>
 <script src="/js/controller/car_demand/car_demand_controller.js"></script>
 <script src="/js/controller/car_demand/demand_Car_details_controller.js"></script>
-
-
 </html>
