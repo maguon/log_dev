@@ -1,8 +1,7 @@
 /**
  * Created by ASUS on 2017/5/5.
  */
-var storage_car_mapController = angular.module("storage_car_mapController", []);
-storage_car_mapController.controller("storage_car_mapController", ["$state", "$rootScope", "$stateParams", "_config", "service_storage_parking", "$scope", "_host", "_basic", function ( $state, $rootScope, $stateParams, _config, service_storage_parking, $scope, _host, _basic) {
+app.controller("storage_car_map_controller", ["$state", "$rootScope", "$stateParams", "_config", "_baseService", "$scope", "_host", "_basic", function ( $state, $rootScope, $stateParams, _config, _baseService, $scope, _host, _basic) {
     var val = $stateParams.id;
     $scope._form=$stateParams.form;
     var data = new Date();
@@ -10,7 +9,7 @@ storage_car_mapController.controller("storage_car_mapController", ["$state", "$r
     var userId = _basic.getSession(_basic.USER_NAME);
     // 到仓储车辆图
     $scope.LookGarage = function (val) {
-        _basic.get(_host.api_url + "/storageDate?storageId=" + val + "&dateStart=" + now_date + "&dateEnd=" + now_date).then(function (data) {
+        _basic.get(_host.api_url + "/storageDate?storageId=" + val/* + "&dateStart=" + now_date + "&dateEnd=" + now_date*/).then(function (data) {
             if (data.success == true&&data.result.length>0) {
                 $scope.storage = data.result[0];
             }
@@ -18,7 +17,7 @@ storage_car_mapController.controller("storage_car_mapController", ["$state", "$r
         _basic.get(_host.api_url + "/storageParking?storageId=" + val).then(function (data) {
             if (data.success == true&&data.result.length>0) {
                 $scope.self_storageParking = data.result;
-                $scope.garageParkingArray = service_storage_parking.storage_parking($scope.self_storageParking);
+                $scope.garageParkingArray =_baseService.storageParking($scope.self_storageParking);
                 $scope.ageParkingCol = $scope.garageParkingArray[0].col
             }
         })
@@ -53,7 +52,7 @@ storage_car_mapController.controller("storage_car_mapController", ["$state", "$r
         _basic.get(_host.api_url + "/storageParking?storageId=" + val).then(function (data) {
             if (data.success == true&&data.result.length>0) {
                 $scope.storageParking = data.result;
-                $scope.parkingArray = service_storage_parking.storage_parking($scope.storageParking);
+                $scope.parkingArray = _baseService.storageParking($scope.storageParking);
             } else {
                 swal(data.msg, "", "error");
             }
@@ -69,7 +68,6 @@ storage_car_mapController.controller("storage_car_mapController", ["$state", "$r
         _basic.get(_host.api_url + "/carMake").then(function (data) {
             if (data.success == true&&data.result.length>0) {
                 $scope.makecarName = data.result;
-                // console.log($scope.makecarName)
             } else {
                 swal(data.msg, "", "error");
             }
@@ -98,14 +96,13 @@ storage_car_mapController.controller("storage_car_mapController", ["$state", "$r
         $scope.storage_name = "";
         // 照片清空
         $scope.imgArr = [];
-        // "enterTime":$scope.enter_time,
         $scope.col_id = "";
         $scope.plan_out_time = "";
         $(".modal").modal({});
         $("#newStorage_car").modal("open");
     };
     // 新增信息
-    $scope.submitForm = function (isValid) {
+    $scope.getNewStorageItem = function (isValid) {
         $scope.submitted = true;
         if (isValid) {
             var obj_car = {
@@ -149,15 +146,12 @@ storage_car_mapController.controller("storage_car_mapController", ["$state", "$r
         var filename = $(dom).val();
         console.log($(dom).val());
         if ((/\.(jpe?g|png|gif|svg|bmp|tiff?)$/i).test(filename)) {
-            //check size
-            //$file_input[0].files[0].size
             var max_size_str = $(dom).attr('max_size');
             var max_size = 4 * 1024 * 1024; //default: 4M
             var re = /\d+m/i;
             if (re.test(max_size_str)) {
                 max_size = parseInt(max_size_str.substring(0, max_size_str.length - 1)) * 1024 * 1024;
             }
-
             if ($(dom)[0].files[0].size > max_size) {
                 swal('图片文件最大: ' + max_size_str, "", "error");
                 return false;
@@ -169,7 +163,6 @@ storage_car_mapController.controller("storage_car_mapController", ["$state", "$r
         }
         _basic.formPost($(dom).parent().parent(), _host.file_url + '/user/' + userId + '/image?imageType=4', function (data) {
             if (data.success) {
-                console.log(data, $scope.Picture_carId);
                 var imageId = data.imageId;
                 _basic.post(_host.record_url + "/car/" + $scope.Picture_carId + "/vin/" + $scope.vin + "/storageImage", {
                     "username": _basic.getSession(_basic.USER_NAME),

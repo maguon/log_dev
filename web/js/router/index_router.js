@@ -58,7 +58,7 @@ app.config(['$stateProvider',"$urlRouterProvider",function($stateProvider,$urlRo
             templateUrl: "/view/storage/storage_car.html",
             controller:'storage_car_controller'
         })
-        .state("storage_store", {
+        .state("storageStore", {
             url:"/storage_store",
             templateUrl: "/view/storage/storage_store.html",
             controller:"storage_store_controller"
@@ -76,7 +76,7 @@ app.config(['$stateProvider',"$urlRouterProvider",function($stateProvider,$urlRo
         .state("storage_car_map", {
             url:"/storage_car_map/{id}?form",
             templateUrl: "/view/storage/storage_car_map.html",
-            controller:"storage_car_mapController"
+            controller:"storage_car_map_controller"
         })
         .state("user_info",{
             url:"/user_info",
