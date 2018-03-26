@@ -2,9 +2,11 @@ app.controller("storage_index_controller", ['$rootScope', '$scope', "_host", '$l
     function ($rootScope, $scope, _host, $location, $q, _basic) {
         var date = new Date();
         var nowDate = moment(date).format('YYYYMMDD');
+        // TODO test date
+        // nowDate = '20180315';
         $scope.storageAllStorage = 0;
         _basic.get(_host.api_url + "/storageCount?dateStart=" + nowDate + "&dateEnd=" + nowDate).then(function (data) {
-            if (data.success == true&&data.result.length>0) {
+            if (data.success == true && data.result.length > 0) {
                 $scope.storageIndexCount = data.result[0];
             } else {
                 swal(data.msg, "", "error");

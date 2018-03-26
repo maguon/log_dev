@@ -1,38 +1,58 @@
+<!-- 共通：header 画面 -->
 <div>
     <nav class="row cyan lighten-1 z-depth-2 header">
         <div class="nav-wrapper ">
+
+            <!-- 左侧 Icon -->
             <ul class="left">
+                <!-- 菜单抽屉 -->
                 <li>
-                    <a id="menu_link" style="margin-left: 0;display: block" data-activates="slide-out" class="button-collapse "><i class="mdi mdi-menu mdi-36px"></i></a>
+                    <a id="menu_link" style="margin-left: 0;display: block" data-activates="slide-out"
+                       class="button-collapse "><i class="mdi mdi-menu mdi-36px"></i></a>
                 </li>
             </ul>
+
+            <!-- 菜单抽屉 -->
             <a href="#" class="brand-logo ">
                 <div class="vc-center" style="height: 100% ">
                     <img class="responsive-img" src="../assets/images/my_logo.png" alt="">
                     <img class="responsive-img" src="../assets/images/honya_white_logo.png" alt="">
                 </div>
             </a>
-            <ul class="right">
-                <li>
-                    <a class="right-align" onclick="toggleFullScreen()"><i class="mdi mdi-fullscreen mdi-36px"></i>
 
-                    </a>
+            <!-- 右侧 Icon -->
+            <ul class="right">
+                <!-- 全屏 -->
+                <li>
+                    <a class="right-align" onclick="toggleFullScreen()"><i class="mdi mdi-fullscreen mdi-36px"></i></a>
                 </li>
-                <li ng-click="openModifyPw()" >
-                    <a><i class="mdi mdi-account mdi-36px" ></i></a>
+
+                <!-- 修改个人密码 -->
+                <li ng-click="openModifyPw()">
+                    <a><i class="mdi mdi-account mdi-36px"></i></a>
                 </li>
+
+                <!-- 注销账号 -->
                 <li ng-click="logOut()">
                     <a><i class="mdi mdi-exit-to-app mdi-36px"></i></a>
                 </li>
             </ul>
         </div>
     </nav>
+
+    <!-- 修改个人密码 画面 -->
     <div id="user_modal" class="modal">
         <form name="amend_userFrom" novalidate>
             <div class="modal-content">
+
+                <!-- title: 修改个人密码 -->
                 <h5 class="center-align grey-text">修改个人密码</h5>
+
+                <!-- 分割线 -->
                 <div class="divider cyan lighten-1" style="height: 2px"></div>
+
                 <div class="container">
+                    <!-- 原始密码 -->
                     <div class="row">
                         <div class="input-field col s12"
                              ng-class="{'has-error':amend_userFrom.user_old_password.$invalid&&submitted}">
@@ -42,6 +62,8 @@
                             <label class="grey-text" for="user_old_password">原始密码</label>
                         </div>
                     </div>
+
+                    <!-- 新密码 -->
                     <div class="row">
                         <div class="input-field col s12"
                              ng-class="{'has-error':amend_userFrom.user_new_password.$invalid&&submitted}">
@@ -51,6 +73,8 @@
                             <label class="grey-text" for="user_new_password">新密码</label>
                         </div>
                     </div>
+
+                    <!-- 确认密码 -->
                     <div class="row">
                         <div class="input-field col s12"
                              ng-class="{'has-error':amend_userFrom.user_confirm_password.$invalid&&submitted}">
@@ -62,10 +86,20 @@
                     </div>
                 </div>
             </div>
+
+            <!-- 底部：确认/取消 按钮 -->
             <div class="modal-footer vc-center">
-                <button class="btn btn-floating waves-light waves-effect  cyan lighten-1" ng-click="updatePassword(amend_userFrom.$valid)"  name="action">
+                <!-- 确认 按钮 -->
+                <button class="btn btn-floating waves-light waves-effect  cyan lighten-1"
+                        ng-click="updatePassword(amend_userFrom.$valid)" name="action">
                     <i class="mdi mdi-check"></i>
                 </button>
+
+                <!-- 取消 按钮 -->
+                <a style="margin-left: 50px"
+                   class="modal-action modal-close waves-light waves-effect red lighten-1 btn btn-floating">
+                    <i class="mdi mdi-close"></i>
+                </a>
             </div>
         </form>
     </div>
