@@ -6,10 +6,6 @@ app.controller("data_controller", ['$rootScope', '$scope', '$location', '$q', '_
         $scope.errorNumber = 0;
         $scope.upload = function (dom, val) {
         };
-        // $scope.update = function () {
-        //     _basic.setCookie('url', "jiangsen");
-        // };
-        // $scope.update();
         $scope.tableHeader = [];
         $scope.fileType = "";
         // 表头原始数据
@@ -41,7 +37,6 @@ app.controller("data_controller", ['$rootScope', '$scope', '$location', '$q', '_
                     }
                 }
             }
-
         };
         // 主体条件判断
         $scope.contentFilter = function (contentArray) {
@@ -77,7 +72,6 @@ app.controller("data_controller", ['$rootScope', '$scope', '$location', '$q', '_
                             } else {
                                 $scope.tableHeadeArray = result.data[0];
                                 // 表头校验
-                                //  if($scope.titleFilter($scope.tableHeadeArray)){
                                 // 主体内容校验
                                 $scope.contentFilter(result.data.slice(1, result.data.length));
                                 $scope.tableHeader = result.data[0];

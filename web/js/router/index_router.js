@@ -58,7 +58,7 @@ app.config(['$stateProvider',"$urlRouterProvider",function($stateProvider,$urlRo
             templateUrl: "/view/storage/storage_car.html",
             controller:'storage_car_controller'
         })
-        .state("storageStore", {
+        .state("storage_store", {
             url:"/storage_store",
             templateUrl: "/view/storage/storage_store.html",
             controller:"storage_store_controller"
