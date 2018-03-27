@@ -81,9 +81,9 @@ app.controller("app_version_controller", ["$scope", "$state", "$stateParams", "_
      * 追加app系统信息。
      */
     $scope.addAppInfo = function () {
-        if ($scope.addAppType !== undefined && $scope.addSystemType !== undefined && $scope.addForceUpdate !== undefined
-            && $scope.addAppVersion !== undefined && $scope.uploadUrl !== undefined
-            && $scope.addAppVersionNum !== undefined && $scope.addAppMinVersionNum !== undefined) {
+        if ($scope.addAppType !== "" && $scope.addSystemType !== "" && $scope.addForceUpdate !== ""
+            && $scope.addAppVersion !== "" && $scope.uploadUrl !== ""
+            && $scope.addAppVersionNum !== "" && $scope.addAppMinVersionNum !== "") {
 
             // 调用 API user create app
             _basic.post(_host.api_url + "/user/" + userId + "/app", {
@@ -120,10 +120,13 @@ app.controller("app_version_controller", ["$scope", "$state", "$stateParams", "_
         $('.modal').modal();
         $('#showAppSystem').modal('open');
         _basic.get(_host.api_url + "/app?appId=" + id).then(function (data) {
+            console.log(data);
             if (data.success == true) {
                 $scope.showAppSystemList = data.result[0];
                 $scope.showAppSystemList.app = data.result[0].app + "";
                 $scope.showAppSystemList.type = data.result[0].type + "";
+                // $scope.showAppSystemList.versionNumber = data.result[0].version_number;
+                // $scope.showAppSystemList.floorVersionNumber = data.result[0].floor_version_number;
                 $scope.showAppSystemList.force_update = data.result[0].force_update + "";
             } else {
                 swal(data.msg, "", "error");
