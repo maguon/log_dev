@@ -881,3 +881,6 @@ input[type=text]{
 .userInfoList i {
     color: #4dd0e1;
 }
+.tabs .indicator{
+    background-color: #26c6da;
+}
