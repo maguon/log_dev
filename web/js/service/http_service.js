@@ -129,9 +129,9 @@ baseService.factory('_basic',['$http','$location','$q',"$cookies",function($http
             }
             return tempObj
     };
-    _this.objToUrl=function(obj){
-        var str="";
-        for(var i in obj){
+    _this.objToUrl = function (obj) {
+        var str = "";
+        for (var i in obj) {
             if (obj[i] == 0 && obj[i] != "") {
                 str = str + i + "=" + 0 + "&";
             }
@@ -139,7 +139,7 @@ baseService.factory('_basic',['$http','$location','$q',"$cookies",function($http
                 str = str + i + "=" + obj[i] + "&";
             }
         }
-        return str.substr(0,str.length-1);
+        return str.substr(0, str.length - 1);
     };
     return _this;
 }]);

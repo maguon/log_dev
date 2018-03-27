@@ -107,6 +107,12 @@ app.config(['$stateProvider',"$urlRouterProvider",function($stateProvider,$urlRo
             controller:'admin_download_app_controller'
         })
 
+        //app系统
+        .state("app_version",{
+            url:"/app_version",
+            templateUrl: "/view/app/app_version.html",
+            controller:'app_version_controller'
+        })
     /*       .state("Com", {
                url: "/Com",  //路由路径
                templateUrl: "/view/car/truck_statistics.html",  //路由填充的模板
