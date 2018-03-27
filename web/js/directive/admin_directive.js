@@ -165,6 +165,67 @@ adminDirective.directive("addBrand", function () {
         }
     }
 });
+adminDirective.directive('percent', function () {
+    return {
+        link: function (scope, element, attr) {
+            var val = Number.parseInt(attr.value);
+            var total = Number.parseInt(attr.total);
+            var percentage = Number.parseInt((val*100/total));
+            if (total != 0) {
+                percentage = Number.parseInt((val * 100 / total));
+            }else {
+                percentage = 0;
+            }
+            $(element[0].children[0]).highcharts({
+                // 表头
+                title: {
+                    text:percentage+"%",
+                    align: 'center',
+                    verticalAlign: 'middle',
+                    y:8,
+                    style:{
+                        color:"#bdbdbd"
+                    }
+                },
+                colors:[
+                    "#4dd0e1",
+                    "#cfd8dc"
+                ],
+                // 版权信息
+                credits: {
+                    enabled:"false",
+                    text: '',
+                    href: ''
+                },
+                tooltip: {
+                    enabled : false
+                },
+                plotOptions: {
+                    pie: {
+                        dataLabels: {
+                            enabled: true,
+                            distance: 0,
+                            style: {
+                                fontWeight: 'bold',
+                                color: 'white'
+                            }
+                        }
+                    }
+                },
+                series: [{
+                    type: 'pie',
+                    name: '',
+                    innerSize: '80%',
+                    data: [
+                        ['',   percentage],
+                        ['',   (100-percentage)]
+                    ]
+                }]
+            });
+            var chart = null;
+        }
+    }
+});
 // 时间格式过滤指令
 adminDirective.directive("formDate", function () {
     return {

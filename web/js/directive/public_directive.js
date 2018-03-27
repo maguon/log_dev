@@ -101,6 +101,11 @@ publicDirective.directive('percent', function () {
             var val = Number.parseInt(attr.value);
             var total = Number.parseInt(attr.total);
             var percentage = Number.parseInt((val*100/total));
+            if (total != 0) {
+                percentage = Number.parseInt((val * 100 / total));
+            }else {
+                percentage = 0;
+            }
             $(element[0].children[0]).highcharts({
                 // 表头
                 title: {
