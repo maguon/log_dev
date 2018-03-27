@@ -30,6 +30,7 @@ app.controller("app_version_controller", ["$scope", "$state", "$stateParams", "_
         // 检索URL组装
         var url = _host.api_url + "/app?&start=" + $scope.start + "&size=" + $scope.size + condition;
 
+        console.log(url);
         // 调用API取得，画面数据
         _basic.get(url).then(function (data) {
             if (data.success == true) {
@@ -40,7 +41,7 @@ app.controller("app_version_controller", ["$scope", "$state", "$stateParams", "_
                     $("#pre").hide();
                 }
                 // 下一页 按钮 控制
-                if (data.result.length <= $scope.size) {
+                if (data.result.length < $scope.size) {
                     $("#next").hide();
                 } else {
                     $("#next").show();
@@ -147,9 +148,9 @@ app.controller("app_version_controller", ["$scope", "$state", "$stateParams", "_
                 forceUpdate: $scope.showAppSystemList.force_update,
                 version: $scope.showAppSystemList.version,
                 // 版本序号
-                versionNumber: $scope.showAppSystemList.versionNumber,
+                versionNumber: $scope.showAppSystemList.version_number,
                 // 最低支持版本序号
-                floorVersionNumber: $scope.showAppSystemList.floorVersionNumber,
+                floorVersionNumber: $scope.showAppSystemList.floor_version_number,
                 url: $scope.showAppSystemList.url,
                 remark: $scope.showAppSystemList.remark
             };
