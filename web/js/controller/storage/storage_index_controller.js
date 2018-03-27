@@ -3,7 +3,7 @@ app.controller("storage_index_controller", ['$rootScope', '$scope', "_host", '$l
         var date = new Date();
         var nowDate = moment(date).format('YYYYMMDD');
         // TODO test date
-        // nowDate = '20180315';
+        //nowDate = '20180327';
         $scope.storageAllStorage = 0;
         _basic.get(_host.api_url + "/storageCount?dateStart=" + nowDate + "&dateEnd=" + nowDate).then(function (data) {
             if (data.success == true && data.result.length > 0) {
