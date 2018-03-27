@@ -48,7 +48,7 @@ adminDirective.directive('header', function () {
                 _basic.setHeader(_basic.USER_TYPE, _basic.getSession(_basic.USER_TYPE));
                 _basic.setHeader(_basic.COMMON_AUTH_NAME, _basic.getSession(_basic.COMMON_AUTH_NAME));
                 _basic.get(_host.api_url + "/admin/" + _basic.getSession(_basic.USER_ID)).then(function (data) {
-                    // $(".shadeDowWrap").hide();
+
                     if (data.success == true && data.result.length > 0) {
                         $scope.userName = data.result[0].user_name;
                         _basic.setSession(_basic.USER_NAME, $scope.userName);
@@ -81,9 +81,6 @@ adminDirective.directive('header', function () {
                         "newPassword": $scope.newPassword
                     };
                     // TODO 管理员修改的话，API 是 PUT /admin/{adminId}/password ？？
-                    console.log(userId);
-                    console.log($scope.oldPassword);
-                    console.log($scope.newPassword);
                     _basic.put(_host.api_url + "/user/" + userId + "/password", obj).then(function (data) {
                         if (data.success == true) {
                             swal("密码重置成功", "", "success");
