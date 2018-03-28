@@ -1,22 +1,22 @@
-<!-- 主菜单：用户管理 -->
+<!-- 主菜单：委托人管理 -->
 <div class="usersWrap"  >
     <div class="row">
 
-        <!-- 追加用户画面区域 -->
+        <!-- 增加用户画面区域 -->
         <div class="row">
-            <!-- 增加操作员按钮 -->
-            <a class="waves-light btn-floating waves-effect btn right  cyan lighten-1"  ng-click="addOperator()">
+            <!-- 增加委托人按钮 -->
+            <a class="waves-light btn-floating waves-effect btn right  cyan lighten-1"  ng-click="addClient()">
                 <i class="mdi mdi-plus"></i>
             </a>
 
-            <!-- 追加用户dialog画面区域 -->
+            <!-- 增加委托人的模态框 -->
             <div id="newOperator" class="modal">
                 <form name="operatorForm" novalidate>
                     <div class="modal-content">
 
-                        <h4 class="center-align ">增加操作员</h4>
+                        <h4 class="center-align ">增加委托人</h4>
                         <div class="divider" style="background: #00bcd4;height: 2px;"></div>
-                        <!-- 增加操作员 输入区域 -->
+                        <!-- 增加委托人 输入区域 -->
                         <div class="container">
                             <div class="row" style="margin-top: 40px">
                                 <!-- 第一行 -->
@@ -55,7 +55,6 @@
                                             </h5>
                                             <select car-select name="dep" class="browser-default col s6-0" ng-model="newDepId" required>
                                                 <option value="" disabled selected>请选择</option>
-                                                <!--<option ng-value="1" >车管部</option>-->
                                                 <option ng-repeat="el in userInfoArray" ng-value="el.type">{{el.name}}</option>
                                             </select>
                                         </div>
@@ -97,7 +96,7 @@
             <table class="highlight bordered striped centered">
                 <thead>
                     <tr class="table_header blue-grey lighten-5 grey-text text-darken-1">
-                        <th data-field="">姓名</th>
+                        <th data-field="">委托人</th>
                         <th data-field="">性别</th>
                         <th data-field="">部门</th>
                         <th data-field="">手机号</th>
@@ -105,12 +104,11 @@
                         <th class="table_operation" >操作</th>
                     </tr>
                 </thead>
-
                 <tbody>
                     <tr ng-repeat="el in operator" class="grey-text text-darken-1">
                         <td ng-bind="el.real_name"></td>
-                        <td  ng-if="el.gender==0">女</td>
-                        <td  ng-if="el.gender==1">男</td>
+                        <td ng-if="el.gender==0">女</td>
+                        <td ng-if="el.gender==1">男</td>
                         <td ng-if="el.type==2">仓储部</td>
                         <td ng-if="el.type==3">调度部</td>
                         <td ng-if="el.type==4">国贸部</td>
@@ -120,24 +118,19 @@
                         <td class="operation table_operation vc-center" >
                             <span><i class="mdi mdi-eye cyan-text text-lighten-1" ng-click="queryOperator(el.uid)"></i></span>
                             <span class="switch" ng-click="changeStatus(el.status,el.uid)" style="height: 30px;">
-                                    <label>
-                                      <input type="checkbox" ng-checked="el.status==1">
-                                      <span class="lever"></span>
-                                    </label>
+                                <label><input type="checkbox" ng-checked="el.status==1"><span class="lever"></span></label>
                             </span>
 
                             <!-- 编辑用户信息画面区域 -->
                             <div id="look_Operator" class="modal">
                                 <form name="change_operatorForm" novalidate>
                                     <div class="modal-content">
-                                        <h4 class="center-align">操作员信息</h4>
+                                        <h4 class="center-align">委托人信息</h4>
                                         <div class="divider" style="background: #00bcd4;height: 2px;"></div>
                                         <div class="container">
                                             <div class="row" style="margin-top: 40px">
                                                 <div class="row" ng-class="{ 'has-error' : change_operatorForm.new_userName.$invalid&&submitted }">
-                                                    <h5 class="col s2-0">
-                                                        <span style="color: red">*</span>
-                                                        姓名:</h5>
+                                                    <h5 class="col s2-0"><span style="color: red">*</span>姓名:</h5>
                                                     <input  id="look_userName" name="new_userName" type="text" autocomplete="off" ng-model="look_operation.real_name" required class=" col s6-0">
                                                     <div class="col s2-0 sexBox" sex-change >
                                                         <i class="mdi mdi-human-male " sex="1" ng-class="{ 'sex' : look_operation.gender=='1' }"></i>
@@ -147,32 +140,23 @@
                                                 <div class="row">
                                                     <div class="col s6">
                                                         <div class="row" ng-class="{ 'has-error' : change_operatorForm.dep.$invalid&&submitted }">
-                                                            <h5 class="col s4-0">
-                                                                <span style="color: red">*</span>
-                                                                部门:
-                                                            </h5>
+                                                            <h5 class="col s4-0"><span style="color: red">*</span>部门:</h5>
                                                             <select car-select name="dep" class="browser-default col s6-0" ng-model="look_operation.type" required>
-                                                                <!--<option value="" disabled selected>请选择</option>-->
                                                                 <option ng-repeat="el in userInfoArray" ng-value="el.type">{{el.name}}</option>
                                                             </select>
                                                         </div>
                                                     </div>
                                                     <div class="col s6"  ng-class="{ 'has-error':change_operatorForm.phone.$invalid&&submitted }">
-                                                        <h5 class="col s4-0">
-                                                            <span style="color: red">*</span>
-                                                            电话:
-                                                        </h5>
+                                                        <h5 class="col s4-0"><span style="color: red">*</span>电话:</h5>
                                                         <input  id="look_phone" name="phone" ng-model="look_operation.mobile" autocomplete="off" type="text" required class=" col s6-0">
                                                     </div>
                                                 </div>
                                                 <div class="row" ng-class="{ 'has-error':change_operatorForm.password.$invalid&&submitted }">
-                                                    <div class="col s6">
-                                                        工作状态:
+                                                    <div class="col s6">工作状态:
                                                         <span ng-if="look_operation.status==0">停用</span>
                                                         <span ng-if="look_operation.status==1">可用</span>
                                                     </div>
                                                 </div>
-
                                             </div>
                                         </div>
                                     </div>

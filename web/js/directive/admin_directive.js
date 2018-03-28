@@ -295,3 +295,13 @@ adminDirective.directive('validNum', ['$parse', function ($parse) {
         }
     };
 }]);
+//tab键之间转换
+adminDirective.directive("ulTabs", function () {
+    return {
+        restrict: "A",
+        link: function () {
+            $('ul.tabs').tabs();
+        }
+    }
+});
+
