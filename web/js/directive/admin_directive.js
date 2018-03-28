@@ -258,3 +258,37 @@ adminDirective.directive('footer', function () {
         restrict: 'E'
     };
 });
+
+adminDirective.directive('validNum', ['$parse', function ($parse) {
+    return {
+        restrict:"AE",
+        require: 'ngModel',
+        link:function(scope,element,attrs,ngModelCtrl){
+            // make sure we're connected to a model
+            if (!ngModelCtrl) {
+                return;
+            }
+
+            ngModelCtrl.$parsers.push(function (val) {
+                if (val === undefined || val === null) {
+                    val = '';
+                }
+
+                var clean = val.toString().replace(/[^0-9]+/g, '');
+
+                if (val !== clean) {
+                    ngModelCtrl.$setViewValue(clean);
+                    ngModelCtrl.$render();
+                }
+                return clean;
+            });
+
+            element.bind('keypress', function (e) {
+                var code = e.keyCode || e.which;
+                if (!(code > 47 && code < 58) || e.shiftKey) {
+                    e.preventDefault();
+                }
+            });
+        }
+    };
+}]);

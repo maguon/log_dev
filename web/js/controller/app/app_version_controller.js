@@ -30,7 +30,6 @@ app.controller("app_version_controller", ["$scope", "$state", "$stateParams", "_
         // 检索URL组装
         var url = _host.api_url + "/app?&start=" + $scope.start + "&size=" + $scope.size + condition;
 
-        console.log(url);
         // 调用API取得，画面数据
         _basic.get(url).then(function (data) {
             if (data.success == true) {
@@ -66,6 +65,9 @@ app.controller("app_version_controller", ["$scope", "$state", "$stateParams", "_
      * 打开画面【新增操作】模态框。
      */
     $scope.openAddAppSystem = function () {
+        $('.modal').modal();
+        $('#addAppSystem').modal('open');
+
         $scope.addSystemType = "";
         $scope.addAppType = "";
         $scope.addAppVersion = "";
@@ -74,8 +76,6 @@ app.controller("app_version_controller", ["$scope", "$state", "$stateParams", "_
         $scope.addAppMinVersionNum = "";
         $scope.uploadUrl = "";
         $scope.appDescription = "";
-        $('.modal').modal();
-        $('#addAppSystem').modal('open');
     }
 
     /**
@@ -121,7 +121,6 @@ app.controller("app_version_controller", ["$scope", "$state", "$stateParams", "_
         $('.modal').modal();
         $('#showAppSystem').modal('open');
         _basic.get(_host.api_url + "/app?appId=" + id).then(function (data) {
-            console.log(data);
             if (data.success == true) {
                 $scope.showAppSystemList = data.result[0];
                 $scope.showAppSystemList.app = data.result[0].app + "";
