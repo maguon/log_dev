@@ -43,6 +43,11 @@ app.config(['$stateProvider',"$urlRouterProvider",function($stateProvider,$urlRo
             templateUrl: "/view/system_settings/setting_amend_vin.html",
             controller:'setting_amend_vin_controller'
         })
+        .state("setting_client",{
+            url:"/setting_client",
+            templateUrl: "/view/system_settings/setting_client.html",
+            controller:'setting_client_controller'
+        })
         .state("storage_index", {  //路由状态
             url: "/storage_index",  //路由路径
             templateUrl: "/view/storage/storage_index.html",  //路由填充的模板
