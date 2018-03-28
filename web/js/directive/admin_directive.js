@@ -259,9 +259,10 @@ adminDirective.directive('footer', function () {
     };
 });
 
+// 验证数字(正数)的指令，只能输入[0-9]
 adminDirective.directive('validNum', ['$parse', function ($parse) {
     return {
-        restrict:"AE",
+        restrict:"A",
         require: 'ngModel',
         link:function(scope,element,attrs,ngModelCtrl){
             // make sure we're connected to a model
@@ -269,6 +270,7 @@ adminDirective.directive('validNum', ['$parse', function ($parse) {
                 return;
             }
 
+            // 和画面的ngModel进行数据绑定
             ngModelCtrl.$parsers.push(function (val) {
                 if (val === undefined || val === null) {
                     val = '';
@@ -283,6 +285,7 @@ adminDirective.directive('validNum', ['$parse', function ($parse) {
                 return clean;
             });
 
+            // 键盘按下时触发，只能输入0-9
             element.bind('keypress', function (e) {
                 var code = e.keyCode || e.which;
                 if (!(code > 47 && code < 58) || e.shiftKey) {
