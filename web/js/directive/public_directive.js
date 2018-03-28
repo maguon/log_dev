@@ -9,8 +9,6 @@ publicDirective.directive('header', function () {
         transclude: false,
         restrict: 'E',
         controller: function ($scope, $element, $rootScope, _basic, _config, _host) {
-
-
            /* $scope.pwdReg = _config.pwdRegx;
             var str_type = $element.attr("type");
             $("#brand-logo").attr("src", $element.attr("url"));
@@ -70,7 +68,7 @@ publicDirective.directive('header', function () {
                 _basic.setHeader(_basic.COMMON_AUTH_NAME, _basic.getSession(_basic.COMMON_AUTH_NAME));
                 _basic.get(_host.api_url + "/user/" + userId).then(function (data) {
                     if (data.success == true) {
-                        $scope.userName = data.result[0].user_name;
+                        $scope.userName = data.result[0].real_name;
                         _basic.setSession(_basic.USER_NAME, $scope.userName);
                         _basic.setHeader(_basic.USER_NAME, $scope.userName);
                     } else {
