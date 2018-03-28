@@ -25,7 +25,7 @@
 
                             <!-- 模块 -->
                             <div class="col s6 input-field">
-                                <select material-select watch name="addAppType" id="addAppType" ng-model="appInfo.type">
+                                <select material-select watch ng-model="appInfo.type">
                                     <option value="" selected>请选择</option>
                                     <option  ng-repeat="op in modules" ng-value="{{op.id}}">{{op.name}}</option>
                                 </select>
@@ -119,20 +119,20 @@
 
                             <!-- 系统 -->
                             <div class=" col s6 input-field">
-                                <select id="type" material-select watch id='type' ng-model="showAppInfo.app" style="border-bottom: 1px solid #000">
+                                <select  material-select watch id="app"ng-model="showAppInfo.app" style="border-bottom: 1px solid #000">
                                     <option value="" selected>请选择</option>
                                     <option ng-repeat="app in appSystems" ng-value="{{app.id}}">{{app.name}}</option>
                                 </select>
-                                <label for="type"><span style="color: red">* </span>系统</label>
+                                <label for="app"><span style="color: red">* </span>系统</label>
                             </div>
 
                             <!-- 模块 -->
                             <div class=" col s6 input-field">
-                                <select material-select watch id="app" ng-model="showAppInfo.type" style="border-bottom: 1px solid #000">
+                                <select material-select watch id="type" ng-model="showAppInfo.type" style="border-bottom: 1px solid #000">
                                     <option value="" selected>请选择</option>
                                     <option  ng-repeat="op in modules" ng-value="{{op.id}}">{{op.name}}</option>
                                 </select>
-                                <label for="app"><span style="color: red">* </span>模块</label>
+                                <label for="type"><span style="color: red">* </span>模块</label>
                             </div>
                         </div>
                         <div class="col s12">
@@ -141,7 +141,7 @@
                             <div class=" col s6 p0">
                                 <div class="col s12 input-field">
                                     <input type="text" id="updateAppVersion" ng-model="showAppInfo.version">
-                                    <label for="addAppVersion"><span style="color: red">* </span>版本号</label>
+                                    <label for="updateAppVersion"><span style="color: red">* </span>版本号</label>
                                 </div>
                             </div>
 
@@ -178,7 +178,7 @@
                         <div class="col s12 " style="margin-bottom:  40px;">
                             <div class="col s12 input-field">
                                 <input type="text" name="url" id="updateUploadUrl" ng-model="showAppInfo.url">
-                                <label for="url"><span style="color: red">* </span>下载地址</label>
+                                <label for="updateUploadUrl"><span style="color: red">* </span>下载地址</label>
                             </div>
                         </div>
 
@@ -186,7 +186,7 @@
                         <div class="col s12">
                             <div class="col s12 input-field">
                                 <input type="text" id="pdateforceUpdate_description" ng-model="showAppInfo.remark">
-                                <label for="addforceUpdate_description">描述</label>
+                                <label for="pdateforceUpdate_description">描述</label>
                             </div>
                         </div>
                     </div>
