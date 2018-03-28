@@ -108,7 +108,7 @@ app.controller("app_version_controller", ["$scope", "$state", "$stateParams", "_
             && $scope.appInfo.forceUpdate !== "" && $scope.appInfo.versionNum !== ""
             && $scope.appInfo.minVersionNum !== "" && $scope.appInfo.url !== "") {
 
-            // 调用 API user create app
+            // 调用 API [user create app]
             _basic.post(_host.api_url + "/user/" + userId + "/app", {
                 app: $scope.appInfo.app,
                 appType: $scope.appInfo.type,
