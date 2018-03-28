@@ -16,23 +16,18 @@
 
                             <!-- 系统 -->
                             <div class=" col s6 input-field">
-                                <select material-select watch name="addSystemType" id="addSystemType" ng-model="addSystemType">
+                                <select material-select watch ng-model="appInfo.app">
                                     <option value="" selected>请选择</option>
-                                    <option value="1">安卓</option>
-                                    <option value="2">IOS</option>
+                                    <option ng-repeat="app in appSystems" ng-value="{{app.id}}">{{app.name}}</option>
                                 </select>
                                 <label><span style="color: red">* </span>系统</label>
                             </div>
 
                             <!-- 模块 -->
                             <div class="col s6 input-field">
-                                <select material-select watch name="addAppType" id="addAppType" ng-model="addAppType">
+                                <select material-select watch name="addAppType" id="addAppType" ng-model="appInfo.type">
                                     <option value="" selected>请选择</option>
-                                    <option value="1">物联存车</option>
-                                    <option value="2">车辆管理</option>
-                                    <option value="3">司机</option>
-                                    <option value="4">质量监管</option>
-                                    <option value="5">现场调度</option>
+                                    <option  ng-repeat="op in modules" ng-value="{{op.id}}">{{op.name}}</option>
                                 </select>
                                 <label><span style="color: red">* </span>模块</label>
                             </div>
@@ -42,17 +37,16 @@
                             <!-- 版本号 -->
                             <div class=" col s6 p0">
                                 <div class="col s12 input-field">
-                                    <input type="text" id="addAppVersion" watch ng-model="addAppVersion">
+                                    <input type="text" id="addAppVersion" watch ng-model="appInfo.version">
                                     <label for="addAppVersion"><span style="color: red">* </span>版本号</label>
                                 </div>
                             </div>
 
                             <!-- 是否强制更新 -->
                             <div class=" col s6 input-field">
-                                <select material-select watch ng-model="addForceUpdate">
+                                <select material-select watch ng-model="appInfo.forceUpdate">
                                     <option value="" selected>请选择</option>
-                                    <option value="1">是</option>
-                                    <option value="0">否</option>
+                                    <option ng-repeat="op in forceUpdates" ng-value="{{op.id}}">{{op.name}}</option>
                                 </select>
                                 <label><span style="color: red">* </span>是否强制更新</label>
                             </div>
@@ -63,14 +57,14 @@
                             <!-- 版本序号 -->
                             <div class=" col s6 p0">
                                 <div class="col s12 input-field">
-                                    <input type="number" id="addAppVersionNum" watch valid-num ng-model="addAppVersionNum">
+                                    <input type="number" id="addAppVersionNum" watch valid-num ng-model="appInfo.versionNum">
                                     <label for="addAppVersionNum"><span style="color: red">* </span>版本序号</label>
                                 </div>
                             </div>
 
                             <!-- 最低支持版本序号 -->
                             <div class=" col s6 input-field">
-                                <input type="number" id="addAppMinVersionNum" watch valid-num ng-model="addAppMinVersionNum">
+                                <input type="number" id="addAppMinVersionNum" watch valid-num ng-model="appInfo.minVersionNum">
                                 <label for="addAppMinVersionNum"><span style="color: red">* </span>最低支持版本序号</label>
                             </div>
                         </div>
@@ -78,15 +72,15 @@
                         <!-- 下载地址 -->
                         <div class="col s12 " style="margin-bottom:  40px;">
                             <div class="col s12 input-field">
-                                <input type="text" name="uploadUrl" id="uploadUrl" ng-model="uploadUrl">
-                                <label for="uploadUrl"><span style="color: red">* </span>下载地址</label>
+                                <input type="text" id="url" ng-model="appInfo.url">
+                                <label for="url"><span style="color: red">* </span>下载地址</label>
                             </div>
                         </div>
 
                         <!-- 描述 -->
                         <div class="col s12">
                             <div class="col s12 input-field">
-                                <input type="text" name="addforceUpdate_description" id="addforceUpdate_description" ng-model="appDescription">
+                                <input type="text" name="addforceUpdate_description" id="addforceUpdate_description" ng-model="appInfo.remark">
                                 <label for="addforceUpdate_description">描述</label>
                             </div>
                         </div>
@@ -125,23 +119,18 @@
 
                             <!-- 系统 -->
                             <div class=" col s6 input-field">
-                                <select id="type" material-select watch id='type' name="showAppSystemList.type" ng-model="showAppSystemList.type" style="border-bottom: 1px solid #000">
+                                <select id="type" material-select watch id='type' ng-model="showAppInfo.app" style="border-bottom: 1px solid #000">
                                     <option value="" selected>请选择</option>
-                                    <option value="1">安卓</option>
-                                    <option value="2">IOS</option>
+                                    <option ng-repeat="app in appSystems" ng-value="{{app.id}}">{{app.name}}</option>
                                 </select>
                                 <label for="type"><span style="color: red">* </span>系统</label>
                             </div>
 
                             <!-- 模块 -->
                             <div class=" col s6 input-field">
-                                <select material-select watch id='app' name="showAppSystemList.app" ng-model="showAppSystemList.app" style="border-bottom: 1px solid #000">
+                                <select material-select watch id="app" ng-model="showAppInfo.type" style="border-bottom: 1px solid #000">
                                     <option value="" selected>请选择</option>
-                                    <option value="1">物联存车</option>
-                                    <option value="2">车辆管理</option>
-                                    <option value="3">司机</option>
-                                    <option value="4">质量监管</option>
-                                    <option value="5">现场调度</option>
+                                    <option  ng-repeat="op in modules" ng-value="{{op.id}}">{{op.name}}</option>
                                 </select>
                                 <label for="app"><span style="color: red">* </span>模块</label>
                             </div>
@@ -151,7 +140,7 @@
                             <!-- 版本号 -->
                             <div class=" col s6 p0">
                                 <div class="col s12 input-field">
-                                    <input type="text" id="updateAppVersion" ng-model="showAppSystemList.version">
+                                    <input type="text" id="updateAppVersion" ng-model="showAppInfo.version">
                                     <label for="addAppVersion"><span style="color: red">* </span>版本号</label>
                                 </div>
                             </div>
@@ -159,10 +148,9 @@
                             <!-- 是否强制更新 -->
                             <div class=" col s6 p0">
                                 <div class="input-field col s12">
-                                    <select required material-select ng-model="showAppSystemList.force_update">
+                                    <select required material-select ng-model="showAppInfo.force_update">
                                         <option value="" selected>请选择</option>
-                                        <option value="1">是</option>
-                                        <option value="0">否</option>
+                                        <option ng-repeat="op in forceUpdates" ng-value="{{op.id}}">{{op.name}}</option>
                                     </select>
                                     <label><span style="color: red">* </span>是否强制更新</label>
                                 </div>
@@ -174,14 +162,14 @@
                             <!-- 版本序号 -->
                             <div class=" col s6 p0">
                                 <div class="col s12 input-field">
-                                    <input type="number" id="updateAppVersionNum" watch valid-num ng-model="showAppSystemList.version_number">
+                                    <input type="number" id="updateAppVersionNum" watch valid-num ng-model="showAppInfo.version_number">
                                     <label for="updateAppVersionNum"><span style="color: red">* </span>版本序号</label>
                                 </div>
                             </div>
 
                             <!-- 最低支持版本序号 -->
                             <div class=" col s6 input-field">
-                                <input type="number" id="updateAppMinVersionNum" watch valid-num ng-model="showAppSystemList.floor_version_number">
+                                <input type="number" id="updateAppMinVersionNum" watch valid-num ng-model="showAppInfo.floor_version_number">
                                 <label for="updateAppMinVersionNum"><span style="color: red">* </span>最低支持版本序号</label>
                             </div>
                         </div>
@@ -189,15 +177,15 @@
                         <!-- 下载地址 -->
                         <div class="col s12 " style="margin-bottom:  40px;">
                             <div class="col s12 input-field">
-                                <input type="text" name="uploadUrl" id="updateUploadUrl" ng-model="showAppSystemList.url">
-                                <label for="uploadUrl"><span style="color: red">* </span>下载地址</label>
+                                <input type="text" name="url" id="updateUploadUrl" ng-model="showAppInfo.url">
+                                <label for="url"><span style="color: red">* </span>下载地址</label>
                             </div>
                         </div>
 
                         <!-- 描述 -->
                         <div class="col s12">
                             <div class="col s12 input-field">
-                                <input type="text" id="pdateforceUpdate_description" ng-model="showAppSystemList.remark">
+                                <input type="text" id="pdateforceUpdate_description" ng-model="showAppInfo.remark">
                                 <label for="addforceUpdate_description">描述</label>
                             </div>
                         </div>
@@ -214,7 +202,7 @@
                     </div>
                     <!-- 确定 按钮 -->
                     <div class="col s2">
-                        <a ng-click="updateAppInfo(showAppSystemList.id)" style="width: 100%" class="waves-light waves-effect cyan lighten-1 btn">确定</a>
+                        <a ng-click="updateAppInfo(showAppInfo.id)" style="width: 100%" class="waves-light waves-effect cyan lighten-1 btn">确定</a>
                     </div>
                 </div>
             </div>
@@ -234,10 +222,9 @@
                             <!-- 主画面：检索部 系统 -->
                             <div class=" col s4 p0">
                                 <div class="input-field col s12">
-                                    <select material-select watch name="type" class="type" ng-model="getSystemType">
+                                    <select material-select watch name="type" class="type" ng-model="conditionApp">
                                         <option value="">系统</option>
-                                        <option value="1">安卓</option>
-                                        <option value="2">IOS</option>
+                                        <option  ng-repeat="app in appSystems" ng-value="{{app.id}}">{{app.name}}</option>
                                     </select>
                                 </div>
                             </div>
@@ -245,13 +232,9 @@
                             <!-- 主画面：检索部 模块 -->
                             <div class=" col s4 p0">
                                 <div class="input-field col s12">
-                                    <select material-select watch name="appType" class="appType" ng-model="appType">
+                                    <select material-select watch ng-model="conditionType">
                                         <option value="">模块</option>
-                                        <option value="1">物联存车</option>
-                                        <option value="2">车辆管理</option>
-                                        <option value="3">司机</option>
-                                        <option value="4">质量监管</option>
-                                        <option value="5">现场调度</option>
+                                        <option ng-repeat="op in modules" ng-value="{{op.id}}">{{op.name}}</option>
                                     </select>
                                 </div>
                             </div>
@@ -259,10 +242,9 @@
                             <!-- 主画面：检索部 是否强制更新 -->
                             <div class=" col s4 p0">
                                 <div class="input-field col s12">
-                                    <select material-select watch ng-model="forceUpdate">
+                                    <select material-select watch ng-model="conditionForceUpdate">
                                         <option value="">是否强制更新</option>
-                                        <option value="1">是</option>
-                                        <option value="0">否</option>
+                                        <option ng-repeat="op in forceUpdates" ng-value="{{op.id}}">{{op.name}}</option>
                                     </select>
                                 </div>
                             </div>
@@ -309,21 +291,13 @@
                                     <!-- 操作时间 -->
                                     <td>{{appSystemItem.updated_on | date:'yyyy-MM-dd HH:mm:ss'}}</td>
                                     <!-- 系统 -->
-                                    <td ng-if="appSystemItem.type==null">所有</td>
-                                    <td ng-if="appSystemItem.type==1">安卓</td>
-                                    <td ng-if="appSystemItem.type==2">IOS</td>
-
+                                    <td>{{appSystems[appSystemItem.app - 1].name}}</td>
                                     <!-- 模块 -->
-                                    <td ng-if="appSystemItem.app==1">物联存车</td>
-                                    <td ng-if="appSystemItem.app==2">车辆管理</td>
-                                    <td ng-if="appSystemItem.app==3">司机</td>
-                                    <td ng-if="appSystemItem.app==4">质量监管</td>
-                                    <td ng-if="appSystemItem.app==5">现场调度</td>
+                                    <td>{{modules[appSystemItem.type - 1].name}}</td>
                                     <!-- 最新版本号 -->
                                     <td ng-bind="appSystemItem.version"></td>
                                     <!-- 强制更新 -->
-                                    <td ng-if="appSystemItem.force_update==1">是</td>
-                                    <td ng-if="appSystemItem.force_update==0">否</td>
+                                    <td>{{forceUpdates[appSystemItem.force_update].name}}</td>
                                     <!-- 描述 -->
                                     <td ng-bind="appSystemItem.remark"></td>
                                     <!-- 操作 -->

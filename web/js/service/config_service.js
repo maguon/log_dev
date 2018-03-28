@@ -98,5 +98,42 @@ baseService.factory("_config", function () {
             colorId: "CCCCCC "
         }
     ];
+
+    // app系统
+    _this.appSystems = [
+        {
+            id: 1,
+            name: "安卓"
+        },
+        {
+            id: 2,
+            name: "IOS"
+        }
+    ];
+
+    // 模块
+    _this.modules = [
+        {
+            id: 1,
+            name: "仓储部"
+        },
+        {
+            id: 2,
+            name: "国贸部"
+        }
+    ];
+
+    // 是否强制更新
+    _this.forceUpdates = [
+        {
+            id: 0,
+            name: "否"
+        },
+        {
+            id: 1,
+            name: "是"
+        }
+    ];
+
     return _this
 });

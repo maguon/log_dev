@@ -11,18 +11,46 @@ app.controller("app_version_controller", ["$scope", "$state", "$stateParams", "_
     // 分页用 每页画面数据
     $scope.size = 10;
 
+    // 条件：系统 [1:安卓 2:IOS]
+    $scope.appSystems = _config.appSystems;
+
+    // 条件：模块 []
+    $scope.modules = _config.modules;
+
+    // 条件：是否强制更新 [0：否 1:是]
+    $scope.forceUpdates = _config.forceUpdates;
+
+    // 追加画面初期数据
+    var initAppInfo = {
+        app:"",
+        type:"",
+        version:"",
+        forceUpdate:"",
+        versionNum:"",
+        minVersionNum:"",
+        url:"",
+        remark:""
+    };
+
+    // 条件：系统
+    $scope.conditionApp = "";
+    // 条件：模块
+    $scope.conditionType = "";
+    // 条件：是否强制更新
+    $scope.conditionForceUpdate = "";
+
     /**
      * 获取app系统详细信息列表
      */
     function getAppSystemList() {
         // 检索条件组装
         var condition = _basic.objToUrl({
-            // 条件：app区分
-            app: $scope.appType,
-            // 条件：系统区分
-            type: $scope.getSystemType,
+            // 条件：系统
+            app: $scope.conditionApp,
+            // 条件：模块
+            type: $scope.conditionType,
             // 条件：是否强制更新
-            forceUpdate: $scope.forceUpdate
+            forceUpdate: $scope.conditionForceUpdate + ""
         });
 
         condition = condition.length > 0 ? "&" + condition : condition;
@@ -32,7 +60,7 @@ app.controller("app_version_controller", ["$scope", "$state", "$stateParams", "_
 
         // 调用API取得，画面数据
         _basic.get(url).then(function (data) {
-            if (data.success == true) {
+            if (data.success) {
                 // 前一页 按钮 控制
                 if ($scope.start > 0) {
                     $("#pre").show();
@@ -51,7 +79,7 @@ app.controller("app_version_controller", ["$scope", "$state", "$stateParams", "_
                 swal(data.msg, "", "error");
             }
         });
-    };
+    }
 
     /**
      * 点击搜索按钮。
@@ -68,38 +96,32 @@ app.controller("app_version_controller", ["$scope", "$state", "$stateParams", "_
         $('.modal').modal();
         $('#addAppSystem').modal('open');
 
-        $scope.addSystemType = "";
-        $scope.addAppType = "";
-        $scope.addAppVersion = "";
-        $scope.addForceUpdate = "";
-        $scope.addAppVersionNum = "";
-        $scope.addAppMinVersionNum = "";
-        $scope.uploadUrl = "";
-        $scope.appDescription = "";
-    }
+        // 初期化数据
+        $scope.appInfo = initAppInfo;
+    };
 
     /**
      * 追加app系统信息。
      */
     $scope.addAppInfo = function () {
-        if ($scope.addAppType !== "" && $scope.addSystemType !== "" && $scope.addForceUpdate !== ""
-            && $scope.addAppVersion !== "" && $scope.uploadUrl !== ""
-            && $scope.addAppVersionNum !== "" && $scope.addAppMinVersionNum !== "") {
+        if ($scope.appInfo.app !== "" && $scope.appInfo.type !== "" && $scope.appInfo.version !== ""
+            && $scope.appInfo.forceUpdate !== "" && $scope.appInfo.versionNum !== ""
+            && $scope.appInfo.minVersionNum !== "" && $scope.appInfo.url !== "") {
 
             // 调用 API user create app
             _basic.post(_host.api_url + "/user/" + userId + "/app", {
-                app: $scope.addAppType,
-                appType: $scope.addSystemType,
-                version: $scope.addAppVersion,
+                app: $scope.appInfo.app,
+                appType: $scope.appInfo.type,
+                version: $scope.appInfo.version,
                 // 版本序号
-                versionNumber: $scope.addAppVersionNum,
+                versionNumber: $scope.appInfo.versionNum,
                 // 最低支持版本序号
-                floorVersionNumber: $scope.addAppMinVersionNum,
-                forceUpdate: $scope.addForceUpdate,
-                url: $scope.uploadUrl,
-                remark: $scope.appDescription
+                floorVersionNumber: $scope.appInfo.minVersionNum,
+                forceUpdate: $scope.appInfo.forceUpdate,
+                url: $scope.appInfo.url,
+                remark: $scope.appInfo.remark
             }).then(function (data) {
-                if (data.success == true) {
+                if (data.success) {
                     $('#addAppSystem').modal('close');
                     swal("新增成功", "", "success");
                     $scope.searchAppSystem();
@@ -110,7 +132,7 @@ app.controller("app_version_controller", ["$scope", "$state", "$stateParams", "_
         } else {
             swal("请填写完整信息！", "", "warning");
         }
-    }
+    };
 
     /**
      * 打开画面【操作记录】模态框。
@@ -121,40 +143,36 @@ app.controller("app_version_controller", ["$scope", "$state", "$stateParams", "_
         $('.modal').modal();
         $('#showAppSystem').modal('open');
         _basic.get(_host.api_url + "/app?appId=" + id).then(function (data) {
-            if (data.success == true) {
-                $scope.showAppSystemList = data.result[0];
-                $scope.showAppSystemList.app = data.result[0].app + "";
-                $scope.showAppSystemList.type = data.result[0].type + "";
-                // $scope.showAppSystemList.versionNumber = data.result[0].version_number;
-                // $scope.showAppSystemList.floorVersionNumber = data.result[0].floor_version_number;
-                $scope.showAppSystemList.force_update = data.result[0].force_update + "";
+            if (data.success) {
+                $scope.showAppInfo = data.result[0];
             } else {
                 swal(data.msg, "", "error");
             }
         })
-    }
+    };
 
     /**
      * 修改app系统信息。
      * @param id App id
      */
     $scope.updateAppInfo = function (id) {
-        if ($scope.showAppSystemList.app !== "" && $scope.showAppSystemList.type !== ""
-            && $scope.showAppSystemList.force_update !== "" && $scope.showAppSystemList.version !== "" && $scope.showAppSystemList.url !== "") {
+        if ($scope.showAppInfo.app !== "" && $scope.showAppInfo.type !== "" && $scope.showAppInfo.version !== ""
+            && $scope.showAppInfo.force_update !== "" && $scope.showAppInfo.version_number !== ""
+            && $scope.showAppInfo.floor_version_number !== "" && $scope.showAppInfo.url !== "") {
             var obj = {
-                app: $scope.showAppSystemList.app,
-                appType: $scope.showAppSystemList.type,
-                forceUpdate: $scope.showAppSystemList.force_update,
-                version: $scope.showAppSystemList.version,
+                app: $scope.showAppInfo.app,
+                appType: $scope.showAppInfo.type,
+                forceUpdate: $scope.showAppInfo.force_update,
+                version: $scope.showAppInfo.version,
                 // 版本序号
-                versionNumber: $scope.showAppSystemList.version_number,
+                versionNumber: $scope.showAppInfo.version_number,
                 // 最低支持版本序号
-                floorVersionNumber: $scope.showAppSystemList.floor_version_number,
-                url: $scope.showAppSystemList.url,
-                remark: $scope.showAppSystemList.remark
+                floorVersionNumber: $scope.showAppInfo.floor_version_number,
+                url: $scope.showAppInfo.url,
+                remark: $scope.showAppInfo.remark
             };
             _basic.put(_host.api_url + "/user/" + userId + "/app/" + id, obj).then(function (data) {
-                if (data.success == true) {
+                if (data.success) {
                     swal("修改成功", "", "success");
                     $('#showAppSystem').modal('close');
                     getAppSystemList();
@@ -187,4 +205,4 @@ app.controller("app_version_controller", ["$scope", "$state", "$stateParams", "_
      * 画面初期检索。
      */
     $scope.searchAppSystem();
-}])
+}]);
