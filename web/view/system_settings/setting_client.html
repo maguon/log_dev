@@ -2,10 +2,12 @@
 <div class="row" style="margin: 0">
     <div id="addClient" class="modal modal-fixed-footer" style="width: 65%;height: 550px">
         <div class="modal-content center fz20" style="font-weight: 500;padding: 0">
+
             <!--标题：增加委托方-->
             <div class="row col s12 vc-center fz22" style="color: white;letter-spacing:1px;font-weight: bold;height: 70px;background-color:rgb(63,185,193)">
                 <p>增加委托方</p>
             </div>
+
             <!--正文：详情-->
             <div class="row col s12">
                 <div style="width: 90%;margin: 0 auto">
@@ -20,6 +22,7 @@
                                 </select>
                                 <label ><span style="color: red">* </span>性质</label>
                             </div>
+
                             <!--委托方简称-->
                             <div class=" col s6 input-field">
                                 <input type="text" id="addShortName" name="addShortName" ng-model="addShortName">
@@ -27,6 +30,7 @@
                             </div>
                         </div>
                         <div class=" col s6 p0">
+
                             <!--委托方全称-->
                             <div class=" col s12 input-field">
                                 <input type="text" id="addEntrustName" name="addEntrustName" ng-model="addEntrustName">
@@ -35,6 +39,7 @@
                         </div>
                     </div>
                     <div class="col s12">
+
                         <!--联系人-->
                         <div class=" col s6 p0">
                             <div class="col s12 input-field">
@@ -42,6 +47,7 @@
                                 <label for="addContactsName"><span style="color: red">* </span>联系人</label>
                             </div>
                         </div>
+
                         <!--联系电话-->
                         <div class=" col s6 p0">
                             <div class="col s12 input-field">
@@ -50,6 +56,7 @@
                             </div>
                         </div>
                     </div>
+
                     <!--详细地址-->
                     <div class="col s12 " style="margin-bottom:  40px;">
                         <div class="col s12 input-field">
@@ -57,6 +64,7 @@
                             <label for="addAddress"><span style="color: red">* </span>详细地址</label>
                         </div>
                     </div>
+
                     <!--备注-->
                     <div class="col s12 " style="margin-bottom:  40px;">
                         <div class="col s12 input-field">
@@ -69,12 +77,14 @@
         </div>
         <div class="modal-footer right-align">
             <div class="col s6 push-l6">
+
                 <!--取消按钮-->
                 <div class="col s3 offset-s6">
                     <a style="width: 100%" class="modal-action modal-close waves-light waves-effect grey lighten-1 btn">
                         取消
                     </a>
                 </div>
+
                 <!--确定按钮-->
                 <div class="col s3">
                     <a ng-click="addClientItem()" style="width: 100%" class="waves-light waves-effect cyan lighten-1 btn">
@@ -85,23 +95,29 @@
         </div>
     </div>
 </div>
+
+
 <!-- 设置委托方的模态框 -->
 <div class="row" style="margin: 0">
     <div id="updateClient" class="modal modal-fixed-footer" style="width: 65%;height: 610px">
         <div class="modal-content center fz20" style="font-weight: 500;padding: 0">
+
             <!--标题：委托方设置-->
             <div class=" col s12 vc-center fz22" style="color: white;letter-spacing:1px;font-weight: bold;height: 70px;background-color:rgb(63,185,193)">
                 <p>委托方设置</p>
             </div>
+
             <!--编号-->
             <div class="row col s12 vc-center fz22 " style="color: #26c6da;letter-spacing:1px;font-weight: bold;height: 70px;background-color:lightgray">
                 <p class="col s2 pull-l10">{{clientList.id}}</p>
             </div>
+
             <!--正文：详情-->
             <div class="row col s12">
                 <div style="width: 90%;margin: 0 auto">
                     <div class="col s12">
                         <div class=" col s6 p0">
+
                             <!--性质-->
                             <div class=" col s6 input-field">
                                 <select material-select watch  class="insure_name" ng-model="clientList.entrust_type">
@@ -111,6 +127,7 @@
                                 </select>
                                 <label ><span style="color: red">* </span>性质</label>
                             </div>
+
                             <!--委托方简称-->
                             <div class=" col s6 input-field">
                                 <input type="text" id="updateShortName" name="updateShortName" ng-model="clientList.short_name">
@@ -118,6 +135,7 @@
                             </div>
                         </div>
                         <div class=" col s6 p0">
+
                             <!--委托方全称-->
                             <div class=" col s12 input-field">
                                 <input type="text" id="updateEntrustName" name="updateEntrustName" ng-model="clientList.entrust_name">
@@ -126,6 +144,7 @@
                         </div>
                     </div>
                     <div class="col s12">
+
                         <!--联系人-->
                         <div class=" col s6 p0">
                             <div class="col s12 input-field">
@@ -133,6 +152,7 @@
                                 <label for="updateContactsName"><span style="color: red">* </span>联系人</label>
                             </div>
                         </div>
+
                         <!--联系电话-->
                         <div class=" col s6 p0">
                             <div class="col s12 input-field">
@@ -141,6 +161,7 @@
                             </div>
                         </div>
                     </div>
+
                     <!--详细地址-->
                     <div class="col s12 " style="margin-bottom:  40px;">
                         <div class="col s12 input-field">
@@ -148,6 +169,7 @@
                             <label for="updateAddress"><span style="color: red">* </span>详细地址</label>
                         </div>
                     </div>
+
                     <!--备注-->
                     <div class="col s12 " style="margin-bottom:  40px;">
                         <div class="col s12 input-field">
@@ -161,12 +183,14 @@
         </div>
         <div class="modal-footer right-align">
             <div class="col s6 push-l6">
+
                 <!--取消按钮-->
                 <div class="col s3 offset-s6">
                     <a style="width: 100%" class="modal-action modal-close waves-light waves-effect grey lighten-1 btn">
                         取消
                     </a>
                 </div>
+
                 <!--确定按钮-->
                 <div class="col s3">
                     <a ng-click="updateClientItem(clientList.id)" style="width: 100%" class="waves-light waves-effect cyan lighten-1 btn">
@@ -177,14 +201,20 @@
         </div>
     </div>
 </div>
+
+
 <!-- 主菜单：委托方管理 -->
 <div class="usersWrap"  style="width: 70%;margin: 0 auto">
-    <div class="row card" style="height: 115px;margin-bottom: 30px">
-        <div class="col s12" style="margin-top: 20px;">
+    <div class="row card" style="height: 100px;margin-bottom: 30px">
+        <div class="col s12" style="margin-top:10px;">
+
+            <!--按编号查找-->
             <div class="col s3 input-field">
                 <input name="showId" id="showId" type="text" ng-model="showId" >
                 <label for="showId">编号</label>
             </div>
+
+            <!--按性质查找-->
             <div class="col s3 input-field">
                 <select  id="showEntrustType"  ng-model="showEntrustType" material-select watch>
                     <option value="" selected>性质</option>
@@ -192,16 +222,22 @@
                     <option value="2" selected>企业</option>
                 </select>
             </div>
+
+            <!--按委托方查找-->
             <div class="col s3 input-field">
                 <input name="showShortName" id="showShortName" type="text" ng-model="showShortName" >
                 <label for="showShortName">委托方</label>
             </div>
             <div class="col s3">
+
+                <!--获取列表-->
                 <div class="col s4 center push-l2">
                     <a class=" btn-floating btn-large waves-light waves-effect red lighten-2  btn vc-center"  ng-click="getClientList()">
                         <i class="mdi mdi-magnify"></i>
                     </a>
                 </div>
+
+                <!--添加按钮-->
                 <div class="col s4 center push-l2">
                     <a class="btn-floating btn-large waves-light waves-effect cyan lighten-1 btn vc-center"   ng-click="addClient()">
                         <i class="mdi mdi-plus"></i>
@@ -210,23 +246,30 @@
             </div>
         </div>
     </div>
+    <!--列表详情-->
     <ul class="collapsible card row"  data-collapsible="accordion" collapsible>
         <li ng-repeat="el in getClientArray" class="grey-text text-darken-1 vc-center" style="border-bottom: 1px solid #ccc;height: 70px;line-height: 70px;text-align: center">
+            <!--序号-->
             <div class="col s1" ng-bind="el.id" style="color: #4dd0e1;"></div>
+            <!--企业性质-->
             <div class="col s1 fz30" ng-if="el.entrust_type==1"  style="color: #4dd0e1;"><i class="mdi mdi-account"></i></div>
             <div class="col s1 fz30" ng-if="el.entrust_type==2"  style="color: #4dd0e1;"><i class="mdi mdi-domain"></i></div>
+            <!--企业名字（全称/简称）-->
             <div class="col s6" style="position: relative;height: 70%">
-                <span  ng-bind="el.short_name" style="position: absolute;top:-40%;left: 0%"></span>
-                <span  ng-bind="el.entrust_name" style="position: absolute;top: 5%;left: 0%"></span>
+                <span  ng-bind="el.short_name" style="position: absolute;top:-40%;left: 7%"></span>
+                <span  ng-bind="el.entrust_name" style="position: absolute;top: 5%;left: 7%"></span>
             </div>
+            <!--联系人/创建时间-->
             <div class="col s3"  style="height: 70%;border-right: 1px solid #ccc;position: relative">
-                <span  ng-bind="el.contacts_name" style="position: absolute;top: -40%;right: 10%;"></span>
-                <span  ng-bind="el.created_on | date:'yyyy-MM-dd HH:mm:ss'" style="position: absolute;top: 5%;right: 10%;"></span>
+                <span  ng-bind="el.contacts_name" style="position: absolute;top: -40%;right: 15%;"></span>
+                <span  ng-bind="el.created_on | date:'yyyy-MM-dd HH:mm:ss'" style="position: absolute;top: 5%;right: 15%;"></span>
             </div>
+            <!--操作-->
             <div class="col s1  right">
                 <span><i class="mdi mdi-file-document cyan-text text-lighten-1 fz30" ng-click="updateClient(el.id)"></i></span>
             </div>
         </li>
+        <!--当搜索结果为空时-->
         <li class="grey-text text-darken-1" ng-if="getClientArray.length == 0" style="border-bottom: 1px solid #ccc;height: 100px;line-height: 100px;text-align: center">
             <div><span style="letter-spacing: 2px">暂无数据</span></div>
         </li>
