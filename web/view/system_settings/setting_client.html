@@ -210,15 +210,13 @@
             </div>
         </div>
     </div>
-    <ul class="collapsible card row fz18"  data-collapsible="accordion" collapsible>
-        <li ng-repeat="el in getClientArray" class="grey-text text-darken-1 vc-center" style="border-bottom: 1px solid #ccc;height: 100px;line-height: 100px;text-align: center">
+    <ul class="collapsible card row"  data-collapsible="accordion" collapsible>
+        <li ng-repeat="el in getClientArray" class="grey-text text-darken-1 vc-center" style="border-bottom: 1px solid #ccc;height: 70px;line-height: 70px;text-align: center">
             <div class="col s1" ng-bind="el.id" style="color: #4dd0e1;"></div>
             <div class="col s1 fz30" ng-if="el.entrust_type==1"  style="color: #4dd0e1;"><i class="mdi mdi-account"></i></div>
             <div class="col s1 fz30" ng-if="el.entrust_type==2"  style="color: #4dd0e1;"><i class="mdi mdi-domain"></i></div>
             <div class="col s6" style="position: relative;height: 70%">
                 <span  ng-bind="el.short_name" style="position: absolute;top:-40%;left: 0%"></span>
-                <span  ng-if="el.entrust_type==1" style="position: absolute;top: -40%;left:20%;color: red">个人</span>
-                <span  ng-if="el.entrust_type==2" style="position: absolute;top:-40%;left:20%;color: #4dd0e1">企业</span>
                 <span  ng-bind="el.entrust_name" style="position: absolute;top: 5%;left: 0%"></span>
             </div>
             <div class="col s3"  style="height: 70%;border-right: 1px solid #ccc;position: relative">

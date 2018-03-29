@@ -1,5 +1,5 @@
 app.controller("setting_client_controller", ["$scope", "_basic", "_config", "_host", function ($scope, _basic, _config, _host) {
-    $scope.size = 5;
+    $scope.size =10;
     $scope.start = 0;
     var userId = _basic.getSession(_basic.USER_ID);
     // 点击按钮查询
