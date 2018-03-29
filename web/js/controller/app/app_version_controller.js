@@ -32,6 +32,9 @@ app.controller("app_version_controller", ["$scope", "$state", "$stateParams", "_
         remark:""
     };
 
+    // 追加画面数据
+    $scope.appInfo = {};
+
     // 条件：系统
     $scope.conditionApp = "";
     // 条件：模块
@@ -52,7 +55,6 @@ app.controller("app_version_controller", ["$scope", "$state", "$stateParams", "_
             // 条件：是否强制更新
             forceUpdate: $scope.conditionForceUpdate + ""
         });
-
         condition = condition.length > 0 ? "&" + condition : condition;
 
         // 检索URL组装
@@ -85,7 +87,9 @@ app.controller("app_version_controller", ["$scope", "$state", "$stateParams", "_
      * 点击搜索按钮。
      */
     $scope.searchAppSystem = function () {
+        // 默认第一页
         $scope.start = 0;
+        // 根据画面条件，检索画面数据
         getAppSystemList();
     };
 
@@ -93,11 +97,11 @@ app.controller("app_version_controller", ["$scope", "$state", "$stateParams", "_
      * 打开画面【新增操作】模态框。
      */
     $scope.openAddAppSystem = function () {
+        // 初期化数据
+        angular.copy(initAppInfo, $scope.appInfo);
+
         $('.modal').modal();
         $('#addAppSystem').modal('open');
-
-        // 初期化数据
-        $scope.appInfo = initAppInfo;
     };
 
     /**
@@ -108,19 +112,20 @@ app.controller("app_version_controller", ["$scope", "$state", "$stateParams", "_
             && $scope.appInfo.forceUpdate !== "" && $scope.appInfo.versionNum !== ""
             && $scope.appInfo.minVersionNum !== "" && $scope.appInfo.url !== "") {
 
-            // 调用 API [user create app]
-            _basic.post(_host.api_url + "/user/" + userId + "/app", {
+            // 追加画面数据
+            var obj = {
                 app: $scope.appInfo.app,
                 appType: $scope.appInfo.type,
                 version: $scope.appInfo.version,
-                // 版本序号
                 versionNumber: $scope.appInfo.versionNum,
-                // 最低支持版本序号
                 floorVersionNumber: $scope.appInfo.minVersionNum,
                 forceUpdate: $scope.appInfo.forceUpdate,
                 url: $scope.appInfo.url,
                 remark: $scope.appInfo.remark
-            }).then(function (data) {
+            };
+
+            // 调用 API [user create app]
+            _basic.post(_host.api_url + "/user/" + userId + "/app", obj).then(function (data) {
                 if (data.success) {
                     $('#addAppSystem').modal('close');
                     swal("新增成功", "", "success");
@@ -137,12 +142,13 @@ app.controller("app_version_controller", ["$scope", "$state", "$stateParams", "_
     /**
      * 打开画面【操作记录】模态框。
      *
-     * @param id App id
+     * @param appId App id
      */
-    $scope.openModifyAppSystem = function (id) {
+    $scope.openModifyAppSystem = function (appId) {
         $('.modal').modal();
         $('#showAppSystem').modal('open');
-        _basic.get(_host.api_url + "/app?appId=" + id).then(function (data) {
+        // 根据选中数据ID，取得详细信息
+        _basic.get(_host.api_url + "/app?appId=" + appId).then(function (data) {
             if (data.success) {
                 $scope.showAppInfo = data.result[0];
             } else {
@@ -153,28 +159,29 @@ app.controller("app_version_controller", ["$scope", "$state", "$stateParams", "_
 
     /**
      * 修改app系统信息。
-     * @param id App id
+     * @param appId App id
      */
-    $scope.updateAppInfo = function (id) {
+    $scope.updateAppInfo = function (appId) {
         if ($scope.showAppInfo.app !== "" && $scope.showAppInfo.type !== "" && $scope.showAppInfo.version !== ""
             && $scope.showAppInfo.force_update !== "" && $scope.showAppInfo.version_number !== ""
             && $scope.showAppInfo.floor_version_number !== "" && $scope.showAppInfo.url !== "") {
+            // 更新画面数据
             var obj = {
                 app: $scope.showAppInfo.app,
                 appType: $scope.showAppInfo.type,
-                forceUpdate: $scope.showAppInfo.force_update,
                 version: $scope.showAppInfo.version,
-                // 版本序号
                 versionNumber: $scope.showAppInfo.version_number,
-                // 最低支持版本序号
                 floorVersionNumber: $scope.showAppInfo.floor_version_number,
+                forceUpdate: $scope.showAppInfo.force_update,
                 url: $scope.showAppInfo.url,
                 remark: $scope.showAppInfo.remark
             };
-            _basic.put(_host.api_url + "/user/" + userId + "/app/" + id, obj).then(function (data) {
+            // 调用更新API
+            _basic.put(_host.api_url + "/user/" + userId + "/app/" + appId, obj).then(function (data) {
                 if (data.success) {
                     swal("修改成功", "", "success");
                     $('#showAppSystem').modal('close');
+                    // 根据画面条件，重新检索画面数据
                     getAppSystemList();
                 } else {
                     swal(data.msg, "", "error");
