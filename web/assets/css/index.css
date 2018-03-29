@@ -493,11 +493,11 @@ input[type=text]{
     color: #00bcd4;
     cursor: pointer;
 }
-.usersWrap .active{
+/*.usersWrap .active{
     border: 1px solid #00bcd4;
     background: #00bcd4;
-    color: white;
-}
+    color: #26c6da;
+}*/
 .sexBox{
      font-size: 40px;
  }

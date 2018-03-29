@@ -111,6 +111,15 @@ adminDirective.directive("date", function () {
         }
     }
 });
+adminDirective.directive("collapsible", function () {
+    return {
+        restrict: "A",
+        link: function () {
+            $('.collapsible').collapsible();
+        }
+    }
+});
+
 adminDirective.directive("dateFilter", ["$filter", function ($filter) {
     var dateFilter = $filter("date");
     return {
