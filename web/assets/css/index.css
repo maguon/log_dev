@@ -83,6 +83,13 @@ body{
 .no-pd{
     padding: 0;
 }
+
+.context-ellipsis {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
 /*表格*/
 /*表头*/
 .table_header{

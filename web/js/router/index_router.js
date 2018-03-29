@@ -48,6 +48,18 @@ app.config(['$stateProvider',"$urlRouterProvider",function($stateProvider,$urlRo
             templateUrl: "/view/system_settings/setting_client.html",
             controller:'setting_client_controller'
         })
+        // 钥匙柜设置
+        .state("setting_key_cabinet",{
+            url:"/setting_key_cabinet",
+            templateUrl: "/view/system_settings/setting_key_cabinet.html",
+            controller:'setting_key_cabinet_controller'
+        })
+        // 钥匙柜设置 -> 详情
+        .state("setting_key_cabinet_detail",{
+            url:"/setting_key_cabinet_detail/{id}/?from",
+            templateUrl: "/view/system_settings/setting_key_cabinet_detail.html",
+            controller:'setting_key_cabinet_detail_controller'
+        })
         .state("storage_index", {  //路由状态
             url: "/storage_index",  //路由路径
             templateUrl: "/view/storage/storage_index.html",  //路由填充的模板

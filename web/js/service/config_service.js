@@ -135,5 +135,17 @@ baseService.factory("_config", function () {
         }
     ];
 
+    // 使用状态
+    _this.useFlags = [
+        {
+            id: 0,
+            name: "停用"
+        },
+        {
+            id: 1,
+            name: "可用"
+        }
+    ];
+
     return _this
 });

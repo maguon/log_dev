@@ -1,0 +1,140 @@
+/**
+ * 主菜单：管理员设置 -> 钥匙柜设置 控制器
+ */
+app.controller("setting_key_cabinet_controller", ["$scope", "_basic", "_config", "_host", function ($scope, _basic, _config, _host) {
+
+    // 取得当前画面 登录用户
+    var userId = _basic.getSession(_basic.USER_ID);
+
+    // 分页用 画面数据 起始位置
+    $scope.start = 0;
+    // 分页用 每页画面数据
+    $scope.size = 10;
+
+    // 条件：状态 [0:停用 1:可用]
+    $scope.useFlags = _config.useFlags;
+
+    // 追加画面初期数据
+    var initKeyCbinetInfo = {
+        keyCabinetName: "",
+        remark: ""
+    };
+
+    // 追加画面数据
+    $scope.kyCbinetInfo = {};
+
+    $scope.conditionKeyCabinet = "";
+    $scope.conditionKeyCabinetStatus = "";
+
+    /**
+     * 获取钥匙柜信息列表
+     */
+    function getKeyCabinetList() {
+        // 检索条件组装
+        var condition = _basic.objToUrl({
+            // 条件：钥匙柜名称
+            keyCabinetName: $scope.conditionKeyCabinet,
+            // 条件：状态
+            keyCabinetStatus: $scope.conditionKeyCabinetStatus + ""
+        });
+        condition = condition.length > 0 ? "?" + condition : condition;
+
+        // 检索URL组装
+        var url = _host.api_url + "/carKeyCabinet" + condition;
+
+        console.log(url);
+
+        // 调用API取得，画面数据
+        _basic.get(url).then(function (data) {
+            if (data.success) {
+                // 检索取得数据集
+                $scope.keyCabinetList = data.result;
+            } else {
+                swal(data.msg, "", "error");
+            }
+        });
+    }
+
+    /**
+     * 点击搜索按钮。
+     */
+    $scope.searchKeyCabinetList = function () {
+        // 默认第一页
+        $scope.start = 0;
+        // 根据画面条件，检索画面数据
+        getKeyCabinetList();
+    };
+
+    /**
+     * 画面初期检索。
+     */
+    $scope.searchKeyCabinetList();
+
+    /**
+     * 打开画面【增加钥匙柜】模态框。
+     */
+    $scope.openAddKeyCabinet = function () {
+        // 初期化数据
+        angular.copy(initKeyCbinetInfo, $scope.kyCbinetInfo);
+
+        $('.modal').modal();
+        $('#addKeyCabinet').modal('open');
+    };
+
+    /**
+     * 增加钥匙柜信息。
+     */
+    $scope.addKeyCabinet = function () {
+        if ($scope.kyCbinetInfo.keyCabinetName !== "") {
+
+            // 追加画面数据
+            var obj = {
+                keyCabinetName: $scope.kyCbinetInfo.keyCabinetName,
+                remark: $scope.kyCbinetInfo.remark
+            };
+
+            // 调用 API [user create carKeyCabinet]
+            _basic.post(_host.api_url + "/user/" + userId + "/carKeyCabinet", obj).then(function (data) {
+                if (data.success) {
+                    $('#addKeyCabinet').modal('close');
+                    swal("新增成功", "", "success");
+                    // TODO
+                    $scope.searchAppSystem();
+                } else {
+                    swal(data.msg, "", "error");
+                }
+            })
+        } else {
+            swal("请填写完整信息！", "", "warning");
+        }
+    };
+
+    /**
+     * 修改钥匙柜状态。
+     * @param keyCabinetStatus 钥匙柜状态
+     */
+    $scope.changeKeyCabinetStatus = function (keyId, keyCabinetStatus) {
+
+        // 状态
+        var status = 0;
+        if (keyCabinetStatus == 0) {
+            // str="启用";
+            status = 1
+        } else {
+            // str="停用";
+            status = 0
+        }
+
+        // API url
+        var url = _host.api_url + "/user/" + userId + "/carKeyCabinet/" + keyId + "/keyCabinetStatus/" + status;
+
+        // 调用更新API
+        _basic.put(url,{}).then(function (data) {
+            if (data.success) {
+                swal("修改成功", "", "success");
+            } else {
+                swal(data.msg, "", "error");
+            }
+        })
+    };
+}])
