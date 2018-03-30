@@ -192,7 +192,7 @@
                     </li>
 
                     <!-- 钥匙柜详情画面 数据明细 -->
-                    <li ng-repeat="zone in zoneList" class="grey-text text-darken-1 vc-center"
+                    <li ng-repeat="zone in zoneList" class="grey-text text-darken-1 vc-center" ng-class="{ 'blue-grey lighten-5':zone.area_status==0}"
                         style="border-bottom: 1px solid #ccc;height: 60px;line-height: 70px;text-align: center">
                         <!-- 扇区 -->
                         <div class="col s4 fz30 context-ellipsis" ng-bind="zone.area_name"

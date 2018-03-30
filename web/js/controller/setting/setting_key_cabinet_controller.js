@@ -131,5 +131,42 @@ app.controller("setting_key_cabinet_controller", ["$scope", "_basic", "_config",
                 swal(data.msg, "", "error");
             }
         })
+        // // 检索条件组装
+        // var condition = _basic.objToUrl({
+        //     // 条件：钥匙柜ID
+        //     carKeyCabinetId: keyId + "",
+        //     // 条件：钥匙柜分区状态：可用
+        //     areaStatus: "1"
+        // });
+        // condition = condition.length > 0 ? "?" + condition : condition;
+        //
+        // // 检索URL组装
+        // var url = _host.api_url + "/carKeyCabinetArea" + condition;
+        //
+        // // 调用API取得，画面数据
+        // _basic.get(url).then(function (data) {
+        //     if (data.success) {
+        //         if (data.result.length > 0) {
+        //             swal("钥匙柜中还有未清空的扇区，请先清空再执行停用操作！", "", "warning");
+        //             $scope.searchKeyCabinetList();
+        //         } else {
+        //             // API url
+        //             var url = _host.api_url + "/user/" + userId + "/carKeyCabinet/" + keyId + "/keyCabinetStatus/" + status;
+        //
+        //             // 调用更新API
+        //             _basic.put(url,{}).then(function (data) {
+        //                 if (data.success) {
+        //                     swal("修改成功", "", "success");
+        //                     // 成功后，刷新页面数据
+        //                     $scope.searchKeyCabinetList();
+        //                 } else {
+        //                     swal(data.msg, "", "error");
+        //                 }
+        //             })
+        //         }
+        //     } else {
+        //         swal(data.msg, "", "error");
+        //     }
+        // });
     };
-}])
+}]);
