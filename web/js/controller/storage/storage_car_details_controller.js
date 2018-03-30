@@ -27,6 +27,14 @@ app.controller("storage_car_details_controller", [ "$state", "$stateParams", "_c
         $("#lookMsg").addClass("active");
         $("#lookMsg").show();
     };
+    $scope.lookCarKey = function () {
+        $('ul.tabWrap li').removeClass("active");
+        $(".tab_box").removeClass("active");
+        $(".tab_box").hide();
+        $('ul.tabWrap li.look_car_key ').addClass("active");
+        $("#lookCarKey").addClass("active");
+        $("#lookCarKey").show();
+    };
     // 返回
     $scope.return = function () {
         $state.go($stateParams.from, {id: $scope.self_car.storage_id, form: $stateParams._form}, {reload: true})
@@ -47,6 +55,16 @@ app.controller("storage_car_details_controller", [ "$state", "$stateParams", "_c
             setTimeout($('select').material_select(), 2000)
         } else {
             swal(data.msg, "", "error");
+        }
+    });
+    //获取委托方信息
+    _basic.get(_host.api_url + "/entrust").then(function (data) {
+        if (data.success == true) {
+            $scope.getEntrust = data.result;
+            $('#getEntrustId').select2({
+                placeholder: '委托方',
+                containerCssClass: 'select2_dropdown'
+            });
         }
     });
     // 存放位置联动查询--行
