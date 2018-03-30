@@ -161,16 +161,17 @@
                 <div class="cyan row  p0 storage_position" style="height: 70px;width: 100%;padding-bottom: 5px;margin-top: 35px">
                     <div class="col s4" >
                         <div class="row input-field  white-text">
-                            <select  material-select watch id="storageName" name="storageName"  ng-change="getStorageId(storage_name.id)" ng-options="o.storage_name for o in storageName|filter:{storage_status:'1'}" ng-model="storage_name" required>
+                            <select  material-select watch ng-model="addCarKeyCabinet" ng-change="changeCarKeyCabinet()" required>
                                 <option value=""  selected style="padding-left: 5px;">钥匙柜</option>
+                                <option ng-repeat="el in keyCabinetNameList"  ng-value="el.id" >{{el.key_cabinet_name}}</option>
                             </select>
                         </div>
                     </div>
                     <div class="col s4">
-                        <div class="input-field  valign-wrapper cyan white-text" >
-                            <select material-select watch id="row" name="row" class="col s12" ng-change="getStorageRow(row,parkingArray)"  ng-model="row" required>
+                        <div class="row input-field  white-text" >
+                            <select material-select watch ng-model="addCarKeyCabinetArea"  required>
                                 <option value=""  selected>扇区</option>
-                                <option ng-repeat="el in parkingArray"  ng-value="el.row" >{{el.row}}扇区</option>
+                                <option ng-repeat="el in carKeyCabinetAreaList"  ng-value="el.id" >{{el.area_name}}</option>
                             </select>
                         </div>
                     </div>

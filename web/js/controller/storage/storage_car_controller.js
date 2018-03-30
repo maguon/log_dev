@@ -12,7 +12,7 @@ app.controller("storage_car_controller", ["$scope", "$rootScope", "$stateParams"
     // 获取车辆状态
     $scope.relStatus = _config.carRelStatus;
     $scope.getRelStatus = 1;
-    
+    $scope.addCarKeyCabinet = "";
     // 获取车辆品牌
     function getCarMakeName () {
         _basic.get(_host.api_url + "/carMake").then(function (data) {
@@ -263,40 +263,26 @@ app.controller("storage_car_controller", ["$scope", "$rootScope", "$stateParams"
         $("#keyCabinet").modal("open");
     }
     // 钥匙存放位置联动查询--柜
-    $scope.addCarKeyCabinet = function (val) {
-        if (val) {
-            _basic.get(_host.api_url + "/carKeyCabinet").then(function (data) {
-                if (data.success == true&&data.result.length>0) {
-                    $scope.keyCabinetNameList = data.result;
-                    $scope.parkingArray =  _baseService.storageParking($scope.storageParking);
-                } else {
-                    swal(data.msg, "", "error");
-                }
-            });
-        }
-    },
-    // 钥匙位置联动查询--扇区
-    $scope.getStorageRow = function (val, array) {
-        if (val) {
-            $scope.colArr = array[val - 1].col;
-        }
-    };
-    // 钥匙联动查询
-    $scope.getMakeId = function (val) {
-        if (val) {
-            if ($scope.curruntId == val) {
+    function addCarKeyCabinet() {
+        _basic.get(_host.api_url + "/carKeyCabinet").then(function (data) {
+            if (data.success == true&&data.result.length>0) {
+                $scope.keyCabinetNameList = data.result;
             } else {
-                $scope.curruntId = val;
-                _basic.get(_host.api_url + "/carMake/" + val + "/carModel").then(function (data) {
-                    if (data.success == true&&data.result.length>0) {
-                        $scope.carModelName = data.result;
-                    } else {
-                        swal(data.msg, "", "error")
-                    }
-                })
+                swal(data.msg, "", "error");
             }
-        }
+        });
     };
+    //改变 钥匙存放位置   钥匙位置联动查询--扇区
+    $scope.changeCarKeyCabinet = function(){
+        _basic.get(_host.api_url + "/carKeyCabinetArea?carKeyCabinetId="+$scope.addCarKeyCabinet).then(function (data) {
+            if (data.success == true&&data.result.length>0) {
+                $scope.carKeyCabinetAreaList = data.result;
+                console.log($scope.carKeyCabinetAreaList)
+            } else {
+                swal(data.msg, "", "error");
+            }
+        });
+    }
     // 立刻出库
     $scope.outStorageCar = function (rel_id, relSta, p_id, s_id, car_id) {
         swal({
@@ -414,6 +400,7 @@ app.controller("storage_car_controller", ["$scope", "$rootScope", "$stateParams"
         getCarMakeName();
         $scope.getStorageCar();
         getStorageName();
+        addCarKeyCabinet();
     };
     $scope.queryData();
 
