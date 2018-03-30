@@ -16,7 +16,7 @@
                     <!-- 钥匙柜名称 -->
                     <div class="col s12 " style="margin-bottom:  40px;">
                         <div class="col s12 input-field">
-                            <input type="text" id="keyCabinetName" ng-model="kyCbinetInfo.keyCabinetName">
+                            <input type="text" maxlength="64" id="keyCabinetName" ng-model="kyCbinetInfo.keyCabinetName">
                             <label for="keyCabinetName"><span style="color: red">* </span>钥匙柜名称</label>
                         </div>
                     </div>
@@ -24,7 +24,7 @@
                     <!-- 备注 -->
                     <div class="col s12">
                         <div class="col s12 input-field">
-                            <input type="text" id="remark" ng-model="kyCbinetInfo.remark">
+                            <input type="text" maxlength="512" id="remark" ng-model="kyCbinetInfo.remark">
                             <label for="remark">备注</label>
                         </div>
                     </div>
@@ -113,7 +113,7 @@
                         存放位置： <span class="cyan-text" style="display: block">{{key.position_count}}</span>
                     </div>
                     <div class="col s2 vc-center">
-                        <a href="#" ui-sref="setting_key_cabinet_detail({id:key.id,from:'setting_key_cabinet'})" class="">
+                        <a href="#" ui-sref="setting_key_cabinet_detail({id:key.id,name:key.key_cabinet_name,remark:key.remark,zoneSize:key.area_count,status:key.key_cabinet_status,from:'setting_key_cabinet'})" class="">
                             <i class="mdi mdi-file-outline look_icon cyan-text lighten-1" ></i>
                         </a>
                     </div>

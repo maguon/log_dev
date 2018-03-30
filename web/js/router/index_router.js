@@ -56,7 +56,9 @@ app.config(['$stateProvider',"$urlRouterProvider",function($stateProvider,$urlRo
         })
         // 钥匙柜设置 -> 详情
         .state("setting_key_cabinet_detail",{
-            url:"/setting_key_cabinet_detail/{id}/?from",
+            url:"/setting_key_cabinet_detail/?from",
+            url:"/setting_key_cabinet_detail/{id}/{name}/{remark}/{zoneSize}/{status}?from",
+            // params: {"id": null, "name": null, "remark": null, "zoneSize": null, "status": null},
             templateUrl: "/view/system_settings/setting_key_cabinet_detail.html",
             controller:'setting_key_cabinet_detail_controller'
         })

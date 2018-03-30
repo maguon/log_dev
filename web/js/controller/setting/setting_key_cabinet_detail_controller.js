@@ -3,45 +3,34 @@
  */
 app.controller("setting_key_cabinet_detail_controller", ["$scope", "$state", "$stateParams", "_basic", "_config", "_host", function ($scope, $state, $stateParams, _basic, _config, _host) {
 
+    // 用户ID
     var userId = _basic.getSession(_basic.USER_ID);
+
+    // 条件：状态 [0:停用 1:可用]
+    $scope.useFlags = _config.useFlags;
 
     // 钥匙柜ID
     var carKeyCabinetId = $stateParams.id;
 
-    var zoneList = [
-        {
-            id: "1", name: "aaaa",row: "5", col: "10", size: "50", status: "1"
-        },
-        {
-            id: "2", name: "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",row: "5", col: "10", size: "50", status: "0"
-        },
-        {
-            id: "3", name: "c",row: "5", col: "10", size: "50", status: "0"
-        },
-        {
-            id: "4", name: "d",row: "5", col: "10", size: "50", status: "0"
-        }
-    ];
-
+    // 钥匙柜信息
+    $scope.carKeyCabinetInfo = {
+        id: carKeyCabinetId,
+        name: $stateParams.name,
+        remark: $stateParams.remark,
+        zoneSize: $stateParams.zoneSize,
+        // 钥匙柜 状态
+        status: $stateParams.status
+    };
     $scope.zoneList = [];
 
-    // 当前画面 钥匙柜 id
-    $scope.cabinetDetailId = "1";
 
-    // 当前画面 钥匙柜 名字
-    $scope.cabinetDetailNm = "钥匙柜 名字";
-
-    // 当前画面 钥匙柜 备注
-    $scope.remark = "钥匙柜 备注";
-
-    $scope.zoneSize = 5;
-
-    // 当前画面 钥匙柜 备注
-    $scope.addZoneRow = "";
-
-    // 当前画面 钥匙柜 备注
-    $scope.addZoneCol = "";
-
+    // 追加画面（增加扇区）初期数据
+    var initZoneInfo = {
+        addZoneName:"",
+        addZoneRow:"",
+        addZoneCol:""
+    };
+    $scope.newZoneInfo = {};
 
     /**
      * 获取钥匙柜分区信息列表
@@ -57,21 +46,18 @@ app.controller("setting_key_cabinet_detail_controller", ["$scope", "$state", "$s
         // 检索URL组装
         var url = _host.api_url + "/carKeyCabinetArea" + condition;
 
-        console.log(url);
-
         // 调用API取得，画面数据
         _basic.get(url).then(function (data) {
             if (data.success) {
                 // 检索取得数据集
                 $scope.zoneList = data.result;
-                // $scope.zoneList = zoneList;
+                // 画面扇区数变更
+                $scope.carKeyCabinetInfo.zoneSize = data.result.length;
             } else {
                 swal(data.msg, "", "error");
             }
         });
     };
-
-    $scope.getKeyCabinetZoneList();
 
     /**
      * 返回到前画面（钥匙柜设置）。
@@ -85,37 +71,136 @@ app.controller("setting_key_cabinet_detail_controller", ["$scope", "$state", "$s
     };
 
     /**
-     * 打开画面【增加钥匙柜】模态框。
+     * 打开画面【修改钥匙柜资料】模态框。
      */
     $scope.openEditKeyCabinet = function (id) {
-        console.log('sss');
-        // 初期化数据
-        // angular.copy(initKeyCbinetInfo, $scope.kyCbinetInfo);
-
         $('.modal').modal();
         $('#editKeyCabinet').modal('open');
     };
 
     /**
-     * 打开画面【增加钥匙柜】模态框。
+     * 修改钥匙柜资料，并刷新画面。
+     */
+    $scope.updateKeyCabinetInfo = function () {
+
+        console.log('updateKeyCabinetInfo inner' + $scope.carKeyCabinetInfo.name);
+
+        if ($scope.carKeyCabinetInfo.name !== "") {
+            console.log('if .... ');
+            // 修改画面数据
+            var obj = {
+                keyCabinetName: $scope.carKeyCabinetInfo.name,
+                remark: $scope.carKeyCabinetInfo.remark
+            };
+
+            var url = _host.api_url + "/user/" + userId + "/carKeyCabinet/" + carKeyCabinetId;
+            console.log(url);
+
+            // 调用 API [update carKeyCabinet info]
+            _basic.put(url, obj).then(function (data) {
+                if (data.success) {
+                    $('#editKeyCabinet').modal('close');
+                    swal("修改成功", "", "success");
+                    // 成功后，刷新页面数据
+                    $scope.getKeyCabinetZoneList();
+                } else {
+                    swal(data.msg, "", "error");
+                }
+            })
+        } else {
+            swal("请填写完整信息！", "", "warning");
+        }
+    };
+
+    /**
+     * 打开画面【增加扇区】模态框。
      */
     $scope.openAddKeyCabinetZone = function (id) {
         // 初期化数据
-        // angular.copy(initKeyCbinetInfo, $scope.kyCbinetInfo);
+        angular.copy(initZoneInfo, $scope.newZoneInfo);
 
         $('.modal').modal();
         $('#addKeyCabinetZone').modal('open');
     };
 
     /**
-     * 打开画面【增加钥匙柜】模态框。
+     * 增加扇区信息。
      */
-    $scope.openEditKeyCabinetZone = function (id) {
+    $scope.addAppInfo = function () {
+
+        if ($scope.newZoneInfo.addZoneName !== "" && $scope.newZoneInfo.addZoneRow !== "" && $scope.newZoneInfo.addZoneCol !== "") {
+
+            // 追加画面数据
+            var obj = {
+                areaName: $scope.newZoneInfo.addZoneName,
+                row: $scope.newZoneInfo.addZoneRow,
+                col: $scope.newZoneInfo.addZoneCol
+            };
+
+            // POST /user/{userId}/carKeyCabinet/{carKeyCabinetId}/carKeyCabinetArea
+
+
+            // 调用 API [user create app]
+            _basic.post(_host.api_url + "/user/" + userId + "/carKeyCabinet/" + carKeyCabinetId + "/carKeyCabinetArea", obj).then(function (data) {
+                if (data.success) {
+                    $('#addKeyCabinetZone').modal('close');
+                    swal("新增成功", "", "success");
+                    $scope.getKeyCabinetZoneList();
+                } else {
+                    swal(data.msg, "", "error");
+                }
+            })
+        } else {
+            swal("请填写完整信息！", "", "warning");
+        }
+    };
+
+    /**
+     * 打开画面【修改扇区名称】模态框。
+     */
+    $scope.openEditKeyCabinetZone = function (id, name) {
         // 初期化数据
         // angular.copy(initKeyCbinetInfo, $scope.kyCbinetInfo);
 
+        $scope.zoneId = id;
+        $scope.zoneName = name;
+
         $('.modal').modal();
         $('#editKeyCabinetZone').modal('open');
+    };
+
+    /**
+     * 修改扇区名称，并刷新画面。
+     */
+    $scope.updateZoneInfo = function () {
+
+        console.log('updateKeyCabinetInfo inner' + $scope.carKeyCabinetInfo.name);
+
+        if ($scope.zoneName !== "") {
+            console.log('if .... ');
+            // 修改画面数据
+            var obj = {
+                areaName: $scope.zoneName
+            };
+
+            // PUT /user/{userId}/carKeyCabinetArea/{areaId}
+            var url = _host.api_url + "/user/" + userId + "/carKeyCabinetArea/" + $scope.zoneId;
+            console.log(url);
+
+            // 调用 API [update carKeyCabinet info]
+            _basic.put(url, obj).then(function (data) {
+                if (data.success) {
+                    $('#editKeyCabinetZone').modal('close');
+                    swal("修改成功", "", "success");
+                    // 成功后，刷新页面数据
+                    $scope.getKeyCabinetZoneList();
+                } else {
+                    swal(data.msg, "", "error");
+                }
+            })
+        } else {
+            swal("请填写完整信息！", "", "warning");
+        }
     };
 
     /**
@@ -131,14 +216,23 @@ app.controller("setting_key_cabinet_detail_controller", ["$scope", "$state", "$s
             // str="停用";
             status = 0
         }
-        _basic.put(_host.api_url + "/admin/" + adminId + "/storage/" + id + "/storageStatus/" + status, {}).then(function (data) {
+
+        // PUT /user/{userId}/carKeyCabinetArea/{areaId}/areaStatus/{areaStatus}
+        var url = _host.api_url + "/user/" + userId + "/carKeyCabinetArea/" + id + "/areaStatus/" + status;
+        console.log(url);
+
+        _basic.put(url, {}).then(function (data) {
             if (data.success == true) {
                 swal("修改成功", "", "success");
-                getStorgeList();
+                $scope.getKeyCabinetZoneList();
             } else {
                 swal(data.msg, "", "error");
-                getStorgeList();
             }
         })
-    }
-}])
+    };
+
+    /**
+     * 画面初期检索
+     */
+    $scope.getKeyCabinetZoneList();
+}]);

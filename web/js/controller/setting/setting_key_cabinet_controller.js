@@ -6,11 +6,6 @@ app.controller("setting_key_cabinet_controller", ["$scope", "_basic", "_config",
     // 取得当前画面 登录用户
     var userId = _basic.getSession(_basic.USER_ID);
 
-    // 分页用 画面数据 起始位置
-    $scope.start = 0;
-    // 分页用 每页画面数据
-    $scope.size = 10;
-
     // 条件：状态 [0:停用 1:可用]
     $scope.useFlags = _config.useFlags;
 
@@ -59,8 +54,6 @@ app.controller("setting_key_cabinet_controller", ["$scope", "_basic", "_config",
      * 点击搜索按钮。
      */
     $scope.searchKeyCabinetList = function () {
-        // 默认第一页
-        $scope.start = 0;
         // 根据画面条件，检索画面数据
         getKeyCabinetList();
     };
@@ -98,8 +91,8 @@ app.controller("setting_key_cabinet_controller", ["$scope", "_basic", "_config",
                 if (data.success) {
                     $('#addKeyCabinet').modal('close');
                     swal("新增成功", "", "success");
-                    // TODO
-                    $scope.searchAppSystem();
+                    // 成功后，刷新页面数据
+                    $scope.searchKeyCabinetList();
                 } else {
                     swal(data.msg, "", "error");
                 }
@@ -132,6 +125,8 @@ app.controller("setting_key_cabinet_controller", ["$scope", "_basic", "_config",
         _basic.put(url,{}).then(function (data) {
             if (data.success) {
                 swal("修改成功", "", "success");
+                // 成功后，刷新页面数据
+                $scope.searchKeyCabinetList();
             } else {
                 swal(data.msg, "", "error");
             }
