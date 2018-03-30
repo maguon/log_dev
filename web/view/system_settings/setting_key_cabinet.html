@@ -112,16 +112,17 @@
                 </div>
 
                 <!-- 钥匙柜 明细 Body -->
-                <div class="valign-wrapper fz16" style="width: 100%;height: 50px;">
+                <div class="valign-wrapper fz15" style="width: 100%;height: 50px;">
                     <div class="col s4 vc-center black-text text-lighten-2">
                         扇区： <span class="cyan-text" style="display: block">{{key.area_count}}</span>
                     </div>
                     <div class="col s7 vc-center black-text text-lighten-2">
                         存放位置： <span class="cyan-text" style="display: block">{{(key.position_count == undefined || key.position_count == null) ? '0' : key.position_count}}</span>
                     </div>
-                    <div class="col s2 vc-center">
-                        <a href="#" ui-sref="setting_key_cabinet_detail({id:key.id,name:key.key_cabinet_name,remark:key.remark,zoneSize:key.area_count,status:key.key_cabinet_status,from:'setting_key_cabinet'})" class="">
-                            <i class="mdi mdi-file-outline look_icon cyan-text lighten-1" ></i>
+                    <div class="col s3 vc-center">
+                        <a href="#" ui-sref="setting_key_cabinet_detail({id:key.id,name:key.key_cabinet_name,remark:key.remark,zoneSize:key.area_count,status:key.key_cabinet_status,from:'setting_key_cabinet'})"
+                           class="right btn-floating  setting_shipments_btn  btn waves-effect cyan  lighten-2 waves-light">
+                            <i class=" mdi mdi-file-document look_icon white-text  lighten-1" ></i>
                         </a>
                     </div>
                 </div>

@@ -181,7 +181,10 @@
                             <!-- 钥匙柜详情 钥匙柜 备注 -->
                             <span ng-bind="carKeyCabinetInfo.remark" class="context-ellipsis" style="position: absolute;top: 30px;left: 100px;max-width: 650px"></span>
                             <!-- 钥匙柜详情 扇区 数量 说明 -->
-                            <span style="position: absolute;top: -15px;right: 20%">扇区 {{carKeyCabinetInfo.zoneSize}} {{useFlags[carKeyCabinetInfo.status].name}}</span>
+                            <span style="position: absolute;top: -15px;right: 20%">
+                                扇区: {{carKeyCabinetInfo.zoneSize}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                状态: {{useFlags[carKeyCabinetInfo.status].name}}
+                            </span>
                             <!-- 钥匙柜详情 扇区 编辑 按钮 -->
                             <span class="mdi mdi-pencil-circle col s1 white-text fz50"
                                   style="position: absolute;right: 8%;cursor: pointer;" ng-click="openEditKeyCabinet(carKeyCabinetId)"></span>
