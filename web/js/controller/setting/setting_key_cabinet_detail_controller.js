@@ -9,20 +9,18 @@ app.controller("setting_key_cabinet_detail_controller", ["$scope", "$state", "$s
     // 条件：状态 [0:停用 1:可用]
     $scope.useFlags = _config.useFlags;
 
-    // 钥匙柜ID
-    var carKeyCabinetId = $stateParams.id;
-
     // 钥匙柜信息
     $scope.carKeyCabinetInfo = {
-        id: carKeyCabinetId,
-        name: $stateParams.name,
-        remark: $stateParams.remark,
-        zoneSize: $stateParams.zoneSize,
+        // 钥匙柜ID
+        id: $stateParams.id,
+        name: "",
+        remark: "",
+        zoneSize: "",
         // 钥匙柜 状态
         status: $stateParams.status
     };
+    // 钥匙柜扇区信息
     $scope.zoneList = [];
-
 
     // 追加画面（增加扇区）初期数据
     var initZoneInfo = {
@@ -39,7 +37,7 @@ app.controller("setting_key_cabinet_detail_controller", ["$scope", "$state", "$s
         // 检索条件组装
         var condition = _basic.objToUrl({
             // 条件：钥匙柜ID
-            carKeyCabinetId: carKeyCabinetId + ""
+            carKeyCabinetId: $scope.carKeyCabinetInfo.id + ""
         });
         condition = condition.length > 0 ? "?" + condition : condition;
 
@@ -51,6 +49,10 @@ app.controller("setting_key_cabinet_detail_controller", ["$scope", "$state", "$s
             if (data.success) {
                 // 检索取得数据集
                 $scope.zoneList = data.result;
+                // 画面钥匙柜 名称
+                $scope.carKeyCabinetInfo.name = data.result[0].key_cabinet_name;
+                // 画面钥匙柜 备注
+                $scope.carKeyCabinetInfo.remark = data.result[0].remark;
                 // 画面扇区数变更
                 $scope.carKeyCabinetInfo.zoneSize = data.result.length;
             } else {
@@ -83,18 +85,14 @@ app.controller("setting_key_cabinet_detail_controller", ["$scope", "$state", "$s
      */
     $scope.updateKeyCabinetInfo = function () {
 
-        console.log('updateKeyCabinetInfo inner' + $scope.carKeyCabinetInfo.name);
-
         if ($scope.carKeyCabinetInfo.name !== "") {
-            console.log('if .... ');
             // 修改画面数据
             var obj = {
                 keyCabinetName: $scope.carKeyCabinetInfo.name,
                 remark: $scope.carKeyCabinetInfo.remark
             };
 
-            var url = _host.api_url + "/user/" + userId + "/carKeyCabinet/" + carKeyCabinetId;
-            console.log(url);
+            var url = _host.api_url + "/user/" + userId + "/carKeyCabinet/" + $scope.carKeyCabinetInfo.id;
 
             // 调用 API [update carKeyCabinet info]
             _basic.put(url, obj).then(function (data) {
@@ -141,7 +139,7 @@ app.controller("setting_key_cabinet_detail_controller", ["$scope", "$state", "$s
 
 
             // 调用 API [user create app]
-            _basic.post(_host.api_url + "/user/" + userId + "/carKeyCabinet/" + carKeyCabinetId + "/carKeyCabinetArea", obj).then(function (data) {
+            _basic.post(_host.api_url + "/user/" + userId + "/carKeyCabinet/" + $scope.carKeyCabinetInfo.id + "/carKeyCabinetArea", obj).then(function (data) {
                 if (data.success) {
                     $('#addKeyCabinetZone').modal('close');
                     swal("新增成功", "", "success");
@@ -174,10 +172,7 @@ app.controller("setting_key_cabinet_detail_controller", ["$scope", "$state", "$s
      */
     $scope.updateZoneInfo = function () {
 
-        console.log('updateKeyCabinetInfo inner' + $scope.carKeyCabinetInfo.name);
-
         if ($scope.zoneName !== "") {
-            console.log('if .... ');
             // 修改画面数据
             var obj = {
                 areaName: $scope.zoneName
@@ -185,7 +180,6 @@ app.controller("setting_key_cabinet_detail_controller", ["$scope", "$state", "$s
 
             // PUT /user/{userId}/carKeyCabinetArea/{areaId}
             var url = _host.api_url + "/user/" + userId + "/carKeyCabinetArea/" + $scope.zoneId;
-            console.log(url);
 
             // 调用 API [update carKeyCabinet info]
             _basic.put(url, obj).then(function (data) {
@@ -219,7 +213,6 @@ app.controller("setting_key_cabinet_detail_controller", ["$scope", "$state", "$s
 
         // PUT /user/{userId}/carKeyCabinetArea/{areaId}/areaStatus/{areaStatus}
         var url = _host.api_url + "/user/" + userId + "/carKeyCabinetArea/" + id + "/areaStatus/" + status;
-        console.log(url);
 
         _basic.put(url, {}).then(function (data) {
             if (data.success == true) {
