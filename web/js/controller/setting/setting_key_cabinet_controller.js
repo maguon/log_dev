@@ -66,6 +66,9 @@ app.controller("setting_key_cabinet_controller", ["$scope", "_basic", "_config",
 
         $('.modal').modal();
         $('#addKeyCabinet').modal('open');
+
+        $('#remark').val('');
+        $('#remark').trigger('autoresize');
     };
 
     /**

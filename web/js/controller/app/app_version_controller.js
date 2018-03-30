@@ -102,6 +102,9 @@ app.controller("app_version_controller", ["$scope", "$state", "$stateParams", "_
 
         $('.modal').modal();
         $('#addAppSystem').modal('open');
+
+        $('#remark').val('');
+        $('#remark').trigger('autoresize');
     };
 
     /**

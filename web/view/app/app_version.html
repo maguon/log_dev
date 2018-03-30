@@ -37,7 +37,7 @@
                             <!-- 版本号 -->
                             <div class=" col s6 p0">
                                 <div class="col s12 input-field">
-                                    <input type="text" id="addAppVersion" ng-model="appInfo.version">
+                                    <input type="text" id="addAppVersion" maxlength="20" ng-model="appInfo.version">
                                     <label for="addAppVersion"><span style="color: red">* </span>版本号</label>
                                 </div>
                             </div>
@@ -72,7 +72,7 @@
                         <!-- 下载地址 -->
                         <div class="col s12 " style="margin-bottom:  40px;">
                             <div class="col s12 input-field">
-                                <input type="text" id="url" ng-model="appInfo.url">
+                                <input type="text" id="url" maxlength="200" ng-model="appInfo.url">
                                 <label for="url"><span style="color: red">* </span>下载地址</label>
                             </div>
                         </div>
@@ -80,8 +80,8 @@
                         <!-- 描述 -->
                         <div class="col s12">
                             <div class="col s12 input-field">
-                                <input type="text" name="addforceUpdate_description" id="addforceUpdate_description" ng-model="appInfo.remark">
-                                <label for="addforceUpdate_description">描述</label>
+                                <textarea id="remark" class="materialize-textarea" ng-model="appInfo.remark" maxlength="400"></textarea>
+                                <label for="remark">描述</label>
                             </div>
                         </div>
                     </div>
@@ -140,7 +140,7 @@
                             <!-- 版本号 -->
                             <div class=" col s6 p0">
                                 <div class="col s12 input-field">
-                                    <input type="text" id="updateAppVersion" ng-model="showAppInfo.version">
+                                    <input type="text" id="updateAppVersion" maxlength="20" ng-model="showAppInfo.version">
                                     <label for="updateAppVersion"><span style="color: red">* </span>版本号</label>
                                 </div>
                             </div>
@@ -177,7 +177,7 @@
                         <!-- 下载地址 -->
                         <div class="col s12 " style="margin-bottom:  40px;">
                             <div class="col s12 input-field">
-                                <input type="text" name="url" id="updateUploadUrl" ng-model="showAppInfo.url">
+                                <input type="text" name="url" id="updateUploadUrl" maxlength="200" ng-model="showAppInfo.url">
                                 <label for="updateUploadUrl"><span style="color: red">* </span>下载地址</label>
                             </div>
                         </div>
@@ -185,7 +185,7 @@
                         <!-- 描述 -->
                         <div class="col s12">
                             <div class="col s12 input-field">
-                                <input type="text" id="pdateforceUpdate_description" ng-model="showAppInfo.remark">
+                                <textarea id="pdateforceUpdate_description" class="materialize-textarea" ng-model="showAppInfo.remark" maxlength="400"></textarea>
                                 <label for="pdateforceUpdate_description">描述</label>
                             </div>
                         </div>
@@ -274,7 +274,7 @@
                 <div class="col s12">
                     <div class="col s12">
                         <div class="divider" style="background: #00bcd4;height: 2px"></div>
-                        <table class="bordered striped text_mid">
+                        <table class="bordered striped text_mid" style="table-layout:fixed;">
                             <thead class="blue-grey lighten-5">
                                 <tr class="grey-text text-darken-2">
                                     <th data-field="">操作时间</th>
@@ -299,7 +299,7 @@
                                     <!-- 强制更新 -->
                                     <td>{{forceUpdates[appSystemItem.force_update].name}}</td>
                                     <!-- 描述 -->
-                                    <td ng-bind="appSystemItem.remark"></td>
+                                    <td ng-bind="appSystemItem.remark" class="context-ellipsis" style="width:200px"></td>
                                     <!-- 操作 -->
                                     <td class="operation vc-center">
                                         <a ng-click="openModifyAppSystem(appSystemItem.id)" class="cyan-text fz12" style="cursor: pointer;display: inline-block;width: 37px;height: 37px;">

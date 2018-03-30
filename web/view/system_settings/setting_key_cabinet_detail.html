@@ -24,7 +24,7 @@
                     <!-- 备注 -->
                     <div class="col s12">
                         <div class="col s12 input-field">
-                            <input type="text" maxlength="200" id="remark" ng-model="carKeyCabinetInfo.remark">
+                            <textarea id="remark" class="materialize-textarea" ng-model="carKeyCabinetInfo.remark" maxlength="200"></textarea>
                             <label for="remark">备注</label>
                         </div>
                     </div>
@@ -176,10 +176,10 @@
                             <span class="mdi mdi-key-variant col s1 white-text fz50"
                                   style="position: absolute;left: 0%;"></span>
                             <!-- 钥匙柜详情 钥匙柜 名字 -->
-                            <span ng-bind="carKeyCabinetInfo.name" class="context-ellipsis fz22"
-                                  style="position: relative;top:-20px;left: 150px;width: 500px;"></span>
+                            <span ng-bind="carKeyCabinetInfo.name" class="fz22 context-ellipsis"
+                                  style="position: relative;top:-20px;left: 100px;max-width: 580px"></span>
                             <!-- 钥匙柜详情 钥匙柜 备注 -->
-                            <span ng-bind="carKeyCabinetInfo.remark" class="context-ellipsis" style="position: absolute;top: 30px;left: 150px;width: 600px;"></span>
+                            <span ng-bind="carKeyCabinetInfo.remark" class="context-ellipsis" style="position: absolute;top: 30px;left: 100px;max-width: 650px"></span>
                             <!-- 钥匙柜详情 扇区 数量 说明 -->
                             <span style="position: absolute;top: -15px;right: 20%">扇区 {{carKeyCabinetInfo.zoneSize}} {{useFlags[carKeyCabinetInfo.status].name}}</span>
                             <!-- 钥匙柜详情 扇区 编辑 按钮 -->
