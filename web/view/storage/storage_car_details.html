@@ -20,8 +20,9 @@
 
                 <!--按键切换  基本信息   车辆照片-->
                 <ul class="tabWrap grey lighten-4 ">
-                    <li class="tab col s6 look_msg     vc-center"  ng-click="lookMsg()">基本信息</li>
-                    <li class="tab col s6 look_car_img vc-center"  ng-click="lookCarImg()">车辆照片</li>
+                    <li class="tab col s4 look_msg     vc-center"  ng-click="lookMsg()">基本信息</li>
+                    <li class="tab col s4 look_car_img vc-center"  ng-click="lookCarImg()">车辆照片</li>
+                    <li class="tab col s4 look_car_key vc-center"  ng-click="lookCarKey()">钥匙存放</li>
                 </ul>
             </div>
 
@@ -97,6 +98,30 @@
                                     <input  id="look_plan_out_time" form-date name="look_plan_out_time" autocomplete="off" ng-model="self_car.plan_out_time" type="text"   required class="datepicker " date><i class="mdi dataIcon mdi-table-large"></i>
                                     <label for="look_plan_out_time" ><span style="color: red">*</span>计划出库时间</label>
                                 </div>
+                            </div>
+                        </div>
+                        <div class="row" >
+                            <!--委托方-->
+                            <div class="input-field col s4">
+                                <select material-select watch id="entrustId" name="entrustId" ng-model="self_car.entrust_id" >
+                                    <option value="" disabled selected>请选择</option>
+                                    <option ng-repeat="el in getEntrust"  ng-value="el.id" >{{el.short_name}}</option>
+                                </select>
+                                <label for="entrustId">委托方</label>
+                            </div>
+                            <!--车辆估值-->
+                            <div class="input-field col s4">
+                                <input  id="carValuation" name="carValuation"  ng-model="self_car.valuation" type="number"    >
+                                <label for="carValuation">车辆估值(美元)</label>
+                            </div>
+                            <!--MOS车辆-->
+                            <div class="input-field col s4">
+                                <select material-select watch id="MOS" name="MOS"  ng-model="self_car.mos_status" >
+                                    <option value="" disabled selected>请选择</option>
+                                    <option value="2">是</option>
+                                    <option value="1">否</option>
+                                </select>
+                                <label for="MOS">是否MOS车辆</label>
                             </div>
                         </div>
                         <div class="row">
@@ -218,6 +243,11 @@
                         </div>
                     </div>
                 </div>
+            </div>
+
+            <!--钥匙存放的详细信息-->
+            <div id="lookCarKey" class="col s12 tab_box">
+
             </div>
         </div>
     </div>

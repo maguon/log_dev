@@ -2,36 +2,53 @@
  * Created by ASUS on 2017/5/4.
  */
 app.controller("storage_car_controller", ["$scope", "$rootScope", "$stateParams", "_host", "_basic", "_config", "_baseService",function ($scope, $rootScope, $stateParams, _host, _basic,  _config ,_baseService) {
+    var userId = _basic.getSession(_basic.USER_ID);
     $scope.curruntId = 0;
     $scope.start = 0;
-    $scope.size = 11;
+    $scope.size = 10;
     $scope.storage_imageBox = [];
-    // 颜色
+    // 获取颜色
     $scope.color = _config.config_color;
-    // modelId全局变量
-    $scope.change_model_id = "";
-    var userId = _basic.getSession(_basic.USER_ID);
-    // 車庫狀態
+    // 获取车辆状态
     $scope.relStatus = _config.carRelStatus;
     $scope.getRelStatus = 1;
-    // 车辆品牌查询
-    _basic.get(_host.api_url + "/carMake").then(function (data) {
-        if (data.success == true&&data.result.length>0) {
-            $scope.makecarName = data.result;
-        } else {
-            swal(data.msg, "", "error");
+    
+    // 获取车辆品牌
+    function getCarMakeName () {
+        _basic.get(_host.api_url + "/carMake").then(function (data) {
+            if (data.success == true&&data.result.length>0) {
+                $scope.makecarName = data.result;
+            } else {
+                swal(data.msg, "", "error");
+            }
+        });
+    }
+
+    // 获取车库信息
+    function getStorageName () {
+        _basic.get(_host.api_url + "/storage").then(function (data) {
+            if (data.success == true&&data.result.length>0) {
+                $scope.storageName = data.result;
+            } else {
+                swal(data.msg, "", "error");
+            }
+        });
+    }
+  //获取委托方信息
+    _basic.get(_host.api_url + "/entrust").then(function (data) {
+        if (data.success == true) {
+            $scope.getEntrust = data.result;
+            $('#getEntrustId').select2({
+                placeholder: '委托方',
+                containerCssClass: 'select2_dropdown'
+            });
         }
     });
-    // 车库查询
-    _basic.get(_host.api_url + "/storage").then(function (data) {
-        if (data.success == true&&data.result.length>0) {
-            $scope.storageName = data.result;
-        } else {
-            swal(data.msg, "", "error");
-        }
-    });
-    /**查询列表*/
-    var getCarDataList = function () {
+    /**
+     * 查询列表 条件查询
+     * 
+     * */
+    $scope.getStorageCar = function () {
         var reqUrl = _host.api_url + "/user/" + userId + "/car?active=" + 1 + "&start=" + $scope.start + "&size=" + $scope.size;
         if ($scope.getRelStatus != null) {
             reqUrl = reqUrl + "&relStatus=" + $scope.getRelStatus
@@ -66,6 +83,13 @@ app.controller("storage_car_controller", ["$scope", "$rootScope", "$stateParams"
         if ($scope.search_outTime_end != null) {
             reqUrl = reqUrl + "&realEnd=" + $scope.search_outTime_end
         }
+        if ($scope.getMOS != null) {
+            reqUrl = reqUrl + "&mosStatus=" + $scope.getMOS
+        }
+        if ($scope.getEntrustId != null) {
+            reqUrl = reqUrl + "&entrustId=" + $scope.getEntrustId
+        }
+
         _basic.get(reqUrl).then(function (data) {
             if (data.success == true) {
                 $scope.storageCarBoxList = data.result;
@@ -85,23 +109,9 @@ app.controller("storage_car_controller", ["$scope", "$rootScope", "$stateParams"
             }
         });
     };
-    // 条件查询
-    $scope.getStorageCar = function () {
-        getCarDataList();
-    };
-    // 上一页
-    $scope.preBtn = function () {
-        $scope.start = $scope.start - ($scope.size - 1);
-        getCarDataList();
-    };
-    // 下一页
-    $scope.nextBtn = function () {
-        $scope.start = $scope.start + ($scope.size - 1);
-        getCarDataList();
-    };
+   
     /**点击新增按钮*/
     $scope.addStorageCar = function () {
-        $scope.submitted = false;
         $('.tabWrap .tab').removeClass("active");
         $(".tab_box ").removeClass("active");
         $(".tab_box ").hide();
@@ -114,6 +124,9 @@ app.controller("storage_car_controller", ["$scope", "$rootScope", "$stateParams"
         $scope.create_time = "";
         $scope.car_color = "";
         $scope.engineNum = "";
+        $scope.entrustId = "";
+        $scope.carValuation = "";
+        $scope.MOS = "";
         $scope.remark = "";
         $scope.storage_name = "";
         // 照片清空
@@ -123,7 +136,6 @@ app.controller("storage_car_controller", ["$scope", "$rootScope", "$stateParams"
         // 存放位置清空
         $scope.parkingArray = "";
         $scope.colArr = "";
-        // "enterTime":$scope.enter_time,
         $scope.parking_id = "";
         $scope.plan_out_time = "";
         $(".modal").modal({
@@ -132,6 +144,7 @@ app.controller("storage_car_controller", ["$scope", "$rootScope", "$stateParams"
         $("#newStorage_car").modal("open");
 
     };
+
     // 存放位置联动查询--行
     $scope.getStorageId = function (val) {
         if (val) {
@@ -219,6 +232,9 @@ app.controller("storage_car_controller", ["$scope", "$rootScope", "$stateParams"
                 "proDate": $scope.create_time,
                 "colour": $scope.car_color,
                 "engineNum": $scope.engineNum,
+                "entrustId":$scope.entrustId,
+                "valuation":$scope.carValuation,
+                "mosStatus":$scope.MOS,
                 "remark": $scope.remark,
                 "storageId": $scope.storage_name.id,
                 "storageName": $scope.storage_name.storage_name,
@@ -233,12 +249,52 @@ app.controller("storage_car_controller", ["$scope", "$rootScope", "$stateParams"
                     $('.tabWrap .test2').addClass("active");
                     $("#test2").addClass("active");
                     $("#test2").show();
-                    getCarDataList();
+                    $scope.getStorageCar();
                     $scope.Picture_carId = data.id;
                 } else {
                     swal(data.msg, "", "error")
                 }
             });
+        }
+    };
+    //钥匙
+    $scope.keyCabinet = function (){
+        $(".modal").modal();
+        $("#keyCabinet").modal("open");
+    }
+    // 钥匙存放位置联动查询--柜
+    $scope.addCarKeyCabinet = function (val) {
+        if (val) {
+            _basic.get(_host.api_url + "/carKeyCabinet").then(function (data) {
+                if (data.success == true&&data.result.length>0) {
+                    $scope.keyCabinetNameList = data.result;
+                    $scope.parkingArray =  _baseService.storageParking($scope.storageParking);
+                } else {
+                    swal(data.msg, "", "error");
+                }
+            });
+        }
+    },
+    // 钥匙位置联动查询--扇区
+    $scope.getStorageRow = function (val, array) {
+        if (val) {
+            $scope.colArr = array[val - 1].col;
+        }
+    };
+    // 钥匙联动查询
+    $scope.getMakeId = function (val) {
+        if (val) {
+            if ($scope.curruntId == val) {
+            } else {
+                $scope.curruntId = val;
+                _basic.get(_host.api_url + "/carMake/" + val + "/carModel").then(function (data) {
+                    if (data.success == true&&data.result.length>0) {
+                        $scope.carModelName = data.result;
+                    } else {
+                        swal(data.msg, "", "error")
+                    }
+                })
+            }
         }
     };
     // 立刻出库
@@ -261,7 +317,7 @@ app.controller("storage_car_controller", ["$scope", "$rootScope", "$stateParams"
                 }).then(function (data) {
                     if (data.success = true) {
                         swal("出库成功!", "", "success");
-                        getCarDataList();
+                        $scope.getStorageCar();
                     }
                 });
             }
@@ -303,7 +359,7 @@ app.controller("storage_car_controller", ["$scope", "$rootScope", "$stateParams"
                 if (data.success == true) {
                     swal('成功', "", "success");
                     $("#loginStorageCar").modal("close");
-                    getCarDataList();
+                    $scope.getStorageCar();
                 } else {
                     swal(data.msg, "", "error")
                 }
@@ -331,7 +387,7 @@ app.controller("storage_car_controller", ["$scope", "$rootScope", "$stateParams"
                     }).then(function (data) {
                         if (data.success == true) {
                             swal("移位成功", "", "success");
-                            getCarDataList();
+                            $scope.getStorageCar();
                             $("#change_storageCar").modal("close");
                         } else {
                             swal(data.msg, "", "error")
@@ -343,5 +399,22 @@ app.controller("storage_car_controller", ["$scope", "$rootScope", "$stateParams"
 
 
     };
-    getCarDataList();
+    // 上一页
+    $scope.preBtn = function () {
+        $scope.start = $scope.start - ($scope.size - 1);
+        $scope.getStorageCar();
+    };
+    // 下一页
+    $scope.nextBtn = function () {
+        $scope.start = $scope.start + ($scope.size - 1);
+        $scope.getStorageCar();
+    };
+    //获取数据
+    $scope.queryData = function () {
+        getCarMakeName();
+        $scope.getStorageCar();
+        getStorageName();
+    };
+    $scope.queryData();
+
 }]);
