@@ -72,11 +72,11 @@
                     <!-- 扇区 行/列 -->
                     <div class="col s12 " style="margin-bottom:  40px;">
                         <div class="col s6 input-field">
-                            <input type="number" id="row" valid-num ng-model="newZoneInfo.addZoneRow">
+                            <input type="text" id="row" maxlength="2" valid-num ng-model="newZoneInfo.addZoneRow">
                             <label for="row"><span style="color: red">* </span>行</label>
                         </div>
                         <div class="col s6 input-field">
-                            <input type="number" id="col" valid-num ng-model="newZoneInfo.addZoneCol">
+                            <input type="text" id="col" maxlength="2" valid-num ng-model="newZoneInfo.addZoneCol">
                             <label for="col"><span style="color: red">* </span>列</label>
                         </div>
                     </div>

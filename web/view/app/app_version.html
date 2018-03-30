@@ -57,14 +57,14 @@
                             <!-- 版本序号 -->
                             <div class=" col s6 p0">
                                 <div class="col s12 input-field">
-                                    <input type="number" id="addAppVersionNum" watch valid-num ng-model="appInfo.versionNum">
+                                    <input type="text" id="addAppVersionNum" maxlength="9" watch valid-num ng-model="appInfo.versionNum">
                                     <label for="addAppVersionNum"><span style="color: red">* </span>版本序号</label>
                                 </div>
                             </div>
 
                             <!-- 最低支持版本序号 -->
                             <div class=" col s6 input-field">
-                                <input type="number" id="addAppMinVersionNum" watch valid-num ng-model="appInfo.minVersionNum">
+                                <input type="text" id="addAppMinVersionNum" maxlength="9" watch valid-num ng-model="appInfo.minVersionNum">
                                 <label for="addAppMinVersionNum"><span style="color: red">* </span>最低支持版本序号</label>
                             </div>
                         </div>
@@ -162,14 +162,14 @@
                             <!-- 版本序号 -->
                             <div class=" col s6 p0">
                                 <div class="col s12 input-field">
-                                    <input type="number" id="updateAppVersionNum" watch valid-num ng-model="showAppInfo.version_number">
+                                    <input type="text" id="updateAppVersionNum" maxlength="9" valid-num ng-model="showAppInfo.version_number">
                                     <label for="updateAppVersionNum"><span style="color: red">* </span>版本序号</label>
                                 </div>
                             </div>
 
                             <!-- 最低支持版本序号 -->
                             <div class=" col s6 input-field">
-                                <input type="number" id="updateAppMinVersionNum" watch valid-num ng-model="showAppInfo.floor_version_number">
+                                <input type="text" id="updateAppMinVersionNum" maxlength="9" valid-num ng-model="showAppInfo.floor_version_number">
                                 <label for="updateAppMinVersionNum"><span style="color: red">* </span>最低支持版本序号</label>
                             </div>
                         </div>
