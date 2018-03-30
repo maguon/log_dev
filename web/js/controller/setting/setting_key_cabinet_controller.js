@@ -14,11 +14,12 @@ app.controller("setting_key_cabinet_controller", ["$scope", "_basic", "_config",
         keyCabinetName: "",
         remark: ""
     };
-
     // 追加画面数据
-    $scope.kyCbinetInfo = {};
+    $scope.keyCbinetInfo = {};
 
+    // 检索条件：钥匙柜名称
     $scope.conditionKeyCabinet = "";
+    // 检索条件：钥匙柜 状态
     $scope.conditionKeyCabinetStatus = "";
 
     /**
@@ -36,8 +37,6 @@ app.controller("setting_key_cabinet_controller", ["$scope", "_basic", "_config",
 
         // 检索URL组装
         var url = _host.api_url + "/carKeyCabinet" + condition;
-
-        console.log(url);
 
         // 调用API取得，画面数据
         _basic.get(url).then(function (data) {
@@ -59,16 +58,11 @@ app.controller("setting_key_cabinet_controller", ["$scope", "_basic", "_config",
     };
 
     /**
-     * 画面初期检索。
-     */
-    $scope.searchKeyCabinetList();
-
-    /**
      * 打开画面【增加钥匙柜】模态框。
      */
     $scope.openAddKeyCabinet = function () {
         // 初期化数据
-        angular.copy(initKeyCbinetInfo, $scope.kyCbinetInfo);
+        angular.copy(initKeyCbinetInfo, $scope.keyCbinetInfo);
 
         $('.modal').modal();
         $('#addKeyCabinet').modal('open');
@@ -78,12 +72,12 @@ app.controller("setting_key_cabinet_controller", ["$scope", "_basic", "_config",
      * 增加钥匙柜信息。
      */
     $scope.addKeyCabinet = function () {
-        if ($scope.kyCbinetInfo.keyCabinetName !== "") {
+        if ($scope.keyCbinetInfo.keyCabinetName !== "") {
 
             // 追加画面数据
             var obj = {
-                keyCabinetName: $scope.kyCbinetInfo.keyCabinetName,
-                remark: $scope.kyCbinetInfo.remark
+                keyCabinetName: $scope.keyCbinetInfo.keyCabinetName,
+                remark: $scope.keyCbinetInfo.remark
             };
 
             // 调用 API [user create carKeyCabinet]
@@ -104,6 +98,8 @@ app.controller("setting_key_cabinet_controller", ["$scope", "_basic", "_config",
 
     /**
      * 修改钥匙柜状态。
+     *
+     * @param keyId 钥匙柜ID
      * @param keyCabinetStatus 钥匙柜状态
      */
     $scope.changeKeyCabinetStatus = function (keyId, keyCabinetStatus) {
@@ -169,4 +165,9 @@ app.controller("setting_key_cabinet_controller", ["$scope", "_basic", "_config",
         //     }
         // });
     };
+
+    /**
+     * 画面初期检索。
+     */
+    $scope.searchKeyCabinetList();
 }]);
