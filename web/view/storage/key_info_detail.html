@@ -21,7 +21,7 @@
     <div class="row cyan lighten-1 white-text" style="padding: 0.75rem 0;margin: 10px 0 0 0 ">
         <div class="row valign-wrapper">
             <!-- 钥匙柜 名称 -->
-            <h5 class="col s2"><span ng-bind="carKeyCabinetInfo.name" class="white-text text-darken-1"></span></h5>
+            <h5 class="col s2"><span ng-bind="keyCabinetNm" class="white-text text-darken-1"></span></h5>
 
             <!-- 钥匙柜 扇区列表 -->
             <div class="col s5">
@@ -38,11 +38,11 @@
             <div class="col s5" style="">
                 <p class="col s6" style="font-size: 18px">
                     <span>总位置:</span>
-                    <span class="white-text" style="font-size: 30px" ng-bind="storage.imports"></span>
+                    <span class="white-text" style="font-size: 30px" ng-bind="totalPosition"></span>
                 </p>
                 <p class="col s6" style="font-size: 18px">
                     <span>剩余位置:</span>
-                    <span class="white-text" style="font-size: 30px" ng-bind="storage.exports"></span>
+                    <span class="white-text" style="font-size: 30px" ng-bind="leftPosition"></span>
                 </p>
             </div>
         </div>
@@ -92,7 +92,7 @@
                     <!-- 钥匙 钥匙柜名称 -->
                     <div class="col s6 left-align cyan-text fz30">
                         <i class="mdi mdi-key-variant lighten-1"></i>
-                        <span style="position: relative; left: 20px;" ng-bind="carKeyCabinetInfo.name"></span>
+                        <span style="position: relative; left: 20px;" ng-bind="keyCabinetNm"></span>
                     </div>
 
                     <!-- 钥匙 扇区位置 -->
