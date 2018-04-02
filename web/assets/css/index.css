@@ -942,3 +942,79 @@ input[type=text]{
     border-width: 8px 4px 0 4px !important;
 }
 
+/*车辆钥匙布局图*/
+.keyWrap{
+    width: 100%;
+    max-height: 500px;
+    border: 1px solid #00bcd4;
+    border-radius: 0px;
+    overflow-y: auto;
+    overflow-x: auto;
+}
+.keyWrap_storage{
+    width: 100%;
+    border: 1px solid #00bcd4;
+    border-radius: 0px;
+    overflow-y: auto;
+    overflow-x: auto;
+}
+.keyBox{
+    /*width:5050px;*/
+}
+.keyWrapTitle{
+    height: 46px;
+}
+.key_list{
+    display: flex;
+    width: auto;
+    height: 46px;
+}
+/*行*/
+.key_row {
+    position: relative;
+    min-width: 36px;
+    flex: 1;
+    height: 46px;
+    border-bottom: 1px solid #e0e0e0 ;
+    border-right: 1px solid #e0e0e0 ;
+    /*cursor: pointer;*/
+}
+.key_row_toolbar{
+    width: 80%;
+    position: absolute;
+    left: 10%;
+    bottom: 100%;
+    z-index: 1000;
+    background: #e57373;
+    display: none;
+}
+.key_row:hover .key_row_toolbar{
+    display: block;
+}
+
+/*确认按钮*/
+.circle-btn{
+    width: 50px;
+    height: 50px;
+    border-radius: 100%;
+}
+/*列*/
+.key_col{
+    min-width: 36px;
+    flex: 1;
+    height: 46px;
+    /*font-size: 12px;*/
+    border-bottom: 1px solid #e0e0e0;
+    border-right: 1px solid #e0e0e0;
+    cursor: pointer;
+}
+.key_row i{
+    font-size: 25px;
+    margin-right: 0;
+}
+.key_row_index{
+    width: 30px;
+    height: 30px;
+    border-radius: 100%;
+    background: #4dd0e1;
+}
