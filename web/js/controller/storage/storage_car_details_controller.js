@@ -10,6 +10,9 @@ app.controller("storage_car_details_controller", [ "$state", "$stateParams", "_c
     $scope.storage_imageBox = [];// 预览详情照片
     $scope.storage_image_i = [];// 照片索引
     $scope.color = _config.config_color;// 颜色
+    $scope.Picture_carId = "";
+    $scope.getCarKeyCabinet ="";
+    $scope.carKeyCabinetParkingArray ='';
     // 车辆照片跳转
     $scope.lookCarImg = function () {
         $('ul.tabWrap li').removeClass("active");
@@ -34,6 +37,7 @@ app.controller("storage_car_details_controller", [ "$state", "$stateParams", "_c
         $('ul.tabWrap li.look_car_key ').addClass("active");
         $("#lookCarKey").addClass("active");
         $("#lookCarKey").show();
+
     };
 
     // 返回
@@ -190,8 +194,99 @@ app.controller("storage_car_details_controller", [ "$state", "$stateParams", "_c
             } else {
                 swal(data.msg, "", "error")
             }
-        })
+        });
     };
+    //获取钥匙柜和扇区和位置
+    function getCarKeyPosition (){
+        _basic.get(_host.api_url + "/carKeyPosition?carId=" + val).then(function (data) {
+            if(data.success==true){
+                $scope.getCarKeyCabinet = data.result[0].car_key_cabinet_id;
+                $scope.getCarKeyCabinetArea = data.result[0].car_key_cabinet_area_id;
+                $scope.keyCabinetRow = data.result[0].row;
+                $scope.keyCabinetCol = data.result[0].col;
+                $scope.changeCarKeyCabinet();
+                $scope.changeCarKeyCabinetArea();
+            }
+        })
+    }
+    // 钥匙存放位置联动查询--柜
+    function getCarKeyCabinet() {
+        _basic.get(_host.api_url + "/carKeyCabinet?keyCabinetStatus=1").then(function (data) {
+            if (data.success == true&&data.result.length>0) {
+                $scope.keyCabinetNameList = data.result;
+            } else {
+                swal(data.msg, "", "error");
+            }
+        });
+    };
+    // 钥匙位置联动查询--扇区
+    $scope.changeCarKeyCabinet = function(){
+        _basic.get(_host.api_url + "/carKeyCabinetArea?areaStatus=1&carKeyCabinetId="+$scope.getCarKeyCabinet).then(function (data) {
+            if (data.success == true) {
+                $scope.carKeyCabinetAreaList = data.result;
+            } else {
+                swal(data.msg, "", "error");
+            }
+        });
+    };
+    //获取二维扇区图
+    $scope.changeCarKeyCabinetArea =function (){
+        _basic.get(_host.api_url + "/carKeyPosition?carKeyCabinetId="+$scope.getCarKeyCabinet+'&areaId='+$scope.getCarKeyCabinetArea).then(function (data) {
+            if (data.success == true) {
+                if(data.result==null){
+                    return;
+                }
+                else{
+                    $scope.carKeyCabinetParking = data.result;
+                    $scope.carKeyCabinetParkingArray =_baseService.carKeyParking($scope.carKeyCabinetParking);
+                    if( $scope.carKeyCabinetParkingArray.length==0){
+                        return
+                    }
+                    $scope.carKeyCabinetParkingCol = $scope.carKeyCabinetParkingArray[0].col;
+                }
+            }
+            else {
+                swal(data.msg, "", "error");
+            }
+        });
+    };
+    //钥匙移动
+    $scope.moveCarKey = function(parkingId, row, col){
+        swal({
+            title: "该钥匙移位到" + row + "排" + col + "列？",
+            text: "",
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#DD6B55",
+            confirmButtonText: "确定",
+            cancelButtonText: "取消",
+            closeOnConfirm: false
+        },
+            function () {
+                if (parkingId != null) {
+                    _basic.put(_host.api_url + "/user/" + userId + "/carKeyPosition/" + parkingId, {
+                        carId: val
+                    }).then(function (data) {
+                        if (data.success == true) {
+                            swal("移位成功", "", "success");
+                            $scope.changeCarKeyCabinet();
+                            $scope.changeCarKeyCabinetArea();
+                        }
+                        else {
+                            swal(data.msg, "", "error")
+                        }
+                    })
+                }
+            })
+    };
+    //有钥匙占位
+    $scope.noMoveCarKey =function(){
+        swal('该位置已存放钥匙，请存放到其他没有被暂用的位置', '','error')
+    }
+    $scope.updateCarKeyCabinetItem = function (){
+        swal("修改成功","", "success")
+        $state.go($stateParams.from, {id: $scope.self_car.storage_id, form: $stateParams._form}, {reload: true})
+    }
     // 修改仓库详情
     $scope.submitForm = function (isValid, id, r_id) {
         $scope.submitted = true;
@@ -352,7 +447,7 @@ app.controller("storage_car_details_controller", [ "$state", "$stateParams", "_c
             }
         )
     };
-    //获取钥匙柜和扇区和位置
-
+    getCarKeyPosition ();
+    getCarKeyCabinet();
     $scope.lookStorageCar(val, vin);
 }]);
