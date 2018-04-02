@@ -15,7 +15,7 @@ app.controller("storage_car_controller", ["$scope", "$rootScope", "$stateParams"
     $scope.addCarKeyCabinet = "";
     $scope.Picture_carId = "";
     // 获取车辆品牌
-    function getCarMakeName () {
+    function getCarMakeName() {
         _basic.get(_host.api_url + "/carMake").then(function (data) {
             if (data.success == true&&data.result.length>0) {
                 $scope.makecarName = data.result;
@@ -64,7 +64,7 @@ app.controller("storage_car_controller", ["$scope", "$rootScope", "$stateParams"
             reqUrl = reqUrl + "&modelId=" + $scope.search_modelId
         }
         if ($scope.search_vin != null) {
-            reqUrl = reqUrl + "&vinCode=" + $scope.search_vin
+            reqUrl = reqUrl + "&vin=" + $scope.search_vin
         }
         if ($scope.search_enterTime_start != null) {
             reqUrl = reqUrl + "&enterStart=" + $scope.search_enterTime_start
@@ -265,11 +265,20 @@ app.controller("storage_car_controller", ["$scope", "$rootScope", "$stateParams"
         $('.tabWrap .test3').addClass("active");
         $("#test3").addClass("active");
         $("#test3").show();
-    }
+    };
     //钥匙
-    $scope.keyCabinet = function (){
+    $scope.keyCabinet = function (id,row,col){
         $(".modal").modal();
         $("#keyCabinet").modal("open");
+        $scope.keyCabinetRow = row;
+        $scope.keyCabinetCol = col;
+        _basic.get(_host.api_url + "/carKeyPosition?carId=" + id).then(function (data) {
+            if(data.success==true){
+                $scope.addCarKeyCabinet = data.result[0].car_key_cabinet_id;
+                $scope.addCarKeyCabinetArea = data.result[0].car_key_cabinet_area_id;
+                $scope.changeCarKeyCabinetArea();
+            }
+        })
     }
     // 钥匙存放位置联动查询--柜
     function addCarKeyCabinet() {
@@ -300,6 +309,8 @@ app.controller("storage_car_controller", ["$scope", "$rootScope", "$stateParams"
                 }
                 else{
                     $scope.carKeyCabinetParking = data.result;
+                    $scope.keyCabinetName = data.result[0].key_cabinet_name;
+                    $scope.areaName = data.result[0].area_name;
                     $scope.carKeyCabinetParkingArray =_baseService.carKeyParking($scope.carKeyCabinetParking);
                     $scope.carKeyCabinetParkingCol = $scope.carKeyCabinetParkingArray[0].col
                 }
@@ -307,11 +318,40 @@ app.controller("storage_car_controller", ["$scope", "$rootScope", "$stateParams"
                 swal(data.msg, "", "error");
             }
         });
+
     }
     //添加钥匙在几排几列
     $scope.addCarKeyCabinetParking = function (id, row, col){
         $scope.addRow = row;
         $scope.addCol = col;
+        swal({
+            title: "该钥匙确定添加到" + row + "排" + col + "列？",
+            text: "",
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#DD6B55",
+            confirmButtonText: "确定",
+            cancelButtonText: "取消",
+            closeOnConfirm: false
+        },
+            function () {
+                if (id != null) {
+                    _basic.put(_host.api_url + "/user/" + userId + "/carKeyPosition/" + id, {
+                        carId:$scope.Picture_carId
+                    }).then(function (data) {
+                        if (data.success == true) {
+                            swal("成功添加钥匙位置", "", "success");
+                            $scope.changeCarKeyCabinetArea();
+                        }
+                        else {
+                            swal(data.msg, "", "error")
+                        }
+                    })
+                }
+            })
+    }
+
+       /*
         _basic.put(_host.api_url + "/user/" + userId + "/carKeyPosition/" + id, {
             carId:$scope.Picture_carId
         }).then(function (data) {
@@ -330,13 +370,15 @@ app.controller("storage_car_controller", ["$scope", "$rootScope", "$stateParams"
                 swal(data.msg, "", "error")
             }
         })
-    }
+    }*/
     //确定添加成功
     $scope.addcarKeyCabinetItem =function (){
         $("#newStorage_car").modal("close");
          swal('成功添加入库车辆', "", "success");
         $scope.getStorageCar();
     }
+
+
     // 立刻出库
     $scope.outStorageCar = function (rel_id, relSta, p_id, s_id, car_id) {
         swal({

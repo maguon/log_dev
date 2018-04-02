@@ -239,7 +239,7 @@
                 <div class="col s7">
                     <!--vin码-->
                     <div class="input-field col s12">
-                        <input name="search_vin" id="search_vin" type="text" ng-model="search_vin" minlength="6">
+                        <input name="search_vin" id="search_vin" type="text" ng-model="search_vin">
                         <label for="search_vin">vin码</label>
                     </div>
                 </div>
@@ -361,7 +361,7 @@
                     <td class="operation">
                         <!--钥匙-->
                          <span>
-                            <i  class="mdi mdi-key-variant cyan-text lighten-1" ng-click="keyCabinet(el.storage_id,el.id,el.row,el.col)"></i>
+                            <i  class="mdi mdi-key-variant cyan-text lighten-1" ng-click="keyCabinet(el.id,el.row,el.col)"></i>
                         </span>
                         <!--钥匙-->
                         <div id="keyCabinet" class="modal ">
@@ -369,38 +369,34 @@
                                 <div class="modal-content">
                                     <h4 class="center-align">钥匙存放位置</h4>
                                     <div class="divider"></div>
-                                    <div class=" col s12 garageWrapTitle vc-center">
+                                    <div class="row col s12 garageWrapTitle vc-center fz20" style="height: 50px;background: #e0e0e0;" >
                                         <div class="col s7">
-                                            <div class="col s12 left-align">
-                                                {{20}}号钥匙柜
-                                            </div>
+                                            <h5 class="col s12 left-align" style="color: #26c6da">
+                                                {{keyCabinetName}}号钥匙柜
+                                            </h5>
                                         </div>
-                                        <div class="col s5">
+                                        <div class="col s5 right-align">
                                             <div class="col s12">
-                                                <span class="red-text" ng-bind="nowRow"></span>
-                                                <span>扇区</span>
-                                                <span class="red-text" ng-bind="nowRow"></span>
-                                                <span>排</span>
-                                                <span class="red-text" ng-bind="nowCol"></span>
-                                                <span>列</span>
+                                                <span class="fz33" style="color: #26c6da">{{areaName}}</span><span>扇区</span>
+                                                <span class="fz33" style="color: #26c6da">{{keyCabinetRow}}</span><span>排</span>
+                                                <span class="fz33" style="color: #26c6da">{{keyCabinetCol}}</span><span>列</span>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="row">
                                         <div class="garageWrap">
-                                            <div class="garageBox ">
+                                            <div class="garageBox">
                                                 <div class=" col s12 garage_list p0" >
                                                     <div class="garage_row vc-center left"></div>
-                                                    <div class="garage_row vc-center left" ng-repeat="el in ageParkingCol">
+                                                    <div class="garage_row vc-center left" ng-repeat="el in carKeyCabinetParkingCol">
                                                         {{el.col}}
                                                     </div>
                                                 </div>
-                                                <div class="col s12  garage_list p0"  ng-repeat="el in garageParkingArray" >
+                                                <div class="col s12  garage_list p0"  ng-repeat="el in carKeyCabinetParkingArray" >
                                                     <div class="garage_row vc-center left">{{$index+1}}</div>
-                                                    <div class="garage_row vc-center left" ng-repeat="els in el.col track by $index" ng-class="{'present_place':el.row==now_row&&els.col==now_col}">
-                                                        <i ng-show="els.carId!=0&&els.plan_time==true" class=" mdi mdi-car red-text accent-1 "></i>
-                                                        <i ng-show="els.carId!=0&&els.plan_time==false" class=" mdi mdi-car cyan-text lighten-1"></i>
-                                                        <i ng-show="els.carId==0" class=" mdi mdi-car grey-text lighten-2 " ng-click="moveParking(els.id,el.row,els.col)"></i>
+                                                    <div class="garage_row vc-center left" ng-repeat="els in el.col track by $index" ng-class="{'present_place':el.row==keyCabinetRow&&els.col==keyCabinetCol}">
+                                                        <i ng-show="els.carId!=0" class=" mdi  mdi-key-variant cyan-text lighten-1"></i>
+                                                        <i ng-show="els.carId==0" class=" mdi mdi-key-variant grey-text lighten-2" ></i>
                                                     </div>
                                                 </div>
                                             </div>
