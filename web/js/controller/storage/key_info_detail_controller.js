@@ -60,8 +60,6 @@ app.controller("key_info_detail_controller", ["$scope", "$state", "$stateParams"
         carMosStatus: ""
     };
 
-    $scope.newZoneInfo = {};
-
     // $scope.selectedZone = "1";
 
     /**
@@ -81,12 +79,15 @@ app.controller("key_info_detail_controller", ["$scope", "$state", "$stateParams"
             }
         });
 
-        var id = 100006;
+        // TODO test data
+        id = 100016;
         var url = _host.api_url + "/user/" + userId + "/car?active=1&carId=" + id;
 
         _basic.get(url).then(function (data) {
             if (data.success == true) {
                 if (data.result.length > 0) {
+                    // 初期化数据
+
                     // vin
                     $scope.keyInfo.carVin = data.result[0].vin;
                     // 制造商
@@ -111,6 +112,9 @@ app.controller("key_info_detail_controller", ["$scope", "$state", "$stateParams"
                     $scope.keyInfo.carValuation = data.result[0].valuation;
                     // MOS
                     $scope.keyInfo.carMosStatus = data.result[0].mos_status;
+
+                    $('.modal').modal();
+                    $('#carKeyInfo').modal('open');
                 } else {
                     swal("该钥匙没有对应的车辆信息！", "", "warning");
                 }
@@ -123,18 +127,8 @@ app.controller("key_info_detail_controller", ["$scope", "$state", "$stateParams"
         $scope.keyInfo.row = row;
         $scope.keyInfo.col = col;
 
-
-        // 初期化数据
-        // angular.copy(initAppInfo, $scope.appInfo);
-
-        $('.modal').modal();
-        $('#carKeyInfo').modal('open');
-
-
     };
 
-    $('.modal').modal();
-    $('#carKeyInfo').modal('open');
 
     /**
      * 获取钥匙柜分区信息列表
