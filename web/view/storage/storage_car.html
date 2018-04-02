@@ -13,7 +13,7 @@
                 </ul>
             </div>
             <!--详情-->
-            <div id="test3" class="col s12 tab_box">
+            <div id="test1" class="col s12 tab_box">
                 <form name="newStorage_carForm" style="color:#616161"  novalidate>
                     <div class="row" style="margin-top: 40px">
                         <div class="row "  >
@@ -151,13 +151,13 @@
                     </div>
                     <div class="divider" style="background: #00bcd4;height: 2px;"></div>
                     <div class="modal-footer vc-center">
-                        <a  class=" modal-action modal-close waves-effect waves-light grey lighten-1 btn" style="margin-left: 10px" >
-                            关闭
-                        </a>
+                        <button class="btn btn-floating waves-light waves-effect  cyan lighten-1" ng-click="nextp()" name="action" >
+                            <i class="mdi mdi-trending-neutral"></i>
+                        </button>
                     </div>
                 </div>
             </div>
-            <div id="test1" class="col s12 tab_box">
+            <div id="test3" class="col s12 tab_box">
                 <div class="cyan row  p0 storage_position" style="height: 70px;width: 100%;padding-bottom: 5px;margin-top: 35px">
                     <div class="col s4" >
                         <div class="row input-field  white-text">
@@ -169,7 +169,7 @@
                     </div>
                     <div class="col s4">
                         <div class="row input-field  white-text" >
-                            <select material-select watch ng-model="addCarKeyCabinetArea"  required>
+                            <select material-select watch ng-model="addCarKeyCabinetArea"  ng-change="changeCarKeyCabinetArea()" required>
                                 <option value=""  selected>扇区</option>
                                 <option ng-repeat="el in carKeyCabinetAreaList"  ng-value="el.id" >{{el.area_name}}</option>
                             </select>
@@ -177,31 +177,37 @@
                     </div>
                     <div class="col s4">
                         <div class="valign-wrapper cyan white-text right fz20" style="margin-top: 25px;margin-right:25px">
-                           {{3}}排{{2}}列
+                           {{addRow}}排{{addCol}}列
                         </div>
                     </div>
                 </div>
-
-
                 <div class="row">
                     <div class="garageWrap">
-                        <div class="garageBox ">
+                        <div class="garageBox">
                             <div class=" col s12 garage_list p0" >
                                 <div class="garage_row vc-center left"></div>
-                                <div class="garage_row vc-center left" ng-repeat="el in ageParkingCol">
+                                <div class="garage_row vc-center left" ng-repeat="el in carKeyCabinetParkingCol">
                                     {{el.col}}
                                 </div>
                             </div>
-                            <div class="col s12  garage_list p0"  ng-repeat="el in garageParkingArray" >
+                            <div class="col s12  garage_list p0"  ng-repeat="el in carKeyCabinetParkingArray" >
                                 <div class="garage_row vc-center left">{{$index+1}}</div>
                                 <div class="garage_row vc-center left" ng-repeat="els in el.col track by $index" ng-class="{'present_place':el.row==now_row&&els.col==now_col}">
-                                    <i ng-show="els.carId!=0&&els.plan_time==true" class=" mdi mdi-car red-text accent-1 "></i>
-                                    <i ng-show="els.carId!=0&&els.plan_time==false" class=" mdi mdi-car cyan-text lighten-1"></i>
-                                    <i ng-show="els.carId==0" class=" mdi mdi-car grey-text lighten-2 " ng-click="moveParking(els.id,el.row,els.col)"></i>
+                                  <!--  <i ng-show="els.carId!=0&&els.plan_time==true" class=" mdi  mdi-key-variant red-text accent-1 "></i>-->
+                                    <i ng-show="els.carId!=0" class=" mdi  mdi-key-variant cyan-text lighten-1"></i>
+                                    <i ng-show="els.carId==0" class=" mdi mdi-key-variant grey-text lighten-2"  ng-click="addCarKeyCabinetParking(els.id,el.row,els.col)"></i>
                                 </div>
                             </div>
                         </div>
                     </div>
+                </div>
+                <div class="modal-footer right-align">
+                    <button class="btn btn-floating waves-light waves-effect  cyan lighten-1" ng-click="addcarKeyCabinetItem()" name="action" >
+                        <i class="mdi mdi-check"></i>
+                    </button>
+                    <a  class=" modal-action btn-floating modal-close waves-effect  grey lighten-1waves-light   btn" style="margin-right: 10px" >
+                        <i class="mdi mdi-close"></i>
+                    </a>
                 </div>
             </div>
         </div>
@@ -517,7 +523,7 @@
                 </tr>
                 <!--当搜索结果为空时-->
                 <tr class="grey-text text-darken-1" ng-if="storageCar.length == 0" style="border-bottom: 1px solid #ccc;">
-                    <td colspan="10"><span style="letter-spacing: 2px;margin-left: 45%">暂无数据</span></td>
+                    <td colspan="10"><span style="letter-spacing: 2px;margin-left: 4%">暂无数据</span></td>
                 </tr>
                 </tbody>
             </table>

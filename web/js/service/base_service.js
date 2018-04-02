@@ -64,6 +64,44 @@ baseService.factory('_baseService',function(){
         }
         return parkingArray;
     };
+    // 钥匙图分布
+    _this.carKeyParking = function (pk) {
+        var parkingArray = [];
+        for (i = 0; i < pk.length; i++) {
+            for (j = 0; j < parkingArray.length;) {
+                if (parkingArray[j].row == pk[i].row) {
+                    break;
+                } else {
+                    j++;
+                }
+            }
+            if (j == parkingArray.length) {
+                parkingArray.push({
+                    row: pk[i].row,
+                    col: [{
+                        col: pk[i].col,
+                        carId: pk[i].car_id,
+                        id: pk[i].id,
+                        car_key_cabinet_id: pk[i].car_key_cabinet_id,
+                        car_key_cabinet_area_id: pk[i].car_key_cabinet_area_id,
+                        key_cabinet_name: pk[i].key_cabinet_name,
+                        area_name:  pk[i].area_name
+                    }]
+                })
+            } else {
+                parkingArray[j].col.push({
+                    col: pk[i].col,
+                    carId: pk[i].car_id,
+                    id: pk[i].id,
+                    car_key_cabinet_id: pk[i].car_key_cabinet_id,
+                    car_key_cabinet_area_id: pk[i].car_key_cabinet_area_id,
+                    key_cabinet_name: pk[i].key_cabinet_name,
+                    area_name:  pk[i].area_name
+                });
+            }
+        }
+        return parkingArray;
+    };
     // 页面之间数据传递
     _this.pass_parameter=function () {
 //定义参数对象

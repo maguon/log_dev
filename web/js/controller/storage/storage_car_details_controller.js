@@ -35,6 +35,7 @@ app.controller("storage_car_details_controller", [ "$state", "$stateParams", "_c
         $("#lookCarKey").addClass("active");
         $("#lookCarKey").show();
     };
+
     // 返回
     $scope.return = function () {
         $state.go($stateParams.from, {id: $scope.self_car.storage_id, form: $stateParams._form}, {reload: true})
@@ -351,5 +352,7 @@ app.controller("storage_car_details_controller", [ "$state", "$stateParams", "_c
             }
         )
     };
+    //获取钥匙柜和扇区和位置
+
     $scope.lookStorageCar(val, vin);
 }]);
