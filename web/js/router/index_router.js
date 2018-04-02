@@ -76,6 +76,18 @@ app.config(['$stateProvider',"$urlRouterProvider",function($stateProvider,$urlRo
             templateUrl: "/view/storage/storage_car.html",
             controller:'storage_car_controller'
         })
+        // 钥匙管理
+        .state("key_info", {
+            url:"/key_info",
+            templateUrl: "/view/storage/key_info.html",
+            controller:'key_info_controller'
+        })
+        // 钥匙管理->钥匙信息
+        .state("key_info_detail", {
+            url:"/key_info_detail/{id}?from",
+            templateUrl: "/view/storage/key_info_detail.html",
+            controller:'key_info_detail_controller'
+        })
         .state("storage_store", {
             url:"/storage_store",
             templateUrl: "/view/storage/storage_store.html",
