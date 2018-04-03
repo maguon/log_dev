@@ -102,13 +102,13 @@ app.controller("key_info_detail_controller", ["$scope", "$state", "$stateParams"
                     // 初期化数据
 
                     // vin
-                    $scope.keyInfo.carVin = data.result[0].vin;
+                    $scope.keyInfo.carVin = data.result[0].vin == null ? '未知' : data.result[0].vin;
                     // 制造商
-                    $scope.keyInfo.carMaker = data.result[0].make_name;
+                    $scope.keyInfo.carMaker = data.result[0].make_name == null ? '未知' : data.result[0].make_name;
                     // 型号
-                    $scope.keyInfo.carModel = data.result[0].model_name;
+                    $scope.keyInfo.carModel = data.result[0].model_name == null ? '未知' : data.result[0].model_name;
                     // 生产日期
-                    $scope.keyInfo.carProDate = data.result[0].pro_date;
+                    $scope.keyInfo.carProDate = data.result[0].pro_date == null ? '未知' : data.result[0].pro_date;
                     // 颜色
                     $scope.keyInfo.carColor = '未知';
                     for (var i = 0; i < $scope.configColor.length; i++) {
@@ -117,22 +117,22 @@ app.controller("key_info_detail_controller", ["$scope", "$state", "$stateParams"
                         }
                     }
                     // 发动机号
-                    $scope.keyInfo.carEngineNum = data.result[0].engine_num;
+                    $scope.keyInfo.carEngineNum = data.result[0].engine_num == null ? '未知' : data.result[0].engine_num;
                     // 位置
                     var storageName = data.result[0].storage_name == null ? '未知' : data.result[0].storage_name;
                     var row = data.result[0].row == null ? '未知' : data.result[0].row;
                     var col = data.result[0].col == null ? '未知' : data.result[0].col;
                     $scope.keyInfo.carPosition = storageName + ' ' +  row + '排' + col + '列';
                     // 入库
-                    $scope.keyInfo.carEnterTime = data.result[0].enter_time;
+                    $scope.keyInfo.carEnterTime = data.result[0].enter_time == null ? '未知' : data.result[0].enter_time;
                     // 计划出库
-                    $scope.keyInfo.carPlanOutTime = data.result[0].plan_out_time;
+                    $scope.keyInfo.carPlanOutTime = data.result[0].plan_out_time == null ? '未知' : data.result[0].plan_out_time;
                     // 委托方
-                    $scope.keyInfo.carEntrust = data.result[0].entrust_name;
+                    $scope.keyInfo.carEntrust = data.result[0].entrust_name == null ? '未知' : data.result[0].entrust_name;
                     // 估价
-                    $scope.keyInfo.carValuation = data.result[0].valuation;
+                    $scope.keyInfo.carValuation = data.result[0].valuation == null ? 0 : data.result[0].valuation;
                     // MOS
-                    $scope.keyInfo.carMosStatus = data.result[0].mos_status;
+                    $scope.keyInfo.carMosStatus = data.result[0].mos_status == null ? '未知' : $scope.mosFlags[data.result[0].mos_status-1].name;
 
                     $('.modal').modal();
                     $('#carKeyInfo').modal('open');
