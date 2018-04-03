@@ -137,7 +137,12 @@ app.config(['$stateProvider',"$urlRouterProvider",function($stateProvider,$urlRo
             templateUrl: "/view/download/admin_download_app.html",
             controller:'admin_download_app_controller'
         })
-
+        //委托方
+        .state("client",{
+            url:"/client",
+            templateUrl: "/view/client/client.html",
+            controller:'client_controller'
+        })
         //app系统
         .state("app_version",{
             url:"/app_version",
