@@ -310,7 +310,7 @@ app.controller("storage_car_controller", ["$scope", "$rootScope", "$stateParams"
     $scope.changeCarKeyCabinetArea =function (){
         _basic.get(_host.api_url + "/carKeyPosition?carKeyCabinetId="+$scope.addCarKeyCabinet+'&areaId='+$scope.addCarKeyCabinetArea).then(function (data) {
             if (data.success == true) {
-                if(data.result==null){
+                if(data.result.length == 0){
                     return
                 }
                 else{
