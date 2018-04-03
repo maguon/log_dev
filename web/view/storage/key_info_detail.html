@@ -64,7 +64,7 @@
                 <div class="key_row vc-center left">{{$index+1}}</div>
                 <div class="key_row vc-center left" ng-repeat="els in el.col track by $index">
                     <i ng-show="els.carId!=0" class=" mdi mdi-key-variant cyan-text lighten-1"
-                       style="cursor: pointer;" ng-click="getCarInfo(els.id,el.row,els.col)"></i>
+                       style="cursor: pointer;" ng-click="getCarInfo(els.carId,el.row,els.col)"></i>
                     <i ng-show="els.carId==0" class=" mdi mdi-key-variant grey-text lighten-2"></i>
                 </div>
             </div>
@@ -119,9 +119,15 @@
 
                     <!-- 钥匙 vin 制造商 型号 -->
                     <div class="vc-center col s12 left-align black-text fz14" style="height:50px ;">
-                        <span style="position: absolute; left: 60px;">VIN码：{{keyInfo.carVin}}</span>
-                        <span style="position: absolute; left: 360px;">制造商：{{keyInfo.carMaker}}</span>
-                        <span style="position: absolute; left: 660px;">型号：{{keyInfo.carModel}}</span>
+                        <div class="col s4 left-align context-ellipsis">
+                            <span>VIN码：{{keyInfo.carVin}}</span>
+                        </div>
+                        <div class="col s4 left-align context-ellipsis">
+                            <span>制造商：{{keyInfo.carMaker}}</span>
+                        </div>
+                        <div class="col s4 left-align context-ellipsis">
+                            <span>型号：{{keyInfo.carModel}}</span>
+                        </div>
                     </div>
 
                     <div class="col s12"
@@ -129,10 +135,15 @@
 
                     <!-- 钥匙 生产日期 -->
                     <div class="vc-center col s12 left-align black-text fz14" style="height:50px ;">
-                        <span style="position: absolute; left: 60px;">生产日期：{{keyInfo.carProDate|date:'yyyy-MM-dd hh:mm:ss'}}</span>
-
-                        <span style="position: absolute; left: 360px;">颜色：{{keyInfo.carColor}}</span>
-                        <span style="position: absolute; left: 660px;">发动机号：{{keyInfo.carEngineNum}}</span>
+                        <div class="col s4 left-align context-ellipsis">
+                            <span>生产日期：{{keyInfo.carProDate|date:'yyyy-MM-dd hh:mm:ss'}}</span>
+                        </div>
+                        <div class="col s4 left-align context-ellipsis">
+                            <span>颜色：{{keyInfo.carColor}}</span>
+                        </div>
+                        <div class="col s4 left-align context-ellipsis">
+                            <span>发动机号：{{keyInfo.carEngineNum}}</span>
+                        </div>
                     </div>
 
                     <div class="col s12"
@@ -140,9 +151,15 @@
 
                     <!-- 钥匙 存放位置 -->
                     <div class="vc-center col s12 left-align black-text fz14" style="height:50px;">
-                        <span style="position: absolute; left: 60px;">存放位置：{{keyInfo.carPosition}}</span>
-                        <span style="position: absolute; left: 360px;">入库时间：{{keyInfo.carEnterTime |date:'yyyy-MM-dd hh:mm:ss'}}</span>
-                        <span style="position: absolute; left: 660px;">计划出库时间：{{keyInfo.carPlanOutTime |date:'yyyy-MM-dd hh:mm:ss'}}</span>
+                        <div class="col s4 left-align context-ellipsis">
+                            <span>存放位置：{{keyInfo.carPosition}}</span>
+                        </div>
+                        <div class="col s4 left-align context-ellipsis">
+                            <span >入库时间：{{keyInfo.carEnterTime |date:'yyyy-MM-dd hh:mm:ss'}}</span>
+                        </div>
+                        <div class="col s4 left-align context-ellipsis">
+                            <span >计划出库时间：{{keyInfo.carPlanOutTime |date:'yyyy-MM-dd hh:mm:ss'}}</span>
+                        </div>
                     </div>
 
                     <div class="col s12"
@@ -150,9 +167,15 @@
 
                     <!-- 钥匙 委托方 -->
                     <div class="vc-center col s12 left-align black-text fz14" style="height:50px ;">
-                        <span style="position: absolute; left: 60px;">委托方：{{(keyInfo.carEntrust == undefined || keyInfo.carEntrust == null) ? '未知' :keyInfo.carEntrust}}</span>
-                        <span style="position: absolute; left: 360px;">车辆估值(美元)：<span class="red-text">{{keyInfo.carValuation | currency }}</span></span>
-                        <span style="position: absolute; left: 660px;">是否MOS车辆：{{mosFlags[keyInfo.carMosStatus-1].name}}</span>
+                        <div class="col s4 left-align context-ellipsis">
+                            <span>委托方：{{(keyInfo.carEntrust == undefined || keyInfo.carEntrust == null) ? '未知' :keyInfo.carEntrust}}</span>
+                        </div>
+                        <div class="col s4 left-align context-ellipsis">
+                            <span>车辆估值(美元)：<span class="red-text">{{keyInfo.carValuation | currency }}</span></span>
+                        </div>
+                        <div class="col s4 left-align context-ellipsis">
+                            <span>是否MOS车辆：{{mosFlags[keyInfo.carMosStatus-1].name}}</span>
+                        </div>
                     </div>
                 </div>
             </div>
