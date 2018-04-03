@@ -20,29 +20,28 @@
     <!-- 头部 -->
     <div class="row cyan lighten-1 white-text" style="padding: 0.75rem 0;margin: 10px 0 0 0 ">
         <div class="row valign-wrapper">
+
             <!-- 钥匙柜 名称 -->
-            <h5 class="col s2"><span ng-bind="keyCabinetNm" class="white-text text-darken-1"></span></h5>
+            <h5 class="col s2">
+                <div ng-bind="keyCabinetNm" class="white-text text-darken-1 context-ellipsis" style="width: 220px;"></div>
+            </h5>
 
             <!-- 钥匙柜 扇区列表 -->
             <div class="col s5">
                 <p class="col s4">
                     <select material-select watch ng-model="selectedZone" ng-change="getKeyCabinetZoneList();">
-                        <option ng-repeat="op in zoneList" ng-value="{{op.id}}"
-                                ng-selected="op.id == selectedZone">{{op.area_name}}
-                        </option>
+                        <option ng-repeat="op in zoneList" ng-value="{{op.id}}" ng-selected="op.id == selectedZone">{{op.area_name}}</option>
                     </select>
                 </p>
             </div>
 
             <!-- 钥匙柜 总位置 / 剩余位置 -->
-            <div class="col s5" style="">
-                <p class="col s6" style="font-size: 18px">
-                    <span>总位置:</span>
-                    <span class="white-text" style="font-size: 30px" ng-bind="totalPosition"></span>
+            <div class="col s5 white-text fz20">
+                <p class="col s6">
+                    总位置: <span ng-bind="totalPosition"></span>
                 </p>
-                <p class="col s6" style="font-size: 18px">
-                    <span>剩余位置:</span>
-                    <span class="white-text" style="font-size: 30px" ng-bind="leftPosition"></span>
+                <p class="col s6">
+                    剩余位置: <span ng-bind="leftPosition"></span>
                 </p>
             </div>
         </div>
@@ -50,7 +49,7 @@
 
     <!-- 详细 -->
     <div class="keyWrap">
-        <div>
+        <div ng-show="hasPosition == true">
 
             <!-- 头 -->
             <div class=" col s12 key_list p0">
@@ -69,6 +68,9 @@
                     <i ng-show="els.carId==0" class=" mdi mdi-key-variant grey-text lighten-2"></i>
                 </div>
             </div>
+        </div>
+        <div ng-show="hasPosition == false" class="col s12  key_list p0 vc-center">
+            <span style="letter-spacing: 2px">暂无数据</span>
         </div>
     </div>
 </div>
@@ -90,19 +92,17 @@
 
                 <div class="col s12">
                     <!-- 钥匙 钥匙柜名称 -->
-                    <div class="col s6 left-align cyan-text fz30">
+                    <div class="col s6 left-align cyan-text fz30 context-ellipsis" style="width: 460px;">
                         <i class="mdi mdi-key-variant lighten-1"></i>
                         <span style="position: relative; left: 20px;" ng-bind="keyCabinetNm"></span>
                     </div>
 
                     <!-- 钥匙 扇区位置 -->
                     <div class="col s6 right-align">
-                        <span class="cyan-text">{{keyInfo.zoneNm}} </span>
-                        <span>扇区</span>
-                        <span class="cyan-text" style="position: relative; left: 10px;">{{keyInfo.row}}</span>
-                        <span style="position: relative; left: 10px;">排</span>
-                        <span class="cyan-text" style="position: relative; left: 10px;">{{keyInfo.col}}</span>
-                        <span style="position: relative; left: 10px;">列</span>
+                        <div class="col cyan-text right-align context-ellipsis" style="width: 52%;">{{keyInfo.zoneNm}}</div>
+                        <div class="col black-text" style="width: 14.6666666666%;">扇区</div>
+                        <div class="col s2 cyan-text right-align">{{keyInfo.row}} <span class="black-text">排</span></div>
+                        <div class="col s2 cyan-text right-align">{{keyInfo.col}} <span class="black-text">列</span></div>
                     </div>
                 </div>
             </div>
@@ -136,10 +136,10 @@
                     </div>
 
                     <div class="col s12"
-                         style="border-top: #cccccc 1px dashed; overflow: hidden;width:95%; margin-left: 20px;height: 1px"></div>
+                         style="border-top: #cccccc 1px dashed; overflow: hidden;width:95%; margin-left: 20px;height: 1px;"></div>
 
                     <!-- 钥匙 存放位置 -->
-                    <div class="vc-center col s12 left-align black-text fz14" style="height:50px ;">
+                    <div class="vc-center col s12 left-align black-text fz14" style="height:50px;">
                         <span style="position: absolute; left: 60px;">存放位置：{{keyInfo.carPosition}}</span>
                         <span style="position: absolute; left: 360px;">入库时间：{{keyInfo.carEnterTime |date:'yyyy-MM-dd hh:mm:ss'}}</span>
                         <span style="position: absolute; left: 660px;">计划出库时间：{{keyInfo.carPlanOutTime |date:'yyyy-MM-dd hh:mm:ss'}}</span>

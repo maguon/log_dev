@@ -20,9 +20,8 @@
                 </div>
 
                 <!-- 钥匙柜详细信息 Button -->
-                <a href="#" ui-sref="key_info_detail({id:key.id,position:key.position_count,from:'key_info'})"
-                   style="position: absolute;top: 25%;right: 20px;"
-                   class="right btn-floating  setting_shipments_btn  btn waves-effect cyan  lighten-2 waves-light">
+                <a class="right btn-floating  setting_shipments_btn  btn waves-effect cyan  lighten-2 waves-light" style="position: absolute;top: 25%;right: 20px;"
+                   href="#" ui-sref="key_info_detail({id:key.id,name:key.key_cabinet_name,position:(key.position_count == undefined || key.position_count == null) ? '0' : key.position_count,from:'key_info'})">
                     <i class=" mdi mdi-file-document look_icon white-text  lighten-1" ></i>
                 </a>
             </div>

@@ -9,6 +9,9 @@ app.controller("key_info_detail_controller", ["$scope", "$state", "$stateParams"
     // 钥匙柜信息 ID
     var keyCabinetId = $stateParams.id;
 
+    // 钥匙柜信息 ID
+    var keyCabinetNm = $stateParams.name;
+
     // 是否MOS车辆
     $scope.mosFlags = _config.mosFlags;
 
@@ -65,6 +68,11 @@ app.controller("key_info_detail_controller", ["$scope", "$state", "$stateParams"
     // 画面扇区列表默认选中项
     $scope.selectedZone = "";
 
+    // 画面扇区详细信息
+    $scope.hasPosition = false;
+
+    $scope.carKeyCabinetParkingArray = [];
+
     /**
      * 获取钥匙柜分区信息列表
      */
@@ -85,8 +93,7 @@ app.controller("key_info_detail_controller", ["$scope", "$state", "$stateParams"
         $scope.keyInfo.row = row;
         $scope.keyInfo.col = col;
 
-        // 车辆信息 TODO test data
-        id = 100016;
+        // 车辆信息
         var url = _host.api_url + "/user/" + userId + "/car?active=1&carId=" + id;
 
         _basic.get(url).then(function (data) {
@@ -154,10 +161,14 @@ app.controller("key_info_detail_controller", ["$scope", "$state", "$stateParams"
                     if ($scope.carKeyCabinetParkingArray.length > 0) {
                         $scope.carKeyCabinetParkingCol = $scope.carKeyCabinetParkingArray[0].col;
                     }
+
+                    $scope.hasPosition = true;
                 } else {
+                    $scope.hasPosition = false;
                     swal("未取到该分区的详细信息！", "", "warning");
                 }
             } else {
+                $scope.hasPosition = false;
                 swal(data.msg, "", "error");
             }
         });
@@ -213,6 +224,7 @@ app.controller("key_info_detail_controller", ["$scope", "$state", "$stateParams"
                     $scope.getKeyCabinetZoneList();
                     $scope.getLeftPosition();
                 } else {
+                    $scope.keyCabinetNm = keyCabinetNm;
                     swal("该钥匙没有对应的扇区信息！", "", "warning");
                 }
             } else {
