@@ -200,6 +200,7 @@ app.controller("storage_car_details_controller", [ "$state", "$stateParams", "_c
     function getCarKeyPosition (){
         _basic.get(_host.api_url + "/carKeyPosition?carId=" + val).then(function (data) {
             if(data.success==true){
+                $scope.keyCabinetId = val;
                 $scope.getCarKeyCabinet = data.result[0].car_key_cabinet_id;
                 $scope.getCarKeyCabinetArea = data.result[0].car_key_cabinet_area_id;
                 $scope.keyCabinetRow = data.result[0].row;
@@ -269,7 +270,8 @@ app.controller("storage_car_details_controller", [ "$state", "$stateParams", "_c
                     }).then(function (data) {
                         if (data.success == true) {
                             swal("移位成功", "", "success");
-                            $scope.changeCarKeyCabinet();
+                            $scope.keyCabinetRow = row;
+                            $scope.keyCabinetCol = col;
                             $scope.changeCarKeyCabinetArea();
                         }
                         else {

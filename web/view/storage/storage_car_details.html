@@ -284,7 +284,7 @@
                             </div>
                             <div class="col s12  garage_list p0"  ng-repeat="el in carKeyCabinetParkingArray" >
                                 <div class="garage_row vc-center left">{{$index+1}}</div>
-                                <div class="garage_row vc-center left" ng-repeat="els in el.col track by $index" ng-class="{'present_place':el.row==keyCabinetRow&&els.col==keyCabinetCol}">
+                                <div class="garage_row vc-center left" ng-repeat="els in el.col track by $index" ng-class="{'present_place':els.carId==keyCabinetId}">
                                     <i ng-show="els.carId!=0" class=" mdi  mdi-key-variant cyan-text lighten-1" ng-click="noMoveCarKey(els.id,el.row,els.col)"></i>
                                     <i ng-show="els.carId==0" class=" mdi mdi-key-variant grey-text lighten-2" ng-click="moveCarKey(els.id,el.row,els.col)"></i>
                                 </div>

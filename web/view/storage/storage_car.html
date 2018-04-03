@@ -150,7 +150,7 @@
                         </div>
                     </div>
                     <div class="divider" style="background: #00bcd4;height: 2px;"></div>
-                    <div class="modal-footer vc-center">
+                    <div class="modal-footer right-align">
                         <button class="btn btn-floating waves-light waves-effect  cyan lighten-1" ng-click="nextp()" name="action" >
                             <i class="mdi mdi-trending-neutral"></i>
                         </button>
@@ -350,7 +350,7 @@
                     <td ng-bind="el.make_name"></td>
                     <td ng-bind="el.model_name"></td>
                     <td ng-if="el.entrust_id==0">无</td>
-                    <td ng-if="el.entrust_id!==0" ng-bind="el.entrust_id"></td>
+                    <td ng-if="el.entrust_id!==0" ng-bind="el.short_name"></td>
                     <td ng-bind="el.enter_time|date:'yyyy-MM-dd HH:mm:ss'"></td>
                     <td ng-if="el.storage_id!=null" ng-bind="el.storage_name"></td>
                     <td ng-if="el.storage_id==null" >无</td>
@@ -394,9 +394,9 @@
                                                 </div>
                                                 <div class="col s12  garage_list p0"  ng-repeat="el in carKeyCabinetParkingArray" >
                                                     <div class="garage_row vc-center left">{{$index+1}}</div>
-                                                    <div class="garage_row vc-center left" ng-repeat="els in el.col track by $index" ng-class="{'present_place':el.row==keyCabinetRow&&els.col==keyCabinetCol}">
-                                                        <i ng-show="els.carId!=0" class=" mdi  mdi-key-variant cyan-text lighten-1"></i>
-                                                        <i ng-show="els.carId==0" class=" mdi mdi-key-variant grey-text lighten-2" ></i>
+                                                    <div class="garage_row vc-center left" ng-repeat="els in el.col track by $index">
+                                                        <i ng-show="els.carId==keyCabinetId" class=" mdi  mdi-key-variant cyan-text lighten-1"></i>
+                                                        <i ng-show="els.carId!==keyCabinetId" class=" mdi mdi-key-variant grey-text lighten-2" ></i>
                                                     </div>
                                                 </div>
                                             </div>

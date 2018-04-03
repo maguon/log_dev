@@ -267,13 +267,14 @@ app.controller("storage_car_controller", ["$scope", "$rootScope", "$stateParams"
         $("#test3").show();
     };
     //钥匙
-    $scope.keyCabinet = function (id,row,col){
+    $scope.keyCabinet = function (id){
         $(".modal").modal();
         $("#keyCabinet").modal("open");
-        $scope.keyCabinetRow = row;
-        $scope.keyCabinetCol = col;
+        $scope.keyCabinetId = id;
         _basic.get(_host.api_url + "/carKeyPosition?carId=" + id).then(function (data) {
             if(data.success==true){
+                $scope.keyCabinetRow = data.result[0].row;
+                $scope.keyCabinetCol =data.result[0]. col;
                 $scope.addCarKeyCabinet = data.result[0].car_key_cabinet_id;
                 $scope.addCarKeyCabinetArea = data.result[0].car_key_cabinet_area_id;
                 $scope.changeCarKeyCabinetArea();
@@ -341,6 +342,7 @@ app.controller("storage_car_controller", ["$scope", "$rootScope", "$stateParams"
                     }).then(function (data) {
                         if (data.success == true) {
                             swal("成功添加钥匙位置", "", "success");
+                            $scope.changeCarKeyCabinet();
                             $scope.changeCarKeyCabinetArea();
                         }
                         else {
@@ -350,27 +352,6 @@ app.controller("storage_car_controller", ["$scope", "$rootScope", "$stateParams"
                 }
             })
     }
-
-       /*
-        _basic.put(_host.api_url + "/user/" + userId + "/carKeyPosition/" + id, {
-            carId:$scope.Picture_carId
-        }).then(function (data) {
-            if (data.success == true) {
-                swal({
-                    title: "该钥匙确定添加到" + row + "排" + col + "列？",
-                    text: "",
-                    type: "warning",
-                    showCancelButton: true,
-                    confirmButtonColor: "#DD6B55",
-                    confirmButtonText: "确定",
-                    cancelButtonText: "取消",
-                    closeOnConfirm: false
-                })
-            } else {
-                swal(data.msg, "", "error")
-            }
-        })
-    }*/
     //确定添加成功
     $scope.addcarKeyCabinetItem =function (){
         $("#newStorage_car").modal("close");
