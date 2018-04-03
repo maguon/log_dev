@@ -9,8 +9,11 @@ app.controller("key_info_detail_controller", ["$scope", "$state", "$stateParams"
     // 钥匙柜信息 ID
     var keyCabinetId = $stateParams.id;
 
-    // 钥匙柜信息 ID
+    // 钥匙柜信息 名称
     var keyCabinetNm = $stateParams.name;
+
+    // 钥匙柜信息 名称
+    $scope.keyCabinetNm = "";
 
     // 是否MOS车辆
     $scope.mosFlags = _config.mosFlags;
@@ -23,9 +26,6 @@ app.controller("key_info_detail_controller", ["$scope", "$state", "$stateParams"
 
     // 剩余位置
     $scope.leftPosition = 0;
-
-    // 钥匙柜信息 名称
-    $scope.keyCabinetNm = "";
 
     // 钥匙柜扇区信息
     $scope.zoneList = [];

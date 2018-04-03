@@ -84,8 +84,7 @@ app.config(['$stateProvider',"$urlRouterProvider",function($stateProvider,$urlRo
         })
         // 钥匙管理->钥匙信息
         .state("key_info_detail", {
-            url:"/key_info_detail/{id}?from",
-            params: {"name": null, "position": null},
+            url:"/key_info_detail/{id}/{name}/{position}?from",
             templateUrl: "/view/storage/key_info_detail.html",
             controller:'key_info_detail_controller'
         })

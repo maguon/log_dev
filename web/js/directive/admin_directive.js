@@ -150,30 +150,7 @@ adminDirective.directive("sexChange", function () {
         }
     }
 });
-adminDirective.directive("addBrand", function () {
-    return {
-        restrict: "A",
-        controller: function ($scope, _host, _basic) {
-            var adminId = _basic.getSession(_basic.USER_ID);
-            $scope.add_brand = function (iValid) {
-                $scope.submitted1 = true;
-                if (iValid) {
-                    _basic.post(_host.api_url + "/admin/" + adminId + "/carMake/", {
-                        makeName: $scope.b_txt
-                    }).then(function (data) {
-                        if (data.success == true) {
-                            swal("新增成功", "", "success");
-                            $scope.b_txt = "";
-                            /* $scope.searchAll();*/
-                        } else {
-                            swal(data.msg, "", "error");
-                        }
-                    })
-                }
-            }
-        }
-    }
-});
+
 adminDirective.directive('percent', function () {
     return {
         link: function (scope, element, attr) {
