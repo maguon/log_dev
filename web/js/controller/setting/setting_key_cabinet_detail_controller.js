@@ -20,7 +20,7 @@ app.controller("setting_key_cabinet_detail_controller", ["$scope", "$state", "$s
         status: $stateParams.status
     };
 
-    // 钥匙柜信息(表示用)
+    // 钥匙柜信息(更新画面用)
     $scope.keyCabinetInfo = {
         name: "",
         remark: ""
@@ -68,15 +68,10 @@ app.controller("setting_key_cabinet_detail_controller", ["$scope", "$state", "$s
         // 调用API取得，画面数据
         _basic.get(url).then(function (data) {
             if (data.success) {
-                // 画面钥匙柜 名称
-                $scope.carKeyCabinetInfo.name = data.result[0].key_cabinet_name;
-                // 画面钥匙柜 备注
-                $scope.carKeyCabinetInfo.remark = data.result[0].remark;
-
                 // 画面钥匙柜 名称（表示用）
-                $scope.keyCabinetInfo.name = data.result[0].key_cabinet_name;
+                $scope.carKeyCabinetInfo.name = data.result[0].key_cabinet_name;
                 // 画面钥匙柜 备注（表示用）
-                $scope.keyCabinetInfo.remark = data.result[0].remark;
+                $scope.carKeyCabinetInfo.remark = data.result[0].remark;
 
                 // 获取钥匙柜分区信息列表
                 getKeyCabinetZoneList();
@@ -96,7 +91,11 @@ app.controller("setting_key_cabinet_detail_controller", ["$scope", "$state", "$s
     /**
      * 打开画面【修改钥匙柜资料】模态框。
      */
-    $scope.openEditKeyCabinet = function (id) {
+    $scope.openEditKeyCabinet = function () {
+        // 修改钥匙柜资料
+        $scope.keyCabinetInfo.name = $scope.carKeyCabinetInfo.name;
+        $scope.keyCabinetInfo.remark = $scope.carKeyCabinetInfo.remark;
+
         $('.modal').modal();
         $('#editKeyCabinet').modal('open');
     };
@@ -106,11 +105,11 @@ app.controller("setting_key_cabinet_detail_controller", ["$scope", "$state", "$s
      */
     $scope.updateKeyCabinetInfo = function () {
 
-        if ($scope.carKeyCabinetInfo.name !== "") {
+        if ($scope.keyCabinetInfo.name !== "") {
             // 修改画面数据
             var obj = {
-                keyCabinetName: $scope.carKeyCabinetInfo.name,
-                remark: $scope.carKeyCabinetInfo.remark
+                keyCabinetName: $scope.keyCabinetInfo.name,
+                remark: $scope.keyCabinetInfo.remark
             };
 
             var url = _host.api_url + "/user/" + userId + "/carKeyCabinet/" + $scope.carKeyCabinetInfo.id;
