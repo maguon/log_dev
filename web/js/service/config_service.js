@@ -147,5 +147,17 @@ baseService.factory("_config", function () {
         }
     ];
 
+    // 是否MOS车辆
+    _this.mosFlags = [
+        {
+            id: 1,
+            name: "否"
+        },
+        {
+            id: 2,
+            name: "是"
+        }
+    ];
+
     return _this
 });
