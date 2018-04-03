@@ -52,7 +52,7 @@
         <div ng-show="hasPosition == true">
 
             <!-- 头 -->
-            <div class=" col s12 key_list p0">
+            <div class=" col s12 key_list p0 cyan-text" style="border-bottom: 2px solid #00bcd4">
                 <div class="key_row vc-center left"></div>
                 <div class="key_row vc-center left" ng-repeat="el in carKeyCabinetParkingCol">
                     {{el.col}}
@@ -61,7 +61,7 @@
 
             <!-- 列表 -->
             <div class="col s12  key_list p0" ng-repeat="el in carKeyCabinetParkingArray">
-                <div class="key_row vc-center left">{{$index+1}}</div>
+                <div class="key_row vc-center left cyan-text" style="border-right: 1px solid #00bcd4">{{$index+1}}</div>
                 <div class="key_row vc-center left" ng-repeat="els in el.col track by $index">
                     <i ng-show="els.carId!=0" class=" mdi mdi-key-variant cyan-text lighten-1"
                        style="cursor: pointer;" ng-click="getCarInfo(els.carId,el.row,els.col)"></i>
