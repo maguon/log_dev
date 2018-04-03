@@ -1,0 +1,102 @@
+<!-- 主菜单：委托方 画面 -->
+<div class="client"  >
+    <div class="row">
+
+        <!-- 上部分：检索条件输入区域 -->
+        <div class="row  grey-text text-darken-1" style="margin-bottom: 70px;margin-top: 20px">
+            <div class="col s10">
+                <!-- 查询条件：委托方性质 -->
+                <div class="input-field col s3">
+                    <select material-select watch ng-model="searchRelStatus">
+                        <option value=""  >委托方性质</option>
+                        <option ng-repeat="el in relStatus" ng-value="el.s_num">{{el.status_text}}</option>
+                    </select>
+                </div>
+
+                <!-- 查询条件：委托方 -->
+                <div class="input-field col s3">
+                    <select material-select watch ng-model="search_storage" ng-change="changeStorageId(search_storage)">
+                        <option value=""  selected>委托方</option>
+                        <option ng-if="el.storage_status==1" ng-repeat="el in storageName" ng-value="el.id">{{el.storage_name}}</option>
+                    </select>
+                </div>
+
+                <!-- 查询条件：联系人 -->
+                <div class="input-field col s3">
+                    <select material-select watch ng-model="search_makeId" ng-change="changeMakerId(search_makeId)">
+                        <option value=""  selected>联系人</option>
+                        <option ng-repeat="el in makecarName" ng-value="el.id">{{el.make_name}}</option>
+                    </select>
+                </div>
+
+                <!-- 查询条件：联系电话 -->
+                <div class="input-field col s3">
+                    <select material-select watch ng-model="search_modelId" >
+                        <option ng-value=""  selected>联系电话</option>
+                        <option ng-repeat="el in carModelName" ng-value="el.id">{{el.model_name}}</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- 查询按钮 -->
+            <div class="col s2  flex flex-round">
+                <a class="btn-floating btn-large waves-light waves-effect red lighten-2  btn vc-center" style="margin-right: 10px"  ng-click="queryCarList()">
+                    <i class="mdi mdi-magnify"></i>
+                </a>
+            </div>
+        </div>
+
+        <!-- 下部分：检索结果显示区域 -->
+        <div class="col s12" >
+            <div class="divider" style="background: #00bcd4;height: 2px;"></div>
+            <table class=" bordered striped">
+                <thead class="blue-grey lighten-5">
+                <tr class="grey-text text-darken-2">
+                    <th data-field="">委托方</th>
+                    <th data-field="">性质</th>
+                    <th data-field="">在库车辆</th>
+                    <th data-field="">库值(美元)</th>
+                    <th data-field="">非MOS车辆</th>
+                    <th data-field="">非MOS资产(美元)</th>
+                    <th data-field="">联系人</th>
+                    <th data-field="">联系电话</th>
+                    <th data-field="">登记时间</th>
+                    <th>操作</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr ng-repeat="el in storageCar" class="grey-text text-darken-1">
+                    <td ng-bind="el.vin"></td>
+                    <td ng-bind="el.make_name"></td>
+                    <td ng-bind="el.model_name"></td>
+                    <td ng-bind="el.enter_time|date:'yyyy-MM-dd HH:mm:ss'"></td>
+                    <td ng-if="el.storage_id!=null" ng-bind="el.storage_name"></td>
+                    <td ng-if="el.storage_id==null" >无</td>
+                    <td ng-if="el.col!=null">{{el.row}}排{{el.col}}列</td>
+                    <td ng-if="el.col==null">无</td>
+                    <td ng-bind="el.plan_out_time|date:'yyyy-MM-dd '"></td>
+                    <td ng-bind="el.real_out_time|date:'yyyy-MM-dd '"></td>
+                    <!-- 显示【仓储车辆信息】画面按钮 -->
+                    <td class="operation">
+                        <a href="#" ui-sref="car_demand_details({id:el.id,vin:el.vin,from:'car_demand'})" class=""><i class="mdi mdi-file-outline look_icon cyan-text lighten-1  " ></i></a>
+                    </td>
+                </tr>
+                <tr class="grey-text text-darken-1" ng-if="storageCar.length == 0">
+                    <td colspan="10" style="letter-spacing: 2px;text-align: center;">暂无数据</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <!-- 上下页按钮 -->
+        <div class="paging_box col s12">
+            <div class="right">
+                <a class="waves-light waves-effect cyan lighten-1 btn  "  id="pre"   ng-click="preBtn()">
+                    上一页
+                </a>
+                <a class="waves-light waves-effect cyan lighten-1 btn " id="next"  ng-click="nextBtn()">
+                    下一页
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
