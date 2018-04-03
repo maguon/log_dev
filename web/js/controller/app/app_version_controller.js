@@ -58,7 +58,7 @@ app.controller("app_version_controller", ["$scope", "$state", "$stateParams", "_
         condition = condition.length > 0 ? "&" + condition : condition;
 
         // 检索URL组装
-        var url = _host.api_url + "/app?&start=" + $scope.start + "&size=" + $scope.size + condition;
+        var url = _host.api_url + "/app?start=" + $scope.start + "&size=" + $scope.size + condition;
 
         // 调用API取得，画面数据
         _basic.get(url).then(function (data) {

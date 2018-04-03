@@ -4,15 +4,6 @@
 var baseService = angular.module("baseService", []);
 baseService.factory('_baseService',function(){
     var _this = {};
-    _this.urlMethod = function (obj) {
-        var str = "?";
-        for (var i in obj) {
-            if (obj[i] != null) {
-                str = str + i + "=" + obj[i] + "&&"
-            }
-        }
-        return str.substr(0, str.length - 2);
-    };
     // 仓储车辆图分布
     _this.storageParking = function (pk) {
         var parkingArray = [];

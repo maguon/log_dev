@@ -2,7 +2,7 @@
  * Created by ASUS on 2017/4/1.
  * TODO 没有相关的菜单入口。
  */
-app.controller("company_controller", ['$rootScope', '$scope', '_basic', '_host', '$urlMethod', function ($rootScope, $scope, _basic, _host, $urlMethod) {
+app.controller("company_controller", ['$rootScope', '$scope', '_basic', '_host', function ($rootScope, $scope, _basic, _host) {
     var userId = _basic.getSession(_basic.USER_ID);
     // 单条公司信息
     var companyMsg;
@@ -33,12 +33,15 @@ app.controller("company_controller", ['$rootScope', '$scope', '_basic', '_host',
      * TODO 因为没有数据，所以没有测试。
      */
     $scope.getCompanyList = function () {
-        var obj = {
+
+        // 检索条件组装
+        var condition = _basic.objToUrl({
             companyName: $scope.s_computer,
             operateType: $scope.s_type,
             cityId: $scope.s_city
-        };
-        _basic.get(_host.api_url + "/user/" + userId + "/company" + $urlMethod.urlMethod(obj)).then(function (data) {
+        });
+
+        _basic.get(_host.api_url + "/user/" + userId + "/company?" + condition).then(function (data) {
             if (data.success == true && data.result.length > 0) {
                 $scope.Company = data.result;
             } else {
