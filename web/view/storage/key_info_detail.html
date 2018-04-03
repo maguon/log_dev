@@ -152,11 +152,10 @@
                     <div class="vc-center col s12 left-align black-text fz14" style="height:50px ;">
                         <span style="position: absolute; left: 60px;">委托方：{{(keyInfo.carEntrust == undefined || keyInfo.carEntrust == null) ? '未知' :keyInfo.carEntrust}}</span>
                         <span style="position: absolute; left: 360px;">车辆估值(美元)：<span class="red-text">{{keyInfo.carValuation | currency }}</span></span>
-                        <span style="position: absolute; left: 660px;">是否MOS车辆：{{keyInfo.carMosStatus}}</span>
+                        <span style="position: absolute; left: 660px;">是否MOS车辆：{{mosFlags[keyInfo.carMosStatus-1].name}}</span>
                     </div>
                 </div>
             </div>
-
 
             <div class="row col right-align" style="width: 96%;margin-top: 20px;">
                 <button class="btn-floating modal-action modal-close waves-effect waves-light cyan lighten-1 btn">

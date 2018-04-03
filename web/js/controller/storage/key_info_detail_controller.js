@@ -9,8 +9,15 @@ app.controller("key_info_detail_controller", ["$scope", "$state", "$stateParams"
     // 钥匙柜信息 ID
     var keyCabinetId = $stateParams.id;
 
+    // 是否MOS车辆
+    $scope.mosFlags = _config.mosFlags;
+
+    // 颜色列表
+    $scope.configColor = _config.config_color;
+
     // 总位置
     $scope.totalPosition = $stateParams.position;
+
     // 剩余位置
     $scope.leftPosition = 0;
 
@@ -96,11 +103,19 @@ app.controller("key_info_detail_controller", ["$scope", "$state", "$stateParams"
                     // 生产日期
                     $scope.keyInfo.carProDate = data.result[0].pro_date;
                     // 颜色
-                    $scope.keyInfo.carColor = data.result[0].colour;
+                    $scope.keyInfo.carColor = '未知';
+                    for (var i = 0; i < $scope.configColor.length; i++) {
+                        if ($scope.configColor[i].colorId == data.result[0].colour) {
+                            $scope.keyInfo.carColor = $scope.configColor[i].colorName;
+                        }
+                    }
                     // 发动机号
                     $scope.keyInfo.carEngineNum = data.result[0].engine_num;
-                    // 位置 TODO
-                    $scope.keyInfo.carPosition = data.result[0].car_key_position_id;
+                    // 位置
+                    var storageName = data.result[0].storage_name == null ? '未知' : data.result[0].storage_name;
+                    var row = data.result[0].row == null ? '未知' : data.result[0].row;
+                    var col = data.result[0].col == null ? '未知' : data.result[0].col;
+                    $scope.keyInfo.carPosition = storageName + ' ' +  row + '排' + col + '列';
                     // 入库
                     $scope.keyInfo.carEnterTime = data.result[0].enter_time;
                     // 计划出库
@@ -130,19 +145,17 @@ app.controller("key_info_detail_controller", ["$scope", "$state", "$stateParams"
 
         var url = _host.api_url + "/carKeyPosition?carKeyCabinetId=" + keyCabinetId + '&areaId=' + $scope.selectedZone;
 
-        console.log(url);
-
         _basic.get(url).then(function (data) {
             if (data.success == true) {
-                if (data.result == null) {
-                    return;
-                } else {
+                if (data.result.length > 0) {
                     $scope.carKeyCabinetParking = data.result;
                     $scope.carKeyCabinetParkingArray = _baseService.carKeyParking($scope.carKeyCabinetParking);
 
                     if ($scope.carKeyCabinetParkingArray.length > 0) {
                         $scope.carKeyCabinetParkingCol = $scope.carKeyCabinetParkingArray[0].col;
                     }
+                } else {
+                    swal("未取到该分区的详细信息！", "", "warning");
                 }
             } else {
                 swal(data.msg, "", "error");
@@ -167,8 +180,6 @@ app.controller("key_info_detail_controller", ["$scope", "$state", "$stateParams"
 
         // 检索钥匙柜详细信息URL
         var url = _host.api_url + "/carKeyCabinet/" + keyCabinetId + "/carKeyPositionCount";
-
-        console.log('url: ' + url);
 
         // 调用API取得，画面数据
         _basic.get(url).then(function (data) {
@@ -195,13 +206,15 @@ app.controller("key_info_detail_controller", ["$scope", "$state", "$stateParams"
                 // 检索取得数据集
                 $scope.zoneList = data.result;
 
-                $scope.selectedZone = $scope.zoneList[0].id;
                 // 画面钥匙柜 名称
                 if (data.result.length > 0) {
+                    $scope.selectedZone = $scope.zoneList[0].id;
                     $scope.keyCabinetNm = data.result[0].key_cabinet_name;
+                    $scope.getKeyCabinetZoneList();
+                    $scope.getLeftPosition();
+                } else {
+                    swal("该钥匙没有对应的扇区信息！", "", "warning");
                 }
-                $scope.getKeyCabinetZoneList();
-                $scope.getLeftPosition();
             } else {
                 swal(data.msg, "", "error");
             }
