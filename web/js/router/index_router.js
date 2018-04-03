@@ -33,10 +33,10 @@ app.config(['$stateProvider',"$urlRouterProvider",function($stateProvider,$urlRo
             templateUrl: "/view/system_settings/system_warehouse.html",
             controller:'system_warehouse_controller'
         })
-        .state("setting_truck", {
-            url:"/setting_truck",
-            templateUrl: "/view/system_settings/setting_truck.html",
-            controller:'setting_truck_controller'
+        .state("setting_car_brand", {
+            url:"/setting_car_brand",
+            templateUrl: "/view/system_settings/setting_car_brand.html",
+            controller:'setting_car_brand_controller'
         })
         .state("setting_amend_vin",{
             url:"/setting_amend_vin",

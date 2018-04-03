@@ -1,7 +1,7 @@
 /**
  * 主菜单：车辆设置
  */
-app.controller("setting_truck_controller", ["$scope", "_host", "_basic", function ($scope, _host, _basic) {
+app.controller("setting_car_brand_controller", ["$scope", "_host", "_basic", function ($scope, _host, _basic) {
     var adminId = _basic.getSession(_basic.USER_ID);
 
     /**
