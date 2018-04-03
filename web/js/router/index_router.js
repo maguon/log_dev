@@ -137,10 +137,16 @@ app.config(['$stateProvider',"$urlRouterProvider",function($stateProvider,$urlRo
             controller:'admin_download_app_controller'
         })
         //委托方
-        .state("client",{
-            url:"/client",
-            templateUrl: "/view/client/client.html",
-            controller:'client_controller'
+        .state("client_info",{
+            url:"/client_info",
+            templateUrl: "/view/client/client_info.html",
+            controller:'client_info_controller'
+        })
+        //委托方详情
+        .state("client_info_detail",{
+            url:"/client_info_detail/id/{id}/from/{from}",
+            templateUrl: "/view/client/client_info_detail.html",
+            controller:'client_info_detail_controller'
         })
         //app系统
         .state("app_version",{

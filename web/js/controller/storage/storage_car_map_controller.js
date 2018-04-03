@@ -7,6 +7,10 @@ app.controller("storage_car_map_controller", ["$state", "$rootScope", "$statePar
     var data = new Date();
     var now_date = moment(data).format('YYYYMMDD');
     var userId = _basic.getSession(_basic.USER_NAME);
+    // 返回
+    $scope.return = function () {
+        $state.go("storage_store", {reload: true})
+    };
     // 到仓储车辆图
     $scope.LookGarage = function (val) {
         _basic.get(_host.api_url + "/storageDate?storageId=" + val/* + "&dateStart=" + now_date + "&dateEnd=" + now_date*/).then(function (data) {
@@ -135,10 +139,6 @@ app.controller("storage_car_map_controller", ["$state", "$rootScope", "$statePar
                 }
             });
         }
-    };
-    // 返回
-    $scope.return = function () {
-        $state.go($stateParams.form, {}, {reload: true})
     };
     // 图片上传
     $scope.imgArr = [];

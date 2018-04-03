@@ -159,5 +159,17 @@ baseService.factory("_config", function () {
         }
     ];
 
+    //委托方性质
+    _this.entrustType = [
+        {
+            entrust_type: 1,
+            name: "个人"
+        },
+        {
+            entrust_type: 2,
+            name: "企业"
+        }
+    ]
+
     return _this
 });
