@@ -19,6 +19,13 @@ app.controller("setting_key_cabinet_detail_controller", ["$scope", "$state", "$s
         // 钥匙柜 状态
         status: $stateParams.status
     };
+
+    // 钥匙柜信息(表示用)
+    $scope.keyCabinetInfo = {
+        name: "",
+        remark: ""
+    };
+
     // 钥匙柜扇区信息
     $scope.zoneList = [];
 
@@ -66,6 +73,11 @@ app.controller("setting_key_cabinet_detail_controller", ["$scope", "$state", "$s
                 // 画面钥匙柜 备注
                 $scope.carKeyCabinetInfo.remark = data.result[0].remark;
 
+                // 画面钥匙柜 名称（表示用）
+                $scope.keyCabinetInfo.name = data.result[0].key_cabinet_name;
+                // 画面钥匙柜 备注（表示用）
+                $scope.keyCabinetInfo.remark = data.result[0].remark;
+
                 // 获取钥匙柜分区信息列表
                 getKeyCabinetZoneList();
             } else {
@@ -109,7 +121,7 @@ app.controller("setting_key_cabinet_detail_controller", ["$scope", "$state", "$s
                     $('#editKeyCabinet').modal('close');
                     swal("修改成功", "", "success");
                     // 成功后，刷新页面数据
-                    getKeyCabinetZoneList();
+                    $scope.getKeyCabinetInfo();
                 } else {
                     swal(data.msg, "", "error");
                 }
