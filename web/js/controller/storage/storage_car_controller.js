@@ -35,16 +35,20 @@ app.controller("storage_car_controller", ["$scope", "$rootScope", "$stateParams"
             }
         });
     }
-  //获取委托方信息
-    _basic.get(_host.api_url + "/entrust").then(function (data) {
-        if (data.success == true) {
-            $scope.getEntrust = data.result;
-            $('#getEntrustId').select2({
-                placeholder: '委托方',
-                containerCssClass: 'select2_dropdown'
-            });
-        }
-    });
+
+    //获取委托方信息
+    function getEntrust () {
+        _basic.get(_host.api_url + "/entrust").then(function (data) {
+            if (data.success == true) {
+                $scope.getEntrust = data.result;
+                $('#getEntrustId').select2({
+                    placeholder: '委托方',
+                    containerCssClass: 'select2_dropdown'
+                });
+            }
+        });
+    }
+
     /**
      * 查询列表 条件查询
      * 
@@ -142,7 +146,7 @@ app.controller("storage_car_controller", ["$scope", "$rootScope", "$stateParams"
         $(".modal").modal({
             height: 500
         });
-        $("#newStorage_car").modal("open");
+        $("#newStorageCar").modal("open");
 
     };
 
@@ -258,6 +262,7 @@ app.controller("storage_car_controller", ["$scope", "$rootScope", "$stateParams"
         }
         else{swal('请填写完整信息', "", "error")}
     };
+    //从添加相片跳转到添加钥匙
     $scope.nextp =function (){
         $('.tabWrap .tab').removeClass("active");
         $(".tab_box ").removeClass("active");
@@ -266,8 +271,8 @@ app.controller("storage_car_controller", ["$scope", "$rootScope", "$stateParams"
         $("#test3").addClass("active");
         $("#test3").show();
     };
-    //钥匙
-    $scope.keyCabinet = function (id){
+    //列表中点击钥匙 查看钥匙位置
+    $scope.getKeyCabinet = function (id){
         $(".modal").modal();
         $("#keyCabinet").modal("open");
         $scope.keyCabinetId = id;
@@ -354,12 +359,10 @@ app.controller("storage_car_controller", ["$scope", "$rootScope", "$stateParams"
     }
     //确定添加成功
     $scope.addcarKeyCabinetItem =function (){
-        $("#newStorage_car").modal("close");
+        $("#newStorageCar").modal("close");
          swal('成功添加入库车辆', "", "success");
         $scope.getStorageCar();
     }
-
-
     // 立刻出库
     $scope.outStorageCar = function (rel_id, relSta, p_id, s_id, car_id) {
         swal({
@@ -475,8 +478,9 @@ app.controller("storage_car_controller", ["$scope", "$rootScope", "$stateParams"
     //获取数据
     $scope.queryData = function () {
         getCarMakeName();
-        $scope.getStorageCar();
         getStorageName();
+        getEntrust();
+        $scope.getStorageCar();
         addCarKeyCabinet();
     };
     $scope.queryData();

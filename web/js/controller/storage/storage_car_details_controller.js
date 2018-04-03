@@ -289,6 +289,9 @@ app.controller("storage_car_details_controller", [ "$state", "$stateParams", "_c
         swal("修改成功","", "success")
         $state.go($stateParams.from, {id: $scope.self_car.storage_id, form: $stateParams._form}, {reload: true})
     }
+    $scope.closeCarKeyCabinetItem = function (){
+        $state.go($stateParams.from, {id: $scope.self_car.storage_id, form: $stateParams._form}, {reload: true})
+    }
     // 修改仓库详情
     $scope.submitForm = function (isValid, id, r_id) {
         $scope.submitted = true;
@@ -449,7 +452,10 @@ app.controller("storage_car_details_controller", [ "$state", "$stateParams", "_c
             }
         )
     };
-    getCarKeyPosition ();
-    getCarKeyCabinet();
-    $scope.lookStorageCar(val, vin);
+    $scope.queryData = function () {
+        getCarKeyPosition ();
+        getCarKeyCabinet();
+        $scope.lookStorageCar(val, vin);
+    };
+    $scope.queryData();
 }]);
