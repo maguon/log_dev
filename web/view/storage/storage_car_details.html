@@ -246,60 +246,67 @@
             </div>
 
             <!--钥匙存放的详细信息-->
-            <div id="lookCarKey" class="col s12 tab_box" style="width: 70%; margin:0 15% ">
-                <div class="cyan row  p0 storage_position" style="height: 70px;width: 100%;padding-bottom: 5px;margin-top: 35px">
-                    <div class="col s4" >
-                        <div class="row input-field  white-text">
-                            <select  material-select watch ng-model="getCarKeyCabinet" ng-change="changeCarKeyCabinet()" required>
-                                <option value=""  selected style="padding-left: 5px;">钥匙柜</option>
-                                <option ng-repeat="el in keyCabinetNameList"  ng-value="el.id" >{{el.key_cabinet_name}}</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="col s4">
-                        <div class="row input-field  white-text" >
-                            <select material-select watch ng-model="getCarKeyCabinetArea"  ng-change="changeCarKeyCabinetArea()" required>
-                                <option value=""  selected>扇区</option>
-                                <option ng-repeat="el in carKeyCabinetAreaList"  ng-value="el.id" >{{el.area_name}}</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="col s4">
-                        <div class="valign-wrapper cyan white-text right fz20" style="margin-top: 25px;margin-right:25px">
-                            <span  ng-bind="keyCabinetRow"></span>
-                            <span>排</span>
-                            <span  ng-bind="keyCabinetCol"></span>
-                            <span>列</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="garageWrap">
-                        <div class="garageBox">
-                            <div class=" col s12 garage_list p0" >
-                                <div class="garage_row vc-center left"></div>
-                                <div class="garage_row vc-center left" ng-repeat="el in carKeyCabinetParkingCol">
-                                    {{el.col}}
-                                </div>
+            <div id="lookCarKey" class="col s12 tab_box" style="width: 70%; margin:0 15% " >
+                <div ng-if="self_car.rel_status==1">
+                    <div class="cyan row  p0 storage_position" style="height: 70px;width: 100%;padding-bottom: 5px;margin-top: 35px">
+                        <div class="col s4" >
+                            <div class="row input-field  white-text">
+                                <select  material-select watch ng-model="getCarKeyCabinet" ng-change="changeCarKeyCabinet()" required>
+                                    <option value=""  selected style="padding-left: 5px;">钥匙柜</option>
+                                    <option ng-repeat="el in keyCabinetNameList"  ng-value="el.id" >{{el.key_cabinet_name}}</option>
+                                </select>
                             </div>
-                            <div class="col s12  garage_list p0"  ng-repeat="el in carKeyCabinetParkingArray" >
-                                <div class="garage_row vc-center left">{{$index+1}}</div>
-                                <div class="garage_row vc-center left" ng-repeat="els in el.col track by $index" ng-class="{'present_place':els.carId==keyCabinetId}">
-                                    <i ng-show="els.carId!=0" class=" mdi  mdi-key-variant cyan-text lighten-1" ng-click="noMoveCarKey(els.id,el.row,els.col)"></i>
-                                    <i ng-show="els.carId==0" class=" mdi mdi-key-variant grey-text lighten-2" ng-click="moveCarKey(els.id,el.row,els.col)"></i>
-                                </div>
+                        </div>
+                        <div class="col s4">
+                            <div class="row input-field  white-text" >
+                                <select material-select watch ng-model="getCarKeyCabinetArea"  ng-change="changeCarKeyCabinetArea()" required>
+                                    <option value=""  selected>扇区</option>
+                                    <option ng-repeat="el in carKeyCabinetAreaList"  ng-value="el.id" >{{el.area_name}}</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col s4">
+                            <div class="valign-wrapper cyan white-text right fz20" style="margin-top: 25px;margin-right:25px">
+                                <span  ng-bind="keyCabinetRow"></span>
+                                <span>排</span>
+                                <span  ng-bind="keyCabinetCol"></span>
+                                <span>列</span>
                             </div>
                         </div>
                     </div>
+                    <div class="row">
+                        <div class="garageWrap">
+                            <div class="garageBox">
+                                <div class=" col s12 garage_list p0" >
+                                    <div class="garage_row vc-center left"></div>
+                                    <div class="garage_row vc-center left" ng-repeat="el in carKeyCabinetParkingCol">
+                                        {{el.col}}
+                                    </div>
+                                </div>
+                                <div class="col s12  garage_list p0"  ng-repeat="el in carKeyCabinetParkingArray" >
+                                    <div class="garage_row vc-center left">{{$index+1}}</div>
+                                    <div class="garage_row vc-center left" ng-repeat="els in el.col track by $index" ng-class="{'present_place':els.carId==keyCabinetId}">
+                                        <i ng-show="els.carId!=0" class=" mdi  mdi-key-variant cyan-text lighten-1" ng-click="noMoveCarKey(els.id,el.row,els.col)"></i>
+                                        <i ng-show="els.carId==0" class=" mdi mdi-key-variant grey-text lighten-2" ng-click="moveCarKey(els.id,el.row,els.col)"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer right-align">
+                        <button class="btn btn-floating waves-light waves-effect  cyan lighten-1" ng-click="updateCarKeyCabinetItem()" name="action" >
+                            <i class="mdi mdi-check"></i>
+                        </button>
+                        <a  class=" modal-action btn-floating modal-close waves-effect  grey lighten-1waves-light   btn" ng-click="closeCarKeyCabinetItem()" style="margin-right: 10px" >
+                            <i class="mdi mdi-close"></i>
+                        </a>
+                    </div>
                 </div>
-                <div class="modal-footer right-align">
-                    <button class="btn btn-floating waves-light waves-effect  cyan lighten-1" ng-click="updateCarKeyCabinetItem()" name="action" >
-                        <i class="mdi mdi-check"></i>
-                    </button>
-                    <a  class=" modal-action btn-floating modal-close waves-effect  grey lighten-1waves-light   btn" ng-click="closeCarKeyCabinetItem()" style="margin-right: 10px" >
-                        <i class="mdi mdi-close"></i>
-                    </a>
-                </div>
+               <div ng-if="self_car.rel_status==2">
+                   <div class="cyan row  p0 storage_position vc-center" style="height: 70px;width: 100%;padding-bottom: 5px;margin-top: 35px">
+                       <h4 style="text-align: center;color: white" >该车钥匙不在库中</h4>
+                   </div>
+               </div>
             </div>
         </div>
     </div>

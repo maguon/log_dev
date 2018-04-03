@@ -7,40 +7,36 @@
             <div class="col s10">
                 <!-- 查询条件：委托方性质 -->
                 <div class="input-field col s3">
-                    <select material-select watch ng-model="searchRelStatus">
+                    <select material-select watch ng-model="getEntrustType">
                         <option value=""  >委托方性质</option>
-                        <option ng-repeat="el in relStatus" ng-value="el.s_num">{{el.status_text}}</option>
+                        <option ng-repeat="el in entrustType" ng-value="el.entrust_type">{{el.name}}</option>
                     </select>
                 </div>
 
                 <!-- 查询条件：委托方 -->
                 <div class="input-field col s3">
-                    <select material-select watch ng-model="search_storage" ng-change="changeStorageId(search_storage)">
-                        <option value=""  selected>委托方</option>
-                        <option ng-if="el.storage_status==1" ng-repeat="el in storageName" ng-value="el.id">{{el.storage_name}}</option>
+                    <select material-select watch id="getEntrustId"  ng-model="getEntrustId" >
+                        <option value="" >清除选择</option>
+                        <option ng-repeat="el in getEntrust" ng-value="el.id">{{el.short_name}}</option>
                     </select>
                 </div>
 
                 <!-- 查询条件：联系人 -->
                 <div class="input-field col s3">
-                    <select material-select watch ng-model="search_makeId" ng-change="changeMakerId(search_makeId)">
-                        <option value=""  selected>联系人</option>
-                        <option ng-repeat="el in makecarName" ng-value="el.id">{{el.make_name}}</option>
-                    </select>
+                    <input  id="contactsName"  ng-model="contactsName" type="text"  >
+                    <label for="contactsName" >联系人</label>
                 </div>
 
                 <!-- 查询条件：联系电话 -->
                 <div class="input-field col s3">
-                    <select material-select watch ng-model="search_modelId" >
-                        <option ng-value=""  selected>联系电话</option>
-                        <option ng-repeat="el in carModelName" ng-value="el.id">{{el.model_name}}</option>
-                    </select>
+                    <input  id="contactsTel"  ng-model="contactsTel" type="text"  >
+                    <label for="contactsTel" >联系电话</label>
                 </div>
             </div>
 
             <!-- 查询按钮 -->
             <div class="col s2  flex flex-round">
-                <a class="btn-floating btn-large waves-light waves-effect red lighten-2  btn vc-center" style="margin-right: 10px"  ng-click="queryCarList()">
+                <a class="btn-floating btn-large waves-light waves-effect red lighten-2  btn vc-center" style="margin-right: 10px"  ng-click="getClient()">
                     <i class="mdi mdi-magnify"></i>
                 </a>
             </div>
@@ -49,7 +45,7 @@
         <!-- 下部分：检索结果显示区域 -->
         <div class="col s12" >
             <div class="divider" style="background: #00bcd4;height: 2px;"></div>
-            <table class=" bordered striped">
+            <table class=" bordered striped centered">
                 <thead class="blue-grey lighten-5">
                 <tr class="grey-text text-darken-2">
                     <th data-field="">委托方</th>
@@ -65,23 +61,23 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr ng-repeat="el in storageCar" class="grey-text text-darken-1">
-                    <td ng-bind="el.vin"></td>
-                    <td ng-bind="el.make_name"></td>
-                    <td ng-bind="el.model_name"></td>
-                    <td ng-bind="el.enter_time|date:'yyyy-MM-dd HH:mm:ss'"></td>
-                    <td ng-if="el.storage_id!=null" ng-bind="el.storage_name"></td>
-                    <td ng-if="el.storage_id==null" >无</td>
-                    <td ng-if="el.col!=null">{{el.row}}排{{el.col}}列</td>
-                    <td ng-if="el.col==null">无</td>
-                    <td ng-bind="el.plan_out_time|date:'yyyy-MM-dd '"></td>
-                    <td ng-bind="el.real_out_time|date:'yyyy-MM-dd '"></td>
+                <tr ng-repeat="el in getClientList" class="grey-text text-darken-1">
+                    <td ng-bind="el.short_name"></td>
+                    <td ng-if="el.entrust_type==1">个人</td>
+                    <td ng-if="el.entrust_type==2">企业</td>
+                    <td ng-bind="el.car_count"></td>
+                    <td ng-bind="el.valuation"></td>
+                    <td ng-bind="el.not_mos_count"></td>
+                    <td ng-bind="el.not_mos_valuation"></td>
+                    <td ng-bind="el.contacts_name"></td>
+                    <td ng-bind="el.tel"></td>
+                    <td ng-bind="el.created_on |date:'yyyy-MM-dd '"></td>
                     <!-- 显示【仓储车辆信息】画面按钮 -->
                     <td class="operation">
-                        <a href="#" ui-sref="car_demand_details({id:el.id,vin:el.vin,from:'car_demand'})" class=""><i class="mdi mdi-file-outline look_icon cyan-text lighten-1  " ></i></a>
+                        <a  ui-sref="client_info_detail({id:el.id,from:'client_info'})" class=""><i class="mdi mdi-file-outline look_icon cyan-text lighten-1  " ></i></a>
                     </td>
                 </tr>
-                <tr class="grey-text text-darken-1" ng-if="storageCar.length == 0">
+                <tr class="grey-text text-darken-1" ng-if="getClientList.length == 0">
                     <td colspan="10" style="letter-spacing: 2px;text-align: center;">暂无数据</td>
                 </tr>
                 </tbody>
