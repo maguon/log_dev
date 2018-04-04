@@ -110,10 +110,10 @@ app.controller("setting_key_cabinet_controller", ["$scope", "_basic", "_config",
         // 状态
         var status = 0;
         if (keyCabinetStatus == 0) {
-            // str="启用";
+            // 启用
             status = 1
         } else {
-            // str="停用";
+            // 停用
             status = 0
         }
 
@@ -128,6 +128,7 @@ app.controller("setting_key_cabinet_controller", ["$scope", "_basic", "_config",
                 $scope.searchKeyCabinetList();
             } else {
                 swal(data.msg, "", "error");
+                $scope.searchKeyCabinetList();
             }
         })
         // // 检索条件组装

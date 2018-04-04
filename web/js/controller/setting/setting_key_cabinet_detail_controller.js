@@ -232,6 +232,7 @@ app.controller("setting_key_cabinet_detail_controller", ["$scope", "$state", "$s
                 getKeyCabinetZoneList();
             } else {
                 swal(data.msg, "", "error");
+                getKeyCabinetZoneList();
             }
         })
     };
