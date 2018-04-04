@@ -15,7 +15,7 @@
             <!--详情-->
             <div id="test1" class="col s12 tab_box">
                 <form name="newStorage_carForm" style="color:#616161"  novalidate>
-                    <div class="row" style="margin-top: 40px">
+                    <div class="row" style="margin-top:20px">
                         <div class="row "  >
                             <div class="input-field col s4" ng-class="{ 'has-error':newStorage_carForm.vin.$invalid&&submitted }" >
                                 <input  id="vin" name="vin" autocomplete="off" ng-model="vin" type="text"   required >
@@ -113,7 +113,7 @@
                                 备注:</p>
                             <div class="col s12 valign-wrapper" style="position: relative">
                                 <p class=" col s12 p0">
-                                    <textarea id="remark" style="height: 100px" name="remark" class="col s12 " ng-model="remark" ></textarea>
+                                    <input id="remark"  name="remark" class="col s12 " ng-model="remark" >
                                 </p>
                             </div>
                         </div>
