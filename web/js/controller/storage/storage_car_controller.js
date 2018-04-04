@@ -298,7 +298,7 @@ app.controller("storage_car_controller", ["$scope", "$rootScope", "$stateParams"
     // 钥匙存放位置联动查询--柜
     function addCarKeyCabinet() {
         _basic.get(_host.api_url + "/carKeyCabinet?keyCabinetStatus=1").then(function (data) {
-            if (data.success == true) {
+            if (data.success == true&&data.result.length>0) {
                 $scope.keyCabinetNameList = data.result;
             } else {
                 swal(data.msg, "", "error");
@@ -308,32 +308,40 @@ app.controller("storage_car_controller", ["$scope", "$rootScope", "$stateParams"
     //改变 钥匙存放位置  钥匙位置联动查询--扇区
     $scope.changeCarKeyCabinet = function(){
         _basic.get(_host.api_url + "/carKeyCabinetArea?areaStatus=1&carKeyCabinetId="+$scope.addCarKeyCabinet).then(function (data) {
-            if (data.success == true) {
+            if (data.success == true&&data.result.length>0) {
                 $scope.carKeyCabinetAreaList = data.result;
-            } else {
+            }
+            else if(data.success == true&&data.result.length==0){
+                $scope.carKeyCabinetAreaList = "";
+            }
+            else{
                 swal(data.msg, "", "error");
             }
         });
     };
     //获取二维扇区图
     $scope.changeCarKeyCabinetArea =function (){
-        _basic.get(_host.api_url + "/carKeyPosition?carKeyCabinetId="+$scope.addCarKeyCabinet+'&areaId='+$scope.addCarKeyCabinetArea).then(function (data) {
-            if (data.success == true) {
-                if(data.result.length == 0){
-                    return
+        if($scope.addCarKeyCabinetArea==undefined){
+            $scope.carKeyCabinetParkingArray = "";
+            $scope.carKeyCabinetParkingCol = "";
+        }else{
+            _basic.get(_host.api_url + "/carKeyPosition?carKeyCabinetId="+$scope.addCarKeyCabinet+'&areaId='+$scope.addCarKeyCabinetArea).then(function (data) {
+                if (data.success == true) {
+                    if(data.result.length == 0){
+                        return
+                    }
+                    else{
+                        $scope.carKeyCabinetParking = data.result;
+                        $scope.keyCabinetName = data.result[0].key_cabinet_name;
+                        $scope.areaName = data.result[0].area_name;
+                        $scope.carKeyCabinetParkingArray =_baseService.carKeyParking($scope.carKeyCabinetParking);
+                        $scope.carKeyCabinetParkingCol = $scope.carKeyCabinetParkingArray[0].col
+                    }
+                } else {
+                    swal(data.msg, "", "error");
                 }
-                else{
-                    $scope.carKeyCabinetParking = data.result;
-                    $scope.keyCabinetName = data.result[0].key_cabinet_name;
-                    $scope.areaName = data.result[0].area_name;
-                    $scope.carKeyCabinetParkingArray =_baseService.carKeyParking($scope.carKeyCabinetParking);
-                    $scope.carKeyCabinetParkingCol = $scope.carKeyCabinetParkingArray[0].col
-                }
-            } else {
-                swal(data.msg, "", "error");
-            }
-        });
-
+            });
+        }
     }
     //添加钥匙在几排几列
     $scope.addCarKeyCabinetParking = function (id, row, col){
