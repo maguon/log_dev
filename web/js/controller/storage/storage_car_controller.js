@@ -6,14 +6,14 @@ app.controller("storage_car_controller", ["$scope", "$rootScope", "$stateParams"
     $scope.curruntId = 0;
     $scope.start = 0;
     $scope.size = 10;
-    $scope.storage_imageBox = [];
+    $scope.storageImageBox = [];
     // 获取颜色
     $scope.color = _config.config_color;
     // 获取车辆状态
     $scope.relStatus = _config.carRelStatus;
     $scope.getRelStatus = 1;
     $scope.addCarKeyCabinet = "";
-    $scope.Picture_carId = "";
+    $scope.pictureCarId = "";
     $scope.show = true;
     // 获取车辆品牌
     function getCarMakeName() {
@@ -208,14 +208,14 @@ app.controller("storage_car_controller", ["$scope", "$rootScope", "$stateParams"
         _basic.formPost($(dom).parent().parent(), _host.file_url + '/user/' + userId + '/image?imageType=4', function (data) {
             if (data.success) {
                 var imageId = data.imageId;
-                _basic.post(_host.record_url + "/car/" + $scope.Picture_carId + "/vin/" + $scope.vin + "/storageImage", {
+                _basic.post(_host.record_url + "/car/" + $scope.pictureCarId + "/vin/" + $scope.vin + "/storageImage", {
                     "username": _basic.getSession(_basic.USER_NAME),
                     "userId": userId,
                     "userType": _basic.getSession(_basic.USER_TYPE),
                     "url": imageId
                 }).then(function (data) {
                     if (data.success == true) {
-                        $scope.storage_imageBox.push({src: _host.file_url + '/image/' + imageId});
+                        $scope.storageImageBox.push({src: _host.file_url + '/image/' + imageId});
                     }
                 });
             } else {
@@ -255,7 +255,7 @@ app.controller("storage_car_controller", ["$scope", "$rootScope", "$stateParams"
                     $("#test2").addClass("active");
                     $("#test2").show();
                     $scope.getStorageCar();
-                    $scope.Picture_carId = data.id;
+                    $scope.pictureCarId = data.id;
                 } else {
                     swal(data.msg, "", "error")
                 }
@@ -363,11 +363,11 @@ app.controller("storage_car_controller", ["$scope", "$rootScope", "$stateParams"
             function () {
                 if (id != null) {
                     _basic.put(_host.api_url + "/user/" + userId + "/carKeyPosition/" + id, {
-                        carId:$scope.Picture_carId
+                        carId:$scope.pictureCarId
                     }).then(function (data) {
                         if (data.success == true) {
                             swal("成功添加钥匙位置", "", "success");
-                            _basic.get(_host.api_url + "/carKeyPosition?carId="+$scope.Picture_carId).then(function (data) {
+                            _basic.get(_host.api_url + "/carKeyPosition?carId="+$scope.pictureCarId).then(function (data) {
                                 if(data.success == true){
                                     $scope.addCarKeyCabinet=data.result[0].car_key_cabinet_id;
                                     $scope.addCarKeyCabinetArea=data.result[0].car_key_cabinet_area_id;
