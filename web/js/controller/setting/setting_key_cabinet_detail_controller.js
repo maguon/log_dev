@@ -215,26 +215,44 @@ app.controller("setting_key_cabinet_detail_controller", ["$scope", "$state", "$s
      * @param status
      */
     $scope.changeZoneStatus = function (id, status) {
-        if (status == 0) {
-            // str="启用";
-            status = 1
-        } else {
-            // str="停用";
-            status = 0
-        }
 
-        // PUT /user/{userId}/carKeyCabinetArea/{areaId}/areaStatus/{areaStatus}
-        var url = _host.api_url + "/user/" + userId + "/carKeyCabinetArea/" + id + "/areaStatus/" + status;
+        swal({
+                title: "",
+                text: "确认修改？",
+                type: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#DD6B55",
+                confirmButtonText: "Yes",
+                cancelButtonText: "No",
+                closeOnConfirm: false,
+                closeOnCancel: false
+            },
+            function (isConfirm) {
+                if (isConfirm) {
+                    if (status == 0) {
+                        // str="启用";
+                        status = 1
+                    } else {
+                        // str="停用";
+                        status = 0
+                    }
 
-        _basic.put(url, {}).then(function (data) {
-            if (data.success == true) {
-                swal("修改成功", "", "success");
-                getKeyCabinetZoneList();
-            } else {
-                swal(data.msg, "", "error");
-                getKeyCabinetZoneList();
-            }
-        })
+                    // PUT /user/{userId}/carKeyCabinetArea/{areaId}/areaStatus/{areaStatus}
+                    var url = _host.api_url + "/user/" + userId + "/carKeyCabinetArea/" + id + "/areaStatus/" + status;
+
+                    _basic.put(url, {}).then(function (data) {
+                        if (data.success == true) {
+                            swal("修改成功", "", "success");
+                            getKeyCabinetZoneList();
+                        } else {
+                            swal(data.msg, "", "error");
+                            getKeyCabinetZoneList();
+                        }
+                    })
+                } else {
+                    swal.close();
+                }
+            });
     };
 
     /**

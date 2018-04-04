@@ -107,30 +107,50 @@ app.controller("setting_key_cabinet_controller", ["$scope", "_basic", "_config",
      */
     $scope.changeKeyCabinetStatus = function (keyId, keyCabinetStatus) {
 
-        // 状态
-        var status = 0;
-        if (keyCabinetStatus == 0) {
-            // 启用
-            status = 1
-        } else {
-            // 停用
-            status = 0
-        }
+        swal({
+                title: "",
+                text: "确认修改？",
+                type: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#DD6B55",
+                confirmButtonText: "Yes",
+                cancelButtonText: "No",
+                closeOnConfirm: false,
+                closeOnCancel: false
+            },
+            function (isConfirm) {
+                if (isConfirm) {
+                    // 状态
+                    var status = 0;
+                    if (keyCabinetStatus == 0) {
+                        // 启用
+                        status = 1
+                    } else {
+                        // 停用
+                        status = 0
+                    }
 
-        // API url
-        var url = _host.api_url + "/user/" + userId + "/carKeyCabinet/" + keyId + "/keyCabinetStatus/" + status;
+                    // API url
+                    var url = _host.api_url + "/user/" + userId + "/carKeyCabinet/" + keyId + "/keyCabinetStatus/" + status;
 
-        // 调用更新API
-        _basic.put(url,{}).then(function (data) {
-            if (data.success) {
-                swal("修改成功", "", "success");
-                // 成功后，刷新页面数据
-                $scope.searchKeyCabinetList();
-            } else {
-                swal(data.msg, "", "error");
-                $scope.searchKeyCabinetList();
-            }
-        })
+                    // 调用更新API
+                    _basic.put(url, {}).then(function (data) {
+                        if (data.success) {
+                            swal("修改成功", "", "success");
+                            // 成功后，刷新页面数据
+                            $scope.searchKeyCabinetList();
+                        } else {
+                            swal(data.msg, "", "error");
+                            $scope.searchKeyCabinetList();
+                        }
+                    })
+                } else {
+                    swal.close();
+                }
+            });
+
+
+
         // // 检索条件组装
         // var condition = _basic.objToUrl({
         //     // 条件：钥匙柜ID
