@@ -28,11 +28,19 @@ app.config(['$stateProvider',"$urlRouterProvider",function($stateProvider,$urlRo
             templateUrl: "/view/system_settings/setting_password.html",
             controller:'setting_password_controller'
         })
-        .state("system_warehouse", {
-            url:"/system_warehouse",
-            templateUrl: "/view/system_settings/system_warehouse.html",
-            controller:'system_warehouse_controller'
+        // 管理员设置 -> 仓库设置
+        .state("setting_storage", {
+            url:"/setting_storage",
+            templateUrl: "/view/system_settings/setting_storage.html",
+            controller:'setting_storage_controller'
         })
+        // 管理员设置 -> 仓库设置 -> 详情
+        .state("setting_storage_detail",{
+            url:"/setting_storage_detail/{id}/{status}?from",
+            templateUrl: "/view/system_settings/setting_storage_detail.html",
+            controller:'setting_storage_detail_controller'
+        })
+
         .state("setting_car_brand", {
             url:"/setting_car_brand",
             templateUrl: "/view/system_settings/setting_car_brand.html",

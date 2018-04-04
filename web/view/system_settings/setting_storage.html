@@ -1,0 +1,108 @@
+<!-- 主菜单：管理员设置 -> 仓库设置 画面 -->
+
+<!-- 追加画面【增加仓库】 模态框 -->
+<div class="row" style="margin: 0">
+    <div id="addStorage" class="modal modal-fixed-footer" style="width: 45%;height: 420px">
+        <div class="modal-content center fz20" style="font-weight: 500;padding: 0">
+
+            <!-- 追加画面【增加仓库】 Header -->
+            <div class="row col s12 vc-center"
+                 style="color: white;letter-spacing:1px;font-weight: bold;height: 50px;background-color:rgb(63,185,193)">
+                <p>增加仓库</p>
+            </div>
+
+            <!-- 追加画面【增加仓库】 Body -->
+            <div class="row col s12">
+                <div style="width: 90%;margin: 0 auto">
+                    <!-- 仓库名称 -->
+                    <div class="col s12 " style="margin-bottom:  40px;">
+                        <div class="col s12 input-field">
+                            <input type="text" maxlength="50" id="storageName" ng-model="storageInfo.storageName">
+                            <label for="storageName"><span style="color: red">* </span>仓库名称</label>
+                        </div>
+                    </div>
+
+                    <!-- 备注 -->
+                    <div class="col s12">
+                        <div class="input-field col s12">
+                            <textarea id="remark" class="materialize-textarea" ng-model="storageInfo.remark"
+                                      style="padding: 10px 0 0 0px;" maxlength="200"></textarea>
+                            <label for="remark">备注</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 追加画面【新增操作】 Footer -->
+        <div class="modal-footer valign-wrapper">
+            <div class="col s12">
+                <!-- 取消 按钮 -->
+                <div class="col s2 offset-s4">
+                    <a style="width: 100%" class="modal-action modal-close waves-light waves-effect grey lighten-1 btn">取消</a>
+                </div>
+                <!-- 确定 按钮 -->
+                <div class="col s2">
+                    <a ng-click="addStorage()" style="width: 100%" class="waves-light waves-effect cyan lighten-1 btn">确定</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 主画面：button区域 + 详细信息列表部 -->
+<div style="width: 90%;margin: 0 auto">
+
+    <!-- 追加 按钮 -->
+    <div class="right-align" style="height: 80px;margin: 20px 30px 10px 0;">
+        <a class="btn-floating btn-large waves-light waves-effect cyan lighten-1 btn vc-center" ng-click="openAddStorage()">
+            <i class="mdi mdi-plus"></i>
+        </a>
+    </div>
+
+    <!-- 仓库 详情 -->
+    <div class="row">
+        <!-- 仓库 遍历 -->
+        <div class="col s3 " ng-repeat="storage in storageList">
+
+            <!-- 仓库 明细 详情 -->
+            <div class="white z-depth-2" ng-class="{ 'blue-grey lighten-5':storage.storage_status==0}" style="margin-bottom: 25px;">
+
+                <!-- 仓库 明细 Header -->
+                <div class="valign-wrapper cyan white-text fz25" ng-class="{ 'blue-grey lighten-2':storage.storage_status==0}" style="width: 100%;height: 50px;">
+
+                    <!-- 仓库 名称 -->
+                    <div class="col s6 context-ellipsis" style="width: 300px;" ng-bind="storage.storage_name"></div>
+
+                    <!-- 可用/停用 开关 -->
+                    <div class="col s6" style="text-align:right;">
+                        <span class="switch" ng-click="changeStorageStatus(storage.id,storage.storage_status)" style="height: 30px">
+                            <label>
+                              <input type="checkbox" ng-checked="storage.storage_status==1">
+                              <span class="lever"></span>
+                            </label>
+                        </span>
+                    </div>
+                </div>
+
+                <!-- 仓库 明细 Body -->
+                <div class="valign-wrapper fz15" style="width: 100%;height: 50px;">
+                    <div class="col s4 vc-center black-text text-lighten-2">
+                        区域： <span ng-class="{ 'cyan-text':storage.storage_status==1}" style="display: block">{{storage.area_count}}</span>
+                    </div>
+                    <div class="col s7 vc-center black-text text-lighten-2">
+                        存放位置： <span ng-class="{ 'cyan-text':storage.storage_status==1}" style="display: block">{{(storage.total_seats == undefined || storage.total_seats == null) ? '0' : storage.total_seats}}</span>
+                    </div>
+                    <div class="col s3 vc-center">
+                        <a href="#" ui-sref="setting_storage_detail({id:storage.id,status:storage.storage_status,from:'setting_storage'})"
+                           class="right btn-floating  setting_shipments_btn  btn waves-effect cyan  lighten-2 waves-light" ng-class="{ 'blue-grey':storage.storage_status==0}">
+                            <i class=" mdi mdi-file-document look_icon white-text  lighten-1"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
