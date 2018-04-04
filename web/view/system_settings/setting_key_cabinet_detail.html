@@ -146,91 +146,86 @@
 </div>
 
 <!-- 主 画面 -->
-<div id="key_cabinet_detail">
-    <div class="">
-        <div class="modal-content grey-text text-darken-2">
+<div class="modal-content grey-text text-darken-2">
+    <!-- 返回前画面 按钮 -->
+    <div class="storage_storeTitle vc-center ">
+        <a class=" storage_goback_btn btn-floating btn waves-effect cyan lighten-1 waves-light "
+           ng-click="return()">
+            <i class="mdi mdi-arrow-left-bold"></i>
+        </a>
+        <h4 class="center-align cyan-text text-lighten-1">钥匙柜详情</h4>
+    </div>
 
-            <!-- 返回前画面 按钮 -->
-            <div class="storage_storeTitle vc-center ">
-                <a class=" storage_goback_btn btn-floating btn waves-effect cyan lighten-1 waves-light "
-                   ng-click="return()">
-                    <i class="mdi mdi-arrow-left-bold"></i>
-                </a>
-                <h4 class="center-align cyan-text text-lighten-1">钥匙柜详情</h4>
-            </div>
+    <!-- 分割线 -->
+    <div class="row">
+        <div class="divider" style="background: #00bcd4;height: 2px"></div>
+    </div>
 
-            <!-- 分割线 -->
-            <div class="row">
-                <div class="divider" style="background: #00bcd4;height: 2px"></div>
-            </div>
+    <!-- 钥匙柜详情画面 主体内容 -->
+    <div class="row no-marBottom" style="width:80%">
 
-            <!-- 钥匙柜详情画面 主体内容 -->
-            <div class="row no-marBottom" style="width:80%">
+        <ul class="card row" data-collapsible="accordion" collapsible>
 
-                <ul class="card row" data-collapsible="accordion" collapsible>
+            <!-- 钥匙柜详情画面 头部信息 -->
+            <li style="border-bottom: 1px solid #ccc;height: 100px;line-height: 100px;text-align: center">
+                <div class="row cyan lighten-2 white-text setting_shipments_title vc-center">
+                    <!-- 钥匙柜详情 header icon -->
+                    <span class="mdi mdi-key-variant col s1 white-text fz50"
+                          style="position: absolute;left: 0%;"></span>
+                    <!-- 钥匙柜详情 钥匙柜 名字 -->
+                    <span ng-bind="carKeyCabinetInfo.name" class="fz22 context-ellipsis"
+                          style="position: relative;top:-20px;left: 100px;max-width: 580px"></span>
+                    <!-- 钥匙柜详情 钥匙柜 备注 -->
+                    <span ng-bind="carKeyCabinetInfo.remark" class="context-ellipsis" style="position: absolute;top: 30px;left: 100px;max-width: 650px"></span>
+                    <!-- 钥匙柜详情 扇区 数量 说明 -->
+                    <span style="position: absolute;top: -15px;right: 20%">
+                        扇区: {{carKeyCabinetInfo.zoneSize}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        状态: {{useFlags[carKeyCabinetInfo.status].name}}
+                    </span>
+                    <!-- 钥匙柜详情 扇区 编辑 按钮 -->
+                    <span class="col s1 white-text fz50" style="position: absolute;right: 8%;" >
+                        <i class="mdi mdi-pencil-circle" style="cursor: pointer;" ng-click="openEditKeyCabinet()"></i>
+                    </span>
+                    <!-- 钥匙柜详情 扇区 追加 按钮 -->
+                    <span class="col s1 white-text fz50" style="position: relative;right: 0%;" >
+                        <i class="mdi mdi-plus-circle" style="cursor: pointer;" ng-click="openAddKeyCabinetZone()"></i>
+                    </span>
+                </div>
+            </li>
 
-                    <!-- 钥匙柜详情画面 头部信息 -->
-                    <li style="border-bottom: 1px solid #ccc;height: 100px;line-height: 100px;text-align: center">
-                        <div class="row cyan lighten-2 white-text setting_shipments_title vc-center">
-                            <!-- 钥匙柜详情 header icon -->
-                            <span class="mdi mdi-key-variant col s1 white-text fz50"
-                                  style="position: absolute;left: 0%;"></span>
-                            <!-- 钥匙柜详情 钥匙柜 名字 -->
-                            <span ng-bind="carKeyCabinetInfo.name" class="fz22 context-ellipsis"
-                                  style="position: relative;top:-20px;left: 100px;max-width: 580px"></span>
-                            <!-- 钥匙柜详情 钥匙柜 备注 -->
-                            <span ng-bind="carKeyCabinetInfo.remark" class="context-ellipsis" style="position: absolute;top: 30px;left: 100px;max-width: 650px"></span>
-                            <!-- 钥匙柜详情 扇区 数量 说明 -->
-                            <span style="position: absolute;top: -15px;right: 20%">
-                                扇区: {{carKeyCabinetInfo.zoneSize}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                状态: {{useFlags[carKeyCabinetInfo.status].name}}
-                            </span>
-                            <!-- 钥匙柜详情 扇区 编辑 按钮 -->
-                            <span class="col s1 white-text fz50" style="position: absolute;right: 8%;" >
-                                <i class="mdi mdi-pencil-circle" style="cursor: pointer;" ng-click="openEditKeyCabinet()"></i>
-                            </span>
-                            <!-- 钥匙柜详情 扇区 追加 按钮 -->
-                            <span class="col s1 white-text fz50" style="position: relative;right: 0%;" >
-                                <i class="mdi mdi-plus-circle" style="cursor: pointer;" ng-click="openAddKeyCabinetZone()"></i>
-                            </span>
-                        </div>
-                    </li>
+            <!-- 钥匙柜详情画面 数据明细 -->
+            <li ng-repeat="zone in zoneList" class="grey-text text-darken-1 vc-center" ng-class="{ 'blue-grey lighten-5':zone.area_status==0}"
+                style="border-bottom: 1px solid #ccc;height: 60px;line-height: 70px;text-align: center">
+                <!-- 扇区 -->
+                <div class="col s4 fz30 context-ellipsis" ng-bind="zone.area_name"
+                     style="color: #4dd0e1;width:600px;"></div>
+                <!-- 行 -->
+                <div class="col s3 fz15">行 {{zone.row}}</div>
+                <!-- 列 -->
+                <div class="col s3 fz15">列 {{zone.col}}</div>
+                <!-- 总位置 -->
+                <div class="col s3 fz15">总位置 {{zone.row * zone.col}}</div>
+                <!-- 编辑 -->
+                <div class="col s1">
+                    <span><i class="mdi mdi-pencil cyan-text text-lighten-1 fz22" style="cursor: pointer;"
+                             ng-click="openEditKeyCabinetZone(zone.id, zone.area_name)"></i></span>
+                </div>
+                <!-- 可用/停用 开关 -->
+                <div class="col s1 right">
+                    <span class="switch" ng-click="changeZoneStatus(zone.id,zone.area_status)" style="height: 30px">
+                        <label>
+                          <input type="checkbox" ng-checked="zone.area_status==1">
+                          <span class="lever"></span>
+                        </label>
+                    </span>
+                </div>
+            </li>
 
-                    <!-- 钥匙柜详情画面 数据明细 -->
-                    <li ng-repeat="zone in zoneList" class="grey-text text-darken-1 vc-center" ng-class="{ 'blue-grey lighten-5':zone.area_status==0}"
-                        style="border-bottom: 1px solid #ccc;height: 60px;line-height: 70px;text-align: center">
-                        <!-- 扇区 -->
-                        <div class="col s4 fz30 context-ellipsis" ng-bind="zone.area_name"
-                             style="color: #4dd0e1;width:600px;"></div>
-                        <!-- 行 -->
-                        <div class="col s3 fz15">行 {{zone.row}}</div>
-                        <!-- 列 -->
-                        <div class="col s3 fz15">列 {{zone.col}}</div>
-                        <!-- 总位置 -->
-                        <div class="col s3 fz15">总位置 {{zone.row * zone.col}}</div>
-                        <!-- 编辑 -->
-                        <div class="col s1">
-                            <span><i class="mdi mdi-pencil cyan-text text-lighten-1 fz22" style="cursor: pointer;"
-                                     ng-click="openEditKeyCabinetZone(zone.id, zone.area_name)"></i></span>
-                        </div>
-                        <!-- 可用/停用 开关 -->
-                        <div class="col s1 right">
-                            <span class="switch" ng-click="changeZoneStatus(zone.id,zone.area_status)" style="height: 30px">
-                                <label>
-                                  <input type="checkbox" ng-checked="zone.area_status==1">
-                                  <span class="lever"></span>
-                                </label>
-                            </span>
-                        </div>
-                    </li>
-
-                    <!-- show no data -->
-                    <li class="grey-text text-darken-1" ng-if="getClientArray.length == 0"
-                        style="border-bottom: 1px solid #ccc;height: 100px;line-height: 100px;text-align: center">
-                        <div><span style="letter-spacing: 2px">暂无数据</span></div>
-                    </li>
-                </ul>
-            </div>
-        </div>
+            <!-- show no data -->
+            <li class="grey-text text-darken-1" ng-if="getClientArray.length == 0"
+                style="border-bottom: 1px solid #ccc;height: 100px;line-height: 100px;text-align: center">
+                <div><span style="letter-spacing: 2px">暂无数据</span></div>
+            </li>
+        </ul>
     </div>
 </div>

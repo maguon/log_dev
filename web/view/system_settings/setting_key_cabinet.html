@@ -49,7 +49,7 @@
 </div>
 
 <!-- 主画面：检索部 + 详细信息列表部 -->
-<div class="usersWrap"  style="width: 90%;margin: 0 auto">
+<div style="width: 90%;margin: 0 auto">
     <div class="row card" style="height: 115px;margin-bottom: 30px">
         <div class="col s12" style="margin-top: 20px;">
 
@@ -92,10 +92,10 @@
         <div class="col s3 " ng-repeat="key in keyCabinetList">
 
             <!-- 钥匙柜 明细 详情 -->
-            <div class="white z-depth-2" style="margin-bottom: 25px;">
+            <div class="white z-depth-2" ng-class="{ 'blue-grey lighten-5':key.key_cabinet_status==0}" style="margin-bottom: 25px;">
 
                 <!-- 钥匙柜 明细 Header -->
-                <div class="valign-wrapper cyan white-text fz25" style="width: 100%;height: 50px;">
+                <div class="valign-wrapper cyan white-text fz25" ng-class="{ 'blue-grey lighten-2':key.key_cabinet_status==0}" style="width: 100%;height: 50px;">
 
                     <!-- 钥匙柜 名称 -->
                     <div class="col s6 context-ellipsis" style="width: 300px;" ng-bind="key.key_cabinet_name"></div>
@@ -114,14 +114,14 @@
                 <!-- 钥匙柜 明细 Body -->
                 <div class="valign-wrapper fz15" style="width: 100%;height: 50px;">
                     <div class="col s4 vc-center black-text text-lighten-2">
-                        扇区： <span class="cyan-text" style="display: block">{{key.area_count}}</span>
+                        扇区： <span ng-class="{ 'cyan-text':key.key_cabinet_status==1}" style="display: block">{{key.area_count}}</span>
                     </div>
                     <div class="col s7 vc-center black-text text-lighten-2">
-                        存放位置： <span class="cyan-text" style="display: block">{{(key.position_count == undefined || key.position_count == null) ? '0' : key.position_count}}</span>
+                        存放位置： <span ng-class="{ 'cyan-text':key.key_cabinet_status==1}" style="display: block">{{(key.position_count == undefined || key.position_count == null) ? '0' : key.position_count}}</span>
                     </div>
                     <div class="col s3 vc-center">
-                        <a href="#" ui-sref="setting_key_cabinet_detail({id:key.id,name:key.key_cabinet_name,remark:key.remark,zoneSize:key.area_count,status:key.key_cabinet_status,from:'setting_key_cabinet'})"
-                           class="right btn-floating  setting_shipments_btn  btn waves-effect cyan  lighten-2 waves-light">
+                        <a href="#" ui-sref="setting_key_cabinet_detail({id:key.id,status:key.key_cabinet_status,from:'setting_key_cabinet'})"
+                           class="right btn-floating  setting_shipments_btn  btn waves-effect cyan  lighten-2 waves-light" ng-class="{ 'blue-grey':key.key_cabinet_status==0}">
                             <i class=" mdi mdi-file-document look_icon white-text  lighten-1" ></i>
                         </a>
                     </div>
