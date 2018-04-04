@@ -13,6 +13,7 @@ app.controller("storage_car_details_controller", [ "$state", "$stateParams", "_c
     $scope.Picture_carId = "";
     $scope.getCarKeyCabinetId = "";
     $scope.carKeyCabinetParkingArray ='';
+    $scope.show = true;
     // 车辆照片跳转
     $scope.lookCarImg = function () {
         $('ul.tabWrap li').removeClass("active");
@@ -235,6 +236,7 @@ app.controller("storage_car_details_controller", [ "$state", "$stateParams", "_c
         });
     }
     $scope.changeCarKeyCabinet = function(id){
+        $scope.show = false;
         $scope.getCarKeyCabinetId = id;
         _basic.get(_host.api_url + "/carKeyCabinetArea?areaStatus=1&carKeyCabinetId="+$scope.getCarKeyCabinetId).then(function (data) {
             if (data.success == true) {
@@ -268,6 +270,7 @@ app.controller("storage_car_details_controller", [ "$state", "$stateParams", "_c
         });
     }
     $scope.changeCarKeyCabinetArea =function (id){
+        $scope.show = true;
         _basic.get(_host.api_url + "/carKeyPosition?carKeyCabinetId="+$scope.getCarKeyCabinetId+'&areaId='+id).then(function (data) {
             if (data.success == true) {
                 if(data.result==null){
@@ -291,7 +294,7 @@ app.controller("storage_car_details_controller", [ "$state", "$stateParams", "_c
     //钥匙移动
     $scope.moveCarKey = function(parkingId, row, col){
         swal({
-            title: "该钥匙移位到" + row + "排" + col + "列？",
+            title: "该钥匙放置到" + row + "排" + col + "列？",
             text: "",
             type: "warning",
             showCancelButton: true,
@@ -309,7 +312,16 @@ app.controller("storage_car_details_controller", [ "$state", "$stateParams", "_c
                             swal("移位成功", "", "success");
                             $scope.keyCabinetRow = row;
                             $scope.keyCabinetCol = col;
-                            $scope.changeCarKeyCabinetArea();
+                            _basic.get(_host.api_url + "/carKeyPosition?carId="+val).then(function (data) {
+                                if(data.success == true){
+                                    $scope.getCarKeyCabinetId=data.result[0].car_key_cabinet_id;
+                                    $scope.getCarKeyCabinetArea=data.result[0].car_key_cabinet_area_id;
+                                    getCarKeyCabinetList();
+                                }
+                                else {
+                                    swal(data.msg, "", "error")
+                                }
+                            })
                         }
                         else {
                             swal(data.msg, "", "error")
