@@ -244,12 +244,11 @@ app.controller("setting_storage_detail_controller", ["$scope", "$state", "$state
 
                     _basic.put(url, {}).then(function (data) {
                         if (data.success == true) {
-                            swal("修改成功", "", "success");
-                            getStorageZoneList();
+                            swal.close();
                         } else {
                             swal(data.msg, "", "error");
-                            getStorageZoneList();
                         }
+                        getStorageZoneList();
                     })
                 } else {
                     swal.close();

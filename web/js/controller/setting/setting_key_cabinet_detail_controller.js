@@ -242,12 +242,11 @@ app.controller("setting_key_cabinet_detail_controller", ["$scope", "$state", "$s
 
                     _basic.put(url, {}).then(function (data) {
                         if (data.success == true) {
-                            swal("修改成功", "", "success");
-                            getKeyCabinetZoneList();
+                            swal.close();
                         } else {
                             swal(data.msg, "", "error");
-                            getKeyCabinetZoneList();
                         }
+                        getKeyCabinetZoneList();
                     })
                 } else {
                     swal.close();

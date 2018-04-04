@@ -135,14 +135,12 @@ app.controller("setting_key_cabinet_controller", ["$scope", "_basic", "_config",
 
                     // 调用更新API
                     _basic.put(url, {}).then(function (data) {
-                        if (data.success) {
-                            swal("修改成功", "", "success");
-                            // 成功后，刷新页面数据
-                            $scope.searchKeyCabinetList();
+                        if (data.success == true) {
+                            swal.close();
                         } else {
                             swal(data.msg, "", "error");
-                            $scope.searchKeyCabinetList();
                         }
+                        $scope.searchKeyCabinetList();
                     })
                 } else {
                     swal.close();
