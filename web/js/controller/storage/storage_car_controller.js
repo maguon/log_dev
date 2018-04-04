@@ -14,6 +14,7 @@ app.controller("storage_car_controller", ["$scope", "$rootScope", "$stateParams"
     $scope.getRelStatus = 1;
     $scope.addCarKeyCabinet = "";
     $scope.Picture_carId = "";
+    $scope.show = true;
     // 获取车辆品牌
     function getCarMakeName() {
         _basic.get(_host.api_url + "/carMake").then(function (data) {
@@ -307,6 +308,7 @@ app.controller("storage_car_controller", ["$scope", "$rootScope", "$stateParams"
     };
     //改变 钥匙存放位置  钥匙位置联动查询--扇区
     $scope.changeCarKeyCabinet = function(){
+        $scope.show = false;
         _basic.get(_host.api_url + "/carKeyCabinetArea?areaStatus=1&carKeyCabinetId="+$scope.addCarKeyCabinet).then(function (data) {
             if (data.success == true&&data.result.length>0) {
                 $scope.carKeyCabinetAreaList = data.result;
@@ -321,6 +323,7 @@ app.controller("storage_car_controller", ["$scope", "$rootScope", "$stateParams"
     };
     //获取二维扇区图
     $scope.changeCarKeyCabinetArea =function (){
+        $scope.show = true;
         if($scope.addCarKeyCabinetArea==undefined){
             $scope.carKeyCabinetParkingArray = "";
             $scope.carKeyCabinetParkingCol = "";
@@ -364,8 +367,16 @@ app.controller("storage_car_controller", ["$scope", "$rootScope", "$stateParams"
                     }).then(function (data) {
                         if (data.success == true) {
                             swal("成功添加钥匙位置", "", "success");
-                            $scope.changeCarKeyCabinet();
-                            $scope.changeCarKeyCabinetArea();
+                            _basic.get(_host.api_url + "/carKeyPosition?carId="+$scope.Picture_carId).then(function (data) {
+                                if(data.success == true){
+                                    $scope.addCarKeyCabinet=data.result[0].car_key_cabinet_id;
+                                    $scope.addCarKeyCabinetArea=data.result[0].car_key_cabinet_area_id;
+                                    $scope.changeCarKeyCabinetArea();
+                                }
+                                else {
+                                    swal(data.msg, "", "error")
+                                }
+                            })
                         }
                         else {
                             swal(data.msg, "", "error")
@@ -452,7 +463,6 @@ app.controller("storage_car_controller", ["$scope", "$rootScope", "$stateParams"
     };
     // 移动位置
     $scope.moveParking = function (parkingId, row, col) {
-
         swal({
                 title: "该车辆确定移位到" + row + "排" + col + "列？",
                 text: "",
