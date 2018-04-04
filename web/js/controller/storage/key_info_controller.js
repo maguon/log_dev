@@ -11,7 +11,7 @@ app.controller("key_info_controller", ["$scope", "_basic", "_host", function ($s
      */
     $scope.searchKeyInfoList = function () {
         // 检索URL组装
-        var url = _host.api_url + "/carKeyCabinet";
+        var url = _host.api_url + "/carKeyCabinet?keyCabinetStatus=1";
 
         // 调用API取得，画面数据
         _basic.get(url).then(function (data) {
