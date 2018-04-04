@@ -205,6 +205,7 @@ app.controller("storage_car_details_controller", [ "$state", "$stateParams", "_c
                 $scope.getCarKeyCabinetArea = data.result[0].car_key_cabinet_area_id;
                 $scope.keyCabinetRow = data.result[0].row;
                 $scope.keyCabinetCol = data.result[0].col;
+                $scope.changeCarKeyCabinet();
                 $scope.changeCarKeyCabinetArea();
                 $scope.flag = true;
             }
@@ -216,7 +217,7 @@ app.controller("storage_car_details_controller", [ "$state", "$stateParams", "_c
     // 钥匙存放位置联动查询--柜
     function getCarKeyCabinet() {
         _basic.get(_host.api_url + "/carKeyCabinet?keyCabinetStatus=1").then(function (data) {
-            if (data.success == true) {
+            if (data.success == true&&data.result.length>0) {
                 $scope.keyCabinetNameList = data.result;
             } else {
                 swal(data.msg, "", "error");
@@ -288,13 +289,6 @@ app.controller("storage_car_details_controller", [ "$state", "$stateParams", "_c
     //有钥匙占位
     $scope.noMoveCarKey =function(){
         swal('该位置已存放钥匙，请存放到其他没有被暂用的位置', '','error')
-    }
-    $scope.updateCarKeyCabinetItem = function (){
-        swal("修改成功","", "success")
-        $state.go($stateParams.from, {id: $scope.self_car.storage_id, form: $stateParams._form}, {reload: true})
-    }
-    $scope.closeCarKeyCabinetItem = function (){
-        $state.go($stateParams.from, {id: $scope.self_car.storage_id, form: $stateParams._form}, {reload: true})
     }
     // 修改仓库详情
     $scope.submitForm = function (isValid, id, r_id) {

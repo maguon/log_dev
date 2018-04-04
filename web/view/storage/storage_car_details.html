@@ -259,7 +259,7 @@
                         </div>
                         <div class="col s4">
                             <div class="row input-field  white-text" >
-                                <select material-select watch ng-model="getCarKeyCabinetArea"  ng-change="changeCarKeyCabinetArea()" required>
+                                <select material-select ng-model="getCarKeyCabinetArea"  ng-change="changeCarKeyCabinetArea()" required>
                                     <option value="" disabled>请选择扇区</option>
                                     <option ng-repeat="el in carKeyCabinetAreaList"  ng-value="el.id" >{{el.area_name}}</option>
                                 </select>
@@ -274,7 +274,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="row">
+                    <div class="row" ng-if="flag==true">
                         <div class="garageWrap">
                             <div class="garageBox">
                                 <div class=" col s12 garage_list p0" >
@@ -293,13 +293,12 @@
                             </div>
                         </div>
                     </div>
-                    <div class="modal-footer right-align">
-                        <button class="btn btn-floating waves-light waves-effect  cyan lighten-1" ng-click="updateCarKeyCabinetItem()" name="action" >
-                            <i class="mdi mdi-check"></i>
-                        </button>
-                        <a  class=" modal-action btn-floating modal-close waves-effect  grey lighten-1waves-light   btn" ng-click="closeCarKeyCabinetItem()" style="margin-right: 10px" >
-                            <i class="mdi mdi-close"></i>
-                        </a>
+                    <div class="row" ng-if="flag==false">
+                        <div class="row fz20 vc-center" style="height: 300px;">
+                            <i class="mdi mdi-alert-circle-outline" style="color: red;font-size: 30px"></i>
+                            <span style="color: grey">该钥匙不在仓库中！</span>
+                        </div>
+                        <div class="divider"></div>
                     </div>
                 </div>
                <div ng-if="self_car.rel_status==2">

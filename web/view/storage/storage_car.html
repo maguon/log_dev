@@ -15,7 +15,7 @@
             <!--详情-->
             <div id="test1" class="col s12 tab_box">
                 <form name="newStorage_carForm" style="color:#616161"  novalidate>
-                    <div class="row" style="margin-top: 40px">
+                    <div class="row" style="margin-top:20px">
                         <div class="row "  >
                             <div class="input-field col s4" ng-class="{ 'has-error':newStorage_carForm.vin.$invalid&&submitted }" >
                                 <input  id="vin" name="vin" autocomplete="off" ng-model="vin" type="text"   required >
@@ -113,7 +113,7 @@
                                 备注:</p>
                             <div class="col s12 valign-wrapper" style="position: relative">
                                 <p class=" col s12 p0">
-                                    <textarea id="remark" style="height: 100px" name="remark" class="col s12 " ng-model="remark" ></textarea>
+                                    <input id="remark"  name="remark" class="col s12 " ng-model="remark" >
                                 </p>
                             </div>
                         </div>
@@ -193,7 +193,6 @@
                             <div class="col s12  garage_list p0"  ng-repeat="el in carKeyCabinetParkingArray" >
                                 <div class="garage_row vc-center left">{{$index+1}}</div>
                                 <div class="garage_row vc-center left" ng-repeat="els in el.col track by $index" ng-class="{'present_place':el.row==now_row&&els.col==now_col}">
-                                  <!--  <i ng-show="els.carId!=0&&els.plan_time==true" class=" mdi  mdi-key-variant red-text accent-1 "></i>-->
                                     <i ng-show="els.carId!=0" class=" mdi  mdi-key-variant cyan-text lighten-1"></i>
                                     <i ng-show="els.carId==0" class=" mdi mdi-key-variant grey-text lighten-2"  ng-click="addCarKeyCabinetParking(els.id,el.row,els.col)"></i>
                                 </div>
@@ -262,7 +261,7 @@
                 <div class="col s7">
                     <!--委托方-->
                     <div class="input-field col s4">
-                        <select material-select watch id="getEntrustId" name="getEntrustId" ng-model="getEntrustId" >
+                        <select material-select watch id="getEntrustId" name="getEntrustId" ng-model="getEntrustId" style="width: 100%">
                             <option value="">全部</option>
                             <option value="0" >清除选择</option>
                             <option ng-repeat="el in getEntrust" ng-value="el.id">{{el.short_name}}</option>
