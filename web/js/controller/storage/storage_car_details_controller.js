@@ -199,21 +199,24 @@ app.controller("storage_car_details_controller", [ "$state", "$stateParams", "_c
     //获取钥匙柜和扇区和位置
     function getCarKeyPosition (){
         _basic.get(_host.api_url + "/carKeyPosition?carId=" + val).then(function (data) {
-            if(data.success==true){
+            if(data.success==true&&data.result.length>0){
                 $scope.keyCabinetId = val;
                 $scope.getCarKeyCabinet = data.result[0].car_key_cabinet_id;
                 $scope.getCarKeyCabinetArea = data.result[0].car_key_cabinet_area_id;
                 $scope.keyCabinetRow = data.result[0].row;
                 $scope.keyCabinetCol = data.result[0].col;
-                $scope.changeCarKeyCabinet();
                 $scope.changeCarKeyCabinetArea();
+                $scope.flag = true;
+            }
+            else{
+                $scope.flag = false;
             }
         })
     }
     // 钥匙存放位置联动查询--柜
     function getCarKeyCabinet() {
         _basic.get(_host.api_url + "/carKeyCabinet?keyCabinetStatus=1").then(function (data) {
-            if (data.success == true&&data.result.length>0) {
+            if (data.success == true) {
                 $scope.keyCabinetNameList = data.result;
             } else {
                 swal(data.msg, "", "error");
@@ -230,6 +233,7 @@ app.controller("storage_car_details_controller", [ "$state", "$stateParams", "_c
             }
         });
     };
+
     //获取二维扇区图
     $scope.changeCarKeyCabinetArea =function (){
         _basic.get(_host.api_url + "/carKeyPosition?carKeyCabinetId="+$scope.getCarKeyCabinet+'&areaId='+$scope.getCarKeyCabinetArea).then(function (data) {

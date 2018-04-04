@@ -30,21 +30,28 @@
         </div>
         <!--头部详情信息-->
         <div class="row col s12">
-            <div class="grey-text text-darken-1 vc-center" style="border-bottom: 1px solid #ccc;height: 70px;line-height: 70px;text-align: center">
+            <div class="grey-text text-darken-1 vc-center" style="height: 100px;line-height: 100px;text-align: center">
                 <!--企业性质-->
-                <div class="col s1 fz30" ng-if="el.entrust_type==1"  style="color: #4dd0e1;"><i class="mdi mdi-account"></i></div>
-                <div class="col s1 fz30" ng-if="el.entrust_type==2"  style="color: #4dd0e1;"><i class="mdi mdi-domain"></i></div>
+                <h3 class="col s1" ng-if="clientList.entrust_type==1"  style="color: #4dd0e1;"><i class="mdi mdi-account"></i></h3>
+                <h3 class="col s1" ng-if="clientList.entrust_type==2"  style="color: #4dd0e1;"><i class="mdi mdi-domain"></i></h3>
                 <!--企业名字（全称/简称）-->
                 <div class="col s6" style="position: relative;height: 70%">
-                    <span  ng-bind="el.short_name" style="position: absolute;top:-40%;left: 7%"></span>
-                    <span  ng-bind="el.entrust_name" style="position: absolute;top: 5%;left: 7%"></span>
+                    <h3    ng-bind="clientList.short_name" style="position: absolute;top:-40%;left: 3%"></h3>
+                    <span  ng-bind="clientList.entrust_name" style="position: absolute;top: 5%;left: 3%"></span>
+                    <div>
+                        <i class="mdi mdi-map-marker"></i>
+                        <span  ng-bind="clientList.entrust_name" style="position: absolute;top: 5%;left: 3%"></span>
+                    </div>
+
                 </div>
                 <!--联系人/创建时间-->
                 <div class="col s3"  style="height: 70%;border-right: 1px solid #ccc;position: relative">
-                    <span  ng-bind="el.contacts_name" style="position: absolute;top: -40%;right: 15%;"></span>
-                    <span  ng-bind="el.created_on | date:'yyyy-MM-dd HH:mm:ss'" style="position: absolute;top: 5%;right: 15%;"></span>
+                    <span  ng-bind="clientList.contacts_name" style="position: absolute;top: -40%;right: 15%;"></span>
+                    <span  ng-bind="clientList.created_on | date:'yyyy-MM-dd HH:mm:ss'" style="position: absolute;top: 5%;right: 15%;"></span>
                 </div>
             </div>
+        </div>
+        <div class="grey-text text-darken-1 vc-center" style="border-bottom: 1px solid #ccc;height: 30px;line-height: 30px;text-align: center">
         </div>
         <!--列表-->
         <div class="modal-content grey-text text-darken-2">

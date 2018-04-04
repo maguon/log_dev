@@ -277,19 +277,28 @@ app.controller("storage_car_controller", ["$scope", "$rootScope", "$stateParams"
         $("#keyCabinet").modal("open");
         $scope.keyCabinetId = id;
         _basic.get(_host.api_url + "/carKeyPosition?carId=" + id).then(function (data) {
-            if(data.success==true){
+            if(data.success==true&&data.result.length>0){
                 $scope.keyCabinetRow = data.result[0].row;
                 $scope.keyCabinetCol =data.result[0]. col;
                 $scope.addCarKeyCabinet = data.result[0].car_key_cabinet_id;
                 $scope.addCarKeyCabinetArea = data.result[0].car_key_cabinet_area_id;
                 $scope.changeCarKeyCabinetArea();
+                $scope.flag = true;
+            }
+            else{
+                $scope.flag = false;
             }
         })
     }
+    $scope. closeCarKeyCabinetModal = function (){
+        $(".modal").modal();
+        $("#keyCabinet").modal("close");
+    }
+
     // 钥匙存放位置联动查询--柜
     function addCarKeyCabinet() {
         _basic.get(_host.api_url + "/carKeyCabinet?keyCabinetStatus=1").then(function (data) {
-            if (data.success == true&&data.result.length>0) {
+            if (data.success == true) {
                 $scope.keyCabinetNameList = data.result;
             } else {
                 swal(data.msg, "", "error");
@@ -299,7 +308,7 @@ app.controller("storage_car_controller", ["$scope", "$rootScope", "$stateParams"
     //改变 钥匙存放位置  钥匙位置联动查询--扇区
     $scope.changeCarKeyCabinet = function(){
         _basic.get(_host.api_url + "/carKeyCabinetArea?areaStatus=1&carKeyCabinetId="+$scope.addCarKeyCabinet).then(function (data) {
-            if (data.success == true&&data.result.length>0) {
+            if (data.success == true) {
                 $scope.carKeyCabinetAreaList = data.result;
             } else {
                 swal(data.msg, "", "error");

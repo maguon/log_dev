@@ -162,7 +162,7 @@
                     <div class="col s4" >
                         <div class="row input-field  white-text">
                             <select  material-select watch ng-model="addCarKeyCabinet" ng-change="changeCarKeyCabinet()" required>
-                                <option value=""  selected style="padding-left: 5px;">钥匙柜</option>
+                                <option value="" disabled selected style="padding-left: 5px;">请选择钥匙柜</option>
                                 <option ng-repeat="el in keyCabinetNameList"  ng-value="el.id" >{{el.key_cabinet_name}}</option>
                             </select>
                         </div>
@@ -170,7 +170,7 @@
                     <div class="col s4">
                         <div class="row input-field  white-text" >
                             <select material-select watch ng-model="addCarKeyCabinetArea"  ng-change="changeCarKeyCabinetArea()" required>
-                                <option value=""  selected>扇区</option>
+                                <option value="" disabled  selected>请选择扇区</option>
                                 <option ng-repeat="el in carKeyCabinetAreaList"  ng-value="el.id" >{{el.area_name}}</option>
                             </select>
                         </div>
@@ -367,46 +367,58 @@
                         <!--钥匙-->
                          <span>
                             <i ng-if="el.rel_status==1" class="mdi mdi-key-variant cyan-text lighten-1" ng-click="getKeyCabinet(el.id,el.row,el.col)"></i>
-                        </span>
+                         </span>
                         <!--钥匙-->
                         <div id="keyCabinet" class="modal ">
                             <form name="look_garageForm" >
                                 <div class="modal-content">
                                     <h4 class="center-align">钥匙存放位置</h4>
                                     <div class="divider"></div>
-                                    <div class="row col s12 garageWrapTitle vc-center fz20" style="height: 50px;background: #e0e0e0;" >
-                                        <div class="col s7">
-                                            <h5 class="col s12 left-align" style="color: #26c6da">
-                                                {{keyCabinetName}}号钥匙柜
-                                            </h5>
-                                        </div>
-                                        <div class="col s5 right-align">
-                                            <div class="col s12">
-                                                <span class="fz33" style="color: #26c6da">{{areaName}}</span><span>扇区</span>
-                                                <span class="fz33" style="color: #26c6da">{{keyCabinetRow}}</span><span>排</span>
-                                                <span class="fz33" style="color: #26c6da">{{keyCabinetCol}}</span><span>列</span>
+                                    <div ng-if="flag==true">
+                                        <div class="row col s12 garageWrapTitle vc-center fz20" style="height: 50px;background: #e0e0e0;" >
+                                            <div class="col s7">
+                                                <h5 class="col s12 left-align" style="color: #26c6da">
+                                                    {{keyCabinetName}}号钥匙柜
+                                                </h5>
                                             </div>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="garageWrap">
-                                            <div class="garageBox">
-                                                <div class=" col s12 garage_list p0" >
-                                                    <div class="garage_row vc-center left"></div>
-                                                    <div class="garage_row vc-center left" ng-repeat="el in carKeyCabinetParkingCol">
-                                                        {{el.col}}
-                                                    </div>
-                                                </div>
-                                                <div class="col s12  garage_list p0"  ng-repeat="el in carKeyCabinetParkingArray" >
-                                                    <div class="garage_row vc-center left">{{$index+1}}</div>
-                                                    <div class="garage_row vc-center left" ng-repeat="els in el.col track by $index">
-                                                        <i ng-show="els.carId==keyCabinetId" class=" mdi  mdi-key-variant cyan-text lighten-1"></i>
-                                                        <i ng-show="els.carId!==keyCabinetId" class=" mdi mdi-key-variant grey-text lighten-2" ></i>
-                                                    </div>
+                                            <div class="col s5 right-align">
+                                                <div class="col s12">
+                                                    <span class="fz33" style="color: #26c6da">{{areaName}}</span><span>扇区</span>
+                                                    <span class="fz33" style="color: #26c6da">{{keyCabinetRow}}</span><span>排</span>
+                                                    <span class="fz33" style="color: #26c6da">{{keyCabinetCol}}</span><span>列</span>
                                                 </div>
                                             </div>
                                         </div>
+                                        <div class="row">
+                                            <div class="garageWrap">
+                                                <div class="garageBox">
+                                                    <div class=" col s12 garage_list p0" >
+                                                        <div class="garage_row vc-center left"></div>
+                                                        <div class="garage_row vc-center left" ng-repeat="el in carKeyCabinetParkingCol">
+                                                            {{el.col}}
+                                                        </div>
+                                                    </div>
+                                                    <div class="col s12  garage_list p0"  ng-repeat="el in carKeyCabinetParkingArray" >
+                                                        <div class="garage_row vc-center left">{{$index+1}}</div>
+                                                        <div class="garage_row vc-center left" ng-repeat="els in el.col track by $index">
+                                                            <i ng-show="els.carId==keyCabinetId" class=" mdi  mdi-key-variant cyan-text lighten-1"></i>
+                                                            <i ng-show="els.carId!==keyCabinetId" class=" mdi mdi-key-variant grey-text lighten-2" ></i>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
+                                    <div ng-if="flag==false">
+                                        <div class="row fz20 vc-center" style="height: 300px;">
+                                        <i class="mdi mdi-alert-circle-outline" style="color: red;font-size: 30px"></i>
+                                        <span style="color: grey">该钥匙不在仓库中！</span>
+                                        </div>
+                                    </div>
+                                    <div class="divider"></div>
+                                    <button class="btn btn-floating waves-light waves-effect  cyan lighten-1" ng-click="closeCarKeyCabinetModal()" name="action" style="margin-left: 80%;margin-top: 25px">
+                                        <i class="mdi mdi-check"></i>
+                                    </button>
                                 </div>
                             </form>
                         </div>
