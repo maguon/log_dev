@@ -76,7 +76,7 @@
                 </a>
                 <div class="collapsible-body blue-grey darken-3" style="padding: 0;">
                     <ul>
-                        <li><a href="#!" ui-sref="system_warehouse"><i class="mdi mdi-chevron-right white-text"></i>仓库设置</a></li>
+                        <li><a href="#!" ui-sref="setting_storage"><i class="mdi mdi-chevron-right white-text"></i>仓库设置</a></li>
                         <li><a href="#!" ui-sref="setting_car_brand"><i class="mdi mdi-chevron-right white-text"></i>车辆设置</a></li>
                         <li><a href="#!" ui-sref="setting_password"><i class="mdi mdi-chevron-right white-text"></i>管理员设置</a></li>
                         <li><a href="#!" ui-sref="setting_users"><i class="mdi mdi-chevron-right white-text"></i>用户管理</a></li>
@@ -165,15 +165,6 @@
 <script src="/js/controller/index_controller.js"></script>
 <script src="/js/controller/admin_login_controller.js"></script>
 <script src="/js/controller/car/company_controller.js"></script>
-<script src="/js/controller/setting/setting_password_controller.js"></script>
-<script src="/js/controller/setting/setting_car_brand_controller.js"></script>
-<script src="/js/controller/setting/system_warehouse_controller.js"></script>
-<script src="/js/controller/setting/setting_user_controller.js"></script>
-<script src="/js/controller/setting/setting_amend_vin_controller.js"></script>
-<script src="/js/controller/setting/setting_password_controller.js"></script>
-<script src="/js/controller/setting/setting_client_controller.js"></script>
-<script src="/js/controller/setting/setting_key_cabinet_controller.js"></script>
-<script src="/js/controller/setting/setting_key_cabinet_detail_controller.js"></script>
 
 <!-- 仓储管理 控制器 -->
 <script src="/js/controller/storage/storage_car_controller.js"></script>
@@ -183,9 +174,26 @@
 <script src="/js/controller/storage/storage_calendar_controller.js"></script>
 <script src="/js/controller/storage/storage_car_map_controller.js"></script>
 <script src="/js/controller/storage/storage_statistics_controller.js"></script>
-<!-- 仓储管理->钥匙管理 控制器 -->
+<!-- 仓储管理 -> 钥匙管理 控制器 -->
 <script src="/js/controller/storage/key_info_controller.js"></script>
 <script src="/js/controller/storage/key_info_detail_controller.js"></script>
+
+<!-- 管理员设置 控制器 -->
+
+<!-- 管理员设置 -> 仓库设置 控制器 -->
+<script src="/js/controller/setting/setting_storage_controller.js"></script>
+<script src="/js/controller/setting/setting_storage_detail_controller.js"></script>
+
+<script src="/js/controller/setting/setting_password_controller.js"></script>
+<script src="/js/controller/setting/setting_car_brand_controller.js"></script>
+<script src="/js/controller/setting/setting_user_controller.js"></script>
+<script src="/js/controller/setting/setting_amend_vin_controller.js"></script>
+<script src="/js/controller/setting/setting_password_controller.js"></script>
+<script src="/js/controller/setting/setting_client_controller.js"></script>
+<!-- 管理员设置 -> 钥匙柜设置 控制器 -->
+<script src="/js/controller/setting/setting_key_cabinet_controller.js"></script>
+<script src="/js/controller/setting/setting_key_cabinet_detail_controller.js"></script>
+
 
 <script src="/js/controller/user/user_info_controller.js"></script>
 <script src="/js/controller/car_demand/car_demand_controller.js"></script>

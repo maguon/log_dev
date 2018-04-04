@@ -1,0 +1,236 @@
+<!-- 主菜单：管理员设置 -> 仓库详情 画面 -->
+
+<!-- 修改画面【修改仓库资料】 模态框 -->
+<div class="row" style="margin: 0">
+    <div id="editStorage" class="modal modal-fixed-footer" style="width: 45%;height: 420px">
+        <div class="modal-content center fz20" style="padding: 0">
+
+            <!-- 修改画面【修改仓库资料】 Header -->
+            <div class="row col s12 vc-center" style="color: white;letter-spacing:1px;font-weight: bold;height: 50px;background-color:rgb(63,185,193)">
+                <p>修改仓库资料</p>
+            </div>
+
+            <!-- 修改画面【修改仓库资料】 Body -->
+            <div class="row col s12">
+                <div style="width: 90%;margin: 0 auto">
+                    <!-- 仓库名称 -->
+                    <div class="col s12 " style="margin-bottom:  40px;">
+                        <div class="col s12 input-field">
+                            <input type="text" maxlength="50" id="storageName" ng-model="editStorageInfo.name">
+                            <label for="storageName"><span style="color: red">* </span>仓库名称</label>
+                        </div>
+                    </div>
+
+                    <!-- 备注 -->
+                    <div class="col s12">
+                        <div class="col s12 input-field">
+                            <textarea id="remark" class="materialize-textarea" ng-model="editStorageInfo.remark" maxlength="200"></textarea>
+                            <label for="remark">备注</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 修改画面【修改仓库资料】 Footer -->
+        <div class="modal-footer valign-wrapper">
+            <div class="col s12">
+                <!-- 取消 按钮 -->
+                <div class="col s2 offset-s4">
+                    <a style="width: 100%" class="modal-action modal-close waves-light waves-effect grey lighten-1 btn">取消</a>
+                </div>
+                <!-- 确定 按钮 -->
+                <div class="col s2">
+                    <a ng-click="updateStorageInfo()" style="width: 100%" class="waves-light waves-effect cyan lighten-1 btn">确定</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 追加画面【增加区域】 模态框 -->
+<div class="row" style="margin: 0">
+    <div id="addStorageZone" class="modal modal-fixed-footer" style="width: 45%;height: 420px">
+        <div class="modal-content center fz20" style="padding: 0">
+
+            <!-- 追加画面【增加区域】 Header -->
+            <div class="row col s12 vc-center" style="color: white;letter-spacing:1px;font-weight: bold;height: 50px;background-color:rgb(63,185,193)">
+                <p>增加区域</p>
+            </div>
+
+            <!-- 追加画面【增加区域】 Body -->
+            <div class="row col s12">
+                <div style="width: 90%;margin: 0 auto">
+                    <!-- 扇区名称 -->
+                    <div class="col s12 " style="margin-bottom:  40px;">
+                        <div class="col s12 input-field">
+                            <input type="text" id="addZoneName" maxlength="20" ng-model="newZoneInfo.addZoneName">
+                            <label for="addZoneName"><span style="color: red">* </span>扇区名称</label>
+                        </div>
+                    </div>
+
+                    <!-- 扇区 行/列 -->
+                    <div class="col s12 " style="margin-bottom:  40px;">
+                        <div class="col s4 input-field">
+                            <input type="text" id="row" maxlength="2" valid-num ng-model="newZoneInfo.addZoneRow">
+                            <label for="row"><span style="color: red">* </span>排</label>
+                        </div>
+                        <div class="col s4 input-field">
+                            <input type="text" id="col" maxlength="2" valid-num ng-model="newZoneInfo.addZoneCol">
+                            <label for="col"><span style="color: red">* </span>列</label>
+                        </div>
+                        <div class="col s4 input-field">
+                            <input type="text" id="lot" maxlength="2" valid-num ng-model="newZoneInfo.addZoneLot">
+                            <label for="lot"><span style="color: red">* </span>可停放车数</label>
+                        </div>
+                    </div>
+
+                    <!-- 总位置 -->
+                    <div class="col s12">
+                        <div class="col s12 fz15" style="text-align: left">总位置：<span style="color: red">{{newZoneInfo.addZoneRow * newZoneInfo.addZoneCol}}</span></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 追加画面【增加区域】 Footer -->
+        <div class="modal-footer valign-wrapper">
+            <div class="col s12">
+                <!-- 取消 按钮 -->
+                <div class="col s2 offset-s4">
+                    <a style="width: 100%" class="modal-action modal-close waves-light waves-effect grey lighten-1 btn">取消</a>
+                </div>
+                <!-- 确定 按钮 -->
+                <div class="col s2">
+                    <a ng-click="addStorageZone()" style="width: 100%" class="waves-light waves-effect cyan lighten-1 btn">确定</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 修改画面【修改区域名称】 模态框 -->
+<div class="row" style="margin: 0">
+    <div id="editStorageZone" class="modal modal-fixed-footer" style="width: 45%;height: 420px">
+        <div class="modal-content center fz20" style="padding: 0">
+
+            <!-- 修改画面【修改区域名称】 Header -->
+            <div class="row col s12 vc-center" style="color: white;letter-spacing:1px;font-weight: bold;height: 50px;background-color:rgb(63,185,193)">
+                <p>修改区域名称</p>
+            </div>
+
+            <!-- 修改画面【修改区域名称】 Body -->
+            <div class="row col s12">
+                <div style="width: 90%;margin: 0 auto">
+                    <!-- 区域名称 -->
+                    <div class="col s12 " style="margin-bottom:  40px;">
+                        <div class="col s12 input-field">
+                            <input type="text" id="editZoneName" maxlength="20" ng-model="zoneName">
+                            <label for="editZoneName"><span style="color: red">* </span>区域名称</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 修改画面【修改区域名称】 Footer -->
+        <div class="modal-footer valign-wrapper">
+            <div class="col s12">
+                <!-- 取消 按钮 -->
+                <div class="col s2 offset-s4">
+                    <a style="width: 100%" class="modal-action modal-close waves-light waves-effect grey lighten-1 btn">取消</a>
+                </div>
+                <!-- 确定 按钮 -->
+                <div class="col s2">
+                    <a ng-click="updateZoneInfo()" style="width: 100%" class="waves-light waves-effect cyan lighten-1 btn">确定</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 主 画面 -->
+<div class="modal-content grey-text text-darken-2">
+
+    <!-- 返回前画面 按钮 -->
+    <div class="storage_storeTitle vc-center ">
+        <a class=" storage_goback_btn btn-floating btn waves-effect cyan lighten-1 waves-light "
+           ng-click="return()">
+            <i class="mdi mdi-arrow-left-bold"></i>
+        </a>
+        <h4 class="center-align cyan-text text-lighten-1">仓库详情</h4>
+    </div>
+
+    <!-- 分割线 -->
+    <div class="row">
+        <div class="divider" style="background: #00bcd4;height: 2px"></div>
+    </div>
+
+    <!-- 仓库详情画面 主体内容 -->
+    <div class="row no-marBottom" style="width:80%">
+
+        <ul class="card row" data-collapsible="accordion" collapsible>
+
+            <!-- 仓库详情画面 头部信息 -->
+            <li style="border-bottom: 1px solid #ccc;height: 100px;line-height: 100px;text-align: center">
+                <div class="row cyan lighten-2 white-text setting_shipments_title vc-center">
+                    <!-- 仓库详情 header icon -->
+                    <span class="mdi mdi-key-variant col s1 white-text fz50"
+                          style="position: absolute;left: 0%;"></span>
+                    <!-- 仓库详情 仓库 名字 -->
+                    <span ng-bind="storageInfo.name" class="fz22 context-ellipsis"
+                          style="position: relative;top:-20px;left: 100px;max-width: 580px"></span>
+                    <!-- 仓库详情 仓库 备注 -->
+                    <span ng-bind="storageInfo.remark" class="context-ellipsis" style="position: absolute;top: 30px;left: 100px;max-width: 650px"></span>
+                    <!-- 仓库详情 区域 数量 说明 -->
+                    <span style="position: absolute;top: -15px;right: 20%">
+                        区域: {{storageInfo.zoneSize}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        状态: {{useFlags[storageInfo.status].name}}
+                    </span>
+                    <!-- 仓库详情 区域 编辑 按钮 -->
+                    <span class="col s1 white-text fz50" style="position: absolute;right: 8%;" >
+                        <i class="mdi mdi-pencil-circle" style="cursor: pointer;" ng-click="openEditStorage()"></i>
+                    </span>
+                    <!-- 仓库详情 区域 追加 按钮 -->
+                    <span class="col s1 white-text fz50" style="position: relative;right: 0%;" >
+                        <i class="mdi mdi-plus-circle" style="cursor: pointer;" ng-click="openAddStorageZone()"></i>
+                    </span>
+                </div>
+            </li>
+
+            <!-- 仓库详情画面 数据明细 -->
+            <li ng-repeat="zone in zoneList" class="grey-text text-darken-1 vc-center" ng-class="{ 'blue-grey lighten-5':zone.area_status==0}"
+                style="border-bottom: 1px solid #ccc;height: 60px;line-height: 70px;text-align: center">
+                <!-- 区域 -->
+                <div class="col s4 fz30 context-ellipsis" ng-bind="zone.area_name"
+                     style="color: #4dd0e1;width:600px;"></div>
+                <!-- 行 -->
+                <div class="col s3 fz15">行 {{zone.row}}</div>
+                <!-- 列 -->
+                <div class="col s3 fz15">列 {{zone.col}}</div>
+                <!-- 总位置 -->
+                <div class="col s3 fz15">总位置 {{zone.row * zone.col}}</div>
+                <!-- 编辑 -->
+                <div class="col s1">
+                    <span><i class="mdi mdi-pencil cyan-text text-lighten-1 fz22" style="cursor: pointer;"
+                             ng-click="openEditStorageZone(zone.id, zone.area_name)"></i></span>
+                </div>
+                <!-- 可用/停用 开关 -->
+                <div class="col s1 right">
+                    <span class="switch" ng-click="changeZoneStatus(zone.id,zone.area_status)" style="height: 30px">
+                        <label>
+                          <input type="checkbox" ng-checked="zone.area_status==1">
+                          <span class="lever"></span>
+                        </label>
+                    </span>
+                </div>
+            </li>
+
+            <!-- show no data -->
+            <li class="grey-text text-darken-1" ng-if="getClientArray.length == 0"
+                style="border-bottom: 1px solid #ccc;height: 100px;line-height: 100px;text-align: center">
+                <div><span style="letter-spacing: 2px">暂无数据</span></div>
+            </li>
+        </ul>
+    </div>
+</div>
