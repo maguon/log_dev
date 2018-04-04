@@ -146,6 +146,7 @@ app.controller("setting_key_cabinet_controller", ["$scope", "_basic", "_config",
                     })
                 } else {
                     swal.close();
+                    $scope.searchKeyCabinetList();
                 }
             });
 

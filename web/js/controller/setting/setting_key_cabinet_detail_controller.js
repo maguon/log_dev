@@ -251,6 +251,7 @@ app.controller("setting_key_cabinet_detail_controller", ["$scope", "$state", "$s
                     })
                 } else {
                     swal.close();
+                    getKeyCabinetZoneList();
                 }
             });
     };
