@@ -153,10 +153,14 @@ app.controller("key_info_detail_controller", ["$scope", "$state", "$stateParams"
         if (selectedZone == null || selectedZone == '') {
             return;
         }
+
+        $scope.getLeftPosition(selectedZone);
+
         var url = _host.api_url + "/carKeyPosition?carKeyCabinetId=" + keyCabinetId + '&areaId=' + selectedZone;
 
         _basic.get(url).then(function (data) {
             if (data.success == true) {
+                $scope.totalPosition = data.result.length;
                 if (data.result.length > 0) {
                     $scope.carKeyCabinetParking = data.result;
                     $scope.carKeyCabinetParkingArray = _baseService.carKeyParking($scope.carKeyCabinetParking);
@@ -187,12 +191,12 @@ app.controller("key_info_detail_controller", ["$scope", "$state", "$stateParams"
     /**
      * 获取钥匙柜（分区）详细信息。
      */
-    $scope.getLeftPosition = function () {
+    $scope.getLeftPosition = function (selectZoneId) {
 
         // GET /carKeyCabinet/{carKeyCabinetId}/carKeyPositionCount
 
         // 检索钥匙柜详细信息URL
-        var url = _host.api_url + "/carKeyCabinet/" + keyCabinetId + "/carKeyPositionCount";
+        var url = _host.api_url + "/carKeyCabinet/" + keyCabinetId + "/carKeyPositionCount?areaId=" + selectZoneId;
 
         // 调用API取得，画面数据
         _basic.get(url).then(function (data) {
@@ -224,7 +228,6 @@ app.controller("key_info_detail_controller", ["$scope", "$state", "$stateParams"
                     $scope.selectedZone = $scope.zoneList[0].id;
                     $scope.keyCabinetNm = data.result[0].key_cabinet_name;
                     $scope.getKeyCabinetZoneList($scope.selectedZone);
-                    $scope.getLeftPosition();
                 } else {
                     $scope.keyCabinetNm = keyCabinetNm;
                     swal("该钥匙没有对应的扇区信息！", "", "warning");

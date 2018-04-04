@@ -175,7 +175,7 @@
             <li style="border-bottom: 1px solid #ccc;height: 100px;line-height: 100px;text-align: center">
                 <div class="row cyan lighten-2 white-text setting_shipments_title vc-center">
                     <!-- 仓库详情 header icon -->
-                    <span class="mdi mdi-key-variant col s1 white-text fz50"
+                    <span class="mdi mdi-home-outline col s1 white-text fz50"
                           style="position: absolute;left: 0%;"></span>
                     <!-- 仓库详情 仓库 名字 -->
                     <span ng-bind="storageInfo.name" class="fz22 context-ellipsis"
@@ -205,11 +205,13 @@
                 <div class="col s4 fz30 context-ellipsis" ng-bind="zone.area_name"
                      style="color: #4dd0e1;width:600px;"></div>
                 <!-- 行 -->
-                <div class="col s3 fz15">行 {{zone.row}}</div>
+                <div class="col s2 fz15">排 {{zone.row}}</div>
                 <!-- 列 -->
-                <div class="col s3 fz15">列 {{zone.col}}</div>
-                <!-- 总位置 -->
-                <div class="col s3 fz15">总位置 {{zone.row * zone.col}}</div>
+                <div class="col s2 fz15">列 {{zone.col}}</div>
+                <!-- 可停放车数 -->
+                <div class="col s3 fz15">可停放车数 {{zone.lot}}</div>
+                <!-- 总停车位 -->
+                <div class="col s3 fz15">总停车位: {{zone.row * zone.col}}</div>
                 <!-- 编辑 -->
                 <div class="col s1">
                     <span><i class="mdi mdi-pencil cyan-text text-lighten-1 fz22" style="cursor: pointer;"
