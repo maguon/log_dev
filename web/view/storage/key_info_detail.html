@@ -29,7 +29,8 @@
             <!-- 钥匙柜 扇区列表 -->
             <div class="col s5">
                 <p class="col s4">
-                    <select material-select watch ng-model="selectedZone" ng-change="getKeyCabinetZoneList();">
+                    <select material-select watch ng-model="selectedZone" ng-change="getKeyCabinetZoneList(selectedZone);">
+                        <option value="" disabled selected>请选择</option>
                         <option ng-repeat="op in zoneList" ng-value="{{op.id}}" ng-selected="op.id == selectedZone">{{op.area_name}}</option>
                     </select>
                 </p>
