@@ -224,8 +224,8 @@ app.controller("setting_storage_detail_controller", ["$scope", "$state", "$state
                 type: "warning",
                 showCancelButton: true,
                 confirmButtonColor: "#DD6B55",
-                confirmButtonText: "Yes",
-                cancelButtonText: "No",
+                confirmButtonText: "确定",
+                cancelButtonText: "取消",
                 closeOnConfirm: false,
                 closeOnCancel: false
             },

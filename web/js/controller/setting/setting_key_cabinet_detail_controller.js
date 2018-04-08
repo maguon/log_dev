@@ -222,8 +222,8 @@ app.controller("setting_key_cabinet_detail_controller", ["$scope", "$state", "$s
                 type: "warning",
                 showCancelButton: true,
                 confirmButtonColor: "#DD6B55",
-                confirmButtonText: "Yes",
-                cancelButtonText: "No",
+                confirmButtonText: "确定",
+                cancelButtonText: "取消",
                 closeOnConfirm: false,
                 closeOnCancel: false
             },
