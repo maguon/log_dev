@@ -61,15 +61,15 @@
             <!-- 追加画面【增加区域】 Body -->
             <div class="row col s12">
                 <div style="width: 90%;margin: 0 auto">
-                    <!-- 扇区名称 -->
+                    <!-- 区域名称 -->
                     <div class="col s12 " style="margin-bottom:  40px;">
                         <div class="col s12 input-field">
                             <input type="text" id="addZoneName" maxlength="20" ng-model="newZoneInfo.addZoneName">
-                            <label for="addZoneName"><span style="color: red">* </span>扇区名称</label>
+                            <label for="addZoneName"><span style="color: red">* </span>区域名称</label>
                         </div>
                     </div>
 
-                    <!-- 扇区 行/列 -->
+                    <!-- 区域 行/列 -->
                     <div class="col s12 " style="margin-bottom:  40px;">
                         <div class="col s4 input-field">
                             <input type="text" id="row" maxlength="2" valid-num ng-model="newZoneInfo.addZoneRow">
@@ -87,7 +87,7 @@
 
                     <!-- 总位置 -->
                     <div class="col s12">
-                        <div class="col s12 fz15" style="text-align: left">总位置：<span style="color: red">{{newZoneInfo.addZoneRow * newZoneInfo.addZoneCol}}</span></div>
+                        <div class="col s12 fz15" style="text-align: left">总停车位：<span style="color: red">{{newZoneInfo.addZoneRow * newZoneInfo.addZoneCol}}</span></div>
                     </div>
                 </div>
             </div>
