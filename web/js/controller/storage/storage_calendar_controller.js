@@ -25,7 +25,7 @@ app.controller("storage_calendar_controller", ["$scope", "_host", "_basic", func
     $scope.todayWeek = weekday[date.getDay()];
 
     // TODO test data
-    // var nowDate = '20180315';
+    // var nowDate = '20180404';
 
     // 画面初期时，用来取得画面数据
     _basic.get(_host.api_url + "/storageDate" + "?dateStart=" + nowDate + "&dateEnd=" + nowDate).then(function (data) {
@@ -158,8 +158,8 @@ app.controller("storage_calendar_controller", ["$scope", "_host", "_basic", func
                             var date = {
                                 title: titleHtml,
                                 start: $scope.data[i].date_id + '',
-                                color: 'white',
-                                textColor: 'grey',
+                                color: 'transparent',
+                                textColor: 'transparent',
                                 allDay: true
                             };
                             eventArray.push(date);
