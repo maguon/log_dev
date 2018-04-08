@@ -1,5 +1,5 @@
 /**
- * 主菜单：管理员设置 -> 钥匙柜设置(详细画面) 控制器
+ * 主菜单：仓储管理 -> 钥匙管理(详细画面) 控制器
  */
 app.controller("key_info_detail_controller", ["$scope", "$state", "$stateParams", "_basic", "_config", "_host", "_baseService", function ($scope, $state, $stateParams, _basic, _config, _host, _baseService) {
 
