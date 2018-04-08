@@ -8,19 +8,20 @@ baseService.factory('_baseService',function(){
     _this.storageParking = function (pk) {
         var parkingArray = [];
         for (i = 0; i < pk.length; i++) {
-            expiredFlag = false;
-            var time;
             var date = new Date(pk[i].plan_out_time);
             var plan_time = date.getTime();
             var new_time = new Date().getTime();
-            time = plan_time - new_time - 1000 * 60 * 60 * 24 * 5;
+            // 临近出库标记：5 days
+            var time = plan_time - new_time - 1000 * 60 * 60 * 24 * 5;
+            // 临近出库标记
+            var expiredFlag = false;
             if (time > 0) {
                 expiredFlag = false;
             } else {
                 expiredFlag = true;
             }
             for (j = 0; j < parkingArray.length;) {
-                if (parkingArray[j].row == pk[i].row) {
+                if (parkingArray[j].row == pk[i].row && parkingArray[j].lot == pk[i].lot) {
                     break;
                 } else {
                     j++;
@@ -29,6 +30,7 @@ baseService.factory('_baseService',function(){
             if (j == parkingArray.length) {
                 parkingArray.push({
                     row: pk[i].row,
+                    lot: pk[i].lot,
                     col: [{
                         col: pk[i].col,
                         vin: pk[i].vin,
