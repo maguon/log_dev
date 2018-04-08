@@ -32,22 +32,35 @@
         <div class="row col s12">
             <div class="grey-text text-darken-1 vc-center" style="height: 100px;line-height: 100px;text-align: center">
                 <!--企业性质-->
-                <h3 class="col s1" ng-if="clientList.entrust_type==1"  style="color: #4dd0e1;"><i class="mdi mdi-account"></i></h3>
-                <h3 class="col s1" ng-if="clientList.entrust_type==2"  style="color: #4dd0e1;"><i class="mdi mdi-domain"></i></h3>
+                <h3 class="col s1 left" ng-if="clientList.entrust_type==1"  style="color: #4dd0e1;"><i class="mdi mdi-account"></i></h3>
+                <h3 class="col s1 left" ng-if="clientList.entrust_type==2"  style="color: #4dd0e1;"><i class="mdi mdi-domain"></i></h3>
                 <!--企业名字（全称/简称）-->
-                <div class="col s6" style="position: relative;height: 70%">
-                    <h3    ng-bind="clientList.short_name" style="position: absolute;top:-40%;left: 3%"></h3>
-                    <span  ng-bind="clientList.entrust_name" style="position: absolute;top: 5%;left: 3%"></span>
+                <div class="col s6 left fz18" style="position: relative;height: 70%">
+                    <h4 ng-bind="clientList.short_name" style="position: absolute;top:-40%;left: 3%;color: #26c6da"></h4>
+                    <span ng-bind="clientList.entrust_name" style="position: absolute;top: 5%;left: 3%"></span>
                     <div>
-                        <i class="mdi mdi-map-marker"></i>
-                        <span  ng-bind="clientList.entrust_name" style="position: absolute;top: 5%;left: 3%"></span>
+                        <i class="mdi mdi-map-marker" style="color:  #26c6da;position: absolute;top:5%;left: 60%;"></i>
+                        <span  ng-bind="clientList.address" style="position: absolute;top: 5%;left: 63%"></span>
                     </div>
-
+                    <div>
+                        <i class="mdi mdi-file-outline" style="color:  #26c6da;position: absolute;top:60%;left: 3%;"></i>
+                        <span  ng-bind="clientList.remark" style="position: absolute;top: 60%;left: 6%"></span>
+                    </div>
                 </div>
                 <!--联系人/创建时间-->
-                <div class="col s3"  style="height: 70%;border-right: 1px solid #ccc;position: relative">
-                    <span  ng-bind="clientList.contacts_name" style="position: absolute;top: -40%;right: 15%;"></span>
-                    <span  ng-bind="clientList.created_on | date:'yyyy-MM-dd HH:mm:ss'" style="position: absolute;top: 5%;right: 15%;"></span>
+                <div class="col s5 offset-s2 fz20"  style="height: 70%;border-right: 1px solid #ccc;position: relative">
+                    <div style="position: absolute;top: -40%;right: 15%;">
+                        <i class="mdi mdi-account" style="color: #26c6da"></i>
+                        <span  ng-bind="clientList.contacts_name" ></span>
+                    </div>
+                    <div  style="position: absolute;top: 5%;right: 15%;">
+                        <i class="mdi mdi-phone" style="color: #26c6da"></i>
+                        <span  ng-bind="clientList.tel"></span>
+                    </div>
+                    <div style="position: absolute;top: 50%;right: 15%;">
+                        <i class="mdi mdi-clock" style="color: #26c6da"></i>
+                        <span  ng-bind="clientList.created_on | date:'yyyy-MM-dd HH:mm:ss'" ></span>
+                    </div>
                 </div>
             </div>
         </div>
@@ -55,293 +68,239 @@
         </div>
         <!--列表-->
         <div class="modal-content grey-text text-darken-2">
-            <div class="row no-marBottom" ul-tabs style="overflow: hidden">
-                <div class="col s12">
+            <div class="row no-marBottom" ul-tabs>
+                <div class="col s12 p0">
                     <ul class="tabWrap grey lighten-4">
-                        <li class="tab col s4 header_car vc-center" ng-click="header_car()">库存记录</li>
-                        <li class="tab col s4 hand_car vc-center" ng-click="hand_car()">在库车辆</li>
-                        <li class="tab col s4 hand_car vc-center" ng-click="hand_car()">非MOS车辆</li>
+                        <li class="tab col s4 inventoryRecord vc-center active"  ng-click="inventoryRecord()">库存记录</li>
+                        <li class="tab col s4 relStatus vc-center" ng-click="relStatus()">在库车辆</li>
+                        <li class="tab col s4 mosStatus vc-center" ng-click="mosStatus()">非MOS车辆</li>
                     </ul>
                 </div>
-                <div id="header_car" class="row tab_box" style="margin-top: 50px">
-                    <div class="storage_storeTitle">
-                        <div class="row grey-text text-darken-1 valign-wrapper">
-                            <div class="col s10">
-                                <div class="col s12">
-                                    <div class="col s8" style="padding: 0;">
-                                        <div class="input-field col s4">
-                                            <select id="search_truck_type" material-select ng-change="get_company(search_truck_type)" watch ng-model="search_truck_type">
-                                                <option ng-value="">请选择</option>
-                                                <option ng-value="1">自营车</option>
-                                                <option ng-value="2">外协车</option>
-                                                <option ng-value="3">供方车</option>
-                                                <option ng-value="4">承包车</option>
-                                            </select>
-                                            <label for="search_truck_type">所属类型</label>
-                                        </div>
-                                        <div class="input-field col s4">
-                                            <select id="truck_brand" name="truck_brand" material-select watch ng-model="truckBrand">
-                                                <option value="">请选择</option>
-                                                <option ng-repeat="el in brand" ng-value="el.id">{{el.brand_name}}</option>
-                                            </select>
-                                            <label for="truck_brand">车辆品牌</label>
-                                        </div>
-                                        <div class="input-field col s4">
-                                            <select id="search_company" material-select watch ng-model="search_company">
-                                                <option value="">所属公司</option>
-                                                <option ng-repeat="el in company" ng-value="el.id">{{el.company_name}}</option>
-                                            </select>
-                                            <label for="search_company">请选择</label>
-                                        </div>
-                                    </div>
-                                    <div class="input-field col s2">
-                                        <input name="search_num" id="search_num" type="text" ng-model="search_num"   >
-                                        <label for="search_num">牌号</label>
-                                    </div>
-                                    <div class="input-field col s2">
-                                        <input name="search_driver" id="search_driver" type="text" ng-model="search_driver" >
-                                        <label for="search_driver">关联司机</label>
-                                    </div>
-                                </div>
-                                <div class="col s12" style="margin-top: 10px">
-                                    <div class=" col s6 p0">
-                                        <div class="input-field col s6">
-                                            <input type="text" ng-model="check_operation_startTime" id="check_operation_startTime" name="check_operation_startTime"  class="datepicker" autocomplete="off" required   date><i class="mdi dataIcon mdi-table-large"></i>
-                                            <label for="check_operation_startTime">营运证检证日期(始)</label>
-                                        </div>
-                                        <div class="input-field col s6">
-                                            <input type="text" ng-model="check_operation_endTime" id="check_operation_endTime" name="check_operation_endTime"  class="datepicker" autocomplete="off" required   date><i class="mdi dataIcon mdi-table-large"></i>
-                                            <label for="check_operation_endTime">营运证检证日期(终)</label>
-                                        </div>
-                                    </div>
-                                    <div class=" col s6 p0">
-                                        <div class="input-field col s6">
-                                            <input type="text" ng-model="search_checkCar_startTime" id="search_checkCar_startTime" name="search_checkCar_startTime"  class="datepicker" autocomplete="off" required   date><i class="mdi dataIcon mdi-table-large"></i>
-                                            <label for="search_checkCar_startTime">行驶证检证日期(始)</label>
-                                        </div>
-                                        <div class="input-field col s6">
-                                            <input type="text" ng-model="search_checkCar_endTime" id="search_checkCar_endTime" name="search_checkCar_endTime"  class="datepicker" autocomplete="off" required   date><i class="mdi dataIcon mdi-table-large"></i>
-                                            <label for="search_checkCar_endTime">行驶证检证日期(终)</label>
-                                        </div>
-                                    </div>
-                                </div>
+                <div id="inventoryRecord" class="col s12 tab_box">
+                    <!-- 上部分：检索条件输入区域 -->
+                    <div class="row  grey-text text-darken-1" style="margin-bottom: 20px;margin-top: 10px">
+                        <div class="col s10">
+                            <!--车辆状态-->
+                            <div class="input-field col s3">
+                                <select material-select watch ng-model="getRelStatus">
+                                    <option value=""  >请选择</option>
+                                    <option ng-repeat="el in relStatus" ng-value="el.s_num">{{el.status_text}}</option>
+                                </select>
+                                <label>车辆状态</label>
                             </div>
-                            <div class="col s2">
-                                <div class="col s6 center">
-                                    <a class=" btn-floating btn-large waves-light waves-effect red lighten-2  btn vc-center" style="margin-right: 10px"  ng-click="searchHead_car()">
-                                        <i class="mdi mdi-magnify"></i>
-                                    </a>
-                                </div>
-                                <div class="col s6 center">
-                                    <a class="btn-floating btn-large waves-light waves-effect cyan lighten-1 btn vc-center" style="margin-right: 10px"   ui-sref="add_head_truck_details({from:'truck_details'})">
-                                        <i class="mdi mdi-plus"></i>
-                                    </a>
-                                </div>
+                            <!-- 查询条件：vin -->
+                            <div class="input-field col s3">
+                                <input name="search_vin" id="search_vin" type="text" ng-model="search_vin">
+                                <label for="search_vin">vin码</label>
                             </div>
+                            <!--所在仓库-->
+                            <div class="input-field col s3">
+                                <select material-select watch ng-model="search_storage" ng-change="getStorageId(search_storage)">
+                                    <option value=""  selected>所在仓库</option>
+                                    <option ng-if="el.storage_status==1" ng-repeat="el in storageName" ng-value="el.id">{{el.storage_name}}</option>
+                                </select>
+                            </div>
+                            <!--是否MSO-->
+                            <div class="input-field col s3">
+                                <select material-select watch id="getMOS" name="getMOS"  ng-model="getMOS" >
+                                    <option value="" disabled selected>是否MSO</option>
+                                    <option value="2">是</option>
+                                    <option value="1">否</option>
+                                </select>
+                            </div>
+
+                            <!--入库时间（始）-->
+                            <div class="input-field col s3">
+                                <input id="get_enterTime_start" type="text" ng-model="search_enterTime_start"  class="datepicker" autocomplete="off" required   date><i class="mdi dataIcon mdi-table-large"></i>
+                                <label for="get_enterTime_start">入库时间（始）</label>
+                            </div>
+                            <!--入库时间（终）-->
+                            <div class="input-field col s3">
+                                <input id="get_enterTime_end" type="text" ng-model="search_enterTime_end"  class="datepicker" autocomplete="off"  required   date><i class="mdi dataIcon mdi-table-large"></i>
+                                <label for="get_enterTime_end">入库时间（终）</label>
+                            </div>
+                            <!--实际出库时间（始）-->
+                            <div class="input-field col s3">
+                                <input id="search_outTime_start" type="text" ng-model="search_outTime_start"  class="datepicker" autocomplete="off"  required   date><i class="mdi dataIcon mdi-table-large"></i>
+                                <label for="search_outTime_start">实际出库时间（始）</label>
+                            </div>
+                            <!--实际出库时间（终）-->
+                            <div class="input-field col s3">
+                                <input id="search_outTime_end" type="text" ng-model="search_outTime_end" class="datepicker" autocomplete="off" required   date><i class="mdi dataIcon mdi-table-large"></i>
+                                <label for="search_outTime_end">实际出库时间（终）</label>
+                            </div>
+
+                        </div>
+                        <!-- 查询按钮 -->
+                        <div class="col s2 center">
+                            <a class="btn-floating btn-large waves-light waves-effect red lighten-2  btn vc-center" style="margin-right: 10px;margin-top: 20px"  ng-click="getClient()">
+                                <i class="mdi mdi-magnify"></i>
+                            </a>
                         </div>
                     </div>
-                    <div class="col s12">
-                        <div class="col s12">
-                            <div class="divider" style="background: #00bcd4;height: 2px"></div>
-                            <table class="bordered striped text_mid">
-                                <thead class="blue-grey lighten-5">
-                                <tr class="grey-text text-darken-2">
-                                    <th data-field="">车牌号</th>
-                                    <th data-field="">品牌</th>
-                                    <th data-field="">挂车号</th>
-                                    <th data-field="">主驾</th>
-                                    <th data-field="">车辆电话</th>
-                                    <th data-field="">所属类型</th>
-                                    <th data-field="">所属单位</th>
-                                    <th data-field="">车辆状态</th>
-                                    <th data-field="">车检</th>
-                                    <th width="300">操作</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                <tr ng-repeat="el in head_car" class="grey-text text-darken-1">
-                                    <td ng-bind="el.truck_num">1</td>
-                                    <td ng-bind="el.brand_name">2</td>
-                                    <td ng-bind="el.trail_num|null_filter"></td>
-                                    <td ng-bind="el.drive_name|null_filter"></td>
-                                    <td ng-bind="el.truck_tel">无</td>
-                                    <td>{{el.operate_type | carType}}</td>
-                                    <td ng-bind="el.company_name">无</td>
-                                    <td>{{el.truck_status | workStatus}}</td>
-                                    <td class="white-text">
-                                        <span ng-show="el.driving_date|ptime" class="small-tips red lighten-2">临</span>
-                                        <span ng-hide="el.driving_date|ptime" class="small-tips "></span>
-                                    </td>
-                                    <td class="operation vc-center">
-                                        <a href="#" ui-sref="truck_guarantee_details({id:el.id,type:1,from:'truck_details'})" class="small-tips cyan lighten-2 white-text" style="width: 31px;margin-right: 10px;cursor: pointer;display: inline-block">保</a>
-                                        <a href="#" ui-sref="truck_repair({id:el.id,type:1,status:1,from:'truck_details'})" ng-if="el.repair_status==1"  class="cyan-text fz12 center-align" style="margin-right: 10px;cursor: pointer;display: inline-block">
-                                            <i class="mdi mdi-wrench"></i>
-                                        </a>
-                                        <a href="#" ui-sref="truck_repair({id:el.id,type:1,status:0,from:'truck_details'})" ng-if="el.repair_status==0" class="red-text fz12" style="margin-right: 10px;cursor: pointer;display: inline-block">
-                                            <i class="mdi mdi-wrench"></i>
-                                        </a>
-                                        <a href="#" ui-sref="look_head_truck_details({id:el.id,from:'truck_details'})" class=""><i class="mdi mdi-file-outline look_icon cyan-text lighten-1" ></i></a>
-                                        <a href="" ng-click="showCarPositionModel(el.id)" class="cyan-text fz12" style="cursor: pointer;display: inline-block">
-                                            <i class="mdi mdi-map-marker"></i>
-                                        </a>
-                                        <span class="switch" ng-click="changeTruck_status(el.id,el.truck_status)" style="height: 30px;display: inline-block">
-                                        <label>
-                                              <input type="checkbox" ng-checked="el.truck_status==1">
-                                              <span class="lever"></span>
-                                        </label>
-                                    </span>
-                                    </td>
-                                </tr>
 
-                                </tbody>
-                            </table>
-                        </div>
-
+                    <!-- 下部分：检索结果显示区域 -->
+                    <div class="col s12" >
+                        <div class="divider" style="background: #00bcd4;height: 2px;"></div>
+                        <table class=" bordered striped centered">
+                            <thead class="blue-grey lighten-5">
+                            <tr class="grey-text text-darken-2">
+                                <th data-field="">vin码</th>
+                                <th data-field="">制造商</th>
+                                <th data-field="">型号</th>
+                                <th data-field="">估值(美元)</th>
+                                <th data-field="">MOS车辆</th>
+                                <th data-field="">存放位置</th>
+                                <th data-field="">入库时间</th>
+                                <th data-field="">出库时间</th>
+                                <th data-field="">状态</th>
+                                <th>操作</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr ng-repeat="el in storageCar" class="grey-text text-darken-1">
+                                <td ng-bind="el.vin"></td>
+                                <td ng-if="el.entrust_type==1">个人</td>
+                                <td ng-if="el.entrust_type==2">企业</td>
+                                <td ng-bind="el.car_count"></td>
+                                <td ng-bind="el.valuation"></td>
+                                <td ng-bind="el.not_mos_count"></td>
+                                <td ng-bind="el.not_mos_valuation"></td>
+                                <td ng-bind="el.contacts_name"></td>
+                                <td ng-bind="el.tel"></td>
+                                <td ng-bind="el.created_on |date:'yyyy-MM-dd '"></td>
+                                <!-- 显示【仓储车辆信息】画面按钮 -->
+                                <td class="operation">
+                                    <a  ui-sref="client_info_detail({id:el.id,from:'client_info'})" class=""><i class="mdi mdi-file-outline look_icon cyan-text lighten-1  " ></i></a>
+                                </td>
+                            </tr>
+                            <tr class="grey-text text-darken-1" ng-if="getClientList.length == 0">
+                                <td colspan="10" style="letter-spacing: 2px;text-align: center;">暂无数据</td>
+                            </tr>
+                            </tbody>
+                        </table>
                     </div>
+                    <!-- 上下页按钮 -->
                     <div class="paging_box col s12">
                         <div class="right">
-                            <a class="waves-light waves-effect cyan lighten-1 btn  " ng-show="head_pre"  id="head_pre"   ng-click="head_pre_btn()">
+                            <a class="waves-light waves-effect cyan lighten-1 btn  "  id="pre"   ng-click="preBtn()">
                                 上一页
                             </a>
-                            <a class="waves-light waves-effect cyan lighten-1 btn " ng-show="head_next" id="head_next"  ng-click="head_next_btn()">
+                            <a class="waves-light waves-effect cyan lighten-1 btn " id="next"  ng-click="nextBtn()">
                                 下一页
                             </a>
                         </div>
                     </div>
                 </div>
-                <div id="hand_car" class="col s12 tab_box" >
-                    <div class="storage_storeTitle  ">
-                        <div class="row  grey-text text-darken-1 ">
-                            <div class="col s10">
-                                <div class="col s12" style="margin-top: 15px">
-                                    <div class="input-field col s2">
-                                        <select id="search_truck_hand_type" material-select watch ng-model="search_truck_hand_type">
-                                            <option ng-value="">请选择</option>
-                                            <option ng-value="1">自营车</option>
-                                            <option ng-value="2">外协车</option>
-                                            <option ng-value="3">供方车</option>
-                                            <option ng-value="4">承包车</option>
-                                        </select>
-                                        <label for="search_truck_hand_type">所属类型</label>
-                                    </div>
-                                    <div class="input-field col s2">
-                                        <select id="hand_brand" name="hand_brand" material-select watch ng-model="handBrand">
-                                            <option value="">请选择</option>
-                                            <option ng-repeat="el in brand" ng-value="el.id">{{el.brand_name}}</option>
-                                        </select>
-                                        <label for="hand_brand">车辆品牌</label>
-                                    </div>
-                                    <div class="input-field col s2">
-                                        <select id="search_hand_company" material-select watch ng-model="search_hand_company">
-                                            <option value="">所属公司</option>
-                                            <option ng-repeat="el in company" ng-value="el.id">{{el.company_name}}</option>
-                                        </select>
-                                        <label for="search_hand_company">请选择</label>
-                                    </div>
-                                    <div class="input-field col s2">
-                                        <input name="search_hand_num" id="search_hand_num" type="text" ng-model="search_hand_num"  minlength="6" >
-                                        <label for="search_hand_num">牌号</label>
-                                    </div>
-                                    <div class="input-field col s2">
-                                        <input name="search_hand_num_start" id="search_hand_num_start" type="number" ng-model="search_hand_num_start"  >
-                                        <label for="search_hand_num_start">挂车货位(始)</label>
-                                    </div>
-                                    <div class="input-field col s2">
-                                        <input name="search_hand_num_end" id="search_hand_num_end" type="number" ng-model="search_hand_num_end"   >
-                                        <label for="search_hand_num_end">挂车货位(终)</label>
-                                    </div>
-                                </div>
-                                <div class="col s12">
-                                    <div class="col s6 p0">
-                                        <div class="input-field col s6">
-                                            <input type="text" ng-model="check_operation_hand_startTime" id="check_operation_hand_startTime" name="check_operation_hand_startTime"  class="datepicker" autocomplete="off" required   date><i class="mdi dataIcon mdi-table-large"></i>
-                                            <label for="check_operation_hand_startTime">营运证检证日期(始)</label>
-                                        </div>
-                                        <div class="input-field col s6">
-                                            <input type="text" ng-model="check_operation_hand_endTime" id="check_operation_hand_endTime" name="check_operation_hand_endTime"  class="datepicker" autocomplete="off" required   date><i class="mdi dataIcon mdi-table-large"></i>
-                                            <label for="check_operation_hand_endTime">营运证检证日期(终)</label>
-                                        </div>
-                                    </div>
-                                    <div class="col s6 p0">
-                                        <div class="input-field col s6">
-                                            <input type="text" ng-model="search_checkCar_hand_startTime" id="search_checkCar_hand_startTime" name="search_checkCar_hand_startTime"  class="datepicker" autocomplete="off" required   date><i class="mdi dataIcon mdi-table-large"></i>
-                                            <label for="search_checkCar_hand_startTime">行驶证检证日期(始)</label>
-                                        </div>
-                                        <div class="input-field col s6">
-                                            <input type="text" ng-model="search_checkCar_hand_endTime" id="search_checkCar_hand_endTime" name="search_checkCar_hand_endTime"  class="datepicker" autocomplete="off" required   date><i class="mdi dataIcon mdi-table-large"></i>
-                                            <label for="search_checkCar_hand_endTime">行驶证检证日期(终)</label>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col s2" style="margin-top: 40px">
-                                <div class="col s6 center">
-                                    <a class="btn-floating btn-large waves-light waves-effect red lighten-2  btn vc-center" style="margin-right: 10px"  ng-click="searchHand_car()">
-                                        <i class="mdi mdi-magnify"></i>
-                                    </a>
-                                </div>
-                                <div class="col s6 center">
-                                    <a class=" btn-floating btn-large waves-light waves-effect cyan lighten-1 btn vc-center" style="margin-right: 10px"   ui-sref="add_hand_truck_details({from:'truck_details'})">
-                                        <i class="mdi mdi-plus"></i>
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                <div id="relStatus" class="col s12 tab_box" >
                     <div class="col s12" >
-                        <table class="bordered striped text_mid">
+                        <div class="col s12 cyan white-text vc-center fz18" style="height: 60px;border-bottom: 1px solid  #26c6da;border-top:1px solid  #fff" >
+                            <div class="col s6 left-align ">在库车辆:{{1111}}</div>
+                            <div class="col s6 right-align">估值(美元):{{1111}}</div>
+                        </div>
+                        <div class="divider" style="background: #00bcd4;height: 2px;"></div>
+                        <table class=" bordered striped centered">
                             <thead class="blue-grey lighten-5">
                             <tr class="grey-text text-darken-2">
-                                <th data-field="">车牌号</th>
-                                <th data-field="">挂车货位</th>
-                                <th data-field="">关联车头</th>
-                                <th data-field="">所属类型</th>
-                                <th data-field="">所属单位</th>
-                                <th data-field="">车辆状态</th>
-                                <th data-field="">车检</th>
-                                <th width="300">操作</th>
+                                <th data-field="">vin码</th>
+                                <th data-field="">制造商</th>
+                                <th data-field="">型号</th>
+                                <th data-field="">估值(美元)</th>
+                                <th data-field="">MOS车辆</th>
+                                <th data-field="">存放位置</th>
+                                <th data-field="">入库时间</th>
+                                <th data-field="">出库时间</th>
+                                <th data-field="">状态</th>
+                                <th>操作</th>
                             </tr>
                             </thead>
                             <tbody>
-                            <tr ng-repeat="el in hand_car_msg" class="grey-text text-darken-1">
-                                <td  ng-bind="el.truck_num">1</td>
-                                <td ng-bind="el.number">2</td>
-                                <td ng-bind="el.first_num">2</td>
-                                <td>{{el.operate_type | carType}}</td>
-                                <td ng-bind="el.company_name">1</td>
-                                <td ng-if="el.truck_status==1">正常</td>
-                                <td ng-if="el.truck_status==0">维修</td>
-                                <td class="white-text">
-                                    <span ng-show="el.driving_date|ptime" class="small-tips red lighten-2">临</span>
-                                    <span ng-hide="el.driving_date|ptime" class="small-tips "></span>
-                                </td>
+                            <tr ng-repeat="el in storageCar" class="grey-text text-darken-1">
+                                <td ng-bind="el.vin"></td>
+                                <td ng-if="el.entrust_type==1">个人</td>
+                                <td ng-if="el.entrust_type==2">企业</td>
+                                <td ng-bind="el.car_count"></td>
+                                <td ng-bind="el.valuation"></td>
+                                <td ng-bind="el.not_mos_count"></td>
+                                <td ng-bind="el.not_mos_valuation"></td>
+                                <td ng-bind="el.contacts_name"></td>
+                                <td ng-bind="el.tel"></td>
+                                <td ng-bind="el.created_on |date:'yyyy-MM-dd '"></td>
+                                <!-- 显示【仓储车辆信息】画面按钮 -->
                                 <td class="operation">
-                                    <a href="#" ui-sref="truck_guarantee_details({id:el.id,type:2,from:'truck_details'})" class="small-tips cyan lighten-2 white-text" style="margin-right: 10px;cursor: pointer">保</a>
-                                    <a href="#" ui-sref="truck_repair({id:el.id,type:2,status:1,from:'truck_details'})" ng-if="el.repair_status==1" class="normal-tips cyan-text   fz12" style="margin-right: 10px;cursor: pointer">
-                                        <i class="mdi mdi-wrench"></i>
-                                    </a>
-                                    <a href="#" ui-sref="truck_repair({id:el.id,type:2,status:0,from:'truck_details'})" ng-if="el.repair_status==0" class="normal-tips red-text   fz12" style="margin-right: 10px;cursor: pointer">
-                                        <i class="mdi mdi-wrench"></i>
-                                    </a>
-
-                                    <a href="#" ui-sref="look_hand_truck_details({id:el.id,from:'truck_details'})" class=""><i class="mdi mdi-file-outline look_icon cyan-text lighten-1  " ></i></a>
-                                    <span class="switch" ng-click="changeTruckTrailer_status(el.id,el.truck_status)" style="height: 30px">
-                                    <label>
-                                      <input type="checkbox" ng-checked="el.truck_status==1">
-                                      <span class="lever"></span>
-                                    </label>
-                                    </span>
+                                    <a  ui-sref="client_info_detail({id:el.id,from:'client_info'})" class=""><i class="mdi mdi-file-outline look_icon cyan-text lighten-1  " ></i></a>
                                 </td>
+                            </tr>
+                            <tr class="grey-text text-darken-1" ng-if="getClientList.length == 0">
+                                <td colspan="10" style="letter-spacing: 2px;text-align: center;">暂无数据</td>
                             </tr>
                             </tbody>
                         </table>
                     </div>
+                    <!-- 上下页按钮 -->
                     <div class="paging_box col s12">
                         <div class="right">
-                            <a class="waves-light waves-effect cyan lighten-1 btn  " ng-show="hand_pre"  id="hand_pre"   ng-click="hand_pre_btn()">
+                            <a class="waves-light waves-effect cyan lighten-1 btn  "  id="pre"   ng-click="preBtn()">
                                 上一页
                             </a>
-                            <a class="waves-light waves-effect cyan lighten-1 btn " ng-show="hand_next" id="hand_next"  ng-click="hand_next_btn()">
+                            <a class="waves-light waves-effect cyan lighten-1 btn " id="next"  ng-click="nextBtn()">
+                                下一页
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div id="mosStatus" class="col s12 tab_box" >
+                    <div class="col s12" >
+                        <div class="col s12 cyan white-text vc-center fz18" style="height: 60px;border-bottom: 1px solid  #26c6da;border-top:1px solid  #fff" >
+                            <div class="col s6 left-align ">在库车辆:{{1111}}</div>
+                            <div class="col s6 right-align">估值(美元):{{1111}}</div>
+                        </div>
+                        <div class="divider" style="background: #00bcd4;height: 2px;"></div>
+                        <table class=" bordered striped centered">
+                            <thead class="blue-grey lighten-5">
+                            <tr class="grey-text text-darken-2">
+                                <th data-field="">vin码</th>
+                                <th data-field="">制造商</th>
+                                <th data-field="">型号</th>
+                                <th data-field="">估值(美元)</th>
+                                <th data-field="">MOS车辆</th>
+                                <th data-field="">存放位置</th>
+                                <th data-field="">入库时间</th>
+                                <th data-field="">出库时间</th>
+                                <th data-field="">状态</th>
+                                <th>操作</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr ng-repeat="el in storageCar" class="grey-text text-darken-1">
+                                <td ng-bind="el.vin"></td>
+                                <td ng-if="el.entrust_type==1">个人</td>
+                                <td ng-if="el.entrust_type==2">企业</td>
+                                <td ng-bind="el.car_count"></td>
+                                <td ng-bind="el.valuation"></td>
+                                <td ng-bind="el.not_mos_count"></td>
+                                <td ng-bind="el.not_mos_valuation"></td>
+                                <td ng-bind="el.contacts_name"></td>
+                                <td ng-bind="el.tel"></td>
+                                <td ng-bind="el.created_on |date:'yyyy-MM-dd '"></td>
+                                <!-- 显示【仓储车辆信息】画面按钮 -->
+                                <td class="operation">
+                                    <a  ui-sref="client_info_detail({id:el.id,from:'client_info'})" class=""><i class="mdi mdi-file-outline look_icon cyan-text lighten-1  " ></i></a>
+                                </td>
+                            </tr>
+                            <tr class="grey-text text-darken-1" ng-if="getClientList.length == 0">
+                                <td colspan="10" style="letter-spacing: 2px;text-align: center;">暂无数据</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <!-- 上下页按钮 -->
+                    <div class="paging_box col s12">
+                        <div class="right">
+                            <a class="waves-light waves-effect cyan lighten-1 btn  "  id="pre"   ng-click="preBtn()">
+                                上一页
+                            </a>
+                            <a class="waves-light waves-effect cyan lighten-1 btn " id="next"  ng-click="nextBtn()">
                                 下一页
                             </a>
                         </div>

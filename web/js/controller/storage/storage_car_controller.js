@@ -52,7 +52,7 @@ app.controller("storage_car_controller", ["$scope", "$rootScope", "$stateParams"
 
     /**
      * 查询列表 条件查询
-     * 
+     *
      * */
     $scope.getStorageCar = function () {
         var reqUrl = _host.api_url + "/user/" + userId + "/car?active=" + 1 + "&start=" + $scope.start + "&size=" + $scope.size;
@@ -115,7 +115,7 @@ app.controller("storage_car_controller", ["$scope", "$rootScope", "$stateParams"
             }
         });
     };
-   
+
     /**点击新增按钮*/
     $scope.addStorageCar = function () {
         $('.tabWrap .tab').removeClass("active");
@@ -135,6 +135,8 @@ app.controller("storage_car_controller", ["$scope", "$rootScope", "$stateParams"
         $scope.MOS = "";
         $scope.remark = "";
         $scope.storage_name = "";
+        $scope.parking_area ="";
+        $scope.lattice = "";
         // 照片清空
         $scope.imgArr = [];
         // 车辆型号清空
@@ -150,11 +152,43 @@ app.controller("storage_car_controller", ["$scope", "$rootScope", "$stateParams"
         $("#newStorageCar").modal("open");
 
     };
+    // 数据导出
+    $scope.export = function () {
+        var obj = {
+            "active":1,
+            "relStatus": $scope.getRelStatus,
+            "storageId": $scope.search_storage,
+            "makeId":$scope.search_makeId,
+            "modelId": $scope.search_modelId,
+            "vin":$scope.search_vin,
+            "enterStart":$scope.search_enterTime_start,
+            "enterEnd":$scope.search_enterTime_end,
+            "planStart":$scope.search_planTime_start,
+            "planEnd":$scope.search_planTime_end,
+            "realStart":$scope.search_outTime_start,
+            "realEnd":$scope.search_outTime_end,
+            "mosStatus":$scope.getMOS,
+            "entrustId":$scope.getEntrustId
+        };
+        window.open(_host.api_url + "/car.csv?" + _basic.objToUrl(obj));
+    };
 
-    // 存放位置联动查询--行
+    // 存放位置联动查询--扇区
     $scope.getStorageId = function (val) {
         if (val) {
-            _basic.get(_host.api_url + "/storageParking?storageId=" + val).then(function (data) {
+            $scope.val =val;
+            _basic.get(_host.api_url + "/storageArea?storageId=" + val+ "&&areaStatus=1").then(function (data) {
+                if (data.success == true&&data.result.length>0) {
+                    $scope.storageAreaParking = data.result;
+                } else {
+                    swal(data.msg, "", "error");
+                }
+            });
+        }
+    },
+        // 存放位置联动查询--行
+        $scope.getStorageAreaParking = function (val) {
+            _basic.get(_host.api_url + "/storageParking?storageId=" + $scope.val+"&areaId="+val).then(function (data) {
                 if (data.success == true&&data.result.length>0) {
                     $scope.storageParking = data.result;
                     $scope.parkingArray =  _baseService.storageParking($scope.storageParking);
@@ -162,14 +196,11 @@ app.controller("storage_car_controller", ["$scope", "$rootScope", "$stateParams"
                     swal(data.msg, "", "error");
                 }
             });
-        }
-    },
-    // 存放位置联动查询--列
-    $scope.getStorageRow = function (val, array) {
-        if (val) {
+        },
+        // 存放位置联动查询--列
+        $scope.getStorageRow = function (val, array) {
             $scope.colArr = array[val - 1].col;
-        }
-    };
+        };
     // 车辆型号联动查询
     $scope.getMakeId = function (val) {
         if (val) {
@@ -245,6 +276,7 @@ app.controller("storage_car_controller", ["$scope", "$rootScope", "$stateParams"
                 "storageName": $scope.storage_name.storage_name,
                 "parkingId": $scope.parking_id,
                 "planOutTime": $scope.plan_out_time
+                /*  :$scope.areaName*/
             };
             _basic.post(_host.api_url + "/user/" + userId + "/carStorageRel", _basic.removeNullProps(obj_car)).then(function (data) {
                 if (data.success == true) {
@@ -295,7 +327,6 @@ app.controller("storage_car_controller", ["$scope", "$rootScope", "$stateParams"
         $(".modal").modal();
         $("#keyCabinet").modal("close");
     }
-
     // 钥匙存放位置联动查询--柜
     function addCarKeyCabinet() {
         _basic.get(_host.api_url + "/carKeyCabinet?keyCabinetStatus=1").then(function (data) {
@@ -351,15 +382,15 @@ app.controller("storage_car_controller", ["$scope", "$rootScope", "$stateParams"
         $scope.addRow = row;
         $scope.addCol = col;
         swal({
-            title: "该钥匙确定添加到" + row + "排" + col + "列？",
-            text: "",
-            type: "warning",
-            showCancelButton: true,
-            confirmButtonColor: "#DD6B55",
-            confirmButtonText: "确定",
-            cancelButtonText: "取消",
-            closeOnConfirm: false
-        },
+                title: "该钥匙确定添加到" + row + "排" + col + "列？",
+                text: "",
+                type: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#DD6B55",
+                confirmButtonText: "确定",
+                cancelButtonText: "取消",
+                closeOnConfirm: false
+            },
             function () {
                 if (id != null) {
                     _basic.put(_host.api_url + "/user/" + userId + "/carKeyPosition/" + id, {
@@ -388,7 +419,7 @@ app.controller("storage_car_controller", ["$scope", "$rootScope", "$stateParams"
     //确定添加成功
     $scope.addcarKeyCabinetItem =function (){
         $("#newStorageCar").modal("close");
-         swal('成功添加入库车辆', "", "success");
+        swal('成功添加入库车辆', "", "success");
         $scope.getStorageCar();
     }
     // 立刻出库
@@ -428,7 +459,7 @@ app.controller("storage_car_controller", ["$scope", "$rootScope", "$stateParams"
             if (data.success == true&&data.result.length>0) {
                 $scope.selfStorageParking = data.result;
                 $scope.garageParkingArray =_baseService.storageParking($scope.selfStorageParking);
-                $scope.ageParkingCol = $scope.garageParkingArray[0].col
+                $scope.ageParkingCol = $scope.garageParkingArray[0].col;
             }
         })
     };
