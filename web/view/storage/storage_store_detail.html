@@ -1,0 +1,81 @@
+<!-- 主菜单：仓储管理 -> 钥匙管理 画面 -->
+
+<!-- 返回前画面 按钮 -->
+<div class="storage_storeTitle vc-center ">
+    <a class=" storage_goback_btn btn-floating btn waves-effect cyan lighten-1 waves-light "
+       ng-click="return()">
+        <i class="mdi mdi-arrow-left-bold"></i>
+    </a>
+    <h4 class="center-align cyan-text text-lighten-1">钥匙管理</h4>
+</div>
+
+<!-- 分割线 -->
+<div class="row">
+    <div class="divider" style="background: #00bcd4;height: 2px"></div>
+</div>
+
+<!-- 主体 -->
+<div class="" style="width: 100%;margin: 0 auto">
+
+    <!-- 头部 -->
+    <div class="row cyan lighten-1 white-text" style="padding: 0.75rem 0;margin: 10px 0 0 0 ">
+        <div class="row valign-wrapper">
+
+            <!-- 钥匙柜 名称 -->
+            <h5 class="col s2">
+                <div ng-bind="keyCabinetNm" class="white-text text-darken-1 context-ellipsis" style="width: 220px;"></div>
+            </h5>
+
+            <!-- 钥匙柜 扇区列表 -->
+            <div class="col s5">
+                <p class="col s4">
+                    <select material-select watch ng-model="selectedZone" ng-change="getKeyCabinetZoneList(selectedZone);">
+                        <option value="" disabled selected>请选择</option>
+                        <option ng-repeat="op in zoneList" ng-value="{{op.id}}" ng-selected="op.id == selectedZone">{{op.area_name}}</option>
+                    </select>
+                </p>
+            </div>
+
+            <!-- 钥匙柜 总位置 / 剩余位置 -->
+            <div class="col s5 white-text fz20">
+                <p class="col s6">
+                    总位置: <span ng-bind="totalPosition"></span>
+                </p>
+                <p class="col s6">
+                    剩余位置: <span ng-bind="leftPosition"></span>
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <!-- 详细 -->
+    <div ng-repeat="el in carKeyCabinetParkingArray" style="width: 95%;margin: 0 auto">
+        <div class="keyWrap" ng-show="hasPosition == true" style="border: 0px solid">
+            <div ng-show="el.lot == 1" style="padding-bottom: 10px;border:1px solid #ff0000;"></div>
+            <!-- 头 -->
+            <div ng-show="el.lot == 1" class=" col s12 key_list p0 cyan-text" style="border-bottom: 2px solid #00bcd4">
+                <div class="key_row vc-center left" style="border-right: 0px solid"></div>
+                <div class="key_row vc-center left"></div>
+                <div class="key_row vc-center left" ng-repeat="el in carKeyCabinetParkingCol">
+                    {{el.col}}
+                </div>
+            </div>
+
+            <!-- 列表 -->
+            <div class="col s12  key_list p0" >
+                <div class="key_row vc-center left">{{(el.lot == 1 ? el.row : '')}}</div>
+                <div class="key_row vc-center left cyan-text" style="border-right: 1px solid #00bcd4">{{characters[el.lot-1].name}}</div>
+                <div class="key_row vc-center left" ng-repeat="els in el.col track by $index">
+                    <i ng-show="els.carId!=0" class=" mdi mdi-car cyan-text lighten-1"
+                       style="cursor: pointer;" ng-click="getCarInfo(els.carId,el.row,els.col)"></i>
+                    <i ng-show="els.carId==0" class=" mdi mdi-car grey-text lighten-2"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div ng-show="hasPosition == false" class="col s12  key_list p0 vc-center">
+        <span style="letter-spacing: 2px">暂无数据</span>
+    </div>
+</div>
+

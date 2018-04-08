@@ -96,10 +96,17 @@ app.config(['$stateProvider',"$urlRouterProvider",function($stateProvider,$urlRo
             templateUrl: "/view/storage/key_info_detail.html",
             controller:'key_info_detail_controller'
         })
+        // 仓储管理->仓储存放
         .state("storage_store", {
             url:"/storage_store",
             templateUrl: "/view/storage/storage_store.html",
             controller:"storage_store_controller"
+        })
+        // 仓储管理->仓储存放->详细
+        .state("storage_store_detail", {
+            url:"/storage_store_detail/{id}/{name}/{position}?from",
+            templateUrl: "/view/storage/storage_store_detail.html",
+            controller:'storage_store_detail_controller'
         })
         .state("statistics", {
             url:"/storage_statistics",

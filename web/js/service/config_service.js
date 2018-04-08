@@ -2,12 +2,21 @@
 //var baseService = angular.module("baseService", []);
 baseService.factory("_config", function () {
     var _this = {};
+
+    // 用户类型
     _this.userTypes = [
         {
-            type: 2,
-            name: "仓储部",
+            type: 21,
+            name: "仓储部操作员",
             subType: [],
-            index: 'storage.html',
+            index: 'storage_home.html',
+            qr: []
+        },
+        {
+            type: 29,
+            name: "仓储部管理员",
+            subType: [{type: 21, name: "仓储部操作员"}],
+            index: 'storage_manager.html',
             qr: []
         },
         {
@@ -25,12 +34,14 @@ baseService.factory("_config", function () {
             qr: []
         }
     ];
-    _this.user_type={
-        storage_type:"2",
-        admin_type:"99"
+
+    //
+    _this.user_type = {
+        storage_type: "2",
+        admin_type: "99"
     };
     _this.rel_status = 1;
-    _this.carRelStatus=[
+    _this.carRelStatus = [
         {
             s_num: 1,
             status_text: "在库"
@@ -96,6 +107,50 @@ baseService.factory("_config", function () {
         {
             colorName: "其他",
             colorId: "CCCCCC "
+        }
+    ];
+
+    // A-Z
+    _this.characters = [
+        {
+            id: 1,
+            name: "A"
+        },
+        {
+            id: 2,
+            name: "B"
+        },
+        {
+            id: 3,
+            name: "C"
+        },
+        {
+            id: 4,
+            name: "D"
+        },
+        {
+            id: 5,
+            name: "E"
+        },
+        {
+            id: 6,
+            name: "F"
+        },
+        {
+            id: 7,
+            name: "G"
+        },
+        {
+            id: 8,
+            name: "H"
+        },
+        {
+            id: 9,
+            name: "I"
+        },
+        {
+            id: 10,
+            name: "J"
         }
     ];
 
@@ -169,7 +224,7 @@ baseService.factory("_config", function () {
             entrust_type: 2,
             name: "企业"
         }
-    ]
+    ];
 
     return _this
 });
