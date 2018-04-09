@@ -134,16 +134,16 @@
                 </div>
                 <div class="col s8">
                     <div class="row left-align">
-                        <div   class="col s2 fz18" ng-bind="clientList.short_name" style="color: #26c6da"> </div>
-                        <div   class="col s10 ">({{clientList.entrust_name}})</div>
+                        <span  class=" fz18" ng-bind="clientList.short_name" style="color: #26c6da;margin-right: 10px"> </span>
+                        <span  >({{clientList.entrust_name}})</span>
                     </div>
                     <div class="row">
-                        <i class="mdi mdi-map-marker col s1 center" style="color: #26c6da"></i>
-                        <div class="col s11">{{clientList.address}}</div>
+                        <i class="mdi mdi-map-marker  center" style="color: #26c6da;margin-right: 10px"></i>
+                        <span >{{clientList.address}}</span>
                     </div>
                     <div class="row">
-                       <i class="mdi mdi-file-outline col s1 center" style="color: #26c6da"></i>
-                        <div class="col s11">{{clientList.remark}}</div>
+                       <i class="mdi mdi-file-outline  center" style="color: #26c6da;margin-right: 10px"></i>
+                        <span >{{clientList.remark}}</span>
                     </div>
                 </div>
                 <div class="col s2 right-align" style="margin-right: 40px">
@@ -263,7 +263,7 @@
                                 <td ng-if="el.valuation!==null">${{el.valuation}}.00</td>
                                 <td ng-if="el.mso_status==2">是</td>
                                 <td ng-if="el.mso_status==1">否</td>
-                                <td ng-if="el.mso_status==null">无状态</td>carLot
+                                <td ng-if="el.mso_status==null">无状态</td>
                                 <td ng-if="el.rel_status==1&&el.lot==1">{{el.storage_name}}{{el.area_name}}{{el.row}}排{{el.col}}列A</td>
                                 <td ng-if="el.rel_status==1&&el.lot==2">{{el.storage_name}}{{el.area_name}}{{el.row}}排{{el.col}}列B</td>
                                 <td ng-if="el.rel_status==1&&el.lot==3">{{el.storage_name}}{{el.area_name}}{{el.row}}排{{el.col}}列C</td>
