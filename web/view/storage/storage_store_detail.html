@@ -73,7 +73,9 @@
 
             <!-- 列表 -->
             <div class="col s12 storage_list p0">
-                <div class="storage_row vc-center left white-text fz20" style="background-color: #aaaaaa;border: 0px solid #cccccc;">{{(el.lot == 1 ? el.row : '')}}</div>
+                <div class="storage_row vc-center left white-text fz20" style="background-color: #aaaaaa;border: 0px solid #cccccc;">
+                   {{((lot/2|number:0) == el.lot) ? el.row : ''}}
+                </div>
                 <div class="storage_row vc-center left" style="background-color: #dddddd;">
                     {{characters[el.lot-1].name}}
                 </div>
