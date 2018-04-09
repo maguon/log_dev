@@ -112,7 +112,7 @@ app.controller("setting_user_controller", ["_basic", "_config", "_host", "$scope
         _basic.put(_host.api_url + "/admin/" + adminId + "/user/" + id + "/status/" + $scope.changeSt
             , {}).then(function (data) {
             if (data.success == true) {
-                getDepartmentInfoList();
+                getUserInfoList();
             } else {
                 swal(data.msg, "", "error");
             }
@@ -142,7 +142,7 @@ app.controller("setting_user_controller", ["_basic", "_config", "_host", "$scope
                 if (data.success == true) {
                     swal("修改成功", "", "success");
                     $('#look_Operator').modal('close');
-                    getDepartmentInfoList();
+                    getUserInfoList();
                 } else {
                     swal(data.msg, "", "error");
                 }
