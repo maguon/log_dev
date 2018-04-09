@@ -2,6 +2,7 @@
  * Created by ASUS on 2017/5/5.
  */
 app.controller("storage_car_details_controller", [ "$state", "$stateParams", "_config", "_baseService", "$scope", "_host", "_basic", function ( $state, $stateParams, _config, _baseService, $scope, _host, _basic) {
+
    /**  自定义变量名  */
     var userId = _basic.getSession(_basic.USER_ID);
     var val = $stateParams.id;//获取本条信息的id
@@ -43,7 +44,11 @@ app.controller("storage_car_details_controller", [ "$state", "$stateParams", "_c
 
     // 返回
     $scope.return = function () {
-        $state.go($stateParams.from, {id: $scope.self_car.storage_id, form: $stateParams._form}, {reload: true})
+        if ($stateParams.from == 'storage_store_detail') {
+            $state.go($stateParams.from, {id: $scope.self_car.storage_id}, {reload: true});
+        } else {
+            $state.go($stateParams.from, {id: $scope.self_car.storage_id, form: $stateParams._from}, {reload: true})
+        }
     };
     // 车辆品牌查询
     _basic.get(_host.api_url + "/carMake").then(function (data) {
