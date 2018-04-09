@@ -60,7 +60,7 @@
         <div ng-repeat="el in storageParkingArray">
             <div ng-show="el.lot == 1" style="padding-bottom: 50px;"></div>
             <!-- 头 -->
-            <div ng-show="el.lot == 1" class="col s12 storage_list">
+            <div ng-show="el.lot == 1" class="col s12 storage_list" style="background-color: #dddddd;">
                 <div class="storage_row vc-center" style="border: 1px solid #cccccc; border-right:0px"></div>
                 <div class="storage_row vc-center" style="border: 1px solid #cccccc; border-left: 0px"></div>
                 <div class="storage_row vc-center" style="border: 1px solid #cccccc; border-left: 0px" ng-repeat="el in storageParkingCol">
@@ -70,8 +70,8 @@
 
             <!-- 列表 -->
             <div class="col s12 storage_list p0">
-                <div class="storage_row vc-center left white-text fz20" style="background-color: #aaaaaa ;border: 0px solid #cccccc;">{{(el.lot == 1 ? el.row : '')}}</div>
-                <div class="storage_row vc-center left" >
+                <div class="storage_row vc-center left white-text fz20" style="background-color: #aaaaaa;border: 0px solid #cccccc;">{{(el.lot == 1 ? el.row : '')}}</div>
+                <div class="storage_row vc-center left" style="background-color: #dddddd;">
                     {{characters[el.lot-1].name}}
                 </div>
                 <div class="storage_row vc-center left" ng-repeat="els in el.col track by $index">
