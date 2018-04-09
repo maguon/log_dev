@@ -461,7 +461,7 @@
                             </form>
                         </div>
                         <!--详情-->
-                        <a href="#" ui-sref="storage_car_detail({id:el.id,vin:el.vin,_from:'',from:'storageCar'})" class=""><i class="mdi mdi-file-outline look_icon cyan-text lighten-1  " ></i></a>
+                        <a href="#" ui-sref="storageCar_details_({id:el.id,vin:el.vin,from:'storageCar'})" class=""><i class="mdi mdi-file-outline look_icon cyan-text lighten-1  " ></i></a>
                         <!--是否出库-->
                         <span>
                             <i ng-if="el.rel_status==1" class="mdi mdi-logout cyan-text lighten-1" ng-click="outStorageCar(el.r_id,2,el.p_id,el.storage_id,el.id)" ></i>
@@ -526,15 +526,15 @@
                                     <div class="valign-wrapper">
                                         <!-- 仓库 名称 -->
                                         <h5 class="col s2">
-                                            <div ng-bind="storageArea.storage_name" class="white-text text-darken-1 context-ellipsis"></div>
+                                            <div ng-bind="storageInfo.storage_name" class="white-text text-darken-1 context-ellipsis"></div>
                                         </h5>
                                         <!-- 仓库柜 扇区列表 -->
-                                        <div class="col s3">
-                                            <p class="col s8">
-                                                <select material-select watch ng-model="selectedZone"
-                                                        ng-change="getStorageAreaInfo(selectedZone);" class="center">
+                                        <div class="col s3" style="width: 50%;">
+                                            <p class="col s8 left-align">
+                                                <select material-select watch ng-model="selectedZoneName"
+                                                        ng-change="getStorageAreaInfo(selectedZoneAreaName);" class="center">
                                                     <option value="" disabled selected>请选择</option>
-                                                    <option ng-repeat="op in zoneList"  ng-value="{{op.id}}" ng-selected="op.id == selectedZone">
+                                                    <option ng-repeat="op in storageArea"  ng-value="{{op.id}}">
                                                         {{op.area_name}}
                                                     </option>
                                                 </select>
@@ -544,16 +544,16 @@
                                         <!-- 仓库柜 总位置 / 剩余位置 -->
                                         <div class="col s7 white-text fz16">
                                             <p class="col" style="width:12%;">
-                                                行: <span ng-bind="nowRow"></span>
+                                                行: <span ng-bind="row"></span>
                                             </p>
                                             <p class="col" style="width:13%;">
-                                                列: <span ng-bind="nowCol"></span>
+                                                列: <span ng-bind="col"></span>
                                             </p>
                                             <p class="col" style="width:25%;">
-                                                单元存车位: <span ng-bind="nowLot"></span>
+                                                单元存车位: <span ng-bind="lot"></span>
                                             </p>
                                             <p class="col" style="width:25%;">
-                                                总位置: {{storageArea.col * storageArea.row * storageArea.lot}}
+                                                总位置: {{(row == null || row == undefined) ? 0 : row * col * lot}}
                                             </p>
                                             <p class="col" style="width:25%;">
                                                 剩余位置: <span ng-bind="leftPosition"></span>
@@ -587,9 +587,9 @@
                                                 <div class="storage_row vc-center left" style="background-color: #dddddd;">
                                                     {{characters[el.lot-1].name}}
                                                 </div>
-                                                <div class="storage_row vc-center left" ng-repeat="els in el.col track by $index">
-                                                    <i ng-show="els.carId!=0" class=" mdi mdi-car cyan-text lighten-1" ng-click="getCarInfo(els.carId,el.row,els.col)"></i>
-                                                    <i ng-show="els.carId==0" class=" mdi mdi-car grey-text lighten-2"></i>
+                                                <div class="storage_row vc-center left" ng-repeat="els in el.col track by $index" ng-class="{'present_place':el.row==nowRow&&els.col==nowCol&&el.lot==nowLot}">
+                                                    <i ng-show="els.carId!=0" class=" mdi mdi-car cyan-text lighten-1" ></i>
+                                                    <i ng-show="els.carId==0" class=" mdi mdi-car grey-text lighten-2" ng-click="getCarInfo(els.id,el.row,els.col,el.lot)"></i>
                                                 </div>
                                             </div>
                                         </div>

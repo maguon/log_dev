@@ -20,6 +20,36 @@ app.controller("storage_car_controller", ["$scope", "$rootScope", "$stateParams"
     $scope.parkingArrayLot =[];
     $scope.parkingArrayR =[];
     $scope.parkingArrayL =[];
+    // 仓库详情（头部）
+    $scope.storageNm = "";
+
+    // 仓库详情（头部）区域列表
+    $scope.zoneList = [];
+
+    // 仓库详情（头部）区域列表 默认选中项
+    $scope.selectedZone = "";
+
+    // 仓库详情（头部）行
+    $scope.row = 0;
+
+    // 仓库详情（头部）列
+    $scope.col = 0;
+
+    // 仓库详情（头部）单元存车位
+    $scope.lot = 0;
+
+    // 仓库详情（头部）剩余位置
+    $scope.leftPosition = 0;
+
+    // 一行一列内，多个停车位区分用 (A-Z)
+    $scope.characters = _config.characters;
+
+    // 画面是否有区域详细信息
+    $scope.hasPosition = false;
+
+    // 画面显示停车情况数据
+    $scope.storageParkingArray = [];
+
     // 获取车辆品牌
     function getCarMakeName() {
         _basic.get(_host.api_url + "/carMake").then(function (data) {
@@ -480,10 +510,23 @@ app.controller("storage_car_controller", ["$scope", "$rootScope", "$stateParams"
         $scope.nowCol = col;
         $scope.nowLot = lot;
         $scope.moveCarId = id;
+        _basic.get(_host.api_url +"/user/"+userId+ "/car?carId=" + id).then(function (data) {
+            if (data.success == true) {
+                if (data.result.length > 0) {
+                    $scope.storageInfo = data.result[0];
+                    $scope.selectedZoneAreaName = $scope.storageInfo.area_name;
+                }
+            }
+        });
         _basic.get(_host.api_url + "/storageArea?storageId=" + val + "&&areaStatus=1").then(function (data) {
             if (data.success == true) {
                 if (data.result.length > 0) {
                     $scope.storageArea = data.result;
+                    for(var i =0;i<$scope.storageArea.length;i++){
+                       if($scope.storageArea[i].area_name==$scope.selectedZoneAreaName) {
+                           $scope.selectedZoneName=$scope.storageArea[i].id;
+                       }
+                    }
                 }
             }
         });
@@ -538,14 +581,11 @@ app.controller("storage_car_controller", ["$scope", "$rootScope", "$stateParams"
      * 获取仓储（分区）详细信息。
      */
     $scope.getStorageAreaInfo = function (selectedZone) {
-
         if (selectedZone == null || selectedZone == '') {
             return;
         }
-
         // 检索仓储详细信息URL
         var url = _host.api_url + "/storageArea?areaStatus=1&storageId=" + $scope.storageId + "&areaId=" + selectedZone;
-
         // 调用API取得，画面数据
         _basic.get(url).then(function (data) {
             if (data.success) {
@@ -640,9 +680,10 @@ app.controller("storage_car_controller", ["$scope", "$rootScope", "$stateParams"
 
     };
     // 移动位置
-    $scope.moveParking = function (parkingId, row, col) {
+    $scope.getCarInfo = function (parkingId, row, col,lot) {
+
         swal({
-                title: "该车辆确定移位到" + row + "排" + col + "列？",
+                title: "该车辆确定移位到" + row + "排" + col + "列"+lot+"?",
                 text: "",
                 type: "warning",
                 showCancelButton: true,
