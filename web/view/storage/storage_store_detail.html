@@ -43,7 +43,7 @@
                 单元存车位: <span ng-bind="lot"></span>
             </p>
             <p class="col" style="width:25%;">
-                总位置: {{row * col * lot}}
+                总位置: {{(row == null || row == undefined) ? 0 : row * col * lot}}
             </p>
             <p class="col" style="width:25%;">
                 剩余位置: <span ng-bind="leftPosition"></span>
@@ -78,7 +78,10 @@
                     {{characters[el.lot-1].name}}
                 </div>
                 <div class="storage_row vc-center left" ng-repeat="els in el.col track by $index">
-                    <i ng-show="els.carId!=0" class=" mdi mdi-car cyan-text lighten-1" ng-click="getCarInfo(els.carId,el.row,els.col)"></i>
+                    <a href="#" ui-sref="storage_car_detail({id:els.carId,vin:els.vin,_from:'storage_store',from:'storage_store_detail'})" >
+                        <i ng-show="els.carId!=0" class=" mdi mdi-car cyan-text lighten-1" ></i>
+                    </a>
+
                     <i ng-show="els.carId==0" class=" mdi mdi-car grey-text lighten-2"></i>
                 </div>
             </div>

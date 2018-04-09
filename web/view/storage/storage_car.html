@@ -461,7 +461,7 @@
                             </form>
                         </div>
                         <!--详情-->
-                        <a href="#" ui-sref="storageCar_details_({id:el.id,vin:el.vin,from:'storageCar'})" class=""><i class="mdi mdi-file-outline look_icon cyan-text lighten-1  " ></i></a>
+                        <a href="#" ui-sref="storage_car_detail({id:el.id,vin:el.vin,_from:'',from:'storageCar'})" class=""><i class="mdi mdi-file-outline look_icon cyan-text lighten-1  " ></i></a>
                         <!--是否出库-->
                         <span>
                             <i ng-if="el.rel_status==1" class="mdi mdi-logout cyan-text lighten-1" ng-click="outStorageCar(el.r_id,2,el.p_id,el.storage_id,el.id)" ></i>

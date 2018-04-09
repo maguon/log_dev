@@ -104,7 +104,7 @@ app.config(['$stateProvider',"$urlRouterProvider",function($stateProvider,$urlRo
         })
         // 仓储管理->仓储存放->详细
         .state("storage_store_detail", {
-            url:"/storage_store_detail/{id}/{name}/{position}?from",
+            url:"/storage_store_detail/{id}?from",
             templateUrl: "/view/storage/storage_store_detail.html",
             controller:'storage_store_detail_controller'
         })
@@ -113,8 +113,8 @@ app.config(['$stateProvider',"$urlRouterProvider",function($stateProvider,$urlRo
             templateUrl: "/view/storage/storage_statistics.html",
             controller:"storage_statistics_controller"
         })
-        .state("storageCar_details_", {
-            url:"/storageCar_details/{id}/vin/{vin}?from",
+        .state("storage_car_detail", {
+            url:"/storage_car_detail/{id}/vin/{vin}/{_from}?from",
             templateUrl: "/view/storage/storage_car_details.html",
             controller:"storage_car_details_controller"
         })
