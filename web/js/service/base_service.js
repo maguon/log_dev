@@ -95,6 +95,19 @@ baseService.factory('_baseService',function(){
         }
         return parkingArray;
     };
+    //数组去重
+    _this.array = function (arr){
+         var o={};
+         var new_arr=[];
+         for(var i=0;i<arr.length;i++){
+                 var k=arr[i];
+                 if(!o[k]){
+                         o[k]=true;
+                         new_arr.push(k);
+                     }
+             }
+        return(new_arr);
+    }
     // 页面之间数据传递
     _this.pass_parameter=function () {
 //定义参数对象

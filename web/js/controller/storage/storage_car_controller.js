@@ -15,6 +15,10 @@ app.controller("storage_car_controller", ["$scope", "$rootScope", "$stateParams"
     $scope.addCarKeyCabinet = "";
     $scope.pictureCarId = "";
     $scope.show = true;
+    $scope.parkingArrayRow=[];
+    $scope.parkingArrayLot =[];
+    $scope.parkingArrayR =[];
+    $scope.parkingArrayL =[];
     // 获取车辆品牌
     function getCarMakeName() {
         _basic.get(_host.api_url + "/carMake").then(function (data) {
@@ -180,26 +184,44 @@ app.controller("storage_car_controller", ["$scope", "$rootScope", "$stateParams"
             _basic.get(_host.api_url + "/storageArea?storageId=" + val+ "&&areaStatus=1").then(function (data) {
                 if (data.success == true&&data.result.length>0) {
                     $scope.storageAreaParking = data.result;
-                } else {
+                }
+                else if(data.success == true&&data.result.length==0){
+                    $scope.storageAreaParking = "";
+                }
+                else{
                     swal(data.msg, "", "error");
                 }
             });
         }
-    },
+    };
         // 存放位置联动查询--行
         $scope.getStorageAreaParking = function (val) {
             _basic.get(_host.api_url + "/storageParking?storageId=" + $scope.val+"&areaId="+val).then(function (data) {
                 if (data.success == true&&data.result.length>0) {
                     $scope.storageParking = data.result;
-                    $scope.parkingArray =  _baseService.storageParking($scope.storageParking);
-                } else {
+                    $scope.parkingArray =_baseService.storageParking($scope.storageParking);
+                    for(var i=0;i<$scope.parkingArray.length;i++){
+                        $scope.parkingArrayR.push($scope.parkingArray[i].row);
+                        $scope.parkingArrayL.push($scope.parkingArray[i].lot);
+                        $scope.parkingArrayRow = _baseService.array($scope.parkingArrayR);
+                        $scope.parkingArrayLot =  _baseService.array($scope.parkingArrayL);
+                    }
+                }
+                else if(data.success == true&&data.result.length==0){
+                    $scope.parkingArray = "";
+                }
+                else {
                     swal(data.msg, "", "error");
                 }
             });
-        },
+        };
         // 存放位置联动查询--列
-        $scope.getStorageRow = function (val, array) {
-            $scope.colArr = array[val - 1].col;
+        $scope.getStorageRow = function (Row,Lot) {
+            for(var i =0;i<$scope.parkingArray.length;i++){
+               if($scope.parkingArray[i].row==Row&&$scope.parkingArray[i].lot== Lot) {
+                   $scope.colArr =$scope.parkingArray[i].col;
+               }
+            }
         };
     // 车辆型号联动查询
     $scope.getMakeId = function (val) {
@@ -258,7 +280,7 @@ app.controller("storage_car_controller", ["$scope", "$rootScope", "$stateParams"
     };
     // 新增信息
     $scope.addCarDataItem = function () {
-        if ($scope.vin!==''&& $scope.plan_out_time!==""&& $scope.$scope.entrustId!==""&& $scope.carValuation!==""&&
+        if ($scope.vin!==''&& $scope.plan_out_time!==""&&$scope.entrustId!==""&& $scope.carValuation!==""&&
             $scope.MSO!==""&& $scope.parking_id!=="") {
             var obj_car = {
                 "vin": $scope.vin,

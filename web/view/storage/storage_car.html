@@ -104,26 +104,32 @@
                         <div class="row  p0 storage_position"  style="padding-bottom: 5px" >
                             <div class="col s4">
                                 <div class="input-field  valign-wrapper cyan white-text" >
-                                    <select material-select watch id="row" name="row" class="col s12" ng-change="getStorageRow(row,parkingArray)"  ng-model="row" required>
+                                    <select material-select watch id="row" name="row" class="col s12"  ng-model="row" required>
                                         <option value=""  selected><span style="color: red;margin-right: 5px">*</span>存放排数</option>
-                                        <option ng-repeat="el in parkingArray"  ng-value="el.row" >{{el.row}}排</option>
+                                        <option ng-repeat="el in parkingArrayRow"  ng-value="$index+1" >{{$index+1}}排</option>
                                     </select>
                                 </div>
                             </div>
                             <div class="col s4">
                                 <div class="input-field  valign-wrapper cyan white-text" >
-                                    <select material-select watch id="col" name="col_id" class=" col s12" ng-model="parking_id" ng-change="getStorageCol(col,colArr)"  required>
+                                    <select material-select watch id="lattice" name="lattice" class=" col s12" ng-model="lot" ng-change="getStorageRow(row,lot)" required>
+                                        <option value=""  selected><span style="color: red;margin-right: 5px">*</span>存放格位</option>
+                                        <option ng-repeat="el in parkingArrayLot"  ng-value="$index+1" ng-if="$index+1==1">A</option>
+                                        <option ng-repeat="el in parkingArrayLot"  ng-value="$index+1" ng-if="$index+1==2">B</option>
+                                        <option ng-repeat="el in parkingArrayLot"  ng-value="$index+1" ng-if="$index+1==3">C</option>
+                                        <option ng-repeat="el in parkingArrayLot"  ng-value="$index+1" ng-if="$index+1==4">D</option>
+                                        <option ng-repeat="el in parkingArrayLot"  ng-value="$index+1" ng-if="$index+1==5">E</option>
+                                        <option ng-repeat="el in parkingArrayLot"  ng-value="$index+1" ng-if="$index+1==6">F</option>
+                                        <option ng-repeat="el in parkingArrayLot"  ng-value="$index+1" ng-if="$index+1==7">G</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col s4">
+                                <div class="input-field  valign-wrapper cyan white-text" >
+                                    <select material-select watch id="col" name="col_id" class=" col s12" ng-model="parking_id"   required>
                                         <option value=""  selected><span style="color: red;margin-right: 5px">*</span>存放道位</option>
                                         <option ng-repeat="el in colArr" ng-if="el.carId==0"  ng-value="el.id" >{{el.col}}列</option>
                                         <option ng-repeat="el in colArr" ng-if="el.carId!=0" disabled  >{{el.col}}列</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="col s4">
-                                <div class="input-field  valign-wrapper cyan white-text" >
-                                    <select material-select watch id="lattice" name="lattice" class=" col s12" ng-model="lattice" required>
-                                        <option value=""  selected><span style="color: red;margin-right: 5px">*</span>存放格位</option>
-                                        <option ng-repeat="el in parkingArray"  ng-value="el.lot" >{{el.lot}}格</option>
                                     </select>
                                 </div>
                             </div>
@@ -386,8 +392,13 @@
                     <td ng-if="el.storage_id!=null" ng-bind="el.storage_name"></td>
                     <td ng-if="el.storage_id==null" >无</td>
                     <td ng-bind="el.area_name"></td>
-                    <td ng-if="el.col!=null">{{el.row}}排{{el.col}}列{{el.lot}}格</td>
-                    <td ng-if="el.col==null">无</td>
+                    <td ng-if="el.lot==1">{{el.row}}排{{el.col}}列A</td>
+                    <td ng-if="el.lot==2">{{el.row}}排{{el.col}}列B</td>
+                    <td ng-if="el.lot==3">{{el.row}}排{{el.col}}列C</td>
+                    <td ng-if="el.lot==4">{{el.row}}排{{el.col}}列D</td>
+                    <td ng-if="el.lot==5">{{el.row}}排{{el.col}}列E</td>
+                    <td ng-if="el.lot==6">{{el.row}}排{{el.col}}列F</td>
+                    <td ng-if="el.lot==7">{{el.row}}排{{el.col}}列G</td>
                     <td ng-bind="el.plan_out_time|date:'yyyy-MM-dd '"></td>
                     <td ng-bind="el.real_out_time|date:'yyyy-MM-dd '"></td>
                     <td class="operation">

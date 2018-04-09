@@ -189,7 +189,28 @@ app.controller("storage_car_details_controller", [ "$state", "$stateParams", "_c
                     }else {
                         $scope.look_create_time = moment($scope.self_car.pro_date).format('YYYY-MM-DD');
                     }
-                $scope.look_storageName = $scope.self_car.storage_name + "" + $scope.self_car.row + "排" + $scope.self_car.col + "列"+$scope.self_car.lot+"格";
+                if($scope.self_car.lot==1){
+                    $scope.self_car.lot='A';
+                }
+                if($scope.self_car.lot==2){
+                    $scope.self_car.lot='B';
+                }
+                if($scope.self_car.lot==3){
+                    $scope.self_car.lot='C';
+                }
+                if($scope.self_car.lot==4){
+                    $scope.self_car.lot='D';
+                }
+                if($scope.self_car.lot==5){
+                    $scope.self_car.lot='E';
+                }
+                if($scope.self_car.lot==6){
+                    $scope.self_car.lot='F';
+                }
+                if($scope.self_car.lot==7){
+                    $scope.self_car.lot='G';
+                }
+                $scope.look_storageName = $scope.self_car.storage_name + "" + $scope.self_car.row + "排" + $scope.self_car.col + "列"+$scope.self_car.lot;
                 // 车辆id
                 $scope.look_car_id = $scope.self_car.id;
             } else {
