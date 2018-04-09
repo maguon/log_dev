@@ -2,14 +2,13 @@
  * Created by star on 2018/4/3.
  * 委托方详情
  */
-app.controller("client_info_detail_controller", ["$scope", "$rootScope", "$stateParams","_host", "_basic", "_config", "_baseService", function ($scope, $rootScope,$stateParams, _host, _basic, _config, _baseService) {
+app.controller("client_info_detail_controller", ["$scope", "$rootScope","$state", "$stateParams","_host", "_basic", "_config", "_baseService", function ($scope, $rootScope,$state,$stateParams, _host, _basic, _config, _baseService) {
     var userId = _basic.getSession(_basic.USER_ID);
     var val = $stateParams.id;//获取本条信息的id
     $scope.start = 0;
     $scope.size = 10;
     $scope.valuation = 0;
     //获取传过来的id
-    var entrustId = $stateParams.id;
     // 跳转
     $('ul.tabWrap li').removeClass("active");
     $(".tab_box").removeClass("active");
@@ -17,6 +16,8 @@ app.controller("client_info_detail_controller", ["$scope", "$rootScope", "$state
     $('ul.tabWrap li.inventoryRecord ').addClass("active");
     $("#inventoryRecord").addClass("active");
     $("#inventoryRecord").show();
+    $("#pre").hide();
+    $("#next").hide();
     $scope.inventoryRecord = function () {
         $('ul.tabWrap li').removeClass("active");
         $(".tab_box").removeClass("active");
@@ -44,6 +45,10 @@ app.controller("client_info_detail_controller", ["$scope", "$rootScope", "$state
         $("#msoStatus").show();
         getMsoStatus();
     };
+    // 返回
+    $scope.return = function () {
+        $state.go($stateParams.from, {reload: true})
+    };
     // 获取车库信息
     function getStorageName () {
         _basic.get(_host.api_url + "/storage").then(function (data) {
@@ -56,7 +61,7 @@ app.controller("client_info_detail_controller", ["$scope", "$rootScope", "$state
     }
     //获取头部基本信息
     function getentrust (){
-        _basic.get(_host.api_url + "/entrust?entrustId=" + entrustId).then(function (data) {
+        _basic.get(_host.api_url + "/entrust?entrustId=" + val).then(function (data) {
             if (data.success == true) {
                 $scope.clientList = data.result[0];
             } else {
@@ -99,14 +104,16 @@ app.controller("client_info_detail_controller", ["$scope", "$rootScope", "$state
                 $scope.storageCarBoxList = data.result;
                 $scope.storageCar = $scope.storageCarBoxList.slice(0, 10);
                 if ($scope.start > 0) {
-                    $("#pre").removeClass("disabled");
-                } else {
-                    $("#pre").addClass("disabled");
+                    $("#pre").show();
                 }
-                if ($scope.storageCarBoxList.length < $scope.size) {
-                    $("#next").addClass("disabled");
-                } else {
-                    $("#next").removeClass("disabled");
+                else {
+                    $("#pre").hide();
+                }
+                if (data.result.length < $scope.size) {
+                    $("#next").hide();
+                }
+                else {
+                    $("#next").show();
                 }
             } else {
                 swal(data.msg, "", "error");
@@ -123,14 +130,16 @@ app.controller("client_info_detail_controller", ["$scope", "$rootScope", "$state
                  $scope.storageCarBoxList2 = data.result;
                  $scope.storageCar2 = $scope.storageCarBoxList2.slice(0, 10);
                  if ($scope.start > 0) {
-                     $("#pre2").removeClass("disabled");
-                 } else {
-                     $("#pre2").addClass("disabled");
+                     $("#pre2").show();
                  }
-                 if ($scope.storageCarBoxList.length < $scope.size) {
-                     $("#next2").addClass("disabled");
-                 } else {
-                     $("#next2").removeClass("disabled");
+                 else {
+                     $("#pre2").hide();
+                 }
+                 if (data.result.length < $scope.size) {
+                     $("#next2").hide();
+                 }
+                 else {
+                     $("#next2").show();
                  }
              } else {
                  swal(data.msg, "", "error");
@@ -148,14 +157,16 @@ app.controller("client_info_detail_controller", ["$scope", "$rootScope", "$state
                 $scope.storageCarBoxList3 = data.result;
                 $scope.storageCar3 = $scope.storageCarBoxList3.slice(0, 10);
                 if ($scope.start > 0) {
-                    $("#pre3").removeClass("disabled");
-                } else {
-                    $("#pre3").addClass("disabled");
+                    $("#pre3").show();
                 }
-                if ($scope.storageCarBoxList.length < $scope.size) {
-                    $("#next3").addClass("disabled");
-                } else {
-                    $("#next3").removeClass("disabled");
+                else {
+                    $("#pre3").hide();
+                }
+                if (data.result.length < $scope.size) {
+                    $("#next3").hide();
+                }
+                else {
+                    $("#next3").show();
                 }
             } else {
                 swal(data.msg, "", "error");
@@ -185,22 +196,21 @@ app.controller("client_info_detail_controller", ["$scope", "$rootScope", "$state
     $scope.closeInventoryRecord= function(){
         $(".modal").modal();
         $("#getInventoryRecord").modal("close");
-    }
+    };
     // 上一页
     $scope.preBtn = function () {
-        $scope.start = $scope.start - ($scope.size - 1);
+        $scope.start = $scope.start - $scope.size;
         $scope.getStorageCar();
     };
     // 下一页
     $scope.nextBtn = function () {
-        $scope.start = $scope.start + ($scope.size - 1);
+        $scope.start = $scope.start + $scope.size;
         $scope.getStorageCar();
     };
     //获取数据
     $scope.queryData = function () {
         getentrust ();
         getStorageName();
-        $scope.getStorageCar();
         getEntrust ();
     };
     $scope.queryData();

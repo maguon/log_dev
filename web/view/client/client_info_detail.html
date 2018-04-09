@@ -97,6 +97,13 @@
     </div>
 </div>
 <div class="client_info_detail" >
+    <div class="storage_storeTitle vc-center ">
+        <a class=" storage_goback_btn btn-floating btn waves-effect cyan lighten-1 waves-light " ng-click="return()">
+            <i class="mdi mdi-arrow-left-bold"></i>
+        </a>
+        <h4 class="center-align cyan-text text-lighten-1">委托方信息</h4>
+    </div>
+    <div class="divider" style="background: #00bcd4;height: 2px;"></div>
     <div class="" >
         <!--车辆信息模态框-->
         <div id="carDataModel" class="modal modal-fixed-footer" style="width: 60%">
@@ -133,12 +140,12 @@
                 <h3 class="col s1 left" ng-if="clientList.entrust_type==1"  style="color: #4dd0e1;"><i class="mdi mdi-account"></i></h3>
                 <h3 class="col s1 left" ng-if="clientList.entrust_type==2"  style="color: #4dd0e1;"><i class="mdi mdi-domain"></i></h3>
                 <!--企业名字（全称/简称）-->
-                <div class="col s6 left fz18" style="position: relative;height: 70%">
-                    <h4 ng-bind="clientList.short_name" style="position: absolute;top:-40%;left: 3%;color: #26c6da"></h4>
-                    <span ng-bind="clientList.entrust_name" style="position: absolute;top: 5%;left: 3%"></span>
+                <div class="col s6 left fz18 vc-center" style="position: relative;height: 70%">
+                    <h5 ng-bind="clientList.short_name" style="position: absolute;top:-15%;left: 3%;color: #26c6da"></h5>
+                    <span style="position: absolute;top: -47%;left:20%">({{clientList.entrust_name}})</span>
                     <div>
-                        <i class="mdi mdi-map-marker" style="color:  #26c6da;position: absolute;top:5%;left: 60%;"></i>
-                        <span  ng-bind="clientList.address" style="position: absolute;top: 5%;left: 63%"></span>
+                        <i class="mdi mdi-map-marker" style="color:  #26c6da;position: absolute;top:5%;left:3%;"></i>
+                        <span  ng-bind="clientList.address" style="position: absolute;top: 5%;left: 6%"></span>
                     </div>
                     <div>
                         <i class="mdi mdi-file-outline" style="color:  #26c6da;position: absolute;top:60%;left: 3%;"></i>
@@ -261,7 +268,8 @@
                                 <td ng-bind="el.vin"></td>
                                 <td ng-bind="el.make_name"></td>
                                 <td ng-bind="el.model_name"></td>
-                                <td ng-bind="el.valuation"></td>
+                                <td ng-if="el.valuation==null"></td>
+                                <td ng-if="el.valuation!==null">${{el.valuation}}.00</td>
                                 <td ng-if="el.mso_status==2">是</td>
                                 <td ng-if="el.mso_status==1">否</td>
                                 <td ng-if="el.mso_status==null">无状态</td>
@@ -319,7 +327,8 @@
                                 <td ng-bind="el.vin"></td>
                                 <td ng-bind="el.make_name"></td>
                                 <td ng-bind="el.model_name"></td>
-                                <td ng-bind="el.valuation"></td>
+                                <td ng-if="el.valuation==null"></td>
+                                <td ng-if="el.valuation!==null">${{el.valuation}}.00</td>
                                 <td ng-if="el.mso_status==2">是</td>
                                 <td ng-if="el.mso_status==1">否</td>
                                 <td ng-if="el.mso_status==null">无状态</td>
@@ -374,7 +383,8 @@
                                 <td ng-bind="el.vin"></td>
                                 <td ng-bind="el.make_name"></td>
                                 <td ng-bind="el.model_name"></td>
-                                <td ng-bind="el.valuation"></td>
+                                <td ng-if="el.valuation==null"></td>
+                                <td ng-if="el.valuation!==null">${{el.valuation}}.00</td>
                                 <td >{{el.storage_name}}{{el.area_name}}{{el.row}}{{el.col}}{{el.lot}}</td>
                                 <td ng-bind="el.enter_time|date:'yyyy-MM-dd '"></td>
                                 <td ng-bind="el.plan_out_time|date:'yyyy-MM-dd '"></td>

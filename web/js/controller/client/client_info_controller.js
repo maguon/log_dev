@@ -31,7 +31,6 @@ app.controller("client_info_controller", ["$scope", "$rootScope", "_host", "_bas
         };
         _basic.get(_host.api_url + "/entrustBase?" +_basic.objToUrl(obj)).then(function (data) {
             if (data.success === true) {
-                // console.log("data", data);
                 if ($scope.start > 0) {
                     $("#pre").show();
                 }
