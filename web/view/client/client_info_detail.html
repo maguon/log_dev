@@ -1,3 +1,101 @@
+<!--库存记录模态框-->
+<div id="getInventoryRecord" class="modal ">
+    <!--标题：新增入库车辆-->
+    <div class="cyan lighten-1 white-text center-align modal_title" >车辆信息</div>
+    <div class="modal-content">
+        <div  class="handleInfoInput" style="width:100%;margin-left:auto;margin-right:auto;margin-top:20px">
+            <div style="width: 100%;margin: 0 auto">
+                <div class="row col s12" style="margin-top: 20px;margin-right: 20px;">
+                    <div class="col s6 valign-wrapper">
+                        <div class="fz20 col s12 input-field left-align"  style="color:#26c6da ;padding-bottom: 7px;">vin码:{{clientList.vin}}</div>
+                    </div>
+                    <div class="col s6 valign-wrapper">
+                        <div class="col s12 input-field right-align" style="color: #26c6da;padding-bottom: 7px;" ng-if="clientList.rel_status==1">在库</div>
+                        <div class="col s12 input-field right-align" style="color: #26c6da;padding-bottom: 7px;"  ng-if="clientList.rel_status==2">出库</div>
+                    </div>
+                </div>
+                <div  class="row col s12" style="height:1px;border-bottom: 1px solid #ccc;width:96%;margin-left: 2%"></div>
+                <div class="row col s12">
+                    <div class="col s4 valign-wrapper">
+                        <div class="col s12 input-field left-align" style="padding-left: 10%">
+                          制造商:{{clientList.make_name}}
+                        </div>
+                    </div>
+                    <div class="col s4 valign-wrapper">
+                        <div class="col s12 input-field left-align" style="padding: 0">
+                          型号:{{clientList.model_name}}
+                        </div>
+                    </div>
+                    <div class="col s4 valign-wrapper">
+                        <div class="col s12 input-field left-align" style="padding: 0">
+                            生产日期:{{clientList.pro_date|date:'yyyy-MM-dd'}}
+                        </div>
+                    </div>
+                </div>
+                <div  class="row col s12" style="height:1px;border-bottom: 1px dotted #ccc;width:96%;margin-left: 2%"></div>
+                <div class="row col s12">
+                    <div class="col s4 valign-wrapper">
+                        <div class="col s12 input-field left-align" style="padding-left: 10%">
+                            颜色:{{clientList.colour}}
+                        </div>
+                    </div>
+                    <div class="col s4 valign-wrapper">
+                        <div class="col s12 input-field left-align" style="padding: 0">
+                            发动机号:{{clientList.engine_num}}
+                        </div>
+                    </div>
+                    <div class="col s4 valign-wrapper">
+                        <div class="col s12 input-field left-align" style="padding: 0">
+                            车辆估值(美元):<span style="color: red">{{clientList.valuation}}</span>
+                        </div>
+                    </div>
+                </div>
+                <div  class="row col s12" style="height:1px;border-bottom: 1px dotted #ccc;width:96%;margin-left: 2%"></div>
+                <div class="row col s12">
+                    <div class="col s4 valign-wrapper">
+                        <div class="col s12 input-field left-align" style="padding-left: 10%">
+                         入库时间:{{clientList.enter_time|date:'yyyy-MM-dd'}}
+                        </div>
+                    </div>
+                    <div class="col s4 valign-wrapper">
+                        <div class="col s12 input-field left-align" style="padding: 0">
+                         计划出库时间:{{clientList.plan_out_time|date:'yyyy-MM-dd'}}
+                        </div>
+                    </div>
+                    <div class="col s4 valign-wrapper">
+                        <div class="col s12 input-field left-align" style="padding: 0">
+                          出库时间:{{clientList.real_out_time|date:'yyyy-MM-dd'}}
+                        </div>
+                    </div>
+                </div>
+                <div  class="row col s12" style="height:1px;border-bottom: 1px dotted #ccc;width:96%;margin-left: 2%"></div>
+                <div class="row col s12">
+                    <div class="col s4 valign-wrapper">
+                        <div class="col s12 input-field left-align" style="padding-left: 10%">
+                            存放仓库：{{clientList.storage_name}}
+                        </div>
+                    </div>
+                    <div class="col s4 valign-wrapper">
+                        <div class="col s12 input-field left-align" style="padding: 0">
+                            存放位置：{{clientList.area_name}}{{clientList.row}}{{clientList.col}}{{clientList.lot}}
+                        </div>
+                    </div>
+                    <div class="col s4 valign-wrapper">
+                        <div class="col s12 input-field left-align" style="padding: 0">
+                        </div>
+                    </div>
+                </div>
+                <div  class="row col s12" style="height:1px;border-bottom: 1px solid #ccc;width:96%;margin-left: 2%"></div>
+                <div class="row col s4 offset-s8 right-align">
+                    <button class="btn  btn-large btn-floating waves-effect cyan" ng-click="closeInventoryRecord()" name="action" >
+                        <i class="mdi mdi-check"></i>
+                    </button>
+                </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 <div class="client_info_detail" >
     <div class="" >
         <!--车辆信息模态框-->
@@ -73,7 +171,7 @@
                     <ul class="tabWrap grey lighten-4">
                         <li class="tab col s4 inventoryRecord vc-center active"  ng-click="inventoryRecord()">库存记录</li>
                         <li class="tab col s4 relStatus vc-center" ng-click="relStatus()">在库车辆</li>
-                        <li class="tab col s4 mosStatus vc-center" ng-click="mosStatus()">非MOS车辆</li>
+                        <li class="tab col s4 msoStatus vc-center" ng-click="msoStatus()">非MSO车辆</li>
                     </ul>
                 </div>
                 <div id="inventoryRecord" class="col s12 tab_box">
@@ -83,8 +181,9 @@
                             <!--车辆状态-->
                             <div class="input-field col s3">
                                 <select material-select watch ng-model="getRelStatus">
-                                    <option value=""  >请选择</option>
-                                    <option ng-repeat="el in relStatus" ng-value="el.s_num">{{el.status_text}}</option>
+                                    <option value="" disabled>请选择</option>
+                                    <option ng-value="1">在库</option>
+                                    <option ng-value="2">出库</option>
                                 </select>
                                 <label>车辆状态</label>
                             </div>
@@ -102,7 +201,7 @@
                             </div>
                             <!--是否MSO-->
                             <div class="input-field col s3">
-                                <select material-select watch id="getMOS" name="getMOS"  ng-model="getMOS" >
+                                <select material-select watch id="getMSO" name="getMSO"  ng-model="getMSO" >
                                     <option value="" disabled selected>是否MSO</option>
                                     <option value="2">是</option>
                                     <option value="1">否</option>
@@ -133,7 +232,7 @@
                         </div>
                         <!-- 查询按钮 -->
                         <div class="col s2 center">
-                            <a class="btn-floating btn-large waves-light waves-effect red lighten-2  btn vc-center" style="margin-right: 10px;margin-top: 20px"  ng-click="getClient()">
+                            <a class="btn-floating btn-large waves-light waves-effect red lighten-2  btn vc-center" style="margin-right: 10px;margin-top: 20px"  ng-click="getStorageCar()">
                                 <i class="mdi mdi-magnify"></i>
                             </a>
                         </div>
@@ -149,7 +248,7 @@
                                 <th data-field="">制造商</th>
                                 <th data-field="">型号</th>
                                 <th data-field="">估值(美元)</th>
-                                <th data-field="">MOS车辆</th>
+                                <th data-field="">MSO车辆</th>
                                 <th data-field="">存放位置</th>
                                 <th data-field="">入库时间</th>
                                 <th data-field="">出库时间</th>
@@ -160,21 +259,23 @@
                             <tbody>
                             <tr ng-repeat="el in storageCar" class="grey-text text-darken-1">
                                 <td ng-bind="el.vin"></td>
-                                <td ng-if="el.entrust_type==1">个人</td>
-                                <td ng-if="el.entrust_type==2">企业</td>
-                                <td ng-bind="el.car_count"></td>
+                                <td ng-bind="el.make_name"></td>
+                                <td ng-bind="el.model_name"></td>
                                 <td ng-bind="el.valuation"></td>
-                                <td ng-bind="el.not_mos_count"></td>
-                                <td ng-bind="el.not_mos_valuation"></td>
-                                <td ng-bind="el.contacts_name"></td>
-                                <td ng-bind="el.tel"></td>
-                                <td ng-bind="el.created_on |date:'yyyy-MM-dd '"></td>
+                                <td ng-if="el.mso_status==2">是</td>
+                                <td ng-if="el.mso_status==1">否</td>
+                                <td ng-if="el.mso_status==null">无状态</td>
+                                <td >{{el.storage_name}}{{el.area_name}}{{el.row}}{{el.col}}{{el.lot}}</td>
+                                <td ng-bind="el.enter_time|date:'yyyy-MM-dd '"></td>
+                                <td ng-bind="el.real_out_time|date:'yyyy-MM-dd '"></td>
+                                <td ng-if="el.rel_status==1">在库</td>
+                                <td ng-if="el.rel_status==2">出库</td>
                                 <!-- 显示【仓储车辆信息】画面按钮 -->
                                 <td class="operation">
-                                    <a  ui-sref="client_info_detail({id:el.id,from:'client_info'})" class=""><i class="mdi mdi-file-outline look_icon cyan-text lighten-1  " ></i></a>
+                                    <a  ng-click="getInventoryRecord(el.id)" class=""><i class="mdi mdi-file-outline look_icon cyan-text lighten-1  " ></i></a>
                                 </td>
                             </tr>
-                            <tr class="grey-text text-darken-1" ng-if="getClientList.length == 0">
+                            <tr class="grey-text text-darken-1" ng-if="storageCar.length == 0">
                                 <td colspan="10" style="letter-spacing: 2px;text-align: center;">暂无数据</td>
                             </tr>
                             </tbody>
@@ -195,8 +296,8 @@
                 <div id="relStatus" class="col s12 tab_box" >
                     <div class="col s12" >
                         <div class="col s12 cyan white-text vc-center fz18" style="height: 60px;border-bottom: 1px solid  #26c6da;border-top:1px solid  #fff" >
-                            <div class="col s6 left-align ">在库车辆:{{1111}}</div>
-                            <div class="col s6 right-align">估值(美元):{{1111}}</div>
+                            <div class="col s6 left-align ">在库车辆:{{entrustList.car_count}}</div>
+                            <div class="col s6 right-align">估值(美元):{{entrustList.valuation}}</div>
                         </div>
                         <div class="divider" style="background: #00bcd4;height: 2px;"></div>
                         <table class=" bordered striped centered">
@@ -206,33 +307,32 @@
                                 <th data-field="">制造商</th>
                                 <th data-field="">型号</th>
                                 <th data-field="">估值(美元)</th>
-                                <th data-field="">MOS车辆</th>
+                                <th data-field="">MSO车辆</th>
                                 <th data-field="">存放位置</th>
                                 <th data-field="">入库时间</th>
-                                <th data-field="">出库时间</th>
-                                <th data-field="">状态</th>
+                                <th data-field="">计划出库时间</th>
                                 <th>操作</th>
                             </tr>
                             </thead>
                             <tbody>
-                            <tr ng-repeat="el in storageCar" class="grey-text text-darken-1">
+                            <tr ng-repeat="el in storageCar2" class="grey-text text-darken-1">
                                 <td ng-bind="el.vin"></td>
-                                <td ng-if="el.entrust_type==1">个人</td>
-                                <td ng-if="el.entrust_type==2">企业</td>
-                                <td ng-bind="el.car_count"></td>
+                                <td ng-bind="el.make_name"></td>
+                                <td ng-bind="el.model_name"></td>
                                 <td ng-bind="el.valuation"></td>
-                                <td ng-bind="el.not_mos_count"></td>
-                                <td ng-bind="el.not_mos_valuation"></td>
-                                <td ng-bind="el.contacts_name"></td>
-                                <td ng-bind="el.tel"></td>
-                                <td ng-bind="el.created_on |date:'yyyy-MM-dd '"></td>
+                                <td ng-if="el.mso_status==2">是</td>
+                                <td ng-if="el.mso_status==1">否</td>
+                                <td ng-if="el.mso_status==null">无状态</td>
+                                <td >{{el.storage_name}}{{el.area_name}}{{el.row}}{{el.col}}{{el.lot}}</td>
+                                <td ng-bind="el.enter_time|date:'yyyy-MM-dd '"></td>
+                                <td ng-bind="el.plan_out_time|date:'yyyy-MM-dd '"></td>
                                 <!-- 显示【仓储车辆信息】画面按钮 -->
                                 <td class="operation">
-                                    <a  ui-sref="client_info_detail({id:el.id,from:'client_info'})" class=""><i class="mdi mdi-file-outline look_icon cyan-text lighten-1  " ></i></a>
+                                    <a  ng-click="getInventoryRecord(el.id)" class=""><i class="mdi mdi-file-outline look_icon cyan-text lighten-1  " ></i></a>
                                 </td>
                             </tr>
-                            <tr class="grey-text text-darken-1" ng-if="getClientList.length == 0">
-                                <td colspan="10" style="letter-spacing: 2px;text-align: center;">暂无数据</td>
+                            <tr class="grey-text text-darken-1" ng-if="storageCar2.length == 0">
+                                <td colspan="9" style="letter-spacing: 2px;text-align: center;">暂无数据</td>
                             </tr>
                             </tbody>
                         </table>
@@ -240,20 +340,20 @@
                     <!-- 上下页按钮 -->
                     <div class="paging_box col s12">
                         <div class="right">
-                            <a class="waves-light waves-effect cyan lighten-1 btn  "  id="pre"   ng-click="preBtn()">
+                            <a class="waves-light waves-effect cyan lighten-1 btn  "  id="pre2"   ng-click="preBtn()">
                                 上一页
                             </a>
-                            <a class="waves-light waves-effect cyan lighten-1 btn " id="next"  ng-click="nextBtn()">
+                            <a class="waves-light waves-effect cyan lighten-1 btn " id="next2"  ng-click="nextBtn()">
                                 下一页
                             </a>
                         </div>
                     </div>
                 </div>
-                <div id="mosStatus" class="col s12 tab_box" >
+                <div id="msoStatus" class="col s12 tab_box" >
                     <div class="col s12" >
                         <div class="col s12 cyan white-text vc-center fz18" style="height: 60px;border-bottom: 1px solid  #26c6da;border-top:1px solid  #fff" >
-                            <div class="col s6 left-align ">在库车辆:{{1111}}</div>
-                            <div class="col s6 right-align">估值(美元):{{1111}}</div>
+                            <div class="col s6 left-align "></div>
+                            <div class="col s6 right-align">信用额度(美元):{{entrustList.not_mso_valuation}}</div>
                         </div>
                         <div class="divider" style="background: #00bcd4;height: 2px;"></div>
                         <table class=" bordered striped centered">
@@ -263,33 +363,28 @@
                                 <th data-field="">制造商</th>
                                 <th data-field="">型号</th>
                                 <th data-field="">估值(美元)</th>
-                                <th data-field="">MOS车辆</th>
                                 <th data-field="">存放位置</th>
                                 <th data-field="">入库时间</th>
-                                <th data-field="">出库时间</th>
-                                <th data-field="">状态</th>
+                                <th data-field="">计划出库时间</th>
                                 <th>操作</th>
                             </tr>
                             </thead>
                             <tbody>
-                            <tr ng-repeat="el in storageCar" class="grey-text text-darken-1">
+                            <tr ng-repeat="el in storageCar3" class="grey-text text-darken-1">
                                 <td ng-bind="el.vin"></td>
-                                <td ng-if="el.entrust_type==1">个人</td>
-                                <td ng-if="el.entrust_type==2">企业</td>
-                                <td ng-bind="el.car_count"></td>
+                                <td ng-bind="el.make_name"></td>
+                                <td ng-bind="el.model_name"></td>
                                 <td ng-bind="el.valuation"></td>
-                                <td ng-bind="el.not_mos_count"></td>
-                                <td ng-bind="el.not_mos_valuation"></td>
-                                <td ng-bind="el.contacts_name"></td>
-                                <td ng-bind="el.tel"></td>
-                                <td ng-bind="el.created_on |date:'yyyy-MM-dd '"></td>
+                                <td >{{el.storage_name}}{{el.area_name}}{{el.row}}{{el.col}}{{el.lot}}</td>
+                                <td ng-bind="el.enter_time|date:'yyyy-MM-dd '"></td>
+                                <td ng-bind="el.plan_out_time|date:'yyyy-MM-dd '"></td>
                                 <!-- 显示【仓储车辆信息】画面按钮 -->
                                 <td class="operation">
-                                    <a  ui-sref="client_info_detail({id:el.id,from:'client_info'})" class=""><i class="mdi mdi-file-outline look_icon cyan-text lighten-1  " ></i></a>
+                                    <a  ng-click="getInventoryRecord(el.id)" class=""><i class="mdi mdi-file-outline look_icon cyan-text lighten-1  " ></i></a>
                                 </td>
                             </tr>
-                            <tr class="grey-text text-darken-1" ng-if="getClientList.length == 0">
-                                <td colspan="10" style="letter-spacing: 2px;text-align: center;">暂无数据</td>
+                            <tr class="grey-text text-darken-1" ng-if="storageCar3.length == 0">
+                                <td colspan="8" style="letter-spacing: 2px;text-align: center;">暂无数据</td>
                             </tr>
                             </tbody>
                         </table>
@@ -297,10 +392,10 @@
                     <!-- 上下页按钮 -->
                     <div class="paging_box col s12">
                         <div class="right">
-                            <a class="waves-light waves-effect cyan lighten-1 btn  "  id="pre"   ng-click="preBtn()">
+                            <a class="waves-light waves-effect cyan lighten-1 btn  "  id="pre3"   ng-click="preBtn()">
                                 上一页
                             </a>
-                            <a class="waves-light waves-effect cyan lighten-1 btn " id="next"  ng-click="nextBtn()">
+                            <a class="waves-light waves-effect cyan lighten-1 btn " id="next3"  ng-click="nextBtn()">
                                 下一页
                             </a>
                         </div>

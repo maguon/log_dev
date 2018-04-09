@@ -4,13 +4,12 @@
  */
 app.controller("client_info_detail_controller", ["$scope", "$rootScope", "$stateParams","_host", "_basic", "_config", "_baseService", function ($scope, $rootScope,$stateParams, _host, _basic, _config, _baseService) {
     var userId = _basic.getSession(_basic.USER_ID);
+    var val = $stateParams.id;//获取本条信息的id
     $scope.start = 0;
     $scope.size = 10;
+    $scope.valuation = 0;
     //获取传过来的id
     var entrustId = $stateParams.id;
-    // 获取车辆状态
-    $scope.relStatus = _config.carRelStatus;
-    $scope.getRelStatus = "";
     // 跳转
     $('ul.tabWrap li').removeClass("active");
     $(".tab_box").removeClass("active");
@@ -34,14 +33,16 @@ app.controller("client_info_detail_controller", ["$scope", "$rootScope", "$state
         $('.tabWrap .relStatus').addClass("active");
         $("#relStatus").addClass("active");
         $("#relStatus").show();
+        getrelStatus();
     };
-    $scope.mosStatus = function () {
+    $scope.msoStatus = function () {
         $('ul.tabWrap li').removeClass("active");
         $(".tab_box ").removeClass("active");
         $(".tab_box ").hide();
-        $('.tabWrap .mosStatus').addClass("active");
-        $("#mosStatus").addClass("active");
-        $("#mosStatus").show();
+        $('.tabWrap .msoStatus').addClass("active");
+        $("#msoStatus").addClass("active");
+        $("#msoStatus").show();
+        getMsoStatus();
     };
     // 获取车库信息
     function getStorageName () {
@@ -68,7 +69,7 @@ app.controller("client_info_detail_controller", ["$scope", "$rootScope", "$state
     *
     * */
     $scope.getStorageCar = function () {
-        var reqUrl = _host.api_url + "/user/" + userId + "/car?active=" + 1 + "&start=" + $scope.start + "&size=" + $scope.size;
+        var reqUrl = _host.api_url + "/user/" + userId + "/car?active=" + 1 + "&start=" + $scope.start + "&size=" + $scope.size+"&entrustId="+val;
         if ($scope.getRelStatus != null) {
             reqUrl = reqUrl + "&relStatus=" + $scope.getRelStatus
         }
@@ -78,8 +79,8 @@ app.controller("client_info_detail_controller", ["$scope", "$rootScope", "$state
         if ($scope.search_storage != null) {
             reqUrl = reqUrl + "&storageId=" + $scope.search_storage
         }
-        if ($scope.getMOS != null) {
-            reqUrl = reqUrl + "&mosStatus=" + $scope.getMOS
+        if ($scope.getMSO != null) {
+            reqUrl = reqUrl + "&msoStatus=" + $scope.getMSO
         }
         if ($scope.search_enterTime_start != null) {
             reqUrl = reqUrl + "&enterStart=" + $scope.search_enterTime_start
@@ -112,6 +113,79 @@ app.controller("client_info_detail_controller", ["$scope", "$rootScope", "$state
             }
         });
     };
+     /**
+     * 在库车辆 查询列表 条件查询
+     *
+     * */
+     function getrelStatus() {
+         _basic.get(_host.api_url + "/user/" + userId + "/car?active=" + 1 + "&start=" + $scope.start + "&size=" + $scope.size+"&entrustId="+val+"&relStatus=1").then(function (data) {
+             if (data.success == true) {
+                 $scope.storageCarBoxList2 = data.result;
+                 $scope.storageCar2 = $scope.storageCarBoxList2.slice(0, 10);
+                 if ($scope.start > 0) {
+                     $("#pre2").removeClass("disabled");
+                 } else {
+                     $("#pre2").addClass("disabled");
+                 }
+                 if ($scope.storageCarBoxList.length < $scope.size) {
+                     $("#next2").addClass("disabled");
+                 } else {
+                     $("#next2").removeClass("disabled");
+                 }
+             } else {
+                 swal(data.msg, "", "error");
+             }
+         });
+     };
+
+    /**
+     * 非mso 查询列表 条件查询
+     *
+     * */
+    function getMsoStatus() {
+        _basic.get( _host.api_url + "/user/" + userId + "/car?active=" + 1 + "&start=" + $scope.start + "&size=" + $scope.size+"&entrustId="+val+"&msoStatus=1").then(function (data) {
+            if (data.success == true) {
+                $scope.storageCarBoxList3 = data.result;
+                $scope.storageCar3 = $scope.storageCarBoxList3.slice(0, 10);
+                if ($scope.start > 0) {
+                    $("#pre3").removeClass("disabled");
+                } else {
+                    $("#pre3").addClass("disabled");
+                }
+                if ($scope.storageCarBoxList.length < $scope.size) {
+                    $("#next3").addClass("disabled");
+                } else {
+                    $("#next3").removeClass("disabled");
+                }
+            } else {
+                swal(data.msg, "", "error");
+            }
+        });
+    };
+    $scope.getInventoryRecord = function(id){
+        $(".modal").modal();
+        $("#getInventoryRecord").modal("open");
+        _basic.get( _host.api_url + "/user/" + userId + "/car?carId="+id+"&active=" + 1).then(function (data) {
+            if (data.success == true) {
+                $scope.clientList = data.result[0];
+            } else {
+                swal(data.msg, "", "error");
+            }
+        })
+    };
+    function getEntrust (){
+        _basic.get( _host.api_url + "/entrustBase?entrustId="+val).then(function (data) {
+            if (data.success == true) {
+                $scope.entrustList = data.result[0];
+            } else {
+                swal(data.msg, "", "error");
+            }
+        })
+    }
+    $scope.closeInventoryRecord= function(){
+        $(".modal").modal();
+        $("#getInventoryRecord").modal("close");
+    }
     // 上一页
     $scope.preBtn = function () {
         $scope.start = $scope.start - ($scope.size - 1);
@@ -127,6 +201,7 @@ app.controller("client_info_detail_controller", ["$scope", "$rootScope", "$state
         getentrust ();
         getStorageName();
         $scope.getStorageCar();
+        getEntrust ();
     };
     $scope.queryData();
 

@@ -189,7 +189,7 @@ app.controller("storage_car_details_controller", [ "$state", "$stateParams", "_c
                     }else {
                         $scope.look_create_time = moment($scope.self_car.pro_date).format('YYYY-MM-DD');
                     }
-                $scope.look_storageName = $scope.self_car.storage_name + "" + $scope.self_car.row + "排" + $scope.self_car.col + "列";
+                $scope.look_storageName = $scope.self_car.storage_name + "" + $scope.self_car.row + "排" + $scope.self_car.col + "列"+$scope.self_car.lot+"格";
                 // 车辆id
                 $scope.look_car_id = $scope.self_car.id;
             } else {
@@ -348,7 +348,7 @@ app.controller("storage_car_details_controller", [ "$state", "$stateParams", "_c
             "engineNum": $scope.self_car.engine_num,
             "entrustId":  $scope.self_car.entrust_id,
             "valuation":  $scope.self_car.valuation,
-            "mosStatus":  $scope.self_car.mos_status,
+            "msoStatus":  $scope.self_car.mso_status,
             "remark": $scope.self_car.remark
         };
         if (isValid) {
