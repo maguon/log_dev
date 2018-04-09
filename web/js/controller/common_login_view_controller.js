@@ -1,5 +1,5 @@
 /**
- * Created by jiangsen on 2017/4/11.
+ * 普通用户 Login 画面 控制器
  */
 Login_model.controller("common_login_view_controller", ['$rootScope','$scope','$location','$q',"_basic","_host","_config",
     function($rootScope,$scope,$location,$q,_basic,_host,_config){
@@ -16,8 +16,6 @@ Login_model.controller("common_login_view_controller", ['$rootScope','$scope','$
                     "mobile": $scope.username,
                     "password": $scope.password
                 }).then(function(data){
-                    console.log(data);
-
                     $(".shadeDowWrap").hide();
                     if(data.success==true){
                         _basic.setSession(_basic.USER_AUTH_NAME, data.result.accessToken);
