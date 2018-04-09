@@ -24,10 +24,10 @@
             <!-- 仓储 明细 Body -->
             <div class="valign-wrapper left-align fz15" style="width: 100%;height: 50px;">
                 <div class="col s12  black-text text-lighten-2">
-                    总车位： <span class="cyan-text">{{(storage.total_seats == undefined || storage.total_seats == null) ? '0' : storage.total_seats}}</span>
+                    总车位： <span class="cyan-text">{{(storage.total_seats == null) ? '0' : storage.total_seats}}</span>
                 </div>
                 <div class="col s12  black-text text-lighten-2">
-                    剩余车位： <span class="cyan-text">{{(storage.balance == undefined || storage.balance == null) ? '0' : storage.balance}}</span>
+                    剩余车位： <span class="cyan-text">{{(storage.total_seats == null || storage.balance == null) ? '0' : storage.total_seats - storage.balance}}</span>
                 </div>
             </div>
             <div class="divider"></div>
