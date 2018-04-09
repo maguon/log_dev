@@ -25,7 +25,7 @@ Login_model.controller("common_login_controller", ['$rootScope','$scope','$locat
                         _basic.setHeader(_basic.COMMON_AUTH_NAME, data.result.accessToken);
                         // 判断user_type控制页面调到某个模块
                         if(data.result.type==_config.userTypes.storageUser.type){
-                            window.location.href="/view/storage.html";
+                            window.location.href="/view/storage_home.html";
                         }
                         if(data.result.type==_config.userTypes.dispatch.type){
                             window.location.href="/view/dispatch.html";

@@ -5,6 +5,8 @@ Login_model.controller("common_login_view_controller", ['$rootScope','$scope','$
     function($rootScope,$scope,$location,$q,_basic,_host,_config){
         $scope.username='';
         $scope.password='';
+
+        // 登录按钮 动作
         $scope.login = function(){
             if($scope.username==''||$scope.username==''){
                 swal("账号或密码不能为空", "", "error");
@@ -14,6 +16,8 @@ Login_model.controller("common_login_view_controller", ['$rootScope','$scope','$
                     "mobile": $scope.username,
                     "password": $scope.password
                 }).then(function(data){
+                    console.log(data);
+
                     $(".shadeDowWrap").hide();
                     if(data.success==true){
                         _basic.setSession(_basic.USER_AUTH_NAME, data.result.accessToken);

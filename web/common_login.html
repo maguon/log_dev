@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>E-Storage</title>
-    <link rel="stylesheet" href="./assets/plugins/materialize/css/materialize.css">
+    <link rel="stylesheet" href="/assets/plugins/materialize/css/materialize.css">
     <link rel="stylesheet" href="/assets/plugins/alert/sweetalert.css">
     <link rel="stylesheet" href="/assets/plugins/material_icon/css/materialdesignicons.css">
     <link rel="stylesheet" href="/assets/style.css">
@@ -11,7 +11,7 @@
     <link rel="icon" href="/assets/images/ico/storage_32.ico">
 </head>
 <body class="cyan lighten-1">
-<div >
+<div>
     <div>
         <div class="row" style="margin-top: 160px">
             <div class="z-depth-4 card-panel" style="width:640px;height: 575px;margin:0 auto; overflow: hidden" ui-view>
@@ -19,35 +19,52 @@
         </div>
     </div>
 </div>
-<div class="shadeDowWrap" >
+<div class="shadeDowWrap">
     <div class="shadeDow vc-center">
         <div class="preloader-wrapper big active ">
             <div class="spinner-layer spinner-blue-only">
                 <div class="circle-clipper left">
                     <div class="circle"></div>
-                </div><div class="gap-patch">
-                <div class="circle"></div>
-            </div><div class="circle-clipper right">
-                <div class="circle"></div>
-            </div>
+                </div>
+                <div class="gap-patch">
+                    <div class="circle"></div>
+                </div>
+                <div class="circle-clipper right">
+                    <div class="circle"></div>
+                </div>
             </div>
         </div>
     </div>
 </div>
 </body>
+<!-- 第三方lib包以及资源文件 -->
 <script src="/lib/jquery.min.js"></script>
-<script src="/assets/plugins/materialize/js/materialize.js"></script>
-<script src="/assets/plugins/alert/sweetalert.min.js"></script>
-<script src="/assets/custom.js"></script>
 <script src="/lib/angular/angular.min.js"></script>
 <script src="/lib/angular/angular-ui-router.min.js"></script>
 <script src="/lib/angular/angular-cookies.min.js"></script>
+<script src="/assets/plugins/materialize/js/materialize.js"></script>
+<script src="/assets/plugins/alert/sweetalert.min.js"></script>
+<script src="/assets/custom.js"></script>
+
+<!-- 本项目 自定义 模块-路由-控制器-服务 等等等... -->
+
+<!-- 模块 -->
 <script src="/js/module/common_login_module.js"></script>
-<script src="/host/host_config.js"></script>
+<!--<script src="/js/module/app_admin_module.js"></script>-->
+
+<!-- 路由 -->
+<script src="/js/router/common_login_router.js"></script>
+
+<!-- 服务 -->
 <script src="/js/service/base_service.js"></script>
 <script src="/js/service/http_service.js"></script>
 <script src="/js/service/config_service.js"></script>
+
+<!-- 控制器 -->
 <script src="/js/controller/common_login_view_controller.js"></script>
 <script src="/js/controller/retrieve_password_controller.js"></script>
-<script src="/js/router/common_login_router.js"></script>
+
+
+<!-- 访问后台服务器地址 -->
+<script src="/host/host_config.js"></script>
 </html>
