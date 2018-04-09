@@ -1018,3 +1018,80 @@ input[type=text]{
     border-radius: 100%;
     background: #4dd0e1;
 }
+
+/* 仓储车辆布局图*/
+.storageWrap{
+    width: 100%;
+    max-height: 510px;
+    border: 1px solid #00bcd4;
+    border-radius: 0px;
+    overflow-y: auto;
+    overflow-x: auto;
+}
+.storageWrap_storage{
+    width: 100%;
+    border: 1px solid #00bcd4;
+    border-radius: 0px;
+    overflow-y: auto;
+    overflow-x: auto;
+}
+.storageBox{
+    /*width:5050px;*/
+}
+.storageWrapTitle{
+    height: 46px;
+}
+.storage_list{
+    display: flex;
+    width: auto;
+    height: 46px;
+}
+/*行*/
+.storage_row {
+    position: relative;
+    min-width: 36px;
+    flex: 1;
+    height: 46px;
+    border-bottom: 1px solid #cccccc ;
+    border-right: 1px solid #cccccc ;
+    /*cursor: pointer;*/
+}
+.storage_row_toolbar{
+    width: 80%;
+    position: absolute;
+    left: 10%;
+    bottom: 100%;
+    z-index: 1000;
+    background: #e57373;
+    display: none;
+}
+.storage_row:hover .storage_row_toolbar{
+    display: block;
+}
+
+/*确认按钮*/
+.circle-btn{
+    width: 50px;
+    height: 50px;
+    border-radius: 100%;
+}
+/*列*/
+.storage_col{
+    min-width: 36px;
+    flex: 1;
+    height: 46px;
+    /*font-size: 12px;*/
+    border-bottom: 1px solid #cccccc;
+    border-right: 1px solid #cccccc;
+    cursor: pointer;
+}
+.storage_row i{
+    font-size: 25px;
+    margin-right: 0;
+}
+.storage_row_index{
+    width: 30px;
+    height: 30px;
+    border-radius: 100%;
+    background: #4dd0e1;
+}
