@@ -73,13 +73,13 @@
 
             <!-- 列表 -->
             <div class="col s12 storage_list p0">
-                <div class="storage_row vc-center left white-text fz20" style="background-color: #aaaaaa;border: 0px solid #cccccc;">
+                <div class="storage_row vc-center white-text fz20" style="background-color: #aaaaaa;border: 0;">
                    {{((lot/2|number:0) == el.lot) ? el.row : ''}}
                 </div>
-                <div class="storage_row vc-center left" style="background-color: #dddddd;">
+                <div class="storage_row vc-center" style="background-color: #dddddd;">
                     {{characters[el.lot-1].name}}
                 </div>
-                <div class="storage_row vc-center left" ng-repeat="els in el.col track by $index">
+                <div class="storage_row vc-center" ng-repeat="els in el.col track by $index">
                     <a href="#" ui-sref="storage_car_detail({id:els.carId,vin:els.vin,_from:'storage_store',from:'storage_store_detail'})" >
                         <i ng-show="els.carId!=0" class=" mdi mdi-car cyan-text lighten-1" ></i>
                     </a>
