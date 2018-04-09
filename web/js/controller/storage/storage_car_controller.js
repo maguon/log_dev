@@ -167,7 +167,7 @@ app.controller("storage_car_controller", ["$scope", "$rootScope", "$stateParams"
             "planEnd":$scope.search_planTime_end,
             "realStart":$scope.search_outTime_start,
             "realEnd":$scope.search_outTime_end,
-            "mosStatus":$scope.getMOS,
+            "msoStatus":$scope.getMSO,
             "entrustId":$scope.getEntrustId
         };
         window.open(_host.api_url + "/car.csv?" + _basic.objToUrl(obj));
@@ -258,7 +258,8 @@ app.controller("storage_car_controller", ["$scope", "$rootScope", "$stateParams"
     };
     // 新增信息
     $scope.addCarDataItem = function () {
-        if ($scope.vin!==''&& $scope.plan_out_time!=="") {
+        if ($scope.vin!==''&& $scope.plan_out_time!==""&& $scope.$scope.entrustId!==""&& $scope.carValuation!==""&&
+            $scope.MSO!==""&& $scope.parking_id!=="") {
             var obj_car = {
                 "vin": $scope.vin,
                 "makeId": $scope.make_name.id,
@@ -276,7 +277,6 @@ app.controller("storage_car_controller", ["$scope", "$rootScope", "$stateParams"
                 "storageName": $scope.storage_name.storage_name,
                 "parkingId": $scope.parking_id,
                 "planOutTime": $scope.plan_out_time
-                /*  :$scope.areaName*/
             };
             _basic.post(_host.api_url + "/user/" + userId + "/carStorageRel", _basic.removeNullProps(obj_car)).then(function (data) {
                 if (data.success == true) {
