@@ -1,175 +1,78 @@
 /**
- * 主菜单：仓储管理 -> 仓储存放(详细画面) 控制器
+ * 主菜单：仓储管理 -> 仓储存放（仓库详情) 控制器
  */
 app.controller("storage_store_detail_controller", ["$scope", "$state", "$stateParams", "_basic", "_config", "_host", "_baseService", function ($scope, $state, $stateParams, _basic, _config, _host, _baseService) {
 
     // 用户ID
     var userId = _basic.getSession(_basic.USER_ID);
 
-    // 仓储信息 ID
+    // 仓储信息 ID (前画面)
     var storageId = $stateParams.id;
 
-    // 仓储信息 名称
-    var storageNm = $stateParams.name;
+    // 仓库详情（头部） 名称(前画面)
+    $scope.storageNm = $stateParams.name;
 
-    // 仓储信息 名称
-    $scope.storageNm = "";
-
-    // characters
-    $scope.characters = _config.characters;
-    //
-    // // 颜色列表
-    // $scope.configColor = _config.config_color;
-
-    // 总位置
-    $scope.totalPosition = $stateParams.position;
-
-    // 剩余位置
-    $scope.leftPosition = 0;
-
-    // 仓储扇区信息
+    // 仓库详情（头部）区域列表
     $scope.zoneList = [];
 
-    // // 钥匙信息
-    // $scope.keyInfo = {
-    //     // 仓储ID
-    //     id: $stateParams.id,
-    //     keyCabinetId: "",
-    //     keyCabinetNm: "",
-    //     zoneNm: "",
-    //     row: "",
-    //     col: "",
-    //     // vin
-    //     carVin: "",
-    //     // 制造商
-    //     carMaker: "",
-    //     // 型号
-    //     carModel: "",
-    //     // 生产日期
-    //     carProDate: "",
-    //     // 颜色
-    //     carColor: "",
-    //     // 发动机号
-    //     carEngineNum: "",
-    //     // 位置
-    //     carPosition: "",
-    //     // 入库
-    //     carEnterTime: "",
-    //     // 计划出库
-    //     carPlanOutTime: "",
-    //     // 委托方
-    //     carEntrust: "",
-    //     // 估价
-    //     carValuation: "",
-    //     // MOS
-    //     carMosStatus: ""
-    // };
-
-    // 画面扇区列表默认选中项
+    // 仓库详情（头部）区域列表 默认选中项
     $scope.selectedZone = "";
 
-    // 画面扇区详细信息
+    // 仓库详情（头部）行
+    $scope.row = 0;
+
+    // 仓库详情（头部）列
+    $scope.col = 0;
+
+    // 仓库详情（头部）单元存车位
+    $scope.lot = 0;
+
+    // 仓库详情（头部）剩余位置
+    $scope.leftPosition = 0;
+
+    // 一行一列内，多个停车位区分用 (A-Z)
+    $scope.characters = _config.characters;
+
+    // 画面是否有区域详细信息
     $scope.hasPosition = false;
 
-    $scope.carKeyCabinetParkingArray = [];
-
-    // /**
-    //  * 获取仓储分区信息列表
-    //  */
-    // $scope.getCarInfo = function (id, row, col) {
-    //
-    //     // 扇区名称
-    //     var url = _host.api_url + "/carKeyCabinetArea?carKeyCabinetId=" + keyCabinetId + "&areaId=" + $scope.selectedZone;
-    //
-    //     _basic.get(url).then(function (data) {
-    //         if (data.success == true) {
-    //             $scope.keyInfo.zoneNm = data.result[0].area_name;
-    //         } else {
-    //             swal(data.msg, "", "error");
-    //         }
-    //     });
-    //
-    //     // 行列
-    //     $scope.keyInfo.row = row;
-    //     $scope.keyInfo.col = col;
-    //
-    //     // 车辆信息
-    //     var url = _host.api_url + "/user/" + userId + "/car?active=1&carId=" + id;
-    //
-    //     _basic.get(url).then(function (data) {
-    //         if (data.success == true) {
-    //             if (data.result.length > 0) {
-    //                 // 初期化数据
-    //
-    //                 // vin
-    //                 $scope.keyInfo.carVin = data.result[0].vin == null ? '未知' : data.result[0].vin;
-    //                 // 制造商
-    //                 $scope.keyInfo.carMaker = data.result[0].make_name == null ? '未知' : data.result[0].make_name;
-    //                 // 型号
-    //                 $scope.keyInfo.carModel = data.result[0].model_name == null ? '未知' : data.result[0].model_name;
-    //                 // 生产日期
-    //                 $scope.keyInfo.carProDate = data.result[0].pro_date == null ? '未知' : data.result[0].pro_date;
-    //                 // 颜色
-    //                 $scope.keyInfo.carColor = '未知';
-    //                 for (var i = 0; i < $scope.configColor.length; i++) {
-    //                     if ($scope.configColor[i].colorId == data.result[0].colour) {
-    //                         $scope.keyInfo.carColor = $scope.configColor[i].colorName;
-    //                     }
-    //                 }
-    //                 // 发动机号
-    //                 $scope.keyInfo.carEngineNum = data.result[0].engine_num == null ? '未知' : data.result[0].engine_num;
-    //                 // 位置
-    //                 var storageName = data.result[0].storage_name == null ? '未知' : data.result[0].storage_name;
-    //                 var row = data.result[0].row == null ? '未知' : data.result[0].row;
-    //                 var col = data.result[0].col == null ? '未知' : data.result[0].col;
-    //                 $scope.keyInfo.carPosition = storageName + ' ' +  row + '排' + col + '列';
-    //                 // 入库
-    //                 $scope.keyInfo.carEnterTime = data.result[0].enter_time == null ? '未知' : data.result[0].enter_time;
-    //                 // 计划出库
-    //                 $scope.keyInfo.carPlanOutTime = data.result[0].plan_out_time == null ? '未知' : data.result[0].plan_out_time;
-    //                 // 委托方
-    //                 $scope.keyInfo.carEntrust = data.result[0].entrust_name == null ? '未知' : data.result[0].entrust_name;
-    //                 // 估价
-    //                 $scope.keyInfo.carValuation = data.result[0].valuation == null ? 0 : data.result[0].valuation;
-    //                 // MOS
-    //                 $scope.keyInfo.carMosStatus = data.result[0].mos_status == null ? '未知' : $scope.mosFlags[data.result[0].mos_status-1].name;
-    //
-    //                 $('.modal').modal();
-    //                 $('#carKeyInfo').modal('open');
-    //             } else {
-    //                 swal("该钥匙没有对应的车辆信息！", "", "warning");
-    //             }
-    //         } else {
-    //             swal(data.msg, "", "error");
-    //         }
-    //     });
-    // };
+    // 画面显示停车情况数据
+    $scope.storageParkingArray = [];
 
     /**
-     * 获取仓储分区信息列表
+     * 获取仓储（分区）剩余位置信息。
+     */
+    $scope.getLeftPosition = function (selectZoneId) {
+
+        // 检索仓储剩余位置信息URL
+        var url = _host.api_url + "/storageParkingBalanceCount?storageId=" + storageId + "&areaId=" + selectZoneId;
+
+        // 调用API取得
+        _basic.get(url).then(function (data) {
+            if (data.success && data.result.length > 0) {
+                // 剩余位置
+                $scope.leftPosition = data.result[0].parking_balance_count;
+            } else {
+                swal(data.msg, "", "error");
+            }
+        });
+    };
+
+    /**
+     * 获取仓储分区停车信息列表
      */
     $scope.getStorageParkingInfo = function (selectedZone) {
-
-        if (selectedZone == null || selectedZone == '') {
-            return;
-        }
-
-        // TODO
-        // $scope.getLeftPosition(selectedZone);
 
         var url = _host.api_url + "/storageParking?storageId=" + storageId + '&areaId=' + selectedZone;
 
         _basic.get(url).then(function (data) {
             if (data.success == true) {
-                $scope.totalPosition = data.result.length;
                 if (data.result.length > 0) {
-                    $scope.carKeyCabinetParking = data.result;
-                    $scope.carKeyCabinetParkingArray = _baseService.storageParking($scope.carKeyCabinetParking);
+                    $scope.storageParking = data.result;
+                    $scope.storageParkingArray = _baseService.storageParking($scope.storageParking);
 
-                    console.log($scope.carKeyCabinetParkingArray);
-
-                    if ($scope.carKeyCabinetParkingArray.length > 0) {
-                        $scope.carKeyCabinetParkingCol = $scope.carKeyCabinetParkingArray[0].col;
+                    if ($scope.storageParkingArray.length > 0) {
+                        $scope.storageParkingCol = $scope.storageParkingArray[0].col;
                     }
 
                     $scope.hasPosition = true;
@@ -191,34 +94,49 @@ app.controller("storage_store_detail_controller", ["$scope", "$state", "$statePa
         $state.go($stateParams.from, {}, {reload: true})
     };
 
+
     /**
      * 获取仓储（分区）详细信息。
      */
-    $scope.getLeftPosition = function (selectZoneId) {
+    $scope.getStorageAreaInfo = function (selectedZone) {
 
-        // GET /carKeyCabinet/{carKeyCabinetId}/carKeyPositionCount
+        if (selectedZone == null || selectedZone == '') {
+            return;
+        }
 
         // 检索仓储详细信息URL
-        var url = _host.api_url + "/carKeyCabinet/" + keyCabinetId + "/carKeyPositionCount?areaId=" + selectZoneId;
+        var url = _host.api_url + "/storageArea?areaStatus=1&storageId=" + storageId + "&areaId=" + selectedZone;
 
         // 调用API取得，画面数据
         _basic.get(url).then(function (data) {
             if (data.success) {
-                // 检索取得数据集
-                $scope.leftPosition = data.result[0].position_count;
+                if (data.result.length > 0) {
+                    // 行
+                    $scope.row = data.result[0].row;
+                    // 列
+                    $scope.col = data.result[0].col;
+                    // 单元存车位
+                    $scope.lot = data.result[0].lot;
+                    // 取得剩余位置
+                    $scope.getLeftPosition(selectedZone);
+                    // 获取仓储分区停车信息
+                    $scope.getStorageParkingInfo(selectedZone);
+                } else {
+                    // 该仓库没有对应的区域信息
+                    $scope.hasPosition = false;
+                    swal("该仓库没有对应的区域信息！", "", "warning");
+                }
             } else {
+                $scope.hasPosition = false;
                 swal(data.msg, "", "error");
             }
         });
     };
 
     /**
-     * 获取仓储（分区）详细信息。
+     * 获取仓储详细信息。
      */
-    $scope.getStorageAreaInfo = function () {
-
-        console.log('getStorageAreaInfo');
-
+    $scope.getStorageInfo = function () {
 
         // 检索仓储详细信息URL
         var url = _host.api_url + "/storageArea?areaStatus=1&storageId=" + storageId;
@@ -226,17 +144,20 @@ app.controller("storage_store_detail_controller", ["$scope", "$state", "$statePa
         // 调用API取得，画面数据
         _basic.get(url).then(function (data) {
             if (data.success) {
-                // 检索取得数据集
+
+                // 仓库区域列表
                 $scope.zoneList = data.result;
 
-                // 画面仓储 名称
+                // 有仓库区域的时候
                 if (data.result.length > 0) {
-                    $scope.selectedZone = $scope.zoneList[0].id;
+                    // 画面仓储 名称
                     $scope.storageNm = data.result[0].storage_name;
-                    $scope.getStorageParkingInfo($scope.selectedZone);
+                    // 默认选中 区域
+                    $scope.selectedZone = data.result[0].id;
+                    // 获取仓储（分区）详细信息
+                    $scope.getStorageAreaInfo($scope.selectedZone);
                 } else {
-                    $scope.storageNm = storageNm;
-                    swal("该钥匙没有对应的扇区信息！", "", "warning");
+                    swal("该仓库没有对应的区域信息！", "", "warning");
                 }
             } else {
                 swal(data.msg, "", "error");
@@ -247,5 +168,5 @@ app.controller("storage_store_detail_controller", ["$scope", "$state", "$statePa
     /**
      * 画面初期检索
      */
-    $scope.getStorageAreaInfo();
+    $scope.getStorageInfo();
 }]);

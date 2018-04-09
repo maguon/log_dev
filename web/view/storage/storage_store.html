@@ -9,10 +9,10 @@
         <div class="white z-depth-2" style="margin-bottom: 25px;border:1px solid #00e5ff">
 
             <!-- 仓储 明细 Header -->
-            <div class="valign-wrapper blue-grey lighten-5 cyan-text fz16" style="width: 100%;height: 50px;">
+            <div class="valign-wrapper blue-grey lighten-5 cyan-text fz16 left-align" style="width: 100%;height: 50px;">
 
                 <!-- 仓储 名称 -->
-                <div class="col s12 context-ellipsis fz18" style="width: 300px;" ng-bind="storage.storage_name"></div>
+                <div class="context-ellipsis fz18 left-align" style="margin-left: 10px; width: 300px;" ng-bind="storage.storage_name"></div>
 
                 <!-- 仓储详细信息 Button -->
                 <a class="right btn-floating  setting_shipments_btn  btn waves-effect cyan  lighten-2 waves-light" style="position: absolute;top: 20%;right: 20px;"
@@ -42,7 +42,7 @@
         </div>
     </div>
 
-    <div ng-if="keyInfoList.length == 0" style="position:relative;">
+    <div ng-if="storageList.length == 0" style="position:relative;">
         <div class="vc-center grey-text fz26" style="margin-top:100px; width: 100%;height: 100px;">
             <i class="mdi mdi-alert-circle-outline" style="color: red;font-size: 30px"></i>
             <span style="margin-left: 10px;">暂无仓库信息</span>
