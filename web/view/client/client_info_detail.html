@@ -71,13 +71,34 @@
                 <div  class="row col s12" style="height:1px;border-bottom: 1px dotted #ccc;width:96%;margin-left: 2%"></div>
                 <div class="row col s12">
                     <div class="col s4 valign-wrapper">
-                        <div class="col s12 input-field left-align" style="padding-left: 10%">
+                        <div class="col s12 input-field left-align" style="padding-left: 10%" ng-if="clientList.rel_status==1">
                             存放仓库：{{clientList.storage_name}}
+                        </div>
+                        <div class="col s12 input-field left-align" style="padding-left: 10%" ng-if="clientList.rel_status==2">
+                            存放仓库：
                         </div>
                     </div>
                     <div class="col s4 valign-wrapper">
-                        <div class="col s12 input-field left-align" style="padding: 0">
-                            存放位置：{{clientList.area_name}}{{clientList.row}}{{clientList.col}}{{clientList.lot}}
+                        <div class="col s12 input-field left-align" style="padding: 0" ng-if="clientList.lot==1">
+                            存放位置：{{clientList.area_name}}{{clientList.row}}排{{clientList.col}}列A
+                        </div>
+                        <div class="col s12 input-field left-align" style="padding: 0" ng-if="clientList.lot==2">
+                            存放位置：{{clientList.area_name}}{{clientList.row}}排{{clientList.col}}列B
+                        </div>
+                        <div class="col s12 input-field left-align" style="padding: 0" ng-if="clientList.lot==3">
+                            存放位置：{{clientList.area_name}}{{clientList.row}}排{{clientList.col}}列C
+                        </div>
+                        <div class="col s12 input-field left-align" style="padding: 0" ng-if="clientList.lot==4">
+                            存放位置：{{clientList.area_name}}{{clientList.row}}排{{clientList.col}}列D
+                        </div>
+                        <div class="col s12 input-field left-align" style="padding: 0" ng-if="clientList.lot==5">
+                            存放位置：{{clientList.area_name}}{{clientList.row}}排{{clientList.col}}列E
+                        </div>
+                        <div class="col s12 input-field left-align" style="padding: 0" ng-if="clientList.lot==6">
+                            存放位置：{{clientList.area_name}}{{clientList.row}}排{{clientList.col}}列F
+                        </div>
+                        <div class="col s12 input-field left-align" style="padding: 0" ng-if="clientList.lot==7">
+                            存放位置：{{clientList.area_name}}{{clientList.row}}排{{clientList.col}}列G
                         </div>
                     </div>
                     <div class="col s4 valign-wrapper">
@@ -105,72 +126,42 @@
     </div>
     <div class="divider" style="background: #00bcd4;height: 2px;"></div>
     <div class="" >
-        <!--车辆信息模态框-->
-        <div id="carDataModel" class="modal modal-fixed-footer" style="width: 60%">
-            <div class="modal-content center fz20" style="font-weight: 500;padding: 0">
-                <div class="row col s12 vc-center fz22" style="font-weight: bold;height: 80px;background-color:rgb(63,185,193)">
-                    <div class="col s12 white-text">
-                        <p style="letter-spacing: 2px">设置车辆当前位置</p>
-                    </div>
-                </div>
-                <div class="row col s12" style="margin-top: -20px">
-                    <div class="input-field col s4 offset-s4">
-
-                        <select class="js-example-basic-single" name="state" style="width:100%" ng-model="currentCityId">
-                            <option value=""></option>
-                            <option ng-repeat="city in allCityList" ng-value="city.id">{{city.city_name}}</option>
-                        </select>
-                    </div>
-                </div>
-            </div>
-
-            <div class="modal-footer vc-center">
-                <button ng-click="closePositionModel()" class="btn waves-light waves-effect grey lighten-1" type="button" style="margin-left: 56px" >
-                    取消
-                </button>
-                <button ng-click="savePositionInfo()" class="btn waves-light waves-effect cyan lighten-1" type="button" style="margin-left: 56px" >
-                    确定
-                </button>
-            </div>
-        </div>
         <!--头部详情信息-->
-        <div class="row col s12">
-            <div class="grey-text text-darken-1 vc-center" style="height: 100px;line-height: 100px;text-align: center">
-                <!--企业性质-->
-                <h3 class="col s1 left" ng-if="clientList.entrust_type==1"  style="color: #4dd0e1;"><i class="mdi mdi-account"></i></h3>
-                <h3 class="col s1 left" ng-if="clientList.entrust_type==2"  style="color: #4dd0e1;"><i class="mdi mdi-domain"></i></h3>
-                <!--企业名字（全称/简称）-->
-                <div class="col s6 left fz18 vc-center" style="position: relative;height: 70%">
-                    <h5 ng-bind="clientList.short_name" style="position: absolute;top:-15%;left: 3%;color: #26c6da"></h5>
-                    <span style="position: absolute;top: -47%;left:20%">({{clientList.entrust_name}})</span>
-                    <div>
-                        <i class="mdi mdi-map-marker" style="color:  #26c6da;position: absolute;top:5%;left:3%;"></i>
-                        <span  ng-bind="clientList.address" style="position: absolute;top: 5%;left: 6%"></span>
+            <div class="grey-text text-darken-1 vc-center row " style="margin-top: 20px">
+                <div class="col s1 center" >
+                    <i  style="color: #4dd0e1;" ng-if="clientList.entrust_type==1" class="mdi mdi-account fz45 s3"></i>
+                   <i   style="color: #4dd0e1;" ng-if="clientList.entrust_type==2" class="mdi mdi-domain fz45 s3"></i>
+                </div>
+                <div class="col s8">
+                    <div class="row left-align">
+                        <span  class=" fz18" ng-bind="clientList.short_name" style="color: #26c6da;margin-right: 10px"> </span>
+                        <span  >({{clientList.entrust_name}})</span>
                     </div>
-                    <div>
-                        <i class="mdi mdi-file-outline" style="color:  #26c6da;position: absolute;top:60%;left: 3%;"></i>
-                        <span  ng-bind="clientList.remark" style="position: absolute;top: 60%;left: 6%"></span>
+                    <div class="row">
+                        <i class="mdi mdi-map-marker  center" style="color: #26c6da;margin-right: 10px"></i>
+                        <span >{{clientList.address}}</span>
+                    </div>
+                    <div class="row">
+                       <i class="mdi mdi-file-outline  center" style="color: #26c6da;margin-right: 10px"></i>
+                        <span >{{clientList.remark}}</span>
                     </div>
                 </div>
-                <!--联系人/创建时间-->
-                <div class="col s5 offset-s2 fz20"  style="height: 70%;border-right: 1px solid #ccc;position: relative">
-                    <div style="position: absolute;top: -40%;right: 15%;">
+                <div class="col s2 right-align" style="margin-right: 40px">
+                    <div class="row">
                         <i class="mdi mdi-account" style="color: #26c6da"></i>
                         <span  ng-bind="clientList.contacts_name" ></span>
                     </div>
-                    <div  style="position: absolute;top: 5%;right: 15%;">
+                    <div class="row">
                         <i class="mdi mdi-phone" style="color: #26c6da"></i>
                         <span  ng-bind="clientList.tel"></span>
                     </div>
-                    <div style="position: absolute;top: 50%;right: 15%;">
+                    <div class="row">
                         <i class="mdi mdi-clock" style="color: #26c6da"></i>
                         <span  ng-bind="clientList.created_on | date:'yyyy-MM-dd HH:mm:ss'" ></span>
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="grey-text text-darken-1 vc-center" style="border-bottom: 1px solid #ccc;height: 30px;line-height: 30px;text-align: center">
-        </div>
+    </div>
         <!--列表-->
         <div class="modal-content grey-text text-darken-2">
             <div class="row no-marBottom" ul-tabs>
@@ -273,7 +264,13 @@
                                 <td ng-if="el.mso_status==2">是</td>
                                 <td ng-if="el.mso_status==1">否</td>
                                 <td ng-if="el.mso_status==null">无状态</td>
-                                <td >{{el.storage_name}}{{el.area_name}}{{el.row}}{{el.col}}{{el.lot}}</td>
+                                <td ng-if="el.rel_status==1&&el.lot==1">{{el.storage_name}}{{el.area_name}}{{el.row}}排{{el.col}}列A</td>
+                                <td ng-if="el.rel_status==1&&el.lot==2">{{el.storage_name}}{{el.area_name}}{{el.row}}排{{el.col}}列B</td>
+                                <td ng-if="el.rel_status==1&&el.lot==3">{{el.storage_name}}{{el.area_name}}{{el.row}}排{{el.col}}列C</td>
+                                <td ng-if="el.rel_status==1&&el.lot==4">{{el.storage_name}}{{el.area_name}}{{el.row}}排{{el.col}}列D</td>
+                                <td ng-if="el.rel_status==1&&el.lot==5">{{el.storage_name}}{{el.area_name}}{{el.row}}排{{el.col}}列E</td>
+                                <td ng-if="el.rel_status==1&&el.lot==6">{{el.storage_name}}{{el.area_name}}{{el.row}}排{{el.col}}列F</td>
+                                <td ng-if="el.rel_status==2"></td>
                                 <td ng-bind="el.enter_time|date:'yyyy-MM-dd '"></td>
                                 <td ng-bind="el.real_out_time|date:'yyyy-MM-dd '"></td>
                                 <td ng-if="el.rel_status==1">在库</td>
@@ -332,7 +329,13 @@
                                 <td ng-if="el.mso_status==2">是</td>
                                 <td ng-if="el.mso_status==1">否</td>
                                 <td ng-if="el.mso_status==null">无状态</td>
-                                <td >{{el.storage_name}}{{el.area_name}}{{el.row}}{{el.col}}{{el.lot}}</td>
+                                <td ng-if="el.rel_status==1&&el.lot==1">{{el.storage_name}}{{el.area_name}}{{el.row}}排{{el.col}}列A</td>
+                                <td ng-if="el.rel_status==1&&el.lot==2">{{el.storage_name}}{{el.area_name}}{{el.row}}排{{el.col}}列B</td>
+                                <td ng-if="el.rel_status==1&&el.lot==3">{{el.storage_name}}{{el.area_name}}{{el.row}}排{{el.col}}列C</td>
+                                <td ng-if="el.rel_status==1&&el.lot==4">{{el.storage_name}}{{el.area_name}}{{el.row}}排{{el.col}}列D</td>
+                                <td ng-if="el.rel_status==1&&el.lot==5">{{el.storage_name}}{{el.area_name}}{{el.row}}排{{el.col}}列E</td>
+                                <td ng-if="el.rel_status==1&&el.lot==6">{{el.storage_name}}{{el.area_name}}{{el.row}}排{{el.col}}列F</td>
+                                <td ng-if="el.rel_status==2"></td>
                                 <td ng-bind="el.enter_time|date:'yyyy-MM-dd '"></td>
                                 <td ng-bind="el.plan_out_time|date:'yyyy-MM-dd '"></td>
                                 <!-- 显示【仓储车辆信息】画面按钮 -->
@@ -362,7 +365,7 @@
                     <div class="col s12" >
                         <div class="col s12 cyan white-text vc-center fz18" style="height: 60px;border-bottom: 1px solid  #26c6da;border-top:1px solid  #fff" >
                             <div class="col s6 left-align "></div>
-                            <div class="col s6 right-align">信用额度(美元):{{entrustList.not_mso_valuation}}</div>
+                            <div class="col s6 right-align">非MSO车辆库值(美元):{{entrustList.not_mso_valuation}}</div>
                         </div>
                         <div class="divider" style="background: #00bcd4;height: 2px;"></div>
                         <table class=" bordered striped centered">
@@ -385,7 +388,13 @@
                                 <td ng-bind="el.model_name"></td>
                                 <td ng-if="el.valuation==null"></td>
                                 <td ng-if="el.valuation!==null">${{el.valuation}}.00</td>
-                                <td >{{el.storage_name}}{{el.area_name}}{{el.row}}{{el.col}}{{el.lot}}</td>
+                                <td ng-if="el.rel_status==1&&el.lot==1">{{el.storage_name}}{{el.area_name}}{{el.row}}排{{el.col}}列A</td>
+                                <td ng-if="el.rel_status==1&&el.lot==2">{{el.storage_name}}{{el.area_name}}{{el.row}}排{{el.col}}列B</td>
+                                <td ng-if="el.rel_status==1&&el.lot==3">{{el.storage_name}}{{el.area_name}}{{el.row}}排{{el.col}}列C</td>
+                                <td ng-if="el.rel_status==1&&el.lot==4">{{el.storage_name}}{{el.area_name}}{{el.row}}排{{el.col}}列D</td>
+                                <td ng-if="el.rel_status==1&&el.lot==5">{{el.storage_name}}{{el.area_name}}{{el.row}}排{{el.col}}列E</td>
+                                <td ng-if="el.rel_status==1&&el.lot==6">{{el.storage_name}}{{el.area_name}}{{el.row}}排{{el.col}}列F</td>
+                                <td ng-if="el.rel_status==2"></td>
                                 <td ng-bind="el.enter_time|date:'yyyy-MM-dd '"></td>
                                 <td ng-bind="el.plan_out_time|date:'yyyy-MM-dd '"></td>
                                 <!-- 显示【仓储车辆信息】画面按钮 -->
@@ -413,5 +422,4 @@
                 </div>
             </div>
         </div>
-    </div>
 </div>

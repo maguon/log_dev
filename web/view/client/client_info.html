@@ -7,16 +7,16 @@
             <div class="col s10">
                 <!-- 查询条件：委托方性质 -->
                 <div class="input-field col s3">
-                    <select material-select watch ng-model="getEntrustType">
+                    <select material-select watch ng-model="getEntrustType" ng-change="entrust(getEntrustType)">
                         <option value=""  >委托方性质</option>
                         <option ng-repeat="el in entrustType" ng-value="el.entrust_type">{{el.name}}</option>
                     </select>
                 </div>
 
                 <!-- 查询条件：委托方 -->
-                <div class="input-field col s3">
-                    <select material-select watch id="getEntrustId"  ng-model="getEntrustId" >
-                        <option value="" >清除选择</option>
+                <div class="input-field col s3" >
+                    <select material-select watch id="getEntrustId"  ng-model="getEntrustId" style="width: 100%">
+                        <option value="" >委托方</option>
                         <option ng-repeat="el in getEntrust" ng-value="el.id">{{el.short_name}}</option>
                     </select>
                 </div>
