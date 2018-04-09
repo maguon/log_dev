@@ -58,7 +58,10 @@
     <!-- 详细 -->
     <div ng-show="hasPosition == true" class="storageWrap" style="border:0">
         <div ng-repeat="el in storageParkingArray">
-            <div ng-show="el.lot == 1" style="padding-bottom: 50px;"></div>
+
+            <!-- 每行之间的余白 -->
+            <div ng-show="el.lot == 1" style="padding-bottom: 30px;"></div>
+
             <!-- 头 -->
             <div ng-show="el.lot == 1" class="col s12 storage_list" style="background-color: #dddddd;">
                 <div class="storage_row vc-center" style="border: 1px solid #cccccc; border-right:0px"></div>
