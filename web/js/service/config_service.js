@@ -202,8 +202,8 @@ baseService.factory("_config", function () {
         }
     ];
 
-    // 是否MOS车辆
-    _this.mosFlags = [
+    // 是否MSO车辆
+    _this.msoFlags = [
         {
             id: 1,
             name: "否"

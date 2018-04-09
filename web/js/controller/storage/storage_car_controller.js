@@ -89,8 +89,8 @@ app.controller("storage_car_controller", ["$scope", "$rootScope", "$stateParams"
         if ($scope.search_outTime_end != null) {
             reqUrl = reqUrl + "&realEnd=" + $scope.search_outTime_end
         }
-        if ($scope.getMOS != null) {
-            reqUrl = reqUrl + "&mosStatus=" + $scope.getMOS
+        if ($scope.getMSO != null) {
+            reqUrl = reqUrl + "&msoStatus=" + $scope.getMSO
         }
         if ($scope.getEntrustId != null) {
             reqUrl = reqUrl + "&entrustId=" + $scope.getEntrustId
@@ -132,7 +132,7 @@ app.controller("storage_car_controller", ["$scope", "$rootScope", "$stateParams"
         $scope.engineNum = "";
         $scope.entrustId = "";
         $scope.carValuation = "";
-        $scope.MOS = "";
+        $scope.MSO = "";
         $scope.remark = "";
         $scope.storage_name = "";
         // 照片清空
@@ -239,7 +239,7 @@ app.controller("storage_car_controller", ["$scope", "$rootScope", "$stateParams"
                 "engineNum": $scope.engineNum,
                 "entrustId":$scope.entrustId,
                 "valuation":$scope.carValuation,
-                "mosStatus":$scope.MOS,
+                "msoStatus":$scope.MSO,
                 "remark": $scope.remark,
                 "storageId": $scope.storage_name.id,
                 "storageName": $scope.storage_name.storage_name,

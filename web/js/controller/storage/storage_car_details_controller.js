@@ -348,7 +348,7 @@ app.controller("storage_car_details_controller", [ "$state", "$stateParams", "_c
             "engineNum": $scope.self_car.engine_num,
             "entrustId":  $scope.self_car.entrust_id,
             "valuation":  $scope.self_car.valuation,
-            "mosStatus":  $scope.self_car.mos_status,
+            "msoStatus":  $scope.self_car.mso_status,
             "remark": $scope.self_car.remark
         };
         if (isValid) {

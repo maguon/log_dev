@@ -15,8 +15,8 @@ app.controller("key_info_detail_controller", ["$scope", "$state", "$stateParams"
     // 钥匙柜信息 名称
     $scope.keyCabinetNm = "";
 
-    // 是否MOS车辆
-    $scope.mosFlags = _config.mosFlags;
+    // 是否MSO车辆
+    $scope.msoFlags = _config.msoFlags;
 
     // 颜色列表
     $scope.configColor = _config.config_color;
@@ -61,8 +61,8 @@ app.controller("key_info_detail_controller", ["$scope", "$state", "$stateParams"
         carEntrust: "",
         // 估价
         carValuation: "",
-        // MOS
-        carMosStatus: ""
+        // MSO
+        carMsoStatus: ""
     };
 
     // 画面扇区列表默认选中项
@@ -131,8 +131,8 @@ app.controller("key_info_detail_controller", ["$scope", "$state", "$stateParams"
                     $scope.keyInfo.carEntrust = data.result[0].entrust_name == null ? '未知' : data.result[0].entrust_name;
                     // 估价
                     $scope.keyInfo.carValuation = data.result[0].valuation == null ? 0 : data.result[0].valuation;
-                    // MOS
-                    $scope.keyInfo.carMosStatus = data.result[0].mos_status == null ? '未知' : $scope.mosFlags[data.result[0].mos_status-1].name;
+                    // MSO
+                    $scope.keyInfo.carMsoStatus = data.result[0].mso_status == null ? '未知' : $scope.msoFlags[data.result[0].mso_status-1].name;
 
                     $('.modal').modal();
                     $('#carKeyInfo').modal('open');
