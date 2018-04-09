@@ -7,9 +7,10 @@ app.controller("client_info_controller", ["$scope", "$rootScope", "_host", "_bas
     $scope.size = 10;
     //委托方性质
     $scope.entrustType = _config.entrustType;
+    $scope.carLot=_config.carParking;
     //获取委托方信息
-    function getEntrust () {
-        _basic.get(_host.api_url + "/entrust").then(function (data) {
+    $scope.entrust =function(type) {
+        _basic.get(_host.api_url + "/entrust?entrustType="+type).then(function (data) {
             if (data.success == true) {
                 $scope.getEntrust = data.result;
                 $('#getEntrustId').select2({
@@ -63,7 +64,6 @@ app.controller("client_info_controller", ["$scope", "$rootScope", "_host", "_bas
     };
     //获取数据
     $scope.queryData = function () {
-        getEntrust ();
         $scope.getClient();
     };
     $scope.queryData();
