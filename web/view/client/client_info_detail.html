@@ -129,13 +129,13 @@
         <!--头部详情信息-->
             <div class="grey-text text-darken-1 vc-center row " style="margin-top: 20px">
                 <div class="col s1 center" >
-                    <i  style="color: #4dd0e1;" ng-if="clientList.entrust_type==1" class="mdi mdi-account fz45 "></i>
-                   <i   style="color: #4dd0e1;" ng-if="clientList.entrust_type==2" class="mdi mdi-domain fz45"></i>
+                    <i  style="color: #4dd0e1;" ng-if="clientList.entrust_type==1" class="mdi mdi-account fz45 s3"></i>
+                   <i   style="color: #4dd0e1;" ng-if="clientList.entrust_type==2" class="mdi mdi-domain fz45 s3"></i>
                 </div>
                 <div class="col s8">
-                    <div class="row">
-                        <div   class="col s1 fz18 right-align" ng-bind="clientList.short_name" style="color: #26c6da"> </div>
-                        <div   class="col s11">({{clientList.entrust_name}})</div>
+                    <div class="row left-align">
+                        <div   class="col s2 fz18" ng-bind="clientList.short_name" style="color: #26c6da"> </div>
+                        <div   class="col s10 ">({{clientList.entrust_name}})</div>
                     </div>
                     <div class="row">
                         <i class="mdi mdi-map-marker col s1 center" style="color: #26c6da"></i>
