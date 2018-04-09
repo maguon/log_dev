@@ -71,7 +71,7 @@ app.controller("setting_user_controller", ["_basic", "_config", "_host", "$scope
                 if (data.success == true) {
                     swal("新增成功", "", "success");
                     $('#newOperator').modal('close');
-                    getDepartmentInfoList();
+                    getUserInfoList();
                 } else {
                     swal(data.msg, "", "error");
                 }
