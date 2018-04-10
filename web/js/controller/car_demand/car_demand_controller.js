@@ -18,7 +18,7 @@ app.controller("car_demand_controller", ["$scope", "$rootScope", "_host", "_basi
     $scope.entrust =function() {
         _basic.get(_host.api_url + "/entrust").then(function (data) {
             if (data.success == true) {
-                $scope.getEntrust = data.result;
+                $scope.entrustList = data.result;
                 $('#entrustId').select2({
                     placeholder: '委托方',
                     containerCssClass: 'select2_dropdown'
