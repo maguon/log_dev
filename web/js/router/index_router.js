@@ -128,9 +128,10 @@ app.config(['$stateProvider',"$urlRouterProvider",function($stateProvider,$urlRo
             templateUrl: "/view/user/user_info.html",
             controller:'user_info_controller'
         })
+
+        // 主菜单：车辆查询 画面
         .state("car_demand",{
             url:"/car_demand",
-            // 主菜单：车辆查询 画面
             templateUrl: "/view/car_demand/car_demand.html",
             controller:'car_demand_controller'
         })

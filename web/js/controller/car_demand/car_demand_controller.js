@@ -1,6 +1,5 @@
 /**
- * Created by jiangsen on 2017/5/17.
- * 主菜单：车辆查询
+ * 主菜单：车辆查询 控制器
  */
 app.controller("car_demand_controller", ["$scope", "$rootScope", "_host", "_basic", "_config", "_baseService", function ($scope, $rootScope, _host, _basic, _config, _baseService) {
     $scope.curruntId = 0;
@@ -9,7 +8,25 @@ app.controller("car_demand_controller", ["$scope", "$rootScope", "_host", "_basi
     var userId = _basic.getSession(_basic.USER_ID);
     // 车库状态
     $scope.relStatus = _config.carRelStatus;
-    $scope.searchRelStatus = 1;
+    // 是否MSO车辆
+    $scope.msoFlags = _config.msoFlags;
+
+
+    $scope.conditionCarStatus = 1;
+
+    //获取委托方信息
+    $scope.entrust =function() {
+        _basic.get(_host.api_url + "/entrust").then(function (data) {
+            if (data.success == true) {
+                $scope.getEntrust = data.result;
+                $('#entrustId').select2({
+                    placeholder: '委托方',
+                    containerCssClass: 'select2_dropdown'
+                });
+            }
+        });
+    };
+    $scope.entrust();
 
     /**
      * 车辆品牌列表查询，用来填充查询条件：车辆品牌
@@ -84,39 +101,59 @@ app.controller("car_demand_controller", ["$scope", "$rootScope", "_host", "_basi
      */
     function queryCarDemandData() {
         var reqUrl = _host.api_url + "/user/" + userId + "/car?active=" + 1 + "&start=" + $scope.start + "&size=" + $scope.size;
-        if ($scope.searchRelStatus != null) {
-            reqUrl = reqUrl + "&relStatus=" + $scope.searchRelStatus
+        // 车辆状态
+        if ($scope.conditionCarStatus != null) {
+            reqUrl = reqUrl + "&relStatus=" + $scope.conditionCarStatus
         }
-        if ($scope.search_storage != null) {
-            reqUrl = reqUrl + "&storageId=" + $scope.search_storage
+        // 所在仓库
+        if ($scope.conditionStorage != null) {
+            reqUrl = reqUrl + "&storageId=" + $scope.conditionStorage
         }
-        if ($scope.search_makeId != null) {
-            reqUrl = reqUrl + "&makeId=" + $scope.search_makeId
+        // vin码
+        if ($scope.conditionVin != null) {
+            reqUrl = reqUrl + "&vin=" + $scope.conditionVin
         }
-        if ($scope.search_modelId != null) {
-            reqUrl = reqUrl + "&modelId=" + $scope.search_modelId
+        // 品牌
+        if ($scope.conditionMakeId != null) {
+            reqUrl = reqUrl + "&makeId=" + $scope.conditionMakeId
         }
-        if ($scope.search_vin != null) {
-            reqUrl = reqUrl + "&vin=" + $scope.search_vin
+        // 型号
+        if ($scope.conditionModelId != null) {
+            reqUrl = reqUrl + "&modelId=" + $scope.conditionModelId
         }
-        if ($scope.search_enterTime_start != null) {
-            reqUrl = reqUrl + "&enterStart=" + $scope.search_enterTime_start
+        // 委托方
+        if ($scope.conditionEntrustId != null) {
+            reqUrl = reqUrl + "&entrustId=" + $scope.conditionEntrustId
         }
-        if ($scope.search_enterTime_end != null) {
-            reqUrl = reqUrl + "&enterEnd=" + $scope.search_enterTime_end
+        // 入库时间 开始
+        if ($scope.searchEnterTimeStart != null) {
+            reqUrl = reqUrl + "&enterStart=" + $scope.searchEnterTimeStart
         }
+        // 入库时间 终了
+        if ($scope.searchEnterTimeEnd != null) {
+            reqUrl = reqUrl + "&enterEnd=" + $scope.searchEnterTimeEnd
+        }
+        // 是否MSO
+        if ($scope.conditionMsoId != null) {
+            reqUrl = reqUrl + "&msoStatus=" + $scope.conditionMsoId
+        }
+        // 计划出库时间
         if ($scope.search_planTime_start != null) {
             reqUrl = reqUrl + "&planStart=" + $scope.search_planTime_start
         }
         if ($scope.search_planTime_end != null) {
             reqUrl = reqUrl + "&planEnd=" + $scope.search_planTime_end
         }
+        // 实际出库时间
         if ($scope.search_outTime_start != null) {
             reqUrl = reqUrl + "&realStart=" + $scope.search_outTime_start
         }
         if ($scope.search_outTime_end != null) {
             reqUrl = reqUrl + "&realEnd=" + $scope.search_outTime_end
         }
+
+        console.log(reqUrl);
+
         _basic.get(reqUrl).then(function (data) {
             if (data.success == true) {
                 $scope.storageCarList = data.result;

@@ -41,6 +41,8 @@ baseService.factory("_config", function () {
         admin_type: "99"
     };
     _this.rel_status = 1;
+
+    // 车辆状态
     _this.carRelStatus = [
         {
             s_num: 1,
