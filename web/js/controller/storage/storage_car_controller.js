@@ -1,5 +1,5 @@
 /**
- * Created by ASUS on 2017/5/4.
+ * Created by star on 2018/4/8.
  */
 app.controller("storage_car_controller", ["$scope", "$rootScope", "$stateParams", "_host", "_basic", "_config", "_baseService",function ($scope, $rootScope, $stateParams, _host, _basic,  _config ,_baseService) {
     var userId = _basic.getSession(_basic.USER_ID);
@@ -82,10 +82,7 @@ app.controller("storage_car_controller", ["$scope", "$rootScope", "$stateParams"
         });
     }
 
-    /**
-     * 查询列表 条件查询
-     *
-     * */
+    //查询列表 条件查询
     $scope.getStorageCar = function () {
         var reqUrl = _host.api_url + "/user/" + userId + "/car?active=" + 1 + "&start=" + $scope.start + "&size=" + $scope.size;
         if ($scope.getRelStatus != null) {
@@ -150,7 +147,7 @@ app.controller("storage_car_controller", ["$scope", "$rootScope", "$stateParams"
         });
     };
 
-    /**点击新增按钮*/
+    //点击新增按钮
     $scope.addStorageCar = function () {
         $('.tabWrap .tab').removeClass("active");
         $(".tab_box ").removeClass("active");
@@ -224,35 +221,35 @@ app.controller("storage_car_controller", ["$scope", "$rootScope", "$stateParams"
             });
         }
     };
-        // 存放位置联动查询--行
-        $scope.getStorageAreaParking = function (val) {
-            _basic.get(_host.api_url + "/storageParking?storageId=" + $scope.val+"&areaId="+val).then(function (data) {
-                if (data.success == true&&data.result.length>0) {
-                    $scope.storageParking = data.result;
-                    $scope.parkingArray =_baseService.storageParking($scope.storageParking);
-                    for(var i=0;i<$scope.parkingArray.length;i++){
-                        $scope.parkingArrayR.push($scope.parkingArray[i].row);
-                        $scope.parkingArrayL.push($scope.parkingArray[i].lot);
-                        $scope.parkingArrayRow = _baseService.array($scope.parkingArrayR);
-                        $scope.parkingArrayLot =  _baseService.array($scope.parkingArrayL);
-                    }
+    // 存放位置联动查询--行
+    $scope.getStorageAreaParking = function (val) {
+        _basic.get(_host.api_url + "/storageParking?storageId=" + $scope.val+"&areaId="+val).then(function (data) {
+            if (data.success == true&&data.result.length>0) {
+                $scope.storageParking = data.result;
+                $scope.parkingArray =_baseService.storageParking($scope.storageParking);
+                for(var i=0;i<$scope.parkingArray.length;i++){
+                    $scope.parkingArrayR.push($scope.parkingArray[i].row);
+                    $scope.parkingArrayL.push($scope.parkingArray[i].lot);
+                    $scope.parkingArrayRow = _baseService.array($scope.parkingArrayR);
+                    $scope.parkingArrayLot =  _baseService.array($scope.parkingArrayL);
                 }
-                else if(data.success == true&&data.result.length==0){
-                    $scope.parkingArray = "";
-                }
-                else {
-                    swal(data.msg, "", "error");
-                }
-            });
-        };
-        // 存放位置联动查询--列
-        $scope.getStorageRow = function (Row,Lot) {
-            for(var i =0;i<$scope.parkingArray.length;i++){
-               if($scope.parkingArray[i].row==Row&&$scope.parkingArray[i].lot== Lot) {
-                   $scope.colArr =$scope.parkingArray[i].col;
-               }
             }
-        };
+            else if(data.success == true&&data.result.length==0){
+                $scope.parkingArray = "";
+            }
+            else {
+                swal(data.msg, "", "error");
+            }
+        });
+    };
+    // 存放位置联动查询--列
+    $scope.getStorageRow = function (Row,Lot) {
+        for(var i =0;i<$scope.parkingArray.length;i++){
+           if($scope.parkingArray[i].row==Row&&$scope.parkingArray[i].lot== Lot) {
+               $scope.colArr =$scope.parkingArray[i].col;
+           }
+        }
+    };
     // 车辆型号联动查询
     $scope.getMakeId = function (val) {
         if (val) {
@@ -517,9 +514,7 @@ app.controller("storage_car_controller", ["$scope", "$rootScope", "$stateParams"
             }
         });
     };
-    /**
-     * 获取仓储详细信息。
-     */
+    //获取仓储详细信息。
     $scope.getStorageInfo = function () {
 
         // 检索仓储详细信息URL
@@ -548,9 +543,8 @@ app.controller("storage_car_controller", ["$scope", "$rootScope", "$stateParams"
             }
         });
     };
-    /**
-     * 获取仓储（分区）详细信息。
-     */
+    // 获取仓储（分区）详细信息。
+
     $scope.getStorageAreaInfo = function (selectedZone) {
         if (selectedZone == null || selectedZone == '') {
             return;
@@ -582,9 +576,8 @@ app.controller("storage_car_controller", ["$scope", "$rootScope", "$stateParams"
             }
         });
     };
-    /**
-     * 获取仓储（分区）剩余位置信息。
-     */
+    //获取仓储（分区）剩余位置信息。
+
     $scope.getLeftPosition = function (selectZoneId) {
 
         // 检索仓储剩余位置信息URL
@@ -601,9 +594,7 @@ app.controller("storage_car_controller", ["$scope", "$rootScope", "$stateParams"
         });
     };
 
-    /**
-     * 获取仓储分区停车信息列表
-     */
+    // 获取仓储分区停车信息列表
     $scope.getStorageParkingInfo = function (selectedZone) {
 
         var url = _host.api_url + "/storageParking?storageId=" + $scope.storageId + '&areaId=' + selectedZone;
