@@ -5,7 +5,7 @@ app.controller("storage_car_controller", ["$scope", "$rootScope", "$stateParams"
     var userId = _basic.getSession(_basic.USER_ID);
     $scope.curruntId = 0;
     $scope.start = 0;
-    $scope.size = 1;
+    $scope.size = 10;
     $scope.storageImageBox = [];
     $scope.storageId ='';
     // 获取颜色
