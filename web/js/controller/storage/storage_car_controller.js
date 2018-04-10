@@ -133,14 +133,16 @@ app.controller("storage_car_controller", ["$scope", "$rootScope", "$stateParams"
                 $scope.storageCarBoxList = data.result;
                 $scope.storageCar = $scope.storageCarBoxList.slice(0, 10);
                 if ($scope.start > 0) {
-                    $("#pre").removeClass("disabled");
-                } else {
-                    $("#pre").addClass("disabled");
+                    $("#pre").show();
                 }
-                if ($scope.storageCarBoxList.length < $scope.size) {
-                    $("#next").addClass("disabled");
-                } else {
-                    $("#next").removeClass("disabled");
+                else {
+                    $("#pre").hide();
+                }
+                if (data.result.length < $scope.size) {
+                    $("#next").hide();
+                }
+                else {
+                    $("#next").show();
                 }
             } else {
                 swal(data.msg, "", "error");
