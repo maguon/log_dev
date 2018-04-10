@@ -7,7 +7,8 @@ app.controller("car_demand_details_controller", ["$state", "$stateParams", "_con
     // 通过url中的信息取得 车辆id 和 VIN码
     var val = $stateParams.id;
     var vin = $stateParams.vin;
-
+    // 一行一列内，多个停车位区分用 (A-Z)
+    $scope.characters = _config.characters;
     // 颜色列表
     $scope.color = _config.config_color;
 
@@ -108,7 +109,8 @@ app.controller("car_demand_details_controller", ["$state", "$stateParams", "_con
                 $scope.look_make_id = $scope.self_car.make_id,
                 $scope.look_model_id = $scope.self_car.model_id,
                 $scope.look_create_time = moment($scope.self_car.pro_date).format('YYYY-MM-DD');
-                $scope.look_storageName = $scope.self_car.storage_name + "  " + $scope.self_car.row + "排" + $scope.self_car.col + "列";
+                var selfLot = $scope.characters[$scope.self_car.lot-1].name;
+                $scope.look_storageName = $scope.self_car.storage_name + "" +$scope.self_car.area_name+""+ $scope.self_car.row + "排" + $scope.self_car.col + "列"+selfLot;
                 // 车辆id
                 $scope.look_car_id = $scope.self_car.id;
             } else {

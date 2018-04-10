@@ -264,12 +264,7 @@
                                 <td ng-if="el.mso_status==2">是</td>
                                 <td ng-if="el.mso_status==1">否</td>
                                 <td ng-if="el.mso_status==null">无状态</td>
-                                <td ng-if="el.rel_status==1&&el.lot==1">{{el.storage_name}}{{el.area_name}}{{el.row}}排{{el.col}}列A</td>
-                                <td ng-if="el.rel_status==1&&el.lot==2">{{el.storage_name}}{{el.area_name}}{{el.row}}排{{el.col}}列B</td>
-                                <td ng-if="el.rel_status==1&&el.lot==3">{{el.storage_name}}{{el.area_name}}{{el.row}}排{{el.col}}列C</td>
-                                <td ng-if="el.rel_status==1&&el.lot==4">{{el.storage_name}}{{el.area_name}}{{el.row}}排{{el.col}}列D</td>
-                                <td ng-if="el.rel_status==1&&el.lot==5">{{el.storage_name}}{{el.area_name}}{{el.row}}排{{el.col}}列E</td>
-                                <td ng-if="el.rel_status==1&&el.lot==6">{{el.storage_name}}{{el.area_name}}{{el.row}}排{{el.col}}列F</td>
+                                <td ng-if="el.rel_status==1">{{el.storage_name}}{{el.area_name}}{{el.row}}排{{characters[el.lot-1].name}}</td>
                                 <td ng-if="el.rel_status==2"></td>
                                 <td ng-bind="el.enter_time|date:'yyyy-MM-dd '"></td>
                                 <td ng-bind="el.real_out_time|date:'yyyy-MM-dd '"></td>
@@ -329,12 +324,7 @@
                                 <td ng-if="el.mso_status==2">是</td>
                                 <td ng-if="el.mso_status==1">否</td>
                                 <td ng-if="el.mso_status==null">无状态</td>
-                                <td ng-if="el.rel_status==1&&el.lot==1">{{el.storage_name}}{{el.area_name}}{{el.row}}排{{el.col}}列A</td>
-                                <td ng-if="el.rel_status==1&&el.lot==2">{{el.storage_name}}{{el.area_name}}{{el.row}}排{{el.col}}列B</td>
-                                <td ng-if="el.rel_status==1&&el.lot==3">{{el.storage_name}}{{el.area_name}}{{el.row}}排{{el.col}}列C</td>
-                                <td ng-if="el.rel_status==1&&el.lot==4">{{el.storage_name}}{{el.area_name}}{{el.row}}排{{el.col}}列D</td>
-                                <td ng-if="el.rel_status==1&&el.lot==5">{{el.storage_name}}{{el.area_name}}{{el.row}}排{{el.col}}列E</td>
-                                <td ng-if="el.rel_status==1&&el.lot==6">{{el.storage_name}}{{el.area_name}}{{el.row}}排{{el.col}}列F</td>
+                                <td ng-if="el.rel_status==1">{{el.storage_name}}{{el.area_name}}{{el.row}}排{{characters[el.lot-1].name}}</td>
                                 <td ng-if="el.rel_status==2"></td>
                                 <td ng-bind="el.enter_time|date:'yyyy-MM-dd '"></td>
                                 <td ng-bind="el.plan_out_time|date:'yyyy-MM-dd '"></td>
@@ -388,12 +378,7 @@
                                 <td ng-bind="el.model_name"></td>
                                 <td ng-if="el.valuation==null"></td>
                                 <td ng-if="el.valuation!==null">${{el.valuation}}.00</td>
-                                <td ng-if="el.rel_status==1&&el.lot==1">{{el.storage_name}}{{el.area_name}}{{el.row}}排{{el.col}}列A</td>
-                                <td ng-if="el.rel_status==1&&el.lot==2">{{el.storage_name}}{{el.area_name}}{{el.row}}排{{el.col}}列B</td>
-                                <td ng-if="el.rel_status==1&&el.lot==3">{{el.storage_name}}{{el.area_name}}{{el.row}}排{{el.col}}列C</td>
-                                <td ng-if="el.rel_status==1&&el.lot==4">{{el.storage_name}}{{el.area_name}}{{el.row}}排{{el.col}}列D</td>
-                                <td ng-if="el.rel_status==1&&el.lot==5">{{el.storage_name}}{{el.area_name}}{{el.row}}排{{el.col}}列E</td>
-                                <td ng-if="el.rel_status==1&&el.lot==6">{{el.storage_name}}{{el.area_name}}{{el.row}}排{{el.col}}列F</td>
+                                <td ng-if="el.rel_status==1">{{el.storage_name}}{{el.area_name}}{{el.row}}排{{characters[el.lot-1].name}}</td>
                                 <td ng-if="el.rel_status==2"></td>
                                 <td ng-bind="el.enter_time|date:'yyyy-MM-dd '"></td>
                                 <td ng-bind="el.plan_out_time|date:'yyyy-MM-dd '"></td>

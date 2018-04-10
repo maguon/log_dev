@@ -78,14 +78,16 @@ app.controller("car_demand_controller", ["$scope", "$rootScope", "_host", "_basi
                 $scope.storageCarList = data.result;
                 $scope.storageCar = $scope.storageCarList.slice(0, 10);
                 if ($scope.start > 0) {
-                    $("#pre").removeClass("disabled");
-                } else {
-                    $("#pre").addClass("disabled");
+                    $("#pre").show();
                 }
-                if ($scope.storageCarList.length < $scope.size) {
-                    $("#next").addClass("disabled");
-                } else {
-                    $("#next").removeClass("disabled");
+                else {
+                    $("#pre").hide();
+                }
+                if (data.result.length < $scope.size) {
+                    $("#next").hide();
+                }
+                else {
+                    $("#next").show();
                 }
             } else {
                 swal(data.msg, "", "error");

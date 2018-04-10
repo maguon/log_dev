@@ -1,9 +1,9 @@
 /**
- * Created by ASUS on 2017/5/5.
+ * Created by star on 2018/4/8.
  */
 app.controller("storage_car_details_controller", [ "$scope","$state", "$stateParams", "_config", "_baseService",  "_host", "_basic", function ( $scope,$state, $stateParams, _config, _baseService,  _host, _basic) {
 
-   /**  自定义变量名  */
+   //自定义变量名
     var userId = _basic.getSession(_basic.USER_ID);
     var val = $stateParams.id;//获取本条信息的id
     var vin = $stateParams.vin;//获取本条信息的vin码
@@ -175,9 +175,7 @@ app.controller("storage_car_details_controller", [ "$scope","$state", "$statePar
             }
         });
     };
-    /**
-     * 获取仓储详细信息。
-     */
+    //获取仓储详细信息
     $scope.getStorageInfo = function () {
 
         // 检索仓储详细信息URL
@@ -205,9 +203,7 @@ app.controller("storage_car_details_controller", [ "$scope","$state", "$statePar
             }
         });
     };
-    /**
-     * 获取仓储（分区）详细信息。
-     */
+    // 获取仓储（分区）详细信息
     $scope.getStorageAreaInfo = function (selectedZone) {
         if (selectedZone == null || selectedZone == '') {
             return;
@@ -239,9 +235,7 @@ app.controller("storage_car_details_controller", [ "$scope","$state", "$statePar
             }
         });
     };
-    /**
-     * 获取仓储（分区）剩余位置信息。
-     */
+    //获取仓储（分区）剩余位置信息。
     $scope.getLeftPosition = function (selectZoneId) {
 
         // 检索仓储剩余位置信息URL
@@ -258,9 +252,8 @@ app.controller("storage_car_details_controller", [ "$scope","$state", "$statePar
         });
     };
 
-    /**
-     * 获取仓储分区停车信息列表
-     */
+    //获取仓储分区停车信息列表
+
     $scope.getStorageParkingInfo = function (selectedZone) {
 
         var url = _host.api_url + "/storageParking?storageId=" + $scope.storageId + '&areaId=' + selectedZone;
@@ -332,28 +325,8 @@ app.controller("storage_car_details_controller", [ "$scope","$state", "$statePar
                     }else {
                         $scope.look_create_time = moment($scope.self_car.pro_date).format('YYYY-MM-DD');
                     }
-                if($scope.self_car.lot==1){
-                    $scope.self_car.lot='A';
-                }
-                if($scope.self_car.lot==2){
-                    $scope.self_car.lot='B';
-                }
-                if($scope.self_car.lot==3){
-                    $scope.self_car.lot='C';
-                }
-                if($scope.self_car.lot==4){
-                    $scope.self_car.lot='D';
-                }
-                if($scope.self_car.lot==5){
-                    $scope.self_car.lot='E';
-                }
-                if($scope.self_car.lot==6){
-                    $scope.self_car.lot='F';
-                }
-                if($scope.self_car.lot==7){
-                    $scope.self_car.lot='G';
-                }
-                $scope.look_storageName = $scope.self_car.storage_name + "" +$scope.self_car.area_name+""+ $scope.self_car.row + "排" + $scope.self_car.col + "列"+$scope.self_car.lot;
+               var selfLot = $scope.characters[$scope.self_car.lot-1].name;
+                $scope.look_storageName = $scope.self_car.storage_name + "" +$scope.self_car.area_name+""+ $scope.self_car.row + "排" + $scope.self_car.col + "列"+selfLot;
                 // 车辆id
                 $scope.look_car_id = $scope.self_car.id;
             } else {

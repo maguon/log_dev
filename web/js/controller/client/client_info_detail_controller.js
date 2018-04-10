@@ -8,7 +8,7 @@ app.controller("client_info_detail_controller", ["$scope", "$rootScope","$state"
     $scope.start = 0;
     $scope.size = 10;
     $scope.valuation = 0;
-    $scope.carLot=_config.characters;
+    $scope.characters = _config.characters;
     //获取传过来的id
     // 跳转
     $('ul.tabWrap li').removeClass("active");

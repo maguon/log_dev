@@ -1,5 +1,5 @@
 <!--新增模块-->
-<div id="newStorageCar" class="modal ">
+<div id="newStorageCar" class="modal">
     <!--标题：新增入库车辆-->
     <div class="cyan lighten-1 white-text center-align modal_title" >新增入库车辆</div>
     <div class="modal-content">
@@ -274,7 +274,7 @@
                     <!--型号-->
                     <div class="input-field col s6">
                         <select material-select watch ng-model="search_modelId" >
-                            <option ng-value=""  selected>车辆型号</option>
+                            <option value=""  selected>车辆型号</option>
                             <option ng-repeat="el in carModelName" ng-value="el.id">{{el.model_name}}</option>
                         </select>
                     </div>
