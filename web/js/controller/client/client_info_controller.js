@@ -8,9 +8,15 @@ app.controller("client_info_controller", ["$scope", "$rootScope", "_host", "_bas
     //委托方性质
     $scope.entrustType = _config.entrustType;
     $scope.carLot=_config.carParking;
+    var url="";
     //获取委托方信息
     $scope.entrust =function(type) {
-        _basic.get(_host.api_url + "/entrust?entrustType="+type).then(function (data) {
+        if(type==undefined){
+            url=_host.api_url + "/entrust";
+        }else{
+            url=_host.api_url + "/entrust?entrustType="+type;
+        }
+        _basic.get(url).then(function (data) {
             if (data.success == true) {
                 $scope.getEntrust = data.result;
                 $('#entrustSelect').select2({
@@ -20,6 +26,12 @@ app.controller("client_info_controller", ["$scope", "$rootScope", "_host", "_bas
             }
         });
     };
+    $scope.changeEntrustId =function(){
+        // 当选中【清除选择】时，委托方改为空
+        if ($scope.getEntrustId == 0) {
+            $scope.getEntrustId = null;
+        }
+    }
    //获取列表
     $scope.getClient = function (){
         var obj = {
@@ -65,6 +77,7 @@ app.controller("client_info_controller", ["$scope", "$rootScope", "_host", "_bas
     //获取数据
     $scope.queryData = function () {
         $scope.getClient();
+        $scope.entrust();
     };
     $scope.queryData();
 }])
