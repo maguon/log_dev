@@ -1,3 +1,87 @@
+<!--车辆移位模态框-->
+<div id="change_storageCar" class="modal" style="width: 90%;height: 70%;">
+    <div class="modal-content">
+        <h4 class="center-align">车辆移位</h4>
+        <!-- 头部 -->
+        <div class="row cyan lighten-1 white-text" style="margin: 10px 0 0 0 ">
+            <div class="valign-wrapper">
+                <!-- 仓库 名称 -->
+                <h5 class="col s2">
+                    <div ng-bind="storageInfo.storage_name" class="white-text text-darken-1 context-ellipsis"></div>
+                </h5>
+                <!-- 仓库柜 扇区列表 -->
+                <div class="col s3" style="width: 50%;">
+                    <p class="col s8 left-align">
+                        <select material-select watch ng-model="selectedZone"
+                                ng-change="getStorageAreaInfo(selectedZone);" class="center">
+                            <!--<option value="" disabled>请选择</option>-->
+                            <option ng-repeat="op in zoneList"  ng-value="{{op.id}}" ng-selected="op.id == selectedZone">
+                                {{op.area_name}}
+                            </option>
+                        </select>
+                    </p>
+                </div>
+
+                <!-- 仓库柜 总位置 / 剩余位置 -->
+                <div class="col s7 white-text fz16">
+                    <p class="col" style="width:12%;">
+                        行: <span ng-bind="row"></span>
+                    </p>
+                    <p class="col" style="width:13%;">
+                        列: <span ng-bind="col"></span>
+                    </p>
+                    <p class="col" style="width:25%;">
+                        单元存车位: <span ng-bind="lot"></span>
+                    </p>
+                    <p class="col" style="width:25%;">
+                        总位置: {{(row == null || row == undefined) ? 0 : row * col * lot}}
+                    </p>
+                    <p class="col" style="width:25%;">
+                        剩余位置: <span ng-bind="leftPosition"></span>
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- 主体 -->
+        <div class="" style="width: 95%;margin: 0 auto;padding-top: 20px;">
+
+            <!-- 详细 -->
+            <div ng-show="hasPosition == true" class="storageWrap" style="border:0">
+                <div ng-repeat="el in storageParkingArray">
+
+                    <!-- 每行之间的余白 -->
+                    <div ng-show="el.lot == 1" style="padding-bottom: 30px;"></div>
+
+                    <!-- 头 -->
+                    <div ng-show="el.lot == 1" class="col s12 storage_list">
+                        <div class="storage_row vc-center" style="border: 1px solid #cccccc; border-right:0px"></div>
+                        <div class="storage_row vc-center" style="border: 1px solid #cccccc; border-left: 0px"></div>
+                        <div class="storage_row vc-center" style="border: 1px solid #cccccc; border-left: 0px" ng-repeat="el in storageParkingCol">
+                            {{el.col}}
+                        </div>
+                    </div>
+
+                    <!-- 列表 -->
+                    <div class="col s12 storage_list">
+                        <div class="storage_row vc-center left white-text fz20" style="background-color: #aaaaaa;border: 0px solid #cccccc;">{{(el.lot == 1 ? el.row : '')}}</div>
+                        <div class="storage_row vc-center left" style="background-color: #dddddd;">
+                            {{characters[el.lot-1].name}}
+                        </div>
+                        <div class="storage_row vc-center left" ng-repeat="els in el.col track by $index" ng-class="{'present_place':els.carId==moveCarId}">
+                            <i ng-show="els.carId!=0" class=" mdi mdi-car cyan-text lighten-1" ></i>
+                            <i ng-show="els.carId==0" class=" mdi mdi-car grey-text lighten-2" ng-click="getCarInfo(els.id,el.row,els.col,el.lot)"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div ng-show="hasPosition == false" class="col s12  storage_list  vc-center">
+                <span style="letter-spacing: 2px">暂无数据</span>
+            </div>
+        </div>
+    </div>
+</div>
 <!--仓储车辆信息详情-->
 <div id="look_StorageCar" >
     <div class="modal-content grey-text text-darken-2">
@@ -164,90 +248,6 @@
                             <a class="btn btn-large btn-floating mr-10 waves-light waves-effect yellow darken-3" ng-click="changeStorageCar(self_car.storage_id,self_car.area_id,self_car.id)">
                                 <i class="mdi mdi-rotate-left"></i>
                             </a>
-                            <!--车辆移位模态框-->
-                            <div id="change_storageCar" class="modal" style="width: 90%;height: 70%;">
-                                <div class="modal-content">
-                                    <h4 class="center-align">车辆移位</h4>
-                                    <!-- 头部 -->
-                                    <div class="row cyan lighten-1 white-text" style="margin: 10px 0 0 0 ">
-                                        <div class="valign-wrapper">
-                                            <!-- 仓库 名称 -->
-                                            <h5 class="col s2">
-                                                <div ng-bind="storageInfo.storage_name" class="white-text text-darken-1 context-ellipsis"></div>
-                                            </h5>
-                                            <!-- 仓库柜 扇区列表 -->
-                                            <div class="col s3" style="width: 50%;">
-                                                <p class="col s8 left-align">
-                                                    <select material-select watch ng-model="selectedZone"
-                                                            ng-change="getStorageAreaInfo(selectedZone);" class="center">
-                                                        <!--<option value="" disabled>请选择</option>-->
-                                                        <option ng-repeat="op in zoneList"  ng-value="{{op.id}}" ng-selected="op.id == selectedZone">
-                                                            {{op.area_name}}
-                                                        </option>
-                                                    </select>
-                                                </p>
-                                            </div>
-
-                                            <!-- 仓库柜 总位置 / 剩余位置 -->
-                                            <div class="col s7 white-text fz16">
-                                                <p class="col" style="width:12%;">
-                                                    行: <span ng-bind="row"></span>
-                                                </p>
-                                                <p class="col" style="width:13%;">
-                                                    列: <span ng-bind="col"></span>
-                                                </p>
-                                                <p class="col" style="width:25%;">
-                                                    单元存车位: <span ng-bind="lot"></span>
-                                                </p>
-                                                <p class="col" style="width:25%;">
-                                                    总位置: {{(row == null || row == undefined) ? 0 : row * col * lot}}
-                                                </p>
-                                                <p class="col" style="width:25%;">
-                                                    剩余位置: <span ng-bind="leftPosition"></span>
-                                                </p>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <!-- 主体 -->
-                                    <div class="" style="width: 95%;margin: 0 auto;padding-top: 20px;">
-
-                                        <!-- 详细 -->
-                                        <div ng-show="hasPosition == true" class="storageWrap" style="border:0">
-                                            <div ng-repeat="el in storageParkingArray">
-
-                                                <!-- 每行之间的余白 -->
-                                                <div ng-show="el.lot == 1" style="padding-bottom: 30px;"></div>
-
-                                                <!-- 头 -->
-                                                <div ng-show="el.lot == 1" class="col s12 storage_list">
-                                                    <div class="storage_row vc-center" style="border: 1px solid #cccccc; border-right:0px"></div>
-                                                    <div class="storage_row vc-center" style="border: 1px solid #cccccc; border-left: 0px"></div>
-                                                    <div class="storage_row vc-center" style="border: 1px solid #cccccc; border-left: 0px" ng-repeat="el in storageParkingCol">
-                                                        {{el.col}}
-                                                    </div>
-                                                </div>
-
-                                                <!-- 列表 -->
-                                                <div class="col s12 storage_list">
-                                                    <div class="storage_row vc-center left white-text fz20" style="background-color: #aaaaaa;border: 0px solid #cccccc;">{{(el.lot == 1 ? el.row : '')}}</div>
-                                                    <div class="storage_row vc-center left" style="background-color: #dddddd;">
-                                                        {{characters[el.lot-1].name}}
-                                                    </div>
-                                                    <div class="storage_row vc-center left" ng-repeat="els in el.col track by $index" ng-class="{'present_place':els.carId==moveCarId}">
-                                                        <i ng-show="els.carId!=0" class=" mdi mdi-car cyan-text lighten-1" ></i>
-                                                        <i ng-show="els.carId==0" class=" mdi mdi-car grey-text lighten-2" ng-click="getCarInfo(els.id,el.row,els.col,el.lot)"></i>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div ng-show="hasPosition == false" class="col s12  storage_list  vc-center">
-                                            <span style="letter-spacing: 2px">暂无数据</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
                             <a class="btn btn-floating  btn-large waves-light waves-effect red lighten-2" ng-click="outStorage(self_car.r_id,self_car.p_id,self_car.storage_id,self_car.id)">
                                 <i class="mdi mdi-logout "></i>
                             </a>

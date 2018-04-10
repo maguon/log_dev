@@ -5,7 +5,7 @@ app.controller("storage_car_controller", ["$scope", "$rootScope", "$stateParams"
     var userId = _basic.getSession(_basic.USER_ID);
     $scope.curruntId = 0;
     $scope.start = 0;
-    $scope.size = 10;
+    $scope.size = 1;
     $scope.storageImageBox = [];
     $scope.storageId ='';
     // 获取颜色
@@ -57,7 +57,6 @@ app.controller("storage_car_controller", ["$scope", "$rootScope", "$stateParams"
             }
         });
     }
-
     // 获取车库信息
     function getStorageName () {
         _basic.get(_host.api_url + "/storage").then(function (data) {
@@ -81,6 +80,18 @@ app.controller("storage_car_controller", ["$scope", "$rootScope", "$stateParams"
             }
         });
     }
+
+    $scope.changeEntrustId =function(){
+        // 当选中【清除选择】时，委托方改为空
+        if ($scope.getEntrustId == 0) {
+            $scope.getEntrustId = null;
+        }
+    }
+    // 点击按钮进行查询
+    $scope.getStorageCarList = function () {
+        $scope.start = 0;
+        $scope.getStorageCar();
+    };
 
     //查询列表 条件查询
     $scope.getStorageCar = function () {
