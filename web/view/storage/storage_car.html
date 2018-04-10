@@ -104,23 +104,17 @@
                         <div class="row  p0 storage_position"  style="padding-bottom: 5px" >
                             <div class="col s4">
                                 <div class="input-field  valign-wrapper cyan white-text" >
-                                    <select material-select watch id="row" name="row" class="col s12"  ng-model="row" required>
-                                        <option value=""  selected><span style="color: red;margin-right: 5px">*</span>存放排数</option>
+                                    <select material-select watch id="row" name="row" class="col s12"  ng-model="addRow" required>
+                                        <option value=""  disabled><span style="color: red;margin-right: 5px">*</span>存放排数</option>
                                         <option ng-repeat="el in parkingArrayRow"  ng-value="$index+1" >{{$index+1}}排</option>
                                     </select>
                                 </div>
                             </div>
                             <div class="col s4">
                                 <div class="input-field  valign-wrapper cyan white-text" >
-                                    <select material-select watch id="lattice" name="lattice" class=" col s12" ng-model="lot" ng-change="getStorageRow(row,lot)" required>
-                                        <option value=""  selected><span style="color: red;margin-right: 5px">*</span>存放格位</option>
-                                        <option ng-repeat="el in parkingArrayLot"  ng-value="$index+1" ng-if="$index+1==1">A</option>
-                                        <option ng-repeat="el in parkingArrayLot"  ng-value="$index+1" ng-if="$index+1==2">B</option>
-                                        <option ng-repeat="el in parkingArrayLot"  ng-value="$index+1" ng-if="$index+1==3">C</option>
-                                        <option ng-repeat="el in parkingArrayLot"  ng-value="$index+1" ng-if="$index+1==4">D</option>
-                                        <option ng-repeat="el in parkingArrayLot"  ng-value="$index+1" ng-if="$index+1==5">E</option>
-                                        <option ng-repeat="el in parkingArrayLot"  ng-value="$index+1" ng-if="$index+1==6">F</option>
-                                        <option ng-repeat="el in parkingArrayLot"  ng-value="$index+1" ng-if="$index+1==7">G</option>
+                                    <select material-select watch id="lattice" name="lattice" class="col s12" ng-model="addLot" ng-change="getStorageRow(addRow,addLot)" required>
+                                        <option value=''  disabled><span style="color: red;margin-right: 5px">*</span>存放格位</option>
+                                        <option ng-repeat="el in parkingArrayLot"  ng-value="$index+1" ng-bind="characters[$index].name"></option>
                                     </select>
                                 </div>
                             </div>
@@ -391,14 +385,10 @@
                     <td ng-bind="el.enter_time|date:'yyyy-MM-dd HH:mm:ss'"></td>
                     <td ng-if="el.storage_id!=null" ng-bind="el.storage_name"></td>
                     <td ng-if="el.storage_id==null" >无</td>
-                    <td ng-bind="el.area_name"></td>
-                    <td ng-if="el.lot==1">{{el.row}}排{{el.col}}列A</td>
-                    <td ng-if="el.lot==2">{{el.row}}排{{el.col}}列B</td>
-                    <td ng-if="el.lot==3">{{el.row}}排{{el.col}}列C</td>
-                    <td ng-if="el.lot==4">{{el.row}}排{{el.col}}列D</td>
-                    <td ng-if="el.lot==5">{{el.row}}排{{el.col}}列E</td>
-                    <td ng-if="el.lot==6">{{el.row}}排{{el.col}}列F</td>
-                    <td ng-if="el.lot==7">{{el.row}}排{{el.col}}列G</td>
+                    <td ng-if="el.area_name==null">无</td>
+                    <td ng-if="el.area_name!==null" >{{el.area_name}}</td>
+                    <td ng-if="el.lot==null&&el.col==null&&el.row==null">无</td>
+                    <td ng-if="el.lot!==null||el.col!==null||el.row!==null" >{{el.row}}排{{el.col}}列{{characters[el.lot-1].name}}</td>
                     <td ng-bind="el.plan_out_time|date:'yyyy-MM-dd '"></td>
                     <td ng-bind="el.real_out_time|date:'yyyy-MM-dd '"></td>
                     <td class="operation">
@@ -466,37 +456,44 @@
                         <span>
                             <i ng-if="el.rel_status==1" class="mdi mdi-logout cyan-text lighten-1" ng-click="outStorageCar(el.r_id,2,el.p_id,el.storage_id,el.id)" ></i>
                             <i ng-if="el.rel_status==2" class="mdi mdi-login cyan-text lighten-1" ng-click="loginStorageCar(el.vin,el.id)"></i>
-                                <div id="loginStorageCar" class="modal modal-fixed-footer ">
+                            <div id="loginStorageCar" class="modal modal-fixed-footer ">
                             <form name="login_garageForm" novalidate>
                                 <div class="modal-content">
                                     <h4 class="center-align">车辆入库</h4>
                                     <div class="row">
                                         <div class="input-field col s4">
-                                            <select material-select watch name="login_storage_name" ng-change="getStorageId(login_storage_name.id)" ng-options="o.storage_name for o in storageName|filter:{storage_status:'1'}" ng-model="login_storage_name" required>
-                                                <option value=""  selected>请选择</option>
-                                                <!--<option ng-repeat="el in storageName" ng-value="el.id">{{el.storage_name}}</option>-->
+                                            <select  material-select watch  name="storageName"  ng-change="getStorageId(storage_name.id)" ng-options="o.storage_name for o in storageName|filter:{storage_status:'1'}" ng-model="storage_name" required>
+                                                <option value=""  selected style="padding-left: 5px;"><span style="color: red;margin-right: 5px">*</span>存放仓库</option>
                                             </select>
-                                            <label >车库</label>
+                                        </div>
+                                         <div class="input-field col s4">
+                                            <select material-select watch  ng-change="getStorageAreaParking(area.id)" ng-model="area" ng-options="area.area_name for area in storageAreaParking" >
+                                                <option value=""  selected style="padding-left: 5px;"><span style="color: red;margin-right: 5px">*</span>存放区域</option>
+                                            </select>
                                         </div>
                                         <div class="input-field col s4">
-                                            <select material-select watch name="login_storageRow" ng-model="login_storageRow" ng-change="getStorageRow(login_storageRow,parkingArray)" required>
-                                                <option value=""  selected>请选择</option>
-                                                <option ng-repeat="el in parkingArray" ng-value="el.row">{{el.row}}</option>
-                                            </select>
-                                            <label >排</label>
+                                             <select material-select watch  name="row" class="col s12"  ng-model="outRow" required>
+                                                <option value=""  selected><span style="color: red;margin-right: 5px">*</span>存放排数</option>
+                                                <option ng-repeat="el in parkingArrayRow"  ng-value="$index+1" >{{$index+1}}排</option>
+                                             </select>
                                         </div>
                                         <div class="input-field col s4">
-                                            <select material-select watch ng-model="login_parkingId"  name="login_parkingId" required>
-                                                <option value=""  selected>请选择</option>
-                                                <option ng-repeat="el in colArr" ng-if="el.carId==0"  ng-value="el.id" >{{el.col}}</option>
-                                                <option ng-repeat="el in colArr" ng-if="el.carId!=0" disabled  >{{el.col}}</option>
+                                             <select material-select watch  name="lattice" class=" col s12" ng-model="outLot" ng-change="getStorageRow(outRow,outLot)" required>
+                                                <option value=''  selected><span style="color: red;margin-right: 5px">*</span>存放格位</option>
+                                                <option ng-repeat="el in parkingArrayLot"  ng-value="$index+1" ng-bind="characters[$index].name"></option>
                                             </select>
-                                            <label >道位</label>
                                         </div>
-                                        <div class="col s4 vc-center">
-                                             <div class="col s4 p0 cyan-text text-lighten-1 bold" style="min-width: 100px;font-size: 13px"  >计划出库时间:</div>
-                                            <div class="col input-field s8 no-mp" ng-class="{'has-error':login_garageForm.login_planOutTime.$invalid&&submitted }">
+                                         <div class="input-field col s4">
+                                            <select material-select watch  name="col_id" class=" col s12" ng-model="parking_id"   required>
+                                                <option value=""  selected><span style="color: red;margin-right: 5px">*</span>存放道位</option>
+                                                <option ng-repeat="el in colArr" ng-if="el.carId==0"  ng-value="el.id" >{{el.col}}列</option>
+                                                <option ng-repeat="el in colArr" ng-if="el.carId!=0" disabled  >{{el.col}}列</option>
+                                             </select>
+                                        </div>
+                                        <div class="input-field col s4">
+                                            <div class="col input-field s12 no-mp" ng-class="{'has-error':login_garageForm.login_planOutTime.$invalid&&submitted }">
                                                 <input type="text" name="login_planOutTime" ng-model="login_planOutTime"  class="datepicker" autocomplete="off" required   date><i class="mdi dataIcon mdi-table-large"></i>
+                                                <label  class="cyan-text text-lighten-1 bold">计划出库时间:</label>
                                             </div>
                                         </div>
                                     </div>
@@ -506,7 +503,7 @@
                                     <a  class=" modal-action modal-close waves-effect  grey lighten-1waves-light   btn" style="margin-right: 10px" >
                                         取消
                                     </a>
-                                    <button class="btn waves-light waves-effect  cyan lighten-1" ng-click="loginStorageCarOnce(login_garageForm.$valid,login_storage_name.id,login_storage_name.storage_name,login_parkingId,login_planOutTime)"  name="action" >
+                                    <button class="btn waves-light waves-effect  cyan lighten-1" ng-click="loginStorageCarOnce(login_garageForm.$valid,storage_name.id,storage_name.storage_name,parking_id,login_planOutTime)"  name="action" >
                                         确定
                                     </button>
                                 </div>
