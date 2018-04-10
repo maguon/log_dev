@@ -3,7 +3,7 @@
 <!-- 主画面：详细信息列表 -->
 <div class="row"  style="">
     <!-- 仓储 详情 -->
-    <div class="col s3 " ng-repeat="storage in storageList" style="position:relative;">
+    <div class="col s3" ng-repeat="storage in storageList" style="position:relative;">
 
         <!-- 仓储 明细 详情 -->
         <div class="white z-depth-2" style="margin-bottom: 25px;border:1px solid #00e5ff">
@@ -15,7 +15,7 @@
                 <div class="context-ellipsis fz18 left-align" style="margin-left: 10px; width: 300px;" ng-bind="storage.storage_name"></div>
 
                 <!-- 仓储详细信息 Button -->
-                <a class="right btn-floating  setting_shipments_btn  btn waves-effect cyan  lighten-2 waves-light" style="position: absolute;top: 20%;right: 20px;"
+                <a class="right btn-floating  setting_shipments_btn  btn waves-effect cyan  lighten-2 waves-light" style="position: absolute;top: 13%;right: 20px;"
                    href="#" ui-sref="storage_store_detail({id:storage.id,from:'storage_store'})">
                     <i class=" mdi mdi-file-document look_icon white-text  lighten-1" ></i>
                 </a>
@@ -23,10 +23,10 @@
 
             <!-- 仓储 明细 Body -->
             <div class="valign-wrapper left-align fz15" style="width: 100%;height: 50px;">
-                <div class="col s12  black-text text-lighten-2">
+                <div class="col s6 black-text text-lighten-2">
                     总车位： <span class="cyan-text">{{(storage.total_seats == null) ? '0' : storage.total_seats}}</span>
                 </div>
-                <div class="col s12  black-text text-lighten-2">
+                <div class="col s6 black-text text-lighten-2">
                     剩余车位： <span class="cyan-text">{{(storage.total_seats == null || storage.balance == null) ? '0' : storage.total_seats - storage.balance}}</span>
                 </div>
             </div>

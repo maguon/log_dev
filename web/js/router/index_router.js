@@ -118,11 +118,6 @@ app.config(['$stateProvider',"$urlRouterProvider",function($stateProvider,$urlRo
             templateUrl: "/view/storage/storage_car_details.html",
             controller:"storage_car_details_controller"
         })
-        .state("storage_car_map", {
-            url:"/storage_car_map/{id}?form",
-            templateUrl: "/view/storage/storage_car_map.html",
-            controller:"storage_car_map_controller"
-        })
         .state("user_info",{
             url:"/user_info",
             templateUrl: "/view/user/user_info.html",
@@ -135,9 +130,9 @@ app.config(['$stateProvider',"$urlRouterProvider",function($stateProvider,$urlRo
             templateUrl: "/view/car_demand/car_demand.html",
             controller:'car_demand_controller'
         })
+        // 主菜单：车辆查询 (车辆信息) 画面
         .state("car_demand_details",{
             url:"/car_demand_details/{id}/vin/{vin}?from",
-            // 主菜单：车辆查询 -> 仓储车辆信息 画面
             templateUrl: "/view/car_demand/car_demand_details.html",
             controller:'car_demand_details_controller'
         })

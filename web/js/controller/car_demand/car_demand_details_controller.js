@@ -51,11 +51,7 @@ app.controller("car_demand_details_controller", ["$state", "$stateParams", "_con
      * 返回到前画面（车辆查询）。
      */
     $scope.return = function () {
-        if ($stateParams.from == "storage_car_map") {
-            $state.go($stateParams.from, {id: $scope.self_car.storage_id, form: "storageStore"}, {reload: true})
-        } else {
-            $state.go($stateParams.from, {}, {reload: true})
-        }
+        $state.go($stateParams.from, {}, {reload: true})
     };
 
     /**
