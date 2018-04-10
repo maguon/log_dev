@@ -13,7 +13,7 @@ app.controller("client_info_controller", ["$scope", "$rootScope", "_host", "_bas
         _basic.get(_host.api_url + "/entrust?entrustType="+type).then(function (data) {
             if (data.success == true) {
                 $scope.getEntrust = data.result;
-                $('#getEntrustId').select2({
+                $('#entrustSelect').select2({
                     placeholder: '委托方',
                     containerCssClass: 'select2_dropdown'
                 });
