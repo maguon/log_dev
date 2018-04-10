@@ -74,7 +74,16 @@ app.controller("storage_car_details_controller", [ "$scope","$state", "$statePar
 
     // 返回
     $scope.return = function () {
-        $state.go("storage_car", {reload: true});
+        // 仓库详情画面 （storage_store_detail）
+        if ($stateParams.from == 'storage_store_detail') {
+            $state.go($stateParams.from, {
+                reload: true,
+                id: $stateParams._id,
+                from: $stateParams._from
+            });
+        } else {
+            $state.go($stateParams.from, {reload: true});
+        }
     };
     // 车辆品牌查询
     _basic.get(_host.api_url + "/carMake").then(function (data) {

@@ -8,6 +8,10 @@ app.controller("storage_store_detail_controller", ["$scope", "$state", "$statePa
 
     // 仓储信息 ID (前画面)
     var storageId = $stateParams.id;
+    $scope.storageId = storageId;
+
+    // 前画面 ID
+    $scope.prePage = $stateParams.from;
 
     // 仓库详情（头部）
     $scope.storageNm = "";
@@ -91,7 +95,7 @@ app.controller("storage_store_detail_controller", ["$scope", "$state", "$statePa
      * 返回到前画面（仓储设置）。
      */
     $scope.return = function () {
-        $state.go('storage_store', {}, {reload: true})
+        $state.go($stateParams.from, {reload: true});
     };
 
 
