@@ -1,57 +1,162 @@
 app.config(['$stateProvider',"$urlRouterProvider",function($stateProvider,$urlRouterProvider) {
     $urlRouterProvider.when("","/storage_index");
     $stateProvider
+        .state("index", {  //路由状态
+            url: "/index",  //路由路径
+            templateUrl: "/view/index.html",  //路由填充的模板
+            controller:'index_controller'
+        })
+        .state("refuel.oilMass", {
+            url: "/refuel",  //路由路径
+            templateUrl: "/view/car/refuel.html" //路由填充的模板
+        })
+        .state("data", {
+            url: "/data",
+            // 无菜单：文件上传 画面
+            templateUrl: "/view/data/data.html",
+            controller:'data_controller'
+        })
+
+        .state("setting_users", {
+            url: "/setting_users",  //路由路径
+            templateUrl: "/view/system_settings/user_manager.html", //路由填充的模板
+            controller:'setting_user_controller'
+        })
+        .state("setting_password", {
+            url:"/setting_password",
+            templateUrl: "/view/system_settings/setting_password.html",
+            controller:'setting_password_controller'
+        })
+        // 管理员设置 -> 仓库设置
+        .state("setting_storage", {
+            url:"/setting_storage",
+            templateUrl: "/view/system_settings/setting_storage.html",
+            controller:'setting_storage_controller'
+        })
+        // 管理员设置 -> 仓库设置 -> 详情
+        .state("setting_storage_detail",{
+            url:"/setting_storage_detail/{id}/{status}?from",
+            templateUrl: "/view/system_settings/setting_storage_detail.html",
+            controller:'setting_storage_detail_controller'
+        })
+
+        .state("setting_car_brand", {
+            url:"/setting_car_brand",
+            templateUrl: "/view/system_settings/setting_car_brand.html",
+            controller:'setting_car_brand_controller'
+        })
+        .state("setting_amend_vin",{
+            url:"/setting_amend_vin",
+            templateUrl: "/view/system_settings/setting_amend_vin.html",
+            controller:'setting_amend_vin_controller'
+        })
+        .state("setting_client",{
+            url:"/setting_client",
+            templateUrl: "/view/system_settings/setting_client.html",
+            controller:'setting_client_controller'
+        })
+        // 钥匙柜设置
+        .state("setting_key_cabinet",{
+            url:"/setting_key_cabinet",
+            templateUrl: "/view/system_settings/setting_key_cabinet.html",
+            controller:'setting_key_cabinet_controller'
+        })
+        // 钥匙柜设置 -> 详情
+        .state("setting_key_cabinet_detail",{
+            url:"/setting_key_cabinet_detail/{id}/{status}?from",
+            // params: {"id": null, "name": null, "remark": null, "zoneSize": null, "status": null},
+            templateUrl: "/view/system_settings/setting_key_cabinet_detail.html",
+            controller:'setting_key_cabinet_detail_controller'
+        })
         .state("storage_index", {  //路由状态
-        url: "/storage_index",  //路由路径
-        templateUrl: "/view/storage/storage_index.html",  //路由填充的模板
-        controller:'storage_index_controller'
-    })
+            url: "/storage_index",  //路由路径
+            templateUrl: "/view/storage/storage_index.html",  //路由填充的模板
+            controller:'storage_index_controller'
+        })
         .state("calendar", {
             url:"/calendar",
             templateUrl: "/view/storage/storage_calendar.html",
             controller:'storage_calendar_controller'
         })
-        .state("storageCar", {
+        .state("storage_car", {
             url:"/storage_car",
             templateUrl: "/view/storage/storage_car.html",
             controller:'storage_car_controller'
         })
-        .state("storageStore", {
+        // 钥匙管理
+        .state("key_info", {
+            url:"/key_info",
+            templateUrl: "/view/storage/key_info.html",
+            controller:'key_info_controller'
+        })
+        // 钥匙管理->钥匙信息
+        .state("key_info_detail", {
+            url:"/key_info_detail/{id}/{name}/{position}?from",
+            templateUrl: "/view/storage/key_info_detail.html",
+            controller:'key_info_detail_controller'
+        })
+        // 仓储管理->仓储存放
+        .state("storage_store", {
             url:"/storage_store",
             templateUrl: "/view/storage/storage_store.html",
             controller:"storage_store_controller"
+        })
+        // 仓储管理->仓储存放->详细
+        .state("storage_store_detail", {
+            url:"/storage_store_detail/{id}?from",
+            templateUrl: "/view/storage/storage_store_detail.html",
+            controller:'storage_store_detail_controller'
         })
         .state("statistics", {
             url:"/storage_statistics",
             templateUrl: "/view/storage/storage_statistics.html",
             controller:"storage_statistics_controller"
         })
-        .state("storage_setting_car", {
-            url:"/storage_setting_car",
-            templateUrl: "/view/storage/storage_setting_car.html",
-            controller:"storage_setting_car_controller"
-        })
         .state("storage_car_detail", {
-            url:"/storage_car_detail/{id}/vin/{vin}/{_from}?from",
+            url:"/storage_car_detail/{id}/vin/{vin}/{_id}/{_from}?from",
             templateUrl: "/view/storage/storage_car_details.html",
             controller:"storage_car_details_controller"
         })
-        /*.state("storageCar_details", {
-            url:"/storageCar_details/{id}/vin/{vin}/_form/{_form}?from",
-            templateUrl: "/view/storage/storage_car_details.html",
-            controller:"storage_car_details_controller"
-        })
-        .state("storageCar_details_", {
-            url:"/storageCar_details/{id}/vin/{vin}?from",
-            templateUrl: "/view/storage/storage_car_details.html",
-            controller:"storage_car_details_controller"
-        })*/
         .state("user_info",{
             url:"/user_info",
             templateUrl: "/view/user/user_info.html",
             controller:'user_info_controller'
-        });
+        })
+
+        // 主菜单：车辆查询 画面
+        .state("car_demand",{
+            url:"/car_demand",
+            templateUrl: "/view/car_demand/car_demand.html",
+            controller:'car_demand_controller'
+        })
+        // 主菜单：车辆查询 (车辆信息) 画面
+        .state("car_demand_details",{
+            url:"/car_demand_details/{id}/vin/{vin}?from",
+            templateUrl: "/view/car_demand/car_demand_details.html",
+            controller:'car_demand_details_controller'
+        })
+        .state("company", {
+            url: "/company",  //路由路径
+            templateUrl: "/view/car/company.html", //路由填充的模板
+            controller:"company_controller"
+        })
+        // 下载app
+        .state("admin_download_app",{
+            url:"/admin_download_app",
+            templateUrl: "/view/download/admin_download_app.html",
+            controller:'admin_download_app_controller'
+        })
+        //委托方
+        .state("client_info",{
+            url:"/client_info",
+            templateUrl: "/view/client/client_info.html",
+            controller:'client_info_controller'
+        })
+        //委托方详情
+        .state("client_info_detail",{
+            url:"/client_info_detail/id/{id}/from/{from}",
+            templateUrl: "/view/client/client_info_detail.html",
+            controller:'client_info_detail_controller'
+        })
+    ;
 }]);
-/**
- * Created by ASUS on 2017/4/10.
- */

@@ -1,4 +1,3 @@
-
 app.config(['$stateProvider',"$urlRouterProvider",function($stateProvider,$urlRouterProvider) {
     $urlRouterProvider.when("","/storage_index");
     $stateProvider
