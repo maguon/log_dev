@@ -11,9 +11,6 @@ app.controller("storage_store_controller", ["$scope", "_host", "_basic", functio
         var data = new Date();
         var nowDate = moment(data).format('YYYYMMDD');
 
-        // TODO test data
-        nowDate = 20180408;
-
         // 检索URL组装
         var url = _host.api_url + "/storageDate?dateStart=" + nowDate + "&dateEnd=" + nowDate;
 

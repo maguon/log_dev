@@ -24,9 +24,6 @@ app.controller("storage_calendar_controller", ["$scope", "_host", "_basic", func
     // 画面显示用(今天周几)
     $scope.todayWeek = weekday[date.getDay()];
 
-    // TODO test data
-    // var nowDate = '20180404';
-
     // 画面初期时，用来取得画面数据
     _basic.get(_host.api_url + "/storageDate" + "?dateStart=" + nowDate + "&dateEnd=" + nowDate).then(function (data) {
         if (data.success == true && data.result.length > 0) {
