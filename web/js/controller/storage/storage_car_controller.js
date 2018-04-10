@@ -684,12 +684,12 @@ app.controller("storage_car_controller", ["$scope", "$rootScope", "$stateParams"
     };
     // 上一页
     $scope.preBtn = function () {
-        $scope.start = $scope.start - ($scope.size - 1);
+        $scope.start = $scope.start - $scope.size ;
         $scope.getStorageCar();
     };
     // 下一页
     $scope.nextBtn = function () {
-        $scope.start = $scope.start + ($scope.size - 1);
+        $scope.start = $scope.start + $scope.size ;
         $scope.getStorageCar();
     };
     //获取数据
