@@ -515,7 +515,7 @@
                         </span>
                         <!--车辆移位-->
                         <span>
-                            <i ng-if="el.rel_status==1" class="mdi mdi-rotate-left cyan-text lighten-1" ng-click="changeStorageCar(el.storage_id,el.id,el.row,el.col,el.lot)"></i>
+                            <i ng-if="el.rel_status==1" class="mdi mdi-rotate-left cyan-text lighten-1" ng-click="changeStorageCar(el.storage_id,el.area_id,el.id)"></i>
                         </span>
                         <!--车辆移位模态框-->
                         <div id="change_storageCar" class="modal" style="width: 90%;height: 70%;">
@@ -531,10 +531,10 @@
                                         <!-- 仓库柜 扇区列表 -->
                                         <div class="col s3" style="width: 50%;">
                                             <p class="col s8 left-align">
-                                                <select material-select watch ng-model="selectedZoneName"
-                                                        ng-change="getStorageAreaInfo(selectedZoneAreaName);" class="center">
-                                                    <option value="" disabled selected>请选择</option>
-                                                    <option ng-repeat="op in storageArea"  ng-value="{{op.id}}">
+                                                <select material-select watch ng-model="selectedZone"
+                                                        ng-change="getStorageAreaInfo(selectedZone);" class="center">
+                                                    <!--<option value="" disabled>请选择</option>-->
+                                                    <option ng-repeat="op in zoneList"  ng-value="{{op.id}}" ng-selected="op.id == selectedZone">
                                                         {{op.area_name}}
                                                     </option>
                                                 </select>
@@ -587,7 +587,7 @@
                                                 <div class="storage_row vc-center left" style="background-color: #dddddd;">
                                                     {{characters[el.lot-1].name}}
                                                 </div>
-                                                <div class="storage_row vc-center left" ng-repeat="els in el.col track by $index" ng-class="{'present_place':el.row==nowRow&&els.col==nowCol&&el.lot==nowLot}">
+                                                <div class="storage_row vc-center left" ng-repeat="els in el.col track by $index" ng-class="{'present_place':els.carId==moveCarId}">
                                                     <i ng-show="els.carId!=0" class=" mdi mdi-car cyan-text lighten-1" ></i>
                                                     <i ng-show="els.carId==0" class=" mdi mdi-car grey-text lighten-2" ng-click="getCarInfo(els.id,el.row,els.col,el.lot)"></i>
                                                 </div>
