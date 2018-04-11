@@ -7,18 +7,18 @@
             <div class="col s10">
                 <!-- 查询条件：委托方性质 -->
                 <div class="input-field col s3">
-                    <select material-select watch ng-model="getEntrustType" ng-change="entrust(getEntrustType)">
+                    <select material-select watch ng-model="entrustType" ng-change="getEntrustInfo(entrustType)">
                         <option value=""  >委托方性质</option>
-                        <option ng-repeat="el in entrustType" ng-value="el.entrust_type">{{el.name}}</option>
+                        <option ng-repeat="el in entrustTypeList" ng-value="el.entrust_type">{{el.name}}</option>
                     </select>
                 </div>
 
                 <!-- 查询条件：委托方 -->
                 <div class="input-field col s3" >
-                    <select material-select watch id="entrustSelect"  ng-model="getEntrustId" ng-change="changeEntrustId()" style="width: 100%">
+                    <select material-select watch id="entrustSelect"  ng-model="entrustId" ng-change="changeEntrustId()" style="width: 100%">
                         <option value="" ></option>
                         <option value="0" >清除选择</option>
-                        <option ng-repeat="el in getEntrust" ng-value="el.id">{{el.short_name}}</option>
+                        <option ng-repeat="el in entrustList" ng-value="el.id">{{el.short_name}}</option>
                     </select>
                 </div>
 
@@ -37,7 +37,7 @@
 
             <!-- 查询按钮 -->
             <div class="col s2  flex flex-round">
-                <a class="btn-floating btn-large waves-light waves-effect red lighten-2  btn vc-center" style="margin-right: 10px"  ng-click="getClient()">
+                <a class="btn-floating btn-large waves-light waves-effect red lighten-2  btn vc-center" style="margin-right: 10px"  ng-click="searchClient()">
                     <i class="mdi mdi-magnify"></i>
                 </a>
             </div>
@@ -62,7 +62,7 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr ng-repeat="el in getClientList" class="grey-text text-darken-1">
+                <tr ng-repeat="el in clientArray" class="grey-text text-darken-1">
                     <td ng-bind="el.short_name"></td>
                     <td ng-if="el.entrust_type==1">个人</td>
                     <td ng-if="el.entrust_type==2">企业</td>
@@ -78,7 +78,7 @@
                         <a  ui-sref="client_info_detail({id:el.id,from:'client_info'})" class=""><i class="mdi mdi-file-outline look_icon cyan-text lighten-1  " ></i></a>
                     </td>
                 </tr>
-                <tr class="grey-text text-darken-1" ng-if="getClientList.length == 0">
+                <tr class="grey-text text-darken-1" ng-if="clientArray.length == 0">
                     <td colspan="10" style="letter-spacing: 2px;text-align: center;">暂无数据</td>
                 </tr>
                 </tbody>
