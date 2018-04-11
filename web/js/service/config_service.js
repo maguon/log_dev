@@ -228,5 +228,17 @@ baseService.factory("_config", function () {
         }
     ];
 
+    // 支付状态
+    _this.payStatus = [
+        {
+            id: 0,
+            name: "未支付"
+        },
+        {
+            id: 1,
+            name: "已支付"
+        }
+    ];
+
     return _this
 });
