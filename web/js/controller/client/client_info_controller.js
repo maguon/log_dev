@@ -2,15 +2,14 @@
  * Created by star on 2018/4/3.
  * 委托方
  */
-app.controller("client_info_controller", ["$scope", "$rootScope", "_host", "_basic", "_config", "_baseService", function ($scope, $rootScope, _host, _basic, _config, _baseService) {
+app.controller("client_info_controller", ["$scope", "$rootScope", "_host", "_basic", "_config",  function ($scope, $rootScope, _host, _basic, _config) {
     $scope.start = 0;
     $scope.size = 10;
-    //委托方性质
-    $scope.entrustType = _config.entrustType;
-    $scope.carLot=_config.carParking;
     var url="";
+    //委托方性质
+    $scope.entrustTypeList = _config.entrustType;
     //获取委托方信息
-    $scope.entrust =function(type) {
+    $scope.getEntrustInfo =function(type) {
         if(type==undefined){
             url=_host.api_url + "/entrust";
         }else{
@@ -18,7 +17,7 @@ app.controller("client_info_controller", ["$scope", "$rootScope", "_host", "_bas
         }
         _basic.get(url).then(function (data) {
             if (data.success == true) {
-                $scope.getEntrust = data.result;
+                $scope.entrustList = data.result;
                 $('#entrustSelect').select2({
                     placeholder: '委托方',
                     containerCssClass: 'select2_dropdown'
@@ -28,15 +27,15 @@ app.controller("client_info_controller", ["$scope", "$rootScope", "_host", "_bas
     };
     $scope.changeEntrustId =function(){
         // 当选中【清除选择】时，委托方改为空
-        if ($scope.getEntrustId == 0) {
-            $scope.getEntrustId = null;
+        if ($scope.entrustId == 0) {
+            $scope.entrustId = null;
         }
     }
    //获取列表
-    $scope.getClient = function (){
+     function getClient  (){
         var obj = {
-            entrustType:$scope.getEntrustType,
-            entrustId:$scope.getEntrustId,
+            entrustType:$scope.entrustType,
+            entrustId:$scope.entrustId,
             contactsName:$scope.contactsName,
             tel:$scope.contactsTel,
             start:$scope.start.toString(),
@@ -56,28 +55,32 @@ app.controller("client_info_controller", ["$scope", "$rootScope", "_host", "_bas
                 else {
                     $("#next").show();
                 }
-                $scope.getClientList = data.result;
+                $scope.clientArray = data.result;
             }
             else {
                 swal(data.msg, "", "error");
             }
         });
     };
-
+    //点击搜索
+    $scope.searchClient = function (){
+        $scope.start =0;
+        getClient();
+    }
     // 上一页
     $scope.preBtn = function () {
         $scope.start = $scope.start - $scope.size;
-        $scope.getClient();
+        getClient();
     };
     // 下一页
     $scope.nextBtn = function () {
         $scope.start = $scope.start + $scope.size;
-        $scope.getClient();
+        getClient();
     };
     //获取数据
     $scope.queryData = function () {
-        $scope.getClient();
-        $scope.entrust();
+        getClient();
+        $scope.getEntrustInfo();
     };
     $scope.queryData();
 }])
