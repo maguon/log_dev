@@ -41,17 +41,21 @@ app.controller("storage_calendar_controller", ["$scope", "_host", "_basic", func
      * @param storage_id 仓库ID
      */
     $scope.changeStorage = function (storage_id) {
-        // 日历详细信息
-        showCalendar(storage_id);
-        // 取得饼图数据
-        $scope.getStorageParkList();
+        if (storage_id != null && storage_id != "") {
+            // 日历详细信息
+            showCalendar(storage_id);
+            // 取得饼图数据
+            $scope.getStorageParkList();
+        }
     };
 
     /**
      * 取得仓储停车品牌数据信息列表。
      */
     $scope.getStorageParkList = function () {
-        _basic.get(_host.api_url + "/storage/" + $scope.storageId + "/makeStat").then(function (data) {
+        var url = _host.api_url + "/storage/" + $scope.storageId + "/makeStat";
+
+        _basic.get(url).then(function (data) {
             if (data.success === true) {
                 // 组装画面需要的数据
                 $scope.storageParkList = [];
@@ -171,20 +175,21 @@ app.controller("storage_calendar_controller", ["$scope", "_host", "_basic", func
         });
         // $('#calendar').fullCalendar('option','locale','zh-CN');
 
+        var url = _host.api_url + "/storageDate?storageId=" + storage_id + "&dateStart=" + nowDate + "&dateEnd=" + nowDate;
+
         // 当天仓库信息
-        _basic.get(_host.api_url + "/storageDate?storageId=" + storage_id + "&dateStart=" + nowDate + "&dateEnd=" + nowDate).then(function (data) {
+        _basic.get(url).then(function (data) {
             if (data.success == true && data.result.length > 0) {
                 $scope.todayData = data.result[0];
             } else {
                 // 取得数据失败时，画面显示的默认数据
                 $scope.todayData = {
                     "storage_id": 0,
+                    "total_seats":0,
                     "imports": 0,
                     "exports": 0,
                     "balance": 0,
                     "id": 0,
-                    "row": 0,
-                    "col": 0,
                     "storage_status": 1
                 }
             }

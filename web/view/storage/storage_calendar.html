@@ -6,7 +6,7 @@
             <div class="col s8 white p0 z-depth-1">
                 <!--仓库的选择-->
                 <div style="height: 50px;padding-left:20px" class="red lighten-2">
-                    <select material-select watch name="" class="col s2 white-text" ng-model="storageId" ng-change="changeStorage(storageId)">
+                    <select material-select watch name="" class="col s3 white-text" ng-model="storageId" ng-change="changeStorage(storageId)">
                         <option value="" disabled selected>请选择</option>
                         <option ng-repeat="el in storeStorage" ng-if="el.storage_status==1" ng-value="el.id">{{el.storage_name}}</option>
                     </select>
@@ -42,12 +42,12 @@
                         <div class="col s6 calendar_data_box_side center-align">
                             <p style="margin: 10px 0" class="col s12 white-text ">使用率</p>
                             <h5 class="s12 white-text center-align">
-                                <span>{{(todayData.row == 0 || todayData.row == undefined) ? '0.00' : (todayData.balance /todayData.row*todayData.col * 100).toFixed(2)}}%</span>
+                                <span>{{(todayData.total_seats == null || todayData.balance == null) ? '0.00' : (todayData.balance /todayData.total_seats * 100).toFixed(2)}}%</span>
                             </h5>
                         </div>
                         <div class="col s6 calendar_data_box_side center-align">
                             <p style="margin: 10px 0" class="col s12 white-text">总车位</p>
-                            <h5 class="s12 white-text">{{(todayData.row == 0 || todayData.row == undefined) ? 0 : todayData.row*todayData.col}}</h5>
+                            <h5 class="s12 white-text">{{todayData.total_seats == null ? 0 : todayData.total_seats}}</h5>
                         </div>
                     </div>
 
@@ -55,11 +55,11 @@
                     <div class="calendar_data_box">
                         <div class="col s6 calendar_data_box_side center-align">
                             <p style="margin: 10px 0" class="col s12 white-text">库存车辆</p>
-                            <h5 class="s12 white-text">{{(todayData.balance == 0 || todayData.balance == undefined) ? 0 : todayData.balance}}</h5>
+                            <h5 class="s12 white-text">{{(todayData.balance == null) ? 0 : todayData.balance}}</h5>
                         </div>
                         <div class="col s6 calendar_data_box_side center-align">
                             <p style="margin: 10px 0" class="col s12 white-text">剩余车位</p>
-                            <h5 class="s12 white-text">{{(todayData.row == 0 || todayData.row == undefined) ? 0 : todayData.row*todayData.col-todayData.balance}}</h5>
+                            <h5 class="s12 white-text">{{(todayData.total_seats == null || todayData.balance == null) ? 0 : todayData.total_seats-todayData.balance}}</h5>
                         </div>
                     </div>
 
@@ -67,11 +67,11 @@
                     <div class="calendar_data_box">
                         <div class="col s6 calendar_data_box_side center-align">
                             <p style="margin: 10px 0" class="col s12 white-text">入库车辆</p>
-                            <h5 class="s12 white-text">{{(todayData.imports == 0 || todayData.imports == undefined) ? 0 : todayData.imports}}</h5>
+                            <h5 class="s12 white-text">{{(todayData.imports == null) ? 0 : todayData.imports}}</h5>
                         </div>
                         <div class="col s6 calendar_data_box_side center-align">
                             <p style="margin: 10px 0" class="col s12 white-text">出库车辆</p>
-                            <h5 class="s12 white-text">{{(todayData.exports == 0 || todayData.exports == undefined) ? 0 : todayData.exports}}</h5>
+                            <h5 class="s12 white-text">{{(todayData.exports == null) ? 0 : todayData.exports}}</h5>
                         </div>
                     </div>
                 </div>
