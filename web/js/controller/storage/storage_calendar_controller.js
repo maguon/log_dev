@@ -27,12 +27,14 @@ app.controller("storage_calendar_controller", ["$scope", "_host", "_basic", func
     // 画面初期时，用来取得画面数据
     _basic.get(_host.api_url + "/storageDate" + "?dateStart=" + nowDate + "&dateEnd=" + nowDate).then(function (data) {
         if (data.success == true && data.result.length > 0) {
-            $scope.storeStorage = data.result;
-            $scope.storageId = $scope.storeStorage[0].id;
+            // 下拉菜单 数据列表
+            $scope.storageList = data.result;
+            // 默认选中第一个
+            $scope.storageId = data.result[0].id;
         }
-        // 日历详细信息
+        // 日历详细信息(左侧)
         showCalendar($scope.storageId);
-        // 取得饼图数据
+        // 取得饼图数据(右侧)
         $scope.getStorageParkList();
     });
 
@@ -125,7 +127,7 @@ app.controller("storage_calendar_controller", ["$scope", "_host", "_basic", func
      *
      * @param storage_id 仓储ID
      */
-    var showCalendar = function (storage_id) {
+    function showCalendar (storage_id) {
         $('#calendar').fullCalendar('destroy');
         $('#calendar').fullCalendar({
             viewRender: function (view, element) {
@@ -175,9 +177,8 @@ app.controller("storage_calendar_controller", ["$scope", "_host", "_basic", func
         });
         // $('#calendar').fullCalendar('option','locale','zh-CN');
 
-        var url = _host.api_url + "/storageDate?storageId=" + storage_id + "&dateStart=" + nowDate + "&dateEnd=" + nowDate;
-
         // 当天仓库信息
+        var url = _host.api_url + "/storageDate?storageId=" + storage_id + "&dateStart=" + nowDate + "&dateEnd=" + nowDate;
         _basic.get(url).then(function (data) {
             if (data.success == true && data.result.length > 0) {
                 $scope.todayData = data.result[0];
