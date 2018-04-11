@@ -1,0 +1,168 @@
+<!-- 主菜单：仓储管理 -> 订单管理 画面 -->
+<div class="row">
+
+    <!-- 上部分：检索条件输入区域 -->
+    <div class="row grey-text text-darken-1">
+        <div class="col s11">
+
+            <!-- 查询条件：第一行 -->
+            <div class="col s12">
+                <!-- 查询条件：订单编号 -->
+                <div class="input-field col" style="width: 20%;">
+                    <input type="text" id="conditionOrderNoText" ng-model="conditionOrderNo">
+                    <label for="conditionOrderNoText">订单编号</label>
+                </div>
+
+                <!-- 查询条件：VIN码 -->
+                <div class="input-field col" style="width: 20%;">
+                    <input type="text" id="conditionVinText" ng-model="conditionVin">
+                    <label for="conditionVinText">VIN码</label>
+                </div>
+
+                <!-- 查询条件：车辆品牌 -->
+                <div class="input-field col" style="width: 20%;">
+                    <select material-select watch ng-model="conditionMakeId"
+                            ng-change="changeMakerId(conditionMakeId)">
+                        <option value="" selected>品牌</option>
+                        <option ng-repeat="el in carMakerList" ng-value="el.id">{{el.make_name}}</option>
+                    </select>
+                </div>
+
+                <!-- 查询条件：车辆型号 -->
+                <div class="input-field col" style="width: 20%;">
+                    <select material-select watch ng-model="conditionModelId">
+                        <option value="" selected>型号</option>
+                        <option ng-repeat="el in carModelList" ng-value="el.id">{{el.model_name}}</option>
+                    </select>
+                </div>
+
+                <!-- 查询条件：委托方 -->
+                <div class="input-field col" style="width: 20%;">
+                    <select material-select watch id="entrustIdSelect" ng-model="conditionEntrustId" ng-change="changeEntrust()"
+                            style="width: 100%">
+                        <option value=""></option>
+                        <option value="0">清除选择</option>
+                        <option ng-repeat="el in entrustList" ng-value="el.id">{{el.short_name}}</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- 查询条件：第二行 -->
+            <div class="col s12">
+                <!-- 查询条件：入库时间 -->
+                <div class="col input-field" style="width: 20%;">
+                    <input id="conditionEnterTimeStartText" type="text" ng-model="conditionEnterTimeStart"
+                           class="datepicker" autocomplete="off" required date>
+                    <label for="conditionEnterTimeStartText">入库时间(始)</label>
+                    <i class="mdi dataIcon mdi-table-large"></i>
+                </div>
+                <div class="col input-field" style="width: 20%;">
+                    <input type="text" id="conditionEnterTimeEndText" ng-model="conditionEnterTimeEnd" class="datepicker"
+                           autocomplete="off" required date>
+                    <label for="conditionEnterTimeEndText">入库时间(终)</label>
+                    <i class="mdi dataIcon mdi-table-large"></i>
+                </div>
+
+                <!-- 查询条件：出库时间 -->
+                <div class="col input-field" style="width: 20%;">
+                    <input type="text" id="conditionOutTimeStartText" ng-model="conditionOutTimeStart" class="datepicker"
+                           autocomplete="off" date>
+                    <label for="conditionOutTimeStartText">出库时间(始)</label>
+                    <i class="mdi dataIcon mdi-table-large"></i>
+                </div>
+                <div class="col input-field" style="width: 20%;">
+                    <input type="text" id="conditionOutTimeEndText" ng-model="conditionOutTimeEnd" class="datepicker"
+                           autocomplete="off" date>
+                    <label for="conditionOutTimeEndText">出库时间(终)</label>
+                    <i class="mdi dataIcon mdi-table-large"></i>
+                </div>
+
+                <!-- 查询条件：支付状态 -->
+                <div class="input-field col" style="width: 20%;">
+                    <select material-select watch ng-model="conditionPayStatus">
+                        <option value="" selected>支付状态</option>
+                        <option ng-repeat="el in payStatusList" ng-value="el.id">{{el.name}}</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <!-- 查询按钮 -->
+        <div class="col s1 flex flex-round">
+            <a class="btn-floating btn-large waves-light waves-effect red lighten-2 btn vc-center"
+               style="margin-top: 30px" ng-click="queryOrderList()">
+                <i class="mdi mdi-magnify"></i>
+            </a>
+        </div>
+    </div>
+
+    <!-- 下部分：检索结果显示区域 -->
+    <div class="col s12">
+        <div class="divider" style="background: #00bcd4;height: 2px;"></div>
+        <table class=" bordered striped">
+            <thead class="blue-grey lighten-5">
+            <tr class="grey-text text-darken-2">
+                <th data-field="">订单编号</th>
+                <th data-field="">VIN码</th>
+                <th data-field="">车型</th>
+                <th data-field="">委托方</th>
+                <th data-field="">入库时间</th>
+                <th data-field="">出库时间</th>
+                <th data-field="">合计天数</th>
+                <th data-field="">预计支付(美元)</th>
+                <th data-field="">实际支付(美元)</th>
+                <th data-field="">支付状态</th>
+                <th>操作</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="el in orderList" class="grey-text text-darken-1">
+                <!-- 订单编号 TODO -->
+                <td>{{el.orderNo}}</td>
+                <!-- VIN码 -->
+                <td ng-bind="el.vin"></td>
+                <!-- 车型 -->
+                <td ng-bind="">{{el.make_name/el.model_name}}</td>
+                <!-- 委托方 -->
+                <td ng-bind="el.entrust_name"></td>
+                <!-- 入库时间 -->
+                <td ng-bind="el.enter_time|date:'yyyy-MM-dd HH:mm:ss'"></td>
+                <!-- 出库时间 TODO-->
+                <td ng-bind="el.real_out_time|date:'yyyy-MM-dd HH:mm:ss'"></td>
+                <!-- 合计天数 TODO -->
+                <td>{{el.storage_id==null ? '无' : el.storage_name}}</td>
+                <!-- 预计支付(美元) TODO -->
+                <td>{{el.storage_id==null ? '无' : el.storage_name}}</td>
+                <!-- 实际支付(美元) TODO -->
+                <td>{{el.storage_id==null ? '无' : el.storage_name}}</td>
+                <!-- 支付状态 TODO -->
+                <td>{{payStatusList[el.pay_status].name}}</td>
+                <!-- 显示【车辆信息】画面按钮 -->
+                <td class="operation">
+                    <a href="#" ui-sref="car_demand_details({id:el.id,vin:el.vin,from:'car_demand'})">
+                        <i class="mdi mdi-pencil look_icon cyan-text lighten-1"></i>
+                    </a>
+                    <a href="#" ui-sref="car_demand_details({id:el.id,vin:el.vin,from:'car_demand'})">
+                        <i class="mdi mdi-file-document look_icon cyan-text lighten-1"></i>
+                        <!-- mdi-pencil-box-outline -->
+                    </a>
+                </td>
+            </tr>
+            <tr class="grey-text text-darken-1" ng-if="storageCar.length == 0">
+                <td colspan="11" style="letter-spacing: 2px;text-align: center;">暂无数据</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <!-- 上下页按钮 -->
+    <div class="paging_box col s12">
+        <div class="right">
+            <a class="waves-light waves-effect cyan lighten-1 btn" id="pre" ng-click="preBtn()">
+                上一页
+            </a>
+            <a class="waves-light waves-effect cyan lighten-1 btn" id="next" ng-click="nextBtn()">
+                下一页
+            </a>
+        </div>
+    </div>
+</div>
