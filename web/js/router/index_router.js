@@ -1,3 +1,6 @@
+/**
+ * 全部画面 路由配置(开发人员专用？).
+ */
 app.config(['$stateProvider',"$urlRouterProvider",function($stateProvider,$urlRouterProvider) {
     $urlRouterProvider.when("","/storage_index");
     $stateProvider

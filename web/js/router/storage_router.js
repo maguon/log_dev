@@ -1,3 +1,6 @@
+/**
+ * 仓储用户使用画面 路由配置.
+ */
 app.config(['$stateProvider',"$urlRouterProvider",function($stateProvider,$urlRouterProvider) {
     $urlRouterProvider.when("","/storage_index");
     $stateProvider
