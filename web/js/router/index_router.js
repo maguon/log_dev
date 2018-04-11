@@ -42,6 +42,12 @@ app.config(['$stateProvider',"$urlRouterProvider",function($stateProvider,$urlRo
             templateUrl: "/view/system_settings/setting_storage_detail.html",
             controller:'setting_storage_detail_controller'
         })
+        // 管理员设置 -> 船务公司设置
+        .state("setting_shipping_co", {
+            url:"/setting_shipping_co",
+            templateUrl: "/view/system_settings/setting_shipping_co.html",
+            controller:'setting_shipping_co_controller'
+        })
 
         .state("setting_car_brand", {
             url:"/setting_car_brand",
