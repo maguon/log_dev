@@ -442,7 +442,7 @@
                     </div>
                     <!--所在仓库-->
                     <div class="input-field col s6">
-                        <select material-select watch ng-model="search_storage" ng-change="getStorageId(search_storage)">
+                        <select material-select watch ng-model="storageIdItem" ng-change="getStorageId(storageIdItem)">
                             <option value=""  selected>所在仓库</option>
                             <option ng-if="el.storage_status==1" ng-repeat="el in storageName" ng-value="el.id">{{el.storage_name}}</option>
                         </select>
@@ -451,21 +451,21 @@
                 <div class="col s7">
                     <!--vin码-->
                     <div class="input-field col s12">
-                        <input name="search_vin" id="search_vin" type="text" ng-model="search_vin">
+                        <input name="search_vin" id="search_vin" type="text" ng-model="vinItem">
                         <label for="search_vin">vin码</label>
                     </div>
                 </div>
                 <div class="col s5">
                     <!--品牌-->
                     <div class="input-field col s6">
-                        <select material-select watch ng-model="search_makeId" ng-change="getMakeId(search_makeId)">
+                        <select material-select watch ng-model="makeIdItem" ng-change="getMakeId(makeIdItem)">
                             <option value=""  selected>车辆品牌</option>
                             <option ng-repeat="el in makecarName" ng-value="el.id">{{el.make_name}}</option>
                         </select>
                     </div>
                     <!--型号-->
                     <div class="input-field col s6">
-                        <select material-select watch ng-model="search_modelId" >
+                        <select material-select watch ng-model="modelIdItem" >
                             <option value=""  selected>车辆型号</option>
                             <option ng-repeat="el in carModelName" ng-value="el.id">{{el.model_name}}</option>
                         </select>
@@ -474,10 +474,10 @@
                 <div class="col s7">
                     <!--委托方-->
                     <div class="input-field col s4">
-                        <select material-select watch id="getEntrustId" name="getEntrustId" ng-model="getEntrustId" ng-change="changeEntrustId()" style="width: 100%">
+                        <select material-select watch id="entrustSelect" name="getEntrustId" ng-model="entrustIdItem" ng-change="changeEntrustId()" style="width: 100%">
                             <option value="" ></option>
                             <option value="0" >清除选择</option>
-                            <option ng-repeat="el in getEntrust" ng-value="el.id">{{el.short_name}}</option>
+                            <option ng-repeat="el in entrustList" ng-value="el.id">{{el.short_name}}</option>
                         </select>
                     </div>
                     <!--入库时间（始）-->
@@ -494,7 +494,7 @@
                 <div class="col s5">
                     <!--是否MSO-->
                     <div class="input-field col s6">
-                        <select material-select watch id="getMSO" name="getMSO"  ng-model="getMSO" >
+                        <select material-select watch id="MSOItem" name="MSOItem"  ng-model="MSOItem" >
                             <option value="" disabled selected>是否MSO</option>
                             <option value="2">是</option>
                             <option value="1">否</option>
@@ -590,7 +590,7 @@
                             <i ng-if="el.rel_status==1" class="mdi mdi-key-variant cyan-text lighten-1" ng-click="getKeyCabinet(el.id,el.row,el.col)"></i>
                          </span>
                         <!--详情-->
-                        <a href="#" ui-sref="storage_car_detail({id:el.id,vin:el.vin,_id:'',_from:'',from:'storage_car'})" class=""><i class="mdi mdi-file-outline look_icon cyan-text lighten-1  " ></i></a>
+                        <a href="#" ui-sref="storage_car_detail({id:el.id,vin:el.vin,from:'storage_car'})" class=""><i class="mdi mdi-file-outline look_icon cyan-text lighten-1  " ></i></a>
                         <!--是否出库-->
                         <span>
                             <i ng-if="el.rel_status==1" class="mdi mdi-logout cyan-text lighten-1" ng-click="outStorageCar(el.r_id,2,el.p_id,el.storage_id,el.id)" ></i>

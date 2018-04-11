@@ -72,8 +72,8 @@ app.controller("storage_car_controller", ["$scope", "$rootScope", "$stateParams"
     function getEntrust () {
         _basic.get(_host.api_url + "/entrust").then(function (data) {
             if (data.success == true) {
-                $scope.getEntrust = data.result;
-                $('#getEntrustId').select2({
+                $scope.entrustList = data.result;
+                $('#entrustSelect').select2({
                     placeholder: '委托方',
                     containerCssClass: 'select2_dropdown'
                 });
@@ -83,8 +83,8 @@ app.controller("storage_car_controller", ["$scope", "$rootScope", "$stateParams"
 
     $scope.changeEntrustId =function(){
         // 当选中【清除选择】时，委托方改为空
-        if ($scope.getEntrustId == 0) {
-            $scope.getEntrustId = null;
+        if ($scope.entrustIdItem == 0) {
+            $scope.entrustIdItem = null;
         }
     }
     // 点击按钮进行查询
@@ -99,17 +99,17 @@ app.controller("storage_car_controller", ["$scope", "$rootScope", "$stateParams"
         if ($scope.getRelStatus != null) {
             reqUrl = reqUrl + "&relStatus=" + $scope.getRelStatus
         }
-        if ($scope.search_storage != null) {
-            reqUrl = reqUrl + "&storageId=" + $scope.search_storage
+        if ($scope.storageIdItem != null) {
+            reqUrl = reqUrl + "&storageId=" + $scope.storageIdItem
         }
-        if ($scope.search_makeId != null) {
-            reqUrl = reqUrl + "&makeId=" + $scope.search_makeId
+        if ($scope.makeIdItem != null) {
+            reqUrl = reqUrl + "&makeId=" + $scope.makeIdItem
         }
-        if ($scope.search_modelId != null) {
-            reqUrl = reqUrl + "&modelId=" + $scope.search_modelId
+        if ($scope.modelIdItem != null) {
+            reqUrl = reqUrl + "&modelId=" + $scope.modelIdItem
         }
-        if ($scope.search_vin != null) {
-            reqUrl = reqUrl + "&vin=" + $scope.search_vin
+        if ($scope.vinItem != null) {
+            reqUrl = reqUrl + "&vin=" + $scope.vinItem
         }
         if ($scope.search_enterTime_start != null) {
             reqUrl = reqUrl + "&enterStart=" + $scope.search_enterTime_start
@@ -129,11 +129,11 @@ app.controller("storage_car_controller", ["$scope", "$rootScope", "$stateParams"
         if ($scope.search_outTime_end != null) {
             reqUrl = reqUrl + "&realEnd=" + $scope.search_outTime_end
         }
-        if ($scope.getMSO != null) {
-            reqUrl = reqUrl + "&msoStatus=" + $scope.getMSO
+        if ($scope.MSOItem != null) {
+            reqUrl = reqUrl + "&msoStatus=" + $scope.MSOItem
         }
-        if ($scope.getEntrustId != null) {
-            reqUrl = reqUrl + "&entrustId=" + $scope.getEntrustId
+        if ($scope.entrustIdItem != null) {
+            reqUrl = reqUrl + "&entrustId=" + $scope.entrustIdItem
         }
 
         _basic.get(reqUrl).then(function (data) {
