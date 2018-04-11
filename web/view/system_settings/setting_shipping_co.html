@@ -7,12 +7,12 @@
             <!-- 船务公司名称 -->
             <div class="col s6 input-field">
                 <input type="text" id="newShippingCoNameText" maxlength="50" ng-model="newShippingCoName">
-                <label for="newShippingCoNameText">船务公司名称</label>
+                <label for="newShippingCoNameText"><span style="color: red">* </span>船务公司名称</label>
             </div>
 
             <!-- 追加 -->
             <div class="col s5 right-align">
-                <a class="btn-floating btn-large waves-light waves-effect cyan lighten-1 btn vc-center"
+                <a class="btn-floating btn-large waves-light waves-effect cyan lighten-1 btn vc-center" style="top:10px;"
                    ng-click="addShippingCo()">
                     <i class="mdi mdi-plus"></i>
                 </a>
@@ -22,13 +22,13 @@
 
     <!-- 船务公司 详情 -->
     <div class="row">
-        <div class="col s4" ng-repeat="shippingCo in shippingCoList">
+        <div class="col s4" ng-repeat="shippingCo in shippingCoList" style="margin-bottom: 25px;">
 
             <div class="col s3 vc-center cyan white-text text-lighten-2" style="height: 50px;">
                 <span style="display: block">{{shippingCo.id}}</span>
             </div>
             <div class="col s9 vc-center white black-text text-lighten-2" style="height: 50px;">
-                <span style="display: block">{{shippingCo.ship_company_name}}</span>
+                <span style="width:100%; display: block;">{{shippingCo.ship_company_name}}</span>
             </div>
         </div>
     </div>
