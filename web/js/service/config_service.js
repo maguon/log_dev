@@ -111,14 +111,37 @@ baseService.factory("_config", function () {
             colorId: "CCCCCC "
         }
     ];
-//获取国家
+    //获取国家
     _this.country = [
         {
             val:1,
             name:'美国'
         }
 
-    ]
+    ];
+    //支付状态
+    _this.paymentStatus = [
+        {
+            id:1,
+            name:'已支付'
+        },
+        {
+            id:2,
+            name:'已完结'
+        }
+
+    ];
+    //支付方式
+    _this.paymentType = [
+        {
+            id:1,
+            name:'支票'
+        },
+        {
+            id:2,
+            name:'电汇'
+        }
+    ];
     // A-Z
     _this.characters = [
         {

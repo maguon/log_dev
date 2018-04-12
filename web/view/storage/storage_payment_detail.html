@@ -1,0 +1,89 @@
+<!-- 主菜单：仓储管理 -> 支付管理（支付详情） 画面 -->
+
+<!-- 返回前画面 按钮 -->
+<div class="row valign-wrapper">
+    <a class="btn-floating btn waves-effect cyan lighten-1 waves-light" ng-click="return()">
+        <i class="mdi mdi-arrow-left-bold"></i>
+    </a>
+    <h5 class="col s12 cyan-text lighten-1  center-align">支付详情</h5>
+</div>
+<div class="row">
+    <div class="divider  cyan lighten-2" style="height:2px"></div>
+</div>
+
+
+<!--按键切换以及详情  支付信息   关联仓储订单-->
+<div class="row no-marBottom" ul-tabs>
+    <div class="col s12 p0" style="width: 90%; margin:0 5% ">
+
+        <!--按键切换  支付信息   关联仓储订单-->
+        <ul class="tabWrap grey lighten-4 ">
+            <li class="tab col s6 lookPaymentMsg   vc-center"  ng-click="lookPaymentMsg()">支付信息</li>
+            <li class="tab col s6 lookRelatedOrder vc-center"  ng-click="lookRelatedOrder()">关联仓储订单</li>
+        </ul>
+    </div>
+
+    <!--支付信息的详细信息-->
+    <div id="lookPaymentMsg" class="col s12 tab_box" style="width: 80%; margin:0 10% ">
+        <div class="modal-content">
+            <div class="row col s12">
+                <div class="col s6 input-field">
+                    <select material-select watch ng-model="addEntrustType" ng-change="getEntrustInfo(addEntrustType)">
+                        <option value=""  ><span style="color: red">*</span>委托方性质</option>
+                        <option ng-repeat="el in entrustTypeList" ng-value="el.entrust_type">{{el.name}}</option>
+                    </select>
+                </div>
+                <div class="col s6 input-field">
+                    <select material-select watch id="addEntrustSelect"  ng-model="addEntrustId" ng-change="changeEntrustId()" style="width: 100%">
+                        <option value="" ><span style="color: red">*</span>委托方</option>
+                        <option ng-repeat="el in entrustList" ng-value="el.id">{{el.short_name}}</option>
+                    </select>
+                </div>
+            </div>
+            <div class="row col s12">
+                <div class="col s6 input-field">
+                    <select material-select watch ng-model="addPaymentType">
+                        <option value=""  ><span style="color: red">*</span>支付方式</option>
+                        <option ng-repeat="el in paymentTypeList" ng-value="el.id">{{el.name}}</option>
+                    </select>
+                </div>
+                <div class="col s6 input-field">
+                    <input  id="addPatmentNumber" name="addPatmentNumber" autocomplete="off" ng-model="addPatmentNumber" type="text"   required >
+                    <label for="addPatmentNumber"><span style="color: red">*</span>票号</label>
+                </div>
+            </div>
+            <div class="row col s12">
+                <div class="col s12 input-field">
+                    <input type="number" name="addPaymentMoney" id="addPaymentMoney" ng-model="addPaymentMoney">
+                    <label for="addPaymentMoney"><span style="color: red">*</span>支付金额(美元)</label>
+                </div>
+            </div>
+            <div class="row col s12" style="margin-bottom: 135px;">
+                <div class="col s12 input-field">
+                    <input type="text" name="addRemark" id="addRemark" ng-model="addRemark">
+                    <label for="addRemark">备注</label>
+                </div>
+            </div>
+            <div class="row col s12">
+                <div class="col s6">操作人</div>
+            </div>
+        </div>
+        <div class="row col s12" style="margin-top: 30px">
+            <div class="col s2 offset-s3">
+                <a ng-click="submitHandleInfo()" style="width: 100%" class="waves-light waves-effect cyan lighten-2 btn">保存
+                </a>
+            </div>
+            <div class="col s2 offset-s2">
+                <a ng-click="saveHandleInfoModify()" style="width: 100%;background-color:#f0ad4e;" class="waves-light waves-effect  lighten-1 btn">
+                    完结
+                </a>
+            </div>
+        </div>
+
+    </div>
+
+    <!--关联仓储订单的详细信息-->
+    <div id="lookRelatedOrder" class="col s12 tab_box">
+    </div>
+
+</div>
