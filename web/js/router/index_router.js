@@ -64,6 +64,13 @@ app.config(['$stateProvider',"$urlRouterProvider",function($stateProvider,$urlRo
             templateUrl: "/view/system_settings/setting_client.html",
             controller:'setting_client_controller'
         })
+        //港口设置
+        .state("setting_port",{
+            url:"/setting_port",
+            templateUrl: "/view/system_settings/setting_port.html",
+            controller:'setting_port_controller'
+        })
+
         // 钥匙柜设置
         .state("setting_key_cabinet",{
             url:"/setting_key_cabinet",

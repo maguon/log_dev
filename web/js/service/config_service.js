@@ -111,7 +111,14 @@ baseService.factory("_config", function () {
             colorId: "CCCCCC "
         }
     ];
+//获取国家
+    _this.country = [
+        {
+            val:1,
+            name:'美国'
+        }
 
+    ]
     // A-Z
     _this.characters = [
         {
