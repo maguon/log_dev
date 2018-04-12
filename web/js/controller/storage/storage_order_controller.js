@@ -128,6 +128,8 @@ app.controller("storage_order_controller", ["$scope", "$rootScope", "_host", "_b
         $scope.orderInfo.realOutTime = el.real_out_time;
         // 预计支付
         $scope.orderInfo.planFee = el.plan_fee;
+        // 实际应付
+        $scope.orderInfo.actualFee = "";
     };
 
     /**

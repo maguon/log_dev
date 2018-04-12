@@ -6,15 +6,25 @@ app.controller("storage_order_detail_controller", ["$scope", "$state", "$statePa
     // 用户ID
     var userId = _basic.getSession(_basic.USER_ID);
 
+    // 订单 ID
+    $scope.storageOrderId = $stateParams.id;
+
+    // 支付状态 列表
+    $scope.payStatusList = _config.payStatus;
 
     // 支付方式 列表
     $scope.paymentMethodList = _config.payMethods;
 
+    // 颜色列表
+    $scope.configColor = _config.config_color;
+
+    // 是否显示关联订单详情部分（支付信息画面）
     $scope.otherOrderList = false;
 
     // 订单信息
     $scope.orderInfo = {
         id: "",
+        orderStatus:"",
         entrustName: "",
         vin: "",
         makeName: "",
@@ -55,38 +65,7 @@ app.controller("storage_order_detail_controller", ["$scope", "$state", "$statePa
                 if (data.result.length > 0) {
                     // 初期化数据
 
-                    // vin
-                    $scope.keyInfo.carVin = data.result[0].vin == null ? '未知' : data.result[0].vin;
-                    // 制造商
-                    $scope.keyInfo.carMaker = data.result[0].make_name == null ? '未知' : data.result[0].make_name;
-                    // 型号
-                    $scope.keyInfo.carModel = data.result[0].model_name == null ? '未知' : data.result[0].model_name;
-                    // 生产日期
-                    $scope.keyInfo.carProDate = data.result[0].pro_date == null ? '未知' : data.result[0].pro_date;
-                    // 颜色
-                    $scope.keyInfo.carColor = '未知';
-                    for (var i = 0; i < $scope.configColor.length; i++) {
-                        if ($scope.configColor[i].colorId == data.result[0].colour) {
-                            $scope.keyInfo.carColor = $scope.configColor[i].colorName;
-                        }
-                    }
-                    // 发动机号
-                    $scope.keyInfo.carEngineNum = data.result[0].engine_num == null ? '未知' : data.result[0].engine_num;
-                    // 位置
-                    var storageName = data.result[0].storage_name == null ? '未知' : data.result[0].storage_name;
-                    var row = data.result[0].row == null ? '未知' : data.result[0].row;
-                    var col = data.result[0].col == null ? '未知' : data.result[0].col;
-                    $scope.keyInfo.carPosition = storageName + ' ' +  row + '排' + col + '列';
-                    // 入库
-                    $scope.keyInfo.carEnterTime = data.result[0].enter_time == null ? '未知' : data.result[0].enter_time;
-                    // 计划出库
-                    $scope.keyInfo.carPlanOutTime = data.result[0].plan_out_time == null ? '未知' : data.result[0].plan_out_time;
-                    // 委托方
-                    $scope.keyInfo.carEntrust = data.result[0].entrust_name == null ? '未知' : data.result[0].entrust_name;
-                    // 估价
-                    $scope.keyInfo.carValuation = data.result[0].valuation == null ? 0 : data.result[0].valuation;
-                    // MSO
-                    $scope.keyInfo.carMsoStatus = data.result[0].mso_status == null ? '未知' : $scope.msoFlags[data.result[0].mso_status-1].name;
+
 
                     $('.modal').modal();
                     $('#carKeyInfo').modal('open');
@@ -151,7 +130,6 @@ app.controller("storage_order_detail_controller", ["$scope", "$state", "$statePa
         $('#paymentInfoDiv').modal('open');
         $scope.otherOrderList = false;
     };
-
 
     /**
      * 根据画面输入的查询条件，进行数据查询。
@@ -221,8 +199,59 @@ app.controller("storage_order_detail_controller", ["$scope", "$state", "$statePa
     //     });
     // };
 
+
     /**
-     * 画面初期检索
+     * 取得订单详情
      */
-    // $scope.getOrderDetails();
+    function getOrderDetails() {
+        // 检索用url
+        var url = _host.api_url + "/storageOrder?storageOrderId=" + $scope.storageOrderId;
+
+        console.log(url);
+
+        _basic.get(url).then(function (data) {
+            if (data.success == true) {
+                //
+                $scope.orderInfo.orderStatus = data.result[0].order_status == null ? '0' : data.result[0].order_status;
+                // 委托方
+                $scope.orderInfo.entrustName = data.result[0].entrust_name == null ? '未知' : data.result[0].entrust_name;
+                // vin
+                $scope.orderInfo.vin = data.result[0].vin == null ? '未知' : data.result[0].vin;
+                // 制造商
+                $scope.orderInfo.makeName = data.result[0].make_name == null ? '未知' : data.result[0].make_name;
+                // 型号
+                $scope.orderInfo.modelName = data.result[0].model_name == null ? '未知' : data.result[0].model_name;
+                // 颜色
+                $scope.orderInfo.color = '未知';
+                for (var i = 0; i < $scope.configColor.length; i++) {
+                    if ($scope.configColor[i].colorId == data.result[0].colour) {
+                        $scope.orderInfo.color = $scope.configColor[i].colorName;
+                    }
+                }
+                // 入库
+                $scope.orderInfo.enterTime = data.result[0].enter_time == null ? '未知' : data.result[0].enter_time;
+                // 出库
+                $scope.orderInfo.realOutTime = data.result[0].real_out_time == null ? '未知' : data.result[0].real_out_time;
+                // 合计天数
+                $scope.orderInfo.dayCount = data.result[0].day_count == null ? 0 : data.result[0].day_count;
+                // 预计支付(美元)：
+                $scope.orderInfo.planFee = data.result[0].plan_fee == null ? 0 : data.result[0].plan_fee;
+                // 实际应付(美元)：
+                $scope.orderInfo.actualFee = data.result[0].plan_fee == null ? 0 : data.result[0].actual_fee;
+            } else {
+                swal(data.msg, "", "error");
+            }
+        });
+    }
+
+    /**
+     * 画面初期显示时，用来获取画面必要信息的初期方法。
+     */
+    $scope.initData = function () {
+        // 取得订单详情
+        getOrderDetails();
+        // 取得支付信息
+        // getOrderPaymentInfo();
+    };
+    $scope.initData();
 }]);

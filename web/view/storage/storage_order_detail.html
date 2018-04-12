@@ -19,8 +19,8 @@
         <div class="col s6">
             订单编号：
         </div>
-        <div class="col s6 right-align">
-            xxxxx
+        <div class="col s6 right-align" ng-class="{'red-text':orderInfo.orderStatus == 1}">
+            {{payStatusList[orderInfo.orderStatus-1].name}}
         </div>
     </div>
 </div>
@@ -34,20 +34,19 @@
             车辆信息
         </div>
     </div>
-
     <!-- body -->
     <div class="col s12 lighten-1 white grey-text vc-center fz13" style="height:50px;">
-        <div class="col s3">
-            委托方：
+        <div class="col s3 cyan-text">
+            委托方：{{orderInfo.entrustName}}
         </div>
         <div class="col s3">
-            VIN码：
+            VIN码：{{orderInfo.vin}}
         </div>
         <div class="col s3">
-            车型：
+            车型：{{orderInfo.makeName}}/{{orderInfo.modelName}}
         </div>
         <div class="col s3">
-            颜色：
+            颜色：{{orderInfo.color}}
         </div>
     </div>
 </div>
@@ -64,13 +63,13 @@
     <!-- body -->
     <div class="col s12 lighten-1 white grey-text vc-center fz13" style="height:50px;">
         <div class="input-field col s4">
-            入库时间：
+            入库时间：{{orderInfo.enterTime |date:'yyyy-MM-dd hh:mm:ss'}}
         </div>
         <div class="input-field col s4">
-            出库时间：
+            出库时间：{{orderInfo.realOutTime |date:'yyyy-MM-dd hh:mm:ss'}}
         </div>
         <div class="input-field col s4">
-            合计天数：
+            合计天数：{{orderInfo.dayCount}}
         </div>
     </div>
 
@@ -80,18 +79,18 @@
 
     <div class="col s12 lighten-1 white grey-text vc-center fz13" style="height:60px;">
         <div class="col s4">
-            预计支付(美元)：
+            预计支付(美元)：<span class="red-text">{{orderInfo.planFee | currency}}</span>
         </div>
         <div class="col s4">
         </div>
         <div class="col s4">
-            实际应付(美元)：
+            实际应付(美元)：<span class="red-text">{{orderInfo.actualFee | currency}}</span>
         </div>
     </div>
 </div>
 
 <!-- [修改价格] [支付] 按钮 -->
-<div ng-show="true" class="row" style="width: 95%;margin-top: 20px;">
+<div ng-show="orderInfo.orderStatus==1" class="row" style="width: 95%;margin-top: 20px;">
 
     <!-- body -->
     <div class="col s12 lighten-1 vc-center fz15" style="height:50px;">
@@ -105,7 +104,7 @@
 </div>
 
 <!-- 关联仓储订单 -->
-<div ng-show="false" class="row blue-grey lighten-5" style="width: 95%;border:1px solid #bdbdbd;margin-top: 20px;">
+<div ng-show="orderInfo.orderStatus==2" class="row blue-grey lighten-5" style="width: 95%;border:1px solid #bdbdbd;margin-top: 20px;">
     <!-- header -->
     <div class="col s12 lighten-1 cyan-text vc-center" style="height:50px;">
         <div class="col s6">
@@ -131,7 +130,7 @@
 
 
 <!-- 支付编号 -->
-<div ng-show="false"  class="row blue-grey lighten-5" style="width: 95%;border:1px solid #bdbdbd;margin-top: 20px;">
+<div ng-show="orderInfo.orderStatus==2" class="row blue-grey lighten-5" style="width: 95%;border:1px solid #bdbdbd;margin-top: 20px;">
     <!-- header -->
     <div class="col s12 lighten-1 cyan-text vc-center" style="height:50px;">
         <div class="col s12">
