@@ -80,9 +80,8 @@ app.controller("storage_order_controller", ["$scope", "$rootScope", "_host", "_b
 
         _basic.get(reqUrl).then(function (data) {
             if (data.success == true) {
-                $scope.storageCarList = data.result;
-                // TODO 可能需要删除的代码
-                $scope.orderList = $scope.storageCarList.slice(0, 10);
+                $scope.orderResult = data.result;
+                $scope.orderList = $scope.orderResult.slice(0, 10);
                 if ($scope.start > 0) {
                     $("#pre").show();
                 }
@@ -157,8 +156,6 @@ app.controller("storage_order_controller", ["$scope", "$rootScope", "_host", "_b
             swal("请填写实际应付价格！", "", "warning");
         }
     };
-
-
 
     /**
      * 上一页

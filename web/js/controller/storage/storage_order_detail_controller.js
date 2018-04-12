@@ -1,82 +1,36 @@
 /**
- * 主菜单：仓储管理 -> 钥匙管理(详细画面) 控制器
+ * 主菜单：仓储管理 -> 订单管理(详细画面) 控制器
  */
 app.controller("storage_order_detail_controller", ["$scope", "$state", "$stateParams", "_basic", "_config", "_host", "_baseService", function ($scope, $state, $stateParams, _basic, _config, _host, _baseService) {
 
     // 用户ID
     var userId = _basic.getSession(_basic.USER_ID);
 
-    // 钥匙柜信息 ID
-    var keyCabinetId = $stateParams.id;
 
-    // 钥匙柜信息 名称
-    var keyCabinetNm = $stateParams.name;
+    // 支付方式 列表
+    $scope.paymentMethodList = _config.payMethods;
 
-    // 钥匙柜信息 名称
-    $scope.keyCabinetNm = "";
+    $scope.otherOrderList = false;
 
-    // 是否MSO车辆
-    $scope.msoFlags = _config.msoFlags;
-
-    // 颜色列表
-    $scope.configColor = _config.config_color;
-
-    // 总位置
-    $scope.totalPosition = $stateParams.position;
-
-    // 剩余位置
-    $scope.leftPosition = 0;
-
-    // 钥匙柜扇区信息
-    $scope.zoneList = [];
-
-    // 钥匙信息
-    $scope.keyInfo = {
-        // 钥匙柜ID
-        id: $stateParams.id,
-        keyCabinetId: "",
-        keyCabinetNm: "",
-        zoneNm: "",
-        row: "",
-        col: "",
-        // vin
-        carVin: "",
-        // 制造商
-        carMaker: "",
-        // 型号
-        carModel: "",
-        // 生产日期
-        carProDate: "",
-        // 颜色
-        carColor: "",
-        // 发动机号
-        carEngineNum: "",
-        // 位置
-        carPosition: "",
-        // 入库
-        carEnterTime: "",
-        // 计划出库
-        carPlanOutTime: "",
-        // 委托方
-        carEntrust: "",
-        // 估价
-        carValuation: "",
-        // MSO
-        carMsoStatus: ""
+    // 订单信息
+    $scope.orderInfo = {
+        id: "",
+        entrustName: "",
+        vin: "",
+        makeName: "",
+        modelName: "",
+        color:"",
+        enterTime: "",
+        realOutTime: "",
+        dayCount: "",
+        planFee: "",
+        actualFee: ""
     };
-
-    // 画面扇区列表默认选中项
-    $scope.selectedZone = "";
-
-    // 画面扇区详细信息
-    $scope.hasPosition = false;
-
-    $scope.carKeyCabinetParkingArray = [];
 
     /**
      * 获取钥匙柜分区信息列表
      */
-    $scope.getCarInfo = function (id, row, col) {
+    $scope.getOrderDetails = function () {
 
         // 扇区名称
         var url = _host.api_url + "/carKeyCabinetArea?carKeyCabinetId=" + keyCabinetId + "&areaId=" + $scope.selectedZone;
@@ -146,100 +100,129 @@ app.controller("storage_order_detail_controller", ["$scope", "$state", "$statePa
     };
 
     /**
-     * 获取钥匙柜分区信息列表
-     */
-    $scope.getKeyCabinetZoneList = function (selectedZone) {
-
-        if (selectedZone == null || selectedZone == '') {
-            return;
-        }
-
-        $scope.getLeftPosition(selectedZone);
-
-        var url = _host.api_url + "/carKeyPosition?carKeyCabinetId=" + keyCabinetId + '&areaId=' + selectedZone;
-
-        _basic.get(url).then(function (data) {
-            if (data.success == true) {
-                $scope.totalPosition = data.result.length;
-                if (data.result.length > 0) {
-                    $scope.carKeyCabinetParking = data.result;
-                    $scope.carKeyCabinetParkingArray = _baseService.carKeyParking($scope.carKeyCabinetParking);
-
-                    if ($scope.carKeyCabinetParkingArray.length > 0) {
-                        $scope.carKeyCabinetParkingCol = $scope.carKeyCabinetParkingArray[0].col;
-                    }
-
-                    $scope.hasPosition = true;
-                } else {
-                    $scope.hasPosition = false;
-                    swal("未取到该分区的详细信息！", "", "warning");
-                }
-            } else {
-                $scope.hasPosition = false;
-                swal(data.msg, "", "error");
-            }
-        });
-    };
-
-    /**
-     * 返回到前画面（钥匙柜设置）。
+     * 返回到前画面（订单管理）。
      */
     $scope.return = function () {
         $state.go($stateParams.from, {}, {reload: true})
     };
 
     /**
-     * 获取钥匙柜（分区）详细信息。
+     * 打开模态画面（查看关联的仓储订单）。
      */
-    $scope.getLeftPosition = function (selectZoneId) {
+    $scope.openAssociatedOrder = function () {
+        $('.modal').modal();
+        $('#associatedOrderInfoDiv').modal('open');
+        queryOrderData();
+    };
 
-        // GET /carKeyCabinet/{carKeyCabinetId}/carKeyPositionCount
 
-        // 检索钥匙柜详细信息URL
-        var url = _host.api_url + "/carKeyCabinet/" + keyCabinetId + "/carKeyPositionCount?areaId=" + selectZoneId;
-
-        // 调用API取得，画面数据
-        _basic.get(url).then(function (data) {
-            if (data.success) {
-                // 检索取得数据集
-                $scope.leftPosition = data.result[0].position_count;
-            } else {
-                swal(data.msg, "", "error");
-            }
-        });
+    $scope.openOtherOrderList = function () {
+        $scope.otherOrderList = true;
     };
 
     /**
-     * 获取钥匙柜（分区）详细信息。
+     * 打开修改价格模态窗口。
      */
-    $scope.getKeyCabinetAreaInfo = function () {
+    $scope.openChangePriceDiv = function (el) {
+        $('.modal').modal();
+        $('#changePriceDiv').modal('open');
 
-        // 检索钥匙柜详细信息URL
-        var url = _host.api_url + "/carKeyCabinetArea?areaStatus=1&carKeyCabinetId=" + keyCabinetId;
+        $scope.orderInfo.id = el.id;
+        // 委托方
+        $scope.orderInfo.entrustName = el.entrust_name;
+        // VIN
+        $scope.orderInfo.vin = el.vin;
+        // 车型
+        $scope.orderInfo.makeName = el.make_name;
+        $scope.orderInfo.modelName = el.model_name;
+        // 入库时间
+        $scope.orderInfo.enterTime = el.enter_time;
+        // 出库时间
+        $scope.orderInfo.realOutTime = el.real_out_time;
+        // 预计支付
+        $scope.orderInfo.planFee = el.plan_fee;
+    };
 
-        // 调用API取得，画面数据
-        _basic.get(url).then(function (data) {
-            if (data.success) {
-                // 检索取得数据集
-                $scope.zoneList = data.result;
+    /**
+     * 打开[支付信息]模态窗口。
+     */
+    $scope.openPaymentInfoDiv = function (el) {
+        $('.modal').modal();
+        $('#paymentInfoDiv').modal('open');
+        $scope.otherOrderList = false;
+    };
 
-                // 画面钥匙柜 名称
-                if (data.result.length > 0) {
-                    $scope.selectedZone = $scope.zoneList[0].id;
-                    $scope.keyCabinetNm = data.result[0].key_cabinet_name;
-                    $scope.getKeyCabinetZoneList($scope.selectedZone);
-                } else {
-                    $scope.keyCabinetNm = keyCabinetNm;
-                    swal("该钥匙没有对应的扇区信息！", "", "warning");
-                }
+
+    /**
+     * 根据画面输入的查询条件，进行数据查询。
+     */
+    function queryOrderData() {
+        // 检索用url
+        var reqUrl = _host.api_url + "/storageOrder?start=" + 0 + "&size=" + 11;
+
+        console.log(reqUrl);
+
+        _basic.get(reqUrl).then(function (data) {
+            if (data.success == true) {
+                $scope.orderResult = data.result;
+                $scope.orderList = $scope.orderResult.slice(0, 10);
             } else {
                 swal(data.msg, "", "error");
             }
         });
-    };
+    }
+
+    // /**
+    //  * 获取钥匙柜（分区）详细信息。
+    //  */
+    // $scope.getLeftPosition = function (selectZoneId) {
+    //
+    //     // GET /carKeyCabinet/{carKeyCabinetId}/carKeyPositionCount
+    //
+    //     // 检索钥匙柜详细信息URL
+    //     var url = _host.api_url + "/carKeyCabinet/" + keyCabinetId + "/carKeyPositionCount?areaId=" + selectZoneId;
+    //
+    //     // 调用API取得，画面数据
+    //     _basic.get(url).then(function (data) {
+    //         if (data.success) {
+    //             // 检索取得数据集
+    //             $scope.leftPosition = data.result[0].position_count;
+    //         } else {
+    //             swal(data.msg, "", "error");
+    //         }
+    //     });
+    // };
+    //
+    // /**
+    //  * 获取钥匙柜（分区）详细信息。
+    //  */
+    // $scope.getKeyCabinetAreaInfo = function () {
+    //
+    //     // 检索钥匙柜详细信息URL
+    //     var url = _host.api_url + "/carKeyCabinetArea?areaStatus=1&carKeyCabinetId=" + keyCabinetId;
+    //
+    //     // 调用API取得，画面数据
+    //     _basic.get(url).then(function (data) {
+    //         if (data.success) {
+    //             // 检索取得数据集
+    //             $scope.zoneList = data.result;
+    //
+    //             // 画面钥匙柜 名称
+    //             if (data.result.length > 0) {
+    //                 $scope.selectedZone = $scope.zoneList[0].id;
+    //                 $scope.keyCabinetNm = data.result[0].key_cabinet_name;
+    //                 $scope.getKeyCabinetZoneList($scope.selectedZone);
+    //             } else {
+    //                 $scope.keyCabinetNm = keyCabinetNm;
+    //             }
+    //         } else {
+    //             swal(data.msg, "", "error");
+    //         }
+    //     });
+    // };
 
     /**
      * 画面初期检索
      */
-    $scope.getKeyCabinetAreaInfo();
+    // $scope.getOrderDetails();
 }]);

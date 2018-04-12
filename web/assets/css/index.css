@@ -1095,3 +1095,8 @@ input[type=text]{
     border-radius: 100%;
     background: #4dd0e1;
 }
+
+/* 支付信息 画面动态高度 */
+.payment-height{
+    height: 800px !important;
+}
