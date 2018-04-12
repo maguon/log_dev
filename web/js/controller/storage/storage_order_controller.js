@@ -2,33 +2,42 @@
  * 主菜单：仓储管理 -> 订单管理 控制器
  */
 app.controller("storage_order_controller", ["$scope", "$rootScope", "_host", "_basic", "_config", "_baseService", function ($scope, $rootScope, _host, _basic, _config, _baseService) {
-    $scope.curruntId = 0;
+
+    // 翻页用
     $scope.start = 0;
     $scope.size = 11;
 
     // 取得当前画面 登录用户
     var userId = _basic.getSession(_basic.USER_ID);
 
-    // 车库状态 列表
-    $scope.carStatusList = _config.carRelStatus;
-    // 车库状态 当前选中项
-    $scope.conditionCarStatus = 1;
-
     // 支付状态 列表
     $scope.payStatusList = _config.payStatus;
+
+    // 当前汽车品牌ID
+    $scope.curruntId = 0;
+
+    // 订单信息：修改价格画面用
+    $scope.orderInfo = {
+        id: "",
+        entrustName: "",
+        vin: "",
+        makeName: "",
+        modelName: "",
+        enterTime: "",
+        realOutTime: "",
+        planFee: "",
+        actualFee: ""
+    };
 
     /**
      * 根据画面输入的查询条件，进行数据查询。
      */
-    function queryCarDemandData() {
-        var reqUrl = _host.api_url + "/user/" + userId + "/car?active=" + 1 + "&start=" + $scope.start + "&size=" + $scope.size;
-        // 车辆状态
-        if ($scope.conditionCarStatus != null) {
-            reqUrl = reqUrl + "&relStatus=" + $scope.conditionCarStatus;
-        }
-        // 所在仓库
-        if ($scope.conditionStorage != null) {
-            reqUrl = reqUrl + "&storageId=" + $scope.conditionStorage;
+    function queryOrderData() {
+        // 检索用url
+        var reqUrl = _host.api_url + "/storageOrder?start=" + $scope.start + "&size=" + $scope.size;
+        // 订单编号
+        if ($scope.conditionOrderNo != null) {
+            reqUrl = reqUrl + "&storageOrderId=" + $scope.conditionOrderNo;
         }
         // vin码
         if ($scope.conditionVin != null) {
@@ -54,23 +63,17 @@ app.controller("storage_order_controller", ["$scope", "$rootScope", "_host", "_b
         if ($scope.conditionEnterTimeEnd != null) {
             reqUrl = reqUrl + "&enterEnd=" + $scope.conditionEnterTimeEnd
         }
-        // 是否MSO
-        if ($scope.conditionMsoId != null) {
-            reqUrl = reqUrl + "&msoStatus=" + $scope.conditionMsoId
-        }
-        // 计划出库时间
-        if ($scope.conditionPlanTimeStart != null) {
-            reqUrl = reqUrl + "&planStart=" + $scope.conditionPlanTimeStart
-        }
-        if ($scope.conditionPlanTimeEnd != null) {
-            reqUrl = reqUrl + "&planEnd=" + $scope.conditionPlanTimeEnd
-        }
-        // 实际出库时间
+        // 实际出库时间 开始
         if ($scope.conditionOutTimeStart != null) {
             reqUrl = reqUrl + "&realStart=" + $scope.conditionOutTimeStart
         }
+        // 实际出库时间 终了
         if ($scope.conditionOutTimeEnd != null) {
             reqUrl = reqUrl + "&realEnd=" + $scope.conditionOutTimeEnd
+        }
+        // 支付状态
+        if ($scope.conditionPayStatus != null) {
+            reqUrl = reqUrl + "&orderStatus=" + $scope.conditionPayStatus
         }
 
         console.log(reqUrl);
@@ -99,6 +102,94 @@ app.controller("storage_order_controller", ["$scope", "$rootScope", "_host", "_b
     }
 
     /**
+     * 点击：查询按钮，进行数据查询
+     */
+    $scope.queryOrderList = function () {
+        queryOrderData();
+    };
+
+    /**
+     * 打开修改价格模态窗口。
+     */
+    $scope.openChangePriceDiv = function (el) {
+        $('.modal').modal();
+        $('#changePriceDiv').modal('open');
+
+        $scope.orderInfo.id = el.id;
+        // 委托方
+        $scope.orderInfo.entrustName = el.entrust_name;
+        // VIN
+        $scope.orderInfo.vin = el.vin;
+        // 车型
+        $scope.orderInfo.makeName = el.make_name;
+        $scope.orderInfo.modelName = el.model_name;
+        // 入库时间
+        $scope.orderInfo.enterTime = el.enter_time;
+        // 出库时间
+        $scope.orderInfo.realOutTime = el.real_out_time;
+        // 预计支付
+        $scope.orderInfo.planFee = el.plan_fee;
+    };
+
+    /**
+     * 修改价格，并刷新画面。
+     */
+    $scope.updateOrder = function () {
+
+        if ($scope.orderInfo.actualFee !== "") {
+            // 修改画面数据
+            var obj = {
+                actualFee: $scope.orderInfo.actualFee
+            };
+
+            var url = _host.api_url + "/user/" + userId + "/storageOrder/" + $scope.orderInfo.id;
+            _basic.put(url, obj).then(function (data) {
+                if (data.success) {
+                    $('#changePriceDiv').modal('close');
+                    swal("修改成功", "", "success");
+                    // 成功后，刷新页面数据
+                    queryOrderData();
+                } else {
+                    swal(data.msg, "", "error");
+                }
+            })
+        } else {
+            swal("请填写实际应付价格！", "", "warning");
+        }
+    };
+
+
+
+    /**
+     * 上一页
+     */
+    $scope.preBtn = function () {
+        $scope.start = $scope.start - ($scope.size - 1);
+        queryOrderData();
+    };
+
+    /**
+     * 下一页
+     */
+    $scope.nextBtn = function () {
+        $scope.start = $scope.start + ($scope.size - 1);
+        queryOrderData();
+    };
+
+    /**
+     * 车辆品牌列表查询，用来填充查询条件：车辆品牌
+     */
+    function getCarMakerList() {
+        _basic.get(_host.api_url + "/carMake").then(function (data) {
+            if (data.success == true && data.result.length > 0) {
+                $scope.carMakerList = data.result;
+            } else {
+                swal(data.msg, "", "error");
+            }
+        });
+    }
+
+    /**
      * 当车辆品牌变更时，车辆型号要进行联动刷新。
      * @param val 车辆品牌ID
      */
@@ -119,65 +210,6 @@ app.controller("storage_order_controller", ["$scope", "$rootScope", "_host", "_b
     };
 
     /**
-     * 委托方下拉变更
-     */
-    $scope.changeEntrust = function () {
-        // 当选中【清除选择】时，委托方改为空
-        if ($scope.conditionEntrustId == 0) {
-            $scope.conditionEntrustId = null;
-        }
-    };
-
-    /**
-     * 点击：查询按钮，进行数据查询
-     */
-    $scope.queryCarList = function () {
-        queryCarDemandData();
-    };
-
-    /**
-     * 上一页
-     */
-    $scope.preBtn = function () {
-        $scope.start = $scope.start - ($scope.size - 1);
-        queryCarDemandData();
-    };
-
-    /**
-     * 下一页
-     */
-    $scope.nextBtn = function () {
-        $scope.start = $scope.start + ($scope.size - 1);
-        queryCarDemandData();
-    };
-
-    /**
-     * 车辆品牌列表查询，用来填充查询条件：车辆品牌
-     */
-    function getCarMakerList() {
-        _basic.get(_host.api_url + "/carMake").then(function (data) {
-            if (data.success == true && data.result.length > 0) {
-                $scope.carMakerList = data.result;
-            } else {
-                swal(data.msg, "", "error");
-            }
-        });
-    }
-
-    /**
-     * 仓库列表查询，用来填充查询条件：所在仓库
-     */
-    function getStorageList() {
-        _basic.get(_host.api_url + "/storage").then(function (data) {
-            if (data.success == true && data.result.length > 0) {
-                $scope.storageList = data.result;
-            } else {
-                swal(data.msg, "", "error");
-            }
-        });
-    }
-
-    /**
      * 委托方列表查询，用来填充查询条件：委托方
      */
     function getEntrustList() {
@@ -193,15 +225,26 @@ app.controller("storage_order_controller", ["$scope", "$rootScope", "_host", "_b
     }
 
     /**
+     * 委托方下拉变更
+     */
+    $scope.changeEntrust = function () {
+        // 当选中【清除选择】时，委托方改为空
+        if ($scope.conditionEntrustId == 0) {
+            $scope.conditionEntrustId = null;
+        }
+    };
+
+    /**
      * 画面初期显示时，用来获取画面必要信息的初期方法。
      */
     $scope.initData = function () {
         // 取得查询条件列表
-        getStorageList();
+        // 汽车品牌
         getCarMakerList();
+        // 委托方
         getEntrustList();
         // 查询数据
-        queryCarDemandData();
+        queryOrderData();
     };
     $scope.initData();
 }]);

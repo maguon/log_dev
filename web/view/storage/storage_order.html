@@ -38,7 +38,8 @@
 
                 <!-- 查询条件：委托方 -->
                 <div class="input-field col" style="width: 20%;">
-                    <select material-select watch id="entrustIdSelect" ng-model="conditionEntrustId" ng-change="changeEntrust()"
+                    <select material-select watch id="entrustIdSelect" ng-model="conditionEntrustId"
+                            ng-change="changeEntrust()"
                             style="width: 100%">
                         <option value=""></option>
                         <option value="0">清除选择</option>
@@ -57,7 +58,8 @@
                     <i class="mdi dataIcon mdi-table-large"></i>
                 </div>
                 <div class="col input-field" style="width: 20%;">
-                    <input type="text" id="conditionEnterTimeEndText" ng-model="conditionEnterTimeEnd" class="datepicker"
+                    <input type="text" id="conditionEnterTimeEndText" ng-model="conditionEnterTimeEnd"
+                           class="datepicker"
                            autocomplete="off" required date>
                     <label for="conditionEnterTimeEndText">入库时间(终)</label>
                     <i class="mdi dataIcon mdi-table-large"></i>
@@ -65,7 +67,8 @@
 
                 <!-- 查询条件：出库时间 -->
                 <div class="col input-field" style="width: 20%;">
-                    <input type="text" id="conditionOutTimeStartText" ng-model="conditionOutTimeStart" class="datepicker"
+                    <input type="text" id="conditionOutTimeStartText" ng-model="conditionOutTimeStart"
+                           class="datepicker"
                            autocomplete="off" date>
                     <label for="conditionOutTimeStartText">出库时间(始)</label>
                     <i class="mdi dataIcon mdi-table-large"></i>
@@ -109,46 +112,46 @@
                 <th data-field="">入库时间</th>
                 <th data-field="">出库时间</th>
                 <th data-field="">合计天数</th>
-                <th data-field="">预计支付(美元)</th>
-                <th data-field="">实际支付(美元)</th>
+                <th data-field="">预计支付<br><span style="margin-left: 12px;font-size: 12px;">(美元)</span></th>
+                <th data-field="">实际支付<br><span style="margin-left: 12px;font-size: 12px;">(美元)</span></th>
+                <!--<th data-field="">实际支付(美元)</th>-->
                 <th data-field="">支付状态</th>
                 <th>操作</th>
             </tr>
             </thead>
             <tbody>
             <tr ng-repeat="el in orderList" class="grey-text text-darken-1">
-                <!-- 订单编号 TODO -->
-                <td>{{el.orderNo}}</td>
+                <!-- 订单编号 -->
+                <td>{{el.id}}</td>
                 <!-- VIN码 -->
                 <td ng-bind="el.vin"></td>
                 <!-- 车型 -->
-                <td ng-bind="">{{el.make_name/el.model_name}}</td>
+                <td>{{el.make_name==null ? '未知' : el.make_name}}/{{el.model_name==null ? '未知' : el.model_name}}</td>
                 <!-- 委托方 -->
                 <td ng-bind="el.entrust_name"></td>
                 <!-- 入库时间 -->
                 <td ng-bind="el.enter_time|date:'yyyy-MM-dd HH:mm:ss'"></td>
-                <!-- 出库时间 TODO-->
+                <!-- 出库时间-->
                 <td ng-bind="el.real_out_time|date:'yyyy-MM-dd HH:mm:ss'"></td>
-                <!-- 合计天数 TODO -->
-                <td>{{el.storage_id==null ? '无' : el.storage_name}}</td>
-                <!-- 预计支付(美元) TODO -->
-                <td>{{el.storage_id==null ? '无' : el.storage_name}}</td>
-                <!-- 实际支付(美元) TODO -->
-                <td>{{el.storage_id==null ? '无' : el.storage_name}}</td>
-                <!-- 支付状态 TODO -->
-                <td>{{payStatusList[el.pay_status].name}}</td>
+                <!-- 合计天数 -->
+                <td>{{el.day_count}}</td>
+                <!-- 预计支付(美元) -->
+                <td>{{el.plan_fee | currency}}</td>
+                <!-- 实际支付(美元) -->
+                <td>{{el.actual_fee | currency}}</td>
+                <!-- 支付状态 -->
+                <td>{{payStatusList[el.order_status].name}}</td>
                 <!-- 显示【车辆信息】画面按钮 -->
                 <td class="operation">
-                    <a href="#" ui-sref="car_demand_details({id:el.id,vin:el.vin,from:'car_demand'})">
-                        <i class="mdi mdi-pencil look_icon cyan-text lighten-1"></i>
-                    </a>
-                    <a href="#" ui-sref="car_demand_details({id:el.id,vin:el.vin,from:'car_demand'})">
+                    <i class="mdi mdi-cash-usd look_icon cyan-text lighten-1"
+                       ng-click="openChangePriceDiv(el)"></i>
+                    <a href="#" ui-sref="storage_order_detail({id:el.id,from:'storage_order'})">
                         <i class="mdi mdi-file-document look_icon cyan-text lighten-1"></i>
                         <!-- mdi-pencil-box-outline -->
                     </a>
                 </td>
             </tr>
-            <tr class="grey-text text-darken-1" ng-if="storageCar.length == 0">
+            <tr class="grey-text text-darken-1" ng-if="orderList.length == 0">
                 <td colspan="11" style="letter-spacing: 2px;text-align: center;">暂无数据</td>
             </tr>
             </tbody>
@@ -163,6 +166,97 @@
             <a class="waves-light waves-effect cyan lighten-1 btn" id="next" ng-click="nextBtn()">
                 下一页
             </a>
+        </div>
+    </div>
+</div>
+
+<!-- 显示画面【修改价格】 模态框 -->
+<div class="row" style="margin: 0">
+    <div id="changePriceDiv" class="modal" style="width: 45%;height: 520px">
+        <div class="modal-content center fz20" style="font-weight: 500;padding: 0;">
+
+            <!-- 显示画面【修改价格】 Header -->
+            <div class="row col s12 vc-center cyan"
+                 style="color: white;letter-spacing:1px;font-weight: bold;height: 50px;">
+                <p>修改价格</p>
+            </div>
+
+            <!-- 显示画面【钥匙信息】 Body -->
+            <div class="row col s11"
+                 style="padding:0 ;margin: 10px 0px 10px 40px ; border: 1px solid #cccccc;  background-color: #F5F5F5">
+                <div style="margin: 0 auto;">
+
+                    <!-- 钥匙 车辆信息 -->
+                    <div class="vc-center col s12 left-align cyan-text fz20 lighten-4"
+                         style="height:60px;">
+                        <div class="col s12 left-align context-ellipsis">
+                            <span>委托方：{{orderInfo.entrustName}}</span>
+                        </div>
+                    </div>
+
+                    <div class="vc-center col s12">
+                        <div class="divider s12 center" style="width:100%; margin-left: 10px;margin-right: 10px;"></div>
+                    </div>
+
+                    <!-- 钥匙 vin 制造商 型号 -->
+                    <div class="vc-center col s12 left-align black-text fz14" style="height:50px ;">
+                        <div class="col s6 left-align context-ellipsis">
+                            <span>VIN：{{orderInfo.vin}}</span>
+                        </div>
+                        <div class="col s6 left-align context-ellipsis">
+                            <span>车型：{{orderInfo.makeName==null ? '未知' : orderInfo.makeName}}/{{orderInfo.modelName==null ? '未知' : orderInfo.modelName}}</span>
+                        </div>
+                    </div>
+
+                    <!--<div class="vc-center col s12">-->
+                    <!--<div class="divider s12 center" style="width:100%; margin-left: 10px;margin-right: 10px;"></div>-->
+                    <!--</div>-->
+                    <div class="vc-center col s12">
+                        <div style="border-top: #cccccc 1px dashed; overflow: hidden;width:100%; margin-left: 10px;margin-right: 10px;height: 1px"></div>
+                    </div>
+
+                    <!-- 钥匙 存放位置 -->
+                    <div class="vc-center col s12 left-align black-text fz14" style="height:50px;">
+                        <div class="col s6 left-align context-ellipsis">
+                            <span>入库时间：{{orderInfo.enterTime |date:'yyyy-MM-dd hh:mm:ss'}}</span>
+                        </div>
+                        <div class="col s6 left-align context-ellipsis">
+                            <span>出库时间：{{orderInfo.realOutTime |date:'yyyy-MM-dd hh:mm:ss'}}</span>
+                        </div>
+                    </div>
+
+                    <div class="vc-center col s12">
+                        <div class="divider s12 center" style="width:100%; margin-left: 10px;margin-right: 10px;"></div>
+                    </div>
+
+                    <!-- 钥匙 委托方 -->
+                    <div class="vc-center col s12 left-align black-text fz14" style="height:60px ;">
+                        <div class="col s12 left-align context-ellipsis">
+                            预计支付：<span class="red-text fz18">{{orderInfo.planFee | currency}}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col s12">
+                <!-- 实际应付 -->
+                <div class="col s11 input-field" style="margin-left: 30px;">
+                    <input type="text" id="actualFeeText" maxlength="9" valid-num ng-model="orderInfo.actualFee">
+                    <label for="actualFeeText"><span style="color: red">* </span>实际应付：</label>
+                </div>
+            </div>
+
+            <div class="divider col s12" style="margin-top: 50px;"></div>
+
+            <div class="row col right-align" style="width: 96%;margin-top: 20px;">
+                <a class="btn-floating waves-effect waves-light grey btn modal-close">
+                    <i class="mdi mdi-close add_brand"></i>
+                </a>
+
+                <a class="btn-floating waves-effect waves-light cyan lighten-1 btn" style="margin-left: 20px;" ng-click="updateOrder()">
+                    <i class="mdi mdi-check add_brand"></i>
+                </a>
+            </div>
         </div>
     </div>
 </div>

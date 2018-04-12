@@ -123,6 +123,18 @@ app.config(['$stateProvider',"$urlRouterProvider",function($stateProvider,$urlRo
             templateUrl: "/view/storage/storage_store_detail.html",
             controller:'storage_store_detail_controller'
         })
+        // 仓储管理->订单管理
+        .state("storage_order", {
+            url:"/storage_order",
+            templateUrl: "/view/storage/storage_order.html",
+            controller:"storage_order_controller"
+        })
+        // 仓储管理->订单管理（订单详情）
+        .state("storage_order_detail", {
+            url:"/storage_order_detail/{id}?from",
+            templateUrl: "/view/storage/storage_order_detail.html",
+            controller:"storage_order_detail_controller"
+        })
         // 仓储管理->支付管理
         .state("storage_payment", {
             url:"/storage_payment",
