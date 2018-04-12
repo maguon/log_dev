@@ -140,7 +140,7 @@
                 <!-- 实际支付(美元) -->
                 <td>{{el.actual_fee | currency}}</td>
                 <!-- 支付状态 -->
-                <td>{{payStatusList[el.order_status].name}}</td>
+                <td>{{payStatusList[el.order_status - 1].name}}</td>
                 <!-- 显示【车辆信息】画面按钮 -->
                 <td class="operation">
                     <i class="mdi mdi-cash-usd look_icon cyan-text lighten-1"
