@@ -141,6 +141,12 @@ app.config(['$stateProvider',"$urlRouterProvider",function($stateProvider,$urlRo
             templateUrl: "/view/storage/storage_payment.html",
             controller:"storage_payment_controller"
         })
+        // 仓储管理->支付管理->详细
+        .state("storage_payment_detail", {
+            url:"/storage_payment_detail/{id}?from",
+            templateUrl: "/view/storage/storage_payment_detail.html",
+            controller:"storage_payment_detail_controller"
+        })
         .state("storage_car_detail", {
             url:"/storage_car_detail/{id}/vin/{vin}/?from",
             templateUrl: "/view/storage/storage_car_details.html",
