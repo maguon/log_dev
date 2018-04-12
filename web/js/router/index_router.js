@@ -123,10 +123,11 @@ app.config(['$stateProvider',"$urlRouterProvider",function($stateProvider,$urlRo
             templateUrl: "/view/storage/storage_store_detail.html",
             controller:'storage_store_detail_controller'
         })
-        .state("statistics", {
-            url:"/storage_statistics",
-            templateUrl: "/view/storage/storage_statistics.html",
-            controller:"storage_statistics_controller"
+        // 仓储管理->支付管理
+        .state("storage_payment", {
+            url:"/storage_payment",
+            templateUrl: "/view/storage/storage_payment.html",
+            controller:"storage_payment_controller"
         })
         .state("storage_car_detail", {
             url:"/storage_car_detail/{id}/vin/{vin}/?from",
