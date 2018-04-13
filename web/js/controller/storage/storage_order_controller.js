@@ -76,8 +76,6 @@ app.controller("storage_order_controller", ["$scope", "$rootScope", "_host", "_b
             reqUrl = reqUrl + "&orderStatus=" + $scope.conditionPayStatus
         }
 
-        console.log(reqUrl);
-
         _basic.get(reqUrl).then(function (data) {
             if (data.success == true) {
                 $scope.orderResult = data.result;
@@ -144,6 +142,7 @@ app.controller("storage_order_controller", ["$scope", "$rootScope", "_host", "_b
             };
 
             var url = _host.api_url + "/user/" + userId + "/storageOrder/" + $scope.orderInfo.id;
+
             _basic.put(url, obj).then(function (data) {
                 if (data.success) {
                     $('#changePriceDiv').modal('close');

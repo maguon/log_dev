@@ -82,7 +82,6 @@ app.controller("storage_order_detail_controller", ["$scope", "$state", "$statePa
         $('#associatedOrderInfoDiv').modal('open');
     };
 
-
     $scope.openOtherOrderList = function () {
         $scope.otherOrderList = true;
         // 取得关联其他订单数据。
@@ -155,14 +154,10 @@ app.controller("storage_order_detail_controller", ["$scope", "$state", "$statePa
             // 修改订单状态为【2：已支付】
             var url = _host.api_url + "/user/" + userId + "/storageOrder/" + $scope.storageOrderId + "/orderStatus/" + $scope.payStatusList[1].id;
 
-            console.log(url);
             _basic.put(url, {}).then(function (data) {
                 if (data.success) {
-                    // TODO
                     if ($scope.selected.length > 0) {
-                        console.log('selected');
                         $scope.selected.forEach(function(value, index, array) {
-                            console.log(value);
                             $scope.paymentInfo.storageOrderIds.push(value);
                         });
                     }
@@ -184,56 +179,6 @@ app.controller("storage_order_detail_controller", ["$scope", "$state", "$statePa
             swal("请填写完整信息！", "", "warning");
         }
     };
-
-    // /**
-    //  * 获取钥匙柜（分区）详细信息。
-    //  */
-    // $scope.getLeftPosition = function (selectZoneId) {
-    //
-    //     // GET /carKeyCabinet/{carKeyCabinetId}/carKeyPositionCount
-    //
-    //     // 检索钥匙柜详细信息URL
-    //     var url = _host.api_url + "/carKeyCabinet/" + keyCabinetId + "/carKeyPositionCount?areaId=" + selectZoneId;
-    //
-    //     // 调用API取得，画面数据
-    //     _basic.get(url).then(function (data) {
-    //         if (data.success) {
-    //             // 检索取得数据集
-    //             $scope.leftPosition = data.result[0].position_count;
-    //         } else {
-    //             swal(data.msg, "", "error");
-    //         }
-    //     });
-    // };
-    //
-    // /**
-    //  * 获取钥匙柜（分区）详细信息。
-    //  */
-    // $scope.getKeyCabinetAreaInfo = function () {
-    //
-    //     // 检索钥匙柜详细信息URL
-    //     var url = _host.api_url + "/carKeyCabinetArea?areaStatus=1&carKeyCabinetId=" + keyCabinetId;
-    //
-    //     // 调用API取得，画面数据
-    //     _basic.get(url).then(function (data) {
-    //         if (data.success) {
-    //             // 检索取得数据集
-    //             $scope.zoneList = data.result;
-    //
-    //             // 画面钥匙柜 名称
-    //             if (data.result.length > 0) {
-    //                 $scope.selectedZone = $scope.zoneList[0].id;
-    //                 $scope.keyCabinetNm = data.result[0].key_cabinet_name;
-    //                 $scope.getKeyCabinetZoneList($scope.selectedZone);
-    //             } else {
-    //                 $scope.keyCabinetNm = keyCabinetNm;
-    //             }
-    //         } else {
-    //             swal(data.msg, "", "error");
-    //         }
-    //     });
-    // };
-
 
     /**
      * 取得订单详情
@@ -292,7 +237,7 @@ app.controller("storage_order_detail_controller", ["$scope", "$state", "$statePa
      */
     function getPaymentDetails() {
         // 检索用url
-        var url = _host.api_url + "/storageOrderPayment?storageOrderId=" + $scope.storageOrderId;
+        var url = _host.api_url + "/orderPayment?storageOrderId=" + $scope.storageOrderId;
 
         _basic.get(url).then(function (data) {
             if (data.success == true) {
@@ -323,18 +268,15 @@ app.controller("storage_order_detail_controller", ["$scope", "$state", "$statePa
      */
     function getOrderPaymentRel(paymentId) {
         // 检索用url
-        var url = _host.api_url + "/storageOrderPaymentRel?storageOrderPaymentId=" + paymentId;
+        var url = _host.api_url + "/orderPaymentRel?orderPaymentId=" + paymentId;
 
-        console.log(url);
 
         _basic.get(url).then(function (data) {
             if (data.success == true) {
                 var totalPlanFee = 0;
                 var totalActualFee = 0;
-
+                $scope.relOrderList = [];
                 data.result.forEach(function(value, index, array) {
-                    console.log(value.id);
-                    console.log($scope.storageOrderId);
                     if (value.storage_order_id != $scope.storageOrderId) {
                         $scope.relOrderList.push(value);
                         totalPlanFee =  totalPlanFee + value.plan_fee;
@@ -386,8 +328,7 @@ app.controller("storage_order_detail_controller", ["$scope", "$state", "$statePa
 
     $scope.selected = [];
 
-
-    $scope.isSelectedAll = function(){
+    $scope.isSelectedAllRelOrder = function(){
         // 选中的情况
         if ($scope.selected.length == $scope.relOrderList.length) {
             return true;
@@ -396,7 +337,7 @@ app.controller("storage_order_detail_controller", ["$scope", "$state", "$statePa
         }
     };
 
-    $scope.selectAll = function($event){
+    $scope.selectAllRelOrder = function($event){
         var checkbox = $event.target;
         $scope.totalPlanFee = 0;
         $scope.totalActualFee = 0;
@@ -412,7 +353,7 @@ app.controller("storage_order_detail_controller", ["$scope", "$state", "$statePa
         }
     };
 
-    $scope.clickOrder = function($event, id, planFee, actualFee){
+    $scope.clickRelOrder = function($event, id, planFee, actualFee){
          var checkbox = $event.target;
 
          // 选中的情况
@@ -427,10 +368,10 @@ app.controller("storage_order_detail_controller", ["$scope", "$state", "$statePa
              var idx = $scope.selected.indexOf(id);
              $scope.selected.splice(idx,1);
          }
-        $scope.isSelectedAll();
+        $scope.isSelectedAllRelOrder();
    };
 
-    $scope.isSelected = function(id){
+    $scope.isRelOrderSelected = function(id){
        return $scope.selected.indexOf(id)>=0;
     };
 
@@ -440,8 +381,6 @@ app.controller("storage_order_detail_controller", ["$scope", "$state", "$statePa
     $scope.initData = function () {
         // 取得订单详情
         getOrderDetails();
-        // 取得支付信息
-        // getOrderPaymentInfo();
     };
     $scope.initData();
 }]);
