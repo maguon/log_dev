@@ -51,7 +51,7 @@ app.controller("storage_payment_controller", ["$scope", "_basic", "_host","_conf
     function seachPayment(){
         // 检索条件组装
         var condition = _basic.objToUrl({
-            storageOrderPaymentId: $scope.patmentId,
+            orderPaymentId: $scope.paymentId,
             entrustType: $scope.entrustType,
             entrustId: $scope.entrustId,
             paymentStatus:$scope.paymentStatus,
@@ -63,7 +63,7 @@ app.controller("storage_payment_controller", ["$scope", "_basic", "_host","_conf
             size: $scope.size
         });
 
-        _basic.get(_host.api_url + "/storageOrderPayment?" + condition).then(function (data) {
+        _basic.get(_host.api_url + "/orderPayment?" + condition).then(function (data) {
             if (data.success == true) {
                 $scope.storagePaymentArray = data.result;
                 if ($scope.start > 0) {
@@ -117,7 +117,7 @@ app.controller("storage_payment_controller", ["$scope", "_basic", "_host","_conf
                 remark: $scope.addRemark
             };
 
-            _basic.post(_host.api_url + "/user/" + userId + "/storageOrderPayment", obj).then(function (data) {
+            _basic.post(_host.api_url + "/user/" + userId + "/orderPayment", obj).then(function (data) {
                 if (data.success) {
                     $('#addPaymentModal').modal('close');
                     seachPayment();
