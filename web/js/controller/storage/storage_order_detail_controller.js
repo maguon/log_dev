@@ -136,6 +136,9 @@ app.controller("storage_order_detail_controller", ["$scope", "$state", "$statePa
         // 订单ID
         $scope.paymentInfo.storageOrderIds = [parseInt($scope.storageOrderId)];
 
+        // 清空关联订单信息
+        $scope.relOrderList = [];
+
         // 支付画面关联订单的选中状态
         $scope.selected = [];
         $scope.totalPlanFee = 0;
