@@ -57,7 +57,7 @@
                             <div class="input-field col s4">
                                 <select material-select watch id="entrustId" name="entrustId" ng-model="entrustId" >
                                     <option value="" disabled selected>请选择</option>
-                                    <option ng-repeat="el in getEntrust"  ng-value="el.id" >{{el.short_name}}</option>
+                                    <option ng-repeat="el in entrustList"  ng-value="el.id" >{{el.short_name}}</option>
                                 </select>
                                 <label for="entrustId"><span style="color: red;margin-right: 5px">*</span>委托方</label>
                             </div>

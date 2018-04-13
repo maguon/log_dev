@@ -138,7 +138,7 @@ app.controller("storage_payment_detail_controller", ["$scope","$stateParams", "_
         $('.tabWrap .lookRelatedOrder').addClass("active");
         $("#lookRelatedOrder").addClass("active");
         $("#lookRelatedOrder").show();
-        _basic.get(_host.api_url + "/storageOrder?entrustId=" + $scope.storagePaymentArray.entrust_id ).then(function (data) {
+        _basic.get(_host.api_url + "/storageOrder?entrustId=" + $scope.storagePaymentArray.entrust_id +'&orderStatus=1').then(function (data) {
             if (data.success == true) {
                 $scope.storageOrderList=data.result;
             } else {
