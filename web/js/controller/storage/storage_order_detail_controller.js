@@ -82,6 +82,9 @@ app.controller("storage_order_detail_controller", ["$scope", "$state", "$statePa
         $('#associatedOrderInfoDiv').modal('open');
     };
 
+    /**
+     * 取得关联其他订单数据
+     */
     $scope.openOtherOrderList = function () {
         $scope.otherOrderList = true;
         // 取得关联其他订单数据。
@@ -270,20 +273,19 @@ app.controller("storage_order_detail_controller", ["$scope", "$state", "$statePa
         // 检索用url
         var url = _host.api_url + "/orderPaymentRel?orderPaymentId=" + paymentId;
 
-
         _basic.get(url).then(function (data) {
             if (data.success == true) {
                 var totalPlanFee = 0;
                 var totalActualFee = 0;
                 $scope.relOrderList = [];
                 data.result.forEach(function(value, index, array) {
+                    // 去掉自己
                     if (value.storage_order_id != $scope.storageOrderId) {
                         $scope.relOrderList.push(value);
                         totalPlanFee =  totalPlanFee + value.plan_fee;
                         totalActualFee = totalActualFee + value.actual_fee;
                     }
                 });
-                // $scope.relOrderList = data.result;
 
                 $scope.totalPlanFee = totalPlanFee;
                 $scope.totalActualFee = totalActualFee;
@@ -306,31 +308,22 @@ app.controller("storage_order_detail_controller", ["$scope", "$state", "$statePa
             if (data.success == true) {
 
                 data.result.forEach(function(value, index, array) {
+                    // 去掉自己
                     if (value.id != $scope.storageOrderId) {
                         $scope.relOrderList.push(value);
                     }
                 });
-
-                var totalPlanFee = 0;
-                var totalActualFee = 0;
-                // $scope.relOrderList.reduce(function(previousValue, currentValue) {
-                //     totalPlanFee =  previousValue.plan_fee + currentValue.plan_fee;
-                //     totalActualFee = previousValue.actual_fee + currentValue.actual_fee;
-                // });
-
-                // $scope.totalPlanFee = totalPlanFee;
-                // $scope.totalActualFee = totalActualFee;
             } else {
                 swal(data.msg, "", "error");
             }
         });
     }
 
-    $scope.selected = [];
+    $scope.selectedRelOrder = [];
 
     $scope.isSelectedAllRelOrder = function(){
         // 选中的情况
-        if ($scope.selected.length == $scope.relOrderList.length) {
+        if ($scope.selectedRelOrder.length == $scope.relOrderList.length) {
             return true;
         } else {
             return false;
@@ -344,12 +337,12 @@ app.controller("storage_order_detail_controller", ["$scope", "$state", "$statePa
         // 选中的情况
         if (checkbox.checked) {
             $scope.relOrderList.forEach(function(value, index, array) {
-                $scope.selected.push(value.id);
+                $scope.selectedRelOrder.push(value.id);
                 $scope.totalPlanFee = $scope.totalPlanFee + value.plan_fee;
                 $scope.totalActualFee = $scope.totalActualFee + value.actual_fee;
             });
         } else {
-            $scope.selected = [];
+            $scope.selectedRelOrder = [];
         }
     };
 
@@ -360,19 +353,19 @@ app.controller("storage_order_detail_controller", ["$scope", "$state", "$statePa
          if (checkbox.checked) {
              $scope.totalPlanFee = $scope.totalPlanFee + planFee;
              $scope.totalActualFee = $scope.totalActualFee + actualFee;
-             $scope.selected.push(id);
+             $scope.selectedRelOrder.push(id);
 
          } else {
              $scope.totalPlanFee = $scope.totalPlanFee - planFee;
              $scope.totalActualFee = $scope.totalActualFee - actualFee;
-             var idx = $scope.selected.indexOf(id);
-             $scope.selected.splice(idx,1);
+             var idx = $scope.selectedRelOrder.indexOf(id);
+             $scope.selectedRelOrder.splice(idx,1);
          }
         $scope.isSelectedAllRelOrder();
    };
 
     $scope.isRelOrderSelected = function(id){
-       return $scope.selected.indexOf(id)>=0;
+       return $scope.selectedRelOrder.indexOf(id)>=0;
     };
 
     /**
