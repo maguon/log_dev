@@ -80,7 +80,7 @@ app.controller("storage_payment_detail_controller", ["$scope","$stateParams", "_
             _basic.put(_host.api_url + "/user/" + userId+"/storageOrderPayment/" + val, obj).then(function (data) {
                 if (data.success == true) {
                     swal("修改成功", "", "success");
-                    $scope.lookPaymentMsg();
+                    getBaseInfo();
                 } else {
                     swal(data.msg, "", "error");
                 }
@@ -113,7 +113,7 @@ app.controller("storage_payment_detail_controller", ["$scope","$stateParams", "_
                 var url = _host.api_url + "/user/" + userId + "/storageOrderPayment/" + val + "/paymentStatus/"+2;
                     _basic.put(url,{}).then(function (data) {
                         if (data.success == true) {
-                            $scope.lookPaymentMsg();
+                            getBaseInfo();
                         } else {
                             swal(data.msg, "", "error");
                         }
