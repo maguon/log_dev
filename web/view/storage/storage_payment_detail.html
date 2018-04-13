@@ -14,7 +14,7 @@
 
 <!--按键切换以及详情  支付信息   关联仓储订单-->
 <div class="row no-marBottom" ul-tabs>
-    <div class="col s12 p0" style="width: 90%; margin:0 5% ">
+    <div class="col s12 p0" style="width: 96%; margin:0 2%">
 
         <!--按键切换  支付信息   关联仓储订单-->
         <ul class="tabWrap grey lighten-4 ">
@@ -24,66 +24,331 @@
     </div>
 
     <!--支付信息的详细信息-->
-    <div id="lookPaymentMsg" class="col s12 tab_box" style="width: 80%; margin:0 10% ">
-        <div class="modal-content">
-            <div class="row col s12">
-                <div class="col s6 input-field">
-                    <select material-select watch ng-model="addEntrustType" ng-change="getEntrustInfo(addEntrustType)">
-                        <option value=""  ><span style="color: red">*</span>委托方性质</option>
-                        <option ng-repeat="el in entrustTypeList" ng-value="el.entrust_type">{{el.name}}</option>
-                    </select>
+    <div id="lookPaymentMsg" class="col s12 tab_box" style="width: 90%; margin:0 5% ">
+        <!--已支付状态下-->
+        <div  ng-if='paymentStatus==1'>
+            <div class="modal-content">
+                <div class="row col s12 bold" style="color:#26c6da ;margin-top: 20px;">
+                    <div class="col s6 fz18" >支付编码:{{storagePaymentArray.id}}</div>
+                    <div class="col s6 right-align">{{paymentStatusList[storagePaymentArray.payment_status-1].name}}</div>
                 </div>
-                <div class="col s6 input-field">
-                    <select material-select watch id="addEntrustSelect"  ng-model="addEntrustId" ng-change="changeEntrustId()" style="width: 100%">
-                        <option value="" ><span style="color: red">*</span>委托方</option>
-                        <option ng-repeat="el in entrustList" ng-value="el.id">{{el.short_name}}</option>
-                    </select>
+                <div class="row col s12">
+                    <div class="col s6 input-field">
+                        <select material-select watch ng-model="storagePaymentArray.entrust_type" ng-change="getEntrustInfo(storagePaymentArray.entrust_type)">
+                            <option value=""  ><span style="color: red">*</span>委托方性质</option>
+                            <option ng-repeat="el in entrustTypeList" ng-value="el.entrust_type">{{el.name}}</option>
+                        </select>
+                    </div>
+                    <div class="col s6 input-field">
+                        <select material-select watch id="entrustSelect"  ng-model="storagePaymentArray.entrust_id" ng-change="changeEntrustId()" style="width: 100%">
+                            <option value="" ></option>
+                            <option value="0" >清除选择</option>
+                            <option ng-repeat="el in entrustList" ng-value="el.id">{{el.short_name}}</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="row col s12">
+                    <div class="col s6 input-field">
+                        <select material-select watch ng-model="storagePaymentArray.payment_type">
+                            <option value=""  ><span style="color: red">*</span>支付方式</option>
+                            <option ng-repeat="el in paymentTypeList" ng-value="el.id">{{el.name}}</option>
+                        </select>
+                    </div>
+                    <div class="col s6 input-field">
+                        <input  id="addPatmentNumber" name="addPatmentNumber" autocomplete="off" ng-model="storagePaymentArray.number" type="text"   required >
+                        <label for="addPatmentNumber"><span style="color: red">*</span>票号</label>
+                    </div>
+                </div>
+                <div class="row col s12">
+                    <div class="col s12 input-field">
+                        <input type="number" name="addPaymentMoney" id="addPaymentMoney" ng-model="storagePaymentArray.payment_money">
+                        <label for="addPaymentMoney"><span style="color: red">*</span>支付金额(美元)</label>
+                    </div>
+                </div>
+                <div class="row col s12">
+                    <div class="col s12 input-field">
+                        <input type="text" name="addRemark" id="addRemark" ng-model="storagePaymentArray.remark">
+                        <label for="addRemark">备注</label>
+                    </div>
+                </div>
+                <div class="row col s12" style="margin-bottom: 35px;color:grey;">
+                    <div class="col s6 ">操作人:{{storagePaymentArray.payment_user_name}}</div>
+                    <div class="col s6 right-align">支付时间:{{storagePaymentArray.created_on |date:'yyyy-MM-dd hh:mm'}}</div>
                 </div>
             </div>
-            <div class="row col s12">
-                <div class="col s6 input-field">
-                    <select material-select watch ng-model="addPaymentType">
-                        <option value=""  ><span style="color: red">*</span>支付方式</option>
-                        <option ng-repeat="el in paymentTypeList" ng-value="el.id">{{el.name}}</option>
-                    </select>
+            <div class="row col s12" style="margin-top: 30px">
+                <div class="col s2 offset-s3">
+                    <a ng-click="updatePaymentInfo()" style="width: 100%" class="waves-light waves-effect cyan lighten-2 btn">保存
+                    </a>
                 </div>
-                <div class="col s6 input-field">
-                    <input  id="addPatmentNumber" name="addPatmentNumber" autocomplete="off" ng-model="addPatmentNumber" type="text"   required >
-                    <label for="addPatmentNumber"><span style="color: red">*</span>票号</label>
+                <div class="col s2 offset-s2">
+                    <a ng-click="updatePaymentStatus()" style="width: 100%;background-color:#f0ad4e;" class="waves-light waves-effect  lighten-1 btn">
+                        完结
+                    </a>
                 </div>
-            </div>
-            <div class="row col s12">
-                <div class="col s12 input-field">
-                    <input type="number" name="addPaymentMoney" id="addPaymentMoney" ng-model="addPaymentMoney">
-                    <label for="addPaymentMoney"><span style="color: red">*</span>支付金额(美元)</label>
-                </div>
-            </div>
-            <div class="row col s12" style="margin-bottom: 135px;">
-                <div class="col s12 input-field">
-                    <input type="text" name="addRemark" id="addRemark" ng-model="addRemark">
-                    <label for="addRemark">备注</label>
-                </div>
-            </div>
-            <div class="row col s12">
-                <div class="col s6">操作人</div>
             </div>
         </div>
-        <div class="row col s12" style="margin-top: 30px">
-            <div class="col s2 offset-s3">
-                <a ng-click="submitHandleInfo()" style="width: 100%" class="waves-light waves-effect cyan lighten-2 btn">保存
-                </a>
-            </div>
-            <div class="col s2 offset-s2">
-                <a ng-click="saveHandleInfoModify()" style="width: 100%;background-color:#f0ad4e;" class="waves-light waves-effect  lighten-1 btn">
-                    完结
-                </a>
+        <!--已完结状态下-->
+        <div  ng-if='paymentStatus==2'>
+            <div class="modal-content">
+                <div class="row col s12 bold" style="color:#26c6da ;margin-top: 20px;">
+                    <div class="col s6 fz18" >支付编码:{{storagePaymentArray.id}}</div>
+                    <div class="col s6 right-align">{{paymentStatusList[storagePaymentArray.payment_status-1].name}}</div>
+                </div>
+                <!--实分割线-->
+                <div  class="row col s12" style="height:2px;border-bottom: 1px solid #ccc;width:96%;margin-left: 2%"></div>
+
+                <!-- 委托方性质 委托方-->
+                <div class="row col s12">
+                    <div class="col s6 left-align">
+                        <div class="col s12">
+                            委托方性质:{{storagePaymentArray.entrust_type}}
+                        </div>
+                    </div>
+                    <div class="col s6 valign-wrapper">
+                        <div class="col s12 input-field left-align">
+                            委托方:{{storagePaymentArray.entrust_name}}
+                        </div>
+                    </div>
+                </div>
+                <!--虚分割线-->
+                <div  class="row col s12" style="height:1px;border-bottom: 1px dotted #ccc;width:96%;margin-left: 2%"></div>
+
+                <!-- 支付方式 票号-->
+                <div class="row col s12">
+                    <div class="col s6 left-align">
+                        <div class="col s12">
+                            支付方式:{{storagePaymentArray.payment_type}}
+                        </div>
+                    </div>
+                    <div class="col s6 valign-wrapper">
+                        <div class="col s12 input-field left-align">
+                            票号:{{storagePaymentArray.number}}
+                        </div>
+                    </div>
+                </div>
+                <!--虚分割线-->
+                <div  class="row col s12" style="height:1px;border-bottom: 1px dotted #ccc;width:96%;margin-left: 2%"></div>
+
+                <!-- 备注-->
+                <div class="row col s12">
+                    <div class="col s6 left-align">
+                        <div class="col s12">
+                            备注:{{storagePaymentArray.remark}}
+                        </div>
+                    </div>
+                </div>
+                <!--实分割线-->
+                <div  class="row col s12" style="height:2px;border-bottom: 1px solid #ccc;width:96%;margin-left: 2%"></div>
+
+                <!--支付金额 操作人-->
+                <div class="row col s12">
+                    <div class="col s6 left-align">
+                        <div class="col s12">
+                            支付金额(美元):&nbsp;$&nbsp;<span style="color: red">{{storagePaymentArray.payment_money}}.00</span>
+                        </div>
+                    </div>
+                    <div class="col s6 right-align">
+                        <div class="col s12">
+                            操作人:{{storagePaymentArray.payment_user_name}}
+                        </div>
+                    </div>
+                </div>
+
+                <!--支付时间-->
+                <div class="row col s12">
+                    <div class="col s12 right-align">
+                        <div class="col s12">
+                            支付时间:{{storagePaymentArray.updated_on | date:'yyyy-MM-dd hh:mm'}}
+                        </div>
+                    </div>
+                </div>
+
+
             </div>
         </div>
 
     </div>
 
     <!--关联仓储订单的详细信息-->
-    <div id="lookRelatedOrder" class="col s12 tab_box">
+    <div id="lookRelatedOrder" class="col s12 tab_box" style="width: 100%; margin:30px 0">
+
+
+
+        <!--条件分支 已支付-->
+        <div ng-if='paymentStatus==1'>
+            <!--条件分支 无订单-->
+            <div  ng-if="storageOrderList.length==0&&storageOrderPaymentRelList.length==0" >
+                <div style="height:400px;line-height: 400px;margin-left: 40%" clss="enter">
+                    <i class="mdi  mdi-alert-circle-outline red-text fz30"></i>
+                    <span class="bold grey-text fz22">委托方暂无未支付仓储订单</span>
+                </div>
+
+            </div>
+
+            <!--条件分支 有订单-->
+            <div ng-if='storageOrderList.length!==0||storageOrderPaymentRelList.length!==0'>
+                <!--未结算仓储订单-->
+                <div class="col s6">
+                    <div  class="col s12 left">
+                        <div class="card" style="border: 2px solid #ccc">
+                            <div class="card-content bold cyan-text fz18 left-align grey lighten-4" style="border-bottom: 2px solid #ccc">
+                                未结算仓储订单
+                            </div>
+                            <div class="card-content">
+                                <ul class="row">
+                                    <li class='col s12 bold fz14' style="border-bottom: 1px solid #ccc;padding-bottom: 10px">
+                                        <div class="col s4 left-align">
+                                            <div class="col s4 left">编号</div>
+                                            <div class="col s8 left">VIN码</div>
+                                        </div>
+                                        <div class="col s4">
+                                            <div class="col s4 left">车型</div>
+                                            <div class="col s4 left">入库</div>
+                                            <div class="col s4 left">出库</div>
+                                        </div>
+                                        <div class="col s4">
+                                            <div class="col s3 left">天数</div>
+                                            <div class="col s7 left center">实际支付(美元)</div>
+                                            <div class="col s2 left"></div>
+                                        </div>
+                                    </li>
+                                    <li ng-repeat="el in storageOrderList" class="grey-text text-darken-1 fz12">
+                                        <div class="col s12" style="border-bottom: 1px solid #ccc;padding:5px 0">
+                                            <div class="col s4">
+                                                <div class="col s4 left">{{el.id}}</div>
+                                                <div class="col s8 left">{{el.vin}}</div>
+                                            </div>
+                                            <div class="col s4">
+                                                <div class="col s4 left">{{el.make_name}}/{{el.model_name}}</div>
+                                                <div class="col s4 left">{{el.created_on |date:'yyyy-MM-dd hh:mm'}}</div>
+                                                <div class="col s4 left">{{el.enter_time |date:'yyyy-MM-dd hh:mm'}}</div>
+                                            </div>
+                                            <div class="col s4">
+                                                <div class="col s3 left">{{el.day_count}}</div>
+                                                <div class="col s7 left center red-text">{{el.actual_fee}}</div>
+                                                <a  ng-click="addOderRel(el.id)" class="col s2 left" style="cursor: pointer">
+                                                    <i class="mdi mdi-plus-circle look_icon cyan-text lighten-1 fz25"></i>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <!--此项支付关联存车订单-->
+                <div class="col s6">
+                    <div  class="col s12 right">
+                        <div class="card" style="border: 2px solid #ccc">
+                            <div class="card-content bold cyan-text fz18 left-align grey lighten-4" style="border-bottom: 2px solid #ccc">
+                                此项支付关联存车订单
+                            </div>
+                            <div class="card-content">
+                                <ul class="row">
+                                    <li class='col s12 bold fz14' style="border-bottom: 1px solid #ccc;padding-bottom: 10px">
+                                        <div class="col s4 left-align">
+                                            <div class="col s4 left">编号</div>
+                                            <div class="col s8 left">VIN码</div>
+                                        </div>
+                                        <div class="col s4">
+                                            <div class="col s4 left">车型</div>
+                                            <div class="col s4 left">入库</div>
+                                            <div class="col s4 left">出库</div>
+                                        </div>
+                                        <div class="col s4">
+                                            <div class="col s3 left">天数</div>
+                                            <div class="col s7 left center">实际支付(美元)</div>
+                                            <div class="col s2 left"></div>
+                                        </div>
+                                    </li>
+                                    <li ng-repeat="el in storageOrderPaymentRelList" class="grey-text text-darken-1 fz12 center">
+                                        <div class="col s12" style="border-bottom: 1px solid #ccc;padding:5px 0">
+                                            <div class="col s4">
+                                                <div class="col s4 left">{{el.id}}</div>
+                                                <div class="col s8 left">{{el.vin}}</div>
+                                            </div>
+                                            <div class="col s4">
+                                                <div class="col s4 left">{{el.make_name}}/{{el.model_name}}</div>
+                                                <div class="col s4 left">{{el.created_on |date:'yyyy-MM-dd hh:mm'}}</div>
+                                                <div class="col s4 left">{{el.enter_time |date:'yyyy-MM-dd hh:mm'}}</div>
+                                            </div>
+                                            <div class="col s4">
+                                                <div class="col s3 left">{{el.day_count}}</div>
+                                                <div class="col s7 left center red-text">{{el.actual_fee}}</div>
+                                                <a  ng-click="deleteOderRel(el.storage_order_id)" class="col s2 left" style="cursor: pointer">
+                                                    <i class="mdi mdi-do-not-disturb look_icon red-text lighten-1 fz25"></i>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <!--条件分支 已完结-->
+        <div ng-if='paymentStatus==2'>
+            <!--条件分支 无订单-->
+            <div  ng-if="storageOrderList.length==0&&storageOrderPaymentRelList.length==0" >
+                <div style="height:400px;line-height: 400px;margin-left: 40%" clss="enter">
+                    <i class="mdi  mdi-alert-circle-outline red-text fz30"></i>
+                    <span class="bold grey-text fz22">委托方暂无未支付仓储订单</span>
+                </div>
+
+            </div>
+
+            <div ng-if='storageOrderList.length!==0||storageOrderPaymentRelList.length!==0'>
+                <div class="card" style="border: 2px solid #ccc;width:90%;margin:0 auto">
+                    <div class="card-content">
+                        <ul class="row">
+                            <li class='col s12 bold ' style="border-bottom: 1px solid #ccc;padding-bottom: 10px">
+                                <div class="col s4">
+                                    <div class="col s4 left">订单编号</div>
+                                    <div class="col s8 left">VIN码</div>
+                                </div>
+                                <div class="col s4">
+                                    <div class="col s4 left">车型</div>
+                                    <div class="col s4 left">入库时间</div>
+                                    <div class="col s4 left">出库时间</div>
+                                </div>
+                                <div class="col s4">
+                                    <div class="col s5 left">合计天数</div>
+                                    <div class="col s7 left">实际支付(美元)</div>
+                                </div>
+                            </li>
+                            <li ng-repeat="el in storageOrderPaymentRelList" class="grey-text text-darken-1">
+                                <div class="col s12" style="border-bottom: 1px solid #ccc;padding:20px 0">
+                                    <div class="col s4">
+                                        <div class="col s3 left push-s1" >{{el.id}}</div>
+                                        <div class="col s8 left">{{el.vin}}</div>
+                                    </div>
+                                    <div class="col s4">
+                                        <div class="col s4 left">{{el.make_name}}/{{el.model_name}}</div>
+                                        <div class="col s4 left">{{el.created_on |date:'yyyy-MM-dd hh:mm'}}</div>
+                                        <div class="col s4 left">{{el.enter_time |date:'yyyy-MM-dd hh:mm'}}</div>
+                                    </div>
+                                    <div class="col s4">
+                                        <div class="col s5 left">{{el.day_count}}</div>
+                                        <div class="col s7 left red-text">{{el.actual_fee}}.00</div>
+                                    </div>
+                                </div>
+                            </li>
+                            <div class="col s3 push-s9" style="margin-top: 20px">实际支付美元:&nbsp;<span class="red-text">{{totalMoney}}.00</span></div>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
     </div>
 
 </div>

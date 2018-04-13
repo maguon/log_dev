@@ -160,7 +160,7 @@
                 <td ng-bind="el.number"></td>
                 <td ng-bind="el.created_on |date:'yyyy-MM-dd hh:mm'"></td>
                 <td>{{paymentStatusList[el.payment_status-1].name}}</td>
-                <td ng-bind="el.updated_on |date:'yyyy-MM-dd hh:mm'"></td>
+                <td ng-bind="el.payment_end_date |date:'yyyy-MM-dd hh:mm'"></td>
 
                 <!-- 显示画面按钮 -->
                 <td class="operation">
