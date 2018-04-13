@@ -245,6 +245,59 @@ adminDirective.directive('footer', function () {
     };
 });
 
+// 验证金钱(小数点后2位)的指令
+adminDirective.directive('validMoney', ['$parse', function ($parse) {
+    return {
+        restrict:"A",
+        require: 'ngModel',
+        link:function(scope,element,attrs,ngModelCtrl){
+            // make sure we're connected to a model
+            if (!ngModelCtrl) {
+                return;
+            }
+
+            // 和画面的ngModel进行数据绑定
+            ngModelCtrl.$parsers.push(function (val) {
+                if (val === undefined || val === null) {
+                    val = '';
+                }
+
+                var n = (val.split('.')).length-1;
+                var reg = /^\d+(\.\d{1,2})?$/;
+
+                var clean = "";
+                if (reg.test(val)) {
+                    clean = val;
+                } else {
+                    if (n==1 && val.substr(val.length-1) == '.') {
+                        clean = val;
+                    } else {
+                        clean = val.toString().substr(0,val.length-1);
+                    }
+                }
+
+                if (val !== clean) {
+                    ngModelCtrl.$setViewValue(clean);
+                    ngModelCtrl.$render();
+                }
+                return clean;
+            });
+
+            // 键盘按下时触发，只能输入0-9
+            // element.bind('keypress', function (e) {
+            //     var code = e.keyCode || e.which;
+            //     // if (!(code > 47 && code < 58) || e.shiftKey) {
+            //     //     e.preventDefault();
+            //     // }
+            //     if ((e.keyCode < 48 || e.keyCode > 57) && e.keyCode != 46 ||
+            //         value.match(/^\d{3}$/) || /\.\d{3}$/.test(value)) {
+            //         e.preventDefault();
+            //     }
+            // });
+        }
+    };
+}]);
+
 // 验证数字(正数)的指令，只能输入[0-9]
 adminDirective.directive('validNum', ['$parse', function ($parse) {
     return {
