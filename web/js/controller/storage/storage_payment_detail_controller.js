@@ -35,7 +35,7 @@ app.controller("storage_payment_detail_controller", ["$scope","$stateParams", "_
      * 获取基本信息
      * */
     function getBaseInfo(){
-        _basic.get(_host.api_url + "/storageOrderPayment?storageOrderPaymentId=" + val).then(function (data) {
+        _basic.get(_host.api_url + "/orderPayment?orderPaymentId=" + val).then(function (data) {
             if (data.success == true) {
                 $scope.storagePaymentArray = data.result[0];
                 $scope.paymentStatus=data.result[0].payment_status;
@@ -77,7 +77,7 @@ app.controller("storage_payment_detail_controller", ["$scope","$stateParams", "_
                 paymentMoney:$scope.storagePaymentArray.payment_money,
                 remark: $scope.storagePaymentArray.remark
             };
-            _basic.put(_host.api_url + "/user/" + userId+"/storageOrderPayment/" + val, obj).then(function (data) {
+            _basic.put(_host.api_url + "/user/" + userId+"/orderPayment/" + val, obj).then(function (data) {
                 if (data.success == true) {
                     swal("修改成功", "", "success");
                     getBaseInfo();
@@ -110,7 +110,7 @@ app.controller("storage_payment_detail_controller", ["$scope","$stateParams", "_
                     closeOnConfirm: true
                 },
                 function(){
-                var url = _host.api_url + "/user/" + userId + "/storageOrderPayment/" + val + "/paymentStatus/"+2;
+                var url = _host.api_url + "/user/" + userId + "/orderPayment/" + val + "/paymentStatus/"+2;
                     _basic.put(url,{}).then(function (data) {
                         if (data.success == true) {
                             getBaseInfo();
@@ -145,7 +145,7 @@ app.controller("storage_payment_detail_controller", ["$scope","$stateParams", "_
                 swal(data.msg, "", "error");
             }
         });
-        _basic.get(_host.api_url + "/storageOrderPaymentRel?storageOrderPaymentId=" + val ).then(function (data) {
+        _basic.get(_host.api_url + "/orderPaymentRel?orderPaymentId=" + val ).then(function (data) {
             if (data.success == true) {
                 $scope.storageOrderPaymentRelList=data.result;
                 for(var i=0;i<$scope.storageOrderPaymentRelList.length;i++){
@@ -168,9 +168,9 @@ app.controller("storage_payment_detail_controller", ["$scope","$stateParams", "_
         // 追加画面数据
         var obj = {
             storageOrderId: id,
-            storageOrderPaymentId:  val
+            orderPaymentId:  val
         };
-        _basic.post(_host.api_url + "/user/" + userId + "/storageOrderPaymentRel", obj).then(function (data) {
+        _basic.post(_host.api_url + "/user/" + userId + "/orderPaymentRel", obj).then(function (data) {
             if (data.success) {
                 // 成功后，刷新页面数据
                 $scope.lookRelatedOrder();
@@ -194,7 +194,7 @@ app.controller("storage_payment_detail_controller", ["$scope","$stateParams", "_
                 closeOnConfirm: true
             },
             function(){
-                _basic.delete(_host.api_url + "/user/" + userId + "/storageOrder/" +id +'/storageOrderPayment/'+ val, {}).then(
+                _basic.delete(_host.api_url + "/user/" + userId + "/storageOrder/" +id +'/orderPayment/'+ val, {}).then(
                     function (data) {
                         if (data.success === true) {
                             $scope.lookRelatedOrder();
