@@ -120,9 +120,10 @@ app.controller("storage_payment_controller", ["$scope", "_basic", "_host","_conf
             _basic.post(_host.api_url + "/user/" + userId + "/storageOrderPayment", obj).then(function (data) {
                 if (data.success) {
                     $('#addPaymentModal').modal('close');
+                    seachPayment();
                     swal("新增成功", "", "success");
                     // 成功后，刷新页面数据
-                   seachPayment();
+
                 } else {
                     swal(data.msg, "", "error");
                 }
