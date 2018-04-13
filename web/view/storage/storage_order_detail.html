@@ -335,7 +335,7 @@
                             <thead>
                             <tr class="grey-text text-darken-2">
                                 <th data-field="">
-                                    <input type="checkbox" id="orderChk" class="filled-in" ng-click="select($event,el.id)"/>
+                                    <input type="checkbox" id="orderChk" class="filled-in" ng-checked="isSelectedAll()" ng-click="selectAll($event)"/>
                                     <label for="orderChk"></label>
                                 </th>
                                 <th data-field="">订单编号</th>
@@ -352,7 +352,7 @@
                             <tr ng-repeat="el in relOrderList" class="grey-text text-darken-1">
                                 <!-- 订单编号 -->
                                 <td>
-                                    <input type="checkbox" id="{{el.id}}" class="filled-in" ng-checked="isSelected(el.id)" ng-click="updateSelection($event,el.id)" />
+                                    <input type="checkbox" id="{{el.id}}" class="filled-in" ng-checked="isSelected(el.id)" ng-click="clickOrder($event,el.id,el.plan_fee,el.actual_fee)" />
                                     <label for="{{el.id}}"></label>
                                 </td>
                                 <!-- 订单编号 -->

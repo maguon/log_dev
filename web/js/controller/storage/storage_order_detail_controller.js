@@ -50,7 +50,7 @@ app.controller("storage_order_detail_controller", ["$scope", "$state", "$statePa
         // 订单ID
         id: 0,
         // 订单ID
-        storageOrderIds: 0,
+        storageOrderIds: [],
         // 委托人ID
         entrustId: 0,
         // 支付方式
@@ -110,8 +110,6 @@ app.controller("storage_order_detail_controller", ["$scope", "$state", "$statePa
 
             var url = _host.api_url + "/user/" + userId + "/storageOrder/" + $scope.storageOrderId;
 
-            console.log(url);
-
             _basic.put(url, obj).then(function (data) {
                 if (data.success) {
                     $('#changePriceDiv').modal('close');
@@ -136,7 +134,12 @@ app.controller("storage_order_detail_controller", ["$scope", "$state", "$statePa
         // 委托人ID
         $scope.paymentInfo.entrustId = $scope.orderInfo.entrustId;
         // 订单ID
-        $scope.paymentInfo.storageOrderIds = $scope.storageOrderId;
+        $scope.paymentInfo.storageOrderIds = [parseInt($scope.storageOrderId)];
+
+        // 支付画面关联订单的选中状态
+        $scope.selected = [];
+        $scope.totalPlanFee = 0;
+        $scope.totalActualFee = 0;
     };
 
     /**
@@ -149,12 +152,23 @@ app.controller("storage_order_detail_controller", ["$scope", "$state", "$statePa
             // 修改订单状态为【2：已支付】
             var url = _host.api_url + "/user/" + userId + "/storageOrder/" + $scope.storageOrderId + "/orderStatus/" + $scope.payStatusList[1].id;
 
+            console.log(url);
             _basic.put(url, {}).then(function (data) {
                 if (data.success) {
+                    // TODO
+                    if ($scope.selected.length > 0) {
+                        console.log('selected');
+                        $scope.selected.forEach(function(value, index, array) {
+                            console.log(value);
+                            $scope.paymentInfo.storageOrderIds.push(value);
+                        });
+                    }
+
                     _basic.post(_host.api_url + "/user/" + userId + "/payment", $scope.paymentInfo).then(function (data) {
                         if (data.success) {
                             $('#paymentInfoDiv').modal('close');
                             swal("支付成功", "", "success");
+                            getOrderDetails();
                         } else {
                             swal(data.msg, "", "error");
                         }
@@ -225,8 +239,6 @@ app.controller("storage_order_detail_controller", ["$scope", "$state", "$statePa
         // 检索用url
         var url = _host.api_url + "/storageOrder?storageOrderId=" + $scope.storageOrderId;
 
-        console.log(url);
-
         _basic.get(url).then(function (data) {
             if (data.success == true) {
 
@@ -279,8 +291,6 @@ app.controller("storage_order_detail_controller", ["$scope", "$state", "$statePa
         // 检索用url
         var url = _host.api_url + "/storageOrderPayment?storageOrderId=" + $scope.storageOrderId;
 
-        console.log(url);
-
         _basic.get(url).then(function (data) {
             if (data.success == true) {
                 // 支付编号
@@ -316,15 +326,19 @@ app.controller("storage_order_detail_controller", ["$scope", "$state", "$statePa
 
         _basic.get(url).then(function (data) {
             if (data.success == true) {
-                console.log(data.result);
-                $scope.relOrderList = data.result;
-
                 var totalPlanFee = 0;
                 var totalActualFee = 0;
-                data.result.reduce(function(previousValue, currentValue) {
-                    totalPlanFee =  previousValue.plan_fee + currentValue.plan_fee;
-                    totalActualFee = previousValue.actual_fee + currentValue.actual_fee;
+
+                data.result.forEach(function(value, index, array) {
+                    console.log(value.id);
+                    console.log($scope.storageOrderId);
+                    if (value.storage_order_id != $scope.storageOrderId) {
+                        $scope.relOrderList.push(value);
+                        totalPlanFee =  totalPlanFee + value.plan_fee;
+                        totalActualFee = totalActualFee + value.actual_fee;
+                    }
                 });
+                // $scope.relOrderList = data.result;
 
                 $scope.totalPlanFee = totalPlanFee;
                 $scope.totalActualFee = totalActualFee;
@@ -342,18 +356,19 @@ app.controller("storage_order_detail_controller", ["$scope", "$state", "$statePa
         // 查询状态为[1：未支付]的所有订单
         var url = _host.api_url + "/storageOrder?orderStatus=" +  + $scope.payStatusList[0].id;;
 
-        console.log('----------------------------' + url);
 
         _basic.get(url).then(function (data) {
             if (data.success == true) {
-                console.log(data.result);
-                $scope.relOrderList = data.result;
+
+                data.result.forEach(function(value, index, array) {
+                    if (value.id != $scope.storageOrderId) {
+                        $scope.relOrderList.push(value);
+                    }
+                });
 
                 var totalPlanFee = 0;
                 var totalActualFee = 0;
                 // $scope.relOrderList.reduce(function(previousValue, currentValue) {
-                //     console.log("previousValue.plan_fee is : " + previousValue.plan_fee);
-                //     console.log("previousValue.actual_fee is : " + previousValue.actual_fee);
                 //     totalPlanFee =  previousValue.plan_fee + currentValue.plan_fee;
                 //     totalActualFee = previousValue.actual_fee + currentValue.actual_fee;
                 // });
@@ -367,33 +382,54 @@ app.controller("storage_order_detail_controller", ["$scope", "$state", "$statePa
     }
 
     $scope.selected = [];
-   $scope.selectedTags = [];
 
-    var updateSelected = function(action,id,name){
-         if(action == 'add' && $scope.selected.indexOf(id) == -1){
-                    $scope.selected.push(id);
-                $scope.selectedTags.push(name);
-                 }
-             if(action == 'remove' && $scope.selected.indexOf(id)!=-1){
-                var idx = $scope.selected.indexOf(id);
-                     $scope.selected.splice(idx,1);
-                      $scope.selectedTags.splice(idx,1);
-               }
-           }
 
-    $scope.updateSelection = function($event, id){
-             var checkbox = $event.target;
-             console.log(checkbox);
-        console.log('id si : ' + id);
+    $scope.isSelectedAll = function(){
+        // 选中的情况
+        if ($scope.selected.length == $scope.relOrderList.length) {
+            return true;
+        } else {
+            return false;
+        }
+    };
 
-               var action = (checkbox.checked?'add':'remove');
-             // updateSelected(action,id,checkbox.name);
-       }
+    $scope.selectAll = function($event){
+        var checkbox = $event.target;
+        $scope.totalPlanFee = 0;
+        $scope.totalActualFee = 0;
+        // 选中的情况
+        if (checkbox.checked) {
+            $scope.relOrderList.forEach(function(value, index, array) {
+                $scope.selected.push(value.id);
+                $scope.totalPlanFee = $scope.totalPlanFee + value.plan_fee;
+                $scope.totalActualFee = $scope.totalActualFee + value.actual_fee;
+            });
+        } else {
+            $scope.selected = [];
+        }
+    };
+
+    $scope.clickOrder = function($event, id, planFee, actualFee){
+         var checkbox = $event.target;
+
+         // 选中的情况
+         if (checkbox.checked) {
+             $scope.totalPlanFee = $scope.totalPlanFee + planFee;
+             $scope.totalActualFee = $scope.totalActualFee + actualFee;
+             $scope.selected.push(id);
+
+         } else {
+             $scope.totalPlanFee = $scope.totalPlanFee - planFee;
+             $scope.totalActualFee = $scope.totalActualFee - actualFee;
+             var idx = $scope.selected.indexOf(id);
+             $scope.selected.splice(idx,1);
+         }
+        $scope.isSelectedAll();
+   };
 
     $scope.isSelected = function(id){
-        console.log($scope.selected);
-               return $scope.selected.indexOf(id)>=0;
-        };
+       return $scope.selected.indexOf(id)>=0;
+    };
 
     /**
      * 画面初期显示时，用来获取画面必要信息的初期方法。
