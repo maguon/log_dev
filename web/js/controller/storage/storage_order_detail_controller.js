@@ -24,6 +24,9 @@ app.controller("storage_order_detail_controller", ["$scope", "$state", "$statePa
     // 关联仓储订单列表
     $scope.relOrderList = [];
 
+    // 选中的关联订单(selected状态)
+    $scope.selectedRelOrder = [];
+
     // 预计支付合计
     $scope.totalPlanFee = 0;
     // 实际应付合计
@@ -31,13 +34,13 @@ app.controller("storage_order_detail_controller", ["$scope", "$state", "$statePa
 
     // 订单信息
     $scope.orderInfo = {
-        orderStatus:"",
+        orderStatus: "",
         entrustId: 0,
         entrustName: "",
         vin: "",
         makeName: "",
         modelName: "",
-        color:"",
+        color: "",
         enterTime: "",
         realOutTime: "",
         dayCount: "",
@@ -47,7 +50,7 @@ app.controller("storage_order_detail_controller", ["$scope", "$state", "$statePa
 
     // 支付信息
     $scope.paymentInfo = {
-        // 订单ID
+        // 支付ID
         id: 0,
         // 订单ID
         storageOrderIds: [],
@@ -64,7 +67,7 @@ app.controller("storage_order_detail_controller", ["$scope", "$state", "$statePa
         // 操作员
         paymentUserName: "",
         // 支付时间
-        paymentEndDate:""
+        paymentEndDate: ""
     };
 
     /**
@@ -142,7 +145,7 @@ app.controller("storage_order_detail_controller", ["$scope", "$state", "$statePa
         $scope.relOrderList = [];
 
         // 支付画面关联订单的选中状态
-        $scope.selected = [];
+        $scope.selectedRelOrder = [];
         $scope.totalPlanFee = 0;
         $scope.totalActualFee = 0;
     };
@@ -152,15 +155,16 @@ app.controller("storage_order_detail_controller", ["$scope", "$state", "$statePa
      */
     $scope.orderPayment = function () {
 
-        if ($scope.paymentInfo.paymentType !== "" && $scope.paymentInfo.number !== "" && $scope.paymentInfo.paymentMoney !== "" ) {
+        if ($scope.paymentInfo.paymentType !== "" && $scope.paymentInfo.number !== "" && $scope.paymentInfo.paymentMoney !== "") {
 
             // 修改订单状态为【2：已支付】
             var url = _host.api_url + "/user/" + userId + "/storageOrder/" + $scope.storageOrderId + "/orderStatus/" + $scope.payStatusList[1].id;
 
             _basic.put(url, {}).then(function (data) {
                 if (data.success) {
-                    if ($scope.selected.length > 0) {
-                        $scope.selected.forEach(function(value, index, array) {
+                    // 执行支付时，将选中的订单一并提交
+                    if ($scope.selectedRelOrder.length > 0) {
+                        $scope.selectedRelOrder.forEach(function (value, index, array) {
                             $scope.paymentInfo.storageOrderIds.push(value);
                         });
                     }
@@ -278,11 +282,11 @@ app.controller("storage_order_detail_controller", ["$scope", "$state", "$statePa
                 var totalPlanFee = 0;
                 var totalActualFee = 0;
                 $scope.relOrderList = [];
-                data.result.forEach(function(value, index, array) {
+                data.result.forEach(function (value, index, array) {
                     // 去掉自己
                     if (value.storage_order_id != $scope.storageOrderId) {
                         $scope.relOrderList.push(value);
-                        totalPlanFee =  totalPlanFee + value.plan_fee;
+                        totalPlanFee = totalPlanFee + value.plan_fee;
                         totalActualFee = totalActualFee + value.actual_fee;
                     }
                 });
@@ -301,13 +305,12 @@ app.controller("storage_order_detail_controller", ["$scope", "$state", "$statePa
     function getOtherOrderPayment() {
 
         // 查询状态为[1：未支付]的所有订单
-        var url = _host.api_url + "/storageOrder?orderStatus=" +  + $scope.payStatusList[0].id;;
-
+        var url = _host.api_url + "/storageOrder?orderStatus=" + +$scope.payStatusList[0].id;
 
         _basic.get(url).then(function (data) {
             if (data.success == true) {
 
-                data.result.forEach(function(value, index, array) {
+                data.result.forEach(function (value, index, array) {
                     // 去掉自己
                     if (value.id != $scope.storageOrderId) {
                         $scope.relOrderList.push(value);
@@ -319,53 +322,72 @@ app.controller("storage_order_detail_controller", ["$scope", "$state", "$statePa
         });
     }
 
-    $scope.selectedRelOrder = [];
-
-    $scope.isSelectedAllRelOrder = function(){
+    /**
+     * 判定关联订单全选按钮是否是选中状态。
+     *
+     * @returns {boolean} true 选中，false 未选
+     */
+    $scope.isSelectedAllRelOrder = function () {
         // 选中的情况
-        if ($scope.selectedRelOrder.length == $scope.relOrderList.length) {
+        if ($scope.relOrderList.length > 0 && $scope.selectedRelOrder.length == $scope.relOrderList.length) {
             return true;
         } else {
             return false;
         }
     };
 
-    $scope.selectAllRelOrder = function($event){
+    /**
+     * 点击全选按钮。
+     * @param $event
+     */
+    $scope.selectAllRelOrder = function ($event) {
         var checkbox = $event.target;
+        $scope.selectedRelOrder = [];
         $scope.totalPlanFee = 0;
         $scope.totalActualFee = 0;
         // 选中的情况
         if (checkbox.checked) {
-            $scope.relOrderList.forEach(function(value, index, array) {
+            $scope.relOrderList.forEach(function (value, index, array) {
                 $scope.selectedRelOrder.push(value.id);
                 $scope.totalPlanFee = $scope.totalPlanFee + value.plan_fee;
                 $scope.totalActualFee = $scope.totalActualFee + value.actual_fee;
             });
-        } else {
-            $scope.selectedRelOrder = [];
         }
     };
 
-    $scope.clickRelOrder = function($event, id, planFee, actualFee){
-         var checkbox = $event.target;
+    /**
+     * 点击某一行关联订单时，修改选中数据列表以及合并金额。
+     * @param $event
+     * @param id
+     * @param planFee
+     * @param actualFee
+     */
+    $scope.clickRelOrder = function ($event, id, planFee, actualFee) {
+        var checkbox = $event.target;
 
-         // 选中的情况
-         if (checkbox.checked) {
-             $scope.totalPlanFee = $scope.totalPlanFee + planFee;
-             $scope.totalActualFee = $scope.totalActualFee + actualFee;
-             $scope.selectedRelOrder.push(id);
+        // 选中的情况
+        if (checkbox.checked) {
+            $scope.totalPlanFee = $scope.totalPlanFee + planFee;
+            $scope.totalActualFee = $scope.totalActualFee + actualFee;
+            $scope.selectedRelOrder.push(id);
 
-         } else {
-             $scope.totalPlanFee = $scope.totalPlanFee - planFee;
-             $scope.totalActualFee = $scope.totalActualFee - actualFee;
-             var idx = $scope.selectedRelOrder.indexOf(id);
-             $scope.selectedRelOrder.splice(idx,1);
-         }
+        } else {
+            $scope.totalPlanFee = $scope.totalPlanFee - planFee;
+            $scope.totalActualFee = $scope.totalActualFee - actualFee;
+            var idx = $scope.selectedRelOrder.indexOf(id);
+            $scope.selectedRelOrder.splice(idx, 1);
+        }
+        // 判定是否是全部选中，修改全部按钮状态
         $scope.isSelectedAllRelOrder();
-   };
+    };
 
-    $scope.isRelOrderSelected = function(id){
-       return $scope.selectedRelOrder.indexOf(id)>=0;
+    /**
+     * 当前行是否选中。
+     * @param id
+     * @returns {boolean}
+     */
+    $scope.isRelOrderSelected = function (id) {
+        return $scope.selectedRelOrder.indexOf(id) >= 0;
     };
 
     /**
