@@ -2,8 +2,18 @@ app.controller("setting_client_controller", ["$scope", "_basic", "_config", "_ho
     $scope.size =11;
     $scope.start = 0;
     var userId = _basic.getSession(_basic.USER_ID);
+
+
+
+
     // 点击按钮查询
-    $scope.getClientList = function () {
+    $scope.getClientList = function (){
+        $scope.start = 0;
+        seachClientList();
+    }
+
+
+    function seachClientList () {
         var obj = {
             entrustId: $scope.showId,
             entrustType: $scope.showEntrustType,
@@ -62,7 +72,7 @@ app.controller("setting_client_controller", ["$scope", "_basic", "_config", "_ho
                 if (data.success == true) {
                     swal("新增成功", "", "success");
                     $('#addClient').modal('close');
-                    $scope.getClientList();
+                    seachClientList();
                 } else {
                     swal(data.msg, "", "error");
                 }
@@ -106,7 +116,7 @@ app.controller("setting_client_controller", ["$scope", "_basic", "_config", "_ho
                 if (data.success == true) {
                     swal("修改成功", "", "success");
                     $('#updateClient').modal('close');
-                    $scope.getClientList();
+                    seachClientList();
                 } else {
                     swal(data.msg, "", "error");
                 }
@@ -121,11 +131,11 @@ app.controller("setting_client_controller", ["$scope", "_basic", "_config", "_ho
      * */
     $scope.previousPage = function () {
         $scope.start = $scope.start - ($scope.size - 1) ;
-        $scope.getClientList();
+        seachClientList();
     };
     $scope.nextPage = function () {
         $scope.start = $scope.start + ($scope.size - 1) ;
-        $scope.getClientList();
+        seachClientList();
     };
-    $scope.getClientList();
+    seachClientList();
 }])
