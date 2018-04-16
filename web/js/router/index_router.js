@@ -141,6 +141,12 @@ app.config(['$stateProvider',"$urlRouterProvider",function($stateProvider,$urlRo
             templateUrl: "/view/storage/storage_payment.html",
             controller:"storage_payment_controller"
         })
+        // 仓储统计
+        .state("statistics", {
+            url:"/statistics",
+            templateUrl: "/view/storage/storage_statistics.html",
+            controller:"storage_statistics_controller"
+        })
         // 仓储管理->支付管理->详细
         .state("storage_payment_detail", {
             url:"/storage_payment_detail/{id}?from",
@@ -206,6 +212,7 @@ app.config(['$stateProvider',"$urlRouterProvider",function($stateProvider,$urlRo
            .state("CarMsg", {
                url: "/CarMsg",  //路由路径
                templateUrl: "/view/car/truck_manager.html", //路由填充的模板
+
                controller:function ($state) {
                    $('.modal').modal();
                    $state.go("CarMsg.truck");
