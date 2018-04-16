@@ -9,7 +9,7 @@ app.controller("app_version_controller", ["$scope", "$state", "$stateParams", "_
     // 分页用 画面数据 起始位置
     $scope.start = 0;
     // 分页用 每页画面数据
-    $scope.size = 10;
+    $scope.size = 11;
 
     // 条件：系统 [1:安卓 2:IOS]
     $scope.appSystems = _config.appSystems;
@@ -63,6 +63,10 @@ app.controller("app_version_controller", ["$scope", "$state", "$stateParams", "_
         // 调用API取得，画面数据
         _basic.get(url).then(function (data) {
             if (data.success) {
+                // 检索取得数据集
+                $scope.appSystemList = data.result;
+                $scope.appSystemList = $scope.appSystemList.slice(0, 10);
+
                 // 前一页 按钮 控制
                 if ($scope.start > 0) {
                     $("#pre").show();
@@ -75,8 +79,6 @@ app.controller("app_version_controller", ["$scope", "$state", "$stateParams", "_
                 } else {
                     $("#next").show();
                 }
-                // 检索取得数据集
-                $scope.appSystemList = data.result;
             } else {
                 swal(data.msg, "", "error");
             }
@@ -199,7 +201,7 @@ app.controller("app_version_controller", ["$scope", "$state", "$stateParams", "_
      * 前一页
      */
     $scope.getPrePage = function () {
-        $scope.start = $scope.start - $scope.size;
+        $scope.start = $scope.start - ($scope.size - 1);
         getAppSystemList();
     };
 
@@ -207,7 +209,7 @@ app.controller("app_version_controller", ["$scope", "$state", "$stateParams", "_
      * 下一页
      */
     $scope.getNextPage = function () {
-        $scope.start = $scope.start + $scope.size;
+        $scope.start = $scope.start + ($scope.size - 1);
         getAppSystemList();
     };
 
