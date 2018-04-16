@@ -102,6 +102,9 @@ app.controller("storage_order_controller", ["$scope", "$rootScope", "_host", "_b
      * 点击：查询按钮，进行数据查询
      */
     $scope.queryOrderList = function () {
+        // 默认第一页
+        $scope.start = 0;
+        // 查询
         queryOrderData();
     };
 

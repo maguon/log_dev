@@ -129,6 +129,8 @@ app.controller("car_demand_controller", ["$scope", "$rootScope", "_host", "_basi
      * 点击：查询按钮，进行数据查询
      */
     $scope.queryCarList = function () {
+        // 默认第一页
+        $scope.start = 0;
         queryCarDemandData();
     };
 
