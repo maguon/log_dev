@@ -1,5 +1,5 @@
 app.controller("setting_client_controller", ["$scope", "_basic", "_config", "_host", function ($scope, _basic, _config, _host) {
-    $scope.size =10;
+    $scope.size =11;
     $scope.start = 0;
     var userId = _basic.getSession(_basic.USER_ID);
     // 点击按钮查询
@@ -11,6 +11,8 @@ app.controller("setting_client_controller", ["$scope", "_basic", "_config", "_ho
         };
         _basic.get(_host.api_url + "/entrust?"+ _basic.objToUrl(obj)+"&start=" + $scope.start + "&size=" + $scope.size).then(function (data) {
             if (data.success == true) {
+                $scope.getClientBoxArray = data.result;
+                $scope.getClientArray = $scope.getClientBoxArray.slice(0,10);
                 if ($scope.start > 0) {
                     $("#pre").show();
                 }
@@ -23,7 +25,7 @@ app.controller("setting_client_controller", ["$scope", "_basic", "_config", "_ho
                 else {
                     $("#next").show();
                 }
-                $scope.getClientArray = data.result;
+
             }
         })
     }
@@ -118,11 +120,11 @@ app.controller("setting_client_controller", ["$scope", "_basic", "_config", "_ho
      * 分页
      * */
     $scope.previousPage = function () {
-        $scope.start = $scope.start - $scope.size;
+        $scope.start = $scope.start - ($scope.size - 1) ;
         $scope.getClientList();
     };
     $scope.nextPage = function () {
-        $scope.start = $scope.start + $scope.size;
+        $scope.start = $scope.start + ($scope.size - 1) ;
         $scope.getClientList();
     };
     $scope.getClientList();

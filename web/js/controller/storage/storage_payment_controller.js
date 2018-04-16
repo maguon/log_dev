@@ -1,7 +1,7 @@
 app.controller("storage_payment_controller", ["$scope", "_basic", "_host","_config",  function ($scope, _basic, _host,_config) {
     var userId = _basic.getSession(_basic.USER_ID);
     $scope.start = 0;
-    $scope.size = 10;
+    $scope.size = 11;
     $scope.entrustTypeList = _config.entrustType;//委托方性质
     $scope.paymentStatusList= _config.paymentStatus;
     $scope.paymentTypeList= _config.paymentType;
@@ -65,7 +65,8 @@ app.controller("storage_payment_controller", ["$scope", "_basic", "_host","_conf
 
         _basic.get(_host.api_url + "/orderPayment?" + condition).then(function (data) {
             if (data.success == true) {
-                $scope.storagePaymentArray = data.result;
+                $scope.storagePaymentBoxArray = data.result;
+                $scope.storagePaymentArray = $scope.storagePaymentBoxArray.slice(0,10);
                 if ($scope.start > 0) {
                     $("#pre").show();
                 }
@@ -140,7 +141,7 @@ app.controller("storage_payment_controller", ["$scope", "_basic", "_host","_conf
      * 上一页
      */
     $scope.preBtn = function () {
-        $scope.start = $scope.start - $scope.size;
+        $scope.start = $scope.start - ($scope.size - 1) ;
         seachPayment();
     };
 
@@ -148,7 +149,7 @@ app.controller("storage_payment_controller", ["$scope", "_basic", "_host","_conf
      * 下一页
      */
     $scope.nextBtn = function () {
-        $scope.start = $scope.start + $scope.size;
+        $scope.start = $scope.start + ($scope.size - 1) ;
         seachPayment();
     };
 

@@ -4,7 +4,7 @@
  */
 app.controller("client_info_controller", ["$scope", "$rootScope", "_host", "_basic", "_config",  function ($scope, $rootScope, _host, _basic, _config) {
     $scope.start = 0;
-    $scope.size = 10;
+    $scope.size = 11;
     var url="";
     //委托方性质
     $scope.entrustTypeList = _config.entrustType;
@@ -43,6 +43,8 @@ app.controller("client_info_controller", ["$scope", "$rootScope", "_host", "_bas
         };
         _basic.get(_host.api_url + "/entrustBase?" +_basic.objToUrl(obj)).then(function (data) {
             if (data.success === true) {
+                $scope.clientBoxArray = data.result;
+                $scope.clientArray = $scope.clientBoxArray.slice(0,10);
                 if ($scope.start > 0) {
                     $("#pre").show();
                 }
@@ -55,7 +57,6 @@ app.controller("client_info_controller", ["$scope", "$rootScope", "_host", "_bas
                 else {
                     $("#next").show();
                 }
-                $scope.clientArray = data.result;
             }
             else {
                 swal(data.msg, "", "error");
@@ -69,12 +70,12 @@ app.controller("client_info_controller", ["$scope", "$rootScope", "_host", "_bas
     }
     // 上一页
     $scope.preBtn = function () {
-        $scope.start = $scope.start - $scope.size;
+        $scope.start = $scope.start - ($scope.size - 1) ;
         getClient();
     };
     // 下一页
     $scope.nextBtn = function () {
-        $scope.start = $scope.start + $scope.size;
+        $scope.start = $scope.start + ($scope.size - 1) ;
         getClient();
     };
     //获取数据

@@ -6,7 +6,7 @@ app.controller("client_info_detail_controller", ["$scope", "$rootScope","$state"
     var userId = _basic.getSession(_basic.USER_ID);
     var val = $stateParams.id;//获取本条信息的id
     $scope.start = 0;
-    $scope.size = 10;
+    $scope.size = 11;
     $scope.valuation = 0;
     $scope.characters = _config.characters;
     $scope.carStatusList =_config.carRelStatus;
@@ -99,7 +99,8 @@ app.controller("client_info_detail_controller", ["$scope", "$rootScope","$state"
         var reqUrl = _host.api_url + "/user/" + userId + "/car?active=" + 1+ "&start=" + $scope.start + "&size=" + $scope.size +"&entrustId="+val;
         _basic.get(reqUrl+_basic.objToUrl(obj)).then(function (data) {
             if (data.success == true) {
-                $scope.storageCarList = data.result;
+                $scope.storageCarBox =  data.result;
+                $scope.storageCar = $scope.storageCarBox.slice(0,10);
                 if ($scope.start > 0) {
                     $("#pre").show();
                 }
@@ -126,7 +127,8 @@ app.controller("client_info_detail_controller", ["$scope", "$rootScope","$state"
     function getRelStatus() {
          _basic.get(_host.api_url + "/user/" + userId + "/car?active=" + 1 + "&start=" + $scope.start + "&size=" + $scope.size+"&entrustId="+val+"&relStatus=1").then(function (data) {
              if (data.success == true) {
-                 $scope.storageCar2 =  data.result;
+                 $scope.storageCarBox2 =  data.result;
+                 $scope.storageCar2 = $scope.storageCarBox2.slice(0,10);
                  if ($scope.start > 0) {
                      $("#pre2").show();
                  }
@@ -149,7 +151,8 @@ app.controller("client_info_detail_controller", ["$scope", "$rootScope","$state"
     function getMsoStatus() {
         _basic.get( _host.api_url + "/user/" + userId + "/car?active=" + 1 + "&start=" + $scope.start + "&size=" + $scope.size+"&entrustId="+val+"&msoStatus=1").then(function (data) {
             if (data.success == true) {
-                $scope.storageCar3 =  data.result;
+                $scope.storageCarBox3 =  data.result;
+                $scope.storageCar3 = $scope.storageCarBox3.slice(0,10);
                 if ($scope.start > 0) {
                     $("#pre3").show();
                 }
@@ -186,34 +189,34 @@ app.controller("client_info_detail_controller", ["$scope", "$rootScope","$state"
     };
     // 上一页
     $scope.preBtn = function () {
-        $scope.start = $scope.start - $scope.size;
+        $scope.start = $scope.start - ($scope.size - 1) ;
         getStorageCar();
     };
     // 下一页
     $scope.nextBtn = function () {
-        $scope.start = $scope.start + $scope.size;
+        $scope.start = $scope.start + ($scope.size - 1) ;
         getStorageCar();
     };
     // 上一页
     $scope.preBtn2 = function () {
-        $scope.start = $scope.start - $scope.size;
+        $scope.start = $scope.start - ($scope.size - 1) ;
         getRelStatus();
 
     };
     // 下一页
     $scope.nextBtn2 = function () {
-        $scope.start = $scope.start + $scope.size;
+        $scope.start = $scope.start + ($scope.size - 1) ;
         getRelStatus();
 
     };
     // 上一页
     $scope.preBtn3 = function () {
-        $scope.start = $scope.start - $scope.size;
+        $scope.start = $scope.start - ($scope.size - 1) ;
         getMsoStatus();
     };
     // 下一页
     $scope.nextBtn3 = function () {
-        $scope.start = $scope.start + $scope.size;
+        $scope.start = $scope.start + ($scope.size - 1) ;
         getMsoStatus();
     };
     //获取数据
