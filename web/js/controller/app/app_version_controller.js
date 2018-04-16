@@ -64,8 +64,8 @@ app.controller("app_version_controller", ["$scope", "$state", "$stateParams", "_
         _basic.get(url).then(function (data) {
             if (data.success) {
                 // 检索取得数据集
-                $scope.appSystemList = data.result;
-                $scope.appSystemList = $scope.appSystemList.slice(0, 10);
+                $scope.appResult = data.result;
+                $scope.appSystemList = $scope.appResult.slice(0, 10);
 
                 // 前一页 按钮 控制
                 if ($scope.start > 0) {
