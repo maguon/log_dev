@@ -9,11 +9,13 @@ app.controller("payment_detail_controller", ["$scope","$stateParams", "_basic", 
 
     //获取委托方信息
     $scope.getEntrustInfo =function(type) {
-        if(type==undefined){
-            url=_host.api_url + "/entrust";
-        }else{
-            url=_host.api_url + "/entrust?entrustType="+type;
+
+        if(type == null && type == undefined){
+            return;
         }
+
+        var url = _host.api_url + "/entrust?entrustType=" + type;
+
         _basic.get(url).then(function (data) {
             if (data.success == true) {
                 $scope.entrustList = data.result;
@@ -34,6 +36,7 @@ app.controller("payment_detail_controller", ["$scope","$stateParams", "_basic", 
             if (data.success == true) {
                 $scope.storagePaymentArray = data.result[0];
                 $scope.paymentStatus=data.result[0].payment_status;
+                $scope.getEntrustInfo($scope.paymentStatus);
                 $scope.storagePaymentArray.entrust_id=data.result[0].entrust_id;
                 $scope.lookRelatedOrder();
                 $scope.lookPaymentMsg();
@@ -86,7 +89,6 @@ app.controller("payment_detail_controller", ["$scope","$stateParams", "_basic", 
         }
     }
 
-
     /**
      * 点击完结
      * */
@@ -119,9 +121,6 @@ app.controller("payment_detail_controller", ["$scope","$stateParams", "_basic", 
             swal("请填写完整信息！", "", "warning");
         }
     };
-
-
-
 
     /**
      * teb跳转 关联仓储订单
@@ -215,7 +214,6 @@ app.controller("payment_detail_controller", ["$scope","$stateParams", "_basic", 
      * */
     function getData(){
         getBaseInfo();
-        $scope.getEntrustInfo();
     };
     getData();
 }])
