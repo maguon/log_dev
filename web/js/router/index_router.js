@@ -183,26 +183,26 @@ app.config(['$stateProvider',"$urlRouterProvider",function($stateProvider,$urlRo
         })
 
         // 财务管理->订单管理
-        .state("storage_order", {
+        .state("order", {
             url:"/order",
             templateUrl: "/view/finance/order.html",
             controller:"order_controller"
         })
         // 财务管理->订单管理（订单详情）
-        .state("storage_order_detail", {
+        .state("order_detail", {
             url:"/order_detail/{id}?from",
             templateUrl: "/view/finance/order_detail.html",
             controller:"order_detail_controller"
         })
         // 财务管理->支付管理
-        .state("storage_payment", {
+        .state("payment", {
             url:"/payment",
             templateUrl: "/view/finance/payment.html",
             controller:"payment_controller"
         })
         // 财务管理->支付管理->详细
-        .state("storage_payment_detail", {
-            url:"/storage_payment_detail/{id}?from",
+        .state("payment_detail", {
+            url:"/payment_detail/{id}?from",
             templateUrl: "/view/finance/payment_detail.html",
             controller:"payment_detail_controller"
         })
