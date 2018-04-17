@@ -130,7 +130,7 @@ app.controller("order_controller", ["$scope", "$rootScope", "_host", "_basic", "
         // 预计支付
         $scope.orderInfo.planFee = el.plan_fee;
         // 实际应付
-        $scope.orderInfo.actualFee = "";
+        $scope.orderInfo.actualFee = el.actual_fee;
     };
 
     /**
