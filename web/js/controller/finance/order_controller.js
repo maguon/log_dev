@@ -1,7 +1,7 @@
 /**
  * 主菜单：仓储管理 -> 订单管理 控制器
  */
-app.controller("order_controller", ["$scope", "$rootScope", "_host", "_basic", "_config", "_baseService", function ($scope, $rootScope, _host, _basic, _config, _baseService) {
+app.controller("order_controller", ["$scope", "$rootScope", "_host", "_basic", "_config", "$filter", function ($scope, $rootScope, _host, _basic, _config, $filter) {
 
     // 翻页用
     $scope.start = 0;
@@ -130,7 +130,7 @@ app.controller("order_controller", ["$scope", "$rootScope", "_host", "_basic", "
         // 预计支付
         $scope.orderInfo.planFee = el.plan_fee;
         // 实际应付
-        $scope.orderInfo.actualFee = el.actual_fee;
+        $scope.orderInfo.actualFee = $filter('number')(el.actual_fee,2);
     };
 
     /**

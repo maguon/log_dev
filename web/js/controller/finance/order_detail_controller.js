@@ -1,7 +1,7 @@
 /**
  * 主菜单：仓储管理 -> 订单管理(详细画面) 控制器
  */
-app.controller("order_detail_controller", ["$scope", "$state", "$stateParams", "_basic", "_config", "_host", "_baseService", function ($scope, $state, $stateParams, _basic, _config, _host, _baseService) {
+app.controller("order_detail_controller", ["$scope", "$state", "$stateParams", "_basic", "_config", "_host", "$filter", function ($scope, $state, $stateParams, _basic, _config, _host, $filter) {
 
     // 用户ID
     var userId = _basic.getSession(_basic.USER_ID);
@@ -31,6 +31,9 @@ app.controller("order_detail_controller", ["$scope", "$state", "$stateParams", "
     $scope.totalPlanFee = 0;
     // 实际应付合计
     $scope.totalActualFee = 0;
+
+    // 修改价格画面、实际应付
+    $scope.modifyActualFee = 0;
 
     // 订单信息
     $scope.orderInfo = {
@@ -100,6 +103,8 @@ app.controller("order_detail_controller", ["$scope", "$state", "$stateParams", "
     $scope.openChangePriceDiv = function () {
         $('.modal').modal();
         $('#changePriceDiv').modal('open');
+        // 实际应付
+        $scope.modifyActualFee = $filter('number')($scope.orderInfo.actualFee,2);
     };
 
     /**
@@ -107,10 +112,10 @@ app.controller("order_detail_controller", ["$scope", "$state", "$stateParams", "
      */
     $scope.updateOrder = function () {
 
-        if ($scope.orderInfo.actualFee !== "") {
+        if ($scope.modifyActualFee !== "") {
             // 修改画面数据
             var obj = {
-                actualFee: $scope.orderInfo.actualFee
+                actualFee: $scope.modifyActualFee
             };
 
             var url = _host.api_url + "/user/" + userId + "/storageOrder/" + $scope.storageOrderId;
@@ -118,6 +123,7 @@ app.controller("order_detail_controller", ["$scope", "$state", "$stateParams", "
             _basic.put(url, obj).then(function (data) {
                 if (data.success) {
                     $('#changePriceDiv').modal('close');
+                    $scope.orderInfo.actualFee = $scope.modifyActualFee;
                     swal("修改成功", "", "success");
                 } else {
                     swal(data.msg, "", "error");

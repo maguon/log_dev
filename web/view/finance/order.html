@@ -141,12 +141,15 @@
                 <td>{{payStatusList[el.order_status - 1].name}}</td>
                 <!-- 显示【车辆信息】画面按钮 -->
                 <td class="operation">
-                    <i class="mdi mdi-cash-usd look_icon cyan-text lighten-1"
-                       ng-click="openChangePriceDiv(el)"></i>
-                    <a href="#" ui-sref="order_detail({id:el.id,from:'order'})">
-                        <i class="mdi mdi-file-document look_icon cyan-text lighten-1"></i>
-                        <!-- mdi-pencil-box-outline -->
-                    </a>
+                    <div class="col s6">
+                        <i ng-show="el.payment_status == 1" class="mdi mdi-cash-usd look_icon cyan-text lighten-1"
+                           ng-click="openChangePriceDiv(el)"></i>
+                    </div>
+                    <div class="col s6">
+                        <a href="#" ui-sref="order_detail({id:el.id,from:'order'})">
+                            <i class="mdi mdi-file-document look_icon cyan-text lighten-1"></i>
+                        </a>
+                    </div>
                 </td>
             </tr>
             <tr class="grey-text text-darken-1" ng-if="orderList.length == 0">
@@ -239,7 +242,7 @@
             <div class="col s12">
                 <!-- 实际应付 -->
                 <div class="col s11 input-field" style="margin-left: 30px;">
-                    <input type="text" id="actualFeeText" maxlength="8" valid-money ng-model="orderInfo.actualFee | number:2">
+                    <input type="text" id="actualFeeText" maxlength="8" valid-money ng-model="orderInfo.actualFee">
                     <label for="actualFeeText"><span style="color: red">* </span>实际应付：</label>
                 </div>
             </div>
