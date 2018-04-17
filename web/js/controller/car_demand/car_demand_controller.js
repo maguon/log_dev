@@ -116,16 +116,6 @@ app.controller("car_demand_controller", ["$scope", "$rootScope", "_host", "_basi
     };
 
     /**
-     * 委托方下拉变更
-     */
-    $scope.changeEntrust = function () {
-        // 当选中【清除选择】时，委托方改为空
-        if ($scope.conditionEntrustId == 0) {
-            $scope.conditionEntrustId = null;
-        }
-    };
-
-    /**
      * 点击：查询按钮，进行数据查询
      */
     $scope.queryCarList = function () {
@@ -207,7 +197,8 @@ app.controller("car_demand_controller", ["$scope", "$rootScope", "_host", "_basi
                 $scope.entrustList = data.result;
                 $('#entrustId').select2({
                     placeholder: '委托方',
-                    containerCssClass: 'select2_dropdown'
+                    containerCssClass: 'select2_dropdown',
+                    allowClear: true
                 });
             }
         });

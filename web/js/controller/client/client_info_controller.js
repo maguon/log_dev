@@ -20,17 +20,13 @@ app.controller("client_info_controller", ["$scope", "$rootScope", "_host", "_bas
                 $scope.entrustList = data.result;
                 $('#entrustSelect').select2({
                     placeholder: '委托方',
-                    containerCssClass: 'select2_dropdown'
+                    containerCssClass: 'select2_dropdown',
+                    allowClear: true
                 });
             }
         });
     };
-    $scope.changeEntrustId =function(){
-        // 当选中【清除选择】时，委托方改为空
-        if ($scope.entrustId == 0) {
-            $scope.entrustId = null;
-        }
-    }
+
    //获取列表
      function getClient  (){
         var obj = {

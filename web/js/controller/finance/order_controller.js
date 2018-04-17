@@ -219,21 +219,12 @@ app.controller("order_controller", ["$scope", "$rootScope", "_host", "_basic", "
                 $scope.entrustList = data.result;
                 $('#entrustIdSelect').select2({
                     placeholder: '委托方',
-                    containerCssClass: 'select2_dropdown'
+                    containerCssClass: 'select2_dropdown',
+                    allowClear: true
                 });
             }
         });
     }
-
-    /**
-     * 委托方下拉变更
-     */
-    $scope.changeEntrust = function () {
-        // 当选中【清除选择】时，委托方改为空
-        if ($scope.conditionEntrustId == 0) {
-            $scope.conditionEntrustId = null;
-        }
-    };
 
     /**
      * 画面初期显示时，用来获取画面必要信息的初期方法。

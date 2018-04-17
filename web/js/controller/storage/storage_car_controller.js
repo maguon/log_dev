@@ -75,18 +75,13 @@ app.controller("storage_car_controller", ["$scope", "$rootScope", "$stateParams"
                 $scope.entrustList = data.result;
                 $('#entrustSelect').select2({
                     placeholder: '委托方',
-                    containerCssClass: 'select2_dropdown'
+                    containerCssClass: 'select2_dropdown',
+                    allowClear: true
                 });
             }
         });
     }
 
-    $scope.changeEntrustId =function(){
-        // 当选中【清除选择】时，委托方改为空
-        if ($scope.entrustIdItem == 0) {
-            $scope.entrustIdItem = null;
-        }
-    }
     // 点击按钮进行查询
     $scope.getStorageCarList = function () {
         $scope.start = 0;

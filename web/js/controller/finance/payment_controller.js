@@ -18,22 +18,17 @@ app.controller("payment_controller", ["$scope", "_basic", "_host","_config",  fu
                 $scope.entrustList = data.result;
                 $('#entrustSelect').select2({
                     placeholder: '委托方',
-                    containerCssClass: 'select2_dropdown'
+                    containerCssClass: 'select2_dropdown',
+                    allowClear: true
                 });
                 $('#addEntrustSelect').select2({
                     placeholder: '委托方',
-                    containerCssClass: 'select2_dropdown'
+                    containerCssClass: 'select2_dropdown',
+                    allowClear: true
                 });
             }
         });
     };
-    $scope.changeEntrustId =function(){
-        // 当选中【清除选择】时，委托方改为空
-        if ($scope.entrustId == 0) {
-            $scope.entrustId = null;
-        }
-    };
-
 
     /**
      * 点击查询按钮

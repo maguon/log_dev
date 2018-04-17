@@ -15,9 +15,8 @@
 
                 <!-- 查询条件：委托方 -->
                 <div class="input-field col s3" >
-                    <select material-select watch id="entrustSelect"  ng-model="entrustId" ng-change="changeEntrustId()" style="width: 100%">
+                    <select material-select watch id="entrustSelect"  ng-model="entrustId" style="width: 100%">
                         <option value="" ></option>
-                        <option value="0" >清除选择</option>
                         <option ng-repeat="el in entrustList" ng-value="el.id">{{el.short_name}}</option>
                     </select>
                 </div>
