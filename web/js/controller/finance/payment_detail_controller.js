@@ -1,4 +1,4 @@
-app.controller("storage_payment_detail_controller", ["$scope","$stateParams", "_basic", "_host","_config","$state",  function ($scope,$stateParams, _basic, _host,_config,$state) {
+app.controller("payment_detail_controller", ["$scope","$stateParams", "_basic", "_host","_config","$state",  function ($scope,$stateParams, _basic, _host,_config,$state) {
     var userId = _basic.getSession(_basic.USER_ID);
     var val = $stateParams.id;//跳转过来的id
     $scope.entrustTypeList = _config.entrustType;//委托方性质

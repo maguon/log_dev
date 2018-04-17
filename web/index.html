@@ -47,8 +47,25 @@
                 class="white-text mdi mdi-magnify"></i>车辆查询</a>
     </li>
     <li class="bold side_navigator">
-        <a href="#!" ui-sref="client_info" class=" waves-effect waves-light first-N"><i
-                class="white-text mdi mdi-account-plus"></i>委托方</a>
+        <a href="#!" ui-sref="client_info" class=" waves-effect waves-light first-N">
+            <i class="white-text mdi mdi-account-plus"></i>委托方
+        </a>
+    </li>
+    <!-- 财务管理 -->
+    <li class="bold side_navigator">
+        <ul class="collapsible collapsible-accordion">
+            <li class="bold">
+                <a class="collapsible-header waves-effect waves-light first-N">
+                    <i class="white-text mdi mdi-home-variant "></i>财务管理
+                </a>
+                <div class="collapsible-body slider_nav_box blue-grey darken-3" style="padding: 0;">
+                    <ul>
+                        <li><a href="#!" ui-sref="storage_order"><i class="white-text mdi mdi-chevron-right"></i>订单管理</a></li>
+                        <li><a href="#!" ui-sref="storage_payment"><i class="white-text mdi mdi-chevron-right"></i>支付管理</a></li>
+                    </ul>
+                </div>
+            </li>
+        </ul>
     </li>
     <li class="bold side_navigator">
         <ul class="collapsible collapsible-accordion">
@@ -63,8 +80,6 @@
                         <li><a href="#!" ui-sref="storage_store"><i class="white-text mdi mdi-chevron-right"></i>仓储存放</a></li>
                         <li><a href="#!" ui-sref="storage_car"><i class="white-text mdi mdi-chevron-right"></i>仓储车辆</a></li>
                         <li><a href="#!" ui-sref="key_info"><i class="white-text mdi mdi-chevron-right"></i>钥匙管理</a></li>
-                        <li><a href="#!" ui-sref="storage_order"><i class="white-text mdi mdi-chevron-right"></i>订单管理</a></li>
-                        <li><a href="#!" ui-sref="storage_payment"><i class="white-text mdi mdi-chevron-right"></i>支付管理</a></li>
                     </ul>
                 </div>
             </li>
@@ -169,6 +184,15 @@
 <script src="/js/controller/admin_login_controller.js"></script>
 <script src="/js/controller/car/company_controller.js"></script>
 
+<!-- 财务管理 控制器 -->
+
+<!-- 财务管理 -> 订单管理 控制器 -->
+<script src="./js/controller/finance/order_controller.js"></script>
+<script src="./js/controller/finance/order_detail_controller.js"></script>
+<!-- 财务管理 -> 支付管理 控制器-->
+<script src="./js/controller/finance/payment_controller.js"></script>
+<script src="./js/controller/finance/payment_detail_controller.js"></script>
+
 <!-- 仓储管理 控制器 -->
 <script src="/js/controller/storage/storage_car_controller.js"></script>
 <script src="/js/controller/storage/storage_car_details_controller.js"></script>
@@ -182,12 +206,7 @@
 <!-- 仓储管理 -> 仓储存放 控制器 -->
 <script src="/js/controller/storage/storage_store_controller.js"></script>
 <script src="/js/controller/storage/storage_store_detail_controller.js"></script>
-<!-- 仓储管理 -> 订单管理 控制器 -->
-<script src="./js/controller/storage/storage_order_controller.js"></script>
-<script src="./js/controller/storage/storage_order_detail_controller.js"></script>
-<!--仓储管理 -> 支付管理 控制器-->
-<script src="/js/controller/storage/storage_payment_controller.js"></script>
-<script src="/js/controller/storage/storage_payment_detail_controller.js"></script>
+
 <!-- 管理员设置 控制器 -->
 
 <!-- 管理员设置 -> 仓库设置 控制器 -->

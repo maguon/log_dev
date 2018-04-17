@@ -1,4 +1,4 @@
-app.controller("storage_payment_controller", ["$scope", "_basic", "_host","_config",  function ($scope, _basic, _host,_config) {
+app.controller("payment_controller", ["$scope", "_basic", "_host","_config",  function ($scope, _basic, _host,_config) {
     var userId = _basic.getSession(_basic.USER_ID);
     $scope.start = 0;
     $scope.size = 11;

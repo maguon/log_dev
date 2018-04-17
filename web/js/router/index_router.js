@@ -123,35 +123,11 @@ app.config(['$stateProvider',"$urlRouterProvider",function($stateProvider,$urlRo
             templateUrl: "/view/storage/storage_store_detail.html",
             controller:'storage_store_detail_controller'
         })
-        // 仓储管理->订单管理
-        .state("storage_order", {
-            url:"/storage_order",
-            templateUrl: "/view/storage/storage_order.html",
-            controller:"storage_order_controller"
-        })
-        // 仓储管理->订单管理（订单详情）
-        .state("storage_order_detail", {
-            url:"/storage_order_detail/{id}?from",
-            templateUrl: "/view/storage/storage_order_detail.html",
-            controller:"storage_order_detail_controller"
-        })
-        // 仓储管理->支付管理
-        .state("storage_payment", {
-            url:"/storage_payment",
-            templateUrl: "/view/storage/storage_payment.html",
-            controller:"storage_payment_controller"
-        })
         // 仓储统计
         .state("statistics", {
             url:"/statistics",
             templateUrl: "/view/storage/storage_statistics.html",
             controller:"storage_statistics_controller"
-        })
-        // 仓储管理->支付管理->详细
-        .state("storage_payment_detail", {
-            url:"/storage_payment_detail/{id}?from",
-            templateUrl: "/view/storage/storage_payment_detail.html",
-            controller:"storage_payment_detail_controller"
         })
         .state("storage_car_detail", {
             url:"/storage_car_detail/{id}/vin/{vin}/?from",
@@ -204,6 +180,31 @@ app.config(['$stateProvider',"$urlRouterProvider",function($stateProvider,$urlRo
             url:"/app_version",
             templateUrl: "/view/app/app_version.html",
             controller:'app_version_controller'
+        })
+
+        // 财务管理->订单管理
+        .state("storage_order", {
+            url:"/order",
+            templateUrl: "/view/finance/order.html",
+            controller:"order_controller"
+        })
+        // 财务管理->订单管理（订单详情）
+        .state("storage_order_detail", {
+            url:"/order_detail/{id}?from",
+            templateUrl: "/view/finance/order_detail.html",
+            controller:"order_detail_controller"
+        })
+        // 财务管理->支付管理
+        .state("storage_payment", {
+            url:"/payment",
+            templateUrl: "/view/finance/payment.html",
+            controller:"payment_controller"
+        })
+        // 财务管理->支付管理->详细
+        .state("storage_payment_detail", {
+            url:"/storage_payment_detail/{id}?from",
+            templateUrl: "/view/finance/payment_detail.html",
+            controller:"payment_detail_controller"
         })
     /*       .state("Com", {
                url: "/Com",  //路由路径

@@ -1,7 +1,7 @@
 /**
  * 主菜单：仓储管理 -> 订单管理(详细画面) 控制器
  */
-app.controller("storage_order_detail_controller", ["$scope", "$state", "$stateParams", "_basic", "_config", "_host", "_baseService", function ($scope, $state, $stateParams, _basic, _config, _host, _baseService) {
+app.controller("order_detail_controller", ["$scope", "$state", "$stateParams", "_basic", "_config", "_host", "_baseService", function ($scope, $state, $stateParams, _basic, _config, _host, _baseService) {
 
     // 用户ID
     var userId = _basic.getSession(_basic.USER_ID);
