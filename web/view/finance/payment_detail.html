@@ -144,7 +144,7 @@
                 <div class="row col s12">
                     <div class="col s6 left-align">
                         <div class="col s12">
-                            支付金额(美元):&nbsp;$&nbsp;<span style="color: red">{{storagePaymentArray.payment_money}}.00</span>
+                            支付金额(美元):&nbsp;$&nbsp;<span style="color: red">{{storagePaymentArray.payment_money|number:2}}</span>
                         </div>
                     </div>
                     <div class="col s6 right-align">
@@ -221,7 +221,7 @@
                                         <td>{{el.created_on |date:'yyyy-MM-dd hh:mm'}}</td>
                                         <td>{{el.enter_time |date:'yyyy-MM-dd hh:mm'}}</td>
                                         <td>{{el.day_count}}</td>
-                                        <td class="red-text">${{el.actual_fee}}.00</td>
+                                        <td class="red-text">${{el.actual_fee|number:2}}</td>
 
                                         <!-- 显示画面按钮 -->
                                         <td class="operation">
@@ -282,7 +282,7 @@
                                     <td>{{el.created_on |date:'yyyy-MM-dd hh:mm'}}</td>
                                     <td>{{el.enter_time |date:'yyyy-MM-dd hh:mm'}}</td>
                                     <td>{{el.day_count}}</td>
-                                    <td class="red-text">${{el.actual_fee}}.00</td>
+                                    <td class="red-text">${{el.actual_fee|number:2}}</td>
 
                                     <!-- 显示画面按钮 -->
                                     <td class="operation">
@@ -335,7 +335,7 @@
                                 <td>{{el.created_on |date:'yyyy-MM-dd hh:mm'}}</td>
                                 <td>{{el.enter_time |date:'yyyy-MM-dd hh:mm'}}</td>
                                 <td>{{el.day_count}}</td>
-                                <td class="red-text">${{el.actual_fee}}.00</td>
+                                <td class="red-text">${{el.actual_fee|number:2}}</td>
                             </tr>
                             <tr>
                                 <td></td>
@@ -344,7 +344,7 @@
                                 <td></td>
                                 <td></td>
                                 <td></td>
-                                <td>实际支付($):&nbsp;<span class="red-text">{{totalMoney}}.00</span></td>
+                                <td>实际支付($):&nbsp;<span class="red-text">{{totalMoney|number:2}}</span></td>
                             </tr>
                             </tbody>
                         </table>
