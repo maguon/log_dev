@@ -36,7 +36,7 @@ app.controller("payment_detail_controller", ["$scope","$stateParams", "_basic", 
             if (data.success == true) {
                 $scope.storagePaymentArray = data.result[0];
                 $scope.paymentStatus=data.result[0].payment_status;
-                $scope.getEntrustInfo($scope.paymentStatus);
+                $scope.getEntrustInfo(data.result[0].entrust_type);
                 $scope.storagePaymentArray.entrust_id=data.result[0].entrust_id;
                 $scope.lookRelatedOrder();
                 $scope.lookPaymentMsg();
