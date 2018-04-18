@@ -114,7 +114,7 @@
                 <th data-field="">实际支付<br><span style="margin-left: 12px;font-size: 12px;">(美元)</span></th>
                 <!--<th data-field="">实际支付(美元)</th>-->
                 <th data-field="">支付状态</th>
-                <th>操作</th>
+                <th class="center">操作</th>
             </tr>
             </thead>
             <tbody>
@@ -141,11 +141,11 @@
                 <td>{{payStatusList[el.order_status - 1].name}}</td>
                 <!-- 显示【车辆信息】画面按钮 -->
                 <td class="operation">
-                    <div class="col s6">
+                    <div class="col s6 right-align">
                         <i ng-show="el.payment_status == 1" class="mdi mdi-cash-usd look_icon cyan-text lighten-1"
                            ng-click="openChangePriceDiv(el)"></i>
                     </div>
-                    <div class="col s6">
+                    <div class="col s6 left-align">
                         <a href="#" ui-sref="order_detail({id:el.id,from:'order'})">
                             <i class="mdi mdi-file-document look_icon cyan-text lighten-1"></i>
                         </a>
