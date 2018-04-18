@@ -11,8 +11,8 @@
                 </select>
             </div>
             <div class="col s6 input-field">
-                <select material-select watch id="addEntrustSelect"  ng-model="addEntrustId" style="width: 100%">
-                    <option value="" ><span style="color: red">*</span>委托方</option>
+                <select id="addEntrustSelect" style="width: 100%">
+                    <option value="" ></option>
                     <option ng-repeat="el in entrustList" ng-value="el.id">{{el.short_name}}</option>
                 </select>
             </div>

@@ -26,6 +26,23 @@ app.controller("payment_controller", ["$scope", "_basic", "_host","_config",  fu
                     containerCssClass: 'select2_dropdown',
                     allowClear: true
                 });
+                // $("#addEntrustSelect").select2({
+                //     placeholder: '委托方',
+                //     containerCssClass: 'select2_dropdown',
+                //     allowClear: true
+                // }).on("select2:unselecting", function(e) {
+                //     console.log('unselecting');
+                //     $(this).data('state', 'unselected');
+                // }).on("select2:open", function(e) {
+                //     console.log('open');
+                //     if ($(this).data('state') === 'unselected') {
+                //         $(this).removeData('state');
+                //         var self = $(this);
+                //         setTimeout(function() {
+                //             self.select2('close');
+                //         }, 1);
+                //     }
+                // });
             }
         });
     };
@@ -80,8 +97,6 @@ app.controller("payment_controller", ["$scope", "_basic", "_host","_config",  fu
         });
     };
 
-
-
     /**
      * 新增支付信息模态框
      * */
@@ -89,24 +104,25 @@ app.controller("payment_controller", ["$scope", "_basic", "_host","_config",  fu
         $(".modal").modal();
         $("#addPaymentModal").modal("open");
         $scope.addEntrustType="";
-        $scope.addEntrustId="";
         $scope.addPaymentType="";
         $scope.addPatmentNumber="";
         $scope.addPaymentMoney="";
         $scope.addRemark="";
     };
 
-
-
     /**
      * 确认新增支付信息
      * */
     $scope.addPaymentInfo =function (){
-        if ($scope.addEntrustId!== ""&&$scope.addPaymentType!== ""&&$scope.addPatmentNumber!==""&&$scope.addPaymentMoney!=="") {
+
+        // 委托方 下拉选中 内容
+        var entrust = $("#addEntrustSelect").select2("data")[0] ; //单选
+
+        if (entrust.id!== ""&&$scope.addPaymentType!== ""&&$scope.addPatmentNumber!==""&&$scope.addPaymentMoney!=="") {
 
             // 追加画面数据
             var obj = {
-                entrustId: $scope.addEntrustId,
+                entrustId: entrust.id,
                 paymentType:  $scope.addPaymentType,
                 number: $scope.addPatmentNumber,
                 paymentMoney: $scope.addPaymentMoney,
