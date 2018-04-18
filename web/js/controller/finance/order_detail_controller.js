@@ -104,7 +104,8 @@ app.controller("order_detail_controller", ["$scope", "$state", "$stateParams", "
         $('.modal').modal();
         $('#changePriceDiv').modal('open');
         // 实际应付
-        $scope.modifyActualFee = $filter('number')($scope.orderInfo.actualFee,2);
+        // $scope.modifyActualFee = $filter('number')($scope.orderInfo.actualFee,2);
+        $scope.modifyActualFee = $scope.orderInfo.actualFee.toFixed(2);
     };
 
     /**
