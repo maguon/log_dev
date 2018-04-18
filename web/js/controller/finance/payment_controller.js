@@ -104,6 +104,11 @@ app.controller("payment_controller", ["$scope", "_basic", "_host","_config",  fu
         $(".modal").modal();
         $("#addPaymentModal").modal("open");
         $scope.addEntrustType="";
+        // 委托方select2初期化
+        $("#addEntrustSelect").val(null).trigger("change");
+        // 或者
+        // $("#addEntrustSelect").val("委托方").trigger("change");
+
         $scope.addPaymentType="";
         $scope.addPatmentNumber="";
         $scope.addPaymentMoney="";
