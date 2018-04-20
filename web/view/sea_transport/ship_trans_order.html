@@ -8,13 +8,13 @@
 
             <!-- 订单编号 -->
             <div class="input-field col s3">
-                <input type="text" id="orderIdText" ng-model="conditionOrderId">
+                <input type="text" id="orderIdText" ng-model="condShipTransOrderId">
                 <label for="orderIdText">订单编号</label>
             </div>
 
             <!-- 目的港 -->
             <div class="input-field col s3">
-                <select material-select watch ng-model="conditionPortId">
+                <select material-select watch ng-model="condEndPortId">
                     <option value="">目的港</option>
                     <option ng-repeat="el in portList" ng-value="el.id">{{el.port_name}}</option>
                 </select>
@@ -22,19 +22,19 @@
 
             <!-- 开船日期 -->
             <div class="input-field col s3">
-                <input type="text" id="sailTimeStart" ng-model="paymentTimeStart" class="datepicker" date><i
+                <input type="text" id="sailTimeStart" ng-model="condStartShipDateStart" class="datepicker" date><i
                     class="mdi dataIcon mdi-table-large"></i>
                 <label for="sailTimeStart">开船日期(始)</label>
             </div>
             <div class="input-field col s3">
-                <input id="sailTimeEnd" type="text" ng-model="paymentTimeEnd" class="datepicker" date><i
+                <input id="sailTimeEnd" type="text" ng-model="condStartShipDateEnd" class="datepicker" date><i
                     class="mdi dataIcon mdi-table-large"></i>
                 <label for="sailTimeEnd">开船日期(终)</label>
             </div>
 
             <!-- 船公司 -->
             <div class="input-field col s3">
-                <select material-select watch ng-model="conditionShippingCo">
+                <select material-select watch ng-model="condShipCompanyId">
                     <option value="">船公司</option>
                     <option ng-repeat="el in shippingCoList" ng-value="el.id">{{el.ship_company_name}}</option>
                 </select>
@@ -42,45 +42,45 @@
 
             <!-- 船名 -->
             <div class="input-field col s3">
-                <input type="text" id="shipNameText" ng-model="conditionShipName">
+                <input type="text" id="shipNameText" ng-model="condShipName">
                 <label for="shipNameText">船名</label>
             </div>
 
             <!-- 到港日期 -->
             <div class="input-field col s3">
-                <input id="arrivalTimeStart" type="text" ng-model="paymentTimeStart" class="datepicker" date><i
+                <input id="arrivalTimeStart" type="text" ng-model="condEndShipDateStart" class="datepicker" date><i
                     class="mdi dataIcon mdi-table-large"></i>
                 <label for="arrivalTimeStart">支付时间(始)</label>
             </div>
             <div class="input-field col s3">
-                <input id="arrivalTimeEnd" type="text" ng-model="paymentTimeEnd" class="datepicker" date><i
+                <input id="arrivalTimeEnd" type="text" ng-model="condEndShipDateEnd" class="datepicker" date><i
                     class="mdi dataIcon mdi-table-large"></i>
                 <label for="arrivalTimeEnd">支付时间(终)</label>
             </div>
 
             <!-- 货柜 -->
             <div class="input-field col s3">
-                <input type="text" id="counterText" ng-model="conditionCounter">
+                <input type="text" id="counterText" ng-model="condContainer">
                 <label for="counterText">货柜</label>
             </div>
 
             <!-- booking -->
             <div class="input-field col s3">
-                <input type="text" id="bookingText" ng-model="conditionBooking">
+                <input type="text" id="bookingText" ng-model="condBooking">
                 <label for="bookingText">booking</label>
             </div>
 
             <!-- 封签 -->
             <div class="input-field col s3">
-                <input type="text" id="sealText" ng-model="conditionSeal">
+                <input type="text" id="sealText" ng-model="condTab">
                 <label for="sealText">封签</label>
             </div>
 
             <!-- 运送状态 -->
             <div class="input-field col s3">
-                <select material-select watch ng-model="transportState" ng-change="getEntrustInfo(entrustType)">
+                <select material-select watch ng-model="condOrderStatus">
                     <option value="">运送状态</option>
-                    <option ng-repeat="el in entrustTypeList" ng-value="el.entrust_type">{{el.name}}</option>
+                    <option ng-repeat="el in orderStatus" ng-value="el.id">{{el.name}}</option>
                 </select>
             </div>
         </div>
@@ -89,7 +89,7 @@
         <div class="col s2" style="margin-top:45px;">
             <!--查询按钮-->
             <div class="col s6 center">
-                <a class="btn-floating btn-large waves-light waves-effect red lighten-2  btn " ng-click="getPayment()">
+                <a class="btn-floating btn-large waves-light waves-effect red lighten-2  btn " ng-click="queryShipTransOrder()">
                     <i class="mdi mdi-magnify"></i>
                 </a>
             </div>
@@ -147,17 +147,9 @@
                 <!--到港日期-->
                 <td ng-bind="el.end_ship_date|date:'yyyy-MM-dd HH:mm:ss'"></td>
                 <!--分单-->
-                <td ng-bind="el.part_status"></td>
+                <td>{{partTypes[el.part_status-1].name}}</td>
                 <!--运送状态-->
-                <td ng-bind="el.order_status"></td>
-
-                <!--&lt;!&ndash; 是否MSO &ndash;&gt;-->
-                <!--<td>{{msoFlags[el.mso_status-1].name}}</td>-->
-                <!--&lt;!&ndash; 仓库 &ndash;&gt;-->
-                <!--<td>{{el.storage_id==null ? '无' : el.storage_name}}</td>-->
-
-                <!--<td ng-if="el.col!=null">{{el.row}}排{{el.col}}列</td>-->
-                <!--<td ng-if="el.col==null">无</td>-->
+                <td>{{orderStatus[el.order_status-1].name}}</td>
                 <!--操作-->
                 <td class="operation">
                     <a href="#" ui-sref="car_demand_details({id:el.id,vin:el.vin,from:'car_demand'})" class=""><i

@@ -160,7 +160,7 @@ app.controller("ship_trans_order_controller", ["$scope", "$rootScope", "_host", 
     /**
      * 点击：查询按钮，进行数据查询
      */
-    $scope.queryCarList = function () {
+    $scope.queryShipTransOrder = function () {
         // 默认第一页
         $scope.start = 0;
         queryShipTransOrderList();
