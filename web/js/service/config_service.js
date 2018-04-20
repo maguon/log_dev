@@ -282,5 +282,33 @@ baseService.factory("_config", function () {
         }
     ];
 
+    // 是否分单
+    _this.partTypes = [
+        {
+            id: 1,
+            name: "否"
+        },
+        {
+            id: 2,
+            name: "是"
+        }
+    ];
+
+    // 订单状态
+    _this.partTypes = [
+        {
+            id: 1,
+            name: "待出发"
+        },
+        {
+            id: 2,
+            name: "已出发"
+        },
+        {
+            id: 3,
+            name: "已到达"
+        }
+    ];
+
     return _this
 });
