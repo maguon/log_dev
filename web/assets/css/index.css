@@ -1101,3 +1101,16 @@ input[type=text]{
 .payment-height{
     height: 850px !important;
 }
+
+/* Autocomplete */
+.autocomplete-content {
+    margin-top: -20px !important;
+    display: block !important;
+    opacity: 1 !important;
+    width: 95% !important;
+    position: absolute !important;
+}
+
+.dropdown-content {
+    z-index: 999999 !important;
+}

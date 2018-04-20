@@ -206,6 +206,13 @@ app.config(['$stateProvider',"$urlRouterProvider",function($stateProvider,$urlRo
             templateUrl: "/view/finance/payment_detail.html",
             controller:"payment_detail_controller"
         })
+
+        // 海运管理->订舱管理
+        .state("ship_trans_order", {
+            url:"/ship_trans_order",
+            templateUrl: "/view/sea_transport/ship_trans_order.html",
+            controller:"ship_trans_order_controller"
+        })
     /*       .state("Com", {
                url: "/Com",  //路由路径
                templateUrl: "/view/car/truck_statistics.html",  //路由填充的模板
