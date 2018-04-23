@@ -174,7 +174,7 @@ adminDirective.directive('percent', function () {
                     }
                 },
                 colors:[
-                    "#4dd0e1",
+                    "#6192d1",
                     "#cfd8dc"
                 ],
                 // 版权信息

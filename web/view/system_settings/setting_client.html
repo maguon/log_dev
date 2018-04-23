@@ -4,7 +4,7 @@
         <div class="modal-content center fz20" style="font-weight: 500;padding: 0">
 
             <!--标题：增加委托方-->
-            <div class="row col s12 vc-center fz22" style="color: white;letter-spacing:1px;font-weight: bold;height: 70px;background-color:rgb(63,185,193)">
+            <div class="row col s12 vc-center fz22" style="color: white;letter-spacing:1px;font-weight: bold;height: 70px;background-color:#4e84cb">
                 <p>增加委托方</p>
             </div>
 
@@ -103,12 +103,12 @@
         <div class="modal-content center fz20" style="font-weight: 500;padding: 0">
 
             <!--标题：委托方设置-->
-            <div class=" col s12 vc-center fz22" style="color: white;letter-spacing:1px;font-weight: bold;height: 70px;background-color:rgb(63,185,193)">
+            <div class=" col s12 vc-center fz22" style="color: white;letter-spacing:1px;font-weight: bold;height: 70px;background-color:#4e84cb">
                 <p>委托方设置</p>
             </div>
 
             <!--编号-->
-            <div class="row col s12 vc-center fz22 " style="color: #26c6da;letter-spacing:1px;font-weight: bold;height: 70px;background-color:lightgray">
+            <div class="row col s12 vc-center fz22 " style="color: #4e84cb;letter-spacing:1px;font-weight: bold;height: 70px;background-color:lightgray">
                 <p class="col s2 pull-l10">{{clientList.id}}</p>
             </div>
 
@@ -250,10 +250,10 @@
     <ul class="collapsible card row"  data-collapsible="accordion" collapsible>
         <li ng-repeat="el in getClientArray" class="grey-text text-darken-1 vc-center" style="border-bottom: 1px solid #ccc;height: 70px;line-height: 70px;text-align: center">
             <!--序号-->
-            <div class="col s1" ng-bind="el.id" style="color: #4dd0e1;"></div>
+            <div class="col s1" ng-bind="el.id" style="color: #6192d1;"></div>
             <!--企业性质-->
-            <div class="col s1 fz30" ng-if="el.entrust_type==1"  style="color: #4dd0e1;"><i class="mdi mdi-account"></i></div>
-            <div class="col s1 fz30" ng-if="el.entrust_type==2"  style="color: #4dd0e1;"><i class="mdi mdi-domain"></i></div>
+            <div class="col s1 fz30" ng-if="el.entrust_type==1"  style="color: #6192d1;"><i class="mdi mdi-account"></i></div>
+            <div class="col s1 fz30" ng-if="el.entrust_type==2"  style="color: #6192d1;"><i class="mdi mdi-domain"></i></div>
             <!--企业名字（全称/简称）-->
             <div class="col s6" style="position: relative;height: 70%">
                 <span  ng-bind="el.short_name" style="position: absolute;top:-40%;left: 7%"></span>

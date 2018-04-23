@@ -28,7 +28,7 @@
         <!--已支付状态下-->
         <div  ng-if='paymentStatus==1'>
             <div class="modal-content">
-                <div class="row col s12 bold" style="color:#26c6da ;margin-top: 20px;">
+                <div class="row col s12 bold" style="color:#4e84cb ;margin-top: 20px;">
                     <div class="col s6 fz18" >支付编码:{{storagePaymentArray.id}}</div>
                     <div class="col s6 right-align">{{paymentStatusList[storagePaymentArray.payment_status-1].name}}</div>
                 </div>
@@ -90,7 +90,7 @@
         <!--已完结状态下-->
         <div  ng-if='paymentStatus==2'>
             <div class="modal-content">
-                <div class="row col s12 bold" style="color:#26c6da ;margin-top: 20px;">
+                <div class="row col s12 bold" style="color:#4e84cb ;margin-top: 20px;">
                     <div class="col s6 fz18" >支付编码:{{storagePaymentArray.id}}</div>
                     <div class="col s6 right-align">{{paymentStatusList[storagePaymentArray.payment_status-1].name}}</div>
                 </div>

@@ -12,7 +12,7 @@ app.controller("storage_statistics_controller", ['$rootScope', '$scope', "_host"
         {
             name: "入库统计",
             data: [],
-            color: "#4dd0e1"
+            color: "#6192d1"
         }, {
             name: "出库统计",
             data: [],
@@ -24,7 +24,7 @@ app.controller("storage_statistics_controller", ['$rootScope', '$scope', "_host"
         {
         name: "入库统计",
         data: [],
-        color: "#4dd0e1"
+        color: "#6192d1"
         },
         {
         name: "出库统计",

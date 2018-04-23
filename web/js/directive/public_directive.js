@@ -70,7 +70,7 @@ publicDirective.directive('header', function () {
                         $scope.realName = data.result[0].real_name;
                         // MaterialAvatar(document.getElementsByClassName('nav-avatar'), {
                         //     shape: 'circle',
-                        //     backgroundColor: '#4dd0e1',
+                        //     backgroundColor: '#6192d1',
                         //     textColor: '#fff'
                         // });
                     } else {
@@ -175,7 +175,7 @@ publicDirective.directive('percent', function () {
                     }
                 },
                 colors: [
-                    "#4dd0e1",
+                    "#6192d1",
                     "#cfd8dc"
                 ],
                 // 版权信息

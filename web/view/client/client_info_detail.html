@@ -6,7 +6,7 @@
     <div class="modal-content">
         <div  class="handleInfoInput" style="width:100%;">
             <!--VIN码 和 是否在库-->
-            <div class="row col s12" style="margin-top: 20px;margin-right: 20px;color:#26c6da;padding-bottom: 7px;">
+            <div class="row col s12" style="margin-top: 20px;margin-right: 20px;color:#4e84cb;padding-bottom: 7px;">
                 <div class="col s6 valign-wrapper">
                     <div class="fz20 col s12 input-field left-align">VIN码:{{clientList.vin}}</div>
                 </div>
@@ -118,39 +118,39 @@
         <h4 class="center-align cyan-text text-lighten-1">委托方信息</h4>
     </div>
     <!--分割线-->
-    <div class="divider" style="background: #00bcd4;height: 2px;"></div>
+    <div class="divider" style="background: #407BC7;height: 2px;"></div>
 
     <!--头部详情信息-->
     <div class="grey-text text-darken-1 vc-center row " style="margin-top: 20px;">
-            <div class="col s1 center" style="color: #4dd0e1;">
+            <div class="col s1 center" style="color: #6192d1;">
                 <i  ng-if="headerInfoList.entrust_type==1" class="mdi mdi-account fz45 s3"></i>
                 <i  ng-if="headerInfoList.entrust_type==2" class="mdi mdi-domain fz45 s3"></i>
             </div>
             <div class="col s8">
                 <div class="row left-align">
-                    <span  class=" fz18" ng-bind="headerInfoList.short_name" style="color: #26c6da;margin-right: 10px"> </span>
+                    <span  class=" fz18" ng-bind="headerInfoList.short_name" style="color: #4e84cb;margin-right: 10px"> </span>
                     <span  >({{headerInfoList.entrust_name}})</span>
                 </div>
                 <div class="row">
-                    <i class="mdi mdi-map-marker  center" style="color: #26c6da;margin-right: 10px"></i>
+                    <i class="mdi mdi-map-marker  center" style="color: #4e84cb;margin-right: 10px"></i>
                     <span >{{headerInfoList.address}}</span>
                 </div>
                 <div class="row">
-                   <i class="mdi mdi-file-outline  center" style="color: #26c6da;margin-right: 10px"></i>
+                   <i class="mdi mdi-file-outline  center" style="color: #4e84cb;margin-right: 10px"></i>
                     <span >{{headerInfoList.remark}}</span>
                 </div>
             </div>
             <div class="col s2 right-align" style="margin-right: 40px">
                 <div class="row">
-                    <i class="mdi mdi-account" style="color: #26c6da"></i>
+                    <i class="mdi mdi-account" style="color: #4e84cb"></i>
                     <span  ng-bind="headerInfoList.contacts_name" ></span>
                 </div>
                 <div class="row">
-                    <i class="mdi mdi-phone" style="color: #26c6da"></i>
+                    <i class="mdi mdi-phone" style="color: #4e84cb"></i>
                     <span  ng-bind="headerInfoList.tel"></span>
                 </div>
                 <div class="row">
-                    <i class="mdi mdi-clock" style="color: #26c6da"></i>
+                    <i class="mdi mdi-clock" style="color: #4e84cb"></i>
                     <span  ng-bind="headerInfoList.created_on | date:'yyyy-MM-dd HH:mm:ss'" ></span>
                 </div>
             </div>
@@ -229,7 +229,7 @@
 
                 <!-- 下部分：检索结果显示区域 -->
                 <div class="col s12" >
-                    <div class="divider" style="background: #00bcd4;height: 2px;"></div>
+                    <div class="divider" style="background: #407BC7;height: 2px;"></div>
                     <table class=" bordered striped centered">
                         <thead class="blue-grey lighten-5">
                         <tr class="grey-text text-darken-2">
@@ -286,11 +286,11 @@
             </div>
             <div id="relStatus" class="col s12 tab_box" >
                 <div class="col s12" >
-                    <div class="col s12 cyan white-text vc-center fz18" style="height: 60px;border-bottom: 1px solid  #26c6da;border-top:1px solid  #fff" >
+                    <div class="col s12 cyan white-text vc-center fz18" style="height: 60px;border-bottom: 1px solid  #4e84cb;border-top:1px solid  #fff" >
                         <div class="col s6 left-align ">在库车辆:{{entrustList.car_count}}</div>
                         <div class="col s6 right-align">估值(美元):{{entrustList.valuation}}</div>
                     </div>
-                    <div class="divider" style="background: #00bcd4;height: 2px;"></div>
+                    <div class="divider" style="background: #407BC7;height: 2px;"></div>
                     <table class=" bordered striped centered">
                         <thead class="blue-grey lighten-5">
                         <tr class="grey-text text-darken-2">
@@ -344,11 +344,11 @@
             </div>
             <div id="msoStatus" class="col s12 tab_box" >
                 <div class="col s12" >
-                    <div class="col s12 cyan white-text vc-center fz18" style="height: 60px;border-bottom: 1px solid  #26c6da;border-top:1px solid  #fff" >
+                    <div class="col s12 cyan white-text vc-center fz18" style="height: 60px;border-bottom: 1px solid  #4e84cb;border-top:1px solid  #fff" >
                         <div class="col s6 left-align "></div>
                         <div class="col s6 right-align">非MSO车辆库值(美元):{{entrustList.not_mso_valuation}}</div>
                     </div>
-                    <div class="divider" style="background: #00bcd4;height: 2px;"></div>
+                    <div class="divider" style="background: #407BC7;height: 2px;"></div>
                     <table class=" bordered striped centered">
                         <thead class="blue-grey lighten-5">
                         <tr class="grey-text text-darken-2">
