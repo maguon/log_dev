@@ -213,6 +213,14 @@ app.config(['$stateProvider',"$urlRouterProvider",function($stateProvider,$urlRo
             templateUrl: "/view/sea_transport/ship_trans_order.html",
             controller:"ship_trans_order_controller"
         })
+
+        // 海运管理->海运日历
+        .state("ship_trans_calendar", {
+            url:"/ship_trans_calendar",
+            templateUrl: "/view/sea_transport/ship_trans_calendar.html",
+            controller:"ship_trans_calendar_controller"
+        })
+
     /*       .state("Com", {
                url: "/Com",  //路由路径
                templateUrl: "/view/car/truck_statistics.html",  //路由填充的模板
