@@ -708,7 +708,7 @@ input[type=text]{
 }
 /*表单*/
 .input-field label{
-    color: #4e84cb;
+    color: black;
 }
 #test1 .input-field label{
      color: #9e9e9e;
