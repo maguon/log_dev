@@ -46,7 +46,7 @@ app.controller("ship_trans_order_controller", ["$scope", "$rootScope", "_host", 
         // VIN（单纯画面使用）
         vin: "",
         // 分单
-        partStatus: "",
+        partStatus: "1",
         // 运费合计（单纯画面使用）
         totalShipTransFees: 0,
         // 订舱备注
@@ -220,6 +220,8 @@ app.controller("ship_trans_order_controller", ["$scope", "$rootScope", "_host", 
         $('.modal').modal();
         $('#newSeaTransportOrderDiv').modal('open');
         getCarMakerList();
+
+        $scope.newCarList = [];
 
         // 实际应付
         // $scope.modifyActualFee = $filter('number')($scope.orderInfo.actualFee,2);
@@ -562,16 +564,25 @@ app.controller("ship_trans_order_controller", ["$scope", "$rootScope", "_host", 
 
     function addCar(carInfo) {
 
-        // 是否是分单
-        $scope.newShippingOrder.partStatus = ""
+        // 是否分单, 默认 分单：否
+        $scope.newShippingOrder.partStatus = "1";
 
         var hasError = false;
         // 遍历新增车辆列表
         for (var i = 0; i < $scope.newCarList.length; i++) {
             var vin = $scope.newCarList[i].vin;
+            var entrustId = $scope.newCarList[i].entrust_id;
             // 已经追加过
             if (vin == carInfo.vin) {
                 hasError = true;
+            }
+
+            // 分单：否 时，进行判定
+            if ($scope.newShippingOrder.partStatus == "1") {
+                if (entrustId != carInfo.entrustId) {
+                    // 委托人不同，分单：是
+                    $scope.newShippingOrder.partStatus = "2";
+                }
             }
         }
         if (hasError) {

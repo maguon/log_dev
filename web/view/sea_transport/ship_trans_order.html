@@ -410,7 +410,7 @@
             <!-- 分单 / 运费(美元) -->
             <div class="col s12" style="padding-top: 20px;padding-left: 23px;">
                 <div class="col s6 left-align">
-                    <label class="fz15">分单：xxxxxxxxx</label>
+                    <label class="fz15">分单：{{partTypes[newShippingOrder.partStatus - 1].name}}</label>
                 </div>
                 <div class="col s6 right-align" style="padding-right: 23px;">
                     <label class="fz15">运费(美元)：<span class="red-text">{{newShippingOrder.totalShipTransFees | currency}}</span></label>
