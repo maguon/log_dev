@@ -866,7 +866,7 @@ input[type=text]{
     text-indent: 10px;
 }
 .switch label input[type=checkbox]:checked + .lever{
-    background-color:#4e84cb
+    background-color:#9cbbe2
 }
 .switch label input[type=checkbox]:checked + .lever:after{
     background-color:#ffffff
