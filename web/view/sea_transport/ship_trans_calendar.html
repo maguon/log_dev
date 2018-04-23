@@ -6,10 +6,6 @@
             <div class="col s12 white p0 z-depth-1">
                 <!--的选择-->
                 <div style="height: 50px;padding-left:20px" class="red lighten-2">
-                    <select material-select watch name="" class="col s3 white-text" ng-model="storageId" ng-change="changeStorage(storageId)">
-                        <option value="" disabled selected>请选择</option>
-                        <option ng-repeat="el in storageList" ng-if="el.storage_status==1" ng-value="el.id">{{el.storage_name}}</option>
-                    </select>
                 </div>
 
                 <!--日历-->

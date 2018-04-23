@@ -24,38 +24,12 @@ app.controller("ship_trans_calendar_controller", ["$scope", "_host", "_basic", f
     // 画面显示用(今天周几)
     $scope.todayWeek = weekday[date.getDay()];
 
-    // 画面初期时，用来取得画面数据
-    _basic.get(_host.api_url + "/storageDate" + "?dateStart=" + nowDate + "&dateEnd=" + nowDate).then(function (data) {
-        if (data.success == true && data.result.length > 0) {
-            // 下拉菜单 数据列表
-            $scope.storageList = data.result;
-            // 默认选中第一个
-            $scope.storageId = data.result[0].id;
-        }
-        // 日历详细信息
-        showCalendar($scope.storageId);
-    });
-
-
-    /**
-     * 根据仓库ID取得日历信息，饼图数据。
-     * @param storage_id 仓库ID
-     */
-    $scope.changeStorage = function (storage_id) {
-        if (storage_id != null && storage_id != "") {
-            // 日历详细信息
-            showCalendar(storage_id);
-        }
-    };
-
-
 
     /**
      * 创建日历详细信息。
      *
-     * @param storage_id 仓储ID
      */
-    function showCalendar (storage_id) {
+    function showCalendar () {
         $('#calendar').fullCalendar('destroy');
         $('#calendar').fullCalendar({
             viewRender: function (view, element) {
@@ -123,4 +97,5 @@ app.controller("ship_trans_calendar_controller", ["$scope", "_host", "_basic", f
             }
         })
     };
+    showCalendar();
 }])
