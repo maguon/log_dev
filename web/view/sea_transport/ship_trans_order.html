@@ -149,10 +149,10 @@
                 <!--分单-->
                 <td>{{partTypes[el.part_status-1].name}}</td>
                 <!--运送状态-->
-                <td>{{orderStatus[el.order_status-1].name}}</td>
+                <td>{{orderStatus[el.ship_trans_status-1].name}}</td>
                 <!--操作-->
                 <td class="operation">
-                    <a href="#" ui-sref="car_demand_details({id:el.id,vin:el.vin,from:'car_demand'})" class=""><i
+                    <a href="#" ui-sref="ship_trans_order_detail({id:el.id,from:'ship_trans_order'})" class=""><i
                             class="mdi mdi-file-outline look_icon cyan-text lighten-1  "></i></a>
                 </td>
             </tr>

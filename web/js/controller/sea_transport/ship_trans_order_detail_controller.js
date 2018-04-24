@@ -1,32 +1,29 @@
 /**
- * 主菜单：车辆查询 控制器
+ * 主菜单：仓储管理 -> 订单管理(详细画面) 控制器
  */
-app.controller("ship_trans_order_controller", ["$scope", "$rootScope", "_host", "_basic", "_config", "_baseService", function ($scope, $rootScope, _host, _basic, _config, _baseService) {
+app.controller("ship_trans_order_detail_controller", ["$scope", "$state", "$stateParams", "_basic", "_config", "_host", "$filter", function ($scope, $state, $stateParams, _basic, _config, _host, $filter) {
 
-    // 取得当前画面 登录用户
+    // 用户ID
     var userId = _basic.getSession(_basic.USER_ID);
 
-    // 翻页用
-    $scope.start = 0;
-    $scope.size = 11;
+    // 海运订舱管理，订舱 ID
+    $scope.shipTransId = $stateParams.id;
 
-    // 查询条件【目的港】列表
-    $scope.portList = [];
-
-    // 查询条件【船公司】列表
-    $scope.shippingCoList = [];
-
-    // 是否分单 列表
-    $scope.partTypes = _config.partTypes;
     // 订单状态 列表
     $scope.orderStatus = _config.orderStatus;
-    // 颜色列表
-    $scope.configColor = _config.config_color;
+    // 是否分单 列表
+    $scope.partTypes = _config.partTypes;
+    // 支付状态 列表
+    $scope.payStatus = _config.payStatus;
 
-    // 订单信息
-    $scope.newShippingOrder = {
+    // 海运订舱管理，订舱详情 基本信息
+    $scope.shippingOrder = {
+        // 海运订单编号
+        shipTransId: "",
+        // 状态
+        status: "",
         // 始发港口
-        startPort: "",
+        startPortId: "",
         // 目的港口
         endPortId: "",
         // 开船日期
@@ -43,21 +40,37 @@ app.controller("ship_trans_order_controller", ["$scope", "$rootScope", "_host", 
         booking: "",
         // 封签
         tab: "",
-        // VIN（单纯画面使用）
-        vin: "",
         // 分单
         partStatus: "1",
-        // 运费合计（单纯画面使用）
-        totalShipTransFees: 0,
         // 订舱备注
-        remark: ""
+        remark: "",
+        // 生成时间
+        createdOn: ""
     };
 
-    // 新增海运订单画面 VIN码 查询结果
-    $scope.carList = [];
+    // 海运订舱管理，订舱详情 运载车辆列表
+    $scope.shipTransCarList = [];
 
-    // 新增海运订单画面 VIN码 后 追加按钮 追加结果List
-    $scope.newCarList = [];
+    // 海运订舱管理，订舱详情 运载车辆信息
+    $scope.newShippingOrder = {
+        // VIN（单纯画面使用）
+        vin: "",
+        // 运费合计（单纯画面使用）
+        totalShipTransFees: 0
+    };
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     // 新增海运订单画面 VIN码 后 追加按钮 追加结果Info
     $scope.newCarInfo = {
@@ -84,104 +97,151 @@ app.controller("ship_trans_order_controller", ["$scope", "$rootScope", "_host", 
         remark: ""
     };
 
-    // 新增海运订单画面 VIN码 后 追加按钮 追加结果Info
-    $scope.customCarInfo = {
-        // vin
-        vin: "",
-        // 制造商
-        maker: "",
-        // 型号
-        model: "",
-        // 生产日期
-        proDate: "",
-        // 颜色
-        colour: "",
-        // 发动机号
-        engineNum: "",
-        // 委托方
-        entrust: "",
-        // 车价(美元)
-        valuation: ""
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    // 支付状态 列表
+    $scope.payStatusList = _config.payStatus;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    // 支付方式 列表
+    $scope.paymentMethodList = _config.payMethods;
+
+    // 颜色列表
+    $scope.configColor = _config.config_color;
+
+    // 是否显示关联订单详情部分（支付信息画面）
+    $scope.otherOrderList = false;
+
+    // 关联仓储订单列表
+    $scope.relOrderList = [];
+
+    // 选中的关联订单(selected状态)
+    $scope.selectedRelOrder = [];
+
+    // 预计支付合计
+    $scope.totalPlanFee = 0;
+    // 实际应付合计
+    $scope.totalActualFee = 0;
+
+    // 修改价格画面、实际应付
+    $scope.modifyActualFee = 0;
+
+
+    // 支付信息
+    $scope.paymentInfo = {
+        // 支付ID
+        id: 0,
+        // 订单ID
+        storageOrderIds: [],
+        // 委托人ID
+        entrustId: 0,
+        // 支付方式
+        paymentType: "",
+        // 编号
+        number: "",
+        // 支付金额(美元)
+        paymentMoney: "",
+        // 支付描述
+        remark: "",
+        // 操作员
+        paymentUserName: "",
+        // 支付时间
+        paymentEndDate: ""
     };
 
-    // 新增海运订单画面 VIN码 尾部 对应追加（新增车辆信息画面）
-    $scope.showCustomCarDiv = false;
-
-    $scope.portList = [];
+    /**
+     * 返回到前画面（订单管理）。
+     */
+    $scope.return = function () {
+        $state.go($stateParams.from, {}, {reload: true})
+    };
 
     /**
-     * 根据画面输入的查询条件，进行数据查询。
+     * 打开模态画面（查看关联的仓储订单）。
      */
-    function queryShipTransOrderList() {
+    $scope.openAssociatedOrder = function () {
+        $('.modal').modal();
+        $('#associatedOrderInfoDiv').modal('open');
+    };
 
-        // 基本检索URL
-        var reqUrl = _host.api_url + "/shipTrans?start=" + $scope.start + "&size=" + $scope.size;
+    /**
+     * 取得订单详情
+     */
+    function getTransOrderDetails() {
+        // 检索用url
+        var url = _host.api_url + "/shipTrans?shipTransId=" + $scope.shipTransId;
 
-        // 订单编号
-        if ($scope.condShipTransId != null) {
-            reqUrl = reqUrl + "&shipTransId=" + $scope.condShipTransId;
-        }
-        // 目的港
-        if ($scope.condEndPortId != null) {
-            reqUrl = reqUrl + "&endPortId=" + $scope.condEndPortId;
-        }
-        // 开始日期 开始
-        if ($scope.condStartShipDateStart != null) {
-            reqUrl = reqUrl + "&startShipDateStart=" + $scope.condStartShipDateStart;
-        }
-        // 开始日期 终了
-        if ($scope.condStartShipDateEnd != null) {
-            reqUrl = reqUrl + "&startShipDateEnd=" + $scope.condStartShipDateEnd;
-        }
-        // 船公司
-        if ($scope.condShipCompanyId != null) {
-            reqUrl = reqUrl + "&shipCompanyId=" + $scope.condShipCompanyId;
-        }
-        // 船名
-        if ($scope.condShipName != null) {
-            reqUrl = reqUrl + "&shipName=" + $scope.condShipName;
-        }
-        // 到港日期 开始
-        if ($scope.condEndShipDateStart != null) {
-            reqUrl = reqUrl + "&endShipDateStart=" + $scope.condEndShipDateStart;
-        }
-        // 到港日期 终了
-        if ($scope.condEndShipDateEnd != null) {
-            reqUrl = reqUrl + "&endShipDateEnd=" + $scope.condEndShipDateEnd;
-        }
-        // 货柜
-        if ($scope.condContainer != null) {
-            reqUrl = reqUrl + "&container=" + $scope.condContainer;
-        }
-        // booking
-        if ($scope.condBooking != null) {
-            reqUrl = reqUrl + "&booking=" + $scope.condBooking;
-        }
-        // 封签
-        if ($scope.condTab != null) {
-            reqUrl = reqUrl + "&tab=" + $scope.condTab;
-        }
-        // 运送状态
-        if ($scope.condOrderStatus != null) {
-            reqUrl = reqUrl + "&orderStatus=" + $scope.condOrderStatus;
-        }
-
-        _basic.get(reqUrl).then(function (data) {
+        _basic.get(url).then(function (data) {
             if (data.success == true) {
-                $scope.shipTransOrder = data.result;
-                $scope.shipTransOrderList = $scope.shipTransOrder.slice(0, 10);
-                if ($scope.start > 0) {
-                    $("#pre").show();
+
+                if (data.result.length == 0) {
+                    return;
                 }
-                else {
-                    $("#pre").hide();
-                }
-                if (data.result.length < $scope.size) {
-                    $("#next").hide();
-                }
-                else {
-                    $("#next").show();
-                }
+
+                // // 订单是已支付时，取得支付详情
+                // if (data.result[0].ship_trans_status == 2) {
+                //     getPaymentDetails();
+                // }
+
+                // 海运编号
+                $scope.shippingOrder.shipTransId = data.result[0].id;
+                // 状态
+                $scope.shippingOrder.status = data.result[0].ship_trans_status;
+                // 始发港口
+                $scope.shippingOrder.startPortId = data.result[0].start_port_id;
+                // 目的港口
+                $scope.shippingOrder.endPortId = data.result[0].end_port_id;
+                // 开船日期
+                $scope.shippingOrder.sailingDay = data.result[0].start_ship_date;
+                // 到港日期
+                $scope.shippingOrder.arrivalDay = data.result[0].end_ship_date;
+                // 船公司
+                $scope.shippingOrder.shippingCoId = data.result[0].ship_company_id;
+                // 船名
+                $scope.shippingOrder.shipName = data.result[0].ship_name;
+                // 货柜
+                $scope.shippingOrder.container = data.result[0].container;
+                // booking
+                $scope.shippingOrder.booking = data.result[0].booking;
+                // 封签
+                $scope.shippingOrder.tab = data.result[0].tab;
+                // 订舱备注
+                $scope.shippingOrder.remark = data.result[0].remark;
+                // 生成时间
+                $scope.shippingOrder.createdOn = data.result[0].created_on;
+                // 分单
+                $scope.shippingOrder.partStatus= data.result[0].part_status;
+
+                // 取得运载车辆详情 （画面下部分）
+                getShipTransCarRel();
             } else {
                 swal(data.msg, "", "error");
             }
@@ -189,29 +249,145 @@ app.controller("ship_trans_order_controller", ["$scope", "$rootScope", "_host", 
     }
 
     /**
-     * 点击：查询按钮，进行数据查询
+     * 取得运载车辆详情
      */
-    $scope.queryShipTransOrder = function () {
-        // 默认第一页
-        $scope.start = 0;
-        queryShipTransOrderList();
+    function getShipTransCarRel() {
+        // 检索用url
+        var url = _host.api_url + "/shipTransCarRel?shipTransId=" + $scope.shippingOrder.shipTransId;
+
+        _basic.get(url).then(function (data) {
+            if (data.success == true) {
+                $scope.shipTransCarList = data.result;
+                $scope.calcTotalFees();
+            } else {
+                swal(data.msg, "", "error");
+            }
+        });
+    }
+
+    /**
+     * 查看关联的仓储订单
+     */
+    function getOrderPaymentRel(paymentId) {
+        // 检索用url
+        var url = _host.api_url + "/orderPaymentRel?orderPaymentId=" + paymentId;
+
+        _basic.get(url).then(function (data) {
+            if (data.success == true) {
+                var totalPlanFee = 0;
+                var totalActualFee = 0;
+                $scope.relOrderList = [];
+                data.result.forEach(function (value, index, array) {
+                    // 去掉自己
+                    if (value.storage_order_id != $scope.shipTransId) {
+                        $scope.relOrderList.push(value);
+                        totalPlanFee = totalPlanFee + value.plan_fee;
+                        totalActualFee = totalActualFee + value.actual_fee;
+                    }
+                });
+
+                $scope.totalPlanFee = totalPlanFee;
+                $scope.totalActualFee = totalActualFee;
+            } else {
+                swal(data.msg, "", "error");
+            }
+        });
+    }
+
+    /**
+     * 关联其他订单
+     */
+    function getOtherOrderPayment() {
+
+        // 查询状态为[1：未支付]的所有订单
+        var url = _host.api_url + "/storageOrder?orderStatus=" + +$scope.payStatusList[0].id;
+
+        _basic.get(url).then(function (data) {
+            if (data.success == true) {
+
+                data.result.forEach(function (value, index, array) {
+                    // 去掉自己
+                    if (value.id != $scope.shipTransId) {
+                        $scope.relOrderList.push(value);
+                    }
+                });
+            } else {
+                swal(data.msg, "", "error");
+            }
+        });
+    }
+
+    /**
+     * 判定关联订单全选按钮是否是选中状态。
+     *
+     * @returns {boolean} true 选中，false 未选
+     */
+    $scope.isSelectedAllRelOrder = function () {
+        // 选中的情况
+        if ($scope.relOrderList.length > 0 && $scope.selectedRelOrder.length == $scope.relOrderList.length) {
+            return true;
+        } else {
+            return false;
+        }
     };
 
     /**
-     * 上一页
+     * 点击全选按钮。
+     * @param $event
      */
-    $scope.preBtn = function () {
-        $scope.start = $scope.start - ($scope.size - 1);
-        queryShipTransOrderList();
+    $scope.selectAllRelOrder = function ($event) {
+        var checkbox = $event.target;
+        $scope.selectedRelOrder = [];
+        $scope.totalPlanFee = 0;
+        $scope.totalActualFee = 0;
+        // 选中的情况
+        if (checkbox.checked) {
+            $scope.relOrderList.forEach(function (value, index, array) {
+                $scope.selectedRelOrder.push(value.id);
+                $scope.totalPlanFee = $scope.totalPlanFee + value.plan_fee;
+                $scope.totalActualFee = $scope.totalActualFee + value.actual_fee;
+            });
+        }
     };
 
     /**
-     * 下一页
+     * 点击某一行关联订单时，修改选中数据列表以及合并金额。
+     * @param $event
+     * @param id
+     * @param planFee
+     * @param actualFee
      */
-    $scope.nextBtn = function () {
-        $scope.start = $scope.start + ($scope.size - 1);
-        queryShipTransOrderList();
+    $scope.clickRelOrder = function ($event, id, planFee, actualFee) {
+        var checkbox = $event.target;
+
+        // 选中的情况
+        if (checkbox.checked) {
+            $scope.totalPlanFee = $scope.totalPlanFee + planFee;
+            $scope.totalActualFee = $scope.totalActualFee + actualFee;
+            $scope.selectedRelOrder.push(id);
+
+        } else {
+            $scope.totalPlanFee = $scope.totalPlanFee - planFee;
+            $scope.totalActualFee = $scope.totalActualFee - actualFee;
+            var idx = $scope.selectedRelOrder.indexOf(id);
+            $scope.selectedRelOrder.splice(idx, 1);
+        }
+        // 判定是否是全部选中，修改全部按钮状态
+        $scope.isSelectedAllRelOrder();
     };
+
+    /**
+     * 当前行是否选中。
+     * @param id
+     * @returns {boolean}
+     */
+    $scope.isRelOrderSelected = function (id) {
+        return $scope.selectedRelOrder.indexOf(id) >= 0;
+    };
+
+
+    /***************************************************************************************************************/
+
 
     /**
      * TODO
@@ -223,7 +399,7 @@ app.controller("ship_trans_order_controller", ["$scope", "$rootScope", "_host", 
         getCarMakerList();
 
         $scope.newShippingOrder = {};
-        $scope.newCarList = [];
+        $scope.shipTransCarList = [];
         // 隐藏 新增车辆信息 画面
         $scope.showCustomCarDiv = false;
 
@@ -233,7 +409,7 @@ app.controller("ship_trans_order_controller", ["$scope", "$rootScope", "_host", 
         // $scope.modifyActualFee = $scope.orderInfo.actualFee.toFixed(2);
 
 
-        // $('#autocomplete-input').autocomplete('onSelected()');
+        // $('#vinInput').autocomplete('onSelected()');
         // instance.selectOption(el);
     };
 
@@ -284,7 +460,7 @@ app.controller("ship_trans_order_controller", ["$scope", "$rootScope", "_host", 
             // 数据初始化
             // 委托方select2初期化
             $("#addEntrustSelect").val(null).trigger("change");
-            $scope.getEntrustInfo();
+            getEntrustInfo();
 
             // 显示追加画面
             $scope.showCustomCarDiv = true;
@@ -305,7 +481,7 @@ app.controller("ship_trans_order_controller", ["$scope", "$rootScope", "_host", 
         // $scope.modifyActualFee = $scope.orderInfo.actualFee.toFixed(2);
 
 
-        // $('#autocomplete-input').autocomplete('onSelected()');
+        // $('#vinInput').autocomplete('onSelected()');
         // instance.selectOption(el);
     };
 
@@ -383,14 +559,14 @@ app.controller("ship_trans_order_controller", ["$scope", "$rootScope", "_host", 
         // 车辆信息运费 标记
         var hasAllCarTransFeeFlg = false;
 
-        if ($scope.newCarList.length == 0) {
+        if ($scope.shipTransCarList.length == 0) {
             swal("请填写完整海运订单信息！", "", "warning");
         } else {
 
             // 遍历新增车辆列表
-            for (var i = 0; i < $scope.newCarList.length; i++) {
-                var carId = $scope.newCarList[i].carId;
-                var shipTransFee = $scope.newCarList[i].shipTransFees;
+            for (var i = 0; i < $scope.shipTransCarList.length; i++) {
+                var carId = $scope.shipTransCarList[i].carId;
+                var shipTransFee = $scope.shipTransCarList[i].shipTransFees;
 
                 if (shipTransFee != undefined && shipTransFee != "") {
                     carIds.push(carId);
@@ -418,7 +594,7 @@ app.controller("ship_trans_order_controller", ["$scope", "$rootScope", "_host", 
                 container: $scope.newShippingOrder.container,
                 booking: $scope.newShippingOrder.booking,
                 tab: $scope.newShippingOrder.tab,
-                partStatus: $scope.newShippingOrder.partStatus,
+                partStatus: $scope.shippingOrder.partStatus,
                 remark: $scope.newShippingOrder.remark,
                 carIds: carIds,
                 shipTransFees: shipTransFees
@@ -443,18 +619,12 @@ app.controller("ship_trans_order_controller", ["$scope", "$rootScope", "_host", 
     };
 
     $scope.removeCar = function ($index) {
-        $scope.newCarList.splice($index, 1);
-        console.log("new" + JSON.stringify($scope.newCarList));
+        $scope.shipTransCarList.splice($index, 1);
+        console.log("new" + JSON.stringify($scope.shipTransCarList));
 
         // 计算合计运费
         $scope.calcTotalFees();
-        // ['a','b']
-        // for (var i = 0; i < $scope.newCarList.length; i++) {
-        //
-        // }
-        // ['a',,'b'].filter(x => true);
     };
-
 
     $scope.changeVin = function () {
 
@@ -472,7 +642,7 @@ app.controller("ship_trans_order_controller", ["$scope", "$rootScope", "_host", 
                 _basic.get(url).then(function (data) {
                     if (data.success == true && data.result.length > 0) {
                         $scope.carList = data.result;
-                        vinObjs = [];
+                        vinObjs = {};
                         for (var i in $scope.carList) {
                             vinObjs[$scope.carList[i].vin + "  " + $scope.carList[i].make_name + "/" + $scope.carList[i].model_name + "  委托方：" + $scope.carList[i].entrust_id] = null;
                         }
@@ -481,7 +651,7 @@ app.controller("ship_trans_order_controller", ["$scope", "$rootScope", "_host", 
                         return {};
                     }
                 }).then(function (vinObjs) {
-                    $('#autocomplete-input').autocomplete({
+                    $('#vinInput').autocomplete({
                         data: vinObjs,
                         minLength: 6,
                         onAutocomplete: function (val) {
@@ -490,19 +660,22 @@ app.controller("ship_trans_order_controller", ["$scope", "$rootScope", "_host", 
                         },
                         // limit: 6
                     });
-                    $('#autocomplete-input').focus();
+                    $('#vinInput').focus();
                 })
             } else {
+                $('#vinInput').autocomplete({minLength: 6});
                 console.log('else');
+
+                vinObjs = {};
                 //
-                // $('#autocomplete-input').autocomplete('updateData', {});
+                // $('#vinInput').autocomplete('updateData', {});
                 //
                 // $scope.carList=[];
             }
 
 
             // 根据填充完毕的完整vin码信息进行精确查询
-            if ($scope.newShippingOrder.vin.length == 17) {
+            if ($scope.newShippingOrder.vin.length === 17) {
                 $scope.addCarInfoFlg = true;
             } else {
                 $scope.addCarInfoFlg = false;
@@ -510,111 +683,38 @@ app.controller("ship_trans_order_controller", ["$scope", "$rootScope", "_host", 
         }
     };
 
-    /**
-     * 车辆品牌列表查询，用来填充查询条件：车辆品牌
-     */
-    function getCarMakerList() {
-        _basic.get(_host.api_url + "/carMake").then(function (data) {
-            if (data.success == true && data.result.length > 0) {
-                $scope.carMakerList = data.result;
-            } else {
-                swal(data.msg, "", "error");
-            }
-        });
-    }
-
-    /**
-     * 当车辆品牌变更时，车辆型号要进行联动刷新。
-     * @param val 车辆品牌ID
-     */
-    $scope.changeMakerId = function (val) {
-        if (val) {
-            if ($scope.curruntId == val) {
-            } else {
-                $scope.curruntId = val;
-                _basic.get(_host.api_url + "/carMake/" + val + "/carModel").then(function (data) {
-                    if (data.success == true && data.result.length > 0) {
-                        $scope.carModelList = data.result;
-                    } else {
-                        swal(data.msg, "", "error")
-                    }
-                })
-            }
-        }
-    };
-
-    //获取委托方信息
-    $scope.getEntrustInfo = function () {
-        _basic.get(_host.api_url + "/entrust").then(function (data) {
-            if (data.success == true) {
-                $scope.entrustList = data.result;
-                $('#addEntrustSelect').select2({
-                    placeholder: '委托方',
-                    containerCssClass: 'select2_dropdown',
-                    allowClear: true
-                });
-                // $("#addEntrustSelect").select2({
-                //     placeholder: '委托方',
-                //     containerCssClass: 'select2_dropdown',
-                //     allowClear: true
-                // }).on("select2:unselecting", function(e) {
-                //     console.log('unselecting');
-                //     $(this).data('state', 'unselected');
-                // }).on("select2:open", function(e) {
-                //     console.log('open');
-                //     if ($(this).data('state') === 'unselected') {
-                //         $(this).removeData('state');
-                //         var self = $(this);
-                //         setTimeout(function() {
-                //             self.select2('close');
-                //         }, 1);
-                //     }
-                // });
-            }
-        });
-    };
-
     function addCar(carInfo) {
 
+        console.log('add car inner');
         // 是否分单, 默认 分单：否
-        $scope.newShippingOrder.partStatus = "1";
+        $scope.shippingOrder.partStatus = "1";
 
         var hasError = false;
         // 遍历新增车辆列表
-        for (var i = 0; i < $scope.newCarList.length; i++) {
-            var vin = $scope.newCarList[i].vin;
-            var entrustId = $scope.newCarList[i].entrust_id;
+        for (var i = 0; i < $scope.shipTransCarList.length; i++) {
+            var vin = $scope.shipTransCarList[i].vin;
+            var entrustId = $scope.shipTransCarList[i].entrust_id;
             // 已经追加过
             if (vin == carInfo.vin) {
                 hasError = true;
             }
 
             // 分单：否 时，进行判定
-            if ($scope.newShippingOrder.partStatus == "1") {
+            if ($scope.shippingOrder.partStatus == "1") {
                 if (entrustId != carInfo.entrustId) {
                     // 委托人不同，分单：是
-                    $scope.newShippingOrder.partStatus = "2";
+                    $scope.shippingOrder.partStatus = "2";
                 }
             }
         }
         if (hasError) {
             swal("不能重复添加相同车辆！", "", "warning");
         } else {
-            $scope.newCarList.push(angular.copy(carInfo));
+            $scope.shipTransCarList.push(angular.copy(carInfo));
         }
     }
 
-    /**
-     * 去除当前索引的car信息。
-     * @param $index
-     */
-    $scope.removeCar = function ($index) {
-        // 删除
-        $scope.newCarList.splice($index, 1);
-
-        // 计算合计运费
-        $scope.calcTotalFees();
-    };
+    /***************************************************************************************************************/
 
     /**
      * 计算合计运费。
@@ -624,8 +724,8 @@ app.controller("ship_trans_order_controller", ["$scope", "$rootScope", "_host", 
         $scope.newShippingOrder.totalShipTransFees = 0;
 
         // 遍历新增车辆列表
-        for (var i = 0; i < $scope.newCarList.length; i++) {
-            var fee = $scope.newCarList[i].shipTransFees;
+        for (var i = 0; i < $scope.shipTransCarList.length; i++) {
+            var fee = $scope.shipTransCarList[i].ship_trans_fee;
             // 有运费时，计算合计
             if (fee != undefined && fee != NaN && fee != null && fee != "") {
                 $scope.newShippingOrder.totalShipTransFees = $scope.newShippingOrder.totalShipTransFees + parseFloat(fee);
@@ -634,7 +734,23 @@ app.controller("ship_trans_order_controller", ["$scope", "$rootScope", "_host", 
     };
 
     /**
-     * 【目的港】列表查询，用来填充查询条件：目的港
+     * 【委托方】列表查询
+     */
+    function getEntrustInfo() {
+        _basic.get(_host.api_url + "/entrust").then(function (data) {
+            if (data.success == true) {
+                $scope.entrustList = data.result;
+                $('#addEntrustSelect').select2({
+                    placeholder: '委托方',
+                    containerCssClass: 'select2_dropdown',
+                    allowClear: true
+                });
+            }
+        });
+    }
+
+    /**
+     * 【港口】列表查询
      */
     function getPortList() {
         _basic.get(_host.api_url + "/port").then(function (data) {
@@ -645,7 +761,7 @@ app.controller("ship_trans_order_controller", ["$scope", "$rootScope", "_host", 
     }
 
     /**
-     * 【船公司】列表查询，用来填充查询条件：船公司
+     * 【船公司】列表查询
      */
     function getShippingCoList() {
         // 调用API取得，画面数据
@@ -658,17 +774,30 @@ app.controller("ship_trans_order_controller", ["$scope", "$rootScope", "_host", 
     }
 
     /**
+     * 【车辆品牌】列表查询
+     */
+    function getCarMakerList() {
+        _basic.get(_host.api_url + "/carMake").then(function (data) {
+            if (data.success == true && data.result.length > 0) {
+                $scope.carMakerList = data.result;
+            } else {
+                swal(data.msg, "", "error");
+            }
+        });
+    }
+
+    /**
      * 画面初期显示时，用来获取画面必要信息的初期方法。
      */
     $scope.initData = function () {
-        // 取得查询条件【目的港】列表
+        // 取得【港口】列表
         getPortList();
-        // 取得查询条件【船公司】列表
+        // 取得【船公司】列表
         getShippingCoList();
-
-        // 查询数据
-        queryShipTransOrderList();
+        // 取得【车辆品牌】列表
+        getCarMakerList();
+        // 取得订舱详情
+        getTransOrderDetails();
     };
     $scope.initData();
 }]);
-

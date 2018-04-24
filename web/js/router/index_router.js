@@ -213,7 +213,12 @@ app.config(['$stateProvider',"$urlRouterProvider",function($stateProvider,$urlRo
             templateUrl: "/view/sea_transport/ship_trans_order.html",
             controller:"ship_trans_order_controller"
         })
-
+        // 海运管理->订舱管理（订单详情）
+        .state("ship_trans_order_detail", {
+            url:"/ship_trans_order_detail/{id}?from",
+            templateUrl: "/view/sea_transport/ship_trans_order_detail.html",
+            controller:"ship_trans_order_detail_controller"
+        })
         // 海运管理->海运日历
         .state("ship_trans_calendar", {
             url:"/ship_trans_calendar",
