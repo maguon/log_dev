@@ -459,14 +459,14 @@
                     <!--品牌-->
                     <div class="input-field col s6">
                         <select material-select watch ng-model="makeIdItem" ng-change="getMakeId(makeIdItem)">
-                            <option value=""  selected>车辆品牌</option>
+                            <option value="" disabled selected>车辆品牌</option>
                             <option ng-repeat="el in makecarName" ng-value="el.id">{{el.make_name}}</option>
                         </select>
                     </div>
                     <!--型号-->
                     <div class="input-field col s6">
                         <select material-select watch ng-model="modelIdItem" >
-                            <option value=""  selected>车辆型号</option>
+                            <option value="" disabled selected>车辆型号</option>
                             <option ng-repeat="el in carModelName" ng-value="el.id">{{el.model_name}}</option>
                         </select>
                     </div>
