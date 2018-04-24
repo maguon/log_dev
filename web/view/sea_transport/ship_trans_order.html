@@ -193,7 +193,7 @@
                 <!-- 始发港口 -->
                 <div class="input-field col s4">
                     <div class="col s12">
-                        <select material-select ng-model="newShippingOrder.startPort" style="width:95%;">
+                        <select material-select watch ng-model="newShippingOrder.startPort" style="width:95%;">
                             <option value="">始发港口</option>
                             <option ng-repeat="el in portList" ng-value="el" >{{el.port_name}}</option>
                         </select>
@@ -202,7 +202,7 @@
                 <!-- 目的港口 -->
                 <div class="input-field col s4">
                     <div class="col s12">
-                    <select material-select ng-model="newShippingOrder.endPort" style="width:95%;">
+                    <select material-select watch ng-model="newShippingOrder.endPort" style="width:95%;">
                         <option value="">目的港口</option>
                         <option ng-repeat="el in portList" ng-value="el" >{{el.port_name}}</option>
                     </select>
@@ -220,7 +220,7 @@
                 <!-- 船公司 -->
                 <div class="input-field col s4">
                     <div class="col s12">
-                    <select material-select ng-model="newShippingOrder.shippingCoId">
+                    <select material-select watch ng-model="newShippingOrder.shippingCoId">
                         <option value="">船公司</option>
                         <option ng-repeat="el in shippingCoList" ng-value="el.id">{{el.ship_company_name}}</option>
                     </select>
@@ -340,7 +340,7 @@
                             </select>
                         </div>
                         <div class="input-field col s3 left-align">
-                            <input type="text" id="newCarloText" ng-model="customCarInfo.valuation">
+                            <input type="text" id="newCarloText" maxlength="8" valid-money ng-model="customCarInfo.valuation">
                             <label for="newCarloText">车价(美元)</label>
                         </div>
                     </div>
@@ -420,7 +420,7 @@
             <!-- 订舱备注 -->
             <div class="col s12">
                 <div class="input-field col" style="width: 99%;padding-left: 23px;">
-                    <input type="text" id="remarkText" ng-model="conditionCounter">
+                    <input type="text" id="remarkText" ng-model="newShippingOrder.remark">
                     <label for="remarkText" style="padding-left: 10px;">订舱备注</label>
                 </div>
             </div>

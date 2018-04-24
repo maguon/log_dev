@@ -99,8 +99,7 @@ app.controller("ship_trans_order_controller", ["$scope", "$rootScope", "_host", 
         // 发动机号
         engineNum: "",
         // 委托方
-        entrustId: 0,
-        entrustNm: "",
+        entrust: "",
         // 车价(美元)
         valuation: ""
     };
@@ -108,6 +107,7 @@ app.controller("ship_trans_order_controller", ["$scope", "$rootScope", "_host", 
     // 新增海运订单画面 VIN码 尾部 对应追加（新增车辆信息画面）
     $scope.showCustomCarDiv = false;
 
+    $scope.portList = [];
 
     /**
      * 根据画面输入的查询条件，进行数据查询。
@@ -214,14 +214,19 @@ app.controller("ship_trans_order_controller", ["$scope", "$rootScope", "_host", 
     };
 
     /**
-     *
+     * TODO
      */
     $scope.openSeaTransportOrderDiv = function () {
         $('.modal').modal();
         $('#newSeaTransportOrderDiv').modal('open');
+        // 取得制造商列表
         getCarMakerList();
 
+        $scope.newShippingOrder = {};
         $scope.newCarList = [];
+        // 隐藏 新增车辆信息 画面
+        $scope.showCustomCarDiv = false;
+
 
         // 实际应付
         // $scope.modifyActualFee = $filter('number')($scope.orderInfo.actualFee,2);
@@ -240,17 +245,13 @@ app.controller("ship_trans_order_controller", ["$scope", "$rootScope", "_host", 
     };
 
     /**
-     * 打开xxxxxx模态窗口。
+     * 打开 xxxxxx 模态窗口。
      */
     $scope.addCarInfo = function () {
-
-
-        console.log($scope.newShippingOrder.vin);
-
         //
-        if ($scope.newShippingOrder.vin.length > 17 ) {
+        if ($scope.newShippingOrder.vin.length > 17) {
             // TODO 追加check 判断 是否有重复的数据在
-            var url = _host.api_url + "/user/" + userId + "/car?vin=" + $scope.newShippingOrder.vin.substr(0,17);
+            var url = _host.api_url + "/user/" + userId + "/car?vin=" + $scope.newShippingOrder.vin.substr(0, 17);
             console.log(url);
 
             _basic.get(url).then(function (data) {
@@ -258,8 +259,8 @@ app.controller("ship_trans_order_controller", ["$scope", "$rootScope", "_host", 
                     console.log('------------------');
                     $scope.newCarInfo.carId = data.result[0].id;
                     $scope.newCarInfo.vin = data.result[0].vin;
-                    $scope.newCarInfo.maker = {id:data.result[0].make_id,make_name:data.result[0].make_name};
-                    $scope.newCarInfo.model = {id:data.result[0].model_id,model_name:data.result[0].model_name};
+                    $scope.newCarInfo.maker = {id: data.result[0].make_id, make_name: data.result[0].make_name};
+                    $scope.newCarInfo.model = {id: data.result[0].model_id, model_name: data.result[0].model_name};
                     $scope.newCarInfo.proDate = data.result[0].pro_date;
                     $scope.newCarInfo.colour = data.result[0].colour;
                     $scope.newCarInfo.engineNum = data.result[0].engine_num;
@@ -299,7 +300,6 @@ app.controller("ship_trans_order_controller", ["$scope", "$rootScope", "_host", 
         $scope.addCarInfoFlg = false;
 
 
-
         // 实际应付
         // $scope.modifyActualFee = $filter('number')($scope.orderInfo.actualFee,2);
         // $scope.modifyActualFee = $scope.orderInfo.actualFee.toFixed(2);
@@ -317,6 +317,9 @@ app.controller("ship_trans_order_controller", ["$scope", "$rootScope", "_host", 
      */
     $scope.createCustomCar = function () {
         var entrust = $("#addEntrustSelect").select2("data")[0]; //单选
+
+        // TODO delete
+        entrust = {id: '1', text: '委托人A'};
 
         if ($scope.customCarInfo.maker !== "" && $scope.customCarInfo.model !== ""
             && $scope.customCarInfo.proDate !== "" && $scope.customCarInfo.colour !== ""
@@ -343,56 +346,71 @@ app.controller("ship_trans_order_controller", ["$scope", "$rootScope", "_host", 
                 valuation: $scope.customCarInfo.valuation
             };
 
-            $scope.showCustomCarDiv = false;
-            $scope.showCarListDiv = true;
-            // 将当前的数据追加的列表中。
-            $scope.customCarInfo.entrustNm = entrust.text;
-            addCar($scope.customCarInfo);
-            //
-            // 新增海运订单画面 VIN码 后 追加按钮 追加结果Info
-            $scope.customCarInfo = {
-                vin: "",
-                maker: "",
-                model: "",
-                proDate: "",
-                colour: "",
-                engineNum: "",
-                entrustId: 0,
-                entrustNm: "",
-                valuation: ""
-            };
-
             console.log(obj);
-            // _basic.post(_host.api_url + "/user/" + userId + "/car", obj).then(function (data) {
-            //     if (data.success) {
-            //         // 成功后，刷新页面数据 TODO
-            //         // $scope.lookRelatedOrder();
-            //     } else {
-            //         swal(data.msg, "", "error");
-            //     }
-            // })
-        }
-        else {
+            _basic.post(_host.api_url + "/user/" + userId + "/car", obj).then(function (data) {
+                if (data.success) {
+
+                    // 隐藏 新增车辆信息 画面
+                    $scope.showCustomCarDiv = false;
+                    // 显示 新增车辆列表
+                    $scope.showCarListDiv = true;
+                    //
+                    $scope.customCarInfo.entrustNm = entrust.text;
+                    // car id
+                    $scope.customCarInfo.carId = data.id;
+                    // 将当前的数据追加的列表中。
+                    addCar($scope.customCarInfo);
+                    //
+                    // 新增海运订单画面 VIN码 后 追加按钮 追加结果Info
+                    $scope.customCarInfo = {};
+                } else {
+                    swal(data.msg, "", "error");
+                }
+            })
+        } else {
             swal("请填写完整车辆信息！", "", "warning");
         }
     };
 
 
-    $scope.createShipTransOrder = function (id) {
-        var entrust = $("#addEntrustSelect").select2("data")[0]; //单选
+    /**
+     * 新增海运订单,
+     */
+    $scope.createShipTransOrder = function () {
+        //
+        var carIds = [];
+        var shipTransFees = [];
+        // 车辆信息运费 标记
+        var hasAllCarTransFeeFlg = false;
 
-        console.log($scope.newCarInfo.maker);
+        if ($scope.newCarList.length == 0) {
+            swal("请填写完整海运订单信息！", "", "warning");
+        } else {
 
-        if ($scope.newCarInfo.maker !== "" && $scope.newCarInfo.model !== ""
-            && $scope.newCarInfo.proDate !== "" && $scope.newCarInfo.colour !== ""
-            && $scope.newCarInfo.engineNum !== "" && entrust.id !== "" && $scope.newCarInfo.valuation !== "") {
+            // 遍历新增车辆列表
+            for (var i = 0; i < $scope.newCarList.length; i++) {
+                var carId = $scope.newCarList[i].carId;
+                var shipTransFee = $scope.newCarList[i].shipTransFees;
 
+                if (shipTransFee != undefined && shipTransFee != "") {
+                    carIds.push(carId);
+                    shipTransFees.push(parseFloat(shipTransFee));
+                    hasAllCarTransFeeFlg = true;
+                }
+            }
+        }
+
+        if ($scope.newShippingOrder.startPort !== "" && $scope.newShippingOrder.endPort !== ""
+            && $scope.newShippingOrder.sailingDay !== ""
+            && $scope.newShippingOrder.shippingCoId !== "" && $scope.newShippingOrder.shipName !== ""
+            && $scope.newShippingOrder.container !== "" && $scope.newShippingOrder.booking !== "" && hasAllCarTransFeeFlg
+        ) {
             // 新增海运订单画面 VIN码 后 追加按钮 追加结果Info
             var obj = {
                 startPortId: $scope.newShippingOrder.startPort.id,
                 startPortName: $scope.newShippingOrder.startPort.port_name,
-                endPortId: $scope.newShippingOrder.endPortId.id,
-                endPortName: $scope.newShippingOrder.endPortId.port_name,
+                endPortId: $scope.newShippingOrder.endPort.id,
+                endPortName: $scope.newShippingOrder.endPort.port_name,
                 startShipDate: $scope.newShippingOrder.sailingDay,
                 endShipDate: $scope.newShippingOrder.arrivalDay,
                 shipCompanyId: $scope.newShippingOrder.shippingCoId,
@@ -402,35 +420,29 @@ app.controller("ship_trans_order_controller", ["$scope", "$rootScope", "_host", 
                 tab: $scope.newShippingOrder.tab,
                 partStatus: $scope.newShippingOrder.partStatus,
                 remark: $scope.newShippingOrder.remark,
-                carIds: 0,
-                shipTransFees: 0
+                carIds: carIds,
+                shipTransFees: shipTransFees
             };
 
-
-            $scope.showCustomCarDiv = false;
-            $scope.showCarListDiv = true;
-
             console.log(obj);
-            _basic.post(_host.api_url + "/user/" + userId + "/car", obj).then(function (data) {
+
+            _basic.post(_host.api_url + "/user/" + userId + "/shipTransOrder", obj).then(function (data) {
                 if (data.success) {
+
+                    // 关闭新增海运订单画面
+                    $('#newSeaTransportOrderDiv').modal('close');
                     // 成功后，刷新页面数据 TODO
-                    // $scope.lookRelatedOrder();
+                    queryShipTransOrderList();
                 } else {
                     swal(data.msg, "", "error");
                 }
             })
+        } else {
+            swal("请填写完整海运订单信息！", "", "warning");
         }
-        else {
-            swal("请填写完整车辆信息！", "", "warning");
-        }
-
-
     };
 
     $scope.removeCar = function ($index) {
-        console.log("$index is : " + $index);
-
-        console.log("old" + JSON.stringify($scope.newCarList));
         $scope.newCarList.splice($index, 1);
         console.log("new" + JSON.stringify($scope.newCarList));
 
