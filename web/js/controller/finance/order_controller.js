@@ -98,7 +98,6 @@ app.controller("order_controller", ["$scope", "$rootScope", "_host", "_basic", "
         if ($scope.conditionPayStatus != null) {
             reqUrl = reqUrl + "&orderStatus=" + $scope.conditionPayStatus
         }
-console.log(reqUrl)
         _basic.get(reqUrl).then(function (data) {
             if (data.success == true) {
                 $scope.orderResult = data.result;

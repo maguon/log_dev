@@ -175,13 +175,22 @@ app.controller("storage_car_controller", ["$scope", "$rootScope", "$stateParams"
         $scope.create_time = "";
         $scope.car_color = "";
         $scope.engineNum = "";
-        $scope.entrustId = "";
         $scope.carValuation = "";
         $scope.MSO = "";
         $scope.remark = "";
         $scope.storage_name = "";
         $scope.parking_area ="";
         $scope.lattice = "";
+        $scope.entrustId = '';
+        $scope.carValuation = '';
+        $scope.plan_out_time = '';
+        $scope.area = '';
+        $scope.addRow = '';
+        $scope.addLot = '';
+        $scope.parking_id = '';
+        $scope.addCarKeyCabinet = '';
+        $scope.addCarKeyCabinetArea = '';
+
         // 照片清空
         $scope.imgArr = [];
         // 车辆型号清空
@@ -272,19 +281,19 @@ app.controller("storage_car_controller", ["$scope", "$rootScope", "$stateParams"
     };
     // 车辆型号联动查询
     $scope.getMakeId = function (val) {
-        if (val) {
-            if ($scope.curruntId == val) {
+        $scope.curruntId = val;
+        _basic.get(_host.api_url + "/carMake/" + val + "/carModel").then(function (data) {
+            if (data.success == true) {
+                if(data.result.length==0){
+                    return;
+                }
+                $scope.carModelName = data.result;
             } else {
-                $scope.curruntId = val;
-                _basic.get(_host.api_url + "/carMake/" + val + "/carModel").then(function (data) {
-                    if (data.success == true&&data.result.length>0) {
-                        $scope.carModelName = data.result;
-                    } else {
-                        swal(data.msg, "", "error")
-                    }
-                })
+                swal(data.msg, "", "error")
             }
-        }
+        })
+
+
     };
     // 图片上传函数
     $scope.uploadBrandImage = function (dom) {
@@ -381,6 +390,7 @@ app.controller("storage_car_controller", ["$scope", "$rootScope", "$stateParams"
         _basic.get(_host.api_url + "/carKeyPosition?carId=" + id).then(function (data) {
             if(data.success==true){
                 if(data.result.length==0){
+                    $scope.flag = false;
                     return;
                 }
                 $scope.keyCabinetRow = data.result[0].row;

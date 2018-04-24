@@ -21,11 +21,12 @@ app.controller("car_demand_controller", ["$scope", "$rootScope", "_host", "_basi
      * 根据画面输入的查询条件，进行数据查询。
      */
     function queryCarDemandData() {
-        var reqUrl = _host.api_url + "/user/" + userId + "/car?active=" + 1 + "&start=" + $scope.start + "&size=" + $scope.size;
-        // 委托方 下拉选中 内容
-        var  entrust = $("#addEntrustSelect").select2("data")[0] ;
 
-         //单选
+        // 委托方 下拉选中 内容
+        var  entrust = $("#entrustId").select2("data")[0] ;
+        var reqUrl = _host.api_url + "/user/" + userId + "/car?active=" + 1 + "&start=" + $scope.start + "&size=" + $scope.size;
+
+        //单选
         // 车辆状态
         if ($scope.conditionCarStatus != null) {
             reqUrl = reqUrl + "&relStatus=" + $scope.conditionCarStatus;
@@ -47,8 +48,8 @@ app.controller("car_demand_controller", ["$scope", "$rootScope", "_host", "_basi
             reqUrl = reqUrl + "&modelId=" + $scope.conditionModelId;
         }
         // 委托方
-        if (entrust != null && entrust != 0) {
-            reqUrl = reqUrl + "&entrustId=" + entrust;
+        if (entrust.id != null && entrust.id != 0) {
+            reqUrl = reqUrl + "&entrustId=" + entrust.id;
         }
         // 入库时间 开始
         if ($scope.conditionEnterTimeStart != null) {
@@ -144,27 +145,6 @@ app.controller("car_demand_controller", ["$scope", "$rootScope", "_host", "_basi
         queryCarDemandData();
     };
 
-    /**
-     * 存放位置联动查询--行
-     */
-    /*    $scope.changeStorageId = function (val) {
-            if (val) {
-                _basic.get(_host.api_url + "/storageParking?storageId=" + val).then(function (data) {
-                    if (data.success == true&&data.result.length>0) {
-                        $scope.storageParking = data.result;
-                        $scope.parkingArray = _baseService.storageParking($scope.storageParking);
-                    } else {
-                        swal(data.msg, "", "error");
-                    }
-                });
-            }
-        },
-        // 存放位置联动查询--列
-        $scope.changeStorageRow = function (val, array) {
-            if (val) {
-                $scope.colArr = array[val - 1].col;
-            }
-        };*/
 
     /**
      * 车辆品牌列表查询，用来填充查询条件：车辆品牌
