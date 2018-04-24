@@ -24,14 +24,17 @@ app.controller("ship_trans_order_detail_controller", ["$scope", "$state", "$stat
         status: "",
         // 始发港口
         startPortId: "",
+        startPortNm: "",
         // 目的港口
         endPortId: "",
+        endPortNm: "",
         // 开船日期
         sailingDay: "",
         // 到港日期
         arrivalDay: "",
         // 船公司
         shippingCoId: "",
+        shippingCoNm: "",
         // 船名
         shipName: "",
         // 货柜
@@ -217,14 +220,17 @@ app.controller("ship_trans_order_detail_controller", ["$scope", "$state", "$stat
                 $scope.shippingOrder.status = data.result[0].ship_trans_status;
                 // 始发港口
                 $scope.shippingOrder.startPortId = data.result[0].start_port_id;
+                $scope.shippingOrder.startPortNm = data.result[0].start_port_name;
                 // 目的港口
                 $scope.shippingOrder.endPortId = data.result[0].end_port_id;
+                $scope.shippingOrder.endPortNm = data.result[0].end_port_name;
                 // 开船日期
                 $scope.shippingOrder.sailingDay = data.result[0].start_ship_date;
                 // 到港日期
                 $scope.shippingOrder.arrivalDay = data.result[0].end_ship_date;
                 // 船公司
                 $scope.shippingOrder.shippingCoId = data.result[0].ship_company_id;
+                $scope.shippingOrder.shippingCoNm = data.result[0].ship_company_name;
                 // 船名
                 $scope.shippingOrder.shipName = data.result[0].ship_name;
                 // 货柜

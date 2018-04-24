@@ -426,7 +426,7 @@ app.controller("ship_trans_order_controller", ["$scope", "$rootScope", "_host", 
 
             console.log(obj);
 
-            _basic.post(_host.api_url + "/user/" + userId + "/shipTransOrder", obj).then(function (data) {
+            _basic.post(_host.api_url + "/user/" + userId + "/shipTrans", obj).then(function (data) {
                 if (data.success) {
 
                     // 关闭新增海运订单画面
