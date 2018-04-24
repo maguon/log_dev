@@ -30,11 +30,34 @@ app.controller("order_controller", ["$scope", "$rootScope", "_host", "_basic", "
     };
 
     /**
+     * 委托方列表查询，用来填充查询条件：委托方
+     */
+    function getEntrustList() {
+        _basic.get(_host.api_url + "/entrust").then(function (data) {
+            if (data.success == true) {
+                $scope.entrustList = data.result;
+                $('#entrustIdSelect').select2({
+                    placeholder: '委托方',
+                    containerCssClass: 'select2_dropdown',
+                    allowClear: true
+                });
+                if(data.result.length==0){
+                    return;
+                }
+                queryOrderData();
+            }
+        });
+    }
+
+
+    /**
      * 根据画面输入的查询条件，进行数据查询。
      */
     function queryOrderData() {
+        var entrust = $("#entrustIdSelect").select2("data")[0] ;
         // 检索用url
         var reqUrl = _host.api_url + "/storageOrder?start=" + $scope.start + "&size=" + $scope.size;
+
         // 订单编号
         if ($scope.conditionOrderNo != null) {
             reqUrl = reqUrl + "&storageOrderId=" + $scope.conditionOrderNo;
@@ -52,8 +75,8 @@ app.controller("order_controller", ["$scope", "$rootScope", "_host", "_basic", "
             reqUrl = reqUrl + "&modelId=" + $scope.conditionModelId;
         }
         // 委托方
-        if ($scope.conditionEntrustId != null && $scope.conditionEntrustId != 0) {
-            reqUrl = reqUrl + "&entrustId=" + $scope.conditionEntrustId;
+        if (entrust.id != null && entrust.id != 0) {
+            reqUrl = reqUrl + "&entrustId=" + entrust.id;
         }
         // 入库时间 开始
         if ($scope.conditionEnterTimeStart != null) {
@@ -75,7 +98,7 @@ app.controller("order_controller", ["$scope", "$rootScope", "_host", "_basic", "
         if ($scope.conditionPayStatus != null) {
             reqUrl = reqUrl + "&orderStatus=" + $scope.conditionPayStatus
         }
-
+console.log(reqUrl)
         _basic.get(reqUrl).then(function (data) {
             if (data.success == true) {
                 $scope.orderResult = data.result;
@@ -211,21 +234,6 @@ app.controller("order_controller", ["$scope", "$rootScope", "_host", "_basic", "
         }
     };
 
-    /**
-     * 委托方列表查询，用来填充查询条件：委托方
-     */
-    function getEntrustList() {
-        _basic.get(_host.api_url + "/entrust").then(function (data) {
-            if (data.success == true) {
-                $scope.entrustList = data.result;
-                $('#entrustIdSelect').select2({
-                    placeholder: '委托方',
-                    containerCssClass: 'select2_dropdown',
-                    allowClear: true
-                });
-            }
-        });
-    }
 
     /**
      * 画面初期显示时，用来获取画面必要信息的初期方法。
@@ -236,8 +244,8 @@ app.controller("order_controller", ["$scope", "$rootScope", "_host", "_basic", "
         getCarMakerList();
         // 委托方
         getEntrustList();
-        // 查询数据
-        queryOrderData();
+        /*// 查询数据
+        queryOrderData();*/
     };
     $scope.initData();
 }]);

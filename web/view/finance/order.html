@@ -38,8 +38,7 @@
 
                 <!-- 查询条件：委托方 -->
                 <div class="input-field col" style="width: 20%;">
-                    <select material-select watch id="entrustIdSelect" ng-model="conditionEntrustId"
-                            style="width: 100%">
+                    <select  id="entrustIdSelect" style="width: 100%">
                         <option value=""></option>
                         <option ng-repeat="el in entrustList" ng-value="el.id">{{el.short_name}}</option>
                     </select>

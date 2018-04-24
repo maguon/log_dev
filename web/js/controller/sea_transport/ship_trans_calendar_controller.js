@@ -29,7 +29,7 @@ app.controller("ship_trans_calendar_controller", ["$scope", "_host", "_basic", f
      * 创建日历详细信息。
      *
      */
-    function showCalendar () {
+    function showCalendar (storage_id) {
         $('#calendar').fullCalendar('destroy');
         $('#calendar').fullCalendar({
             viewRender: function (view, element) {
@@ -97,5 +97,5 @@ app.controller("ship_trans_calendar_controller", ["$scope", "_host", "_basic", f
             }
         })
     };
-    showCalendar();
+    showCalendar($scope.storageId);
 }])

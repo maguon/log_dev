@@ -60,7 +60,10 @@ app.controller("storage_car_controller", ["$scope", "$rootScope", "$stateParams"
     // 获取车库信息
     function getStorageName () {
         _basic.get(_host.api_url + "/storage").then(function (data) {
-            if (data.success == true&&data.result.length>0) {
+            if (data.success == true) {
+                if(data.result.length==0){
+                    return;
+                }
                 $scope.storageName = data.result;
             } else {
                 swal(data.msg, "", "error");
@@ -78,6 +81,10 @@ app.controller("storage_car_controller", ["$scope", "$rootScope", "$stateParams"
                     containerCssClass: 'select2_dropdown',
                     allowClear: true
                 });
+                if(data.result.length==0){
+                    return;
+                }
+                $scope.getStorageCar();
             }
         });
     }
@@ -91,6 +98,7 @@ app.controller("storage_car_controller", ["$scope", "$rootScope", "$stateParams"
     //查询列表 条件查询
     $scope.getStorageCar = function () {
         var reqUrl = _host.api_url + "/user/" + userId + "/car?active=" + 1 + "&start=" + $scope.start + "&size=" + $scope.size;
+        var entrust = $("#entrustSelect").select2("data")[0] ;
         if ($scope.getRelStatus != null) {
             reqUrl = reqUrl + "&relStatus=" + $scope.getRelStatus
         }
@@ -127,8 +135,8 @@ app.controller("storage_car_controller", ["$scope", "$rootScope", "$stateParams"
         if ($scope.MSOItem != null) {
             reqUrl = reqUrl + "&msoStatus=" + $scope.MSOItem
         }
-        if ($scope.entrustIdItem != null) {
-            reqUrl = reqUrl + "&entrustId=" + $scope.entrustIdItem
+        if (entrust.id != null) {
+            reqUrl = reqUrl + "&entrustId=" + entrust.id
         }
 
         _basic.get(reqUrl).then(function (data) {
@@ -215,7 +223,10 @@ app.controller("storage_car_controller", ["$scope", "$rootScope", "$stateParams"
         if (val) {
             $scope.val =val;
             _basic.get(_host.api_url + "/storageArea?storageId=" + val+ "&&areaStatus=1").then(function (data) {
-                if (data.success == true&&data.result.length>0) {
+                if (data.success == true) {
+                    if(data.result.length==0){
+                        return;
+                    }
                     $scope.storageAreaParking = data.result;
                 }
                 else if(data.success == true&&data.result.length==0){
@@ -230,7 +241,10 @@ app.controller("storage_car_controller", ["$scope", "$rootScope", "$stateParams"
     // 存放位置联动查询--行
     $scope.getStorageAreaParking = function (val) {
         _basic.get(_host.api_url + "/storageParking?storageId=" + $scope.val+"&areaId="+val).then(function (data) {
-            if (data.success == true&&data.result.length>0) {
+            if (data.success == true) {
+                if(data.result.length==0){
+                    return;
+                }
                 $scope.storageParking = data.result;
                 $scope.parkingArray =_baseService.storageParking($scope.storageParking);
                 for(var i=0;i<$scope.parkingArray.length;i++){
@@ -365,7 +379,10 @@ app.controller("storage_car_controller", ["$scope", "$rootScope", "$stateParams"
         $("#keyCabinet").modal("open");
         $scope.keyCabinetId = id;
         _basic.get(_host.api_url + "/carKeyPosition?carId=" + id).then(function (data) {
-            if(data.success==true&&data.result.length>0){
+            if(data.success==true){
+                if(data.result.length==0){
+                    return;
+                }
                 $scope.keyCabinetRow = data.result[0].row;
                 $scope.keyCabinetCol =data.result[0]. col;
                 $scope.addCarKeyCabinet = data.result[0].car_key_cabinet_id;
@@ -385,7 +402,10 @@ app.controller("storage_car_controller", ["$scope", "$rootScope", "$stateParams"
     // 钥匙存放位置联动查询--柜
     function addCarKeyCabinet() {
         _basic.get(_host.api_url + "/carKeyCabinet?keyCabinetStatus=1").then(function (data) {
-            if (data.success == true&&data.result.length>0) {
+            if (data.success == true) {
+                if(data.result.length==0){
+                    return;
+                }
                 $scope.keyCabinetNameList = data.result;
             } else {
                 swal(data.msg, "", "error");
@@ -396,7 +416,10 @@ app.controller("storage_car_controller", ["$scope", "$rootScope", "$stateParams"
     $scope.changeCarKeyCabinet = function(){
         $scope.show = false;
         _basic.get(_host.api_url + "/carKeyCabinetArea?areaStatus=1&carKeyCabinetId="+$scope.addCarKeyCabinet).then(function (data) {
-            if (data.success == true&&data.result.length>0) {
+            if (data.success == true) {
+                if(data.result.length==0){
+                    return;
+                }
                 $scope.carKeyCabinetAreaList = data.result;
             }
             else if(data.success == true&&data.result.length==0){
@@ -591,7 +614,10 @@ app.controller("storage_car_controller", ["$scope", "$rootScope", "$stateParams"
 
         // 调用API取得
         _basic.get(url).then(function (data) {
-            if (data.success && data.result.length > 0) {
+            if (data.success==true ) {
+                if (data.result.length == 0) {
+                    return;
+                }
                 // 剩余位置
                 $scope.leftPosition = data.result[0].parking_balance_count;
             } else {
@@ -703,7 +729,7 @@ app.controller("storage_car_controller", ["$scope", "$rootScope", "$stateParams"
         getCarMakeName();
         getStorageName();
         getEntrust();
-        $scope.getStorageCar();
+      /*  $scope.getStorageCar();*/
         addCarKeyCabinet();
     };
     $scope.queryData();

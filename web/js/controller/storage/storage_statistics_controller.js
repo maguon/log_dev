@@ -147,7 +147,10 @@ app.controller("storage_statistics_controller", ['$rootScope', '$scope', "_host"
     };
     // 车库查询
     _basic.get(_host.api_url + "/storage").then(function (data) {
-        if (data.success == true&&data.result.length>0) {
+        if (data.success == true) {
+            if(data.result.length==0){
+                return;
+            }
             $scope.storageName = data.result;
             $scope.storageId = $scope.storageName[0];
             getAllStorgeStatistics();

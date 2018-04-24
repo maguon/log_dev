@@ -22,6 +22,10 @@ app.controller("car_demand_controller", ["$scope", "$rootScope", "_host", "_basi
      */
     function queryCarDemandData() {
         var reqUrl = _host.api_url + "/user/" + userId + "/car?active=" + 1 + "&start=" + $scope.start + "&size=" + $scope.size;
+        // 委托方 下拉选中 内容
+        var  entrust = $("#addEntrustSelect").select2("data")[0] ;
+
+         //单选
         // 车辆状态
         if ($scope.conditionCarStatus != null) {
             reqUrl = reqUrl + "&relStatus=" + $scope.conditionCarStatus;
@@ -43,8 +47,8 @@ app.controller("car_demand_controller", ["$scope", "$rootScope", "_host", "_basi
             reqUrl = reqUrl + "&modelId=" + $scope.conditionModelId;
         }
         // 委托方
-        if ($scope.conditionEntrustId != null && $scope.conditionEntrustId != 0) {
-            reqUrl = reqUrl + "&entrustId=" + $scope.conditionEntrustId;
+        if (entrust != null && entrust != 0) {
+            reqUrl = reqUrl + "&entrustId=" + entrust;
         }
         // 入库时间 开始
         if ($scope.conditionEnterTimeStart != null) {
@@ -180,7 +184,10 @@ app.controller("car_demand_controller", ["$scope", "$rootScope", "_host", "_basi
      */
     function getStorageList() {
         _basic.get(_host.api_url + "/storage").then(function (data) {
-            if (data.success == true && data.result.length > 0) {
+            if (data.success == true) {
+                if(data.result.length == 0){
+                    return;
+                }
                 $scope.storageList = data.result;
             } else {
                 swal(data.msg, "", "error");
@@ -200,6 +207,10 @@ app.controller("car_demand_controller", ["$scope", "$rootScope", "_host", "_basi
                     containerCssClass: 'select2_dropdown',
                     allowClear: true
                 });
+                if(data.result.length==0){
+                    return;
+                }
+                queryCarDemandData();
             }
         });
     }
@@ -212,8 +223,8 @@ app.controller("car_demand_controller", ["$scope", "$rootScope", "_host", "_basi
         getStorageList();
         getCarMakerList();
         getEntrustList();
-        // 查询数据
-        queryCarDemandData();
+        /*// 查询数据
+        queryCarDemandData();*/
     };
     $scope.initData();
 }]);

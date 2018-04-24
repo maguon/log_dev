@@ -54,7 +54,7 @@
 
                 <!-- 查询条件：委托方 -->
                 <div class="input-field col" style="width: 20%;">
-                    <select material-select watch id="entrustId" ng-model="conditionEntrustId" style="width: 100%">
+                    <select  watch id="entrustId"  style="width: 100%">
                         <option value="" ></option>
                         <option ng-repeat="el in entrustList" ng-value="el.id">{{el.short_name}}</option>
                     </select>
@@ -167,7 +167,7 @@
                     </td>
                 </tr>
                 <tr class="grey-text text-darken-1" ng-if="storageCar.length == 0">
-                    <td colspan="9" style="letter-spacing: 2px;text-align: center;">暂无数据</td>
+                    <td colspan="10" style="letter-spacing: 2px;text-align: center;">暂无数据</td>
                 </tr>
                 </tbody>
             </table>

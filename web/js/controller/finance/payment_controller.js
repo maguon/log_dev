@@ -26,23 +26,11 @@ app.controller("payment_controller", ["$scope", "_basic", "_host","_config",  fu
                     containerCssClass: 'select2_dropdown',
                     allowClear: true
                 });
-                // $("#addEntrustSelect").select2({
-                //     placeholder: '委托方',
-                //     containerCssClass: 'select2_dropdown',
-                //     allowClear: true
-                // }).on("select2:unselecting", function(e) {
-                //     console.log('unselecting');
-                //     $(this).data('state', 'unselected');
-                // }).on("select2:open", function(e) {
-                //     console.log('open');
-                //     if ($(this).data('state') === 'unselected') {
-                //         $(this).removeData('state');
-                //         var self = $(this);
-                //         setTimeout(function() {
-                //             self.select2('close');
-                //         }, 1);
-                //     }
-                // });
+                if(data.result.length==0){
+                    return;
+                }
+                $("#entrustSelect").val(null).trigger("change");
+                seachPayment();
             }
         });
     };
@@ -61,11 +49,12 @@ app.controller("payment_controller", ["$scope", "_basic", "_host","_config",  fu
      * 查询列表
      * */
     function seachPayment(){
+        var entrust = $("#entrustSelect").select2("data")[0] ;
         // 检索条件组装
         var condition = _basic.objToUrl({
             orderPaymentId: $scope.paymentId,
             entrustType: $scope.entrustType,
-            entrustId: $scope.entrustId,
+            entrustId: entrust.id,
             paymentStatus:$scope.paymentStatus,
             paymentType:$scope.paymentType,
             number:$scope.patmentNumber,
@@ -175,7 +164,7 @@ app.controller("payment_controller", ["$scope", "_basic", "_host","_config",  fu
      */
     function getData (){
         $scope.getEntrustInfo();
-        seachPayment();
+        /*seachPayment();*/
     }
     getData();
 }])

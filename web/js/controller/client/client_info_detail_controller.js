@@ -11,15 +11,7 @@ app.controller("client_info_detail_controller", ["$scope", "$rootScope","$state"
     $scope.characters = _config.characters;
     $scope.carStatusList =_config.carRelStatus;
     $scope.MSOList= _config.msoFlags;
-    // 跳转 默认进来是库存记录
-    $('ul.tabWrap li').removeClass("active");
-    $(".tab_box").removeClass("active");
-    $(".tab_box").hide();
-    $('ul.tabWrap li.inventoryRecord ').addClass("active");
-    $("#inventoryRecord").addClass("active");
-    $("#inventoryRecord").show();
-    $("#pre").hide();
-    $("#next").hide();
+
     $scope.inventoryRecord = function () {
         $('ul.tabWrap li').removeClass("active");
         $(".tab_box").removeClass("active");
@@ -94,9 +86,12 @@ app.controller("client_info_detail_controller", ["$scope", "$rootScope","$state"
             enterStart:$scope.enterStart,
             enterEnd:$scope.enterEnd,
             realStart:$scope.realStart,
-            realEnd:$scope.realEnd
+            realEnd:$scope.realEnd,
+            entrustId:val,
+            start:$scope.start.toString(),
+            size:$scope.size
         }
-        var reqUrl = _host.api_url + "/user/" + userId + "/car?active=" + 1+ "&start=" + $scope.start + "&size=" + $scope.size +"&entrustId="+val;
+        var reqUrl = _host.api_url + "/user/" + userId + "/car?active=1&";
         _basic.get(reqUrl+_basic.objToUrl(obj)).then(function (data) {
             if (data.success == true) {
                 $scope.storageCarBox =  data.result;
@@ -221,6 +216,7 @@ app.controller("client_info_detail_controller", ["$scope", "$rootScope","$state"
     };
     //获取数据
     $scope.queryData = function () {
+        $scope.inventoryRecord();
         getHeaderInfo ();
         getStorageName();
         getEntrustBase ();

@@ -23,15 +23,21 @@ app.controller("client_info_controller", ["$scope", "$rootScope", "_host", "_bas
                     containerCssClass: 'select2_dropdown',
                     allowClear: true
                 });
+                if(data.result.length==0){
+                    return;
+                }
+                $("#entrustSelect").val(null).trigger("change");
+                getClient();
             }
         });
     };
 
    //获取列表
      function getClient  (){
+        var entrust = $("#entrustSelect").select2("data")[0] ;
         var obj = {
             entrustType:$scope.entrustType,
-            entrustId:$scope.entrustId,
+            entrustId:entrust.id,
             contactsName:$scope.contactsName,
             tel:$scope.contactsTel,
             start:$scope.start.toString(),
@@ -76,7 +82,7 @@ app.controller("client_info_controller", ["$scope", "$rootScope", "_host", "_bas
     };
     //获取数据
     $scope.queryData = function () {
-        getClient();
+        /*getClient();*/
         $scope.getEntrustInfo();
     };
     $scope.queryData();
