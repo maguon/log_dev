@@ -56,7 +56,7 @@
     <!-- header -->
     <div class="col s12 lighten-1 cyan-text vc-center" style="height:50px;">
         <div class="col s6">
-            订单编号：{{paymentInfo.ship_trans_id}}
+            订单编号：{{paymentInfo.id}}
         </div>
         <div class="col s6 right-align" ng-class="{'red-text':paymentInfo.order_status == 1}">
             {{payStatus[paymentInfo.order_status-1].name}}
@@ -110,10 +110,10 @@
         <div class="divider s12 center" style="width:98%; margin-left: 10px;margin-right: 10px;margin-top: 10px;"></div>
     </div>
 
-    <div class="col s12 lighten-1 white grey-text vc-center fz13" ng-if="paymentInfo.order_status== 1" style="height:80px;">
-        <div class="col s5">
-            <span class="col s2" style="margin-top: 20px">运费(美元):</span>
-            <input  type="text" name="look_contacts" autocomplete="off" ng-model="paymentInfo.ship_trans_fee" class="col s2 red-text left-align" required>
+    <div class="col s12 lighten-1 white grey-text vc-center fz13" ng-if="paymentInfo.order_status== 1" style="height:100px;">
+        <div class="col s4">
+            <span>运费(美元):</span>
+            <input  type="number" name="look_contacts" autocomplete="off" ng-model="paymentInfo.ship_trans_fee" class="red-text left-align" required>
         </div>
         <div class="col s8 right-align">
             <a class="btn-floating btn-large waves-light waves-effect cyan lighten-2  btn "  ng-click="changeShipTransFee(paymentInfo.id)">

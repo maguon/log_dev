@@ -5,9 +5,12 @@ app.controller("sea_transport_order_controller", ["$scope", "$rootScope", "_host
     // 翻页用
     $scope.start = 0;
     $scope.size = 11;
+    // 用户ID
+    var userId = _basic.getSession(_basic.USER_ID);
     // 支付状态 列表
     $scope.payStatusList = _config.payStatus;
     $scope.portList = [];
+
 
     /*
     * 数据导出*
@@ -203,7 +206,7 @@ app.controller("sea_transport_order_controller", ["$scope", "$rootScope", "_host
     /*
     * 删除
     * */
-    $scope.deletePriceOrder=function(id){
+    $scope.deletePriceOrder=function(shipTransId,carId){
         swal({
                 title: "确定删除当前订单吗？",
                 type: "warning",
@@ -214,7 +217,7 @@ app.controller("sea_transport_order_controller", ["$scope", "$rootScope", "_host
                 closeOnConfirm: false
             },
             function(){
-                _basic.delete($host.api_url + "/user/" + userId + "/shipTransOrder/"+id).then(function (data) {
+                _basic.delete(_host.api_url + "/user/" + userId + "/shipTrans/"+shipTransId+'/car/'+carId).then(function (data) {
                     if (data.success === true) {
                         queryOrderData();
                         swal("删除成功", "", "success");
