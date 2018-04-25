@@ -1,0 +1,224 @@
+<!--海运 --  订单管理-->
+<div class="sea_transport_order">
+
+    <!-- 上部分：检索条件输入区域 -->
+    <div class="row col s12">
+        <!-- 左侧：输入区 -->
+        <div class="col s10">
+            <div class="col s7">
+                <!-- VIN -->
+                <div class="input-field col s4">
+                    <input type="text" id="orderVIN" ng-model="conditionOrderVIN">
+                    <label for="orderVIN"> VIN</label>
+                </div>
+
+                <!-- 制造商 -->
+                <div class="input-field col s4">
+                    <select material-select watch ng-model="conditionMakeId"
+                            ng-change="changeMakerId(conditionMakeId)">
+                        <option value="" selected>制造商</option>
+                        <option ng-repeat="el in carMakerList" ng-value="el.id">{{el.make_name}}</option>
+                    </select>
+                </div>
+
+                <!-- 型号 -->
+                <div class="input-field col s4">
+                    <select material-select watch ng-model="conditionModelId">
+                        <option value="" selected>型号</option>
+                        <option ng-repeat="el in carModelList" ng-value="el.id">{{el.model_name}}</option>
+                    </select>
+                </div>
+                <!-- 船公司 -->
+                <div class="input-field col s4">
+                    <select material-select watch ng-model="conditionShipCompanyId">
+                        <option value="">船公司</option>
+                        <option ng-repeat="el in shippingCoList" ng-value="el.id">{{el.ship_company_name}}</option>
+                    </select>
+                </div>
+
+                <!-- 船名-->
+                <div class="input-field col s4">
+                    <input type="text" id="shipNameText" ng-model="conditionShipName">
+                    <label for="shipNameText">船名</label>
+                </div>
+
+                <!-- 货柜 -->
+                <div class="input-field col s4">
+                    <input type="text" id="counterText" ng-model="conditionContainer">
+                    <label for="counterText">货柜</label>
+                </div>
+
+                <!-- 开船日期(始) -->
+                <div class="input-field col s4">
+                    <input type="text" id="sailTimeStart" ng-model="conditionStartShipDateStart" class="datepicker" date><i
+                        class="mdi dataIcon mdi-table-large"></i>
+                    <label for="sailTimeStart">开船日期(始)</label>
+                </div>
+
+                <!-- 开船日期(终)-->
+                <div class="input-field col s4">
+                    <input id="sailTimeEnd" type="text" ng-model="conditionStartShipDateEnd" class="datepicker" date><i
+                        class="mdi dataIcon mdi-table-large"></i>
+                    <label for="sailTimeEnd">开船日期(终)</label>
+                </div>
+
+                <!-- 到港日期(始) -->
+                <div class="input-field col s4">
+                    <input id="arrivalTimeStart" type="text" ng-model="conditionEndShipDateStart" class="datepicker" date><i
+                        class="mdi dataIcon mdi-table-large"></i>
+                    <label for="arrivalTimeStart">到港日期(始)</label>
+                </div>
+            </div>
+            <div class="col s5">
+                <!-- 委托方 -->
+                <div class="input-field col s6">
+                    <input type="text" id="entrustId" ng-model="conditionEntrust">
+                    <label for="entrustId">委托方</label>
+                </div>
+
+                <!-- 支付状态 -->
+                <div class="input-field col s6">
+                    <select material-select watch ng-model="conditionPayStatus">
+                        <option value="" selected>支付状态</option>
+                        <option ng-repeat="el in payStatusList" ng-value="el.id">{{el.name}}</option>
+                    </select>
+                </div>
+
+                <!-- 始发港口 -->
+                <div class="input-field col s6">
+                    <select material-select watch ng-model="conditionStartPortId">
+                        <option value="">始发港口</option>
+                        <option ng-repeat="el in portList" ng-value="el.id">{{el.port_name}}</option>
+                    </select>
+                </div>
+
+                <!-- 目的港口 -->
+                <div class="input-field col s6">
+                    <select material-select watch ng-model="conditionEndPortId">
+                        <option value="">目的港口</option>
+                        <option ng-repeat="el in portList" ng-value="el.id">{{el.port_name}}</option>
+                    </select>
+                </div>
+
+                <!--到港日期(终)-->
+                <div class="input-field col s6">
+                    <input id="arrivalTimeEnd" type="text" ng-model="conditionEndShipDateEnd" class="datepicker" date><i
+                        class="mdi dataIcon mdi-table-large"></i>
+                    <label for="arrivalTimeEnd">到港日期(终)</label>
+                </div>
+
+                <!-- booking -->
+                <div class="input-field col s6">
+                    <input type="text" id="bookingText" ng-model="conditionBooking">
+                    <label for="bookingText">booking</label>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- 右侧：按钮区 -->
+        <div class="col s2" style="margin-top:70px;">
+            <!--查询按钮-->
+            <div class="col s6 center">
+                <a class="btn-floating btn-large waves-light waves-effect red lighten-2  btn " ng-click="queryOrderList()">
+                    <i class="mdi mdi-magnify"></i>
+                </a>
+            </div>
+
+            <!--下载按钮-->
+            <div class="col s6 center">
+                <a class="btn-floating btn-large waves-light waves-effect btn vc-center" style="margin-right: 10px;background-color: #fea353;" ng-click="export()">
+                    <i class="mdi mdi-cloud-download"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- 下部分：检索结果显示区域 -->
+    <div class="col s12">
+        <div class="divider" style="background: #00bcd4;height: 2px;"></div>
+        <table class=" bordered striped centered">
+            <thead class="blue-grey lighten-5">
+            <tr class="grey-text text-darken-2">
+                <th data-field="">订单编号</th>
+                <th data-field="">VIN</th>
+                <th data-field="">制造商</th>
+                <th data-field="">型号</th>
+                <th data-field="">始发港口</th>
+                <th data-field="">目的港口</th>
+                <th data-field="">船公司</th>
+                <th data-field="">货柜</th>
+                <th data-field="">运费(美元)</th>
+                <th data-field="">开船日期</th>
+                <th data-field="">到港日期</th>
+                <th data-field="">委托方</th>
+                <th data-field="">支付状态</th>
+                <th>操作</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr  class="grey-text text-darken-1" ng-repeat="el in orderList">
+                <!-- 订单编号 -->
+                <td ng-bind="el.id"></td>
+                <!--VIN-->
+                <td ng-bind="el.vin"></td>
+                <!--制造商-->
+                <td ng-bind="el.make_name"></td>
+                <!--型号-->
+                <td ng-bind="el.model_name"></td>
+                <!--始发港口-->
+                <td ng-bind="el.start_port_name"></td>
+                <!--目的港口-->
+                <td ng-bind="el.end_port_name"></td>
+                <!--船公司-->
+                <td ng-bind="el.ship_company_name"></td>
+                <!--货柜-->
+                <td  ng-bind="el.container"></td>
+                <!--运费(美元)-->
+                <td class="red-text" ng-bind="el.ship_trans_fee"></td>
+                <!--开船日期-->
+                <td ng-bind="el.start_ship_date|date:'yyyy-MM-dd'"></td>
+                <!--到港日期-->
+                <td ng-bind="el.end_ship_date|date:'yyyy-MM-dd'"></td>
+                <!--委托方-->
+                <td>{{el.short_name}}</td>
+                <!--支付状态-->
+                <td ng-if="el.order_status==1" class="red-text">{{payStatusList[el.order_status-1].name}}</td>
+                <td ng-if="el.order_status==2" class="grey-text">{{payStatusList[el.order_status-1].name}}</td>
+                <!--操作-->
+                <td class="operation col s12">
+                    <span class="s6 left-align">
+                        <i class="mdi  mdi-delete-forever look_icon red-text lighten-1"
+                           ng-click="deletePriceOrder(el.ship_trans_id,el.car_id)">
+                        </i>
+                    </span>
+                    <span class="s6 right-align">
+                        <a href="#" ui-sref="sea_transport_order_detail({id:el.id,from:'sea_transport_order'})" class=""><i
+                                class="mdi mdi-file-outline look_icon cyan-text lighten-1  "></i>
+                        </a>
+                    </span>
+
+                </td>
+            </tr>
+            <tr class="grey-text text-darken-1" ng-if="orderList.length == 0">
+                <td colspan="14" style="letter-spacing: 2px;text-align: center;">暂无数据</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <!-- 上下页按钮 -->
+    <div class="paging_box col s12">
+        <div class="right">
+            <a class="waves-light waves-effect cyan lighten-1 btn  " id="pre" ng-click="preBtn()">
+                上一页
+            </a>
+            <a class="waves-light waves-effect cyan lighten-1 btn " id="next" ng-click="nextBtn()">
+                下一页
+            </a>
+        </div>
+    </div>
+
+
+
+
+</div>

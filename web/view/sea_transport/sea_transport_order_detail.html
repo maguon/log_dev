@@ -1,0 +1,157 @@
+<!-- 主菜单：仓储管理 -> 订单管理(订单详情) 画面 -->
+
+<!-- 返回前画面 按钮 -->
+<div class="" style="position: relative">
+    <a class="storage_goback_btn btn-floating btn waves-effect cyan lighten-1 waves-light" ng-click="return()">
+        <i class="mdi mdi-arrow-left-bold"></i>
+    </a>
+    <h4 class="center-align cyan-text text-lighten-1">海运订单详情</h4>
+</div>
+
+<!-- 分割线 -->
+<div class="row">
+    <div class="divider" style="background: #407BC7;height: 2px"></div>
+</div>
+
+<!-- 车辆信息 -->
+<div class="row blue-grey lighten-5" style="width: 80%;border:1px solid #bdbdbd;margin-top: 10px;">
+    <!-- header -->
+    <div class="col s12 lighten-1 cyan-text vc-center" style="height:50px;">
+        <div class="col s12">
+            当前车辆
+        </div>
+    </div>
+    <!-- body -->
+    <div class="col s12 lighten-1 white grey-text vc-center" style="height:50px;">
+        <div class="col s4">
+            VIN码：{{paymentInfo.vin}}
+        </div>
+        <div class="col s4">
+            制造商：{{paymentInfo.make_name}}
+        </div>
+        <div class="col s4">
+            品牌：{{paymentInfo.model_name}}
+        </div>
+    </div>
+    <div class="col s12 white">
+        <div class="divider s12 center" style="width:98%; margin-left: 10px;margin-right: 10px;margin-top: 10px;"></div>
+    </div>
+    <div class="col s12 lighten-1 white grey-text vc-center" style="height:50px;">
+        <div class="col s4">
+            车辆年份：{{paymentInfo.pro_date | date:'yyyy'}}
+        </div>
+        <div class="col s4">
+            车价(美元)：<span style="color: red">{{paymentInfo.valuation |number:2}}</span>
+        </div>
+        <div class="col s4">
+            委托方：{{paymentInfo.short_name}}
+        </div>
+    </div>
+</div>
+
+
+
+<!-- 支付编号 -->
+<div class="row blue-grey lighten-5" style="width: 80%;border:1px solid #bdbdbd;margin-top: 40px;">
+    <!-- header -->
+    <div class="col s12 lighten-1 cyan-text vc-center" style="height:50px;">
+        <div class="col s6">
+            订单编号：{{paymentInfo.id}}
+        </div>
+        <div class="col s6 right-align" ng-class="{'red-text':paymentInfo.order_status == 1}">
+            {{payStatus[paymentInfo.order_status-1].name}}
+        </div>
+    </div>
+
+    <!-- body -->
+    <div class="col s12 lighten-1 white grey-text vc-center fz13" style="height:50px;">
+        <div class="input-field col s4">
+            始发港口：{{paymentInfo.start_port_name}}
+        </div>
+        <div class="input-field col s4">
+            目的港口：{{paymentInfo.end_port_name}}
+        </div>
+        <div class="input-field col s4">
+            开船日期：{{paymentInfo.start_ship_date | date:'yyyy-mm-dd' }}
+        </div>
+    </div>
+    <div class="col s12 white">
+        <div class="s12 center" style="width:98%; margin-left: 10px;margin-right: 10px;margin-top: 10px;border: 1px dotted #ccc"></div>
+    </div>
+    <!-- body -->
+    <div class="col s12 lighten-1 white grey-text vc-center fz13" style="height:50px;">
+        <div class="input-field col s4">
+            船公司：{{paymentInfo.ship_company_name}}
+        </div>
+        <div class="input-field col s4">
+            船名：{{paymentInfo.ship_name}}
+        </div>
+        <div class="input-field col s4">
+            到港日期：{{paymentInfo.end_ship_date | date:'yyyy-mm-dd'}}
+        </div>
+    </div>
+    <div class="col s12 white">
+        <div class="s12 center" style="width:98%; margin-left: 10px;margin-right: 10px;margin-top: 10px;border: 1px dotted #ccc"></div>
+    </div>
+    <!-- body -->
+    <div class="col s12 lighten-1 white grey-text vc-center fz13" style="height:50px;">
+        <div class="input-field col s4">
+            货柜：{{paymentInfo.container}}
+        </div>
+        <div class="input-field col s4">
+            booking：{{paymentInfo.booking}}
+        </div>
+        <div class="input-field col s4">
+            封签：{{paymentInfo.tab}}
+        </div>
+    </div>
+
+    <div class="col s12 white">
+        <div class="divider s12 center" style="width:98%; margin-left: 10px;margin-right: 10px;margin-top: 10px;"></div>
+    </div>
+
+    <div class="col s12 lighten-1 white grey-text vc-center fz13" ng-if="paymentInfo.order_status== 1" style="height:100px;">
+        <div class="col s4">
+            <span>运费(美元):</span>
+            <input  type="number" name="look_contacts" autocomplete="off" ng-model="paymentInfo.ship_trans_fee" class="red-text left-align" required>
+        </div>
+        <div class="col s8 right-align">
+            <a class="btn-floating btn-large waves-light waves-effect cyan lighten-2  btn "  ng-click="changeShipTransFee(paymentInfo.id)">
+                <i  class="mdi mdi-check"></i>
+            </a>
+        </div>
+    </div>
+    <div ng-if="paymentInfo.order_status !== 1" >
+        <div class="col s12 lighten-1 white grey-text vc-center fz13"  style="height:45px;">
+            <div class="col s6">
+                运费(美元)：<span style="color: red" class="fz25">{{paymentInfo.ship_trans_fee}}</span>
+            </div>
+            <div class="col s6 right-align">
+            </div>
+        </div>
+        <div class="col s12 white">
+            <div class="s12 center" style="width:98%; margin-left: 10px;margin-right: 10px;margin-top: 10px;border: 1px dotted #ccc"></div>
+        </div>
+        <div class="col s12 lighten-1 white grey-text vc-center fz13"  ng-if="paymentInfo.order_status !== 1" style="height:45px;">
+            <div class="col s6 cyan-text">
+                支付编号：{{123456789}}
+            </div>
+            <div class="col s6 right-align">
+                支付时间：{{2018-04-25}}
+            </div>
+        </div>
+    </div>
+
+    <div class="col s12 white">
+        <div class="divider s12 center" style="width:98%; margin-left: 10px;margin-right: 10px;margin-top: 10px;"></div>
+    </div>
+    <div class="col s12 lighten-1 white grey-text vc-center fz13" style="height:40px;">
+        <div class="col s6">
+            操作员：{{paymentInfo.paymentUserName}}
+        </div>
+        <div class="col s6 right-align">
+            生成时间：{{paymentInfo.ship_trans_created_date | date:'yyyy-MM-dd HH:mm:ss'}}
+        </div>
+    </div>
+
+</div>

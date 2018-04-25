@@ -225,6 +225,19 @@ app.config(['$stateProvider',"$urlRouterProvider",function($stateProvider,$urlRo
             templateUrl: "/view/sea_transport/ship_trans_calendar.html",
             controller:"ship_trans_calendar_controller"
         })
+        // 海运管理->订单管理
+        .state("sea_transport_order", {
+            url:"/sea_transport_order",
+            templateUrl: "/view/sea_transport/sea_transport_order.html",
+            controller:"sea_transport_order_controller"
+        })
+
+        // 海运管理->订单管理详情
+        .state("sea_transport_order_detail", {
+            url:"/sea_transport_order_detail/{id}?from",
+            templateUrl: "/view/sea_transport/sea_transport_order_detail.html",
+            controller:"sea_transport_order_detail_controller"
+        })
 
     /*       .state("Com", {
                url: "/Com",  //路由路径
