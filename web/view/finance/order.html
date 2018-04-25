@@ -110,8 +110,8 @@
                 <th data-field="">出库时间</th>
                 <th data-field="">合计天数</th>
                 <th data-field="">预计支付<br><span style="margin-left: 12px;font-size: 12px;">(美元)</span></th>
-                <th data-field="">实际支付<br><span style="margin-left: 12px;font-size: 12px;">(美元)</span></th>
-                <!--<th data-field="">实际支付(美元)</th>-->
+                <th data-field="">实际应付<br><span style="margin-left: 12px;font-size: 12px;">(美元)</span></th>
+                <!--<th data-field="">实际应付(美元)</th>-->
                 <th data-field="">支付状态</th>
                 <th class="center">操作</th>
             </tr>
@@ -134,7 +134,7 @@
                 <td>{{el.day_count}}</td>
                 <!-- 预计支付(美元) -->
                 <td>{{el.plan_fee | currency}}</td>
-                <!-- 实际支付(美元) -->
+                <!-- 实际应付(美元) -->
                 <td>{{el.actual_fee | currency}}</td>
                 <!-- 支付状态 -->
                 <td>{{payStatusList[el.order_status - 1].name}}</td>
