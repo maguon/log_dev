@@ -1,4 +1,4 @@
-<!-- 主菜单：海运管理 -> 订舱管理 画面 -->
+<!-- 主菜单：海运管理 -> 海运管理 画面 -->
 <div class="row">
 
     <!-- 上部分：检索条件输入区域 -->
@@ -6,10 +6,10 @@
         <!-- 左侧：输入区 -->
         <div class="col s10">
 
-            <!-- 订单编号 -->
+            <!-- 海运编号 -->
             <div class="input-field col s3">
                 <input type="text" id="orderIdText" ng-model="condShipTransOrderId">
-                <label for="orderIdText">订单编号</label>
+                <label for="orderIdText">海运编号</label>
             </div>
 
             <!-- 目的港 -->
@@ -109,7 +109,7 @@
         <table class=" bordered striped">
             <thead class="blue-grey lighten-5">
             <tr class="grey-text text-darken-2">
-                <th data-field="">订单编号</th>
+                <th data-field="">海运编号</th>
                 <th data-field="">始发港口</th>
                 <th data-field="">目的港口</th>
                 <th data-field="">船公司</th>
@@ -126,7 +126,7 @@
             </thead>
             <tbody>
             <tr ng-repeat="el in shipTransOrderList" class="grey-text text-darken-1">
-                <!-- 订单编号 -->
+                <!-- 海运编号 -->
                 <td ng-bind="el.id"></td>
                 <!--始发港口-->
                 <td ng-bind="el.start_port_name"></td>
@@ -139,17 +139,17 @@
                 <!--货柜-->
                 <td ng-bind="el.container"></td>
                 <!--装载数-->
-                <td ng-bind="el.load_car_count"></td>
+                <td ng-bind="el.ship_trans_count"></td>
                 <!--运送费(美元)-->
                 <td ng-bind="el.ship_trans_fee"></td>
                 <!--开船日期-->
-                <td ng-bind="el.start_ship_date|date:'yyyy-MM-dd HH:mm:ss'"></td>
+                <td ng-bind="el.start_ship_date|date:'yyyy-MM-dd'"></td>
                 <!--到港日期-->
-                <td ng-bind="el.end_ship_date|date:'yyyy-MM-dd HH:mm:ss'"></td>
+                <td ng-bind="el.end_ship_date|date:'yyyy-MM-dd'"></td>
                 <!--分单-->
                 <td>{{partTypes[el.part_status-1].name}}</td>
                 <!--运送状态-->
-                <td>{{orderStatus[el.ship_trans_status-1].name}}</td>
+                <td ng-class="{'red-text':el.ship_trans_status == 1,'cyan-text':el.ship_trans_status == 2}">{{orderStatus[el.ship_trans_status-1].name}}</td>
                 <!--操作-->
                 <td class="operation">
                     <a href="#" ui-sref="ship_trans_order_detail({id:el.id,from:'ship_trans_order'})" class=""><i
@@ -175,16 +175,16 @@
     </div>
 </div>
 
-<!-- 画面【新增海运订单】 模态框 -->
+<!-- 画面【新增海运】 模态框 -->
 <div class="row" style="margin: 0">
     <div id="newSeaTransportOrderDiv" class="modal" style="width: 45%;height: 600px"
          ng-class="{ 'payment-height':otherOrderList}">
         <div class="modal-content center fz20" style="font-weight: 500;padding: 0">
 
-            <!-- 显示画面【新增海运订单】 Header -->
+            <!-- 显示画面【新增海运】 Header -->
             <div class="col s12 vc-center cyan"
                  style="color: white;letter-spacing:1px;font-weight: bold;height: 50px;">
-                <p>新增海运订单</p>
+                <p>新增海运海运</p>
             </div>
 
             <!-- 订单信息 -->
@@ -417,11 +417,11 @@
                 </div>
             </div>
 
-            <!-- 订舱备注 -->
+            <!-- 海运备注 -->
             <div class="col s12">
                 <div class="input-field col" style="width: 99%;padding-left: 23px;">
                     <input type="text" id="remarkText" ng-model="newShippingOrder.remark">
-                    <label for="remarkText" style="padding-left: 10px;">订舱备注</label>
+                    <label for="remarkText" style="padding-left: 10px;">海运备注</label>
                 </div>
             </div>
 

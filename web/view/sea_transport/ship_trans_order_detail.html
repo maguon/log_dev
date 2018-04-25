@@ -1,10 +1,11 @@
 <!-- 主菜单：海运管理 -> 订舱管理(订单详情) 画面 -->
+
 <!-- 返回前画面 按钮 -->
 <div class="" style="position: relative">
     <a class="storage_goback_btn btn-floating btn waves-effect cyan lighten-1 waves-light" ng-click="return()">
         <i class="mdi mdi-arrow-left-bold"></i>
     </a>
-    <h4 class="center-align cyan-text text-lighten-1">订舱详情</h4>
+    <h4 class="center-align cyan-text text-lighten-1">海运详情</h4>
 </div>
 
 <!-- 分割线 -->
@@ -12,23 +13,28 @@
     <div class="divider" style="background: #407BC7;height: 2px"></div>
 </div>
 
-<!-- 车辆信息 -->
+<!-- 上部分：海运信息  基本信息 -->
 <div class="row blue-grey lighten-5" style="width: 95%;border:1px solid #bdbdbd;margin-top: 10px;">
     <!-- header -->
     <div class="col s12 lighten-1 cyan-text vc-center" style="height:50px;">
+        <!-- 海运编号 -->
         <div class="col s6 left-align">
             海运编号：{{shippingOrder.shipTransId}}
         </div>
-        <div class="col s6 right-align">
+
+        <!-- 状态标记 -->
+        <div class="col s6 right-align" ng-class="{'red-text':shippingOrder.status == 1,'grey-text':shippingOrder.status == 3}">
             {{orderStatus[shippingOrder.status - 1].name}}
         </div>
     </div>
+
     <!-- body -->
+    <!-- 可编辑 海运订舱 基本信息 ：待出发/已出发 -->
     <div ng-if="shippingOrder.status==1 || shippingOrder.status==2" class="col s12 lighten-1 white grey-text fz13">
         <!-- 始发港口 -->
         <div class="input-field col s4">
             <div class="col s12">
-                <select material-select watch ng-model="shippingOrder.startPortId" style="width:95%;">
+                <select material-select watch ng-model="shippingOrder.startPortId" id="startPortSelect" style="width:95%;">
                     <option value="">始发港口</option>
                     <option ng-repeat="el in portList" ng-value="el.id" >{{el.port_name}}</option>
                 </select>
@@ -37,7 +43,7 @@
         <!-- 目的港口 -->
         <div class="input-field col s4">
             <div class="col s12">
-                <select material-select watch ng-model="shippingOrder.endPortId" style="width:95%;">
+                <select material-select watch ng-model="shippingOrder.endPortId" id="endPortSelect" style="width:95%;">
                     <option value="">目的港口</option>
                     <option ng-repeat="el in portList" ng-value="el.id" >{{el.port_name}}</option>
                 </select>
@@ -101,15 +107,16 @@
             </div>
         </div>
 
-        <!-- 订舱备注 -->
+        <!-- 海运备注 -->
         <div class="input-field col s12" style="padding-bottom: 10px;">
             <div class="col s12">
                 <input type="text" id="remarkText" ng-model="shippingOrder.remark">
-                <label for="remarkText" style="position: absolute;padding-left: 12px;">订舱备注</label>
+                <label for="remarkText" style="position: absolute;padding-left: 12px;">海运备注</label>
             </div>
         </div>
     </div>
 
+    <!-- 显示用 海运详情 基本信息 ：已送达状态 -->
     <div ng-if="shippingOrder.status==3"  class="col s12 lighten-1 white grey-text fz15">
         <!-- 始发港口 -->
         <div class="col s12 vc-center" style="height: 40px;">
@@ -154,16 +161,16 @@
 
         <div class="divider col s12" style="height:1px;border-bottom: 1px solid #ccc;width:96%;margin-left: 2%"></div>
 
-        <!-- 订舱备注 -->
+        <!-- 海运备注 -->
         <div class="col s12 vc-center" style="height: 40px;">
             <div class="col s12">
-                <label>订舱备注: {{shippingOrder.remark}}</label>
+                <label>海运备注: {{shippingOrder.remark}}</label>
             </div>
         </div>
     </div>
 </div>
 
-<!-- 仓储信息 -->
+<!-- 下部分：运载车辆信息 -->
 <div class="row blue-grey lighten-5" style="width: 95%;border:1px solid #bdbdbd;margin-top: 20px;">
     <!-- header -->
     <div class="col s12 lighten-1 cyan-text vc-center" style="height:50px;">
@@ -172,37 +179,18 @@
         </div>
     </div>
 
-
     <!-- body -->
     <div class="col s12 lighten-1 white grey-text fz13">
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        <!-- VIN -->
+        <!-- VIN （仅待出发状态显示） -->
         <div ng-show="shippingOrder.status==1" class="col s12">
             <div class="input-field col" style="width: 99%;padding-left: 23px;">
-                <input type="text" id="vinInput" ng-change="changeVin()" class="autocomplete" ng-model="newShippingOrder.vin" minlength="6">
+                <input type="text" id="vinInput" ng-change="changeVin()" class="autocomplete" ng-model="shippingOrder.vin">
                 <a ng-if="addCarInfoFlg" ng-click="addCarInfo()" class="dataIcon btn-floating cyan" style="width:20px;height: 20px;">
                     <i class="mdi mdi-plus" style="position: absolute;right:0px;bottom:0px;font-size:15px;line-height: 20px;"></i>
                 </a>
                 <a ng-if="!addCarInfoFlg" class="dataIcon btn-floating grey" style="width:20px;height: 20px;cursor: default">
                     <i class="mdi mdi-plus" style="position: absolute;right:0px;bottom:0px;font-size:15px;line-height: 20px;"></i>
                 </a>
-
                 <label for="vinInput" style="padding-left: 2px;"> VIN</label>
             </div>
         </div>
@@ -279,7 +267,6 @@
         </div>
 
         <!-- 新增运送车辆信息列表 -->
-        <!--<div ng-show="true" class="col s12 vc-center">-->
         <div class="col s12 vc-center">
             <div class="row" style="width: 95%;margin-top: 20px;">
                 <div class="col s12" ng-repeat="transCar in shipTransCarList" style="margin-bottom: 20px;">
@@ -289,10 +276,9 @@
                             委托方：{{transCar.short_name}}
                         </div>
                         <div class="col s6 right-align">
-                            {{payStatus[transCar.order_status - 1].name}}
-                            <span ng-show="transCar.order_status==1" ng-click="removeCar($index)"><i class="mdi mdi-close red-text right-align" style="padding-left:5px; cursor:pointer; right: 22px;"></i></span>
+                            <span ng-class="{'red-text':transCar.order_status == 1}">{{payStatus[transCar.order_status - 1].name}}</span>
+                            <span ng-show="shippingOrder.status==1 && transCar.order_status==1" ng-click="removeCar($index, transCar)"><i class="mdi mdi-close red-text right-align" style="padding-left:5px; cursor:pointer; right: 22px;"></i></span>
                         </div>
-
                     </div>
 
                     <div class="col s12 lighten-1 white grey-text vc-center fz12"  style="height:64px;border:1px solid #bdbdbd;border-top:0px solid #bdbdbd;">
@@ -309,13 +295,20 @@
                         </div>
                         <div class="col s4 left-align">车价(美元):<span class="red-text">{{transCar.valuation | currency}}</span>
                         </div>
-                        <div class="col s4 input-field left-align">
-                            <div ng-if="transCar.order_status==1" class="col s12">
-                                <input type="text" id="shipTransFeesText" maxlength="8" valid-money ng-blur="calcTotalFees()" class="red-text" ng-model="transCar.ship_trans_fee">
-                                <label for="shipTransFeesText"><span class="red-text">*</span>运费(美元):</label>
-                            </div>
-                            <div ng-if="transCar.order_status==2" class="col s12 right-align">
+                        <div class="col s4 input-field left-align" ng-switch="transCar.order_status">
+                            <div ng-switch-when="2" class="col s12 right-align">
                                 运费(美元):<span class="red-text">{{transCar.ship_trans_fee | currency}}</span>
+                            </div>
+                            <div ng-switch-default class="col s12">
+                                <div class="col s10">
+                                    <input type="text" id="shipTransFeesText" maxlength="8" valid-money ng-blur="calcTotalFees()" class="red-text" ng-model="transCar.ship_trans_fee">
+                                    <label for="shipTransFeesText"><span class="red-text">*</span>运费(美元):</label>
+                                </div>
+                                <div class="col s2 left-align">
+                                    <a class="btn-floating waves-effect waves-light cyan lighten-1" style="left: 1px;width:30px;height: 30px;" ng-click="modifyCarInfo(transCar)">
+                                        <i class="mdi mdi-check add_brand" style="position: absolute;right:0;bottom:3px;font-size:20px;line-height: 20px;"></i>
+                                    </a>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -329,7 +322,7 @@
                 <label class="fz15">分单：{{partTypes[shippingOrder.partStatus - 1].name}}</label>
             </div>
             <div class="col s6 right-align" style="padding-right: 23px;">
-                <label class="fz15">合计运费(美元)：<span class="red-text">{{newShippingOrder.totalShipTransFees | currency}}</span></label>
+                <label class="fz15">合计运费(美元)：<span class="red-text">{{shippingOrder.totalShipTransFees | currency}}</span></label>
             </div>
         </div>
     </div>
@@ -351,25 +344,14 @@
 <div class="row" style="width: 95%;margin-top: 20px;">
     <!-- body -->
     <div class="col s12 lighten-1 vc-center fz15" style="height:50px;">
-        <div class="col s6 right-align">
-            <a ng-click="openPaymentInfoDiv()" style="width: 150px;" class="waves-light waves-effect cyan lighten-1 btn">保存</a>
+        <div ng-if="shippingOrder.status==1 || shippingOrder.status==2" class="col s6 right-align">
+            <a ng-click="saveShipTransOrder()" style="width: 150px;" class="waves-light waves-effect cyan lighten-1 btn">保存</a>
         </div>
         <div ng-if="shippingOrder.status==1" class="col s6 left-align">
-            <a ng-click="openChangePriceDiv()" style="width: 150px;" class="waves-light waves-effect amber darken-2 btn">出发</a>
+            <a ng-click="changeTransOrderStatus(orderStatus[1].id)" style="width: 150px;" class="waves-light waves-effect amber darken-2 btn">出发</a>
         </div>
         <div ng-if="shippingOrder.status==2" class="col s6 left-align">
-            <a ng-click="openChangePriceDiv()" style="width: 150px;" class="waves-light waves-effect amber darken-2 btn">送达</a>
+            <a ng-click="changeTransOrderStatus(orderStatus[2].id)" style="width: 150px;" class="waves-light waves-effect amber darken-2 btn">送达</a>
         </div>
     </div>
 </div>
-
-<!--&lt;!&ndash; [保存] [出发] 按钮 &ndash;&gt;-->
-<!--<div ng-if="shippingOrder.status==2" class="row" style="width: 95%;margin-top: 20px;">-->
-    <!--&lt;!&ndash; body &ndash;&gt;-->
-    <!--<div class="col s12 lighten-1 vc-center fz15" style="height:50px;">-->
-        <!--<div class="col s6 right-align">-->
-            <!--<a ng-click="openPaymentInfoDiv()" style="width: 150px;" class="waves-light waves-effect cyan lighten-1 btn">保存</a>-->
-        <!--</div>-->
-
-    <!--</div>-->
-<!--</div>-->

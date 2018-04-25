@@ -49,7 +49,7 @@ app.controller("ship_trans_order_controller", ["$scope", "$rootScope", "_host", 
         partStatus: "1",
         // 运费合计（单纯画面使用）
         totalShipTransFees: 0,
-        // 订舱备注
+        // 海运备注
         remark: ""
     };
 
