@@ -234,7 +234,7 @@ app.config(['$stateProvider',"$urlRouterProvider",function($stateProvider,$urlRo
 
         // 海运管理->订单管理详情
         .state("sea_transport_order_detail", {
-            url:"/sea_transport_order_detail",
+            url:"/sea_transport_order_detail/{id}?from",
             templateUrl: "/view/sea_transport/sea_transport_order_detail.html",
             controller:"sea_transport_order_detail_controller"
         })
