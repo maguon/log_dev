@@ -123,7 +123,7 @@ baseService.factory("_config", function () {
     _this.paymentStatus = [
         {
             id:1,
-            name:'已支付'
+            name:'未完结'
         },
         {
             id:2,
