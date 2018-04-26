@@ -162,19 +162,47 @@ body{
     background: #4e84cb;
     color: white;
 }
+.tabWrapDetail{
+    overflow: hidden;
+    margin: 0;
+    padding: 0;
+
+}
+.tabWrapDetail li{
+    height: 40px;
+    cursor: pointer;
+    color: #6192d1;
+    background: #e0e0e0;
+}
+.tabWrapDetail .active{
+    background: #4e84cb;
+    color: white;
+}
 /*.test1{*/
     /*background: #4e84cb;*/
 /*}*/
 .tabWrap .active.tab.disabled a{
-    color: white;
-}
+     color: white;
+ }
 .tabWrap .active.tab.disabled a:hover{
     color: white;
 }
 .tabWrap .tab.disabled a:hover{
     color: #4e84cb;
 }
-.tabWrap .tab.disabled a{
+.tabWrapDetail .tab.disabled a{
+    color: #4e84cb;
+}
+.tabWrapDetail .active.tab.disabled a{
+    color: white;
+}
+.tabWrapDetail .active.tab.disabled a:hover{
+    color: white;
+}
+.tabWrapDetail .tab.disabled a:hover{
+    color: #4e84cb;
+}
+.tabWrapDetail .tab.disabled a{
     color: #4e84cb;
 }
 /*.side-nav .collapsible-header{*/
