@@ -43,43 +43,8 @@ app.controller("payment_detail_controller", ["$scope", "$stateParams", "_basic",
         $('.tabWrap .lookRelatedOrder').addClass("active");
         $("#lookRelatedOrder").addClass("active");
         $("#lookRelatedOrder").show();
-        _basic.get(_host.api_url + "/storageOrder?entrustId=" + $scope.storagePaymentArray.entrust_id + '&orderStatus=1').then(function (data) {
-            if (data.success == true) {
-                $scope.storageOrderList = data.result;
-            } else {
-                swal(data.msg, "", "error");
-            }
-        });
-        var url = _host.api_url + "/orderPaymentRel?orderPaymentId=" + orderPaymentId;
-
-        _basic.get(url).then(function (data) {
-            if (data.success == true) {
-                $scope.storageOrderPaymentRelList = data.result;
-                $scope.totalMoney = 0;
-                for (var i = 0; i < $scope.storageOrderPaymentRelList.length; i++) {
-                    if ($scope.storageOrderPaymentRelList[i].actual_fee == null) {
-                        $scope.storageOrderPaymentRelList[i].actual_fee = 0;
-                    }
-                    $scope.totalMoney = $scope.storageOrderPaymentRelList[i].actual_fee + $scope.totalMoney;
-                }
-            } else {
-                swal(data.msg, "", "error");
-            }
-        });
-    };
-
-    /**
-     * Tab跳转 关联海运订单
-     */
-    $scope.lookShipTransOrder = function () {
-        $('.tabWrap .tab').removeClass("active");
-        $(".tab_box ").removeClass("active");
-        $(".tab_box ").hide();
-        $('.tabWrap .lookShipTransOrder').addClass("active");
-        $("#lookShipTransOrder").addClass("active");
-        $("#lookShipTransOrder").show();
-        // TODO
-        _basic.get(_host.api_url + "/storageOrder?entrustId=" + $scope.storagePaymentArray.entrust_id + '&orderStatus=1').then(function (data) {
+        // 左侧 未完结 列表
+        _basic.get(_host.api_url + "/storageOrder?entrustId=" + $scope.storagePaymentArray.entrust_id + '&orderStatus=' + $scope.paymentStatusList[0].id).then(function (data) {
             if (data.success == true) {
                 $scope.storageOrderList = data.result;
             } else {
@@ -106,7 +71,7 @@ app.controller("payment_detail_controller", ["$scope", "$stateParams", "_basic",
 
     /**
      * *
-     * 添加关联
+     * 添加仓储关联
      * */
     $scope.addOderRel = function (id) {
         // 追加画面数据
@@ -126,7 +91,7 @@ app.controller("payment_detail_controller", ["$scope", "$stateParams", "_basic",
 
     /**
      * *
-     * 删除关联
+     * 删除仓储关联
      * */
     $scope.deleteOderRel = function (id) {
         swal({
@@ -145,6 +110,89 @@ app.controller("payment_detail_controller", ["$scope", "$stateParams", "_basic",
                             $scope.lookRelatedOrder();
                         }
                         else {
+                            swal(data.msg, "", "error");
+                        }
+                    });
+            });
+    };
+
+    /**
+     * Tab跳转 关联海运订单
+     */
+    $scope.lookShipTransOrder = function () {
+        $('.tabWrap .tab').removeClass("active");
+        $(".tab_box ").removeClass("active");
+        $(".tab_box ").hide();
+        $('.tabWrap .lookShipTransOrder').addClass("active");
+        $("#lookShipTransOrder").addClass("active");
+        $("#lookShipTransOrder").show();
+        // 左侧一览 未完结
+        _basic.get(_host.api_url + "/shipTransOrder?entrustId=" + $scope.storagePaymentArray.entrust_id + '&orderStatus=' + $scope.paymentStatusList[0].id).then(function (data) {
+            if (data.success == true) {
+                $scope.shipTransOrderList = data.result;
+            } else {
+                swal(data.msg, "", "error");
+            }
+        });
+
+        // 右侧，已关联
+        var url = _host.api_url + "/shipTransOrderPaymentRel?orderPaymentId=" + orderPaymentId;
+        _basic.get(url).then(function (data) {
+            if (data.success == true) {
+                $scope.shipTransOrderRelList = data.result;
+                $scope.totalShipTransMoney = 0;
+                for (var i = 0; i < $scope.shipTransOrderRelList.length; i++) {
+                    if ($scope.shipTransOrderRelList[i].actual_fee == null) {
+                        $scope.shipTransOrderRelList[i].actual_fee = 0;
+                    }
+                    $scope.totalShipTransMoney = $scope.shipTransOrderRelList[i].actual_fee + $scope.totalShipTransMoney;
+                }
+            } else {
+                swal(data.msg, "", "error");
+            }
+        });
+    };
+
+    /**
+     * *
+     * 添加海运关联
+     * */
+    $scope.addShipTransOderRel = function (shipTransOrderId) {
+        // 追加画面数据
+        var obj = {
+            shipTransOrderId: shipTransOrderId,
+            orderPaymentId: orderPaymentId
+        };
+        _basic.post(_host.api_url + "/user/" + userId + "/shipTransOrderPaymentRel", obj).then(function (data) {
+            if (data.success) {
+                // 成功后，刷新页面数据
+                $scope.lookShipTransOrder();
+            } else {
+                swal(data.msg, "", "error");
+            }
+        })
+    };
+
+    /**
+     * *
+     * 删除海运关联
+     * */
+    $scope.deleteShipTransOderRel = function (shipTransOrderId) {
+        swal({
+                title: "确定要移除当前订单与该次支付的关联吗？",
+                type: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#DD6B55",
+                confirmButtonText: "确认",
+                cancelButtonText: "取消",
+                closeOnConfirm: true
+            },
+            function () {
+                _basic.delete(_host.api_url + "/user/" + userId + "/shipTransOrder/" + shipTransOrderId + '/orderPayment/' + orderPaymentId, {}).then(
+                    function (data) {
+                        if (data.success === true) {
+                            $scope.lookShipTransOrder();
+                        } else {
                             swal(data.msg, "", "error");
                         }
                     });
