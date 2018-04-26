@@ -184,7 +184,7 @@
         <!-- VIN （仅待出发状态显示） -->
         <div ng-show="shippingOrder.status==1" class="col s12">
             <div class="input-field col" style="width: 99%;padding-left: 23px;">
-                <input type="text" id="vinInput" ng-change="changeVin()" class="autocomplete" ng-model="shippingOrder.vin">
+                <input type="text" id="vinInput" ng-change="changeVin()" class="autocomplete" ng-model="shippingOrder.vin" minlength="6">
                 <a ng-if="addCarInfoFlg" ng-click="addCarInfo()" class="dataIcon btn-floating cyan" style="width:20px;height: 20px;">
                     <i class="mdi mdi-plus" style="position: absolute;right:0px;bottom:0px;font-size:15px;line-height: 20px;"></i>
                 </a>
@@ -243,7 +243,7 @@
                     <div class="input-field col s3 left-align">
                         <select id="addEntrustSelect" style="width: 100%">
                             <option value="" ></option>
-                            <option ng-repeat="el in entrustList" ng-value="el">{{el.short_name}}</option>
+                            <option ng-repeat="el in entrustList" ng-value="el.id">{{el.short_name}}</option>
                         </select>
                     </div>
                     <div class="input-field col s3 left-align">

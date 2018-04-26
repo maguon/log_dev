@@ -336,7 +336,7 @@
                         <div class="input-field col s3 left-align">
                             <select id="addEntrustSelect" style="width: 100%">
                                 <option value="" ></option>
-                                <option ng-repeat="el in entrustList" ng-value="el">{{el.short_name}}</option>
+                                <option ng-repeat="el in entrustList" ng-value="el.id">{{el.short_name}}</option>
                             </select>
                         </div>
                         <div class="input-field col s3 left-align">
@@ -386,7 +386,7 @@
                         </div>
 
                         <div class="col s12 lighten-1 white grey-text vc-center fz12"  style="height:64px;border:1px solid #bdbdbd;border-top:0px solid #bdbdbd;">
-                            <div class="col s4 left-align">车辆年份:{{newCar.proDate}}
+                            <div class="col s4 left-align">车辆年份:{{newCar.proDate | date: 'yyyy'}}
                             </div>
                             <div class="col s4 left-align">车价(美元):{{newCar.valuation}}
                             </div>
