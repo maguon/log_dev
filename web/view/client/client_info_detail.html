@@ -352,7 +352,7 @@
             </div>
             <div class="col s12 lighten-1 white grey-text vc-center fz13" style="height:40px;">
                 <div class="col s6">
-                    操作员：{{paymentInfo.start_ship_user_name}}
+                    操作员：{{paymentInfo.ship_trans_user_name}}
                 </div>
                 <div class="col s6 right-align">
                     生成时间：{{paymentInfo.ship_trans_created_date | date:'yyyy-MM-dd HH:mm:ss'}}
@@ -367,6 +367,195 @@
             </button>
         </div>
     </div>
+</div>
+
+<!--付款记录模态框-->
+<div id="openPaymentHistory" class="modal">
+    <!--标题：海运详情-->
+    <div class="cyan lighten-1 white-text center-align modal_title" >支付详情</div>
+    <div class="modal-content">
+        <div class="row blue-grey lighten-5" style="border:1px solid #bdbdbd;margin-top: 10px;">
+            <!-- header -->
+            <div class="col s12 lighten-1 cyan-text vc-center" style="height:50px;">
+                <div class="col s6" >支付编码:{{storagePaymentArray.id}}</div>
+                <div class="col s6 right-align" ng-class="{'red-text':storagePaymentArray.payment_status == 1,'cyan-text':storagePaymentArray.payment_status == 2}">{{paymentStatusList[storagePaymentArray.payment_status-1].name}}</div>
+            </div>
+            <!-- 委托方性质 委托方-->
+            <div class="col s12 lighten-1 white grey-text vc-center" style="height:50px;">
+                <div class="col s6">
+                    委托方性质:
+                    <span ng-if="storagePaymentArray.entrust_type==1">个人</span>
+                    <span ng-if="storagePaymentArray.entrust_type==2">企业</span>
+                </div>
+                <div class="col s6">
+                    委托方:{{storagePaymentArray.entrust_name}}
+                </div>
+            </div>
+            <!--虚分割线-->
+            <div  class="col s12" style="height:1px;border-bottom: 1px dotted #ccc;width:96%;margin-left: 2%"></div>
+            <div class="col s12 lighten-1 white grey-text vc-center" style="height:40px;">
+                <div class="col s6">
+                    支付方式:{{paymentMethodList[storagePaymentArray.payment_type-1].name}}
+                </div>
+                <div class="col s6">
+                    票号:{{storagePaymentArray.number}}
+                </div>
+            </div>
+
+            <!--虚分割线-->
+            <div  class="col s12" style="height:1px;border-bottom: 1px dotted #ccc;width:96%;margin-left: 2%"></div>
+
+            <!-- 备注-->
+            <div class="col s12 lighten-1 white grey-text vc-center" style="height:40px;">
+                <div class="col s6">
+                    备注:{{storagePaymentArray.remark}}
+                </div>
+            <div class="col s6">
+            </div>
+            </div>
+            <!--实分割线-->
+            <div  class="col s12" style="height:2px;border-bottom: 1px solid #ccc;width:96%;margin-left: 2%"></div>
+
+            <!--支付金额 操作人-->
+            <div class="col s12  lighten-1 white grey-text vc-center" style="height:40px;">
+                <div class="col s6">
+                    支付金额(美元):&nbsp;<span class="red-text" >{{storagePaymentArray.payment_money | currency }}</span>
+                </div>
+                <div class="col s6 right-align">
+                    支付时间:{{storagePaymentArray.updated_on | date:'yyyy-MM-dd hh:mm'}}
+                </div>
+            </div>
+        </div>
+        <div class="row blue-grey lighten-5" style="border:1px solid #bdbdbd;margin-top: 20px;">
+            <!--列表-->
+            <div class="modal-content grey-text text-darken-2">
+                <div class="row no-marBottom" ul-tabs>
+                    <div class="col s12 p0">
+                        <ul class="tabWrapDetail grey lighten-4">
+                            <li class="tab col s6 storageOrderDetails vc-center" ng-click="storageOrderDetails()">仓储订单</li>
+                            <li class="tab col s6 seaTransportOrderDetails vc-center" ng-click="seaTransportOrderDetails()">海运订单</li>
+                        </ul>
+                    </div>
+                    <div id="storageOrderDetails" class="col s12 tab_box_detail" >
+                        <div class="col s12">
+                            <table class=" bordered striped centered">
+                                <thead class="blue-grey lighten-5">
+                                <tr class="grey-text text-darken-2">
+                                    <th data-field="">订单编号</th>
+                                    <th data-field="">VIN码</th>
+                                    <th data-field="">车型</th>
+                                    <th data-field="">入库时间</th>
+                                    <th data-field="">出库时间</th>
+                                    <th data-field="">合计天数</th>
+                                    <th data-field="">实际支付<br><span style="margin-left: 12px;font-size: 12px;">(美元)</span></th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr ng-repeat="el in storageOrderDetailsArray" class="grey-text text-darken-1">
+                                    <!-- 订单编号 -->
+                                    <td>{{el.id}}</td>
+                                    <!-- VIN码 -->
+                                    <td ng-bind="el.vin"></td>
+                                    <!-- 车型 -->
+                                    <td>{{el.make_name==null ? '未知' : el.make_name}}/{{el.model_name==null ? '未知' : el.model_name}}</td>
+                                    <!-- 入库时间 -->
+                                    <td ng-bind="el.enter_time|date:'yyyy-MM-dd HH:mm:ss'"></td>
+                                    <!-- 出库时间-->
+                                    <td ng-bind="el.real_out_time|date:'yyyy-MM-dd HH:mm:ss'"></td>
+                                    <!-- 合计天数 -->
+                                    <td>{{el.day_count}}</td>
+                                    <!-- 支付金额(美元) -->
+                                    <td class="red-text">{{el.actual_fee | currency}}</td>
+                                </tr>
+                                <tr class="grey-text text-darken-1 "  ng-if="storageOrderDetailsArray.length!== 0">
+                                    <td colspan="7"  style="letter-spacing: 2px;text-align: right;" class="red-text">合计金额(美元):{{actualFee | currency}}</td>
+                                </tr>
+                                <tr class="grey-text text-darken-1" ng-if="storageOrderDetailsArray.length == 0">
+                                    <td colspan="7" style="letter-spacing: 2px;text-align: center;">暂无数据</td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <!-- 上下页按钮 -->
+                        <div class="paging_box col s12">
+                            <div class="right">
+                                <a class="waves-light waves-effect cyan lighten-1 btn" id="pre7" ng-click="preBtn7()">
+                                    上一页
+                                </a>
+                                <a class="waves-light waves-effect cyan lighten-1 btn" id="next7" ng-click="nextBtn7()">
+                                    下一页
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="seaTransportOrderDetails" class="col s12 tab_box_detail" >
+                        <!-- 下部分：检索结果显示区域 -->
+                        <div class="col s12">
+                            <table class=" bordered striped centered">
+                                <thead class="blue-grey lighten-5">
+                                <tr class="grey-text text-darken-2">
+                                    <th data-field="">海运编号</th>
+                                    <th data-field="">VIN</th>
+                                    <th data-field="">车型</th>
+                                    <th data-field="">始发港口</th>
+                                    <th data-field="">目的港口</th>
+                                    <th data-field="">开船日期</th>
+                                    <th data-field="">到港日期</th>
+                                    <th data-field="">运费(美元)</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr  class="grey-text text-darken-1" ng-repeat="el in seaTransportOrderDetailsArray">
+                                    <td ng-bind="el.ship_trans_id"></td>
+                                    <!--VIN-->
+                                    <td ng-bind="el.vin"></td>
+                                    <!--制造商-->
+                                    <td>{{el.make_name}}/{{el.model_name}}</td>
+
+                                    <!--始发港口-->
+                                    <td ng-bind="el.start_port_name"></td>
+                                    <!--目的港口-->
+                                    <td ng-bind="el.end_port_name"></td>
+
+                                    <!--开船日期-->
+                                    <td ng-bind="el.start_ship_date|date:'yyyy-MM-dd'"></td>
+                                    <!--到港日期-->
+                                    <td ng-bind="el.end_ship_date|date:'yyyy-MM-dd'"></td>
+                                    <!--运费(美元)-->
+                                    <td class="red-text">{{el.ship_trans_fee| currency}}</td>
+                                </tr>
+                                <tr class="grey-text text-darken-1 right-align"  ng-if="seaTransportOrderDetailsArray.length !== 0">
+                                    <td colspan="8"  style="letter-spacing: 2px;text-align: right;" class="red-text">合计金额(美元):{{shipTransFee | currency}}</td>
+                                </tr>
+                                <tr class="grey-text text-darken-1" ng-if="seaTransportOrderDetailsArray.length == 0">
+                                    <td colspan="8" style="letter-spacing: 2px;text-align: center;">暂无数据</td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <!-- 上下页按钮 -->
+                        <div class="paging_box col s12">
+                            <div class="right">
+                                <a class="waves-light waves-effect cyan lighten-1 btn  " id="pre8" ng-click="preBtn8()">
+                                    上一页
+                                </a>
+                                <a class="waves-light waves-effect cyan lighten-1 btn " id="next8" ng-click="nextBtn8()">
+                                    下一页
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--关闭模态框按钮-->
+        <div class="row col s4 offset-s8 right-align" style="margin-top: 50px;margin-right: 20px">
+            <button class="btn  btn-large btn-floating waves-effect cyan" ng-click="closePaymentHistory()" name="action" >
+                <i class="mdi mdi-check"></i>
+            </button>
+        </div>
+    </div>
+
 </div>
 
 <!--委托方信息-->
@@ -944,7 +1133,7 @@
 
                 <!-- 下部分：检索结果显示区域 -->
                 <div class="col s12">
-                    <div class="divider" style="background: #00bcd4;height: 2px;"></div>
+                    <div class="divider" style="background: #407BC7;height: 2px;"></div>
                     <table class=" bordered striped centered">
                         <thead class="blue-grey lighten-5">
                         <tr class="grey-text text-darken-2">
@@ -1023,7 +1212,119 @@
 
             </div>
             <div id="paymentDetail" class="col s12 tab_box" >
+                <!-- 上部分：检索条件输入区域 -->
+                <div class="row col s12">
+                    <!-- 左侧：输入区 -->
+                    <div class="col s11">
 
+                            <!-- 支付编号 -->
+                            <div class="input-field col s4">
+                                <input type="text" id="paymentHistoryOrderPaymentId" ng-model="paymentHistoryOrderPaymentId">
+                                <label for="paymentHistoryOrderPaymentId"> 支付编号</label>
+                            </div>
+
+                            <!-- 支付方式 -->
+                            <div class="input-field col s4">
+                                <select material-select watch ng-model="paymentHistoryPaymentType">
+                                    <option value="" selected>支付方式</option>
+                                    <option ng-repeat="el in paymentMethodList" ng-value="el.id">{{el.name}}</option>
+                                </select>
+                            </div>
+
+                            <!-- 票号 -->
+                            <div class="input-field col s4">
+                                <input type="text" id="number" ng-model="paymentHistoryNumber">
+                                <label for="number"> 票号</label>
+                            </div>
+
+                            <!-- 支付时间(始) -->
+                            <div class="input-field col s4">
+                                <input type="text" id="createdOnStart" ng-model="createdOnStart" class="datepicker" date><i
+                                    class="mdi dataIcon mdi-table-large"></i>
+                                <label for="createdOnStart">支付时间(始)</label>
+                            </div>
+
+                            <!-- 支付时间(终)-->
+                            <div class="input-field col s4">
+                                <input id="createdOnEnd" type="text" ng-model="createdOnEnd" class="datepicker" date><i
+                                    class="mdi dataIcon mdi-table-large"></i>
+                                <label for="sailTimeEnd">支付时间(终)</label>
+                            </div>
+
+                            <!-- 支付状态-->
+                            <div class="input-field col s4">
+                                <select material-select watch ng-model="paymentHistoryPaymentStatus">
+                                    <option value="" selected>支付状态</option>
+                                    <option ng-repeat="el in paymentStatusList" ng-value="el.id">{{el.name}}</option>
+                                </select>
+                            </div>
+
+
+                    </div>
+
+                    <!-- 右侧：按钮区 -->
+                    <div class="col s1" style="margin-top:40px;">
+                        <!--查询按钮-->
+                        <div class="col s6 center">
+                            <a class="btn-floating btn-large waves-light waves-effect red lighten-2  btn " ng-click="queryPaymentHistoryList()">
+                                <i class="mdi mdi-magnify"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 下部分：检索结果显示区域 -->
+                <div class="col s12">
+                    <div class="divider" style="background: #407BC7;height: 2px;"></div>
+                    <table class=" bordered striped centered">
+                        <thead class="blue-grey lighten-5">
+                        <tr class="grey-text text-darken-2">
+                            <th data-field="">支付编号</th>
+                            <th data-field="">支付方式</th>
+                            <th data-field="">票号</th>
+                            <th data-field="">支付时间</th>
+                            <th data-field="">支付金额(美元)</th>
+                            <th data-field="">支付状态</th>
+                            <th data-field="">完结时间</th>
+                            <th>操作</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr  class="grey-text text-darken-1" ng-repeat="el in paymentHistoryList">
+                            <td ng-bind="el.id"></td>
+                            <td>{{paymentMethodList[el.payment_type-1].name}}</td>
+                            <td ng-bind="el.number"></td>
+                            <td ng-bind="el.created_on|date:'yyyy-MM-dd'"></td>
+                            <td ng-bind="el.payment_money"></td>
+                            <td>{{paymentStatusList[el.payment_status-1].name}}</td>
+                            <td ng-bind="el.payment_end_date|date:'yyyy-MM-dd'"></td>
+                            <!--操作-->
+                            <td class="operation">
+                                <span class="s12 center">
+                                    <a ng-click= 'openPaymentHistoryModal(el.id)' class="">
+                                        <i class="mdi mdi-file-outline look_icon cyan-text lighten-1  "></i>
+                                    </a>
+                                </span>
+
+                            </td>
+                        </tr>
+                        <tr class="grey-text text-darken-1" ng-if="paymentHistoryList.length == 0">
+                            <td colspan="8" style="letter-spacing: 2px;text-align: center;">暂无数据</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <!-- 上下页按钮 -->
+                <div class="paging_box col s12">
+                    <div class="right">
+                        <a class="waves-light waves-effect cyan lighten-1 btn  " id="pre6" ng-click="preBtn6()">
+                            上一页
+                        </a>
+                        <a class="waves-light waves-effect cyan lighten-1 btn " id="next6" ng-click="nextBtn6()">
+                            下一页
+                        </a>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
