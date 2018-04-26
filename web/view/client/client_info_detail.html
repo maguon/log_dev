@@ -111,7 +111,7 @@
 <!--委托方信息-->
 <div class="client_info_detail" >
     <!--返回按钮  标题：委托方信息-->
-    <div class="storage_storeTitle vc-center ">
+    <div class="storage_storeTitle vc-center " style="height:42px">
         <a class=" storage_goback_btn btn-floating btn waves-effect cyan lighten-1 waves-light " ng-click="return()">
             <i class="mdi mdi-arrow-left-bold"></i>
         </a>
@@ -121,35 +121,35 @@
     <div class="divider" style="background: #407BC7;height: 2px;"></div>
 
     <!--头部详情信息-->
-    <div class="grey-text text-darken-1 vc-center row " style="margin-top: 20px;">
+    <div class="grey-text text-darken-1 vc-center row " style="height:60px;margin-top: 20px;">
             <div class="col s1 center" style="color: #6192d1;">
                 <i  ng-if="headerInfoList.entrust_type==1" class="mdi mdi-account fz45 s3"></i>
                 <i  ng-if="headerInfoList.entrust_type==2" class="mdi mdi-domain fz45 s3"></i>
             </div>
             <div class="col s8">
-                <div class="row left-align">
+                <div class="left-align">
                     <span  class=" fz18" ng-bind="headerInfoList.short_name" style="color: #4e84cb;margin-right: 10px"> </span>
                     <span  >({{headerInfoList.entrust_name}})</span>
                 </div>
-                <div class="row">
+                <div class="">
                     <i class="mdi mdi-map-marker  center" style="color: #4e84cb;margin-right: 10px"></i>
                     <span >{{headerInfoList.address}}</span>
                 </div>
-                <div class="row">
+                <div class="">
                    <i class="mdi mdi-file-outline  center" style="color: #4e84cb;margin-right: 10px"></i>
                     <span >{{headerInfoList.remark}}</span>
                 </div>
             </div>
             <div class="col s2 right-align" style="margin-right: 40px">
-                <div class="row">
+                <div class="">
                     <i class="mdi mdi-account" style="color: #4e84cb"></i>
                     <span  ng-bind="headerInfoList.contacts_name" ></span>
                 </div>
-                <div class="row">
+                <div class="">
                     <i class="mdi mdi-phone" style="color: #4e84cb"></i>
                     <span  ng-bind="headerInfoList.tel"></span>
                 </div>
-                <div class="row">
+                <div class="">
                     <i class="mdi mdi-clock" style="color: #4e84cb"></i>
                     <span  ng-bind="headerInfoList.created_on | date:'yyyy-MM-dd HH:mm:ss'" ></span>
                 </div>
@@ -160,9 +160,12 @@
         <div class="row no-marBottom" ul-tabs>
             <div class="col s12 p0">
                 <ul class="tabWrap grey lighten-4">
-                    <li class="tab col s4 inventoryRecord vc-center active"  ng-click="inventoryRecord()">库存记录</li>
-                    <li class="tab col s4 relStatus vc-center" ng-click="relStatus()">在库车辆</li>
-                    <li class="tab col s4 msoStatus vc-center" ng-click="msoStatus()">非MSO车辆</li>
+                    <li class="tab col s2 inventoryRecord vc-center active"  ng-click="inventoryRecord()">库存记录</li>
+                    <li class="tab col s2 relStatus vc-center" ng-click="relStatus()">在库车辆</li>
+                    <li class="tab col s2 msoStatus vc-center" ng-click="msoStatus()">非MSO车辆</li>
+                    <li class="tab col s2 storageOrder vc-center" ng-click="storageOrder()">仓储订单</li>
+                    <li class="tab col s2 seaTransportOrder vc-center" ng-click="seaTransportOrder()">海运订单</li>
+                    <li class="tab col s2 paymentDetail vc-center" ng-click="paymentDetail()">付款记录</li>
                 </ul>
             </div>
             <div id="inventoryRecord" class="col s12 tab_box">
@@ -395,6 +398,166 @@
                         </a>
                     </div>
                 </div>
+            </div>
+            <div id="storageOrder" class="col s12 tab_box" >
+                <!-- 上部分：检索条件输入区域 -->
+                <div class="row grey-text text-darken-1">
+                    <div class="col s11">
+
+                        <!-- 查询条件：第一行 -->
+                        <div class="col s12">
+
+                            <!-- 查询条件：VIN码 -->
+                            <div class="input-field col" style="width: 40%;">
+                                <input type="text" id="conditionVinText" ng-model="conditionVin">
+                                <label for="conditionVinText">VIN码</label>
+                            </div>
+
+                            <!-- 查询条件：车辆品牌 -->
+                            <div class="input-field col" style="width: 20%;">
+                                <select material-select watch ng-model="conditionMakeId"
+                                        ng-change="changeMakerId(conditionMakeId)">
+                                    <option value="" selected>制造商</option>
+                                    <option ng-repeat="el in carMakerList" ng-value="el.id">{{el.make_name}}</option>
+                                </select>
+                            </div>
+
+                            <!-- 查询条件：车辆型号 -->
+                            <div class="input-field col" style="width: 20%;">
+                                <select material-select watch ng-model="conditionModelId">
+                                    <option value="" selected>型号</option>
+                                    <option ng-repeat="el in carModelList" ng-value="el.id">{{el.model_name}}</option>
+                                </select>
+                            </div>
+
+                            <!-- 查询条件：支付状态 -->
+                            <div class="input-field col" style="width: 20%;">
+                                <select material-select watch ng-model="conditionPayStatus">
+                                    <option value="" selected>支付状态</option>
+                                    <option ng-repeat="el in payStatusList" ng-value="el.id">{{el.name}}</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <!-- 查询条件：第二行 -->
+                        <div class="col s12">
+
+                            <!-- 查询条件：订单编号 -->
+                            <div class="input-field col" style="width: 20%;">
+                                <input type="text" id="conditionOrderNoText" ng-model="conditionOrderNo">
+                                <label for="conditionOrderNoText">订单编号</label>
+                            </div>
+
+                            <!-- 查询条件：入库时间 -->
+                            <div class="col input-field" style="width: 20%;">
+                                <input id="conditionEnterTimeStartText" type="text" ng-model="conditionEnterTimeStart"
+                                       class="datepicker" autocomplete="off" required date>
+                                <label for="conditionEnterTimeStartText">入库时间(起)</label>
+                                <i class="mdi dataIcon mdi-table-large"></i>
+                            </div>
+                            <div class="col input-field" style="width: 20%;">
+                                <input type="text" id="conditionEnterTimeEndText" ng-model="conditionEnterTimeEnd"
+                                       class="datepicker"
+                                       autocomplete="off" required date>
+                                <label for="conditionEnterTimeEndText">入库时间(止)</label>
+                                <i class="mdi dataIcon mdi-table-large"></i>
+                            </div>
+
+                            <!-- 查询条件：出库时间 -->
+                            <div class="col input-field" style="width: 20%;">
+                                <input type="text" id="conditionOutTimeStartText" ng-model="conditionOutTimeStart"
+                                       class="datepicker"
+                                       autocomplete="off" date>
+                                <label for="conditionOutTimeStartText">出库时间(起)</label>
+                                <i class="mdi dataIcon mdi-table-large"></i>
+                            </div>
+                            <div class="col input-field" style="width: 20%;">
+                                <input type="text" id="conditionOutTimeEndText" ng-model="conditionOutTimeEnd" class="datepicker"
+                                       autocomplete="off" date>
+                                <label for="conditionOutTimeEndText">出库时间(止)</label>
+                                <i class="mdi dataIcon mdi-table-large"></i>
+                            </div>
+
+
+                        </div>
+                    </div>
+
+                    <!-- 查询按钮 -->
+                    <div class="col s1 flex flex-round">
+                        <a class="btn-floating btn-large waves-light waves-effect red lighten-2 btn vc-center"
+                           style="margin-top: 30px" ng-click="queryOrderList()">
+                            <i class="mdi mdi-magnify"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- 下部分：检索结果显示区域 -->
+                <div class="col s12">
+                    <div class="divider" style="background: #407BC7;height: 2px;"></div>
+                    <table class=" bordered striped centered">
+                        <thead class="blue-grey lighten-5">
+                        <tr class="grey-text text-darken-2">
+                            <th data-field="">订单编号</th>
+                            <th data-field="">VIN码</th>
+                            <th data-field="">车型</th>
+                            <th data-field="">入库时间</th>
+                            <th data-field="">出库时间</th>
+                            <th data-field="">合计天数</th>
+                            <th data-field="">支付金额<br><span style="margin-left: 12px;font-size: 12px;">(美元)</span></th>
+                            <th data-field="">支付状态</th>
+                            <th class="center">操作</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr ng-repeat="el in orderList" class="grey-text text-darken-1">
+                            <!-- 订单编号 -->
+                            <td>{{el.id}}</td>
+                            <!-- VIN码 -->
+                            <td ng-bind="el.vin"></td>
+                            <!-- 车型 -->
+                            <td>{{el.make_name==null ? '未知' : el.make_name}}/{{el.model_name==null ? '未知' : el.model_name}}</td>
+                            <!-- 入库时间 -->
+                            <td ng-bind="el.enter_time|date:'yyyy-MM-dd HH:mm:ss'"></td>
+                            <!-- 出库时间-->
+                            <td ng-bind="el.real_out_time|date:'yyyy-MM-dd HH:mm:ss'"></td>
+                            <!-- 合计天数 -->
+                            <td>{{el.day_count}}</td>
+                            <!-- 支付金额(美元) -->
+                            <td>{{el.actual_fee | currency}}</td>
+                            <!-- 支付状态 -->
+                            <td>{{payStatusList[el.order_status - 1].name}}</td>
+                            <!-- 显示【车辆信息】画面按钮 -->
+                            <td class="operation">
+                                <div class="col s12">
+                                    <a href="#" ui-sref="order_detail({id:el.id})">
+                                        <i class="mdi mdi-file-document look_icon cyan-text lighten-1"></i>
+                                    </a>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr class="grey-text text-darken-1" ng-if="orderList.length == 0">
+                            <td colspan="9" style="letter-spacing: 2px;text-align: center;">暂无数据</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <!-- 上下页按钮 -->
+                <div class="paging_box col s12">
+                    <div class="right">
+                        <a class="waves-light waves-effect cyan lighten-1 btn" id="pre4" ng-click="preBtn4()">
+                            上一页
+                        </a>
+                        <a class="waves-light waves-effect cyan lighten-1 btn" id="next4" ng-click="nextBtn4()">
+                            下一页
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div id="seaTransportOrder" class="col s12 tab_box" >
+
+            </div>
+            <div id="paymentDetail" class="col s12 tab_box" >
+
             </div>
         </div>
     </div>

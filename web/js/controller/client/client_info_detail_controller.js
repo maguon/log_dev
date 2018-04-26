@@ -11,7 +11,12 @@ app.controller("client_info_detail_controller", ["$scope", "$rootScope","$state"
     $scope.characters = _config.characters;
     $scope.carStatusList =_config.carRelStatus;
     $scope.MSOList= _config.msoFlags;
+    // 支付状态 列表
+    $scope.payStatusList = _config.payStatus;
 
+    /*
+    * 跳转页面
+    * */
     $scope.inventoryRecord = function () {
         $('ul.tabWrap li').removeClass("active");
         $(".tab_box").removeClass("active");
@@ -41,6 +46,32 @@ app.controller("client_info_detail_controller", ["$scope", "$rootScope","$state"
         $scope.start = 0;
         getMsoStatus();
     };
+    $scope.storageOrder = function () {
+        $('ul.tabWrap li').removeClass("active");
+        $(".tab_box ").removeClass("active");
+        $(".tab_box ").hide();
+        $('.tabWrap .storageOrder').addClass("active");
+        $("#storageOrder").addClass("active");
+        $("#storageOrder").show();
+        queryOrderData();
+    };
+    $scope.seaTransportOrder = function () {
+        $('ul.tabWrap li').removeClass("active");
+        $(".tab_box ").removeClass("active");
+        $(".tab_box ").hide();
+        $('.tabWrap .seaTransportOrder').addClass("active");
+        $("#seaTransportOrder").addClass("active");
+        $("#seaTransportOrder").show();
+    };
+    $scope.paymentDetail = function () {
+        $('ul.tabWrap li').removeClass("active");
+        $(".tab_box ").removeClass("active");
+        $(".tab_box ").hide();
+        $('.tabWrap .paymentDetail').addClass("active");
+        $("#paymentDetail").addClass("active");
+        $("#paymentDetail").show();
+    };
+
     // 返回
     $scope.return = function () {
         $state.go($stateParams.from, {reload: true})
@@ -182,6 +213,119 @@ app.controller("client_info_detail_controller", ["$scope", "$rootScope","$state"
         $(".modal").modal();
         $("#getInventoryRecord").modal("close");
     };
+
+
+    /**
+     * 车辆品牌列表查询，用来填充查询条件：车辆品牌
+     */
+    function getCarMakerList() {
+        _basic.get(_host.api_url + "/carMake").then(function (data) {
+            if (data.success == true && data.result.length > 0) {
+                $scope.carMakerList = data.result;
+            } else {
+                swal(data.msg, "", "error");
+            }
+        });
+    }
+
+    /**
+     * 当车辆品牌变更时，车辆型号要进行联动刷新。
+     * @param val 车辆品牌ID
+     */
+    $scope.changeMakerId = function (val) {
+        if (val) {
+            if ($scope.curruntId == val) {
+            } else {
+                $scope.curruntId = val;
+                _basic.get(_host.api_url + "/carMake/" + val + "/carModel").then(function (data) {
+                    if (data.success == true && data.result.length > 0) {
+                        $scope.carModelList = data.result;
+                    } else {
+                        swal(data.msg, "", "error")
+                    }
+                })
+            }
+        }
+    };
+
+
+
+    /**
+     * 根据画面输入的查询条件，进行仓储订单数据查询。
+     */
+    function queryOrderData() {
+        // 检索用url
+        var reqUrl = _host.api_url + "/storageOrder?entrustId="+val+"&start=" + $scope.start + "&size=" + $scope.size;
+
+        // 订单编号
+        if ($scope.conditionOrderNo != null) {
+            reqUrl = reqUrl + "&storageOrderId=" + $scope.conditionOrderNo;
+        }
+        // vin码
+        if ($scope.conditionVin != null) {
+            reqUrl = reqUrl + "&vin=" + $scope.conditionVin;
+        }
+        // 品牌
+        if ($scope.conditionMakeId != null) {
+            reqUrl = reqUrl + "&makeId=" + $scope.conditionMakeId;
+        }
+        // 型号
+        if ($scope.conditionModelId != null) {
+            reqUrl = reqUrl + "&modelId=" + $scope.conditionModelId;
+        }
+        // 入库时间 开始
+        if ($scope.conditionEnterTimeStart != null) {
+            reqUrl = reqUrl + "&enterStart=" + $scope.conditionEnterTimeStart
+        }
+        // 入库时间 终了
+        if ($scope.conditionEnterTimeEnd != null) {
+            reqUrl = reqUrl + "&enterEnd=" + $scope.conditionEnterTimeEnd
+        }
+        // 实际出库时间 开始
+        if ($scope.conditionOutTimeStart != null) {
+            reqUrl = reqUrl + "&realStart=" + $scope.conditionOutTimeStart
+        }
+        // 实际出库时间 终了
+        if ($scope.conditionOutTimeEnd != null) {
+            reqUrl = reqUrl + "&realEnd=" + $scope.conditionOutTimeEnd
+        }
+        // 支付状态
+        if ($scope.conditionPayStatus != null) {
+            reqUrl = reqUrl + "&orderStatus=" + $scope.conditionPayStatus
+        }
+        _basic.get(reqUrl).then(function (data) {
+            if (data.success == true) {
+                $scope.orderResult = data.result;
+                $scope.orderList = $scope.orderResult.slice(0, 10);
+                if ($scope.start > 0) {
+                    $("#pre4").show();
+                }
+                else {
+                    $("#pre4").hide();
+                }
+                if (data.result.length < $scope.size) {
+                    $("#next4").hide();
+                }
+                else {
+                    $("#next4").show();
+                }
+            } else {
+                swal(data.msg, "", "error");
+            }
+        });
+    }
+
+    /*
+    点击：查询按钮，进行数据查询
+    */
+    $scope.queryOrderList = function () {
+        // 默认第一页
+        $scope.start = 0;
+        // 查询
+        queryOrderData();
+    };
+
+
     // 上一页
     $scope.preBtn = function () {
         $scope.start = $scope.start - ($scope.size - 1) ;
@@ -214,12 +358,24 @@ app.controller("client_info_detail_controller", ["$scope", "$rootScope","$state"
         $scope.start = $scope.start + ($scope.size - 1) ;
         getMsoStatus();
     };
+    // 上一页
+    $scope.preBtn3 = function () {
+        $scope.start = $scope.start - ($scope.size - 1) ;
+
+    };
+    // 下一页
+    $scope.nextBtn3 = function () {
+        $scope.start = $scope.start + ($scope.size - 1) ;
+
+    };
     //获取数据
     $scope.queryData = function () {
         $scope.inventoryRecord();
         getHeaderInfo ();
         getStorageName();
         getEntrustBase ();
+        // 汽车品牌
+        getCarMakerList();
     };
     $scope.queryData();
 
