@@ -190,7 +190,7 @@ app.config(['$stateProvider',"$urlRouterProvider",function($stateProvider,$urlRo
         })
         // 财务管理->订单管理（订单详情）
         .state("order_detail", {
-            url:"/order_detail/{id}",
+            url:"/order_detail/{id}?from",
             templateUrl: "/view/finance/order_detail.html",
             controller:"order_detail_controller"
         })

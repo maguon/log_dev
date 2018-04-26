@@ -13,6 +13,11 @@ app.controller("client_info_detail_controller", ["$scope", "$rootScope","$state"
     $scope.MSOList= _config.msoFlags;
     // 支付状态 列表
     $scope.payStatusList = _config.payStatus;
+    // 颜色 列表
+    $scope.configColor = _config.config_color;
+    // 订单状态 列表
+    $scope.orderStatus = _config.orderStatus;
+    $scope.portList = [];
 
     /*
     * 跳转页面
@@ -62,6 +67,7 @@ app.controller("client_info_detail_controller", ["$scope", "$rootScope","$state"
         $('.tabWrap .seaTransportOrder').addClass("active");
         $("#seaTransportOrder").addClass("active");
         $("#seaTransportOrder").show();
+        querySeaTransportOrder();
     };
     $scope.paymentDetail = function () {
         $('ul.tabWrap li').removeClass("active");
@@ -325,6 +331,189 @@ app.controller("client_info_detail_controller", ["$scope", "$rootScope","$state"
         queryOrderData();
     };
 
+    //点击打开仓储订单模态框
+    $scope.openStorageOrder = function(id){
+        $(".modal").modal();
+        $("#openStorageOrder").modal("open");
+        _basic.get( _host.api_url + "/storageOrder?storageOrderId="+id).then(function (data) {
+            if (data.success == true) {
+                $scope.orderInfo = data.result[0];
+                for (var i in _config.config_color) {
+                    if (_config.config_color[i].colorId == $scope.orderInfo.colour) {
+                        $scope.color = _config.config_color[i].colorName;
+                    }
+                }
+            } else {
+                swal(data.msg, "", "error");
+            }
+        });
+        _basic.get( _host.api_url + "/orderPayment?storageOrderId="+id).then(function (data) {
+            if (data.success == true) {
+                $scope.orderPaymentInfo = data.result[0];
+
+            } else {
+                swal(data.msg, "", "error");
+            }
+        })
+    };
+    //点击关闭仓储订单模态框
+    $scope.closeModalStorageOrder= function(){
+        $(".modal").modal();
+        $("#openStorageOrder").modal("close");
+    };
+
+
+    /**
+     * 【始发港口 目的港口】列表查询
+     */
+    function getPortList() {
+        _basic.get(_host.api_url + "/port").then(function (data) {
+            if (data.success) {
+                $scope.portList = data.result;
+            }
+        });
+    }
+
+
+    /**
+     * 【船公司】列表查询，用来填充查询条件：船公司
+     */
+    function getShippingCoList() {
+        // 调用API取得，画面数据
+        _basic.get(_host.api_url + "/shipCompany").then(function (data) {
+            if (data.success) {
+                // 检索取得数据集
+                $scope.shippingCoList = data.result;
+            }
+        });
+    }
+
+    /**
+     * 根据画面输入的查询条件，进行数据查询。
+     */
+    function querySeaTransportOrder() {
+        // 检索用url
+        var reqUrl = _host.api_url + "/shipTransOrder?entrustId="+val+"&start=" + $scope.start + "&size=" + $scope.size;
+
+        // vin码
+        if ($scope.conditionOrderVIN != null) {
+            reqUrl = reqUrl + "&vin=" + $scope.conditionOrderVIN;
+        }
+
+        if ($scope.conditionOrderId != null) {
+            reqUrl = reqUrl + "&shipTransId=" + $scope.conditionOrderId;
+        }
+        // 制造商
+        if ($scope.conditionMakeId != null) {
+            reqUrl = reqUrl + "&makeId=" + $scope.conditionMakeId;
+        }
+        // 型号
+        if ($scope.conditionModelId != null) {
+            reqUrl = reqUrl + "&modelId=" + $scope.conditionModelId;
+        }
+        //送达状态
+        if ($scope.conditionOrderStatus != null) {
+            reqUrl = reqUrl + "&shipTransStatus=" + $scope.conditionOrderStatus;
+        }
+
+        // 支付状态
+        if ($scope.conditionPayStatus != null) {
+            reqUrl = reqUrl + "&orderStatus=" + $scope.conditionPayStatus
+        }
+        // 船公司
+        if ($scope.conditionShipCompanyId != null) {
+            reqUrl = reqUrl + "&shipCompanyId=" + $scope.conditionShipCompanyId
+        }
+        // 货柜
+        if ($scope.conditionContainer != null) {
+            reqUrl = reqUrl + "&container=" + $scope.conditionContainer
+        }
+        // 始发港口
+        if ($scope.conditionStartPortId != null) {
+            reqUrl = reqUrl + "&startPortId=" + $scope.conditionStartPortId
+        }
+        // 目的港口
+        if ($scope.conditionEndPortId != null) {
+            reqUrl = reqUrl + "&endPortId=" + $scope.conditionEndPortId
+        }
+        // 开船日期(始)
+        if ($scope.conditionStartShipDateStart != null) {
+            reqUrl = reqUrl + "&startShipDateStart=" + $scope.conditionStartShipDateStart
+        }
+        // 开船日期(终)
+        if ($scope.conditionStartShipDateEnd != null) {
+            reqUrl = reqUrl + "&startShipDateEnd=" + $scope.conditionStartShipDateEnd
+        }
+        // 到港日期(始)
+        if ($scope.conditionEnterTimeStart != null) {
+            reqUrl = reqUrl + "&endShipDateStart=" + $scope.conditionEnterTimeStart
+        }
+        // 到港日期(终)
+        if ($scope.conditionEndShipDateEnd != null) {
+            reqUrl = reqUrl + "&endShipDateEnd=" + $scope.conditionEndShipDateEnd
+        }
+
+
+        _basic.get(reqUrl).then(function (data) {
+            if (data.success == true) {
+                $scope.seaTransportOrderResult = data.result;
+                $scope.seaTransportOrderList = $scope.seaTransportOrderResult.slice(0, 10);
+                if ($scope.start > 0) {
+                    $("#pre5").show();
+                }
+                else {
+                    $("#pre5").hide();
+                }
+                if (data.result.length < $scope.size) {
+                    $("#next5").hide();
+                }
+                else {
+                    $("#next5").show();
+                }
+            } else {
+                swal(data.msg, "", "error");
+            }
+        });
+    }
+
+
+    /**
+     * 点击：查询按钮，进行数据查询
+     */
+    $scope.querySeaTransportOrderList = function () {
+        // 默认第一页
+        $scope.start = 0;
+        // 查询
+        querySeaTransportOrder();
+    };
+
+
+    //点击打开海运订单模态框
+    $scope.openSeaTranModal = function(vin){
+        $(".modal").modal();
+        $("#openSeaTranModal").modal("open");
+        _basic.get(_host.api_url + "/shipTransOrder?vin="+vin).then(function (data) {
+            if (data.success == true) {
+                $scope.paymentInfo = data.result[0];
+                for (var i in _config.config_color) {
+                    if (_config.config_color[i].colorId == $scope.paymentInfo.colour) {
+                        $scope.SeaTranOrderColor = _config.config_color[i].colorName;
+                    }
+                }
+            } else {
+                swal(data.msg, "", "error");
+            }
+        })
+    };
+    //点击关闭海运订单模态框
+    $scope.closeSeaTranModal= function(){
+        $(".modal").modal();
+        $("#openSeaTranModal").modal("close");
+    };
+
+
+
+
 
     // 上一页
     $scope.preBtn = function () {
@@ -368,6 +557,21 @@ app.controller("client_info_detail_controller", ["$scope", "$rootScope","$state"
         $scope.start = $scope.start + ($scope.size - 1) ;
 
     };
+    /**
+     * 上一页
+     */
+    $scope.preBtn5 = function () {
+        $scope.start = $scope.start - ($scope.size - 1);
+        queryOrderData();
+    };
+
+    /**
+     * 下一页
+     */
+    $scope.nextBtn5 = function () {
+        $scope.start = $scope.start + ($scope.size - 1);
+        queryOrderData();
+    };
     //获取数据
     $scope.queryData = function () {
         $scope.inventoryRecord();
@@ -376,6 +580,10 @@ app.controller("client_info_detail_controller", ["$scope", "$rootScope","$state"
         getEntrustBase ();
         // 汽车品牌
         getCarMakerList();
+        // 取得查询条件【始发港口 目的港口】列表
+        getPortList();
+        // 取得查询条件【船公司】列表
+        getShippingCoList();
     };
     $scope.queryData();
 
