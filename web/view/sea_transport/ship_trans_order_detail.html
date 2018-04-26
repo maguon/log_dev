@@ -332,7 +332,7 @@
 <div class="row cyan-text" style="width: 95%;margin: 0 auto;">
     <div class="col s12">
         <div class="col s6">
-            <span ng-show="false">操作员：{{userName}}</span>
+            <span ng-show="false">操作员：{{shippingOrder.ship_trans_user_name}}</span>
         </div>
         <div class="col s6 right-align" ng-class="{'red-text':orderInfo.orderStatus == 1}">
             生成时间：{{shippingOrder.createdOn|date:'yyyy-MM-dd HH:mm:ss'}}

@@ -414,7 +414,8 @@ app.controller("ship_trans_order_controller", ["$scope", "$rootScope", "_host", 
                     $scope.showCustomCarDiv = false;
                     // 显示 新增车辆列表
                     $scope.showCarListDiv = true;
-                    //
+                    // 委托方
+                    $scope.customCarInfo.entrustId = entrust.id;
                     $scope.customCarInfo.entrustNm = entrust.text;
                     // car id
                     $scope.customCarInfo.carId = data.id;

@@ -142,10 +142,10 @@ app.controller("payment_detail_controller", ["$scope", "$stateParams", "_basic",
                 $scope.shipTransOrderRelList = data.result;
                 $scope.totalShipTransMoney = 0;
                 for (var i = 0; i < $scope.shipTransOrderRelList.length; i++) {
-                    if ($scope.shipTransOrderRelList[i].actual_fee == null) {
-                        $scope.shipTransOrderRelList[i].actual_fee = 0;
+                    if ($scope.shipTransOrderRelList[i].ship_trans_fee == null) {
+                        $scope.shipTransOrderRelList[i].ship_trans_fee = 0;
                     }
-                    $scope.totalShipTransMoney = $scope.shipTransOrderRelList[i].actual_fee + $scope.totalShipTransMoney;
+                    $scope.totalShipTransMoney = $scope.shipTransOrderRelList[i].ship_trans_fee + $scope.totalShipTransMoney;
                 }
             } else {
                 swal(data.msg, "", "error");

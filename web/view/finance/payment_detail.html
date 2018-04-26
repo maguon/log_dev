@@ -384,7 +384,7 @@
                                 <tbody>
                                 <tr ng-repeat="el in shipTransOrderList" class="grey-text text-darken-1" style="height:30px">
                                     <!-- 订单编号 -->
-                                    <td ng-bind="el.ship_trans_id"></td>
+                                    <td ng-bind="el.id"></td>
                                     <!-- VIN码 -->
                                     <td ng-bind="el.vin"></td>
                                     <!-- 车型 -->
@@ -398,10 +398,10 @@
                                     <!-- 到港日期 -->
                                     <td>{{el.end_ship_date |date:'yyyy-MM-dd'}}</td>
                                     <!-- 运费(美元) -->
-                                    <td class="red-text">{{el.actual_fee|currency}}</td>
+                                    <td class="red-text">{{el.ship_trans_fee|currency}}</td>
                                     <!-- 显示画面按钮 -->
                                     <td class="operation">
-                                        <a  ng-click="addShipTransOderRel(el.ship_trans_id)" class="col s2 left" style="cursor: pointer">
+                                        <a  ng-click="addShipTransOderRel(el.id)" class="col s2 left" style="cursor: pointer">
                                             <i class="mdi mdi-plus-circle look_icon cyan-text lighten-1 fz25"></i>
                                         </a>
                                     </td>
@@ -468,7 +468,7 @@
                                     <!-- 到港日期 -->
                                     <td>{{el.end_ship_date |date:'yyyy-MM-dd'}}</td>
                                     <!-- 运费(美元) -->
-                                    <td class="red-text">{{el.actual_fee|currency}}</td>
+                                    <td class="red-text">{{el.ship_trans_fee|currency}}</td>
                                     <!-- 显示画面按钮 -->
                                     <td class="operation">
                                         <a  ng-click="deleteShipTransOderRel(el.ship_trans_order_id)" class="col s2 left" style="cursor: pointer">
@@ -529,7 +529,7 @@
                                 <!-- 到港日期 -->
                                 <td>{{el.end_ship_date |date:'yyyy-MM-dd'}}</td>
                                 <!-- 运费(美元) -->
-                                <td class="red-text">{{el.actual_fee|currency}}</td>
+                                <td class="red-text">{{el.ship_trans_fee|currency}}</td>
                             </tr>
                             </tbody>
                         </table>
