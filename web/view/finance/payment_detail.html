@@ -11,26 +11,26 @@
     <div class="divider  cyan lighten-2" style="height:2px"></div>
 </div>
 
-
 <!--按键切换以及详情  支付信息   关联仓储订单-->
 <div class="row no-marBottom" ul-tabs>
     <div class="col s12 p0" style="width: 96%; margin:0 2%">
 
         <!--按键切换  支付信息   关联仓储订单-->
         <ul class="tabWrap grey lighten-4 ">
-            <li class="tab col s6 lookPaymentMsg   vc-center"  ng-click="lookPaymentMsg()">支付信息</li>
-            <li class="tab col s6 lookRelatedOrder vc-center"  ng-click="lookRelatedOrder()">关联仓储订单</li>
+            <li class="tab col s4 lookPaymentMsg   vc-center"  ng-click="lookPaymentMsg()">支付信息</li>
+            <li class="tab col s4 lookRelatedOrder vc-center"  ng-click="lookRelatedOrder()">关联仓储订单</li>
+            <li class="tab col s4 lookShipTransOrder vc-center"  ng-click="lookShipTransOrder()">关联海运订单</li>
         </ul>
     </div>
 
     <!--支付信息的详细信息-->
     <div id="lookPaymentMsg" class="col s12 tab_box" style="width: 90%; margin:0 5% ">
-        <!--已支付状态下-->
+        <!--未完结状态下-->
         <div  ng-if='paymentStatus==1'>
             <div class="modal-content">
                 <div class="row col s12 bold" style="color:#4e84cb ;margin-top: 20px;">
-                    <div class="col s6 fz18" >支付编码:{{storagePaymentArray.id}}</div>
-                    <div class="col s6 right-align">{{paymentStatusList[storagePaymentArray.payment_status-1].name}}</div>
+                    <div class="col s6 fz18" >支付编号:{{storagePaymentArray.id}}</div>
+                    <div class="col s6 right-align" ng-class="{'red-text':storagePaymentArray.payment_status==1}">{{paymentStatusList[storagePaymentArray.payment_status-1].name}}</div>
                 </div>
                 <div class="row col s12">
                     <div class="col s6 input-field">
@@ -60,7 +60,7 @@
                 </div>
                 <div class="row col s12">
                     <div class="col s12 input-field">
-                        <input type="number" name="addPaymentMoney" id="addPaymentMoney" ng-model="storagePaymentArray.payment_money">
+                        <input type="number" name="addPaymentMoney" id="addPaymentMoney" class="red-text" ng-model="storagePaymentArray.payment_money">
                         <label for="addPaymentMoney"><span style="color: red">*</span>支付金额(美元)</label>
                     </div>
                 </div>
@@ -77,13 +77,10 @@
             </div>
             <div class="row col s12" style="margin-top: 30px">
                 <div class="col s2 offset-s3">
-                    <a ng-click="updatePaymentInfo()" style="width: 100%" class="waves-light waves-effect cyan lighten-2 btn">保存
-                    </a>
+                    <a ng-click="updatePaymentInfo()" style="width: 100%" class="waves-light waves-effect cyan lighten-2 btn">保存</a>
                 </div>
                 <div class="col s2 offset-s2">
-                    <a ng-click="updatePaymentStatus()" style="width: 100%;background-color:#f0ad4e;" class="waves-light waves-effect  lighten-1 btn">
-                        完结
-                    </a>
+                    <a ng-click="updatePaymentStatus()" style="width: 100%;background-color:#f0ad4e;" class="waves-light waves-effect  lighten-1 btn">完结</a>
                 </div>
             </div>
         </div>
@@ -91,7 +88,7 @@
         <div  ng-if='paymentStatus==2'>
             <div class="modal-content">
                 <div class="row col s12 bold" style="color:#4e84cb ;margin-top: 20px;">
-                    <div class="col s6 fz18" >支付编码:{{storagePaymentArray.id}}</div>
+                    <div class="col s6 fz18" >支付编号:{{storagePaymentArray.id}}</div>
                     <div class="col s6 right-align">{{paymentStatusList[storagePaymentArray.payment_status-1].name}}</div>
                 </div>
                 <!--实分割线-->
@@ -101,11 +98,11 @@
                 <div class="row col s12">
                     <div class="col s6 left-align">
                         <div class="col s12">
-                            委托方性质:{{storagePaymentArray.entrust_type}}
+                            委托方性质:{{entrustTypeList[storagePaymentArray.entrust_type-1].name}}
                         </div>
                     </div>
                     <div class="col s6 valign-wrapper">
-                        <div class="col s12 input-field left-align">
+                        <div class="col s12 left-align">
                             委托方:{{storagePaymentArray.entrust_name}}
                         </div>
                     </div>
@@ -117,11 +114,11 @@
                 <div class="row col s12">
                     <div class="col s6 left-align">
                         <div class="col s12">
-                            支付方式:{{storagePaymentArray.payment_type}}
+                            支付方式:{{paymentTypeList[storagePaymentArray.payment_type-1].name}}
                         </div>
                     </div>
                     <div class="col s6 valign-wrapper">
-                        <div class="col s12 input-field left-align">
+                        <div class="col s12 left-align">
                             票号:{{storagePaymentArray.number}}
                         </div>
                     </div>
@@ -144,7 +141,7 @@
                 <div class="row col s12">
                     <div class="col s6 left-align">
                         <div class="col s12">
-                            支付金额(美元):&nbsp;$&nbsp;<span style="color: red">{{storagePaymentArray.payment_money|number:2}}</span>
+                            支付金额(美元):<span style="color: red">{{storagePaymentArray.payment_money|currency}}</span>
                         </div>
                     </div>
                     <div class="col s6 right-align">
@@ -162,27 +159,21 @@
                         </div>
                     </div>
                 </div>
-
-
             </div>
         </div>
-
     </div>
 
     <!--关联仓储订单的详细信息-->
     <div id="lookRelatedOrder" class="col s12 tab_box" style="width: 100%; margin:30px 0">
-
-
-
-        <!--条件分支 已支付-->
+        <!--条件分支 未完结-->
         <div ng-if='paymentStatus==1'>
 
-            <!--未结算仓储订单 无订单-->
+            <!--委托方未结仓储订单 无订单-->
             <div class="col s6" ng-if="storageOrderList.length==0">
                 <div  class="col s12 left">
                     <div class="card" style="border: 2px solid #ccc">
                         <div class="card-content bold cyan-text fz18 left-align grey lighten-4" style="border-bottom: 2px solid #ccc">
-                            未结算仓储订单
+                            委托方未结仓储订单
                         </div>
                         <div class="card-content">
                             <div style="height:200px;line-height: 200px;text-align: center">
@@ -193,90 +184,91 @@
                     </div>
                 </div>
             </div>
-            <!--未结算仓储订单 有订单-->
+            <!--委托方未结仓储订单 有订单-->
             <div class="col s6" ng-if="storageOrderList.length!==0">
                 <div  class="col s12 left">
                     <div class="card" style="border: 2px solid #ccc;height:auto">
                         <div class="card-content bold cyan-text fz18 left-align grey lighten-4" style="border-bottom: 2px solid #ccc">
-                            未结算仓储订单
+                            委托方未结仓储订单
                         </div>
                         <div class="card-content">
-
-                                <table class="bordered centered" style="width: 100%;">
-                                    <thead class="blue-grey lighten-5">
-                                    <tr class="grey-text text-darken-2">
-                                        <th data-field="">VIN码</th>
-                                        <th data-field="">车型</th>
-                                        <th data-field="">入库时间</th>
-                                        <th data-field="">出库时间</th>
-                                        <th data-field="">合计天数</th>
-                                        <th data-field="">实际支付($)</th>
-                                        <th></th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    <tr ng-repeat="el in storageOrderList" class="grey-text text-darken-1" style="height:30px">
-                                        <td ng-bind="el.vin"></td>
-                                        <td>{{el.make_name}}/{{el.model_name}}</td>
-                                        <td>{{el.created_on |date:'yyyy-MM-dd hh:mm'}}</td>
-                                        <td>{{el.enter_time |date:'yyyy-MM-dd hh:mm'}}</td>
-                                        <td>{{el.day_count}}</td>
-                                        <td class="red-text">${{el.actual_fee|number:2}}</td>
-
-                                        <!-- 显示画面按钮 -->
-                                        <td class="operation">
-                                            <a  ng-click="addOderRel(el.id)" class="col s2 left" style="cursor: pointer">
-                                                <i class="mdi mdi-plus-circle look_icon cyan-text lighten-1 fz25"></i>
-                                            </a>
-                                        </td>
-                                    </tr>
-                                    </tbody>
-                                </table>
-
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!--此项支付关联存储订单 无订单-->
-            <div class="col s6"  ng-if="storageOrderPaymentRelList.length==0">
-                <div  class="col s12 right">
-                    <div class="card" style="border: 2px solid #ccc">
-                        <div class="card-content bold cyan-text fz18 left-align grey lighten-4" style="border-bottom: 2px solid #ccc">
-                            此项支付关联存储订单
-                        </div>
-                        <div class="card-content">
-                            <div style="height:200px;line-height: 200px;text-align: center">
-                                <i class="mdi  mdi-alert-circle-outline red-text fz30"></i>
-                                <span class="bold grey-text fz22">暂无关联仓储订单</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!--此项支付关联存储订单 有订单-->
-            <div class="col s6"  ng-if="storageOrderPaymentRelList.length!==0">
-                <div  class="col s12 right">
-                    <div class="card" style="border: 2px solid #ccc">
-                        <div class="card-content bold cyan-text fz18 left-align grey lighten-4" style="border-bottom: 2px solid #ccc">
-                            此项支付关联存储订单
-                        </div>
-                        <div class="card-content">
-
                             <table class="bordered centered" style="width: 100%;">
-                                <thead class="blue-grey lighten-5">
+                                <thead>
                                 <tr class="grey-text text-darken-2">
+                                    <th data-field="">订单编号</th>
                                     <th data-field="">VIN码</th>
                                     <th data-field="">车型</th>
                                     <th data-field="">入库时间</th>
                                     <th data-field="">出库时间</th>
                                     <th data-field="">合计天数</th>
-                                    <th data-field="">实际支付($)</th>
+                                    <th data-field="">实际应付($)</th>
+                                    <th></th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr ng-repeat="el in storageOrderList" class="grey-text text-darken-1" style="height:30px">
+                                    <td ng-bind="el.id"></td>
+                                    <td ng-bind="el.vin"></td>
+                                    <td>{{el.make_name}}/{{el.model_name}}</td>
+                                    <td>{{el.created_on |date:'yyyy-MM-dd hh:mm'}}</td>
+                                    <td>{{el.enter_time |date:'yyyy-MM-dd hh:mm'}}</td>
+                                    <td>{{el.day_count}}</td>
+                                    <td class="red-text">${{el.actual_fee|number:2}}</td>
+
+                                    <!-- 显示画面按钮 -->
+                                    <td class="operation">
+                                        <a  ng-click="addOderRel(el.id)" class="col s2 left" style="cursor: pointer">
+                                            <i class="mdi mdi-plus-circle look_icon cyan-text lighten-1 fz25"></i>
+                                        </a>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!--此项支付关联存车订单 无订单-->
+            <div class="col s6"  ng-if="storageOrderPaymentRelList.length==0">
+                <div  class="col s12 right">
+                    <div class="card" style="border: 2px solid #ccc">
+                        <div class="card-content bold cyan-text fz18 left-align grey lighten-4" style="border-bottom: 2px solid #ccc">
+                            此项支付关联存车订单
+                        </div>
+                        <div class="card-content">
+                            <div style="height:200px;line-height: 200px;text-align: center">
+                                <!--<i class="mdi  mdi-alert-circle-outline red-text fz30"></i>-->
+                                <span class="bold grey-text fz22">请从左边未支付订单中选择欲支付订单</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--此项支付关联存车订单 有订单-->
+            <div class="col s6"  ng-if="storageOrderPaymentRelList.length!==0">
+                <div  class="col s12 right">
+                    <div class="card" style="border: 2px solid #ccc">
+                        <div class="card-content bold cyan-text fz18 left-align grey lighten-4" style="border-bottom: 2px solid #ccc">
+                            此项支付关联存车订单
+                        </div>
+                        <div class="card-content">
+                            <table class="bordered centered" style="width: 100%;">
+                                <thead>
+                                <tr class="grey-text text-darken-2">
+                                    <th data-field="">订单编号</th>
+                                    <th data-field="">VIN码</th>
+                                    <th data-field="">车型</th>
+                                    <th data-field="">入库时间</th>
+                                    <th data-field="">出库时间</th>
+                                    <th data-field="">合计天数</th>
+                                    <th data-field="">实际应付($)</th>
                                     <th></th>
                                 </tr>
                                 </thead>
                                 <tbody>
                                 <tr ng-repeat="el in storageOrderPaymentRelList" class="grey-text text-darken-1" style="height:30px">
+                                    <td ng-bind="el.id"></td>
                                     <td ng-bind="el.vin"></td>
                                     <td>{{el.make_name}}/{{el.model_name}}</td>
                                     <td>{{el.created_on |date:'yyyy-MM-dd hh:mm'}}</td>
@@ -294,6 +286,7 @@
                                 </tbody>
                             </table>
                         </div>
+                        <div class="right-align" style="padding-right: 25px;padding-bottom: 15px;">合计应付(美元): <span class="red-text">{{totalMoney | currency}}</span></div>
                     </div>
                 </div>
             </div>
@@ -306,9 +299,8 @@
             <div  ng-if="storageOrderPaymentRelList.length==0" >
                 <div style="height:400px;line-height: 400px;text-align: center">
                     <i class="mdi  mdi-alert-circle-outline red-text fz30"></i>
-                    <span class="bold grey-text fz22">委托方暂无未支付仓储订单</span>
+                    <span class="bold grey-text fz22">委托方暂无仓储订单信息</span>
                 </div>
-
             </div>
 
             <div ng-if='storageOrderPaymentRelList.length!==0'>
@@ -316,7 +308,7 @@
                     <div class="card-content">
 
                         <table class="bordered centered" style="width: 100%;">
-                            <thead class="blue-grey lighten-5">
+                            <thead>
                             <tr class="grey-text text-darken-2">
                                 <th data-field="">订单编号</th>
                                 <th data-field="">VIN码</th>
@@ -324,7 +316,7 @@
                                 <th data-field="">入库时间</th>
                                 <th data-field="">出库时间</th>
                                 <th data-field="">合计天数</th>
-                                <th data-field="">实际支付(美元)</th>
+                                <th data-field="">实际应付(美元)</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -337,23 +329,188 @@
                                 <td>{{el.day_count}}</td>
                                 <td class="red-text">${{el.actual_fee|number:2}}</td>
                             </tr>
-                            <tr>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td>实际支付($):&nbsp;<span class="red-text">{{totalMoney|number:2}}</span></td>
-                            </tr>
                             </tbody>
                         </table>
+                    </div>
+                    <div class="right-align" style="padding-right: 25px;padding-bottom: 15px;">合计支付(美元): <span class="red-text">{{totalMoney | currency}}</span></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!--关联仓储订单的详细信息-->
+    <div id="lookShipTransOrder" class="col s12 tab_box" style="width: 100%; margin:30px 0">
+        <!--条件分支 未完结-->
+        <div ng-if='paymentStatus==1'>
+
+            <!--委托方未结仓储订单 无订单-->
+            <div class="col s6" ng-if="storageOrderList.length==0">
+                <div  class="col s12 left">
+                    <div class="card" style="border: 2px solid #ccc">
+                        <div class="card-content bold cyan-text fz18 left-align grey lighten-4" style="border-bottom: 2px solid #ccc">
+                            委托方未结仓储订单
+                        </div>
+                        <div class="card-content">
+                            <div style="height:200px;line-height: 200px;text-align: center">
+                                <i class="mdi  mdi-alert-circle-outline red-text fz30"></i>
+                                <span class="bold grey-text fz22">委托方暂无未支付仓储订单</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--委托方未结仓储订单 有订单-->
+            <div class="col s6" ng-if="storageOrderList.length!==0">
+                <div  class="col s12 left">
+                    <div class="card" style="border: 2px solid #ccc;height:auto">
+                        <div class="card-content bold cyan-text fz18 left-align grey lighten-4" style="border-bottom: 2px solid #ccc">
+                            委托方未结仓储订单
+                        </div>
+                        <div class="card-content">
+                            <table class="bordered centered" style="width: 100%;">
+                                <thead>
+                                <tr class="grey-text text-darken-2">
+                                    <th data-field="">订单编号</th>
+                                    <th data-field="">VIN码</th>
+                                    <th data-field="">车型</th>
+                                    <th data-field="">入库时间</th>
+                                    <th data-field="">出库时间</th>
+                                    <th data-field="">合计天数</th>
+                                    <th data-field="">合计应付($)</th>
+                                    <th></th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr ng-repeat="el in storageOrderList" class="grey-text text-darken-1" style="height:30px">
+                                    <td ng-bind="el.id"></td>
+                                    <td ng-bind="el.vin"></td>
+                                    <td>{{el.make_name}}/{{el.model_name}}</td>
+                                    <td>{{el.created_on |date:'yyyy-MM-dd hh:mm'}}</td>
+                                    <td>{{el.enter_time |date:'yyyy-MM-dd hh:mm'}}</td>
+                                    <td>{{el.day_count}}</td>
+                                    <td class="red-text">${{el.actual_fee|number:2}}</td>
+
+                                    <!-- 显示画面按钮 -->
+                                    <td class="operation">
+                                        <a  ng-click="addOderRel(el.id)" class="col s2 left" style="cursor: pointer">
+                                            <i class="mdi mdi-plus-circle look_icon cyan-text lighten-1 fz25"></i>
+                                        </a>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!--此项支付关联存车订单 无订单-->
+            <div class="col s6"  ng-if="storageOrderPaymentRelList.length==0">
+                <div  class="col s12 right">
+                    <div class="card" style="border: 2px solid #ccc">
+                        <div class="card-content bold cyan-text fz18 left-align grey lighten-4" style="border-bottom: 2px solid #ccc">
+                            此项支付关联存车订单
+                        </div>
+                        <div class="card-content">
+                            <div style="height:200px;line-height: 200px;text-align: center">
+                                <!--<i class="mdi  mdi-alert-circle-outline red-text fz30"></i>-->
+                                <span class="bold grey-text fz22">请从左边未支付订单中选择欲支付订单</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--此项支付关联存车订单 有订单-->
+            <div class="col s6"  ng-if="storageOrderPaymentRelList.length!==0">
+                <div  class="col s12 right">
+                    <div class="card" style="border: 2px solid #ccc">
+                        <div class="card-content bold cyan-text fz18 left-align grey lighten-4" style="border-bottom: 2px solid #ccc">
+                            此项支付关联存车订单
+                        </div>
+                        <div class="card-content">
+                            <table class="bordered centered" style="width: 100%;">
+                                <thead>
+                                <tr class="grey-text text-darken-2">
+                                    <th data-field="">订单编号</th>
+                                    <th data-field="">VIN码</th>
+                                    <th data-field="">车型</th>
+                                    <th data-field="">入库时间</th>
+                                    <th data-field="">出库时间</th>
+                                    <th data-field="">合计天数</th>
+                                    <th data-field="">实际应付($)</th>
+                                    <th></th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr ng-repeat="el in storageOrderPaymentRelList" class="grey-text text-darken-1" style="height:30px">
+                                    <td ng-bind="el.id"></td>
+                                    <td ng-bind="el.vin"></td>
+                                    <td>{{el.make_name}}/{{el.model_name}}</td>
+                                    <td>{{el.created_on |date:'yyyy-MM-dd hh:mm'}}</td>
+                                    <td>{{el.enter_time |date:'yyyy-MM-dd hh:mm'}}</td>
+                                    <td>{{el.day_count}}</td>
+                                    <td class="red-text">${{el.actual_fee|number:2}}</td>
+
+                                    <!-- 显示画面按钮 -->
+                                    <td class="operation">
+                                        <a  ng-click="deleteOderRel(el.storage_order_id)" class="col s2 left" style="cursor: pointer">
+                                            <i class="mdi mdi-do-not-disturb look_icon red-text lighten-1 fz25"></i>
+                                        </a>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="right-align" style="padding-right: 25px;padding-bottom: 15px;">合计应付(美元): <span class="red-text">{{totalMoney | currency}}</span></div>
                     </div>
                 </div>
             </div>
         </div>
 
 
-    </div>
+        <!--条件分支 已完结-->
+        <div ng-if='paymentStatus==2'>
+            <!--条件分支 无订单-->
+            <div  ng-if="storageOrderPaymentRelList.length==0" >
+                <div style="height:400px;line-height: 400px;text-align: center">
+                    <i class="mdi  mdi-alert-circle-outline red-text fz30"></i>
+                    <span class="bold grey-text fz22">委托方暂无仓储订单信息</span>
+                </div>
+            </div>
 
+            <div ng-if='storageOrderPaymentRelList.length!==0'>
+                <div class="card" style="border: 2px solid #ccc;width:90%;margin:0 auto">
+                    <div class="card-content">
+
+                        <table class="bordered centered" style="width: 100%;">
+                            <thead>
+                            <tr class="grey-text text-darken-2">
+                                <th data-field="">订单编号</th>
+                                <th data-field="">VIN码</th>
+                                <th data-field="">车型</th>
+                                <th data-field="">入库时间</th>
+                                <th data-field="">出库时间</th>
+                                <th data-field="">合计天数</th>
+                                <th data-field="">实际应付(美元)</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr ng-repeat="el in storageOrderPaymentRelList" class="grey-text text-darken-1" style="height:30px">
+                                <td ng-bind="el.id"></td>
+                                <td ng-bind="el.vin"></td>
+                                <td>{{el.make_name}}/{{el.model_name}}</td>
+                                <td>{{el.created_on |date:'yyyy-MM-dd hh:mm'}}</td>
+                                <td>{{el.enter_time |date:'yyyy-MM-dd hh:mm'}}</td>
+                                <td>{{el.day_count}}</td>
+                                <td class="red-text">${{el.actual_fee|number:2}}</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="right-align" style="padding-right: 25px;padding-bottom: 15px;">合计支付(美元): <span class="red-text">{{totalMoney | currency}}</span></div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>

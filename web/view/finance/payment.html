@@ -6,13 +6,13 @@
         <div class="row col s12">
             <div class="col s6 input-field">
                 <select material-select watch ng-model="addEntrustType" ng-change="getEntrustInfo(addEntrustType)">
-                    <option value=""  ><span style="color: red">*</span>委托方性质</option>
+                    <option value="">委托方性质</option>
                     <option ng-repeat="el in entrustTypeList" ng-value="el.entrust_type">{{el.name}}</option>
                 </select>
             </div>
             <div class="col s6 input-field">
                 <select id="addEntrustSelect" style="width: 100%">
-                    <option value="" ></option>
+                    <option value=""></option>
                     <option ng-repeat="el in entrustList" ng-value="el.id">{{el.short_name}}</option>
                 </select>
             </div>
@@ -20,7 +20,7 @@
         <div class="row col s12">
             <div class="col s6 input-field">
                 <select material-select watch ng-model="addPaymentType">
-                    <option value=""  ><span style="color: red">*</span>支付方式</option>
+                    <option value=""  >支付方式</option>
                     <option ng-repeat="el in paymentTypeList" ng-value="el.id">{{el.name}}</option>
                 </select>
             </div>
@@ -31,7 +31,7 @@
         </div>
         <div class="row col s12">
             <div class="col s12 input-field">
-                <input type="number" name="addPaymentMoney" id="addPaymentMoney" ng-model="addPaymentMoney">
+                <input type="text" name="addPaymentMoney" id="addPaymentMoney" maxlength="8" valid-money ng-model="addPaymentMoney">
                 <label for="addPaymentMoney"><span style="color: red">*</span>支付金额(美元)</label>
             </div>
         </div>
