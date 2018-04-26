@@ -77,7 +77,7 @@ app.controller("order_detail_controller", ["$scope", "$state", "$stateParams", "
      * 返回到前画面（订单管理）。
      */
     $scope.return = function () {
-        $state.go($stateParams.from, {}, {reload: true})
+        window.history.back();
     };
 
     /**
