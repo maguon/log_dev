@@ -80,7 +80,8 @@
                     {{characters[el.lot-1].name}}
                 </div>
                 <div class="storage_row vc-center" ng-repeat="els in el.col track by $index">
-                    <a href="#" ui-sref="storage_car_detail({id:els.carId,vin:els.vin,_id:storageId,_from:prePage,from:'storage_store_detail'})" >
+                    <a ng-href="#!/storage_car_detail/{{els.carId}}/{{els.vin}}?from=storage_store_detail&_id={{storageId}}&_from={{prePage}}"  class="">
+                    <!--<a href="#" ui-sref="storage_car_detail({_id:storageId,_from:prePage,from:'storage_store_detail'})" >-->
                         <i ng-show="els.carId!=0" class=" mdi mdi-car cyan-text lighten-1" ></i>
                     </a>
 

@@ -129,8 +129,9 @@ app.config(['$stateProvider',"$urlRouterProvider",function($stateProvider,$urlRo
             templateUrl: "/view/storage/storage_statistics.html",
             controller:"storage_statistics_controller"
         })
+        // 仓储车辆信息
         .state("storage_car_detail", {
-            url:"/storage_car_detail/{id}/vin/{vin}/?from",
+            url:"/storage_car_detail/{id}/{vin}?from",
             templateUrl: "/view/storage/storage_car_details.html",
             controller:"storage_car_details_controller"
         })

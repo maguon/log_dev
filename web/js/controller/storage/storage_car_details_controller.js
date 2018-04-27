@@ -1,7 +1,7 @@
 /**
  * Created by star on 2018/4/8.
  */
-app.controller("storage_car_details_controller", [ "$scope","$state", "$stateParams", "_config", "_baseService",  "_host", "_basic", function ( $scope,$state, $stateParams, _config, _baseService,  _host, _basic) {
+app.controller("storage_car_details_controller", [ "$scope","$state", "$stateParams", "_config", "_baseService",  "_host", "_basic", "$location", function ( $scope,$state, $stateParams, _config, _baseService,  _host, _basic, $location) {
 
    //自定义变量名
     var userId = _basic.getSession(_basic.USER_ID);
@@ -74,12 +74,14 @@ app.controller("storage_car_details_controller", [ "$scope","$state", "$statePar
 
     // 返回
     $scope.return = function () {
+        // 获取url参数
+
         // 仓库详情画面 （storage_store_detail）
         if ($stateParams.from == 'storage_store_detail') {
             $state.go($stateParams.from, {
                 reload: true,
-                id: $stateParams._id,
-                from: $stateParams._from
+                id: $location.search()._id,
+                from: $location.search()._from
             });
         } else {
             $state.go($stateParams.from, {reload: true});

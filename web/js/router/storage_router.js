@@ -76,7 +76,7 @@ app.config(['$stateProvider',"$urlRouterProvider",function($stateProvider,$urlRo
         })
         // 仓储车辆信息
         .state("storage_car_detail", {
-            url:"/storage_car_detail/{id}/vin/{vin}/{_id}/{_from}?from",
+            url:"/storage_car_detail/{id}/{vin}?from",
             templateUrl: "/view/storage/storage_car_details.html",
             controller:"storage_car_details_controller"
         })
@@ -142,5 +142,12 @@ app.config(['$stateProvider',"$urlRouterProvider",function($stateProvider,$urlRo
             templateUrl: "/view/system_settings/setting_key_cabinet_detail.html",
             controller:'setting_key_cabinet_detail_controller'
         })
+
+        // 车辆定位 测试用
+        // .state("truck_position",{
+        //     url:"/truck_position",
+        //     templateUrl: "/view/app/truck_position.html",
+        //     controller:"truck_position_controller"
+        // })
     ;
 }]);
