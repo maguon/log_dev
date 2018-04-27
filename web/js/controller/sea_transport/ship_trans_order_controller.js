@@ -26,7 +26,7 @@ app.controller("ship_trans_order_controller", ["$scope", "$rootScope", "_host", 
     // 订单信息
     $scope.newShippingOrder = {
         // 始发港口
-        startPort: "",
+        startPortId: "",
         // 目的港口
         endPortId: "",
         // 开船日期

@@ -177,7 +177,23 @@ app.controller("ship_trans_order_detail_controller", ["$scope", "$state", "$stat
             if (data.success == true) {
                 $scope.shipTransCarList = data.result;
                 angular.copy(data.result, $scope.relShipTransCarList);
+                // 计算 运载车辆 部分 合计运费
                 $scope.calcTotalFees();
+                // 委托人分单：默认 否
+                $scope.shippingOrder.partStatus = "1";
+                var preEntrustId = -1;
+                for (var i = 0; i < $scope.shipTransCarList.length; i++) {
+                    if (i === 0) {
+                        preEntrustId = $scope.shipTransCarList[i].entrust_id;
+                        continue;
+                    }
+
+                    if (preEntrustId !== $scope.shipTransCarList[i].entrust_id) {
+                        // 委托人不同，分单：是
+                        $scope.shippingOrder.partStatus = "2";
+                        break;
+                    }
+                }
             } else {
                 swal(data.msg, "", "error");
             }
@@ -305,29 +321,17 @@ app.controller("ship_trans_order_detail_controller", ["$scope", "$state", "$stat
     };
 
     /**
-     * 将指定汽车信息追加到列表中。
+     * 将指定汽车信息追加到列表中。（共通方法）
      * @param carInfo 汽车信息
      */
     function addCar(carInfo) {
-        // 是否分单, 默认 分单：否
-        $scope.shippingOrder.partStatus = "1";
-
         var hasError = false;
         // 遍历新增车辆列表
         for (var i = 0; i < $scope.shipTransCarList.length; i++) {
             var vin = $scope.shipTransCarList[i].vin;
-            var entrustId = $scope.shipTransCarList[i].entrust_id;
             // 已经追加过
             if (vin == carInfo.vin) {
                 hasError = true;
-            }
-
-            // 分单：否 时，进行判定
-            if ($scope.shippingOrder.partStatus == "1") {
-                if (entrustId != carInfo.entrustId) {
-                    // 委托人不同，分单：是
-                    $scope.shippingOrder.partStatus = "2";
-                }
             }
         }
         if (hasError) {
@@ -448,7 +452,8 @@ app.controller("ship_trans_order_detail_controller", ["$scope", "$state", "$stat
                     if (data.success) {
                         // 取得运载车辆详情 （画面下部分）
                         getShipTransCarRel();
-                        car.id = data.result[0].id;
+                        // 将当前追加的车辆信息，添加到关联车辆列表中，用来做check
+                        // car.id = data.id;
                         $scope.relShipTransCarList.push(angular.copy(car));
                         swal("运载车辆追加成功！", "", "info");
                     } else {
@@ -481,25 +486,15 @@ app.controller("ship_trans_order_detail_controller", ["$scope", "$state", "$stat
      */
     $scope.removeCar = function ($index, car) {
 
-        // 是否分单, 默认 分单：否
-        $scope.shippingOrder.partStatus = "1";
         // 新关联车辆
         var newCarFlag = true;
 
-        var hasError = false;
         // 遍历新增车辆列表
-        for (var i = 0; i < $scope.shipTransCarList.length; i++) {
-            var entrustId = $scope.shipTransCarList[i].entrust_id;
+        for (var i = 0; i < $scope.relShipTransCarList.length; i++) {
             var carId = $scope.relShipTransCarList[i].car_id;
             if (newCarFlag && carId == car.car_id) {
                 // 已经存在的车辆
                 newCarFlag = false;
-            }
-
-            // 分单：否 时，进行判定
-            if ($scope.shippingOrder.partStatus == "1" && entrustId != carInfo.entrustId) {
-                // 委托人不同，分单：是
-                $scope.shippingOrder.partStatus = "2";
             }
         }
 
@@ -524,6 +519,8 @@ app.controller("ship_trans_order_detail_controller", ["$scope", "$state", "$stat
                             function (data) {
                                 if (data.success === true) {
                                     $scope.shipTransCarList.splice($index, 1);
+                                    // 取得运载车辆详情 （画面下部分）
+                                    getShipTransCarRel();
                                     swal("删除运载车辆成功", "", "success");
                                 }
                                 else {
@@ -535,7 +532,6 @@ app.controller("ship_trans_order_detail_controller", ["$scope", "$state", "$stat
                     }
                 });
         }
-
         // 计算合计运费
         $scope.calcTotalFees();
     };
@@ -549,7 +545,7 @@ app.controller("ship_trans_order_detail_controller", ["$scope", "$state", "$stat
             swal("请填写完整海运订单信息！", "", "warning");
         }
 
-        if ($scope.shippingOrder.startPort !== "" && $scope.shippingOrder.endPort !== ""
+        if ($scope.shippingOrder.startPortId !== "" && $scope.shippingOrder.endPortId !== ""
             && $scope.shippingOrder.sailingDay !== ""
             && $scope.shippingOrder.shippingCoId !== "" && $scope.shippingOrder.shipName !== ""
             && $scope.shippingOrder.container !== "" && $scope.shippingOrder.booking !== ""
