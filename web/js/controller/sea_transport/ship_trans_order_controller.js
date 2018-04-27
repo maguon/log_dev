@@ -165,7 +165,7 @@ app.controller("ship_trans_order_controller", ["$scope", "$rootScope", "_host", 
         }
 
         _basic.get(reqUrl).then(function (data) {
-            if (data.success == true) {
+            if (data.success === true) {
                 $scope.shipTransOrder = data.result;
                 $scope.shipTransOrderList = $scope.shipTransOrder.slice(0, 10);
                 if ($scope.start > 0) {
@@ -231,11 +231,11 @@ app.controller("ship_trans_order_controller", ["$scope", "$rootScope", "_host", 
      */
     $scope.changeVin = function () {
 
-        if ($scope.newShippingOrder.vin != undefined) {
+        if ($scope.newShippingOrder.vin !== undefined) {
             if ($scope.newShippingOrder.vin.length >= 6) {
 
                 _basic.get(_host.api_url + "/carList?vinCode=" + $scope.newShippingOrder.vin).then(function (data) {
-                    if (data.success == true && data.result.length > 0) {
+                    if (data.success && data.result.length > 0) {
                         $scope.carList = data.result;
                         vinObjs = [];
                         for (var i in $scope.carList) {
@@ -259,11 +259,10 @@ app.controller("ship_trans_order_controller", ["$scope", "$rootScope", "_host", 
                 })
             }
 
+            $scope.addCarInfoFlg = false;
             // 根据填充完毕的完整vin码信息进行精确查询
-            if ($scope.newShippingOrder.vin.length == 17) {
+            if ($scope.newShippingOrder.vin.length === 17) {
                 $scope.addCarInfoFlg = true;
-            } else {
-                $scope.addCarInfoFlg = false;
             }
         }
     };
@@ -288,7 +287,7 @@ app.controller("ship_trans_order_controller", ["$scope", "$rootScope", "_host", 
         for (var i = 0; i < $scope.newCarList.length; i++) {
             var vin = $scope.newCarList[i].vin;
             // 已经追加过
-            if (vin == newVin) {
+            if (vin === newVin) {
                 hasError = true;
                 break;
             }
@@ -303,7 +302,7 @@ app.controller("ship_trans_order_controller", ["$scope", "$rootScope", "_host", 
                 if (data.success) {
 
                     // 新的vin码，(不存在的车辆)，打开新建画面
-                    if (data.result.length == 0) {
+                    if (data.result.length === 0) {
                         // 自定义车辆 画面 VIN码 不可变项目
                         $scope.customCarInfo.vin = newVin;
                         // 数据初始化
@@ -357,13 +356,13 @@ app.controller("ship_trans_order_controller", ["$scope", "$rootScope", "_host", 
             var vin = $scope.newCarList[i].vin;
             var entrustId = $scope.newCarList[i].entrust_id;
             // 已经追加过
-            if (vin == carInfo.vin) {
+            if (vin === carInfo.vin) {
                 hasError = true;
             }
 
             // 分单：否 时，进行判定
-            if ($scope.newShippingOrder.partStatus == "1") {
-                if (entrustId != carInfo.entrustId) {
+            if ($scope.newShippingOrder.partStatus === "1") {
+                if (entrustId !== carInfo.entrustId) {
                     // 委托人不同，分单：是
                     $scope.newShippingOrder.partStatus = "2";
                 }
@@ -421,7 +420,6 @@ app.controller("ship_trans_order_controller", ["$scope", "$rootScope", "_host", 
                     $scope.customCarInfo.carId = data.id;
                     // 将当前的数据追加的列表中。
                     addCar($scope.customCarInfo);
-                    //
                     // 新增海运订单画面 VIN码 后 追加按钮 追加结果Info
                     $scope.customCarInfo = {};
                 } else {
@@ -447,7 +445,7 @@ app.controller("ship_trans_order_controller", ["$scope", "$rootScope", "_host", 
      */
     function getCarMakerList() {
         _basic.get(_host.api_url + "/carMake").then(function (data) {
-            if (data.success == true && data.result.length > 0) {
+            if (data.success && data.result.length > 0) {
                 $scope.carMakerList = data.result;
             } else {
                 swal(data.msg, "", "error");
@@ -461,11 +459,11 @@ app.controller("ship_trans_order_controller", ["$scope", "$rootScope", "_host", 
      */
     $scope.changeMakerId = function (val) {
         if (val) {
-            if ($scope.curruntId == val) {
+            if ($scope.curruntId === val) {
             } else {
                 $scope.curruntId = val;
                 _basic.get(_host.api_url + "/carMake/" + val + "/carModel").then(function (data) {
-                    if (data.success == true && data.result.length > 0) {
+                    if (data.success && data.result.length > 0) {
                         $scope.carModelList = data.result;
                     } else {
                         swal(data.msg, "", "error")
@@ -480,7 +478,7 @@ app.controller("ship_trans_order_controller", ["$scope", "$rootScope", "_host", 
      */
     $scope.getEntrustInfo = function () {
         _basic.get(_host.api_url + "/entrust").then(function (data) {
-            if (data.success == true) {
+            if (data.success) {
                 $scope.entrustList = data.result;
                 $('#addEntrustSelect').select2({
                     placeholder: '委托方',
@@ -532,7 +530,7 @@ app.controller("ship_trans_order_controller", ["$scope", "$rootScope", "_host", 
         for (var i = 0; i < $scope.newCarList.length; i++) {
             var fee = $scope.newCarList[i].shipTransFees;
             // 有运费时，计算合计
-            if (fee != undefined && fee != NaN && fee != null && fee != "") {
+            if (fee !== undefined && fee !== null && fee !== "") {
                 $scope.newShippingOrder.totalShipTransFees = $scope.newShippingOrder.totalShipTransFees + parseFloat(fee);
             }
         }
@@ -543,22 +541,25 @@ app.controller("ship_trans_order_controller", ["$scope", "$rootScope", "_host", 
      */
     $scope.createShipTransOrder = function () {
         var carIds = [];
+        var vins = [];
         var shipTransFees = [];
         var entrustIds = [];
         // 车辆信息运费 标记
         var hasAllCarTransFeeFlg = false;
 
-        if ($scope.newCarList.length == 0) {
+        if ($scope.newCarList.length === 0) {
             swal("请填写完整海运订单信息！", "", "warning");
         } else {
 
             // 遍历新增车辆列表
             for (var i = 0; i < $scope.newCarList.length; i++) {
                 var carId = $scope.newCarList[i].carId;
+                var vin = $scope.newCarList[i].vin;
                 var shipTransFee = $scope.newCarList[i].shipTransFees;
                 var entrustId = $scope.newCarList[i].entrustId;
-                if (shipTransFee != undefined && shipTransFee != "") {
+                if (shipTransFee !== undefined && shipTransFee !== "") {
                     carIds.push(carId);
+                    vins.push(vin);
                     shipTransFees.push(parseFloat(shipTransFee));
                     entrustIds.push(entrustId);
                     hasAllCarTransFeeFlg = true;
@@ -588,6 +589,7 @@ app.controller("ship_trans_order_controller", ["$scope", "$rootScope", "_host", 
                 partStatus: $scope.newShippingOrder.partStatus,
                 remark: $scope.newShippingOrder.remark,
                 carIds: carIds,
+                vins: vins,
                 entrustIds: entrustIds,
                 shipTransFees: shipTransFees
             };
