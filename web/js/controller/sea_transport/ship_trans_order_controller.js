@@ -499,6 +499,24 @@ app.controller("ship_trans_order_controller", ["$scope", "$rootScope", "_host", 
         // 删除
         $scope.newCarList.splice($index, 1);
 
+        // 是否分单, 默认 分单：否
+        $scope.newShippingOrder.partStatus = "1";
+
+        // 表单状态判定
+        var preEntrustId = -1;
+        for (var i = 0; i < $scope.newCarList.length; i++) {
+            if (i === 0) {
+                preEntrustId = $scope.newCarList[i].entrustId;
+                continue;
+            }
+
+            if (preEntrustId !== $scope.newCarList[i].entrustId) {
+                // 委托人不同，分单：是
+                $scope.newShippingOrder.partStatus = "2";
+                break;
+            }
+        }
+
         // 计算合计运费
         $scope.calcTotalFees();
     };
