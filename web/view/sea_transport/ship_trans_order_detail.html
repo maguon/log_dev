@@ -24,7 +24,7 @@
 
         <!-- 状态标记 -->
         <div class="col s6 right-align" ng-class="{'red-text':shippingOrder.status == 1,'grey-text':shippingOrder.status == 3}">
-            {{orderStatus[shippingOrder.status - 1].name}}
+            {{shipTransStatus[shippingOrder.status - 1].name}}
         </div>
     </div>
 
@@ -334,7 +334,7 @@
         <div class="col s6">
             <span ng-show="false">操作员：{{shippingOrder.ship_trans_user_name}}</span>
         </div>
-        <div class="col s6 right-align" ng-class="{'red-text':orderInfo.orderStatus == 1}">
+        <div class="col s6 right-align" ng-class="{'red-text':orderInfo.shipTransStatus == 1}">
             生成时间：{{shippingOrder.createdOn|date:'yyyy-MM-dd HH:mm:ss'}}
         </div>
     </div>
@@ -348,10 +348,10 @@
             <a ng-click="saveShipTransOrder()" style="width: 150px;" class="waves-light waves-effect cyan lighten-1 btn">保存</a>
         </div>
         <div ng-if="shippingOrder.status==1" class="col s6 left-align">
-            <a ng-click="changeTransOrderStatus(orderStatus[1].id)" style="width: 150px;" class="waves-light waves-effect amber darken-2 btn">出发</a>
+            <a ng-click="changeTransOrderStatus(shipTransStatus[1].id)" style="width: 150px;" class="waves-light waves-effect amber darken-2 btn">出发</a>
         </div>
         <div ng-if="shippingOrder.status==2" class="col s6 left-align">
-            <a ng-click="changeTransOrderStatus(orderStatus[2].id)" style="width: 150px;" class="waves-light waves-effect amber darken-2 btn">送达</a>
+            <a ng-click="changeTransOrderStatus(shipTransStatus[2].id)" style="width: 150px;" class="waves-light waves-effect amber darken-2 btn">送达</a>
         </div>
     </div>
 </div>

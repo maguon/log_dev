@@ -18,8 +18,8 @@ app.controller("ship_trans_order_controller", ["$scope", "$rootScope", "_host", 
 
     // 是否分单 列表
     $scope.partTypes = _config.partTypes;
-    // 订单状态 列表
-    $scope.orderStatus = _config.orderStatus;
+    // 运送状态 列表
+    $scope.shipTransStatus = _config.shipTransStatus;
     // 颜色列表
     $scope.configColor = _config.config_color;
 
@@ -160,8 +160,8 @@ app.controller("ship_trans_order_controller", ["$scope", "$rootScope", "_host", 
             reqUrl = reqUrl + "&tab=" + $scope.condTab;
         }
         // 运送状态
-        if ($scope.condOrderStatus != null) {
-            reqUrl = reqUrl + "&orderStatus=" + $scope.condOrderStatus;
+        if ($scope.condShipTransStatus != null) {
+            reqUrl = reqUrl + "&shipTransStatus=" + $scope.condShipTransStatus;
         }
 
         _basic.get(reqUrl).then(function (data) {

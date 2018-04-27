@@ -295,7 +295,7 @@ baseService.factory("_config", function () {
     ];
 
     // 订单状态
-    _this.orderStatus = [
+    _this.shipTransStatus = [
         {
             id: 1,
             name: "待出发"

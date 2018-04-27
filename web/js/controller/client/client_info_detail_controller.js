@@ -18,8 +18,8 @@ app.controller("client_info_detail_controller", ["$scope", "$rootScope","$state"
     $scope.payStatusList = _config.payStatus;
     // 颜色 列表
     $scope.configColor = _config.config_color;
-    // 订单状态 列表
-    $scope.orderStatus = _config.orderStatus;
+    // 运送状态 列表
+    $scope.orderStatus = _config.shipTransStatus;
     $scope.portList = [];
 
     // 支付方式 列表

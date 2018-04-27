@@ -8,7 +8,7 @@
 
             <!-- 海运编号 -->
             <div class="input-field col s3">
-                <input type="text" id="orderIdText" ng-model="condShipTransOrderId">
+                <input type="text" id="orderIdText" ng-model="condShipTransId">
                 <label for="orderIdText">海运编号</label>
             </div>
 
@@ -50,12 +50,12 @@
             <div class="input-field col s3">
                 <input id="arrivalTimeStart" type="text" ng-model="condEndShipDateStart" class="datepicker" date><i
                     class="mdi dataIcon mdi-table-large"></i>
-                <label for="arrivalTimeStart">支付时间(始)</label>
+                <label for="arrivalTimeStart">到港日期(始)</label>
             </div>
             <div class="input-field col s3">
                 <input id="arrivalTimeEnd" type="text" ng-model="condEndShipDateEnd" class="datepicker" date><i
                     class="mdi dataIcon mdi-table-large"></i>
-                <label for="arrivalTimeEnd">支付时间(终)</label>
+                <label for="arrivalTimeEnd">到港日期(终)</label>
             </div>
 
             <!-- 货柜 -->
@@ -78,9 +78,9 @@
 
             <!-- 运送状态 -->
             <div class="input-field col s3">
-                <select material-select watch ng-model="condOrderStatus">
+                <select material-select watch ng-model="condShipTransStatus">
                     <option value="">运送状态</option>
-                    <option ng-repeat="el in orderStatus" ng-value="el.id">{{el.name}}</option>
+                    <option ng-repeat="el in shipTransStatus" ng-value="el.id">{{el.name}}</option>
                 </select>
             </div>
         </div>
@@ -149,7 +149,7 @@
                 <!--分单-->
                 <td>{{partTypes[el.part_status-1].name}}</td>
                 <!--运送状态-->
-                <td ng-class="{'red-text':el.ship_trans_status == 1,'cyan-text':el.ship_trans_status == 2}">{{orderStatus[el.ship_trans_status-1].name}}</td>
+                <td ng-class="{'red-text':el.ship_trans_status == 1,'cyan-text':el.ship_trans_status == 2}">{{shipTransStatus[el.ship_trans_status-1].name}}</td>
                 <!--操作-->
                 <td class="operation">
                     <a href="#" ui-sref="ship_trans_order_detail({id:el.id,from:'ship_trans_order'})" class=""><i

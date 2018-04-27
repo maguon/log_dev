@@ -9,8 +9,8 @@ app.controller("ship_trans_order_detail_controller", ["$scope", "$state", "$stat
     // 海运订舱管理，订舱 ID
     $scope.shipTransId = $stateParams.id;
 
-    // 订单状态 列表
-    $scope.orderStatus = _config.orderStatus;
+    // 运送状态 列表
+    $scope.shipTransStatus = _config.shipTransStatus;
     // 是否分单 列表
     $scope.partTypes = _config.partTypes;
     // 支付状态 列表
@@ -590,7 +590,7 @@ app.controller("ship_trans_order_detail_controller", ["$scope", "$state", "$stat
      */
     $scope.changeTransOrderStatus = function (status) {
         var msg = '确认出发？';
-        if (status == $scope.orderStatus[2].id) {
+        if (status == $scope.shipTransStatus[2].id) {
             msg = '确认送达？';
         }
         swal({
