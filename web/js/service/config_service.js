@@ -27,10 +27,17 @@ baseService.factory("_config", function () {
             qr: []
         },
         {
-            type: 4,
-            name: "国贸部",
+            type: 41,
+            name: "国贸部操作员",
             subType: [],
-            index: 'international_trade.html',
+            index: 'trade_home.html',
+            qr: []
+        },
+        {
+            type: 49,
+            name: "国贸部管理员",
+            subType: [],
+            index: 'trade_manager.html',
             qr: []
         }
     ];

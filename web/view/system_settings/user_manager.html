@@ -111,10 +111,15 @@
                         <td ng-bind="el.real_name"></td>
                         <td  ng-if="el.gender==0">女</td>
                         <td  ng-if="el.gender==1">男</td>
-                        <td ng-if="el.type==21">仓储部操作员</td>
-                        <td ng-if="el.type==29">仓储部管理员</td>
-                        <td ng-if="el.type==3">调度部</td>
-                        <td ng-if="el.type==4">国贸部</td>
+
+                        <td ng-switch="el.type">
+                            <span ng-switch-when="21">仓储部操作员</span>
+                            <span ng-switch-when="29">仓储部管理员</span>
+                            <span ng-switch-when="3">调度部</span>
+                            <span ng-switch-when="41">国贸部操作员</span>
+                            <span ng-switch-when="49">国贸部管理员</span>
+                            <span ng-switch-default class="red-text">未知</span>
+                        </td>
                         <td ng-bind="el.mobile"></td>
                         <td ng-if="el.status==1">可用</td>
                         <td ng-if="el.status==0">停用</td>
