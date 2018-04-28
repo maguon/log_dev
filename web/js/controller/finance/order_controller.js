@@ -231,6 +231,18 @@ app.controller("order_controller", ["$scope", "$rootScope", "_host", "_basic", "
                     placeholder: '委托方',
                     containerCssClass: 'select2_dropdown',
                     allowClear: true
+                // }).on("select2:unselecting", function(e) {
+                //     // 点击清除(x)按钮，设定状态
+                //     $(this).data('state', 'unselected');
+                // }).on("select2:open", function(e) {
+                //     // 打开时判断，如果是点击清除(x)按钮，则关闭下拉
+                //     if ($(this).data('state') === 'unselected') {
+                //         $(this).removeData('state');
+                //         var self = $(this);
+                //         setTimeout(function() {
+                //             self.select2('close');
+                //         }, 1);
+                //     }
                 });
             }
         });
