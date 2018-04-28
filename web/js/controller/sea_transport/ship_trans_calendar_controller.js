@@ -49,17 +49,17 @@ app.controller("ship_trans_calendar_controller", ["$scope", "_host", "_basic", f
                 start = moment(start).format('YYYYMMDD');
                 end = moment(end).format('YYYYMMDD');
                 var eventArray = [];
-                _basic.get(_host.api_url + "/storageDate?storageId=" + storage_id + "&dateStart=" + start + "&dateEnd=" + end).then(function (data) {
+                _basic.get(_host.api_url + "/shipTransStatDate?" + "dateStart=" + start + "&dateEnd=" + end).then(function (data) {
                     if (data.success == true && data.result.length > 0) {
                         $scope.data = data.result;
                         for (var i in $scope.data) {
                             var titleHtml = '<div class=" p0" style="padding-top: 10px">' +
+                                '<div class="col s4 center-align  red-text text-lighten-1" style="font-size: 14px">' +
+                                '<i style="display: block" class="mdi mdi-ferry"></i><span>' + $scope.data[i].arrive + '</span></div>' +
                                 '<div class="col s4 center-align  cyan-text text-lighten-1" style="font-size: 14px">' +
-                                '<i style="display: block" class="mdi mdi-login"></i><span>' + $scope.data[i].imports + '</span></div>' +
-                                '<div class="col s4 center-align  cyan-text text-lighten-1" style="font-size: 14px">' +
-                                '<i style="display: block" class="mdi mdi-arrow-down-bold-circle-outline"></i><span >' + $scope.data[i].balance + '</span></div>' +
-                                '<div class="col s4 center-align red-text text-lighten-2" style="font-size: 14px">' +
-                                '<i style="display: block" class=" mdi mdi-logout"></i><span >' + $scope.data[i].exports + '</span></div></div>';
+                                '<img src="/assets/images/start2x.png" alt="" class="circle responsive-img valign profile-image-login"><span >' + $scope.data[i].booking + '</span></div>' +
+                                '<div class="col s4 center-align cyan-text text-lighten-2" style="font-size: 14px">' +
+                                '<img src="/assets/images/end2x.png" alt="" class="circle responsive-img valign profile-image-login"><span>' + $scope.data[i].exports + '</span></div></div>';
                             var date = {
                                 title: titleHtml,
                                 start: $scope.data[i].date_id + '',
@@ -78,21 +78,17 @@ app.controller("ship_trans_calendar_controller", ["$scope", "_host", "_basic", f
             }
         });
 
-        // 当天仓库信息
-        var url = _host.api_url + "/storageDate?storageId=" + storage_id + "&dateStart=" + nowDate + "&dateEnd=" + nowDate;
+        // 当天订舱 到港
+        var url = _host.api_url + "/shipTransStatDate?dateStart="  + nowDate+'&dateEnd='+nowDate;
         _basic.get(url).then(function (data) {
             if (data.success == true && data.result.length > 0) {
                 $scope.todayData = data.result[0];
             } else {
                 // 取得数据失败时，画面显示的默认数据
                 $scope.todayData = {
-                    "storage_id": 0,
-                    "total_seats":0,
-                    "imports": 0,
+                    "booking": 0,
                     "exports": 0,
-                    "balance": 0,
-                    "id": 0,
-                    "storage_status": 1
+                    "arrive": 0
                 }
             }
         })
