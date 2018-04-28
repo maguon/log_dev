@@ -1,5 +1,5 @@
 /**
- * Created by ASUS on 2017/5/19.
+ * Created by ASUS on 2017/5/19. 调度-使用画面 路由配置.
  */
 app.config(['$stateProvider',"$urlRouterProvider",function($stateProvider,$urlRouterProvider) {
     $urlRouterProvider.when("","/user_info");
