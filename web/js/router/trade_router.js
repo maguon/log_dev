@@ -4,11 +4,11 @@
 app.config(['$stateProvider',"$urlRouterProvider",function($stateProvider,$urlRouterProvider) {
     $urlRouterProvider.when("","/trade_index");
     $stateProvider
-        // 主菜单：主控面板 TODO
+        // 主菜单：主控面板
         .state("trade_index", {
             url: "/trade_index",
-            templateUrl: "/view/storage/storage_index.html",
-            controller:'storage_index_controller'
+            templateUrl: "/view/finance/finance_index.html",
+            controller:'finance_index_controller'
         })
 
         // 主菜单：用户信息

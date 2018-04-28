@@ -36,8 +36,19 @@
         </div>
     </li>
     <li class="bold side_navigator">
-        <a class="waves-effect waves-light first-N" ui-sref="storage_index"><i
-                class="white-text mdi mdi-crop-free "></i>主控面板</a>
+        <ul class="collapsible collapsible-accordion">
+            <li class="bold">
+                <a class="collapsible-header waves-effect waves-light first-N">
+                    <i class="white-text mdi mdi-crop-free"></i>主控面板
+                </a>
+                <div class="collapsible-body slider_nav_box blue-grey darken-3" style="padding: 0;">
+                    <ul>
+                        <li><a href="#!" ui-sref="storage_index"><i class="white-text mdi mdi-chevron-right"></i>仓储主控</a></li>
+                        <li><a href="#!" ui-sref="trade_index"><i class="white-text mdi mdi-chevron-right"></i>财务主控</a></li>
+                    </ul>
+                </div>
+            </li>
+        </ul>
     </li>
     <li class="bold side_navigator">
         <a href="#!" ui-sref="user_info" class=" waves-effect waves-light first-N"><i
@@ -201,13 +212,14 @@
 <script src="./js/router/index_router.js"></script>
 
 <!-- angularjs 控制器 -->
-<script src="./js/controller/data/data_controller.js"></script>
-<script src="./js/controller/index_controller.js"></script>
 <script src="./js/controller/admin_login_controller.js"></script>
-<script src="./js/controller/car/company_controller.js"></script>
 
 <!-- 主控面板 控制器 -->
+
+<!-- 主控面板 -> 仓储主控 控制器 -->
 <script src="./js/controller/storage/storage_index_controller.js"></script>
+<!-- 主控面板 -> 财务主控 控制器 -->
+<script src="./js/controller/finance/finance_index_controller.js"></script>
 
 <!-- 用户信息 控制器 -->
 <script src="./js/controller/user/user_info_controller.js"></script>
