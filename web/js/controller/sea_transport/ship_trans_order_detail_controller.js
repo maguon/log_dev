@@ -444,6 +444,7 @@ app.controller("ship_trans_order_detail_controller", ["$scope", "$state", "$stat
                     //
                     shipTransId: $scope.shipTransId,
                     carId: car.car_id,
+                    vin: car.vin,
                     entrustId: car.entrust_id,
                     shipTransFee: car.ship_trans_fee
                 };
