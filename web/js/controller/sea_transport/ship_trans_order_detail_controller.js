@@ -540,11 +540,6 @@ app.controller("ship_trans_order_detail_controller", ["$scope", "$state", "$stat
      * 修改海运订单基本信息 （画面保存按钮）
      */
     $scope.saveShipTransOrder = function () {
-
-        if ($scope.shipTransCarList.length == 0) {
-            swal("请填写完整海运订单信息！", "", "warning");
-        }
-
         if ($scope.shippingOrder.startPortId !== "" && $scope.shippingOrder.endPortId !== ""
             && $scope.shippingOrder.sailingDay !== ""
             && $scope.shippingOrder.shippingCoId !== "" && $scope.shippingOrder.shipName !== ""
