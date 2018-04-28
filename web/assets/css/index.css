@@ -767,6 +767,10 @@ input[type=text]{
     /*height: 300px;*/
     border-bottom: 1px solid white;
 }
+/*calendar日期*/
+.calendarToday{
+    width: 100%;
+}
 .fc-row .fc-content-skeleton tbody td, .fc-row .fc-helper-skeleton tbody td{
     height: 50px;
 }
