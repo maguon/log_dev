@@ -183,6 +183,70 @@ baseService.factory("_config", function () {
         {
             id: 10,
             name: "J"
+        },
+        {
+            id: 11,
+            name: "K"
+        },
+        {
+            id: 12,
+            name: "L"
+        },
+        {
+            id: 13,
+            name: "M"
+        },
+        {
+            id: 14,
+            name: "N"
+        },
+        {
+            id: 15,
+            name: "O"
+        },
+        {
+            id: 16,
+            name: "P"
+        },
+        {
+            id: 17,
+            name: "Q"
+        },
+        {
+            id: 18,
+            name: "R"
+        },
+        {
+            id: 19,
+            name: "S"
+        },
+        {
+            id: 20,
+            name: "T"
+        },
+        {
+            id: 21,
+            name: "U"
+        },
+        {
+            id: 22,
+            name: "V"
+        },
+        {
+            id: 23,
+            name: "W"
+        },
+        {
+            id: 24,
+            name: "X"
+        },
+        {
+            id: 25,
+            name: "Y"
+        },
+        {
+            id: 26,
+            name: "Z"
         }
     ];
 
