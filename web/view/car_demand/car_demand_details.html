@@ -117,7 +117,7 @@
 
 
                     <!-- 海运信息 -->
-                    <div class="row blue-grey lighten-5" style="width: 80%;border:1px solid #bdbdbd;margin-top: 10px;">
+                    <div class="row blue-grey lighten-5" style="width: 80%;border:1px solid #bdbdbd;margin-top: 10px;" ng-if="self_car.ship_trans_status!==null">
                         <!-- header -->
                         <div class="col s12 lighten-1 cyan-text vc-center" style="height:50px;">
                             <div class="col s6">
@@ -172,6 +172,19 @@
                             <div class="col s12">
                                 订舱备注：{{self_car.ship_trans_remark}}
                             </div>
+                        </div>
+                    </div>
+                    <div class="row blue-grey lighten-5" style="width: 80%;border:1px solid #bdbdbd;margin-top: 10px;" ng-if="self_car.ship_trans_status==null">
+                        <!-- header -->
+                        <div class="col s12 lighten-1 cyan-text vc-center" style="height:50px;">
+                            <div class="col s6">
+                                海运信息
+                            </div>
+                            <div class="col s6 right-align"></div>
+                        </div>
+                        <div class="col s12 lighten-1 white grey-text vc-center" style="height:70px;">
+                            <i class="mdi  mdi-alert-circle-outline red-text fz30"></i>
+                            <span class="bold grey-text fz22">暂无海运信息</span>
                         </div>
                     </div>
 
