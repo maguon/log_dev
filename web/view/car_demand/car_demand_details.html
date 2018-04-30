@@ -16,123 +16,165 @@
                 <!-- 功能选项卡 -->
                 <div class="col s12 p0">
                     <ul class="tabWrap grey lighten-4 ">
-                        <li class="tab col s6  look_msg vc-center" ng-click="showCarInfo()">基本信息</li>
-                        <li  class="tab  col s6 look_car_img vc-center" ng-click="showCarImg()">车辆照片</li>
+                        <li class="tab col s4  look_msg vc-center" ng-click="showCarInfo()">基本信息</li>
+                        <li class="tab col s4 look_car_img vc-center" ng-click="showCarImg()">车辆照片</li>
+                        <li class="tab col s4 look_comment vc-center" ng-click="showComment()">操作记录</li>
                     </ul>
                 </div>
 
                 <!-- 车辆基本信息 显示区域 -->
                 <div id="look_msg" class="col s12 tab_box" style="width: 95%; margin:0 2% ">
-                    <form name="change_newStorage_carForm" style="color:#616161"  novalidate>
-                        <div class="row" style="margin-top: 20px;">
-                            <div class="row">
-                                <div class="col s4 valign-wrapper " style="padding: 0" ng-class="{ 'has-error':change_newStorage_carForm.look_win.$invalid&&submitted }">
-                                    <div class="input-field col s12">
-                                        <input  id="look_win" name="look_win" autocomplete="off" ng-model="self_car.vin" type="text" disabled   required >
-                                        <label for="look_win" ><span style="color: red">*</span>
-                                            VIN码</label>
-                                    </div>
-                                </div>
-                                <div class="col s4 valign-wrapper ">
-                                    <div class="input-field col s12">
-                                        <input  id="look_makecarName" name="look_win" autocomplete="off" ng-model="self_car.make_name" type="text" disabled   required >
-                                        <label for="look_makecarName" ><span style="color: red">*</span>
-                                            制造商</label>
-                                    </div>
-                                </div>
-                                <div class="col s4 valign-wrapper ">
-                                    <div class="input-field col s12">
-                                        <input  id="look_model_name" name="look_win" autocomplete="off" ng-model="self_car.model_name" type="text" disabled   required >
-                                        <label for="look_model_name" ><span style="color: red">*</span>
-                                            型号</label>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row "  >
-                                <div class="col s4 valign-wrapper p0" style="position: relative ;">
-                                    <div class="input-field col s12">
-                                        <input type="text" id="look_create_time" form-date   name="look_create_time" class="datepicker" disabled autocomplete="off" ng-model="self_car.pro_date" required   date><i class="mdi dataIcon mdi-table-large"></i>
-                                        <label for="look_create_time" >
-                                            生产日期</label>
-                                    </div>
-                                </div>
-                                <div class="col s4 valign-wrapper">
-                                    <div class="input-field col s12">
-                                        <select material-select watch id="look_car_color" name="look_car_color" class="" disabled ng-model="self_car.colour" required>
-                                            <option value="" disabled selected>请选择</option>
-                                            <option ng-repeat="el in color" ng-value="el.colorId" >{{el.colorName}}</option>
-                                        </select>
-                                        <label for="look_car_color" >
-                                            颜色</label>
-                                    </div>
-                                </div>
-                                <div class="col s4 valign-wrapper ">
-                                    <div class="input-field col s12">
-                                        <input  id="look_engineNum" name="look_engineNum" autocomplete="off" disabled ng-model="self_car.engine_num" type="text"   required >
-                                        <label for="look_engineNum" >
-                                            发动机号</label>
-                                    </div>
-                                </div>
-                            </div>
-                            <div ng-if="self_car.rel_status==1" class="row ">
-                                <div class="col s4 valign-wrapper p0" >
-                                    <div class="input-field col s12">
-                                        <input  id="look_storageName"  name="look_storageName"  autocomplete="off" disabled ng-model="look_storageName" class=" red-text text-lighten-2" type="text"   required >
-                                        <label for="look_storageName" ><span style="color: red">*</span>
-                                            存放位置</label>
-                                    </div>
-                                </div>
-                                <div class="col s4 valign-wrapper ">
-                                    <div class="input-field col s12">
-                                        <input  id="look_enter_time" form-date name="look_enter_time" autocomplete="off" disabled ng-model="self_car.enter_time" type="text"   required class="datepicker " date><i class="mdi dataIcon mdi-table-large"></i>
-                                        <label for="look_enter_time" ><span style="color: red">*</span>
-                                            入库时间</label>
-                                    </div>
-                                </div>
-                                <div class="col s4 valign-wrapper ">
-                                    <div class="input-field col s12">
-                                        <input  id="look_plan_out_time" form-date name="look_plan_out_time"  autocomplete="off" ng-model="self_car.plan_out_time" type="text"  disabled  required class="datepicker " date><i class="mdi dataIcon mdi-table-large"></i>
-                                        <label for="look_plan_out_time" ><span style="color: red">*</span>
-                                            计划出库时间</label>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <p class="col s12 min-width-2 left-align" style="color: #4e84cb" >
-                                    <span style="color: red">*</span>
-                                    备注:</p>
-                                <div class="col s12 valign-wrapper " style="position: relative">
-                                    <p class=" col s12 p0" >
-                                        <textarea disabled id="look_remark" style="height: 100px" name="remark" class="col s12" ng-model="self_car.remark"></textarea>
-                                    </p>
-                                </div>
-                            </div>
-                            <div class="row" style="height: 100px;overflow-y: auto">
-                                <p class="col s12  left-align " style="color: #4e84cb" >
-                                    <span style="color: red">*</span>
-                                    操作记录:</p>
-                                <div ng-repeat="el in comment" class="col s12 valign-wrapper " style="position: relative">
-                                    <p class=" col s12 p0" >
-                                        <span class="col s12 p0">
-                                            <span ng-bind="el.timez|formdate"></span>
-                                            <span>
-                                                操作内容：
-                                            </span>
-                                            <span ng-bind="el.content">
 
-                                            </span>
-                                            <span>
-                                                操作员：
-                                            </span>
-                                            <span ng-bind="el.name">
-                                                王大锤
-                                            </span>
-                                        </span>
-                                    </p>
-                                </div>
+
+                    <!-- 车辆信息 -->
+                    <div class="row blue-grey lighten-5" style="width: 80%;border:1px solid #bdbdbd;margin-top: 10px;">
+                        <!-- header -->
+                        <div class="col s12 lighten-1 cyan-text vc-center" style="height:50px;">
+                            <div class="col s12">
+                                当前车辆
                             </div>
                         </div>
-                    </form>
+                        <!-- body -->
+                        <div class="col s12 lighten-1 white grey-text vc-center" style="height:50px;">
+                            <div class="col s4">
+                                VIN码：{{self_car.vin}}
+                            </div>
+                            <div class="col s4">
+                                制造商：{{self_car.make_name}}
+                            </div>
+                            <div class="col s4">
+                                品牌：{{self_car.model_name}}
+                            </div>
+                        </div>
+                        <div class="col s12 white">
+                            <div class="divider s12 center" style="width:98%; margin-left: 10px;margin-right: 10px;margin-top: 10px;"></div>
+                        </div>
+                        <div class="col s12 lighten-1 white grey-text vc-center" style="height:50px;">
+                            <div class="col s4">
+                                生产日期：{{self_car.pro_date | date:'yyyy-MM-dd'}}
+                            </div>
+                            <div class="col s4">
+
+                                颜色:{{carColor}}
+                            </div>
+                            <div class="col s4">
+                                发动机号：{{self_car.engine_num}}
+                            </div>
+                        </div>
+                        <div class="col s12 lighten-1 white grey-text vc-center" style="height:50px;">
+                            <div class="col s12">
+                               备注：{{self_car.remark}}
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <!-- 仓储信息 -->
+                    <div class="row blue-grey lighten-5" style="width: 80%;border:1px solid #bdbdbd;margin-top: 10px;">
+                        <!-- header -->
+                        <div class="col s12 lighten-1 cyan-text vc-center" style="height:50px;">
+                            <div class="col s6">
+                                仓储信息
+                            </div>
+                            <div class="col s6 right-align">{{carStatusList[self_car.rel_status-1].status_text}}</div>
+                        </div>
+                        <!-- body -->
+                        <div class="col s12 lighten-1 white grey-text vc-center" style="height:50px;">
+                            <div class="col s4">
+                               入库时间：{{self_car.enter_time|date:'yy-MM-dd hh:mm:ss'}}
+                            </div>
+                            <div class="col s4">
+                                计划出库时间：{{self_car.plan_out_time|date:'yy-MM-dd hh:mm:ss'}}
+                            </div>
+                            <div class="col s4" ng-if="self_car.rel_status==2">
+                                实际出库时间：{{self_car.real_out_time|date:'yy-MM-dd hh:mm:ss'}}
+                            </div>
+                            <div class="col s4" ng-if="self_car.rel_status==1">
+                                实际出库时间：无
+                            </div>
+                        </div>
+                        <div class="col s12 white">
+                            <div class="divider s12 center" style="width:98%; margin-left: 10px;margin-right: 10px;margin-top: 10px;"></div>
+                        </div>
+                        <div class="col s12 lighten-1 white grey-text vc-center" style="height:50px;">
+                            <div class="col s4" ng-if="self_car.rel_status==1">
+                                车辆存放位置：{{look_storageName}}
+                            </div>
+                            <div class="col s4" ng-if="self_car.rel_status==2">
+                                车辆存放位置：无
+                            </div>
+                            <div class="col s4" ng-if="self_car.rel_status==1">
+                                钥匙存放位置:{{self_car.key_cabinet_name}}{{self_car.car_key_cabinet_area}}扇区{{self_car.car_key_position_row}}排{{self_car.car_key_position_col}}列</span>
+                            </div>
+                            <div class="col s4" ng-if="self_car.rel_status==2">
+                                钥匙存放位置:无
+                            </div>
+                            <div class="col s4">
+                            </div>
+                        </div>
+                    </div>
+
+
+
+                    <!-- 海运信息 -->
+                    <div class="row blue-grey lighten-5" style="width: 80%;border:1px solid #bdbdbd;margin-top: 10px;">
+                        <!-- header -->
+                        <div class="col s12 lighten-1 cyan-text vc-center" style="height:50px;">
+                            <div class="col s6">
+                                海运信息
+                            </div>
+                            <div class="col s6 right-align">{{shipTransStatus[self_car.ship_trans_status-1].name}}</div>
+                        </div>
+                        <!-- body -->
+                        <div class="col s12 lighten-1 white grey-text vc-center" style="height:50px;">
+                            <div class="col s4">
+                                始发港口：{{self_car.start_port_name}}
+                            </div>
+                            <div class="col s4">
+                                目的港口：{{self_car.end_port_name}}
+                            </div>
+                            <div class="col s4">
+                                开船日期：{{self_car.start_ship_date | date:'yyyy-mm-dd' }}
+                            </div>
+                        </div>
+                        <div class="col s12 white">
+                            <div class="divider s12 center" style="width:98%; margin-left: 10px;margin-right: 10px;margin-top: 10px;"></div>
+                        </div>
+                        <div class="col s12 lighten-1 white grey-text vc-center" style="height:50px;">
+                            <div class="col s4">
+                                船公司：{{self_car.ship_company_name}}
+                            </div>
+                            <div class="col s4">
+                                船名：{{self_car.ship_name}}
+                            </div>
+                            <div class="col s4">
+                                到港日期：{{self_car.end_ship_date | date:'yyyy-mm-dd'}}
+                            </div>
+                        </div>
+                        <div class="col s12 white">
+                            <div class="divider s12 center" style="width:98%; margin-left: 10px;margin-right: 10px;margin-top: 10px;"></div>
+                        </div>
+                        <div class="col s12 lighten-1 white grey-text vc-center" style="height:50px;">
+                            <div class="input-field col s4">
+                                货柜：{{self_car.container}}
+                            </div>
+                            <div class="input-field col s4">
+                                booking：{{self_car.booking}}
+                            </div>
+                            <div class="input-field col s4">
+                                封签：{{self_car.tab}}
+                            </div>
+                        </div>
+                        <div class="col s12 white">
+                            <div class="divider s12 center" style="width:98%; margin-left: 10px;margin-right: 10px;margin-top: 10px;"></div>
+                        </div>
+                        <div class="col s12 lighten-1 white grey-text vc-center" style="height:50px;">
+                            <div class="col s12">
+                                订舱备注：{{self_car.ship_trans_remark}}
+                            </div>
+                        </div>
+                    </div>
+
                 </div>
 
                 <!-- 车辆照片 显示区域 -->
@@ -151,6 +193,33 @@
                             </div>
                         </div>
                     </div>
+                </div>
+
+                <!--操作记录-->
+                <div id="look_comment" class="col s12 tab_box" style="width: 60%; margin:0 20% ">
+                    <div style="padding: 50px 0;">
+                        <div ng-repeat="el in comment" class="col s12 valign-wrapper " style="position: relative;border-bottom: 1px dotted #ccc;height:40px">
+                            <p class=" col s12 p0" >
+                            <span class="col s12 p0">
+                                <span class=" mdi mdi-chevron-right"></span>
+                                <span ng-bind="el.timez|formdate"></span>
+                                <span>
+                                    操作内容：
+                                </span>
+                                <span ng-bind="el.content">
+
+                                </span>
+                                <span>
+                                    操作员：
+                                </span>
+                                <span ng-bind="el.name">
+                                    王大锤
+                                </span>
+                            </span>
+                            </p>
+                        </div>
+                    </div>
+
                 </div>
             </div>
         </div>

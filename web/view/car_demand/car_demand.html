@@ -4,130 +4,167 @@
 
         <!-- 上部分：检索条件输入区域 -->
         <div class="row  grey-text text-darken-1">
-            <div class="col s11">
+            <div class="col s10">
 
                 <!-- 查询条件：第一行 -->
+                <div class="row col s12">
+                    <!-- 查询条件：车辆VIN码 -->
+                    <div class="input-field col" style="width: 40%;">
+                        <input type="text" id="conditionVin" ng-model="conditionVin">
+                        <label for="conditionVin">VIN码</label>
+                    </div>
 
-                <!-- 查询条件：车辆状态 -->
-                <div class="input-field col" style="width: 20%;">
-                    <select material-select watch ng-model="conditionCarStatus">
-                        <option value="">车辆状态</option>
-                        <option ng-repeat="el in carStatusList" ng-value="el.s_num">{{el.status_text}}</option>
-                    </select>
+                    <!-- 查询条件：车辆品牌 -->
+                    <div class="input-field col" style="width: 20%;">
+                        <select material-select watch ng-model="conditionMakeId"
+                                ng-change="changeMakerId(conditionMakeId)">
+                            <option value="" selected>品牌</option>
+                            <option ng-repeat="el in carMakerList" ng-value="el.id">{{el.make_name}}</option>
+                        </select>
+                    </div>
+
+                    <!-- 查询条件：车辆型号 -->
+                    <div class="input-field col" style="width: 20%;">
+                        <select material-select watch ng-model="conditionModelId">
+                            <option value="" selected>型号</option>
+                            <option ng-repeat="el in carModelList" ng-value="el.id">{{el.model_name}}</option>
+                        </select>
+                    </div>
+
+                    <!-- 查询条件：委托方 -->
+                    <div class="input-field col" style="width: 20%;">
+                        <select  watch id="entrustId"  style="width: 100%">
+                            <option value="" ></option>
+                            <option ng-repeat="el in entrustList" ng-value="el.id">{{el.short_name}}</option>
+                        </select>
+                    </div>
                 </div>
-
-                <!-- 查询条件：所在仓库 -->
-                <div class="input-field col" style="width: 20%;">
-                    <select material-select watch ng-model="conditionStorage" ng-change="changeStorageId(conditionStorage)">
-                        <option value="" selected>所在仓库</option>
-                        <option ng-if="el.storage_status==1" ng-repeat="el in storageList" ng-value="el.id">
-                            {{el.storage_name}}
-                        </option>
-                    </select>
-                </div>
-
-                <!-- 查询条件：车辆VIN码 -->
-                <div class="input-field col" style="width: 60%;">
-                    <input type="text" id="conditionVin" ng-model="conditionVin">
-                    <label for="conditionVin">VIN码</label>
-                </div>
-
 
                 <!-- 查询条件：第二行 -->
+                <div class="row col s12">
 
-                <!-- 查询条件：车辆品牌 -->
-                <div class="input-field col" style="width: 20%;">
-                    <select material-select watch ng-model="conditionMakeId"
-                            ng-change="changeMakerId(conditionMakeId)">
-                        <option value="" selected>品牌</option>
-                        <option ng-repeat="el in carMakerList" ng-value="el.id">{{el.make_name}}</option>
-                    </select>
-                </div>
+                    <!-- 查询条件：车辆状态 -->
+                    <div class="input-field col" style="width: 20%;">
+                        <select material-select watch ng-model="conditionCarStatus">
+                            <option value="">车辆状态</option>
+                            <option ng-repeat="el in carStatusList" ng-value="el.s_num">{{el.status_text}}</option>
+                        </select>
+                    </div>
 
-                <!-- 查询条件：车辆型号 -->
-                <div class="input-field col" style="width: 20%;">
-                    <select material-select watch ng-model="conditionModelId">
-                        <option value="" selected>型号</option>
-                        <option ng-repeat="el in carModelList" ng-value="el.id">{{el.model_name}}</option>
-                    </select>
-                </div>
+                    <!-- 查询条件：所在仓库 -->
+                    <div class="input-field col" style="width: 20%;">
+                        <select material-select watch ng-model="conditionStorage" ng-change="changeStorageId(conditionStorage)">
+                            <option value="" selected>所在仓库</option>
+                            <option ng-if="el.storage_status==1" ng-repeat="el in storageList" ng-value="el.id">
+                                {{el.storage_name}}
+                            </option>
+                        </select>
+                    </div>
 
-                <!-- 查询条件：委托方 -->
-                <div class="input-field col" style="width: 20%;">
-                    <select  watch id="entrustId"  style="width: 100%">
-                        <option value="" ></option>
-                        <option ng-repeat="el in entrustList" ng-value="el.id">{{el.short_name}}</option>
-                    </select>
-                </div>
+                    <!-- 查询条件：是否MSO -->
+                    <div class="input-field col" style="width: 20%;">
+                        <select material-select watch ng-model="conditionMsoId">
+                            <option value="" selected>是否MSO</option>
+                            <option ng-repeat="mso in msoFlags" ng-value="mso.id">{{mso.name}}</option>
+                        </select>
+                    </div>
 
-                <!-- 查询条件：入库时间 -->
-                <div class="col" style="width: 40%;">
-                    <div class="col input-field s6">
+                    <!-- 查询条件：入库时间 -->
+                    <div class="col input-field" style="width: 10%;">
                         <input id="conditionEnterTimeStart" type="text" ng-model="conditionEnterTimeStart"
                                class="datepicker" autocomplete="off" required date>
-                        <label for="conditionEnterTimeStart">入库时间(始)</label>
+                        <label for="conditionEnterTimeStart">入库时间</label>
                         <i class="mdi dataIcon mdi-table-large"></i>
-
                     </div>
-                    <div class="col input-field s6">
-                        <input type="text" id="conditionEnterTimeEnd" ng-model="conditionEnterTimeEnd" class="datepicker"
+                    <div class="col input-field" style="width: 10%;">
+                        <input id="conditionEnterTimeEnd" type="text" ng-model="conditionEnterTimeEnd"
+                               class="datepicker" autocomplete="off" required date>
+                        <i class="mdi dataIcon mdi-table-large"></i>
+                    </div>
+                    <div class="col input-field" style="width: 10%;">
+                        <input type="text" id="conditionOutTimeStart" ng-model="conditionOutTimeStart" class="datepicker"
                                autocomplete="off" required date>
-                        <label for="conditionEnterTimeEnd">入库时间(终)</label>
+                        <label for="conditionOutTimeStart">出库时间</label>
+                        <i class="mdi dataIcon mdi-table-large"></i>
+                    </div>
+                    <div class="col input-field" style="width: 10%;">
+                        <input type="text" id="conditionOutTimeEnd" ng-model="conditionOutTimeEnd" class="datepicker"
+                               autocomplete="off" required date>
                         <i class="mdi dataIcon mdi-table-large"></i>
                     </div>
                 </div>
 
                 <!-- 查询条件：第三行 -->
+                <div class="row col s12">
+                    <!-- 查询条件：船运状态 -->
+                    <div class="input-field col" style="width: 20%;">
+                        <select material-select watch ng-model="conditionShipTransStatus">
+                            <option value="">船运状态</option>
+                            <option ng-repeat="el in shipTransStatus" ng-value="el.id">{{el.name}}</option>
+                        </select>
+                    </div>
 
-                <!-- 查询条件：是否MSO -->
-                <div class="input-field col" style="width: 20%;">
-                    <select material-select watch ng-model="conditionMsoId">
-                        <option value="" selected>是否MSO</option>
-                        <option ng-repeat="mso in msoFlags" ng-value="mso.id">{{mso.name}}</option>
-                    </select>
-                </div>
+                    <!-- 船公司 -->
+                    <div class="input-field col" style="width: 20%;">
+                        <select material-select watch ng-model="conditionShipCompanyId">
+                            <option value="">船公司</option>
+                            <option ng-repeat="el in shippingCoList" ng-value="el.id">{{el.ship_company_name}}</option>
+                        </select>
+                    </div>
 
-                <!-- 查询条件：计划出库时间 -->
-                <div class="input-field col" style="width: 40%;">
-                    <div class="col input-field s6 no-mp p0">
-                        <input type="text" id="conditionPlanTimeStart" ng-model="conditionPlanTimeStart" class="datepicker" autocomplete="off" date>
-                        <label for="conditionPlanTimeStart">计划出库时间(始)</label>
+                    <!-- 货柜 -->
+                    <div class="input-field col" style="width: 20%;">
+                        <input type="text" id="counterText" ng-model="conditionContainer">
+                        <label for="counterText">货柜</label>
+                    </div>
+
+                    <!-- 开船日期 -->
+                    <div class="input-field col" style="width: 10%;">
+                        <input type="text" id="sailTimeStart" ng-model="conditionStartShipDateStart" class="datepicker" date>
+                        <i class="mdi dataIcon mdi-table-large"></i>
+                        <label for="sailTimeStart">开船日期</label>
+                    </div>
+                    <div class="input-field col" style="width: 10%;">
+                        <input type="text" id="sailTime" ng-model="conditionStartShipDateEnd" class="datepicker" date>
                         <i class="mdi dataIcon mdi-table-large"></i>
                     </div>
-                    <div class="col input-field s6 no-mp">
-                        <input type="text" id="conditionPlanTimeEnd" ng-model="conditionPlanTimeEnd" class="datepicker" autocomplete="off" date>
-                        <label for="conditionPlanTimeEnd">计划出库时间(终)</label>
-                        <i class="mdi dataIcon mdi-table-large"></i>
+
+                    <!-- 到港日期 -->
+                    <div class="input-field col" style="width: 10%;">
+                        <input id="arrivalTimeStart" type="text" ng-model="conditionEndShipDateStart" class="datepicker" date><i
+                            class="mdi dataIcon mdi-table-large"></i>
+                        <label for="arrivalTimeStart">到港日期</label>
                     </div>
-                </div>
-                <!-- 查询条件：实际出库时间 -->
-                <div class="input-field col vc-center" style="width: 40%;">
-                    <div class="col input-field s6 no-mp">
-                        <input type="text" id="conditionOutTimeStart" ng-model="conditionOutTimeStart" class="datepicker" autocomplete="off" date>
-                        <label for="conditionOutTimeStart">实际出库时间(始)</label>
-                        <i class="mdi dataIcon mdi-table-large"></i>
-                    </div>
-                    <div class="col input-field s6 no-mp">
-                        <input type="text" id="conditionOutTimeEnd" ng-model="conditionOutTimeEnd" class="datepicker" autocomplete="off" date>
-                        <label for="conditionOutTimeEnd">实际出库时间(终)</label>
-                        <i class="mdi dataIcon mdi-table-large"></i>
+                    <div class="input-field col" style="width: 10%;">
+                        <input id="arrivalTime" type="text" ng-model="conditionEndShipDateEnd" class="datepicker" date><i
+                            class="mdi dataIcon mdi-table-large"></i>
                     </div>
                 </div>
             </div>
 
-            <!-- 查询按钮 -->
-            <div class="col s1 flex flex-round">
-                <a class="btn-floating btn-large waves-light waves-effect red lighten-2  btn vc-center"
-                   style="margin-top: 50px" ng-click="queryCarList()">
-                    <i class="mdi mdi-magnify"></i>
-                </a>
+
+            <!-- 右侧：按钮区 -->
+            <div class="col s2" style="margin-top:90px;">
+                <!--查询按钮-->
+                <div class="col s6 center">
+                    <a class="btn-floating btn-large waves-light waves-effect red lighten-2  btn " ng-click="queryCarList()()">
+                        <i class="mdi mdi-magnify"></i>
+                    </a>
+                </div>
+
+                <!--下载按钮-->
+                <div class="col s6 center">
+                    <a class="btn-floating btn-large waves-light waves-effect btn vc-center" style="margin-right: 10px;background-color: #fea353;" ng-click="export()">
+                        <i class="mdi mdi-cloud-download"></i>
+                    </a>
+                </div>
             </div>
         </div>
 
         <!-- 下部分：检索结果显示区域 -->
         <div class="col s12">
             <div class="divider" style="background: #407BC7;height: 2px;"></div>
-            <table class=" bordered striped">
+            <table class=" bordered striped centered">
                 <thead class="blue-grey lighten-5">
                 <tr class="grey-text text-darken-2">
                     <th data-field="">VIN码</th>
@@ -135,10 +172,12 @@
                     <th data-field="">型号</th>
                     <th data-field="">委托方</th>
                     <th data-field="">是否MSO</th>
-                    <th data-field="">入库时间</th>
                     <th data-field="">仓库</th>
-                    <th data-field="">计划出库时间</th>
-                    <th data-field="">实际出库时间</th>
+                    <th data-field="">入库时间</th>
+                    <th data-field="">发船日期</th>
+                    <th data-field="">到港日期</th>
+                    <th data-field="">仓储状态</th>
+                    <th data-field="">船运状态</th>
                     <th>操作</th>
                 </tr>
                 </thead>
@@ -151,15 +190,19 @@
                     <td ng-bind="el.entrust_name"></td>
                     <!-- 是否MSO -->
                     <td>{{msoFlags[el.mso_status-1].name}}</td>
-                    <!-- 入库时间 -->
-                    <td ng-bind="el.enter_time|date:'yyyy-MM-dd HH:mm:ss'"></td>
                     <!-- 仓库 -->
                     <td>{{el.storage_id==null ? '无' : el.storage_name}}</td>
 
-                    <!--<td ng-if="el.col!=null">{{el.row}}排{{el.col}}列</td>-->
-                    <!--<td ng-if="el.col==null">无</td>-->
-                    <td ng-bind="el.plan_out_time|date:'yyyy-MM-dd '"></td>
-                    <td ng-bind="el.real_out_time|date:'yyyy-MM-dd '"></td>
+                    <!-- 入库时间 -->
+                    <td ng-bind="el.enter_time|date:'yyyy-MM-dd HH:mm:ss'"></td>
+                    <!--发船日期-->
+                    <td ng-bind="el.start_ship_date|date:'yyyy-MM-dd '"></td>
+                    <!--到港日期-->
+                    <td ng-bind="el.end_ship_date|date:'yyyy-MM-dd '"></td>
+                    <!--仓储状态-->
+                    <td>{{carStatusList[el.rel_status-1].status_text}}</td>
+                    <!--船运状态-->
+                    <td>{{shipTransStatus[el.ship_trans_status-1].name}}</td>
                     <!-- 显示【车辆信息】画面按钮 -->
                     <td class="operation">
                         <a href="#" ui-sref="car_demand_details({id:el.id,vin:el.vin,from:'car_demand'})" class=""><i
@@ -167,7 +210,7 @@
                     </td>
                 </tr>
                 <tr class="grey-text text-darken-1" ng-if="storageCar.length == 0">
-                    <td colspan="10" style="letter-spacing: 2px;text-align: center;">暂无数据</td>
+                    <td colspan="12" style="letter-spacing: 2px;text-align: center;">暂无数据</td>
                 </tr>
                 </tbody>
             </table>

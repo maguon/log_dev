@@ -11,6 +11,10 @@ app.controller("car_demand_details_controller", ["$state", "$stateParams", "_con
     $scope.characters = _config.characters;
     // 颜色列表
     $scope.color = _config.config_color;
+    // 车库状态 列表
+    $scope.carStatusList = _config.carRelStatus;
+    // 状态船运 列表
+    $scope.shipTransStatus = _config.shipTransStatus;
 
     /**
      * 显示仓储车辆基本信息。
@@ -34,6 +38,18 @@ app.controller("car_demand_details_controller", ["$state", "$stateParams", "_con
         $('ul.tabWrap li.look_car_img ').addClass("active");
         $("#look_car_img").addClass("active");
         $("#look_car_img").show();
+    };
+
+    /**
+     * 显示仓储车辆照片。
+     */
+    $scope.showComment = function () {
+        $('ul.tabWrap li').removeClass("active");
+        $(".tab_box").removeClass("active");
+        $(".tab_box").hide();
+        $('ul.tabWrap li.look_comment ').addClass("active");
+        $("#look_comment").addClass("active");
+        $("#look_comment").show();
     };
 
     var viewer;
@@ -101,6 +117,11 @@ app.controller("car_demand_details_controller", ["$state", "$stateParams", "_con
             if (data.success == true && data.result.length > 0) {
                 $scope.modelId = data.result[0].model_id;
                 $scope.self_car = data.result[0];
+                for (var i in _config.config_color) {
+                    if (_config.config_color[i].colorId == $scope.self_car.colour) {
+                        $scope.carColor = _config.config_color[i].colorName;
+                    }
+                }
                 // modelID赋值
                 $scope.look_make_id = $scope.self_car.make_id,
                 $scope.look_model_id = $scope.self_car.model_id,
