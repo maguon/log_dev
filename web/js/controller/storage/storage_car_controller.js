@@ -159,51 +159,6 @@ app.controller("storage_car_controller", ["$scope", "$rootScope", "$stateParams"
             }
         });
     };
-
-    //点击新增按钮
-    $scope.addStorageCar = function () {
-        $('.tabWrap .tab').removeClass("active");
-        $(".tab_box ").removeClass("active");
-        $(".tab_box ").hide();
-        $('.tabWrap .test1').addClass("active");
-        $("#test1").addClass("active");
-        $("#test1").show();
-        $scope.vin = "";
-        $scope.make_name = "";
-        $scope.model_name = "";
-        $scope.create_time = "";
-        $scope.car_color = "";
-        $scope.engineNum = "";
-        $scope.carValuation = "";
-        $scope.MSO = "";
-        $scope.remark = "";
-        $scope.storage_name = "";
-        $scope.parking_area ="";
-        $scope.lattice = "";
-        $scope.entrustId = '';
-        $scope.carValuation = '';
-        $scope.plan_out_time = '';
-        $scope.area = '';
-        $scope.addRow = '';
-        $scope.addLot = '';
-        $scope.addCarKeyCabinet = '';
-        $scope.addCarKeyCabinetArea = '';
-
-        // 照片清空
-        $scope.imgArr = [];
-        // 车辆型号清空
-        $scope.carModelName = "";
-        // 存放位置清空
-        $scope.parkingArray = "";
-        $scope.colArr = "";
-        $scope.parking_id = "";
-        $scope.plan_out_time = "";
-        $(".modal").modal({
-            height: 500
-        });
-        $("#newStorageCar").modal("open");
-
-    };
     // 数据导出
     $scope.export = function () {
         var obj = {
@@ -235,6 +190,13 @@ app.controller("storage_car_controller", ["$scope", "$rootScope", "$stateParams"
                         return;
                     }
                     $scope.storageAreaParking = data.result;
+                    $scope.area = '';
+                    $scope.addRow = '';
+                    $scope.addLot = '';
+                    $scope.parking_id = "";
+                    $scope.parkingArrayRow=[];
+                    $scope.colArr=[];
+                    $scope.parkingArrayLot=[];
                 }
                 else if(data.success == true&&data.result.length==0){
                     $scope.storageAreaParking = "";
@@ -253,12 +215,14 @@ app.controller("storage_car_controller", ["$scope", "$rootScope", "$stateParams"
                     return;
                 }
                 $scope.storageParking = data.result;
-                $scope.parkingArray =_baseService.storageParking($scope.storageParking);
+                $scope.parkingArrayR=[];
+                $scope.parkingArrayL=[];
+                $scope.parkingArray =_baseService.storageParking2($scope.storageParking);
                 for(var i=0;i<$scope.parkingArray.length;i++){
                     $scope.parkingArrayR.push($scope.parkingArray[i].row);
-                    $scope.parkingArrayL.push($scope.parkingArray[i].lot);
+                    $scope.parkingArrayL.push($scope.parkingArray[i].col);
                     $scope.parkingArrayRow = _baseService.array($scope.parkingArrayR);
-                    $scope.parkingArrayLot =  _baseService.array($scope.parkingArrayL);
+                    $scope.parkingArrayCol =  _baseService.array($scope.parkingArrayL);
                 }
             }
             else if(data.success == true&&data.result.length==0){
@@ -270,11 +234,11 @@ app.controller("storage_car_controller", ["$scope", "$rootScope", "$stateParams"
         });
     };
     // 存放位置联动查询--列
-    $scope.getStorageRow = function (Row,Lot) {
+    $scope.getStorageRow = function (Row,Col) {
         for(var i =0;i<$scope.parkingArray.length;i++){
-           if($scope.parkingArray[i].row==Row&&$scope.parkingArray[i].lot== Lot) {
-               $scope.colArr =$scope.parkingArray[i].col;
-           }
+            if($scope.parkingArray[i].row==Row&&$scope.parkingArray[i].col== Col) {
+                $scope.colArr =$scope.parkingArray[i].lot;
+            }
         }
     };
     // 车辆型号联动查询
@@ -293,6 +257,51 @@ app.controller("storage_car_controller", ["$scope", "$rootScope", "$stateParams"
 
 
     };
+    //点击新增按钮
+    $scope.addStorageCar = function () {
+        $('.tabWrap .tab').removeClass("active");
+        $(".tab_box ").removeClass("active");
+        $(".tab_box ").hide();
+        $('.tabWrap .test1').addClass("active");
+        $("#test1").addClass("active");
+        $("#test1").show();
+        $scope.vin = "";
+        $scope.make_name = "";
+        $scope.model_name = "";
+        $scope.create_time = "";
+        $scope.car_color = "";
+        $scope.engineNum = "";
+        $scope.carValuation = "";
+        $scope.MSO = "";
+        $scope.remark = "";
+        $scope.storage_name = "";
+        $scope.parking_area ="";
+        $scope.lattice = "";
+        $scope.entrustId = '';
+        $scope.carValuation = '';
+        $scope.addCarKeyCabinet = '';
+        $scope.addCarKeyCabinetArea = '';
+        // 照片清空
+        $scope.imgArr = [];
+        // 车辆型号清空
+        $scope.carModelName = "";
+        // 存放位置清空
+        $scope.area = '';
+        $scope.addRow = '';
+        $scope.addLot = '';
+        $scope.parking_id = "";
+        $scope.parkingArrayRow=[];
+        $scope.colArr=[];
+        $scope.parkingArrayLot=[];
+        $scope.storageAreaParking=[];
+        $scope.plan_out_time = "";
+        $(".modal").modal({
+            height: 500
+        });
+        $("#newStorageCar").modal("open");
+
+    };
+
     // 图片上传函数
     $scope.uploadBrandImage = function (dom) {
         var filename = $(dom).val();

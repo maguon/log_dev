@@ -57,6 +57,64 @@ baseService.factory('_baseService',function(){
         }
         return parkingArray;
     };
+
+
+    // 仓储车辆图分布2 先行后列再格
+    _this.storageParking2 = function (pk) {
+        var parkingArray = [];
+        for (i = 0; i < pk.length; i++) {
+            var date = new Date(pk[i].plan_out_time);
+            var plan_time = date.getTime();
+            var new_time = new Date().getTime();
+            // 临近出库标记：5 days
+            var time = plan_time - new_time - 1000 * 60 * 60 * 24 * 5;
+            // 临近出库标记
+            var expiredFlag = false;
+            if (time > 0) {
+                expiredFlag = false;
+            } else {
+                expiredFlag = true;
+            }
+            for (j = 0; j < parkingArray.length;) {
+                if (parkingArray[j].row == pk[i].row && parkingArray[j].col == pk[i].col) {
+                    break;
+                } else {
+                    j++;
+                }
+            }
+            if (j == parkingArray.length) {
+                parkingArray.push({
+                    row: pk[i].row,
+                    col: pk[i].col,
+                    lot: [{
+                        lot: pk[i].lot,
+                        vin: pk[i].vin,
+                        carId: pk[i].car_id,
+                        id: pk[i].id,
+                        status: pk[i].parking_statu,
+                        plan_time: expiredFlag,
+                        storage_name: pk[i].storage_name,
+                        storage_id: pk[i].storage_id
+                    }]
+                })
+            } else {
+                parkingArray[j].lot.push({
+                    lot: pk[i].lot,
+                    vin: pk[i].vin,
+                    carId: pk[i].car_id,
+                    id: pk[i].id,
+                    status: pk[i].parking_status,
+                    plan_time: expiredFlag,
+                    storage_name: pk[i].storage_name,
+                    storage_id: pk[i].storage_id
+                });
+            }
+        }
+        return parkingArray;
+    };
+
+
+
     // 钥匙图分布
     _this.carKeyParking = function (pk) {
         var parkingArray = [];
