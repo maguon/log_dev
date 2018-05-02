@@ -298,7 +298,6 @@ app.controller("ship_trans_order_controller", ["$scope", "$rootScope", "_host", 
      */
     $scope.changeVin = function () {
 
-        var times = 0;
         if ($scope.newShippingOrder.vin !== undefined) {
             if ($scope.newShippingOrder.vin.length >= 6) {
 
@@ -318,14 +317,14 @@ app.controller("ship_trans_order_controller", ["$scope", "$rootScope", "_host", 
                         data: vinObjs,
                         minLength: 6,
                         onAutocomplete: function (val) {
-                            if (times ==0) {
-                                $scope.addCarInfo(val);
-                                times = times+ 1;
-                            }
+                            $scope.addCarInfoFlg = true;
                         },
-                        // limit: 6
+                        limit: 6
                     });
                     $('#autocomplete-input').focus();
+                    if ($scope.newShippingOrder.vin.length > 17 && $scope.addCarInfoFlg) {
+                        $scope.addCarInfo();
+                    }
                 })
             }
 
@@ -340,14 +339,10 @@ app.controller("ship_trans_order_controller", ["$scope", "$rootScope", "_host", 
     /**
      * 点击 vin码 后的 追加按钮。(打开追加画面 或追加列表数据)
      */
-    $scope.addCarInfo = function (vin) {
+    $scope.addCarInfo = function () {
 
         // 新追加的车辆VIN码
         var newVin = $scope.newShippingOrder.vin;
-
-        if (vin !== undefined) {
-            newVin = vin;
-        }
 
         // 如果是从自动填充中，选择出来的话，需要截取前面17位
         if (newVin.length > 17) {
