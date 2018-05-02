@@ -77,10 +77,10 @@
                     <i class="mdi dataIcon mdi-table-large"></i>
                 </div>
 
-                <!-- 查询条件：支付状态 -->
+                <!-- 查询条件：订单状态 -->
                 <div class="input-field col" style="width: 20%;">
                     <select material-select watch ng-model="conditionPayStatus">
-                        <option value="" selected>支付状态</option>
+                        <option value="" selected>订单状态</option>
                         <option ng-repeat="el in payStatusList" ng-value="el.id">{{el.name}}</option>
                     </select>
                 </div>
@@ -118,7 +118,7 @@
                 <th data-field="">预计支付<br><span style="margin-left: 12px;font-size: 12px;">(美元)</span></th>
                 <th data-field="">实际应付<br><span style="margin-left: 12px;font-size: 12px;">(美元)</span></th>
                 <!--<th data-field="">实际应付(美元)</th>-->
-                <th data-field="">支付状态</th>
+                <th data-field="">订单状态</th>
                 <th class="center">操作</th>
             </tr>
             </thead>
@@ -142,12 +142,12 @@
                 <td>{{el.plan_fee | currency}}</td>
                 <!-- 实际应付(美元) -->
                 <td>{{el.actual_fee | currency}}</td>
-                <!-- 支付状态 -->
+                <!-- 订单状态 -->
                 <td>{{payStatusList[el.order_status - 1].name}}</td>
                 <!-- 显示【车辆信息】画面按钮 -->
                 <td class="operation">
                     <div class="col s6 right-align">
-                        <i ng-show="el.payment_status == 1" class="mdi mdi-cash-usd look_icon cyan-text lighten-1"
+                        <i ng-show="el.payment_status !== paymentStatus[1].id" class="mdi mdi-cash-usd look_icon cyan-text lighten-1"
                            ng-click="openChangePriceDiv(el)"></i>
                     </div>
                     <div class="col s6 left-align">

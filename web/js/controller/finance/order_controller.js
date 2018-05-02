@@ -12,6 +12,8 @@ app.controller("order_controller", ["$scope", "$rootScope", "_host", "_basic", "
 
     // 支付状态 列表
     $scope.payStatusList = _config.payStatus;
+    // 支付状态 列表
+    $scope.paymentStatus = _config.paymentStatus;
 
     // 当前汽车品牌ID
     $scope.curruntId = 0;
@@ -81,7 +83,7 @@ app.controller("order_controller", ["$scope", "$rootScope", "_host", "_basic", "
         if ($scope.conditionOutTimeEnd != null) {
             reqUrl = reqUrl + "&realEnd=" + $scope.conditionOutTimeEnd
         }
-        // 支付状态
+        // 订单状态
         if ($scope.conditionPayStatus != null) {
             reqUrl = reqUrl + "&orderStatus=" + $scope.conditionPayStatus
         }
