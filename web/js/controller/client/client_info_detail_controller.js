@@ -25,6 +25,8 @@ app.controller("client_info_detail_controller", ["$scope", "$rootScope","$state"
     // 支付方式 列表
     $scope.paymentMethodList = _config.paymentType;
     $scope.paymentStatusList= _config.paymentStatus;
+    $("#pre").hide();
+    $("#next").hide();
     /*
     * 跳转页面
     * */
@@ -35,6 +37,7 @@ app.controller("client_info_detail_controller", ["$scope", "$rootScope","$state"
         $('ul.tabWrap li.inventoryRecord ').addClass("active");
         $("#inventoryRecord").addClass("active");
         $("#inventoryRecord").show();
+
 
     };
     $scope.relStatus = function () {

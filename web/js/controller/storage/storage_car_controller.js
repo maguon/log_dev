@@ -12,7 +12,6 @@ app.controller("storage_car_controller", ["$scope", "$rootScope", "$stateParams"
     $scope.color = _config.config_color;
     // 获取车辆状态
     $scope.relStatus = _config.carRelStatus;
-    $scope.getRelStatus = 1;
     $scope.addCarKeyCabinet = "";
     $scope.pictureCarId = "";
     $scope.show = true;
@@ -187,7 +186,6 @@ app.controller("storage_car_controller", ["$scope", "$rootScope", "$stateParams"
         $scope.area = '';
         $scope.addRow = '';
         $scope.addLot = '';
-        $scope.parking_id = '';
         $scope.addCarKeyCabinet = '';
         $scope.addCarKeyCabinetArea = '';
 

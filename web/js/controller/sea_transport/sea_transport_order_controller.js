@@ -99,9 +99,37 @@ app.controller("sea_transport_order_controller", ["$scope", "$rootScope", "_host
     }
 
     /**
+     * 获取委托方信息
+     * @param type 委托方类型
+     */
+    /**
+     * 【委托方】列表查询
+     */
+    function getEntrustInfo() {
+        _basic.get(_host.api_url + "/entrust").then(function (data) {
+            if (data.success == true) {
+                $scope.entrustList = data.result;
+                $('#entrustSelect').select2({
+                    placeholder: '委托方',
+                    containerCssClass: 'select2_dropdown',
+                    allowClear: true
+                });
+            }
+        });
+    }
+
+
+    /**
      * 根据画面输入的查询条件，进行数据查询。
      */
     function queryOrderData() {
+        var entrust = {};
+
+        if ($("#entrustSelect").val() == "") {
+            entrust = {id: "", text: ""};
+        } else {
+            entrust = $("#entrustSelect").select2("data")[0];
+        }
         // 检索用url
         var reqUrl = _host.api_url + "/shipTransOrder?start=" + $scope.start + "&size=" + $scope.size;
 
@@ -119,8 +147,8 @@ app.controller("sea_transport_order_controller", ["$scope", "$rootScope", "_host
             reqUrl = reqUrl + "&modelId=" + $scope.conditionModelId;
         }
         // 委托方
-        if ($scope.conditionEntrust != null && $scope.conditionEntrust!= 0) {
-            reqUrl = reqUrl + "&shortName=" + $scope.conditionEntrust;
+        if (entrust.id!= null && entrust.id!= 0) {
+            reqUrl = reqUrl + "&entrustId=" + entrust.id;
         }
         // 支付状态
         if ($scope.conditionPayStatus != null) {
@@ -256,6 +284,8 @@ app.controller("sea_transport_order_controller", ["$scope", "$rootScope", "_host
         getCarMakerList();
         // 取得查询条件【船公司】列表
         getShippingCoList();
+
+        getEntrustInfo();
 
         queryOrderData();
     };

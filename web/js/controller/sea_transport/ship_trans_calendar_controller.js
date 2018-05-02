@@ -55,11 +55,11 @@ app.controller("ship_trans_calendar_controller", ["$scope", "_host", "_basic", f
                         for (var i in $scope.data) {
                             var titleHtml = '<div class=" p0" style="padding-top: 10px">' +
                                 '<div class="col s4 center-align  red-text text-lighten-1" style="font-size: 14px">' +
-                                '<i style="display: block" class="mdi mdi-ferry"></i><span>' + $scope.data[i].arrive + '</span></div>' +
+                                '<i style="display: block" class="mdi mdi-ferry"></i><span>' + $scope.data[i].booking + '</span></div>' +
                                 '<div class="col s4 center-align  cyan-text text-lighten-1" style="font-size: 14px">' +
-                                '<i style="display: block" class="mdi mdi-format-horizontal-align-left"></i><span>' + $scope.data[i].booking + '</span></div>' +
+                                '<i style="display: block" class="mdi mdi mdi-cube-send"></i><span>' + $scope.data[i].exports + '</span></div>' +
                                 '<div class="col s4 center-align cyan-text text-lighten-2" style="font-size: 14px">' +
-                                '<i style="display: block" class="mdi mdi-format-horizontal-align-right"></i><span>' + $scope.data[i].exports + '</span></div></div>';
+                                '<i style="display: block" class="mdi mdi-checkbox-multiple-marked-outline"></i><span>' + $scope.data[i].arrive + '</span></div></div>';
                             var date = {
                                 title: titleHtml,
                                 start: $scope.data[i].date_id + '',
