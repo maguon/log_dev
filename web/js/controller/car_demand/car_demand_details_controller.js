@@ -90,10 +90,6 @@ app.controller("car_demand_details_controller", ["$state", "$stateParams", "_con
         $('ul.tabWrap li.look_msg').addClass("active");
         $("#look_msg").addClass("active");
         $("#look_msg").show();
-        // TODO 暂时无效声明
-        $scope.Picture_carId = val;
-        $scope.vin = vin;
-
         //
         _basic.get(_host.record_url + "/user/" + userId + "/car/" + val + "/record").then(function (data) {
             if (data.success == true && data.result.length > 0) {
@@ -114,25 +110,36 @@ app.controller("car_demand_details_controller", ["$state", "$stateParams", "_con
 
         //
         _basic.get(_host.api_url + "/user/" + userId + "/car?carId=" + val + '&active=1').then(function (data) {
-            if (data.success == true && data.result.length > 0) {
-                $scope.modelId = data.result[0].model_id;
-                $scope.self_car = data.result[0];
-                for (var i in _config.config_color) {
-                    if (_config.config_color[i].colorId == $scope.self_car.colour) {
-                        $scope.carColor = _config.config_color[i].colorName;
-                    }
+            if (data.success == true ) {
+                if (data.result.length == 0) {
+                    return;
                 }
-                // modelID赋值
-                $scope.look_make_id = $scope.self_car.make_id,
-                $scope.look_model_id = $scope.self_car.model_id,
-                $scope.look_create_time = moment($scope.self_car.pro_date).format('YYYY-MM-DD');
-                var selfLot = $scope.characters[$scope.self_car.lot-1].name;
-                $scope.look_storageName = $scope.self_car.storage_name + "" +$scope.self_car.area_name+""+ $scope.self_car.row + "排" + $scope.self_car.col + "列"+selfLot;
-                // 车辆id
-                $scope.look_car_id = $scope.self_car.id;
-            } else {
+                else {
+                    $scope.modelId = data.result[0].model_id;
+                    $scope.self_car = data.result[0];
+                    for (var i in _config.config_color) {
+                        if (_config.config_color[i].colorId == $scope.self_car.colour) {
+                            $scope.carColor = _config.config_color[i].colorName;
+                        }
+                    }
+                    // modelID赋值
+                    $scope.look_make_id = $scope.self_car.make_id;
+                    $scope.look_model_id = $scope.self_car.model_id;
+                    $scope.look_create_time = moment($scope.self_car.pro_date).format('YYYY-MM-DD');
+                    if($scope.self_car.lot== null){
+                        $scope.selfLot='';
+                    }else{
+                        $scope.selfLot = $scope.characters[$scope.self_car.lot - 1].name;
+                    }
+                    $scope.look_storageName = $scope.self_car.storage_name + "" + $scope.self_car.area_name + "" + $scope.self_car.row + "排" + $scope.self_car.col + "列" +$scope.selfLot;
+                    // 车辆id
+                    $scope.look_car_id = $scope.self_car.id;
+                }
+            }
+                else {
                 swal(data.msg, "", "error")
             }
+
         })
     };
     $scope.getStorageCarInfo(val, vin);
