@@ -26,13 +26,19 @@
                 <!--订舱 发舱 到港-->
                 <div class="row col s12 white-text fz18" style="text-align: center">
                     <div class="col s12 " style="border-top: 1px solid white;height: 150px;line-height: 150px">
-                        今日订舱:{{todayData.booking}}
+                        <div class="col s3"><i class="mdi mdi mdi-ferry fz25"></i></div>
+                        <div class="col s6">今日订舱数</div>
+                        <div class="col s3 fz25">{{todayData.booking}}</div>
                     </div>
                     <div class="col s12" style="border-top: 1px solid white;height: 150px;line-height: 150px">
-                        今日发舱:{{todayData.exports}}
+                        <div class="col s3 fz25"><i class="mdi mdi-cube-send"></i></div>
+                        <div class="col s6">今日发送车辆</div>
+                        <div class="col s3 fz25">{{todayData.exports}}</div>
                     </div>
                     <div class="col s12" style="border-top: 1px solid white;border-bottom: 1px solid white;height:150px;line-height: 150px">
-                        今日到港:{{todayData.arrive}}
+                        <div class="col s3 fz25"><i class="mdi mdi-checkbox-multiple-marked-outline"></i></div>
+                        <div class="col s6">今日到港车辆</div>
+                        <div class="col s3 fz25">{{todayData.arrive}}</div>
                     </div>
                 </div>
 

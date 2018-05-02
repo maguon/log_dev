@@ -11,8 +11,6 @@ app.controller("car_demand_controller", ["$scope", "$rootScope", "_host", "_basi
 
     // 车库状态 列表
     $scope.carStatusList = _config.carRelStatus;
-    // 车库状态 当前选中项
-    $scope.conditionCarStatus = 1;
     // 状态船运 列表
     $scope.shipTransStatus = _config.shipTransStatus;
     // 是否MSO车辆 列表

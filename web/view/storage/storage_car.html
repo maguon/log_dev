@@ -13,7 +13,7 @@
                 </ul>
             </div>
             <!--详情-->
-            <div id="test1" class="col s12 tab_box" style="height: 500px;">
+            <div id="test1" class="col s12 tab_box">
                 <form name="newStorage_carForm" style="color:#616161"  novalidate>
                     <div class="row" style="margin-top:20px">
                         <div class="row "  >
@@ -110,20 +110,21 @@
                                     </select>
                                 </div>
                             </div>
+
                             <div class="col s4">
                                 <div class="input-field  valign-wrapper cyan white-text" >
-                                    <select material-select watch id="lattice" name="lattice" class="col s12" ng-model="addLot" ng-change="getStorageRow(addRow,addLot)" required>
-                                        <option value=''  disabled><span style="color: red;margin-right: 5px">*</span>存放格位</option>
-                                        <option ng-repeat="el in parkingArrayLot"  ng-value="$index+1" ng-bind="characters[$index].name"></option>
+                                    <select material-select watch id="col" name="col_id" class=" col s12" ng-model="parking_id"   required>
+                                        <option value=""  disabled><span style="color: red;margin-right: 5px">*</span>存放列位</option>
+                                        <option ng-repeat="el in colArr" ng-if="el.carId==0"  ng-value="el.id" >{{el.col}}列</option>
+                                        <option ng-repeat="el in colArr" ng-if="el.carId!=0" disabled  >{{el.col}}列</option>
                                     </select>
                                 </div>
                             </div>
                             <div class="col s4">
                                 <div class="input-field  valign-wrapper cyan white-text" >
-                                    <select material-select watch id="col" name="col_id" class=" col s12" ng-model="parking_id"   required>
-                                        <option value=""  selected><span style="color: red;margin-right: 5px">*</span>存放道位</option>
-                                        <option ng-repeat="el in colArr" ng-if="el.carId==0"  ng-value="el.id" >{{el.col}}列</option>
-                                        <option ng-repeat="el in colArr" ng-if="el.carId!=0" disabled  >{{el.col}}列</option>
+                                    <select material-select watch id="lattice" name="lattice" class="col s12" ng-model="addLot" ng-change="getStorageRow(addRow,addLot)" required>
+                                        <option value=''  disabled><span style="color: red;margin-right: 5px">*</span>存放格位</option>
+                                        <option ng-repeat="el in parkingArrayLot"  ng-value="$index+1" ng-bind="characters[$index].name"></option>
                                     </select>
                                 </div>
                             </div>

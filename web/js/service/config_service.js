@@ -123,6 +123,10 @@ baseService.factory("_config", function () {
         {
             val:1,
             name:'美国'
+        },
+        {
+            val:2,
+            name:'中国'
         }
 
     ];
