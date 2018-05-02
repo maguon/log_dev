@@ -3,7 +3,7 @@
 
     <!-- 上部分：检索条件输入区域 -->
     <div class="row grey-text text-darken-1">
-        <div class="col s11">
+        <div class="col s10">
 
             <!-- 查询条件：第一行 -->
             <div class="col s12">
@@ -92,6 +92,12 @@
             <a class="btn-floating btn-large waves-light waves-effect red lighten-2 btn vc-center"
                style="margin-top: 30px" ng-click="queryOrderList()">
                 <i class="mdi mdi-magnify"></i>
+            </a>
+        </div>
+        <!--下载按钮-->
+        <div class="col s1 flex flex-round">
+            <a class="btn-floating btn-large waves-light waves-effect btn vc-center" style="margin-top: 30px; margin-right: 10px;background-color: #fea353;" ng-click="export()">
+                <i class="mdi mdi-cloud-download"></i>
             </a>
         </div>
     </div>

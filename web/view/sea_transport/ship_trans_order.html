@@ -7,33 +7,75 @@
         <div class="col s10">
 
             <!-- 海运编号 -->
-            <div class="input-field col s3">
+            <div class="input-field col" style="width: 20%;">
                 <input type="text" id="orderIdText" ng-model="condShipTransId">
                 <label for="orderIdText">海运编号</label>
             </div>
 
+            <!-- VIN码 -->
+            <div class="input-field col" style="width: 20%;">
+                <input type="text" id="vinText" ng-model="condVin">
+                <label for="vinText">VIN码</label>
+            </div>
+
+            <!-- 委托方 -->
+            <div class="input-field col" style="width: 20%;">
+                <select id="condEntrustSelect" style="width: 100%">
+                    <option value="" ></option>
+                    <option ng-repeat="el in entrustList" ng-value="el.id">{{el.short_name}}</option>
+                </select>
+            </div>
+
+            <!-- 始发港 -->
+            <div class="input-field col" style="width: 20%;">
+                <select material-select watch ng-model="condStartPortId">
+                    <option value="">始发港</option>
+                    <option ng-repeat="el in portList" ng-value="el.id">{{el.port_name}}</option>
+                </select>
+            </div>
+
             <!-- 目的港 -->
-            <div class="input-field col s3">
+            <div class="input-field col" style="width: 20%;">
                 <select material-select watch ng-model="condEndPortId">
                     <option value="">目的港</option>
                     <option ng-repeat="el in portList" ng-value="el.id">{{el.port_name}}</option>
                 </select>
             </div>
 
+            <!-- 运送状态 -->
+            <div class="input-field col" style="width: 20%;">
+                <select material-select watch ng-model="condShipTransStatus">
+                    <option value="">运送状态</option>
+                    <option ng-repeat="el in shipTransStatus" ng-value="el.id">{{el.name}}</option>
+                </select>
+            </div>
+
             <!-- 开船日期 -->
-            <div class="input-field col s3">
+            <div class="input-field col" style="width: 20%;">
                 <input type="text" id="sailTimeStart" ng-model="condStartShipDateStart" class="datepicker" date><i
                     class="mdi dataIcon mdi-table-large"></i>
                 <label for="sailTimeStart">开船日期(始)</label>
             </div>
-            <div class="input-field col s3">
+            <div class="input-field col" style="width: 20%;">
                 <input id="sailTimeEnd" type="text" ng-model="condStartShipDateEnd" class="datepicker" date><i
                     class="mdi dataIcon mdi-table-large"></i>
                 <label for="sailTimeEnd">开船日期(终)</label>
             </div>
 
+            <!-- 到港日期 -->
+            <div class="input-field col" style="width: 20%;">
+                <input id="arrivalTimeStart" type="text" ng-model="condEndShipDateStart" class="datepicker" date><i
+                    class="mdi dataIcon mdi-table-large"></i>
+                <label for="arrivalTimeStart">到港日期(始)</label>
+            </div>
+            <div class="input-field col" style="width: 20%;">
+                <input id="arrivalTimeEnd" type="text" ng-model="condEndShipDateEnd" class="datepicker" date><i
+                    class="mdi dataIcon mdi-table-large"></i>
+                <label for="arrivalTimeEnd">到港日期(终)</label>
+            </div>
+
             <!-- 船公司 -->
-            <div class="input-field col s3">
+            <div class="input-field col" style="width: 20%;">
                 <select material-select watch ng-model="condShipCompanyId">
                     <option value="">船公司</option>
                     <option ng-repeat="el in shippingCoList" ng-value="el.id">{{el.ship_company_name}}</option>
@@ -41,63 +83,49 @@
             </div>
 
             <!-- 船名 -->
-            <div class="input-field col s3">
+            <div class="input-field col" style="width: 20%;">
                 <input type="text" id="shipNameText" ng-model="condShipName">
                 <label for="shipNameText">船名</label>
             </div>
 
-            <!-- 到港日期 -->
-            <div class="input-field col s3">
-                <input id="arrivalTimeStart" type="text" ng-model="condEndShipDateStart" class="datepicker" date><i
-                    class="mdi dataIcon mdi-table-large"></i>
-                <label for="arrivalTimeStart">到港日期(始)</label>
-            </div>
-            <div class="input-field col s3">
-                <input id="arrivalTimeEnd" type="text" ng-model="condEndShipDateEnd" class="datepicker" date><i
-                    class="mdi dataIcon mdi-table-large"></i>
-                <label for="arrivalTimeEnd">到港日期(终)</label>
-            </div>
-
             <!-- 货柜 -->
-            <div class="input-field col s3">
+            <div class="input-field col" style="width: 20%;">
                 <input type="text" id="counterText" ng-model="condContainer">
                 <label for="counterText">货柜</label>
             </div>
 
             <!-- booking -->
-            <div class="input-field col s3">
+            <div class="input-field col" style="width: 20%;">
                 <input type="text" id="bookingText" ng-model="condBooking">
                 <label for="bookingText">booking</label>
             </div>
 
             <!-- 封签 -->
-            <div class="input-field col s3">
+            <div class="input-field col" style="width: 20%;">
                 <input type="text" id="sealText" ng-model="condTab">
                 <label for="sealText">封签</label>
-            </div>
-
-            <!-- 运送状态 -->
-            <div class="input-field col s3">
-                <select material-select watch ng-model="condShipTransStatus">
-                    <option value="">运送状态</option>
-                    <option ng-repeat="el in shipTransStatus" ng-value="el.id">{{el.name}}</option>
-                </select>
             </div>
         </div>
 
         <!-- 右侧：按钮区 -->
         <div class="col s2" style="margin-top:45px;">
             <!--查询按钮-->
-            <div class="col s6 center">
+            <div class="col s4 center">
                 <a class="btn-floating btn-large waves-light waves-effect red lighten-2  btn " ng-click="queryShipTransOrder()">
                     <i class="mdi mdi-magnify"></i>
                 </a>
             </div>
             <!--新增按钮-->
-            <div class="col s6 center">
+            <div class="col s4 center">
                 <a class=" btn-floating btn-large waves-light waves-effect cyan lighten-1 btn "
                    ng-click="openSeaTransportOrderDiv()">
                     <i class="mdi mdi-plus"></i>
+                </a>
+            </div>
+            <!--下载按钮-->
+            <div class="col s4 center">
+                <a class="btn-floating btn-large waves-light waves-effect btn vc-center" style="margin-right: 10px;background-color: #fea353;" ng-click="export()">
+                    <i class="mdi mdi-cloud-download"></i>
                 </a>
             </div>
         </div>
@@ -276,7 +304,7 @@
             <!-- VIN -->
             <div class="col s12">
                 <div class="input-field col" style="width: 99%;padding-left: 23px;">
-                    <input type="text" id="autocomplete-input" ng-change="changeVin()" class="autocomplete" ng-model="newShippingOrder.vin" >
+                    <input type="text" placeholder="模糊查询至少6位，新增车辆完整17位" id="autocomplete-input" ng-change="changeVin()" class="autocomplete" ng-model="newShippingOrder.vin" >
                     <a ng-if="addCarInfoFlg" ng-click="addCarInfo()" class="dataIcon btn-floating cyan" style="width:20px;height: 20px;">
                         <i class="mdi mdi-plus" style="position: absolute;right:0px;bottom:0px;font-size:15px;line-height: 20px;"></i>
                     </a>
@@ -284,7 +312,7 @@
                         <i class="mdi mdi-plus" style="position: absolute;right:0px;bottom:0px;font-size:15px;line-height: 20px;"></i>
                     </a>
 
-                    <label for="autocomplete-input" style="padding-left: 2px;"><span class="red-text">*</span> VIN</label>
+                    <label for="autocomplete-input" class="active" style="padding-left: 2px;"><span class="red-text">*</span> VIN</label>
                 </div>
             </div>
 

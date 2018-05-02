@@ -115,13 +115,37 @@ app.controller("ship_trans_order_controller", ["$scope", "$rootScope", "_host", 
         // 基本检索URL
         var reqUrl = _host.api_url + "/shipTrans?start=" + $scope.start + "&size=" + $scope.size;
 
-        // 订单编号
+        var entrust = {};
+        if ($("#condEntrustSelect").val() == "") {
+            entrust = {id: "", text: ""};
+        } else {
+            entrust = $("#condEntrustSelect").select2("data")[0];
+        }
+
+        // 海运编号
         if ($scope.condShipTransId != null) {
             reqUrl = reqUrl + "&shipTransId=" + $scope.condShipTransId;
+        }
+        // vin码
+        if ($scope.condVin != null) {
+            reqUrl = reqUrl + "&vin=" + $scope.condVin;
+        }
+        // 委托方
+        if (entrust.id !== null && entrust.id !== "") {
+            reqUrl = reqUrl + "&entrustId=" + entrust.id;
+        }
+        // 始发港
+        if ($scope.condStartPortId != null) {
+            reqUrl = reqUrl + "&startPortId=" + $scope.condStartPortId;
         }
         // 目的港
         if ($scope.condEndPortId != null) {
             reqUrl = reqUrl + "&endPortId=" + $scope.condEndPortId;
+        }
+
+        // 运送状态
+        if ($scope.condShipTransStatus != null) {
+            reqUrl = reqUrl + "&shipTransStatus=" + $scope.condShipTransStatus;
         }
         // 开始日期 开始
         if ($scope.condStartShipDateStart != null) {
@@ -131,14 +155,6 @@ app.controller("ship_trans_order_controller", ["$scope", "$rootScope", "_host", 
         if ($scope.condStartShipDateEnd != null) {
             reqUrl = reqUrl + "&startShipDateEnd=" + $scope.condStartShipDateEnd;
         }
-        // 船公司
-        if ($scope.condShipCompanyId != null) {
-            reqUrl = reqUrl + "&shipCompanyId=" + $scope.condShipCompanyId;
-        }
-        // 船名
-        if ($scope.condShipName != null) {
-            reqUrl = reqUrl + "&shipName=" + $scope.condShipName;
-        }
         // 到港日期 开始
         if ($scope.condEndShipDateStart != null) {
             reqUrl = reqUrl + "&endShipDateStart=" + $scope.condEndShipDateStart;
@@ -146,6 +162,15 @@ app.controller("ship_trans_order_controller", ["$scope", "$rootScope", "_host", 
         // 到港日期 终了
         if ($scope.condEndShipDateEnd != null) {
             reqUrl = reqUrl + "&endShipDateEnd=" + $scope.condEndShipDateEnd;
+        }
+
+        // 船公司
+        if ($scope.condShipCompanyId != null) {
+            reqUrl = reqUrl + "&shipCompanyId=" + $scope.condShipCompanyId;
+        }
+        // 船名
+        if ($scope.condShipName != null) {
+            reqUrl = reqUrl + "&shipName=" + $scope.condShipName;
         }
         // 货柜
         if ($scope.condContainer != null) {
@@ -158,10 +183,6 @@ app.controller("ship_trans_order_controller", ["$scope", "$rootScope", "_host", 
         // 封签
         if ($scope.condTab != null) {
             reqUrl = reqUrl + "&tab=" + $scope.condTab;
-        }
-        // 运送状态
-        if ($scope.condShipTransStatus != null) {
-            reqUrl = reqUrl + "&shipTransStatus=" + $scope.condShipTransStatus;
         }
 
         _basic.get(reqUrl).then(function (data) {
@@ -185,6 +206,52 @@ app.controller("ship_trans_order_controller", ["$scope", "$rootScope", "_host", 
             }
         });
     }
+
+    /**
+     * 数据导出
+     */
+    $scope.export = function () {
+        var entrust = {};
+        if ($("#condEntrustSelect").val() == "") {
+            entrust = {id: "", text: ""};
+        } else {
+            entrust = $("#condEntrustSelect").select2("data")[0];
+        }
+
+        var obj = {
+            // 海运编号
+            shipTransId:$scope.condShipTransId,
+            // vin码
+            vin:$scope.condVin,
+            // 委托方
+            entrustId:entrust.id,
+            // 始发港
+            startPortId:$scope.condStartPortId,
+            // 目的港
+            endPortId:$scope.condEndPortId,
+            // 运送状态
+            shipTransStatus:$scope.condShipTransStatus,
+            // 开始日期 开始
+            startShipDateStart:$scope.condStartShipDateStart,
+            // 开始日期 终了
+            startShipDateEnd:$scope.condStartShipDateEnd,
+            // 到港日期 开始
+            endShipDateStart:$scope.condEndShipDateStart,
+            // 到港日期 终了
+            endShipDateEnd:$scope.condEndShipDateEnd,
+            // 船公司
+            shipCompanyId:$scope.condShipCompanyId,
+            // 船名
+            shipName:$scope.condShipName,
+            // 货柜
+            container:$scope.condContainer,
+            // booking
+            booking:$scope.condBooking,
+            // 封签
+            tab:$scope.condTab
+        };
+        window.open(_host.api_url + "/shipTrans.csv?" + _basic.objToUrl(obj));
+    };
 
     /**
      * 点击：查询按钮，进行数据查询
@@ -231,6 +298,7 @@ app.controller("ship_trans_order_controller", ["$scope", "$rootScope", "_host", 
      */
     $scope.changeVin = function () {
 
+        var times = 0;
         if ($scope.newShippingOrder.vin !== undefined) {
             if ($scope.newShippingOrder.vin.length >= 6) {
 
@@ -239,7 +307,7 @@ app.controller("ship_trans_order_controller", ["$scope", "$rootScope", "_host", 
                         $scope.carList = data.result;
                         vinObjs = [];
                         for (var i in $scope.carList) {
-                            vinObjs[$scope.carList[i].vin + "  " + $scope.carList[i].make_name + "/" + $scope.carList[i].model_name + "  委托方：" + $scope.carList[i].entrust_id] = null;
+                            vinObjs[$scope.carList[i].vin + "  " + $scope.carList[i].make_name + "/" + $scope.carList[i].model_name + "  委托方：" + $scope.carList[i].short_name] = null;
                         }
                         return vinObjs;
                     } else {
@@ -250,8 +318,10 @@ app.controller("ship_trans_order_controller", ["$scope", "$rootScope", "_host", 
                         data: vinObjs,
                         minLength: 6,
                         onAutocomplete: function (val) {
-                            $scope.addCarInfoFlg = true;
-                            // $scope.newShippingOrder.vin = val;
+                            if (times ==0) {
+                                $scope.addCarInfo(val);
+                                times = times+ 1;
+                            }
                         },
                         // limit: 6
                     });
@@ -270,14 +340,18 @@ app.controller("ship_trans_order_controller", ["$scope", "$rootScope", "_host", 
     /**
      * 点击 vin码 后的 追加按钮。(打开追加画面 或追加列表数据)
      */
-    $scope.addCarInfo = function () {
+    $scope.addCarInfo = function (vin) {
 
         // 新追加的车辆VIN码
         var newVin = $scope.newShippingOrder.vin;
 
+        if (vin !== undefined) {
+            newVin = vin;
+        }
+
         // 如果是从自动填充中，选择出来的话，需要截取前面17位
-        if ($scope.newShippingOrder.vin.length > 17) {
-            newVin = $scope.newShippingOrder.vin.substr(0, 17);
+        if (newVin.length > 17) {
+            newVin = newVin.substr(0, 17);
         }
 
         // 遍历新增车辆列表
@@ -485,6 +559,11 @@ app.controller("ship_trans_order_controller", ["$scope", "$rootScope", "_host", 
                     containerCssClass: 'select2_dropdown',
                     allowClear: true
                 });
+                $('#condEntrustSelect').select2({
+                    placeholder: '委托方',
+                    containerCssClass: 'select2_dropdown',
+                    allowClear: true
+                });
             }
         });
     };
@@ -653,7 +732,8 @@ app.controller("ship_trans_order_controller", ["$scope", "$rootScope", "_host", 
         getPortList();
         // 取得查询条件【船公司】列表
         getShippingCoList();
-
+        //
+        $scope.getEntrustInfo();
         // 查询数据
         queryShipTransOrderList();
     };

@@ -108,6 +108,43 @@ app.controller("order_controller", ["$scope", "$rootScope", "_host", "_basic", "
     }
 
     /**
+     * 数据导出
+     */
+    $scope.export = function () {
+        var entrust = {};
+
+        if ($("#entrustIdSelect").val() == "") {
+            entrust = {id:"",text:""};
+        } else {
+            entrust = $("#entrustIdSelect").select2("data")[0] ;
+        }
+
+        var obj = {
+            // 订单编号
+            storageOrderId:$scope.conditionOrderNo,
+            // vin码
+            vin:$scope.conditionVin,
+            // 品牌
+            makeId:$scope.conditionMakeId,
+            // 型号
+            modelId:$scope.conditionModelId,
+            // 委托方
+            entrustId:entrust.id,
+            // 入库时间 开始
+            enterStart:$scope.conditionEnterTimeStart,
+            // 入库时间 终了
+            enterEnd:$scope.conditionEnterTimeEnd,
+            // 实际出库时间 开始
+            realStart:$scope.conditionOutTimeStart,
+            // 实际出库时间 终了
+            realEnd:$scope.conditionOutTimeEnd,
+            // 支付状态
+            orderStatus:$scope.conditionPayStatus
+        };
+        window.open(_host.api_url + "/shipTransOrder.csv?" + _basic.objToUrl(obj));
+    };
+
+    /**
      * 点击：查询按钮，进行数据查询
      */
     $scope.queryOrderList = function () {
