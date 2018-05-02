@@ -18,6 +18,90 @@ app.controller("car_demand_controller", ["$scope", "$rootScope", "_host", "_basi
     // 是否MSO车辆 列表
     $scope.msoFlags = _config.msoFlags;
 
+
+    /**
+     * 当车辆品牌变更时，车辆型号要进行联动刷新。
+     * @param val 车辆品牌ID
+     */
+    $scope.changeMakerId = function (val) {
+        if (val) {
+            if ($scope.curruntId == val) {
+            } else {
+                $scope.curruntId = val;
+                _basic.get(_host.api_url + "/carMake/" + val + "/carModel").then(function (data) {
+                    if (data.success == true && data.result.length > 0) {
+                        $scope.carModelList = data.result;
+                    } else {
+                        swal(data.msg, "", "error")
+                    }
+                })
+            }
+        }
+    };
+
+    /**
+     * 【船公司】列表查询，用来填充查询条件：船公司
+     */
+    function getShippingCoList() {
+        // 调用API取得，画面数据
+        _basic.get(_host.api_url + "/shipCompany").then(function (data) {
+            if (data.success) {
+                // 检索取得数据集
+                $scope.shippingCoList = data.result;
+            }
+        });
+    }
+
+
+    /**
+     * 车辆品牌列表查询，用来填充查询条件：车辆品牌
+     */
+    function getCarMakerList() {
+        _basic.get(_host.api_url + "/carMake").then(function (data) {
+            if (data.success == true && data.result.length > 0) {
+                $scope.carMakerList = data.result;
+            } else {
+                swal(data.msg, "", "error");
+            }
+        });
+    }
+
+    /**
+     * 仓库列表查询，用来填充查询条件：所在仓库
+     */
+    function getStorageList() {
+        _basic.get(_host.api_url + "/storage").then(function (data) {
+            if (data.success == true) {
+                if(data.result.length == 0){
+                    return;
+                }
+                $scope.storageList = data.result;
+            } else {
+                swal(data.msg, "", "error");
+            }
+        });
+    }
+
+    /**
+     * 委托方列表查询，用来填充查询条件：委托方
+     */
+    function getEntrustList() {
+        _basic.get(_host.api_url + "/entrust").then(function (data) {
+            if (data.success == true) {
+                $scope.entrustList = data.result;
+                $('#entrustId').select2({
+                    placeholder: '委托方',
+                    containerCssClass: 'select2_dropdown',
+                    allowClear: true
+                });
+                if(data.result.length==0){
+                    return;
+                }
+                queryCarDemandData();
+            }
+        });
+    }
+
     /**
      * 根据画面输入的查询条件，进行数据查询。
      */
@@ -125,7 +209,7 @@ app.controller("car_demand_controller", ["$scope", "$rootScope", "_host", "_basi
     }
 
     /*
-        * 数据导出*
+     * 数据导出*
      * */
     $scope.export = function () {
         var obj = {
@@ -154,39 +238,6 @@ app.controller("car_demand_controller", ["$scope", "$rootScope", "_host", "_basi
 
 
     /**
-     * 当车辆品牌变更时，车辆型号要进行联动刷新。
-     * @param val 车辆品牌ID
-     */
-    $scope.changeMakerId = function (val) {
-        if (val) {
-            if ($scope.curruntId == val) {
-            } else {
-                $scope.curruntId = val;
-                _basic.get(_host.api_url + "/carMake/" + val + "/carModel").then(function (data) {
-                    if (data.success == true && data.result.length > 0) {
-                        $scope.carModelList = data.result;
-                    } else {
-                        swal(data.msg, "", "error")
-                    }
-                })
-            }
-        }
-    };
-
-    /**
-     * 【船公司】列表查询，用来填充查询条件：船公司
-     */
-    function getShippingCoList() {
-        // 调用API取得，画面数据
-        _basic.get(_host.api_url + "/shipCompany").then(function (data) {
-            if (data.success) {
-                // 检索取得数据集
-                $scope.shippingCoList = data.result;
-            }
-        });
-    }
-
-    /**
      * 点击：查询按钮，进行数据查询
      */
     $scope.queryCarList = function () {
@@ -211,56 +262,6 @@ app.controller("car_demand_controller", ["$scope", "$rootScope", "_host", "_basi
         queryCarDemandData();
     };
 
-
-    /**
-     * 车辆品牌列表查询，用来填充查询条件：车辆品牌
-     */
-    function getCarMakerList() {
-        _basic.get(_host.api_url + "/carMake").then(function (data) {
-            if (data.success == true && data.result.length > 0) {
-                $scope.carMakerList = data.result;
-            } else {
-                swal(data.msg, "", "error");
-            }
-        });
-    }
-
-    /**
-     * 仓库列表查询，用来填充查询条件：所在仓库
-     */
-    function getStorageList() {
-        _basic.get(_host.api_url + "/storage").then(function (data) {
-            if (data.success == true) {
-                if(data.result.length == 0){
-                    return;
-                }
-                $scope.storageList = data.result;
-            } else {
-                swal(data.msg, "", "error");
-            }
-        });
-    }
-
-    /**
-     * 委托方列表查询，用来填充查询条件：委托方
-     */
-    function getEntrustList() {
-        _basic.get(_host.api_url + "/entrust").then(function (data) {
-            if (data.success == true) {
-                $scope.entrustList = data.result;
-                $('#entrustId').select2({
-                    placeholder: '委托方',
-                    containerCssClass: 'select2_dropdown',
-                    allowClear: true
-                });
-                if(data.result.length==0){
-                    return;
-                }
-                queryCarDemandData();
-            }
-        });
-    }
-
     /**
      * 画面初期显示时，用来获取画面必要信息的初期方法。
      */
@@ -270,8 +271,6 @@ app.controller("car_demand_controller", ["$scope", "$rootScope", "_host", "_basi
         getShippingCoList();
         getCarMakerList();
         getEntrustList();
-        /*// 查询数据
-        queryCarDemandData();*/
     };
     $scope.initData();
 }]);

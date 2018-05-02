@@ -1,6 +1,6 @@
 /**
  * Created by ASUS on 2017/5/5.
- * 主菜单：车辆查询 -> 仓储车辆信息 画面
+ * 主菜单：车辆查询 -> 车辆信息詳情 画面
  */
 app.controller("car_demand_details_controller", ["$state", "$stateParams", "_config", "$scope", "_host", "_basic", function ($state, $stateParams, _config, $scope, _host, _basic) {
     var userId = _basic.getSession(_basic.USER_ID);
@@ -41,7 +41,7 @@ app.controller("car_demand_details_controller", ["$state", "$stateParams", "_con
     };
 
     /**
-     * 显示仓储车辆照片。
+     * 显示仓储操作记录。
      */
     $scope.showComment = function () {
         $('ul.tabWrap li').removeClass("active");

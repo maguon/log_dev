@@ -7,7 +7,7 @@ app.controller("client_info_detail_controller", ["$scope", "$rootScope","$state"
     var val = $stateParams.id;//获取本条信息的id
     $scope.start = 0;
     $scope.size = 11;
-    $scope.sizeDetail = 5;
+    $scope.sizeDetail = 6;
     $scope.valuation = 0;
     $scope.characters = _config.characters;
     $scope.carStatusList =_config.carRelStatus;
@@ -126,7 +126,7 @@ app.controller("client_info_detail_controller", ["$scope", "$rootScope","$state"
                 swal(data.msg, "", "error");
             }
         })
-    };
+    }
     //获取估值 在库车辆 非MSO车辆库值
     function getEntrustBase (){
         _basic.get( _host.api_url + "/entrustBase?entrustId="+val).then(function (data) {
@@ -330,19 +330,15 @@ app.controller("client_info_detail_controller", ["$scope", "$rootScope","$state"
                 $scope.orderList = $scope.orderResult.slice(0, 10);
                 if ($scope.start > 0) {
                     $("#pre4").show();
-                    $("#pre7").show();
                 }
                 else {
                     $("#pre4").hide();
-                    $("#pre7").hide();
                 }
                 if (data.result.length < $scope.size) {
                     $("#next4").hide();
-                    $("#next7").hide();
                 }
                 else {
                     $("#next4").show();
-                    $("#next7").show();
                 }
             } else {
                 swal(data.msg, "", "error");
@@ -628,7 +624,8 @@ app.controller("client_info_detail_controller", ["$scope", "$rootScope","$state"
         $scope.actualFee=0;
         _basic.get(_host.api_url + "/orderPaymentRel?orderPaymentId="+$scope.storagePaymentArray.id+"&start=" + $scope.start + "&size=" + $scope.sizeDetail).then(function (data) {
             if (data.success == true) {
-                $scope.storageOrderDetailsArray = data.result;
+                $scope.storageOrderDetailsBoxArray = data.result;
+                $scope.storageOrderDetailsArray = $scope.storageOrderDetailsBoxArray.slice(0, 5);
                 for(var i=0;i<$scope.storageOrderDetailsArray.length;i++){
                     $scope.actualFee= $scope.actualFee+$scope.storageOrderDetailsArray[i].actual_fee;
                 }
@@ -638,7 +635,7 @@ app.controller("client_info_detail_controller", ["$scope", "$rootScope","$state"
                 else {
                     $("#pre7").hide();
                 }
-                if (data.result.length < $scope.size) {
+                if (data.result.length <$scope.sizeDetail) {
                     $("#next7").hide();
                 }
                 else {
@@ -654,7 +651,8 @@ app.controller("client_info_detail_controller", ["$scope", "$rootScope","$state"
         $scope.shipTransFee=0;
         _basic.get(_host.api_url + "/shipTransOrderPaymentRel?orderPaymentId="+$scope.storagePaymentArray.id+"&start=" + $scope.start + "&size=" + $scope.sizeDetail).then(function (data) {
             if (data.success == true) {
-                $scope.seaTransportOrderDetailsArray = data.result;
+                $scope.seaTransportOrderDetailsBoxArray = data.result;
+                $scope.seaTransportOrderDetailsArray = $scope.seaTransportOrderDetailsBoxArray.slice(0,5);
                 for(var i=0;i<$scope.seaTransportOrderDetailsArray.length;i++){
                     $scope.shipTransFee= $scope.shipTransFee+$scope.seaTransportOrderDetailsArray[i].ship_trans_fee;
                 }
@@ -664,7 +662,7 @@ app.controller("client_info_detail_controller", ["$scope", "$rootScope","$state"
                 else {
                     $("#pre8").hide();
                 }
-                if (data.result.length < $scope.size) {
+                if (data.result.length < $scope.sizeDetail) {
                     $("#next8").hide();
                 }
                 else {
@@ -761,28 +759,28 @@ app.controller("client_info_detail_controller", ["$scope", "$rootScope","$state"
      * 上一页
      */
     $scope.preBtn7 = function () {
-        $scope.start = $scope.start - ($scope.size - 1);
-        queryOrderData();
+        $scope.start = $scope.start - ($scope.sizeDetail - 1);
+        getStorageOrderDetails();
     };
 
     /**
      * 下一页
      */
     $scope.nextBtn7 = function () {
-        $scope.start = $scope.start + ($scope.size - 1);
-        queryOrderData();
+        $scope.start = $scope.start + ($scope.sizeDetail - 1);
+        getStorageOrderDetails();
     };
     $scope.preBtn8 = function () {
-        $scope.start = $scope.start - ($scope.size - 1);
-        queryOrderData();
+        $scope.start = $scope.start - ($scope.sizeDetail - 1);
+        getSeaTransportOrderDetails();
     };
 
     /**
      * 下一页
      */
     $scope.nextBtn8 = function () {
-        $scope.start = $scope.start + ($scope.size - 1);
-        queryOrderData();
+        $scope.start = $scope.start + ($scope.sizeDetail - 1);
+        getSeaTransportOrderDetails();
     };
     //获取数据
     $scope.queryData = function () {
