@@ -341,18 +341,6 @@ baseService.factory("_config", function () {
         }
     ];
 
-    // 支付方式
-    _this.payMethods = [
-        {
-            id: 1,
-            name: "电汇"
-        },
-        {
-            id: 2,
-            name: "支票"
-        }
-    ];
-
     // 是否分单
     _this.partTypes = [
         {

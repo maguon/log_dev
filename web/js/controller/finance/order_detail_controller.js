@@ -13,7 +13,7 @@ app.controller("order_detail_controller", ["$scope", "$state", "$stateParams", "
     $scope.payStatusList = _config.payStatus;
 
     // 支付方式 列表
-    $scope.paymentMethodList = _config.payMethods;
+    $scope.paymentMethodList = _config.paymentType;
 
     // 颜色列表
     $scope.configColor = _config.config_color;
