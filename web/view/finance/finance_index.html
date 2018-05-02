@@ -1,39 +1,49 @@
+<!-- 主控面板 -> 财务面板 控制器 -->
 <div class="finance_index">
     <div class="finance_content" style="width: 95%;margin: 0 auto">
         <div class="row ">
 
+            <!-- 委托方总数 -->
             <div class="col s6" style="font-weight: bold;color: white">
-                <div class="center-align cyan-text" style="height: 200px;margin-top: 10px;border:1px solid cornflowerblue">
+                <div class="center-align cyan-text z-depth-1" style="height: 140px;margin-top: 10px;border:1px solid cornflowerblue">
 
-                    <div class="col s12" style="height: 200px;">
-                        <div class="col s2">
-                            icon
+                    <div class="col s12" style="height: 140px;">
+                        <div class="col s2 vc-center" style="height: 140px;">
+                            <a class="btn-floating btn-large waves-light waves-effect cyan lighten-2" style="cursor: default">
+                                <i class="mdi mdi-account-group"></i>
+                            </a>
                         </div>
 
-                        <div class="col s4 cyan-text" style="border-right: 1px solid grey">
-                            <div class="col s12">
+                        <div class="col s3" style="height: 100px;margin-top:20px;margin-bottom:20px; border-right: 1px solid #c2c0c2">
+                            <div class="col s12 vc-center" style="height: 50px;">
                                 委托方总数
                             </div>
-                            <div class="col s12">
-                                TODO:{{TODO}}
+                            <div class="col s12 vc-center" style="height: 50px;">
+                                {{entrustCoCount + entrustPerCount| number}}
                             </div>
                         </div>
 
-                        <div class="col s6">
-                            <div class="col s12" style="border-bottom: 1px solid grey">
-                                <div class="col s6">
-                                    TODO:ICON 企业
+                        <div class="col s7" style="height: 100px;margin-top:20px;margin-bottom:20px;">
+                            <div class="col s12" style="border-bottom: 1px solid #c2c0c2">
+                                <div class="col s2" style="height: 50px;padding-top:3px;">
+                                    <span class="fz28"><i class="mdi mdi-domain"></i></span>
                                 </div>
-                                <div class="col s6">
-                                    TODO:{{TODO}}
+                                <div class="col s3 left-align" style="margin-top:15px;">
+                                    <span class="grey-text">企业</span>
+                                </div>
+                                <div class="col s7 right-align" style="margin-top:15px;">
+                                    {{entrustCoCount| number}}
                                 </div>
                             </div>
                             <div class="col s12">
-                                <div class="col s6">
-                                    TODO:ICON 企业
+                                <div class="col s2" style="height: 50px;padding-top:3px;">
+                                    <span class="fz28"><i class="mdi mdi-account-outline"></i></span>
                                 </div>
-                                <div class="col s6">
-                                    TODO:{{TODO}}
+                                <div class="col s3 left-align" style="margin-top:15px;">
+                                    <span class="grey-text">个人</span>
+                                </div>
+                                <div class="col s7 right-align" style="margin-top:15px;">
+                                    {{entrustPerCount| number}}
                                 </div>
                             </div>
                         </div>
@@ -41,38 +51,134 @@
                 </div>
             </div>
 
+            <!-- 委托方支付 -->
             <div class="col s6" style="font-weight: bold;color: white">
-                <div class="center-align cyan-text" style="height: 200px;margin-top: 10px;border:1px solid cornflowerblue">
+                <div class="center-align cyan-text z-depth-1" style="height: 140px;margin-top: 10px;border:1px solid cornflowerblue">
 
-                    <div class="col s12" style="height: 200px;">
-                        <div class="col s2">
-                            icon
+                    <div class="col s12" style="height: 140px;">
+                        <div class="col s2 vc-center" style="height: 140px;">
+                            <a class="btn-floating btn-large waves-light waves-effect cyan lighten-2" style="cursor: default">
+                                <i class="mdi mdi-coin"></i>
+                            </a>
                         </div>
 
-                        <div class="col s4 cyan-text" style="border-right: 1px solid grey">
-                            <div class="col s12">
-                                委托方总数
-                            </div>
-                            <div class="col s12">
-                                TODO:{{TODO}}
+                        <div class="col s3" style="height: 100px;margin-top:20px;margin-bottom:20px; border-right: 1px solid #c2c0c2">
+                            <div class="col s12 vc-center" style="height: 100px;">
+                                委托方支付
                             </div>
                         </div>
 
-                        <div class="col s6">
-                            <div class="col s12" style="border-bottom: 1px solid grey">
-                                <div class="col s6">
-                                    TODO:ICON 企业
+                        <div class="col s7" style="height: 100px;margin-top:20px;margin-bottom:20px;">
+                            <div class="col s12" style="border-bottom: 1px solid #c2c0c2">
+                                <div class="col s2" style="height: 50px;padding-top:3px;">
+                                    <span class="fz28"><i class="mdi mdi-content-copy"></i></span>
                                 </div>
-                                <div class="col s6">
-                                    TODO:{{TODO}}
+                                <div class="col s5 left-align" style="margin-top:15px;">
+                                    <span class="grey-text">未完结笔数</span>
+                                </div>
+                                <div class="col s5 right-align" style="margin-top:15px;">
+                                    {{paymentCount| number}}
                                 </div>
                             </div>
                             <div class="col s12">
-                                <div class="col s6">
-                                    TODO:ICON 企业
+                                <div class="col s2" style="height: 50px;padding-top:3px;">
+                                    <span class="fz28"><i class="mdi mdi-cash-usd"></i></span>
                                 </div>
-                                <div class="col s6">
-                                    TODO:{{TODO}}
+                                <div class="col s5 left-align" style="margin-top:15px;">
+                                    <span class="grey-text">未完结总额(美元)</span>
+                                </div>
+                                <div class="col s5 right-align red-text" style="margin-top:15px;">
+                                    {{paymentMoney| number}}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 仓储订单 -->
+            <div class="col s6 z-depth-" style="font-weight: bold;color: white;margin-top: 30px;">
+                <div class="center-align cyan-text z-depth-1" style="height: 140px;margin-top: 10px;border:1px solid cornflowerblue">
+
+                    <div class="col s12" style="height: 140px;">
+                        <div class="col s2 vc-center" style="height: 140px;">
+                            <a class="btn-floating btn-large waves-light waves-effect cyan lighten-2" style="cursor: default">
+                                <i class="mdi mdi-home-outline"></i>
+                            </a>
+                        </div>
+
+                        <div class="col s3" style="height: 100px;margin-top:20px;margin-bottom:20px; border-right: 1px solid #c2c0c2">
+                            <div class="col s12 vc-center" style="height: 100px;">
+                                仓储订单
+                            </div>
+                        </div>
+
+                        <div class="col s7" style="height: 100px;margin-top:20px;margin-bottom:20px;">
+                            <div class="col s12" style="border-bottom: 1px solid #c2c0c2">
+                                <div class="col s2" style="height: 50px;padding-top:3px;">
+                                    <span class="fz28"><i class="mdi mdi-content-copy"></i></span>
+                                </div>
+                                <div class="col s5 left-align" style="margin-top:15px;">
+                                    <span class="grey-text">未支付笔数</span>
+                                </div>
+                                <div class="col s5 right-align" style="margin-top:15px;">
+                                    {{orderCount| number}}
+                                </div>
+                            </div>
+                            <div class="col s12">
+                                <div class="col s2" style="height: 50px;padding-top:3px;">
+                                    <span class="fz28"><i class="mdi mdi-cash-usd"></i></span>
+                                </div>
+                                <div class="col s5 left-align" style="margin-top:15px;">
+                                    <span class="grey-text">未支付总额(美元)</span>
+                                </div>
+                                <div class="col s5 right-align red-text" style="margin-top:15px;">
+                                    {{actualFee| number}}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 海运订单 -->
+            <div class="col s6" style="font-weight: bold;color: white;margin-top: 30px;">
+                <div class="center-align cyan-text z-depth-1" style="height: 140px;margin-top: 10px;border:1px solid cornflowerblue">
+
+                    <div class="col s12" style="height: 140px;">
+                        <div class="col s2 vc-center" style="height: 140px;">
+                            <a class="btn-floating btn-large waves-light waves-effect cyan lighten-2" style="cursor: default">
+                                <i class="mdi mdi-ferry"></i>
+                            </a>
+                        </div>
+
+                        <div class="col s3" style="height: 100px;margin-top:20px;margin-bottom:20px; border-right: 1px solid #c2c0c2">
+                            <div class="col s12 vc-center" style="height: 100px;">
+                                海运订单
+                            </div>
+                        </div>
+
+                        <div class="col s7" style="height: 100px;margin-top:20px;margin-bottom:20px;">
+                            <div class="col s12" style="border-bottom: 1px solid #c2c0c2">
+                                <div class="col s2" style="height: 50px;padding-top:3px;">
+                                    <span class="fz28"><i class="mdi mdi-content-copy"></i></span>
+                                </div>
+                                <div class="col s5 left-align" style="margin-top:15px;">
+                                    <span class="grey-text">未支付笔数</span>
+                                </div>
+                                <div class="col s5 right-align" style="margin-top:15px;">
+                                    {{shipTransOrderCount| number}}
+                                </div>
+                            </div>
+                            <div class="col s12">
+                                <div class="col s2" style="height: 50px;padding-top:3px;">
+                                    <span class="fz28"><i class="mdi mdi-cash-usd"></i></span>
+                                </div>
+                                <div class="col s5 left-align" style="margin-top:15px;">
+                                    <span class="grey-text">未支付总额(美元)</span>
+                                </div>
+                                <div class="col s5 right-align red-text" style="margin-top:15px;">
+                                    {{shipTransFee| number}}
                                 </div>
                             </div>
                         </div>
