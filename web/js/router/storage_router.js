@@ -45,16 +45,16 @@ app.config(['$stateProvider',"$urlRouterProvider",function($stateProvider,$urlRo
         })
 
         // 海运管理->海运信息
-        .state("ship_trans_order", {
-            url:"/ship_trans_order",
-            templateUrl: "/view/sea_transport/ship_trans_order.html",
-            controller:"ship_trans_order_controller"
+        .state("ship_trans_info", {
+            url:"/ship_trans_info",
+            templateUrl: "/view/sea_transport/ship_trans_info.html",
+            controller:"ship_trans_info_controller"
         })
         // 海运管理->海运信息（订单详情）
-        .state("ship_trans_order_detail", {
-            url:"/ship_trans_order_detail/{id}?from",
-            templateUrl: "/view/sea_transport/ship_trans_order_detail.html",
-            controller:"ship_trans_order_detail_controller"
+        .state("ship_trans_info_detail", {
+            url:"/ship_trans_info_detail/{id}?from",
+            templateUrl: "/view/sea_transport/ship_trans_info_detail.html",
+            controller:"ship_trans_info_detail_controller"
         })
         // 海运管理->海运日历
         .state("ship_trans_calendar", {

@@ -1,7 +1,7 @@
 /**
  * 主菜单：海运管理 -> 海运信息(详细画面) 控制器
  */
-app.controller("ship_trans_order_detail_controller", ["$scope", "$state", "$stateParams", "_basic", "_config", "_host", "$filter", function ($scope, $state, $stateParams, _basic, _config, _host, $filter) {
+app.controller("ship_trans_info_detail_controller", ["$scope", "$state", "$stateParams", "_basic", "_config", "_host", "$filter", function ($scope, $state, $stateParams, _basic, _config, _host, $filter) {
 
     // 用户ID
     var userId = _basic.getSession(_basic.USER_ID);

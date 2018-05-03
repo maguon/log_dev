@@ -1,7 +1,7 @@
 /**
  * 主菜单：海运管理 -> 海运信息 控制器
  */
-app.controller("ship_trans_order_controller", ["$scope", "$rootScope", "_host", "_basic", "_config", "$state", function ($scope, $rootScope, _host, _basic, _config, $state) {
+app.controller("ship_trans_info_controller", ["$scope", "$rootScope", "_host", "_basic", "_config", "$state", function ($scope, $rootScope, _host, _basic, _config, $state) {
 
     // 取得当前画面 登录用户
     var userId = _basic.getSession(_basic.USER_ID);
