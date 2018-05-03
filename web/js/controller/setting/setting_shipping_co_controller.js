@@ -1,7 +1,7 @@
 /**
  * 主菜单：管理员设置 -> 船舶公司设置 控制器
  */
-app.controller("setting_shipping_co_controller", ["$scope", "_basic", "_host", function ($scope, _basic, _host) {
+app.controller("setting_shipping_co_controller", ["$scope", "_basic", "_host", "_config", function ($scope, _basic, _host, _config) {
 
     // 取得当前画面 登录用户
     var userId = _basic.getSession(_basic.USER_ID);
