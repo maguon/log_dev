@@ -105,86 +105,12 @@ app.controller("car_demand_controller", ["$scope", "$rootScope", "_host", "_basi
      * 根据画面输入的查询条件，进行数据查询。
      */
     function queryCarDemandData() {
-
-        // 委托方 下拉选中 内容
-        $scope.entrust = $("#entrustId").select2("data")[0] ;
-        var reqUrl = _host.api_url + "/user/" + userId + "/car?active=" + 1 + "&start=" + $scope.start + "&size=" + $scope.size;
-
-        //单选
-        // 车辆状态
-        if ($scope.conditionCarStatus != null) {
-            reqUrl = reqUrl + "&relStatus=" + $scope.conditionCarStatus;
-        }
-        // 所在仓库
-        if ($scope.conditionStorage != null) {
-            reqUrl = reqUrl + "&storageId=" + $scope.conditionStorage;
-        }
-        // vin码
-        if ($scope.conditionVin != null) {
-            reqUrl = reqUrl + "&vin=" + $scope.conditionVin;
-        }
-        // 品牌
-        if ($scope.conditionMakeId != null) {
-            reqUrl = reqUrl + "&makeId=" + $scope.conditionMakeId;
-        }
-        // 型号
-        if ($scope.conditionModelId != null) {
-            reqUrl = reqUrl + "&modelId=" + $scope.conditionModelId;
-        }
-        // 委托方
-        if ($scope.entrust.id != null && $scope.entrust.id != 0) {
-            reqUrl = reqUrl + "&entrustId=" + $scope.entrust.id;
-        }
-        // 入库时间 开始
-        if ($scope.conditionEnterTimeStart != null) {
-            reqUrl = reqUrl + "&enterStart=" + $scope.conditionEnterTimeStart
-        }
-        // 入库时间 终了
-        if ($scope.conditionEnterTimeEnd != null) {
-            reqUrl = reqUrl + "&enterEnd=" + $scope.conditionEnterTimeEnd
-        }
-        // 出库库时间 开始
-        if ($scope.conditionOutTimeStart != null) {
-            reqUrl = reqUrl + "&realStart=" + $scope.conditionOutTimeStart
-        }
-        // 出库时间 终了
-        if ($scope.conditionOutTimeEnd != null) {
-            reqUrl = reqUrl + "&realEnd=" + $scope.conditionOutTimeEnd
-        }
-        // 是否MSO
-        if ($scope.conditionMsoId != null) {
-            reqUrl = reqUrl + "&msoStatus=" + $scope.conditionMsoId
-        }
-
-        // 船公司
-        if ($scope.conditionShipCompanyId != null) {
-            reqUrl = reqUrl + "&shipCompanyId=" + $scope.conditionShipCompanyId
-        }
-        // 状态
-        if ($scope.conditionShipTransStatus != null) {
-            reqUrl = reqUrl + "&shipTransStatus=" + $scope.conditionShipTransStatus
-        }
-        // 货柜
-        if ($scope.conditionContainer != null) {
-            reqUrl = reqUrl + "&container=" + $scope.conditionContainer
-        }
-        // 开船日期
-        if ($scope.conditionStartShipDateStart!= null) {
-            reqUrl = reqUrl + "&startShipDateStart=" + $scope.conditionStartShipDateStart
-        }
-        // 开船日期
-        if ($scope.conditionStartShipDateEnd!= null) {
-            reqUrl = reqUrl + "&startShipDateEnd=" + $scope.conditionStartShipDateEnd
-        }
-        // 到港日期
-        if ($scope.conditionEndShipDateStart!= null) {
-            reqUrl = reqUrl + "&endShipDateStart=" + $scope.conditionEndShipDateStart
-        }
-        // 到港日期
-        if ($scope.conditionEndShipDateEnd!= null) {
-            reqUrl = reqUrl + "&endShipDateEnd=" + $scope.conditionEndShipDateEnd
-        }
-
+        // 基本检索URL
+        var reqUrl = _host.api_url + "/user/" + userId + "/car?start=" + $scope.start + "&size=" + $scope.size;
+        // 检索条件
+        var conditions = _basic.objToUrl(makeConditions());
+        // 检索URL
+        reqUrl = conditions.length > 0 ? reqUrl + "&" + conditions : reqUrl;
         _basic.get(reqUrl).then(function (data) {
             if (data.success == true) {
                 $scope.storageCarList = data.result;
@@ -211,6 +137,29 @@ app.controller("car_demand_controller", ["$scope", "$rootScope", "_host", "_basi
      * 数据导出*
      * */
     $scope.export = function () {
+        // 基本检索URL
+        var url =_host.api_url + "/carStorageShipTrans.csv";
+        // 检索条件
+        var conditions = _basic.objToUrl(makeConditions());
+        // 检索URL
+        url = conditions.length > 0 ? url + "?" + conditions : url;
+        // 调用接口下载
+        window.open(url);
+    };
+
+
+    /**
+     * 组装检索条件。
+     */
+    function makeConditions() {
+        // 委托方
+        $scope.entrust = {};
+        if ($("#entrustId").val() === "") {
+            $scope.entrust = {id: "", text: ""};
+        } else {
+            $scope.entrust = $("#entrustId").select2("data")[0];
+        }
+
         var obj = {
             vin: $scope.conditionVin,
             makeId:$scope.conditionMakeId,
@@ -232,8 +181,10 @@ app.controller("car_demand_controller", ["$scope", "$rootScope", "_host", "_basi
             endShipDateStart:$scope.conditionEndShipDateStart,
             endShipDateEnd:$scope.conditionEndShipDateEnd
         };
-        window.open(_host.api_url + "/carStorageShipTrans.csv?" + _basic.objToUrl(obj));
-    };
+        return obj;
+    }
+
+
 
 
     /**

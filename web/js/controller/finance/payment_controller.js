@@ -98,29 +98,13 @@ app.controller("payment_controller", ["$scope", "_basic", "_host", "_config", fu
      * 查询列表
      * */
     function seachPayment() {
-        var entrust = {};
-
-        if ($("#entrustSelect").val() == "") {
-            entrust = {id: "", text: ""};
-        } else {
-            entrust = $("#entrustSelect").select2("data")[0];
-        }
-
-        // 检索条件组装
-        var condition = _basic.objToUrl({
-            orderPaymentId: $scope.paymentId,
-            entrustType: $scope.entrustType,
-            entrustId: entrust.id,
-            paymentStatus: $scope.paymentStatus,
-            paymentType: $scope.paymentType,
-            number: $scope.patmentNumber,
-            createdOnStart: $scope.paymentTimeStart,
-            createdOnEnd: $scope.paymentTimeEnd,
-            start: $scope.start.toString(),
-            size: $scope.size
-        });
-
-        _basic.get(_host.api_url + "/orderPayment?" + condition).then(function (data) {
+        // 基本检索URL
+        var reqUrl = _host.api_url + "/orderPayment?start=" + $scope.start + "&size=" + $scope.size;
+        // 检索条件
+        var conditions = _basic.objToUrl(makeConditions());
+        // 检索URL
+        reqUrl = conditions.length > 0 ? reqUrl + "&" + conditions : reqUrl;
+        _basic.get(reqUrl).then(function (data) {
             if (data.success == true) {
                 $scope.storagePaymentBoxArray = data.result;
                 $scope.storagePaymentArray = $scope.storagePaymentBoxArray.slice(0, 10);
@@ -157,6 +141,21 @@ app.controller("payment_controller", ["$scope", "_basic", "_host", "_config", fu
      * 数据导出
      */
     $scope.export = function () {
+        // 基本检索URL
+        var url = _host.api_url + "/orderPayment.csv";
+        // 检索条件
+        var conditions = _basic.objToUrl(makeConditions());
+        // 检索URL
+        url = conditions.length > 0 ? url + "?" + conditions : url;
+        // 调用接口下载
+        window.open(url);
+    };
+
+
+    /**
+     * 组装检索条件。
+     */
+    function makeConditions() {
         var entrust = {};
 
         if ($("#entrustSelect").val() == "") {
@@ -175,8 +174,9 @@ app.controller("payment_controller", ["$scope", "_basic", "_host", "_config", fu
             createdOnStart: $scope.paymentTimeStart,
             createdOnEnd: $scope.paymentTimeEnd
         };
-        window.open(_host.api_url + "/orderPayment.csv?" + _basic.objToUrl(obj));
-    };
+        return obj;
+    }
+
 
 
     /**
