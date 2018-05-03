@@ -89,7 +89,10 @@ app.controller("car_demand_details_controller", ["$state", "$stateParams", "_con
         $("#look_msg").show();
         //图片获取
         _basic.get(_host.record_url + "/user/" + userId + "/car/" + val + "/record").then(function (data) {
-            if (data.success == true && data.result.length > 0) {
+            if (data.success == true ) {
+                if(data.result.length == 0){
+                    return;
+                }
                 $scope.operating_record = data.result[0];
                 $scope.comment = $scope.operating_record.comment;
                 $scope.storage_image = $scope.operating_record.storage_image;
@@ -106,7 +109,7 @@ app.controller("car_demand_details_controller", ["$state", "$stateParams", "_con
         });
 
         //基本信息获取
-        _basic.get(_host.api_url + "/user/" + userId + "/car?carId=" + val + '&active=1').then(function (data) {
+        _basic.get(_host.api_url + "/user/" + userId + "/car?carId=" + val).then(function (data) {
             if (data.success == true ) {
                 if (data.result.length == 0) {
                     return;

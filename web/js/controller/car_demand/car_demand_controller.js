@@ -171,7 +171,6 @@ app.controller("car_demand_controller", ["$scope", "$rootScope", "_host", "_basi
             realStart:$scope.conditionOutTimeStart,
             realEnd:$scope.conditionOutTimeEnd,
             relStatus:$scope.conditionCarStatus,
-            active:1,
             storageId:$scope.conditionStorage,
             shipTransStatus:$scope.conditionShipTransStatus,
             shipCompanyId:$scope.conditionShipCompanyId,
