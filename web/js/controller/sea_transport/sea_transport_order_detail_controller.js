@@ -23,8 +23,8 @@ app.controller("sea_transport_order_detail_controller", ["$scope","$stateParams"
      */
     function queryOrderData() {
         _basic.get( _host.api_url + "/shipTransOrder?shipTransOrderId="+$scope.seaTransportOrderId).then(function (data) {
-            if (data.success == true) {
-                if(data.result.length==0){
+            if (data.success) {
+                if(data.result.length===0){
                     return;
                 }
                 $scope.paymentInfo = data.result[0];
@@ -42,14 +42,14 @@ app.controller("sea_transport_order_detail_controller", ["$scope","$stateParams"
             shipTransFee:$scope.paymentInfo.ship_trans_fee
         };
         _basic.put(_host.api_url + "/user/" + userId + "/shipTransOrder/"+id+'/ShipTransOrderFee', obj).then(function (data) {
-            if (data.success == true) {
+            if (data.success) {
                 swal('修改成功!', "", "success");
 
             } else {
                 swal(data.msg, "", "error");
             }
         });
-    }
+    };
 
 
     /**
@@ -60,4 +60,4 @@ app.controller("sea_transport_order_detail_controller", ["$scope","$stateParams"
         queryOrderData();
     };
     $scope.initData();
-}])
+}]);

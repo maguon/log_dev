@@ -5,37 +5,37 @@
     <div class="row card" style="height: 115px;margin-bottom: 30px">
 
         <!-- 检索用画面 -->
-        <!--<div class="col s12" style="margin-top: 20px;">-->
-            <!--&lt;!&ndash; 编号 &ndash;&gt;-->
-            <!--<div class="col s5 input-field">-->
-                <!--<input type="text" id="condShippingCoIdText" maxlength="10" ng-model="condShippingCoId">-->
-                <!--<label for="condShippingCoIdText">编号</label>-->
-            <!--</div>-->
+        <div class="col s12" id="searchShippingCoDiv" style="margin-top: 20px;">
+            <!-- 编号 -->
+            <div class="col s5 input-field">
+                <input type="text" id="condShippingCoIdText" maxlength="10" ng-model="condShippingCoId">
+                <label for="condShippingCoIdText">编号</label>
+            </div>
 
-            <!--&lt;!&ndash; 状态 &ndash;&gt;-->
-            <!--<div class="col s5 input-field">-->
-                <!--<select material-select ng-model="condUseFlags">-->
-                    <!--<option value="" selected>状态</option>-->
-                    <!--<option ng-repeat="op in useFlags" ng-value="{{op.id}}">{{op.name}}</option>-->
-                <!--</select>-->
-            <!--</div>-->
+            <!-- 状态 -->
+            <div class="col s5 input-field">
+                <select material-select ng-model="condUseFlags">
+                    <option value="" selected>状态</option>
+                    <option ng-repeat="op in useFlags" ng-value="{{op.id}}">{{op.name}}</option>
+                </select>
+            </div>
 
-            <!--&lt;!&ndash;查询按钮&ndash;&gt;-->
-            <!--<div class="col s1 center">-->
-                <!--<a class="btn-floating btn-large waves-light waves-effect red lighten-2 btn" ng-click="queryShipTransOrder()">-->
-                    <!--<i class="mdi mdi-magnify"></i>-->
-                <!--</a>-->
-            <!--</div>-->
-            <!--&lt;!&ndash;新增按钮&ndash;&gt;-->
-            <!--<div class="col s1 center">-->
-                <!--<a class=" btn-floating btn-large waves-light waves-effect cyan lighten-1 btn" ng-click="showAddShippingCo()">-->
-                    <!--<i class="mdi mdi-plus"></i>-->
-                <!--</a>-->
-            <!--</div>-->
-        <!--</div>-->
+            <!--查询按钮-->
+            <div class="col s1 center">
+                <a class="btn-floating btn-large waves-light waves-effect red lighten-2 btn" ng-click="getShippingCoList()">
+                    <i class="mdi mdi-magnify"></i>
+                </a>
+            </div>
+            <!--新增按钮-->
+            <div class="col s1 center">
+                <a class=" btn-floating btn-large waves-light waves-effect cyan lighten-1 btn" ng-click="showAddShippingCo()">
+                    <i class="mdi mdi-plus"></i>
+                </a>
+            </div>
+        </div>
 
         <!-- 追加用画面 -->
-        <div class="col s12" style="margin-top: 20px;">
+        <div class="col s12" id="addShippingCoDiv" style="margin-top: 20px;">
             <!-- 船务公司名称 -->
             <div class="col s6 input-field">
                 <input type="text" id="newShippingCoNameText" maxlength="50" ng-model="newShippingCoName">
@@ -44,9 +44,9 @@
 
             <!-- 追加 -->
             <div class="col s5 right-align">
-                <!--<a class="btn-floating btn-large waves-light waves-effect red lighten-2 btn vc-center modal-close" style="top:10px;" ng-click="closeAddShippingCo()">-->
-                    <!--<i class="mdi mdi-close"></i>-->
-                <!--</a>-->
+                <a class="btn-floating btn-large waves-light waves-effect red lighten-2 btn vc-center modal-close" style="top:10px;" ng-click="hideAddShippingCo()">
+                    <i class="mdi mdi-close"></i>
+                </a>
 
                 <a class="btn-floating btn-large waves-light waves-effect cyan lighten-1 btn vc-center" style="margin-left:50px;top:10px;" ng-click="addShippingCo()">
                     <i class="mdi mdi-check"></i>
@@ -57,13 +57,83 @@
 
     <!-- 船务公司 详情 -->
     <div class="row">
-        <div class="col s4" ng-repeat="shippingCo in shippingCoList" style="margin-bottom: 25px;">
+        <div class="col s4" ng-repeat="shippingCo in shippingCoList | filter:{ship_company_status:1}" style="margin-bottom: 25px;">
+            <div class="col s12 white cyan-text z-depth-1">
+                <div class="show_ship_co_enable{{$index}} col" style="width:76%;height: 50px;">
+                    <!-- 船务公司 显示 -->
+                    <div class="col" style="width:90%; padding-top: 15px;">
+                        <span style="display: block">{{shippingCo.id}} - {{shippingCo.ship_company_name}}</span>
+                    </div>
+                    <!-- 编辑 按钮 -->
+                    <div class="col fz18 right-align" style="width:10%; padding-top: 10px;cursor: pointer;">
+                        <i ng-click="showEditEnableShippingCo($event,$index)" class="mdi grey-text mdi-pencil"></i>
+                    </div>
+                </div>
 
-            <div class="col s3 vc-center cyan white-text text-lighten-2" style="height: 50px;">
-                <span style="display: block">{{shippingCo.id}}</span>
+                <div class="edit_ship_co_enable{{$index}} col" style="width:76%;height: 50px;display: none;">
+                    <!-- 船务公司 编辑 -->
+                    <div class="col" style="width:74%;">
+                        <input type="text" class="cyan-text text-lighten-1" ng-model="shippingCo.ship_company_name">
+                    </div>
+
+                    <!-- 编辑画面 取消/确定 按钮 -->
+                    <div class="col fz18 right-align" style="width:26%;padding-top: 10px;">
+                        <i class="mdi mdi-close red-text text-darken-2" style="cursor: pointer;" ng-click="hideEditEnableShippingCo($index)"></i>
+                        <i class="mdi mdi-check cyan-text text-lighten-1" style="cursor: pointer;" ng-click="updateShippingCo(shippingCo.id,shippingCo.ship_company_name,$index)"></i>
+                    </div>
+                </div>
+
+                <!-- 可用/停用 开关 -->
+                <div class="col" style="width:24%;height: 50px;padding-top: 12px;">
+                    <span class="switch" ng-click="changeShipCompanyStatus(shippingCo.id,shippingCo.ship_company_status)">
+                        <label>
+                          <input type="checkbox" ng-checked="shippingCo.ship_company_status==1">
+                          <span class="lever"></span>
+                        </label>
+                    </span>
+                </div>
             </div>
-            <div class="col s9 vc-center white black-text text-lighten-2" style="height: 50px;">
-                <span style="width:100%; display: block;">{{shippingCo.ship_company_name}}</span>
+        </div>
+
+        <div class="col s12" ng-show="hasDoubleType">
+            <div class="divider s12 center" style="height: 2px;"></div>
+        </div>
+
+        <div class="col s4" ng-repeat="shippingCo in shippingCoList | filter:{ship_company_status:0}" style="margin-top: 25px;">
+            <div class="col s12 white grey-text z-depth-1">
+                <div class="show_ship_co_disable{{$index}} col" style="width:76%;height: 50px;">
+                    <!-- 船务公司 显示 -->
+                    <div class="col" style="width:90%; padding-top: 15px;">
+                        <span style="display: block">{{shippingCo.id}} - {{shippingCo.ship_company_name}}</span>
+                    </div>
+                    <!-- 编辑 按钮 -->
+                    <div class="col fz18 right-align" style="width:10%; padding-top: 10px;cursor: pointer;">
+                        <i ng-click="showEditDisableShippingCo($event,$index)" class="mdi grey-text mdi-pencil"></i>
+                    </div>
+                </div>
+
+                <div class="edit_ship_co_disable{{$index}} col" style="width:76%;height: 50px;display: none;">
+                    <!-- 船务公司 编辑 -->
+                    <div class="col" style="width:74%;">
+                        <input type="text" class="cyan-text text-lighten-1" ng-model="shippingCo.ship_company_name">
+                    </div>
+
+                    <!-- 编辑画面 取消/确定 按钮 -->
+                    <div class="col fz18 right-align" style="width:26%;padding-top: 10px;">
+                        <i class="mdi mdi-close red-text text-darken-2" style="cursor: pointer;" ng-click="hideEditDisableShippingCo($index)"></i>
+                        <i class="mdi mdi-check cyan-text text-lighten-1" style="cursor: pointer;" ng-click="updateShippingCo(shippingCo.id,shippingCo.ship_company_name,$index)"></i>
+                    </div>
+                </div>
+
+                <!-- 可用/停用 开关 -->
+                <div class="col" style="width:24%;height: 50px;padding-top: 12px;">
+                    <span class="switch" ng-click="changeShipCompanyStatus(shippingCo.id,shippingCo.ship_company_status)">
+                        <label>
+                          <input type="checkbox" ng-checked="shippingCo.ship_company_status==1">
+                          <span class="lever"></span>
+                        </label>
+                    </span>
+                </div>
             </div>
         </div>
     </div>
