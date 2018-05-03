@@ -187,12 +187,12 @@
                 <p>修改价格</p>
             </div>
 
-            <!-- 显示画面【钥匙信息】 Body -->
+            <!-- 显示画面【修改价格】 Body -->
             <div class="row col s11"
                  style="padding:0 ;margin: 10px 0px 10px 40px ; border: 1px solid #cccccc;  background-color: #F5F5F5">
                 <div style="margin: 0 auto;">
 
-                    <!-- 钥匙 车辆信息 -->
+                    <!-- 修改价格 委托方 -->
                     <div class="vc-center col s12 left-align cyan-text fz20 lighten-4"
                          style="height:60px;">
                         <div class="col s12 left-align context-ellipsis">
@@ -221,7 +221,7 @@
                         <div style="border-top: #cccccc 1px dashed; overflow: hidden;width:100%; margin-left: 10px;margin-right: 10px;height: 1px"></div>
                     </div>
 
-                    <!-- 钥匙 存放位置 -->
+                    <!-- 入库时间 / 出库时间 -->
                     <div class="vc-center col s12 left-align black-text fz14" style="height:50px;">
                         <div class="col s6 left-align context-ellipsis">
                             <span>入库时间：{{orderInfo.enterTime |date:'yyyy-MM-dd hh:mm:ss'}}</span>
@@ -235,10 +235,13 @@
                         <div class="divider s12 center" style="width:100%; margin-left: 10px;margin-right: 10px;"></div>
                     </div>
 
-                    <!-- 钥匙 委托方 -->
+                    <!-- 预计支付 / 合计天数 -->
                     <div class="vc-center col s12 left-align black-text fz14" style="height:60px ;">
-                        <div class="col s12 left-align context-ellipsis">
+                        <div class="col s6 left-align context-ellipsis">
                             预计支付：<span class="red-text fz18">{{orderInfo.planFee | currency}}</span>
+                        </div>
+                        <div class="col s6 left-align context-ellipsis">
+                            合计天数：{{orderInfo.dayCount}}
                         </div>
                     </div>
                 </div>
