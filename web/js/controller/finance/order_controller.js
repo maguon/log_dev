@@ -1,5 +1,5 @@
 /**
- * 主菜单：仓储管理 -> 订单管理 控制器
+ * 主菜单：财务管理 -> 仓储订单 控制器
  */
 app.controller("order_controller", ["$scope", "$rootScope", "_host", "_basic", "_config", "$filter", function ($scope, $rootScope, _host, _basic, _config, $filter) {
 
@@ -27,6 +27,7 @@ app.controller("order_controller", ["$scope", "$rootScope", "_host", "_basic", "
         modelName: "",
         enterTime: "",
         realOutTime: "",
+        dayCount: "",
         planFee: "",
         actualFee: ""
     };
@@ -134,7 +135,7 @@ app.controller("order_controller", ["$scope", "$rootScope", "_host", "_basic", "
 
         $scope.orderInfo.id = el.id;
         // 委托方
-        $scope.orderInfo.entrustName = el.entrust_name;
+        $scope.orderInfo.entrustName = el.short_name;
         // VIN
         $scope.orderInfo.vin = el.vin;
         // 车型
@@ -144,6 +145,9 @@ app.controller("order_controller", ["$scope", "$rootScope", "_host", "_basic", "
         $scope.orderInfo.enterTime = el.enter_time;
         // 出库时间
         $scope.orderInfo.realOutTime = el.real_out_time;
+        // 合计天数
+        $scope.orderInfo.dayCount = el.day_count;
+
         // 预计支付
         $scope.orderInfo.planFee = el.plan_fee;
         // 实际应付

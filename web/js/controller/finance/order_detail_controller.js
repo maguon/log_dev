@@ -1,5 +1,5 @@
 /**
- * 主菜单：仓储管理 -> 订单管理(详细画面) 控制器
+ * 主菜单：财务管理 -> 仓储订单(详细画面) 控制器
  */
 app.controller("order_detail_controller", ["$scope", "$state", "$stateParams", "_basic", "_config", "_host", "$filter", function ($scope, $state, $stateParams, _basic, _config, _host, $filter) {
 
