@@ -140,7 +140,7 @@
 
     <!-- 下部分：检索结果显示区域 -->
     <div class="col s12">
-        <div class="divider" style="background: #00bcd4;height: 2px;"></div>
+        <div class="divider" style="background: #4e84cb;height: 2px;"></div>
         <table class=" bordered striped centered">
             <thead class="blue-grey lighten-5">
             <tr class="grey-text text-darken-2">
@@ -191,12 +191,12 @@
                 <td ng-if="el.order_status==2" class="grey-text">{{payStatusList[el.order_status-1].name}}</td>
                 <!--操作-->
                 <td class="operation col s12">
-                    <span class="s6 left-align">
+                    <!--<span class="s6 left-align">
                         <i class="mdi  mdi-delete-forever look_icon red-text lighten-1"
                            ng-click="deletePriceOrder(el.ship_trans_id,el.car_id)">
                         </i>
-                    </span>
-                    <span class="s6 right-align">
+                    </span>-->
+                    <span class="s12">
                         <a href="#" ui-sref="sea_transport_order_detail({id:el.id,from:'sea_transport_order'})" class=""><i
                                 class="mdi mdi-file-outline look_icon cyan-text lighten-1  "></i>
                         </a>

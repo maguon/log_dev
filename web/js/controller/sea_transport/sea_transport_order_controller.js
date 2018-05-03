@@ -16,24 +16,14 @@ app.controller("sea_transport_order_controller", ["$scope", "$rootScope", "_host
     * 数据导出*
     * */
     $scope.export = function () {
-        var obj = {
-            vin:$scope.conditionOrderVIN,
-            makeId:$scope.conditionMakeId,
-            modelId:$scope.conditionModelId,
-            orderStatus:$scope.conditionPayStatus,
-            conditionEntrust:$scope.entrustName,
-            shipCompanyId:$scope.conditionShipCompanyId,
-            shipName:$scope.conditionShipName,
-            container:$scope.conditionContainer,
-            startPortId:$scope.conditionStartPortId,
-            endPortId:$scope.conditionEndPortId,
-            startShipDateStart:$scope.conditionStartShipDateStart,
-            startShipDateEnd:$scope.conditionStartShipDateEnd,
-            endShipDateStart:$scope.conditionEnterTimeStart,
-            endShipDateEnd:$scope.conditionEndShipDateEnd,
-            booking:$scope.conditionBooking
-        };
-        window.open(_host.api_url + "/shipTransOrder.csv?" + _basic.objToUrl(obj));
+        // 基本检索URL
+        var url = _host.api_url + "/shipTransOrder.csv";
+        // 检索条件
+        var conditions = _basic.objToUrl(makeConditions());
+        // 检索URL
+        url = conditions.length > 0 ? url + "?" + conditions : url;
+        // 调用接口下载
+        window.open(url);
     };
 
 
@@ -123,78 +113,13 @@ app.controller("sea_transport_order_controller", ["$scope", "$rootScope", "_host
      * 根据画面输入的查询条件，进行数据查询。
      */
     function queryOrderData() {
-        var entrust = {};
 
-        if ($("#entrustSelect").val() == "") {
-            entrust = {id: "", text: ""};
-        } else {
-            entrust = $("#entrustSelect").select2("data")[0];
-        }
-        // 检索用url
+        // 基本检索URL
         var reqUrl = _host.api_url + "/shipTransOrder?start=" + $scope.start + "&size=" + $scope.size;
-
-        // vin码
-        if ($scope.conditionOrderVIN != null) {
-            reqUrl = reqUrl + "&vin=" + $scope.conditionOrderVIN;
-        }
-
-        // 制造商
-        if ($scope.conditionMakeId != null) {
-            reqUrl = reqUrl + "&makeId=" + $scope.conditionMakeId;
-        }
-        // 型号
-        if ($scope.conditionModelId != null) {
-            reqUrl = reqUrl + "&modelId=" + $scope.conditionModelId;
-        }
-        // 委托方
-        if (entrust.id!= null && entrust.id!= 0) {
-            reqUrl = reqUrl + "&entrustId=" + entrust.id;
-        }
-        // 支付状态
-        if ($scope.conditionPayStatus != null) {
-            reqUrl = reqUrl + "&orderStatus=" + $scope.conditionPayStatus
-        }
-        // 船公司
-        if ($scope.conditionShipCompanyId != null) {
-            reqUrl = reqUrl + "&shipCompanyId=" + $scope.conditionShipCompanyId
-        }
-        // 船名
-        if ($scope.conditionShipName != null) {
-            reqUrl = reqUrl + "&shipName=" + $scope.conditionShipName
-        }
-        // 货柜
-        if ($scope.conditionContainer != null) {
-            reqUrl = reqUrl + "&container=" + $scope.conditionContainer
-        }
-        // 始发港口
-        if ($scope.conditionStartPortId != null) {
-            reqUrl = reqUrl + "&startPortId=" + $scope.conditionStartPortId
-        }
-        // 目的港口
-        if ($scope.conditionEndPortId != null) {
-            reqUrl = reqUrl + "&endPortId=" + $scope.conditionEndPortId
-        }
-        // 开船日期(始)
-        if ($scope.conditionStartShipDateStart != null) {
-            reqUrl = reqUrl + "&startShipDateStart=" + $scope.conditionStartShipDateStart
-        }
-        // 开船日期(终)
-        if ($scope.conditionStartShipDateEnd != null) {
-            reqUrl = reqUrl + "&startShipDateEnd=" + $scope.conditionStartShipDateEnd
-        }
-        // 到港日期(始)
-        if ($scope.conditionEnterTimeStart != null) {
-            reqUrl = reqUrl + "&endShipDateStart=" + $scope.conditionEnterTimeStart
-        }
-        // 到港日期(终)
-        if ($scope.conditionEndShipDateEnd != null) {
-            reqUrl = reqUrl + "&endShipDateEnd=" + $scope.conditionEndShipDateEnd
-        }
-
-        // booking
-        if ($scope.conditionBooking != null) {
-            reqUrl = reqUrl + "&booking=" + $scope.conditionBooking
-        }
+        // 检索条件
+        var conditions = _basic.objToUrl(makeConditions());
+        // 检索URL
+        reqUrl = conditions.length > 0 ? reqUrl + "&" + conditions : reqUrl;
 
         _basic.get(reqUrl).then(function (data) {
             if (data.success == true) {
@@ -229,6 +154,38 @@ app.controller("sea_transport_order_controller", ["$scope", "$rootScope", "_host
         // 查询
         queryOrderData();
     };
+
+
+    /**
+     * 组装检索条件。
+     */
+    function makeConditions() {
+        // 委托方
+        var entrust = {};
+        if ($("#entrustSelect").val() === "") {
+            entrust = {id: "", text: ""};
+        } else {
+            entrust = $("#entrustSelect").select2("data")[0];
+        }
+        var obj = {
+            vin:$scope.conditionOrderVIN,
+            makeId:$scope.conditionMakeId,
+            modelId:$scope.conditionModelId,
+            entrustId:entrust.id,
+            orderStatus:$scope.conditionPayStatus,
+            shipCompanyId:$scope.conditionShipCompanyId,
+            shipName:$scope.conditionShipName,
+            container:$scope.conditionContainer,
+            startPortId:$scope.conditionStartPortId,
+            endPortId:$scope.conditionEndPortId,
+            startShipDateStart:$scope.conditionStartShipDateStart,
+            startShipDateEnd:$scope.conditionStartShipDateEnd,
+            endShipDateStart:$scope.conditionEnterTimeStart,
+            endShipDateEnd:$scope.conditionEndShipDateEnd,
+            booking:$scope.conditionBooking
+    };
+        return obj;
+    }
 
 
     /*

@@ -311,45 +311,22 @@ app.controller("client_info_detail_controller", ["$scope", "$rootScope","$state"
      */
     function queryOrderData() {
         // 检索用url
-        var reqUrl = _host.api_url + "/storageOrder?entrustId="+val+"&start=" + $scope.start + "&size=" + $scope.size;
+        var reqUrl = _host.api_url + "/storageOrder?entrustId="+val+'&';
+        var obj = {
+            storageOrderId:$scope.conditionOrderNo,
+            vin:$scope.conditionVin,
+            makeId:$scope.conditionMakeId,
+            modelId:$scope.conditionModelId,
+            enterStart:$scope.conditionEnterTimeStart,
+            enterEnd:$scope.conditionEnterTimeEnd,
+            realStart:$scope.conditionOutTimeStart,
+            realEnd:$scope.conditionOutTimeEnd,
+            orderStatus:$scope.conditionPayStatus,
+            start:$scope.start,
+            size:$scope.size
+        };
 
-        // 订单编号
-        if ($scope.conditionOrderNo != null) {
-            reqUrl = reqUrl + "&storageOrderId=" + $scope.conditionOrderNo;
-        }
-        // vin码
-        if ($scope.conditionVin != null) {
-            reqUrl = reqUrl + "&vin=" + $scope.conditionVin;
-        }
-        // 品牌
-        if ($scope.conditionMakeId != null) {
-            reqUrl = reqUrl + "&makeId=" + $scope.conditionMakeId;
-        }
-        // 型号
-        if ($scope.conditionModelId != null) {
-            reqUrl = reqUrl + "&modelId=" + $scope.conditionModelId;
-        }
-        // 入库时间 开始
-        if ($scope.conditionEnterTimeStart != null) {
-            reqUrl = reqUrl + "&enterStart=" + $scope.conditionEnterTimeStart
-        }
-        // 入库时间 终了
-        if ($scope.conditionEnterTimeEnd != null) {
-            reqUrl = reqUrl + "&enterEnd=" + $scope.conditionEnterTimeEnd
-        }
-        // 实际出库时间 开始
-        if ($scope.conditionOutTimeStart != null) {
-            reqUrl = reqUrl + "&realStart=" + $scope.conditionOutTimeStart
-        }
-        // 实际出库时间 终了
-        if ($scope.conditionOutTimeEnd != null) {
-            reqUrl = reqUrl + "&realEnd=" + $scope.conditionOutTimeEnd
-        }
-        // 支付状态
-        if ($scope.conditionPayStatus != null) {
-            reqUrl = reqUrl + "&orderStatus=" + $scope.conditionPayStatus
-        }
-        _basic.get(reqUrl).then(function (data) {
+        _basic.get(reqUrl+_basic.objToUrl(obj)).then(function (data) {
             if (data.success == true) {
                 $scope.orderResult = data.result;
                 $scope.orderList = $scope.orderResult.slice(0, 10);
@@ -417,68 +394,26 @@ app.controller("client_info_detail_controller", ["$scope", "$rootScope","$state"
      */
     function querySeaTransportOrder() {
         // 检索用url
-        var reqUrl = _host.api_url + "/shipTransOrder?entrustId="+val+"&start=" + $scope.start + "&size=" + $scope.size;
-
-        // vin码
-        if ($scope.conditionOrderVIN != null) {
-            reqUrl = reqUrl + "&vin=" + $scope.conditionOrderVIN;
-        }
-
-        if ($scope.conditionOrderId != null) {
-            reqUrl = reqUrl + "&shipTransId=" + $scope.conditionOrderId;
-        }
-        // 制造商
-        if ($scope.conditionMakeId != null) {
-            reqUrl = reqUrl + "&makeId=" + $scope.conditionMakeId;
-        }
-        // 型号
-        if ($scope.conditionModelId != null) {
-            reqUrl = reqUrl + "&modelId=" + $scope.conditionModelId;
-        }
-        //送达状态
-        if ($scope.conditionOrderStatus != null) {
-            reqUrl = reqUrl + "&shipTransStatus=" + $scope.conditionOrderStatus;
-        }
-
-        // 支付状态
-        if ($scope.conditionPayStatus != null) {
-            reqUrl = reqUrl + "&orderStatus=" + $scope.conditionPayStatus
-        }
-        // 船公司
-        if ($scope.conditionShipCompanyId != null) {
-            reqUrl = reqUrl + "&shipCompanyId=" + $scope.conditionShipCompanyId
-        }
-        // 货柜
-        if ($scope.conditionContainer != null) {
-            reqUrl = reqUrl + "&container=" + $scope.conditionContainer
-        }
-        // 始发港口
-        if ($scope.conditionStartPortId != null) {
-            reqUrl = reqUrl + "&startPortId=" + $scope.conditionStartPortId
-        }
-        // 目的港口
-        if ($scope.conditionEndPortId != null) {
-            reqUrl = reqUrl + "&endPortId=" + $scope.conditionEndPortId
-        }
-        // 开船日期(始)
-        if ($scope.conditionStartShipDateStart != null) {
-            reqUrl = reqUrl + "&startShipDateStart=" + $scope.conditionStartShipDateStart
-        }
-        // 开船日期(终)
-        if ($scope.conditionStartShipDateEnd != null) {
-            reqUrl = reqUrl + "&startShipDateEnd=" + $scope.conditionStartShipDateEnd
-        }
-        // 到港日期(始)
-        if ($scope.conditionEnterTimeStart != null) {
-            reqUrl = reqUrl + "&endShipDateStart=" + $scope.conditionEnterTimeStart
-        }
-        // 到港日期(终)
-        if ($scope.conditionEndShipDateEnd != null) {
-            reqUrl = reqUrl + "&endShipDateEnd=" + $scope.conditionEndShipDateEnd
-        }
-
-
-        _basic.get(reqUrl).then(function (data) {
+        var reqUrl = _host.api_url + "/shipTransOrder?entrustId="+val+'&';
+        var obj = {
+            vin:$scope.conditionOrderVIN,
+            shipTransId:$scope.conditionOrderId,
+            makeId:$scope.conditionMakeId,
+            modelId:$scope.conditionModelId,
+            shipTransStatus:$scope.conditionOrderStatus,
+            orderStatus:$scope.conditionPayStatus,
+            shipCompanyId:$scope.conditionShipCompanyId,
+            container:$scope.conditionContainer,
+            startPortId:$scope.conditionStartPortId,
+            endPortId:$scope.conditionEndPortId,
+            startShipDateStart:$scope.conditionStartShipDateStart,
+            startShipDateEnd:$scope.conditionStartShipDateEnd,
+            endShipDateStart:$scope.conditionEnterTimeStart,
+            endShipDateEnd:$scope.conditionEndShipDateEnd,
+            start:$scope.start,
+            size:$scope.size
+        };
+        _basic.get(reqUrl+_basic.objToUrl(obj)).then(function (data) {
             if (data.success == true) {
                 $scope.seaTransportOrderResult = data.result;
                 $scope.seaTransportOrderList = $scope.seaTransportOrderResult.slice(0, 10);
@@ -561,33 +496,18 @@ app.controller("client_info_detail_controller", ["$scope", "$rootScope","$state"
      */
     function querypaymentHistoryData() {
         // 检索用url
-        var reqUrl = _host.api_url + "/orderPayment?entrustId="+ val +"&start=" + $scope.start + "&size=" + $scope.size;
-
-        // 支付编号
-        if ($scope.paymentHistoryOrderPaymentId != null) {
-            reqUrl = reqUrl + "&orderPaymentId=" + $scope.paymentHistoryOrderPaymentId;
-        }
-
-        if ($scope.paymentHistoryPaymentType != null) {
-            reqUrl = reqUrl + "&entrustType=" + $scope.paymentHistoryPaymentType;
-        }
-        //票号
-        if ($scope.paymentHistoryNumber != null) {
-            reqUrl = reqUrl + "&number=" + $scope.paymentHistoryNumber;
-        }
-
-        if ($scope.createdOnStart != null) {
-            reqUrl = reqUrl + "&createdOnStart=" + $scope.createdOnStart;
-        }
-        if ($scope.createdOnEnd != null) {
-            reqUrl = reqUrl + "&createdOnEnd=" + $scope.createdOnEnd;
-        }
-
-        // 支付状态
-        if ($scope.paymentHistoryPaymentStatus != null) {
-            reqUrl = reqUrl + "&paymentStatus=" + $scope.paymentHistoryPaymentStatus
-        }
-        _basic.get(reqUrl).then(function (data) {
+        var reqUrl = _host.api_url + "/orderPayment?entrustId="+ val+'&';
+        var obj={
+            orderPaymentId:$scope.paymentHistoryOrderPaymentId,
+            entrustType:$scope.paymentHistoryPaymentType,
+            number:$scope.paymentHistoryNumber,
+            createdOnStart:$scope.createdOnStart,
+            createdOnEnd:$scope.createdOnEnd,
+            paymentStatus:$scope.paymentHistoryPaymentStatus,
+            start:$scope.start,
+            size:$scope.size
+        };
+        _basic.get(reqUrl+_basic.objToUrl(obj)).then(function (data) {
             if (data.success == true) {
                 $scope.paymentHistoryResult = data.result;
                 $scope.paymentHistoryList = $scope.paymentHistoryResult.slice(0, 10);
