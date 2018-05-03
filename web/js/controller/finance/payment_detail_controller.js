@@ -52,7 +52,7 @@ app.controller("payment_detail_controller", ["$scope", "$stateParams", "_basic",
             }
         });
         var url = _host.api_url + "/orderPaymentRel?orderPaymentId=" + orderPaymentId;
-
+        //右侧关联列表
         _basic.get(url).then(function (data) {
             if (data.success == true) {
                 $scope.storageOrderPaymentRelList = data.result;

@@ -37,8 +37,6 @@ app.controller("client_info_detail_controller", ["$scope", "$rootScope","$state"
         $('ul.tabWrap li.inventoryRecord ').addClass("active");
         $("#inventoryRecord").addClass("active");
         $("#inventoryRecord").show();
-
-
     };
     $scope.relStatus = function () {
         $('ul.tabWrap li').removeClass("active");
@@ -120,6 +118,65 @@ app.controller("client_info_detail_controller", ["$scope", "$rootScope","$state"
             }
         });
     }
+    /**
+     * 【始发港口 目的港口】列表查询
+     */
+    function getPortList() {
+        _basic.get(_host.api_url + "/port").then(function (data) {
+            if (data.success) {
+                $scope.portList = data.result;
+            }
+        });
+    }
+
+
+    /**
+     * 【船公司】列表查询，用来填充查询条件：船公司
+     */
+    function getShippingCoList() {
+        // 调用API取得，画面数据
+        _basic.get(_host.api_url + "/shipCompany").then(function (data) {
+            if (data.success) {
+                // 检索取得数据集
+                $scope.shippingCoList = data.result;
+            }
+        });
+    }
+
+
+
+    /**
+     * 车辆品牌列表查询，用来填充查询条件：车辆品牌
+     */
+    function getCarMakerList() {
+        _basic.get(_host.api_url + "/carMake").then(function (data) {
+            if (data.success == true && data.result.length > 0) {
+                $scope.carMakerList = data.result;
+            } else {
+                swal(data.msg, "", "error");
+            }
+        });
+    }
+
+    /**
+     * 当车辆品牌变更时，车辆型号要进行联动刷新。
+     * @param val 车辆品牌ID
+     */
+    $scope.changeMakerId = function (val) {
+        if (val) {
+            if ($scope.curruntId == val) {
+            } else {
+                $scope.curruntId = val;
+                _basic.get(_host.api_url + "/carMake/" + val + "/carModel").then(function (data) {
+                    if (data.success == true && data.result.length > 0) {
+                        $scope.carModelList = data.result;
+                    } else {
+                        swal(data.msg, "", "error")
+                    }
+                })
+            }
+        }
+    };
     //获取头部基本信息
     function getHeaderInfo (){
         _basic.get(_host.api_url + "/entrust?entrustId=" + val).then(function (data) {
@@ -250,41 +307,6 @@ app.controller("client_info_detail_controller", ["$scope", "$rootScope","$state"
 
 
     /**
-     * 车辆品牌列表查询，用来填充查询条件：车辆品牌
-     */
-    function getCarMakerList() {
-        _basic.get(_host.api_url + "/carMake").then(function (data) {
-            if (data.success == true && data.result.length > 0) {
-                $scope.carMakerList = data.result;
-            } else {
-                swal(data.msg, "", "error");
-            }
-        });
-    }
-
-    /**
-     * 当车辆品牌变更时，车辆型号要进行联动刷新。
-     * @param val 车辆品牌ID
-     */
-    $scope.changeMakerId = function (val) {
-        if (val) {
-            if ($scope.curruntId == val) {
-            } else {
-                $scope.curruntId = val;
-                _basic.get(_host.api_url + "/carMake/" + val + "/carModel").then(function (data) {
-                    if (data.success == true && data.result.length > 0) {
-                        $scope.carModelList = data.result;
-                    } else {
-                        swal(data.msg, "", "error")
-                    }
-                })
-            }
-        }
-    };
-
-
-
-    /**
      * 根据画面输入的查询条件，进行仓储订单数据查询。
      */
     function queryOrderData() {
@@ -389,32 +411,6 @@ app.controller("client_info_detail_controller", ["$scope", "$rootScope","$state"
         $(".modal").modal();
         $("#openStorageOrder").modal("close");
     };
-
-
-    /**
-     * 【始发港口 目的港口】列表查询
-     */
-    function getPortList() {
-        _basic.get(_host.api_url + "/port").then(function (data) {
-            if (data.success) {
-                $scope.portList = data.result;
-            }
-        });
-    }
-
-
-    /**
-     * 【船公司】列表查询，用来填充查询条件：船公司
-     */
-    function getShippingCoList() {
-        // 调用API取得，画面数据
-        _basic.get(_host.api_url + "/shipCompany").then(function (data) {
-            if (data.success) {
-                // 检索取得数据集
-                $scope.shippingCoList = data.result;
-            }
-        });
-    }
 
     /**
      * 根据画面输入的查询条件，进行数据查询。
@@ -523,6 +519,7 @@ app.controller("client_info_detail_controller", ["$scope", "$rootScope","$state"
         _basic.get(_host.api_url + "/shipTransOrder?vin="+vin).then(function (data) {
             if (data.success == true) {
                 $scope.paymentInfo = data.result[0];
+                getOrderPayment( $scope.paymentInfo.id);
                 for (var i in _config.config_color) {
                     if (_config.config_color[i].colorId == $scope.paymentInfo.colour) {
                         $scope.SeaTranOrderColor = _config.config_color[i].colorName;
@@ -533,13 +530,30 @@ app.controller("client_info_detail_controller", ["$scope", "$rootScope","$state"
             }
         })
     };
+
+
+    /*
+   * 获取支付信息
+   * */
+    function getOrderPayment(id){
+        _basic.get( _host.api_url + "/orderPayment?shipTransOrderId="+id).then(function (data) {
+            if (data.success == true) {
+                if(data.result.length==0){
+                    return;
+                }
+                $scope.orderPaymentList = data.result[0];
+            } else {
+                swal(data.msg, "", "error");
+            }
+        });
+    }
+
+
     //点击关闭海运订单模态框
     $scope.closeSeaTranModal= function(){
         $(".modal").modal();
         $("#openSeaTranModal").modal("close");
     };
-
-
 
 
     /**
@@ -728,59 +742,42 @@ app.controller("client_info_detail_controller", ["$scope", "$rootScope","$state"
         $scope.start = $scope.start + ($scope.size - 1) ;
 
     };
-    /**
-     * 上一页
-     */
+    // 上一页
     $scope.preBtn5 = function () {
         $scope.start = $scope.start - ($scope.size - 1);
         queryOrderData();
     };
-
-    /**
-     * 下一页
-     */
+    // 下一页
     $scope.nextBtn5 = function () {
         $scope.start = $scope.start + ($scope.size - 1);
         queryOrderData();
     };
-    /**
-     * 上一页
-     */
+    // 上一页
     $scope.preBtn6 = function () {
         $scope.start = $scope.start - ($scope.size - 1);
         querypaymentHistoryData();
     };
-
-    /**
-     * 下一页
-     */
+    // 下一页
     $scope.nextBtn6 = function () {
         $scope.start = $scope.start + ($scope.size - 1);
         querypaymentHistoryData();
     };
-    /**
-     * 上一页
-     */
+    // 上一页
     $scope.preBtn7 = function () {
         $scope.start = $scope.start - ($scope.sizeDetail - 1);
         getStorageOrderDetails();
     };
-
-    /**
-     * 下一页
-     */
+    // 下一页
     $scope.nextBtn7 = function () {
         $scope.start = $scope.start + ($scope.sizeDetail - 1);
         getStorageOrderDetails();
     };
+    // 上一页
     $scope.preBtn8 = function () {
         $scope.start = $scope.start - ($scope.sizeDetail - 1);
         getSeaTransportOrderDetails();
     };
-
-    /**
-     * 下一页
-     */
+    // 下一页
     $scope.nextBtn8 = function () {
         $scope.start = $scope.start + ($scope.sizeDetail - 1);
         getSeaTransportOrderDetails();

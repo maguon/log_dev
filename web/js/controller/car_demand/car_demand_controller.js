@@ -1,7 +1,8 @@
 /**
  * 主菜单：车辆查询 控制器
  */
-app.controller("car_demand_controller", ["$scope", "$rootScope", "_host", "_basic", "_config", "_baseService", function ($scope, $rootScope, _host, _basic, _config, _baseService) {
+app.controller("car_demand_controller", ["$scope", "$rootScope", "_host", "_basic", "_config", function ($scope, $rootScope, _host, _basic, _config) {
+    // 当前汽车品牌ID
     $scope.curruntId = 0;
     $scope.start = 0;
     $scope.size = 11;
