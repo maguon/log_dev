@@ -3,21 +3,52 @@
 <!-- 主画面：添加部 + 详细信息列表部 -->
 <div style="width: 90%;margin: 0 auto">
     <div class="row card" style="height: 115px;margin-bottom: 30px">
+
+        <!-- 检索用画面 -->
         <div class="col s12" style="margin-top: 20px;">
             <!-- 船务公司名称 -->
-            <div class="col s6 input-field">
+            <div class="col s4 input-field">
                 <input type="text" id="newShippingCoNameText" maxlength="50" ng-model="newShippingCoName">
                 <label for="newShippingCoNameText"><span style="color: red">* </span>船务公司名称</label>
             </div>
 
+            <!-- 状态 -->
+            <div class="col s4 input-field">
+                <select material-select ng-model="condUseFlags">
+                    <option value="" selected>请选择</option>
+                    <option ng-repeat="op in useFlags" ng-value="{{op.id}}">{{op.name}}</option>
+                </select>
+                <label>状态</label>
+            </div>
+
             <!-- 追加 -->
-            <div class="col s5 right-align">
+            <div class="col s4 right-align">
                 <a class="btn-floating btn-large waves-light waves-effect cyan lighten-1 btn vc-center" style="top:10px;"
                    ng-click="addShippingCo()">
                     <i class="mdi mdi-plus"></i>
                 </a>
             </div>
         </div>
+
+        <!-- 追加用画面 -->
+        <!--<div class="col s12" style="margin-top: 20px;">-->
+            <!--&lt;!&ndash; 船务公司名称 &ndash;&gt;-->
+            <!--<div class="col s6 input-field">-->
+                <!--<input type="text" id="newShippingCoNameText" maxlength="50" ng-model="newShippingCoName">-->
+                <!--<label for="newShippingCoNameText"><span style="color: red">* </span>船务公司名称</label>-->
+            <!--</div>-->
+
+            <!--&lt;!&ndash; 追加 &ndash;&gt;-->
+            <!--<div class="col s5 right-align">-->
+                <!--<a class="btn-floating btn-large waves-light waves-effect red lighten-2 btn vc-center modal-close" style="top:10px;" ng-click="closeAddShippingCo()">-->
+                    <!--<i class="mdi mdi-close"></i>-->
+                <!--</a>-->
+
+                <!--<a class="btn-floating btn-large waves-light waves-effect cyan lighten-1 btn vc-center" style="margin-left:50px;top:10px;" ng-click="addShippingCo()">-->
+                    <!--<i class="mdi mdi-check"></i>-->
+                <!--</a>-->
+            <!--</div>-->
+        <!--</div>-->
     </div>
 
     <!-- 船务公司 详情 -->

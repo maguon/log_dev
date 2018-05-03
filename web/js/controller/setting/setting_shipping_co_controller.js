@@ -6,6 +6,9 @@ app.controller("setting_shipping_co_controller", ["$scope", "_basic", "_host", f
     // 取得当前画面 登录用户
     var userId = _basic.getSession(_basic.USER_ID);
 
+    // 条件：状态 [0:停用 1:可用]
+    $scope.useFlags = _config.useFlags;
+
     // 船务公司名称
     $scope.newShippingCoName = "";
 
@@ -25,6 +28,14 @@ app.controller("setting_shipping_co_controller", ["$scope", "_basic", "_host", f
                 swal(data.msg, "", "error");
             }
         });
+    };
+
+    /**
+     * 显示增加船公司画面。
+     */
+    $scope.showAddShippingCo = function () {
+        $(".open_car_brand").show();
+        $(".car_Brand_box").hide();
     };
 
     /**
