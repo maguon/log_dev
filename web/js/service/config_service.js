@@ -42,117 +42,37 @@ baseService.factory("_config", function () {
         }
     ];
 
-    //
+    // 模块
+    _this.modules = [
+        {
+            id: 1,
+            name: "仓储部"
+        },
+        {
+            id: 2,
+            name: "国贸部"
+        }
+    ];
+
+    // app系统
+    _this.appSystems = [
+        {
+            id: 1,
+            name: "安卓"
+        },
+        {
+            id: 2,
+            name: "IOS"
+        }
+    ];
+
+    // TODO DELETE
     _this.user_type = {
         storage_type: "2",
         admin_type: "99"
     };
-    _this.rel_status = 1;
+    // _this.rel_status = 1;
 
-    // 车辆状态
-    _this.carRelStatus = [
-        {
-            s_num: 1,
-            status_text: "在库"
-        },
-        {
-            s_num: 2,
-            status_text: "出库"
-        },
-    ];
-    _this.config_color = [
-        {
-            colorName: "白色",
-            colorId: "FFFFFF"
-        },
-        {
-            colorName: "黑色",
-            colorId: "000000"
-        },
-        {
-            colorName: "银色",
-            colorId: "ECECEC"
-        },
-        {
-            colorName: "金色",
-            colorId: "EDB756"
-        },
-        {
-            colorName: "红色",
-            colorId: "D0011B"
-        },
-        {
-            colorName: "蓝色",
-            colorId: "0B7DD5"
-        },
-        {
-            colorName: "灰色",
-            colorId: "9B9B9B"
-        },
-        {
-            colorName: "紫色",
-            colorId: "7C24AB"
-        },
-        {
-            colorName: "桔色",
-            colorId: "FF6600"
-        },
-        {
-            colorName: "黄色",
-            colorId: "FFCC00"
-        },
-        {
-            colorName: "绿色",
-            colorId: "39A23F "
-        },
-        {
-            colorName: "棕色",
-            colorId: "794A21 "
-        },
-        {
-            colorName: "粉色",
-            colorId: "FF9CC3 "
-        },
-        {
-            colorName: "其他",
-            colorId: "CCCCCC "
-        }
-    ];
-    //获取国家
-    _this.country = [
-        {
-            val:1,
-            name:'美国'
-        },
-        {
-            val:2,
-            name:'中国'
-        }
-
-    ];
-    //支付状态
-    _this.paymentStatus = [
-        {
-            id:1,
-            name:'未完结'
-        },
-        {
-            id:2,
-            name:'已完结'
-        }
-
-    ];
-    //支付方式
-    _this.paymentType = [
-        {
-            id:1,
-            name:'支票'
-        },
-        {
-            id:2,
-            name:'电汇'
-        }
-    ];
     // A-Z
     _this.characters = [
         {
@@ -261,27 +181,113 @@ baseService.factory("_config", function () {
         }
     ];
 
-    // app系统
-    _this.appSystems = [
+    // 车辆颜色
+    _this.config_color = [
         {
-            id: 1,
-            name: "安卓"
+            colorName: "白色",
+            colorId: "FFFFFF"
         },
         {
-            id: 2,
-            name: "IOS"
+            colorName: "黑色",
+            colorId: "000000"
+        },
+        {
+            colorName: "银色",
+            colorId: "ECECEC"
+        },
+        {
+            colorName: "金色",
+            colorId: "EDB756"
+        },
+        {
+            colorName: "红色",
+            colorId: "D0011B"
+        },
+        {
+            colorName: "蓝色",
+            colorId: "0B7DD5"
+        },
+        {
+            colorName: "灰色",
+            colorId: "9B9B9B"
+        },
+        {
+            colorName: "紫色",
+            colorId: "7C24AB"
+        },
+        {
+            colorName: "桔色",
+            colorId: "FF6600"
+        },
+        {
+            colorName: "黄色",
+            colorId: "FFCC00"
+        },
+        {
+            colorName: "绿色",
+            colorId: "39A23F "
+        },
+        {
+            colorName: "棕色",
+            colorId: "794A21 "
+        },
+        {
+            colorName: "粉色",
+            colorId: "FF9CC3 "
+        },
+        {
+            colorName: "其他",
+            colorId: "CCCCCC "
         }
     ];
 
-    // 模块
-    _this.modules = [
+    // 车辆状态
+    _this.carRelStatus = [
         {
-            id: 1,
-            name: "仓储部"
+            s_num: 1,
+            status_text: "在库"
         },
         {
-            id: 2,
-            name: "国贸部"
+            s_num: 2,
+            status_text: "出库"
+        }
+    ];
+
+    // 国家
+    _this.country = [
+        {
+            val:1,
+            name:'美国'
+        },
+        {
+            val:2,
+            name:'中国'
+        }
+
+    ];
+
+    // 支付状态
+    _this.paymentStatus = [
+        {
+            id:1,
+            name:'未完结'
+        },
+        {
+            id:2,
+            name:'已完结'
+        }
+
+    ];
+
+    // 支付方式
+    _this.paymentType = [
+        {
+            id:1,
+            name:'支票'
+        },
+        {
+            id:2,
+            name:'电汇'
         }
     ];
 
