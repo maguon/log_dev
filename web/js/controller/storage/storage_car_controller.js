@@ -192,7 +192,7 @@ app.controller("storage_car_controller", ["$scope", "$rootScope", "$stateParams"
                     $scope.storageAreaParking = data.result;
                     $scope.area = '';
                     $scope.addRow = '';
-                    $scope.addLot = '';
+                    $scope.addCol = '';
                     $scope.parking_id = "";
                     $scope.parkingArrayRow=[];
                     $scope.colArr=[];
@@ -288,7 +288,7 @@ app.controller("storage_car_controller", ["$scope", "$rootScope", "$stateParams"
         // 存放位置清空
         $scope.area = '';
         $scope.addRow = '';
-        $scope.addLot = '';
+        $scope.addCol = '';
         $scope.parking_id = "";
         $scope.parkingArrayRow=[];
         $scope.colArr=[];

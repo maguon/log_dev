@@ -9,7 +9,7 @@
                 <!--添加国家名称-->
                 <div class="col s12 input-field">
                     <select material-select watch id="addCountry" name="addCountry"  ng-model="addCountry">
-                        <option value="" selected><span style="color: red">* </span>国家</option>
+                        <option value="" selected>国家</option>
                         <option ng-repeat="el in countryList" ng-value="el.val">{{el.name}}</option>
                     </select>
                 </div>
@@ -58,7 +58,7 @@
             <!--添加国家名称-->
             <div class="col s12 input-field">
                 <select material-select watch id="updateCountry" name="updateCountry"  ng-model="updateCountry">
-                    <option value="" selected><span style="color: red">* </span>国家</option>
+                    <option value="" selected>国家</option>
                     <option ng-repeat="el in countryList" ng-value="el.val">{{el.name}}</option>
                 </select>
             </div>
