@@ -16,8 +16,19 @@ app.controller("car_demand_details_controller", ["$state", "$stateParams", "_con
     // 状态船运 列表
     $scope.shipTransStatus = _config.shipTransStatus;
 
+
     /**
-     * 显示仓储车辆基本信息。
+     * 返回到前画面（车辆查询）。
+     */
+
+    $scope.return = function () {
+        $state.go($stateParams.from, {}, {reload: true})
+    };
+
+
+
+    /**
+     * 仓储车辆基本信息 仓储车辆照片 仓储操作记录 跳转
      */
     $scope.showCarInfo = function () {
         $('ul.tabWrap li').removeClass("active");
@@ -27,10 +38,6 @@ app.controller("car_demand_details_controller", ["$state", "$stateParams", "_con
         $("#look_msg").addClass("active");
         $("#look_msg").show();
     };
-
-    /**
-     * 显示仓储车辆照片。
-     */
     $scope.showCarImg = function () {
         $('ul.tabWrap li').removeClass("active");
         $(".tab_box").removeClass("active");
@@ -39,10 +46,6 @@ app.controller("car_demand_details_controller", ["$state", "$stateParams", "_con
         $("#look_car_img").addClass("active");
         $("#look_car_img").show();
     };
-
-    /**
-     * 显示仓储操作记录。
-     */
     $scope.showComment = function () {
         $('ul.tabWrap li').removeClass("active");
         $(".tab_box").removeClass("active");
@@ -63,12 +66,7 @@ app.controller("car_demand_details_controller", ["$state", "$stateParams", "_con
         });
     };
 
-    /**
-     * 返回到前画面（车辆查询）。
-     */
-    $scope.return = function () {
-        $state.go($stateParams.from, {}, {reload: true})
-    };
+
 
     /**
      * 通过车辆ID，取得仓储车辆信息。
@@ -77,7 +75,6 @@ app.controller("car_demand_details_controller", ["$state", "$stateParams", "_con
      * @param vin VIN码
      */
     $scope.getStorageCarInfo = function (val, vin) {
-        $scope.submitted = false;
         // 照片清空
         $scope.imgArr = [];
         // 预览详情照片
@@ -90,7 +87,7 @@ app.controller("car_demand_details_controller", ["$state", "$stateParams", "_con
         $('ul.tabWrap li.look_msg').addClass("active");
         $("#look_msg").addClass("active");
         $("#look_msg").show();
-        //
+        //图片获取
         _basic.get(_host.record_url + "/user/" + userId + "/car/" + val + "/record").then(function (data) {
             if (data.success == true && data.result.length > 0) {
                 $scope.operating_record = data.result[0];
@@ -108,7 +105,7 @@ app.controller("car_demand_details_controller", ["$state", "$stateParams", "_con
             }
         });
 
-        //
+        //基本信息获取
         _basic.get(_host.api_url + "/user/" + userId + "/car?carId=" + val + '&active=1').then(function (data) {
             if (data.success == true ) {
                 if (data.result.length == 0) {

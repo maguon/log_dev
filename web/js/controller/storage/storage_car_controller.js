@@ -292,7 +292,7 @@ app.controller("storage_car_controller", ["$scope", "$rootScope", "$stateParams"
         $scope.parking_id = "";
         $scope.parkingArrayRow=[];
         $scope.colArr=[];
-        $scope.parkingArrayLot=[];
+        $scope.parkingArrayCol=[];
         $scope.storageAreaParking=[];
         $scope.plan_out_time = "";
         $(".modal").modal({
@@ -672,6 +672,16 @@ app.controller("storage_car_controller", ["$scope", "$rootScope", "$stateParams"
 
     // 打开车辆重新入库模态框
     $scope.loginStorageCar = function (el, id) {
+        $scope.storage_name = "";
+        $scope.area = '';
+        $scope.addRow = '';
+        $scope.addCol = '';
+        $scope.parking_id = "";
+        $scope.parkingArrayRow=[];
+        $scope.colArr=[];
+        $scope.parkingArrayCol=[];
+        $scope.storageAreaParking=[];
+        $scope.plan_out_time = "";
         $scope.self_vin = el;
         $scope.self_car_id = id;
         $(".modal").modal();

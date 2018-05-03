@@ -6,8 +6,12 @@ app.controller("client_info_controller", ["$scope", "$rootScope", "_host", "_bas
     $scope.start = 0;
     $scope.size = 11;
     var url="";
+
+
     //委托方性质
     $scope.entrustTypeList = _config.entrustType;
+
+
     //获取委托方信息
     $scope.getEntrustInfo =function(type) {
         if(type==undefined){
@@ -33,7 +37,7 @@ app.controller("client_info_controller", ["$scope", "$rootScope", "_host", "_bas
     };
 
    //获取列表
-     function getClient  (){
+     function getClient(){
          //委托方
         var entrust = $("#entrustSelect").select2("data")[0] ;
         var obj = {
