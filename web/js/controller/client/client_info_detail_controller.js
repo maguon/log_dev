@@ -519,6 +519,7 @@ app.controller("client_info_detail_controller", ["$scope", "$rootScope","$state"
         _basic.get(_host.api_url + "/shipTransOrder?vin="+vin).then(function (data) {
             if (data.success == true) {
                 $scope.paymentInfo = data.result[0];
+                getOrderPayment( $scope.paymentInfo.id);
                 for (var i in _config.config_color) {
                     if (_config.config_color[i].colorId == $scope.paymentInfo.colour) {
                         $scope.SeaTranOrderColor = _config.config_color[i].colorName;
@@ -529,6 +530,25 @@ app.controller("client_info_detail_controller", ["$scope", "$rootScope","$state"
             }
         })
     };
+
+
+    /*
+   * 获取支付信息
+   * */
+    function getOrderPayment(id){
+        _basic.get( _host.api_url + "/orderPayment?shipTransOrderId="+id).then(function (data) {
+            if (data.success == true) {
+                if(data.result.length==0){
+                    return;
+                }
+                $scope.orderPaymentList = data.result[0];
+            } else {
+                swal(data.msg, "", "error");
+            }
+        });
+    }
+
+
     //点击关闭海运订单模态框
     $scope.closeSeaTranModal= function(){
         $(".modal").modal();
