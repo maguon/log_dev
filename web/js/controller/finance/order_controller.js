@@ -35,58 +35,12 @@ app.controller("order_controller", ["$scope", "$rootScope", "_host", "_basic", "
      * 根据画面输入的查询条件，进行数据查询。
      */
     function queryOrderData() {
-
-        var entrust = {};
-
-        if ($("#entrustIdSelect").val() == "") {
-            entrust = {id:"",text:""};
-        } else {
-            entrust = $("#entrustIdSelect").select2("data")[0] ;
-        }
-
-        // 检索用url
+        // 基本检索URL
         var reqUrl = _host.api_url + "/storageOrder?start=" + $scope.start + "&size=" + $scope.size;
-
-        // 订单编号
-        if ($scope.conditionOrderNo != null) {
-            reqUrl = reqUrl + "&storageOrderId=" + $scope.conditionOrderNo;
-        }
-        // vin码
-        if ($scope.conditionVin != null) {
-            reqUrl = reqUrl + "&vin=" + $scope.conditionVin;
-        }
-        // 品牌
-        if ($scope.conditionMakeId != null) {
-            reqUrl = reqUrl + "&makeId=" + $scope.conditionMakeId;
-        }
-        // 型号
-        if ($scope.conditionModelId != null) {
-            reqUrl = reqUrl + "&modelId=" + $scope.conditionModelId;
-        }
-        // 委托方
-        if (entrust.id != null && entrust.id != 0) {
-            reqUrl = reqUrl + "&entrustId=" + entrust.id;
-        }
-        // 入库时间 开始
-        if ($scope.conditionEnterTimeStart != null) {
-            reqUrl = reqUrl + "&enterStart=" + $scope.conditionEnterTimeStart
-        }
-        // 入库时间 终了
-        if ($scope.conditionEnterTimeEnd != null) {
-            reqUrl = reqUrl + "&enterEnd=" + $scope.conditionEnterTimeEnd
-        }
-        // 实际出库时间 开始
-        if ($scope.conditionOutTimeStart != null) {
-            reqUrl = reqUrl + "&realStart=" + $scope.conditionOutTimeStart
-        }
-        // 实际出库时间 终了
-        if ($scope.conditionOutTimeEnd != null) {
-            reqUrl = reqUrl + "&realEnd=" + $scope.conditionOutTimeEnd
-        }
-        // 订单状态
-        if ($scope.conditionPayStatus != null) {
-            reqUrl = reqUrl + "&orderStatus=" + $scope.conditionPayStatus
-        }
+        // 检索条件
+        var conditions = _basic.objToUrl(makeConditions());
+        // 检索URL
+        reqUrl = conditions.length > 0 ? reqUrl + "&" + conditions : reqUrl;
         _basic.get(reqUrl).then(function (data) {
             if (data.success == true) {
                 $scope.orderResult = data.result;
@@ -113,14 +67,29 @@ app.controller("order_controller", ["$scope", "$rootScope", "_host", "_basic", "
      * 数据导出
      */
     $scope.export = function () {
-        var entrust = {};
+        // 基本检索URL
+        var url = _host.api_url + "/storageOrder.csv";
+        // 检索条件
+        var conditions = _basic.objToUrl(makeConditions());
+        // 检索URL
+        url = conditions.length > 0 ? url + "?" + conditions : url;
+        // 调用接口下载
+        window.open(url);
+    };
 
+    /**
+     * 组装检索条件。
+     */
+    function makeConditions() {
+        // 委托方
+        var entrust = {};
         if ($("#entrustIdSelect").val() == "") {
             entrust = {id:"",text:""};
         } else {
             entrust = $("#entrustIdSelect").select2("data")[0] ;
         }
 
+        // 检索条件
         var obj = {
             // 订单编号
             storageOrderId:$scope.conditionOrderNo,
@@ -143,8 +112,8 @@ app.controller("order_controller", ["$scope", "$rootScope", "_host", "_basic", "
             // 支付状态
             orderStatus:$scope.conditionPayStatus
         };
-        window.open(_host.api_url + "/shipTransOrder.csv?" + _basic.objToUrl(obj));
-    };
+        return obj;
+    }
 
     /**
      * 点击：查询按钮，进行数据查询

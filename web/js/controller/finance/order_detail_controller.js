@@ -216,7 +216,7 @@ app.controller("order_detail_controller", ["$scope", "$state", "$stateParams", "
                 $scope.orderInfo.orderStatus = data.result[0].order_status == null ? '0' : data.result[0].order_status;
                 // 委托方
                 $scope.orderInfo.entrustId = data.result[0].entrust_id == null ? 0 : data.result[0].entrust_id;
-                $scope.orderInfo.entrustName = data.result[0].entrust_name == null ? '未知' : data.result[0].entrust_name;
+                $scope.orderInfo.entrustName = data.result[0].short_name == null ? '未知' : data.result[0].short_name;
                 // vin
                 $scope.orderInfo.vin = data.result[0].vin == null ? '未知' : data.result[0].vin;
                 // 制造商

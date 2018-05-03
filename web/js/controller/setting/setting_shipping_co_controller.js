@@ -25,17 +25,14 @@ app.controller("setting_shipping_co_controller", ["$scope", "_basic", "_host", "
      */
     $scope.getShippingCoList = function () {
         // 检索URL组装
-        var conditions = "";
-        if ($scope.condShippingCoId !== "") {
-            conditions = conditions + "&shipCompanyId=" + $scope.condShippingCoId;
-        }
-        if ($scope.condUseFlags !== "") {
-            conditions = conditions + "&shipCompanyStatus=" + $scope.condUseFlags;
-        }
-        var url = _host.api_url + "/shipCompany";
-        if (conditions.length > 0) {
-            url = url + "?" + conditions.substr(1);
-        }
+        var obj = {
+            shipCompanyId:$scope.condShippingCoId,
+            shipCompanyStatus:$scope.condUseFlags
+        };
+        var conditions = _basic.objToUrl(obj);
+        conditions = conditions.length > 0 ? "?" + conditions : conditions;
+
+        var url = _host.api_url + "/shipCompany" + conditions;
 
         // 调用API取得，画面数据
         _basic.get(url).then(function (data) {

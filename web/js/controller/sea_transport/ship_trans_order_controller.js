@@ -111,80 +111,12 @@ app.controller("ship_trans_order_controller", ["$scope", "$rootScope", "_host", 
      * 根据画面输入的查询条件，进行数据查询。
      */
     function queryShipTransOrderList() {
-
         // 基本检索URL
         var reqUrl = _host.api_url + "/shipTrans?start=" + $scope.start + "&size=" + $scope.size;
-
-        var entrust = {};
-        if ($("#condEntrustSelect").val() == "") {
-            entrust = {id: "", text: ""};
-        } else {
-            entrust = $("#condEntrustSelect").select2("data")[0];
-        }
-
-        // 海运编号
-        if ($scope.condShipTransId != null) {
-            reqUrl = reqUrl + "&shipTransId=" + $scope.condShipTransId;
-        }
-        // vin码
-        if ($scope.condVin != null) {
-            reqUrl = reqUrl + "&vin=" + $scope.condVin;
-        }
-        // 委托方
-        if (entrust.id !== null && entrust.id !== "") {
-            reqUrl = reqUrl + "&entrustId=" + entrust.id;
-        }
-        // 始发港
-        if ($scope.condStartPortId != null) {
-            reqUrl = reqUrl + "&startPortId=" + $scope.condStartPortId;
-        }
-        // 目的港
-        if ($scope.condEndPortId != null) {
-            reqUrl = reqUrl + "&endPortId=" + $scope.condEndPortId;
-        }
-
-        // 运送状态
-        if ($scope.condShipTransStatus != null) {
-            reqUrl = reqUrl + "&shipTransStatus=" + $scope.condShipTransStatus;
-        }
-        // 开始日期 开始
-        if ($scope.condStartShipDateStart != null) {
-            reqUrl = reqUrl + "&startShipDateStart=" + $scope.condStartShipDateStart;
-        }
-        // 开始日期 终了
-        if ($scope.condStartShipDateEnd != null) {
-            reqUrl = reqUrl + "&startShipDateEnd=" + $scope.condStartShipDateEnd;
-        }
-        // 到港日期 开始
-        if ($scope.condEndShipDateStart != null) {
-            reqUrl = reqUrl + "&endShipDateStart=" + $scope.condEndShipDateStart;
-        }
-        // 到港日期 终了
-        if ($scope.condEndShipDateEnd != null) {
-            reqUrl = reqUrl + "&endShipDateEnd=" + $scope.condEndShipDateEnd;
-        }
-
-        // 船公司
-        if ($scope.condShipCompanyId != null) {
-            reqUrl = reqUrl + "&shipCompanyId=" + $scope.condShipCompanyId;
-        }
-        // 船名
-        if ($scope.condShipName != null) {
-            reqUrl = reqUrl + "&shipName=" + $scope.condShipName;
-        }
-        // 货柜
-        if ($scope.condContainer != null) {
-            reqUrl = reqUrl + "&container=" + $scope.condContainer;
-        }
-        // booking
-        if ($scope.condBooking != null) {
-            reqUrl = reqUrl + "&booking=" + $scope.condBooking;
-        }
-        // 封签
-        if ($scope.condTab != null) {
-            reqUrl = reqUrl + "&tab=" + $scope.condTab;
-        }
-
+        // 检索条件
+        var conditions = _basic.objToUrl(makeConditions());
+        // 检索URL
+        reqUrl = conditions.length > 0 ? reqUrl + "&" + conditions : reqUrl;
         _basic.get(reqUrl).then(function (data) {
             if (data.success === true) {
                 $scope.shipTransOrder = data.result;
@@ -211,8 +143,23 @@ app.controller("ship_trans_order_controller", ["$scope", "$rootScope", "_host", 
      * 数据导出
      */
     $scope.export = function () {
+        // 基本检索URL
+        var url = _host.api_url + "/shipTrans.csv";
+        // 检索条件
+        var conditions = _basic.objToUrl(makeConditions());
+        // 检索URL
+        url = conditions.length > 0 ? url + "?" + conditions : url;
+        // 调用接口下载
+        window.open(url);
+    };
+
+    /**
+     * 组装检索条件。
+     */
+    function makeConditions() {
+        // 委托方
         var entrust = {};
-        if ($("#condEntrustSelect").val() == "") {
+        if ($("#condEntrustSelect").val() === "") {
             entrust = {id: "", text: ""};
         } else {
             entrust = $("#condEntrustSelect").select2("data")[0];
@@ -250,8 +197,8 @@ app.controller("ship_trans_order_controller", ["$scope", "$rootScope", "_host", 
             // 封签
             tab:$scope.condTab
         };
-        window.open(_host.api_url + "/shipTrans.csv?" + _basic.objToUrl(obj));
-    };
+        return obj;
+    }
 
     /**
      * 点击：查询按钮，进行数据查询
