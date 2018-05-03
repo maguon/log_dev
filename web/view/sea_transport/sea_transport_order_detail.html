@@ -72,7 +72,7 @@
             目的港口：{{paymentInfo.end_port_name}}
         </div>
         <div class="input-field col s4">
-            开船日期：{{paymentInfo.start_ship_date | date:'yyyy-mm-dd' }}
+            开船日期：{{paymentInfo.start_ship_date | date:'yyyy-MM-dd' }}
         </div>
     </div>
     <div class="col s12 white">
@@ -87,7 +87,7 @@
             船名：{{paymentInfo.ship_name}}
         </div>
         <div class="input-field col s4">
-            到港日期：{{paymentInfo.end_ship_date | date:'yyyy-mm-dd'}}
+            到港日期：{{paymentInfo.end_ship_date | date:'yyyy-MM-dd'}}
         </div>
     </div>
     <div class="col s12 white">
@@ -137,7 +137,7 @@
                 支付编号：{{orderPaymentList.id}}
             </div>
             <div class="col s6 right-align">
-                支付时间：{{orderPaymentList.payment_end_date |date:'yyyy-mm-dd HH:mm:ss'}}
+                支付时间：{{orderPaymentList.created_on |date:'yyyy-MM-dd HH:mm:ss'}}
             </div>
         </div>
     </div>

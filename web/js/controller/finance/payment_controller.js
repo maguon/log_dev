@@ -154,6 +154,32 @@ app.controller("payment_controller", ["$scope", "_basic", "_host", "_config", fu
 
 
     /**
+     * 数据导出
+     */
+    $scope.export = function () {
+        var entrust = {};
+
+        if ($("#entrustSelect").val() == "") {
+            entrust = {id:"",text:""};
+        } else {
+            entrust = $("#entrustSelect").select2("data")[0] ;
+        }
+
+        var obj = {
+            orderPaymentId: $scope.paymentId,
+            entrustType: $scope.entrustType,
+            entrustId: entrust.id,
+            paymentStatus: $scope.paymentStatus,
+            paymentType: $scope.paymentType,
+            number: $scope.patmentNumber,
+            createdOnStart: $scope.paymentTimeStart,
+            createdOnEnd: $scope.paymentTimeEnd
+        };
+        window.open(_host.api_url + "/orderPayment.csv?" + _basic.objToUrl(obj));
+    };
+
+
+    /**
      * 上一页
      */
     $scope.preBtn = function () {
