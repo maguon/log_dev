@@ -59,7 +59,7 @@ app.controller("setting_client_controller", ["$scope", "_basic", "_config", "_ho
     * */
     $scope.addClientItem=function() {
         if ($scope.addEntrustType !== '' && $scope.addShortName !== '' && $scope.addEntrustName!== '' &&
-            $scope.addContactsName!== ''&&$scope.addTel!== ''&&$scope.addAddress!== '') {
+            $scope.addContactsName!== ''&&$scope.addTel!== '') {
             _basic.post(_host.api_url + "/user/" + userId + "/entrust", {
                 shortName: $scope.addShortName,
                 entrustName: $scope.addEntrustName,
@@ -102,7 +102,7 @@ app.controller("setting_client_controller", ["$scope", "_basic", "_config", "_ho
     $scope.updateClientItem = function (id) {
         if($scope.clientList.short_name!== "" &&$scope.clientList.entrust_name!==""
             &&$scope.clientList.entrust_type!== undefined &&$scope.clientList.contacts_name!== ""
-            &&$scope.clientList.tel!== "" &&$scope.clientList.address!== ""){
+            &&$scope.clientList.tel!== ""){
             var obj = {
                 shortName: $scope.clientList.short_name,
                 entrustName: $scope.clientList.entrust_name,

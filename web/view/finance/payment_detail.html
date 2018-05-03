@@ -268,7 +268,7 @@
                                 </thead>
                                 <tbody>
                                 <tr ng-repeat="el in storageOrderPaymentRelList" class="grey-text text-darken-1" style="height:30px">
-                                    <td ng-bind="el.id"></td>
+                                    <td ng-bind="el.storage_order_id"></td>
                                     <td ng-bind="el.vin"></td>
                                     <td>{{el.make_name}}/{{el.model_name}}</td>
                                     <td>{{el.created_on |date:'yyyy-MM-dd hh:mm'}}</td>
@@ -321,7 +321,7 @@
                             </thead>
                             <tbody>
                             <tr ng-repeat="el in storageOrderPaymentRelList" class="grey-text text-darken-1" style="height:30px">
-                                <td ng-bind="el.id"></td>
+                                <td ng-bind="el.storage_order_id"></td>
                                 <td ng-bind="el.vin"></td>
                                 <td>{{el.make_name}}/{{el.model_name}}</td>
                                 <td>{{el.created_on |date:'yyyy-MM-dd hh:mm'}}</td>
