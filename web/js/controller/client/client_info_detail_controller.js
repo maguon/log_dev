@@ -294,6 +294,11 @@ app.controller("client_info_detail_controller", ["$scope", "$rootScope","$state"
         _basic.get( _host.api_url + "/user/" + userId + "/car?carId="+id+"&active=" + 1).then(function (data) {
             if (data.success == true) {
                 $scope.clientList = data.result[0];
+                for (var i in _config.config_color) {
+                    if (_config.config_color[i].colorId == $scope.clientList.colour) {
+                        $scope.clientColor = _config.config_color[i].colorName;
+                    }
+                }
             } else {
                 swal(data.msg, "", "error");
             }
