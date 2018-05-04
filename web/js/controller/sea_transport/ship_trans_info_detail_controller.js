@@ -17,6 +17,8 @@ app.controller("ship_trans_info_detail_controller", ["$scope", "$state", "$state
     $scope.payStatus = _config.payStatus;
     // 颜色 列表
     $scope.configColor = _config.config_color;
+    // 是否MSO车辆
+    $scope.msoFlags = _config.msoFlags;
 
     // 海运订舱管理，订舱详情 基本信息
     $scope.shippingOrder = {
@@ -109,7 +111,7 @@ app.controller("ship_trans_info_detail_controller", ["$scope", "$state", "$state
      * 返回到前画面（海运 订舱管理）。
      */
     $scope.return = function () {
-        $state.go($stateParams.from, {}, {reload: true})
+        $state.go($stateParams.from, {from:"ship_trans_info_detail"}, {reload: true})
     };
 
     /**
@@ -370,7 +372,9 @@ app.controller("ship_trans_info_detail_controller", ["$scope", "$state", "$state
                 // 委托方
                 entrustId: entrust.id,
                 // 车价(美元)
-                valuation: $scope.customCarInfo.valuation
+                valuation: $scope.customCarInfo.valuation,
+                // 是否MSO车辆 ： 默认 是MSO车辆
+                msoStatus: $scope.msoFlags[1].id
             };
 
             _basic.post(_host.api_url + "/user/" + userId + "/car", obj).then(function (data) {

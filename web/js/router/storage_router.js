@@ -47,6 +47,7 @@ app.config(['$stateProvider',"$urlRouterProvider",function($stateProvider,$urlRo
         // 海运管理->海运信息
         .state("ship_trans_info", {
             url:"/ship_trans_info",
+            params: {"from": null},
             templateUrl: "/view/sea_transport/ship_trans_info.html",
             controller:"ship_trans_info_controller"
         })

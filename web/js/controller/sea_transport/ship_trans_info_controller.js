@@ -1,7 +1,7 @@
 /**
  * 主菜单：海运管理 -> 海运信息 控制器
  */
-app.controller("ship_trans_info_controller", ["$scope", "$rootScope", "_host", "_basic", "_config", "$state", function ($scope, $rootScope, _host, _basic, _config, $state) {
+app.controller("ship_trans_info_controller", ["$scope", "$rootScope", "_host", "_basic", "_config", "$state", "$stateParams", function ($scope, $rootScope, _host, _basic, _config, $state, $stateParams) {
 
     // 取得当前画面 登录用户
     var userId = _basic.getSession(_basic.USER_ID);
@@ -22,6 +22,9 @@ app.controller("ship_trans_info_controller", ["$scope", "$rootScope", "_host", "
     $scope.shipTransStatus = _config.shipTransStatus;
     // 颜色列表
     $scope.configColor = _config.config_color;
+    // 是否MSO车辆
+    $scope.msoFlags = _config.msoFlags;
+
 
     // 订单信息
     $scope.newShippingOrder = {
@@ -107,18 +110,37 @@ app.controller("ship_trans_info_controller", ["$scope", "$rootScope", "_host", "
     // 新增海运订单画面 VIN码 尾部 对应追加（新增车辆信息画面）
     $scope.showCustomCarDiv = false;
 
+    // 委托方默认选中项
+    $scope.condEntrustSelectedId = "";
+
+    // 检索条件 委托方
+    $scope.condEntrustId = "";
+
     /**
      * 根据画面输入的查询条件，进行数据查询。
      */
     function queryShipTransOrderList() {
         // 基本检索URL
-        var reqUrl = _host.api_url + "/shipTrans?start=" + $scope.start + "&size=" + $scope.size;
+        var url = _host.api_url + "/shipTrans?start=" + $scope.start + "&size=" + $scope.size;
         // 检索条件
-        var conditions = _basic.objToUrl(makeConditions());
+        var conditionsObj = makeConditions();
+        var conditions = _basic.objToUrl(conditionsObj);
         // 检索URL
-        reqUrl = conditions.length > 0 ? reqUrl + "&" + conditions : reqUrl;
-        _basic.get(reqUrl).then(function (data) {
+        url = conditions.length > 0 ? url + "&" + conditions : url;
+        _basic.get(url).then(function (data) {
             if (data.success === true) {
+
+                // 当前画面的检索信息
+                var pageItems = {
+                    pageId: "ship_trans_info",
+                    start: $scope.start,
+                    size: $scope.size,
+                    conditions: conditionsObj
+                };
+                // 将当前画面的条件
+                $rootScope.refObj = {pageArray: []};
+                $rootScope.refObj.pageArray.push(pageItems);
+
                 $scope.shipTransOrder = data.result;
                 $scope.shipTransOrderList = $scope.shipTransOrder.slice(0, 10);
                 if ($scope.start > 0) {
@@ -154,50 +176,92 @@ app.controller("ship_trans_info_controller", ["$scope", "$rootScope", "_host", "
     };
 
     /**
+     * 设置检索条件。
+     */
+    function setConditions(conditions) {
+        // 海运编号
+        $scope.condShipTransId = conditions.shipTransId;
+        // vin码
+        $scope.condVin = conditions.vin;
+        // 委托方 检索条件
+        $scope.condEntrustId = conditions.entrustId;
+        // 委托方 默认选中用
+        $scope.condEntrustSelectedId = conditions.entrustId;
+        // 始发港
+        $scope.condStartPortId = conditions.startPortId;
+        // 目的港
+        $scope.condEndPortId = conditions.endPortId;
+        // 运送状态
+        $scope.condShipTransStatus = conditions.shipTransStatus;
+        // 开始日期 开始
+        $scope.condStartShipDateStart = conditions.startShipDateStart;
+        // 开始日期 终了
+        $scope.condStartShipDateEnd = conditions.startShipDateEnd;
+        // 到港日期 开始
+        $scope.condEndShipDateStart = conditions.endShipDateStart;
+        // 到港日期 终了
+        $scope.condEndShipDateEnd = conditions.endShipDateEnd;
+        // 船公司
+        $scope.condShipCompanyId = conditions.shipCompanyId;
+        // 船名
+        $scope.condShipName = conditions.shipName;
+        // 货柜
+        $scope.condContainer = conditions.container;
+        // booking
+        $scope.condBooking = conditions.booking;
+        // 封签
+        $scope.condTab = conditions.tab;
+    }
+
+    /**
      * 组装检索条件。
      */
     function makeConditions() {
-        // 委托方
-        var entrust = {};
-        if ($("#condEntrustSelect").val() === "") {
-            entrust = {id: "", text: ""};
-        } else {
-            entrust = $("#condEntrustSelect").select2("data")[0];
-        }
-
         var obj = {
             // 海运编号
-            shipTransId:$scope.condShipTransId,
+            shipTransId: $scope.condShipTransId,
             // vin码
-            vin:$scope.condVin,
+            vin: $scope.condVin,
             // 委托方
-            entrustId:entrust.id,
+            entrustId: $scope.condEntrustId,
             // 始发港
-            startPortId:$scope.condStartPortId,
+            startPortId: $scope.condStartPortId,
             // 目的港
-            endPortId:$scope.condEndPortId,
+            endPortId: $scope.condEndPortId,
             // 运送状态
-            shipTransStatus:$scope.condShipTransStatus,
+            shipTransStatus: $scope.condShipTransStatus,
             // 开始日期 开始
-            startShipDateStart:$scope.condStartShipDateStart,
+            startShipDateStart: $scope.condStartShipDateStart,
             // 开始日期 终了
-            startShipDateEnd:$scope.condStartShipDateEnd,
+            startShipDateEnd: $scope.condStartShipDateEnd,
             // 到港日期 开始
-            endShipDateStart:$scope.condEndShipDateStart,
+            endShipDateStart: $scope.condEndShipDateStart,
             // 到港日期 终了
-            endShipDateEnd:$scope.condEndShipDateEnd,
+            endShipDateEnd: $scope.condEndShipDateEnd,
             // 船公司
-            shipCompanyId:$scope.condShipCompanyId,
+            shipCompanyId: $scope.condShipCompanyId,
             // 船名
-            shipName:$scope.condShipName,
+            shipName: $scope.condShipName,
             // 货柜
-            container:$scope.condContainer,
+            container: $scope.condContainer,
             // booking
-            booking:$scope.condBooking,
+            booking: $scope.condBooking,
             // 封签
-            tab:$scope.condTab
+            tab: $scope.condTab
         };
         return obj;
+    }
+
+    /**
+     * 取得检索条件委托方ID。
+     */
+    function getEntrustId() {
+        // 委托方ID
+        var entrustId = "";
+        if ($("#condEntrustSelect").val() != null && $("#condEntrustSelect").val() !== "") {
+            entrustId = $("#condEntrustSelect").select2("data")[0].id;
+        }
+        return entrustId;
     }
 
     /**
@@ -206,6 +270,8 @@ app.controller("ship_trans_info_controller", ["$scope", "$rootScope", "_host", "
     $scope.queryShipTransOrder = function () {
         // 默认第一页
         $scope.start = 0;
+        // 检索条件 委托方
+        $scope.condEntrustId =getEntrustId();
         queryShipTransOrderList();
     };
 
@@ -214,6 +280,8 @@ app.controller("ship_trans_info_controller", ["$scope", "$rootScope", "_host", "
      */
     $scope.preBtn = function () {
         $scope.start = $scope.start - ($scope.size - 1);
+        // 检索条件 委托方
+        $scope.condEntrustId =getEntrustId();
         queryShipTransOrderList();
     };
 
@@ -222,6 +290,8 @@ app.controller("ship_trans_info_controller", ["$scope", "$rootScope", "_host", "
      */
     $scope.nextBtn = function () {
         $scope.start = $scope.start + ($scope.size - 1);
+        // 检索条件 委托方
+        $scope.condEntrustId =getEntrustId();
         queryShipTransOrderList();
     };
 
@@ -420,7 +490,9 @@ app.controller("ship_trans_info_controller", ["$scope", "$rootScope", "_host", "
                 // 委托方
                 entrustId: entrust.id,
                 // 车价(美元)
-                valuation: $scope.customCarInfo.valuation
+                valuation: $scope.customCarInfo.valuation,
+                // 是否MSO车辆 ： 默认 是MSO车辆
+                msoStatus: $scope.msoFlags[1].id
             };
 
             _basic.post(_host.api_url + "/user/" + userId + "/car", obj).then(function (data) {
@@ -498,17 +570,32 @@ app.controller("ship_trans_info_controller", ["$scope", "$rootScope", "_host", "
     $scope.getEntrustInfo = function () {
         _basic.get(_host.api_url + "/entrust").then(function (data) {
             if (data.success) {
-                $scope.entrustList = data.result;
+                var entrustList = [{
+                    id: "",
+                    text: "委托方"
+                }];
+                for (var i = 0; i < data.result.length; i++) {
+                    entrustList.push({
+                        id: data.result[i].id,
+                        text: data.result[i].short_name
+                    });
+                }
+                // 新增画面用
                 $('#addEntrustSelect').select2({
                     placeholder: '委托方',
                     containerCssClass: 'select2_dropdown',
+                    data: entrustList,
                     allowClear: true
                 });
+                // 检索画面用
                 $('#condEntrustSelect').select2({
                     placeholder: '委托方',
                     containerCssClass: 'select2_dropdown',
+                    data: entrustList,
                     allowClear: true
                 });
+                // 委托方（select2）默认选择项
+                $("#condEntrustSelect").val($scope.condEntrustSelectedId).trigger("change");
             }
         });
     };
@@ -677,8 +764,23 @@ app.controller("ship_trans_info_controller", ["$scope", "$rootScope", "_host", "
         getPortList();
         // 取得查询条件【船公司】列表
         getShippingCoList();
-        //
+
+        // 如果是从后画面跳回来时，取得上次检索条件
+        if ($stateParams.from === "ship_trans_info_detail" && $rootScope.refObj !== undefined && $rootScope.refObj.pageArray.length > 0) {
+            var pageItems = $rootScope.refObj.pageArray.pop();
+            if (pageItems.pageId === "ship_trans_info") {
+                // 设定画面翻页用数据
+                $scope.start = pageItems.start;
+                $scope.size = pageItems.size;
+                // 将上次的检索条件设定到画面
+                setConditions(pageItems.conditions);
+            }
+        } else {
+            $rootScope.refObj = {pageArray: []};
+        }
+        // 取得委托方
         $scope.getEntrustInfo();
+
         // 查询数据
         queryShipTransOrderList();
     };
