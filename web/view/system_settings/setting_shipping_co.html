@@ -95,11 +95,11 @@
             </div>
         </div>
 
-        <div class="col s12" ng-show="hasDoubleType">
+        <div class="col s12" ng-show="hasDoubleType" style="margin-bottom: 25px;">
             <div class="divider s12 center" style="height: 2px;"></div>
         </div>
 
-        <div class="col s4" ng-repeat="shippingCo in shippingCoList | filter:{ship_company_status:0}" style="margin-top: 25px;">
+        <div class="col s4" ng-repeat="shippingCo in shippingCoList | filter:{ship_company_status:0}" style="margin-bottom: 25px;">
             <div class="col s12 white grey-text z-depth-1">
                 <div class="show_ship_co_disable{{$index}} col" style="width:76%;height: 50px;">
                     <!-- 船务公司 显示 -->

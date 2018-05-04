@@ -96,6 +96,7 @@ app.controller("setting_shipping_co_controller", ["$scope", "_basic", "_host", "
                 if (data.success) {
                     swal("新增成功", "", "success");
                     $scope.newShippingCoName = "";
+                    $scope.hideAddShippingCo();
                     // 成功后，刷新页面数据
                     $scope.getShippingCoList();
                 } else {
