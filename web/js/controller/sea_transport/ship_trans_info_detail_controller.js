@@ -304,7 +304,7 @@ app.controller("ship_trans_info_detail_controller", ["$scope", "$state", "$state
                         // 车价(美元)
                         $scope.newCarInfo.valuation = data.result[0].valuation;
                         // 运费(美元)
-                        $scope.newCarInfo.ship_trans_fee = '';
+                        $scope.newCarInfo.ship_trans_fee = 0;
 
                         addCar($scope.newCarInfo);
                     }
@@ -397,7 +397,7 @@ app.controller("ship_trans_info_detail_controller", ["$scope", "$state", "$state
                     // 车价(美元)
                     $scope.newCarInfo.valuation= $scope.customCarInfo.valuation;
                     // 运费(美元)
-                    $scope.newCarInfo.ship_trans_fee = "";
+                    $scope.newCarInfo.ship_trans_fee = 0;
 
                     // 将当前的数据追加的列表中。
                     addCar($scope.newCarInfo);

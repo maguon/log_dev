@@ -341,6 +341,7 @@ app.controller("ship_trans_info_controller", ["$scope", "$rootScope", "_host", "
                         $scope.newCarInfo.valuation = data.result[0].valuation;
                         $scope.newCarInfo.msoStatus = data.result[0].mso_status;
                         $scope.newCarInfo.remark = data.result[0].remark;
+                        $scope.newCarInfo.shipTransFees = 0;
 
                         addCar($scope.newCarInfo);
 
@@ -434,6 +435,8 @@ app.controller("ship_trans_info_controller", ["$scope", "$rootScope", "_host", "
                     $scope.customCarInfo.entrustNm = entrust.text;
                     // car id
                     $scope.customCarInfo.carId = data.id;
+                    $scope.customCarInfo.shipTransFees = 0;
+
                     // 将当前的数据追加的列表中。
                     addCar($scope.customCarInfo);
                     // 新增海运订单画面 VIN码 后 追加按钮 追加结果Info

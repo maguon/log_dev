@@ -302,7 +302,7 @@
                             <div ng-switch-default class="col s12">
                                 <div class="col s10">
                                     <input type="text" id="shipTransFeesText" maxlength="8" valid-money ng-blur="calcTotalFees()" class="red-text" ng-model="transCar.ship_trans_fee">
-                                    <label for="shipTransFeesText"><span class="red-text">*</span>运费(美元):</label>
+                                    <label for="shipTransFeesText" class="active"><span class="red-text">*</span>运费(美元):</label>
                                 </div>
                                 <div class="col s2 left-align">
                                     <a class="btn-floating waves-effect waves-light cyan lighten-1" style="left: 1px;width:30px;height: 30px;" ng-click="modifyCarInfo(transCar)">
