@@ -224,11 +224,18 @@
             </div>
 
             <!--按委托方查找-->
-            <div class="col s3 input-field">
+            <div class="input-field col s3">
+                <select  id="entrustSelect"   style="width: 100%">
+                    <option value="" ></option>
+                    <option ng-repeat="el in entrustList" ng-value="el.id">{{el.short_name}}</option>
+                </select>
+            </div>
 
+
+            <!--<div class="col s3 input-field">
                 <input name="showShortName" id="showShortName" type="text" ng-model="showShortName" >
                 <label for="showShortName">委托方</label>
-            </div>
+            </div>-->
             <div class="col s3" style="margin-top:12px ">
 
                 <!--获取列表-->

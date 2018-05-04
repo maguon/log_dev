@@ -41,7 +41,7 @@
             <div class="row col s12">
                 <div class="col s4 valign-wrapper">
                     <div class="col s12 input-field left-align" style="padding-left: 10%">
-                        颜色:{{clientList.colour}}
+                        颜色:{{clientColor}}
                     </div>
                 </div>
                 <div class="col s4 valign-wrapper">
@@ -69,9 +69,14 @@
                      计划出库时间:{{clientList.plan_out_time|date:'yyyy-MM-dd'}}
                     </div>
                 </div>
-                <div class="col s4 valign-wrapper">
+                <div class="col s4 valign-wrapper" ng-if="clientList.rel_status==2">
                     <div class="col s12 input-field left-align">
                       出库时间:{{clientList.real_out_time|date:'yyyy-MM-dd'}}
+                    </div>
+                </div>
+                <div class="col s4 valign-wrapper" ng-if="clientList.rel_status==1">
+                    <div class="col s12 input-field left-align">
+                        出库时间:无
                     </div>
                 </div>
             </div>
@@ -87,9 +92,14 @@
                         存放仓库：无
                     </div>
                 </div>
-                <div class="col s4 valign-wrapper">
+                <div class="col s4 valign-wrapper" ng-if="clientList.rel_status==1">
                     <div class="col s12 input-field left-align">
                         存放位置：{{clientList.area_name}}{{clientList.row}}排{{clientList.col}}列{{characters[clientList.lot-1].name}}
+                    </div>
+                </div>
+                <div class="col s4 valign-wrapper" ng-if="clientList.rel_status==2">
+                    <div class="col s12 input-field left-align">
+                        存放位置: 无
                     </div>
                 </div>
                 <div class="col s4 valign-wrapper">

@@ -337,7 +337,7 @@ app.controller("storage_car_details_controller", [ "$scope","$state", "$statePar
                         $scope.look_create_time = moment($scope.self_car.pro_date).format('YYYY-MM-DD');
                     }
                var selfLot = $scope.characters[$scope.self_car.lot-1].name;
-                $scope.look_storageName = $scope.self_car.storage_name + "" +$scope.self_car.area_name+""+ $scope.self_car.row + "排" + $scope.self_car.col + "列"+selfLot;
+                $scope.look_storageName = $scope.self_car.storage_name + " " +$scope.self_car.area_name+"扇区"+ $scope.self_car.row + "排" + $scope.self_car.col + "列"+selfLot;
                 // 车辆id
                 $scope.look_car_id = $scope.self_car.id;
             } else {
