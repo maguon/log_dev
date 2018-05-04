@@ -4,6 +4,21 @@ app.controller("setting_client_controller", ["$scope", "_basic", "_config", "_ho
     var userId = _basic.getSession(_basic.USER_ID);
 
 
+    /**
+     * 委托方列表查询，用来填充查询条件：委托方
+     */
+    function getEntrustList() {
+        _basic.get(_host.api_url + "/entrust").then(function (data) {
+            if (data.success == true) {
+                $scope.entrustList = data.result;
+                $('#entrustSelect').select2({
+                    placeholder: '委托方',
+                    containerCssClass: 'select2_dropdown',
+                    allowClear: true
+                });
+            }
+        });
+    }
 
 
     // 点击按钮查询
@@ -14,11 +29,20 @@ app.controller("setting_client_controller", ["$scope", "_basic", "_config", "_ho
 
 
     function seachClientList () {
+        var entrust = {};
+
+        if ($("#entrustSelect").val() == "") {
+            entrust = {id:"",text:""};
+        } else {
+            entrust = $("#entrustSelect").select2("data")[0];
+        }
+
         var obj = {
             entrustId: $scope.showId,
             entrustType: $scope.showEntrustType,
-            shortName: $scope.showShortName
+            shortName: entrust.text
         };
+
         _basic.get(_host.api_url + "/entrust?"+ _basic.objToUrl(obj)+"&start=" + $scope.start + "&size=" + $scope.size).then(function (data) {
             if (data.success == true) {
                 $scope.getClientBoxArray = data.result;
@@ -138,4 +162,5 @@ app.controller("setting_client_controller", ["$scope", "_basic", "_config", "_ho
         seachClientList();
     };
     seachClientList();
+    getEntrustList();
 }])
