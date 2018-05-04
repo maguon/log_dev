@@ -227,19 +227,20 @@ app.controller("ship_trans_info_detail_controller", ["$scope", "$state", "$state
                         minLength: 6,
                         onAutocomplete: function (val) {
                             $scope.addCarInfoFlg = true;
-                            // $scope.shippingOrder.vin = val;
                         },
                         // limit: 6
                     });
                     $('#vinInput').focus();
+                    if ($scope.shippingOrder.vin.length > 17 && $scope.addCarInfoFlg) {
+                        $scope.addCarInfo();
+                    }
                 })
             }
 
             // 根据填充完毕的完整vin码信息进行精确查询
+            $scope.addCarInfoFlg = false;
             if ($scope.shippingOrder.vin.length === 17) {
                 $scope.addCarInfoFlg = true;
-            } else {
-                $scope.addCarInfoFlg = false;
             }
         }
     };
