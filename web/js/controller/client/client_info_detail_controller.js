@@ -266,7 +266,7 @@ app.controller("client_info_detail_controller", ["$scope", "$rootScope","$state"
 
     //非mso 查询列表 条件查询
     function getMsoStatus() {
-        _basic.get( _host.api_url + "/user/" + userId + "/car?active=" + 1 + "&start=" + $scope.start + "&size=" + $scope.size+"&entrustId="+val+"&msoStatus=1").then(function (data) {
+        _basic.get( _host.api_url + "/user/" + userId + "/car?active=1&relStatus=1"+ "&start=" + $scope.start + "&size=" + $scope.size+"&entrustId="+val+"&msoStatus=1").then(function (data) {
             if (data.success == true) {
                 $scope.storageCarBox3 =  data.result;
                 $scope.storageCar3 = $scope.storageCarBox3.slice(0,10);
