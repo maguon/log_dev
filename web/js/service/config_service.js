@@ -379,5 +379,17 @@ baseService.factory("_config", function () {
         }
     ];
 
+    // 是否金融车
+    _this.purchaseTypes = [
+        {
+            id: 0,
+            name: "否"
+        },
+        {
+            id: 1,
+            name: "是"
+        }
+    ];
+
     return _this
 });
