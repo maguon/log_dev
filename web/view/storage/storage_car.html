@@ -1,3 +1,18 @@
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 <!--新增模块-->
 <div id="newStorageCar" class="modal">
     <!--标题：新增入库车辆-->
@@ -29,7 +44,7 @@
                 </div>
             </div>
             <div id="test1" class="col s12 tab_box">
-                <div ng-if="show === 2">
+                <div ng-show="showStorageData === 2">
                     <div class="row" style="margin-top:20px" >
                         <div class="row"  >
                             <div class="input-field col s4">
@@ -71,15 +86,14 @@
                         <div class="row" >
                             <!--新增委托方-->
                             <div class="input-field col s4">
-                                <select material-select watch id="entrustId" name="entrustId" ng-model="entrustId" >
-                                    <option value="" disabled selected>请选择</option>
+                                <select id="addEntrustSelect" style="width: 100%">
+                                    <option value=""></option>
                                     <option ng-repeat="el in entrustList"  ng-value="el.id" >{{el.short_name}}</option>
                                 </select>
-                                <label for="entrustId"><span style="color: red;margin-right: 5px">*</span>委托方</label>
                             </div>
                             <!--新增车辆估值-->
                             <div class="input-field col s4">
-                                <input  id="carValuation" name="carValuation"  ng-model="carValuation" type="number"    >
+                                <input  id="carValuation" name="carValuation"  ng-model="carValuation" type="number">
                                 <label for="carValuation"><span style="color: red;margin-right: 5px">*</span>车辆估值(美元)</label>
                             </div>
                             <!--是否MSO车辆-->
@@ -112,7 +126,7 @@
                         </a>
                     </div>
                 </div>
-                <div ng-if="show === 1">
+                <div ng-if="showStorageData === 1">
                     <div class="row" style="margin-top:20px"  >
                         <div class="row">
                             <div class="input-field col s4">
@@ -738,3 +752,8 @@
         </div>
     </div>
 </div>
+
+
+
+
+
