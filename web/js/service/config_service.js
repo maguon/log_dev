@@ -39,6 +39,20 @@ baseService.factory("_config", function () {
             subType: [],
             index: 'trade_manager.html',
             qr: []
+        },
+        {
+            type: 59,
+            name: "海运部管理员",
+            subType: [],
+            index: 'trans_manager.html',
+            qr: []
+        },
+        {
+            type: 69,
+            name: "信用证管理员",
+            subType: [],
+            index: 'credit_manager.html',
+            qr: []
         }
     ];
 
