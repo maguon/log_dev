@@ -306,7 +306,7 @@ app.controller("finance_car_controller", ["$scope", "$rootScope", "_host", "_bas
     $scope.updateFinanceCar = function () {
         if ($scope.carInfo.vin !== "" && $scope.carInfo.proDate !== ""
             && $scope.carInfo.makerId !== "" && $scope.carInfo.modelId !== "" && $scope.carInfo.colour !== ""
-            && $scope.carInfo.entrustId !== "" && $scope.carInfo.engineNum !== ""
+            && $scope.carInfo.entrustId !== "" && $scope.carInfo.entrustId != null && $scope.carInfo.engineNum !== ""
             && $scope.carInfo.valuation !== "" && $scope.carInfo.msoStatus !== "" && $scope.carInfo.purchaseType !== "") {
             var obj = {
                 // vin

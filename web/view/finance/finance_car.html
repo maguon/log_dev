@@ -138,7 +138,7 @@
 
 <!-- 画面【新增金融车辆】 模态框 -->
 <div class="row" style="margin: 0">
-    <div id="newFinanceCarDiv" class="modal" style="width: 45%;height: 600px">
+    <div id="newFinanceCarDiv" class="modal" style="width: 45%;height: 580px">
         <div class="modal-content center fz20" style="font-weight: 500;padding: 0">
 
             <!-- 显示画面【新增金融车辆】 Header -->
@@ -209,7 +209,7 @@
                         </select>
                     </div>
                     <div ng-show="!newFinanceCar" class="input-field col s4">
-                        <select material-select watch id="editEntrustSelect" ng-model="carInfo.entrustId" style="width: 100%">
+                        <select material-select watch id="editEntrustSelect" style="width: 100%">
                             <option value=""></option>
                             <option ng-repeat="el in entrustList" ng-value="el.id">{{el.short_name}}</option>
                         </select>
