@@ -223,7 +223,7 @@
 
                     <!-- 车辆估值(美元) -->
                     <div class="input-field col s4">
-                        <input type="text" id="valuationText" ng-model="carInfo.valuation">
+                        <input type="text" id="valuationText" maxlength="8" valid-money ng-model="carInfo.valuation">
                         <label for="valuationText"><span class="red-text">*</span> 车辆估值(美元)</label>
                     </div>
 
