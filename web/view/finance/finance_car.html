@@ -209,7 +209,7 @@
                         </select>
                     </div>
                     <div ng-show="!newFinanceCar" class="input-field col s4">
-                        <select material-select watch id="editEntrustSelect" style="width: 100%">
+                        <select id="editEntrustSelect" style="width: 100%">
                             <option value=""></option>
                             <option ng-repeat="el in entrustList" ng-value="el.id">{{el.short_name}}</option>
                         </select>
@@ -273,12 +273,7 @@
                 <a class="btn-floating waves-effect waves-light grey btn modal-close">
                     <i class="mdi mdi-close"></i>
                 </a>
-
-                <a ng-show="newFinanceCar" class="btn-floating waves-effect waves-light cyan lighten-1 btn" style="margin-left: 20px;"
-                   ng-click="createFinanceCar()">
-                    <i class="mdi mdi-check"></i>
-                </a>
-                <a ng-show="!newFinanceCar" class="btn-floating waves-effect waves-light cyan lighten-1 btn" style="margin-left: 20px;"
+                <a class="btn-floating waves-effect waves-light cyan lighten-1 btn" style="margin-left: 20px;"
                    ng-click="updateFinanceCar()">
                     <i class="mdi mdi-check"></i>
                 </a>

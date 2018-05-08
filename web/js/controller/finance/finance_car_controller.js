@@ -247,66 +247,33 @@ app.controller("finance_car_controller", ["$scope", "$rootScope", "_host", "_bas
     };
 
     /**
-     * 新增金融车。
-     */
-    $scope.createFinanceCar = function () {
-        // 委托方 下拉选中 内容
-        var entrust = $("#addEntrustSelect").select2("data")[0]; //单选
-
-        if ($scope.carInfo.vin !== "" && $scope.carInfo.proDate !== ""
-            && $scope.carInfo.makerId !== "" && $scope.carInfo.modelId !== "" && $scope.carInfo.colour !== ""
-            && entrust.id !== "" && $scope.carInfo.engineNum !== ""
-            && $scope.carInfo.valuation !== "" && $scope.carInfo.msoStatus !== "" && $scope.carInfo.purchaseType !== "") {
-            // 新增海运订单画面 VIN码 后 追加按钮 追加结果Info
-            var obj = {
-                // vin
-                vin: $scope.carInfo.vin,
-                // 制造商
-                makeId: $scope.carInfo.makerId,
-                makeName: $('#makerSelect').find("option:selected").text(),
-                // 型号
-                modelId: $scope.carInfo.modelId,
-                modelName: $('#modelSelect').find("option:selected").text(),
-                // 生产日期
-                proDate: $scope.carInfo.proDate,
-                // 颜色
-                colour: $scope.carInfo.colour,
-                // 发动机号
-                engineNum: $scope.carInfo.engineNum,
-                // 委托方
-                entrustId: entrust.id,
-                // 车价(美元)
-                valuation: $scope.carInfo.valuation,
-                // 是否MSO车辆
-                msoStatus: $scope.carInfo.msoStatus,
-                // 是否金融车
-                purchaseType: $scope.carInfo.purchaseType,
-                // 备注
-                remark: $scope.carInfo.remark
-            };
-
-            _basic.post(_host.api_url + "/user/" + userId + "/car", obj).then(function (data) {
-                if (data.success) {
-                    $('#newFinanceCarDiv').modal('close');
-                    swal("新增成功", "", "success");
-                    // 成功后，刷新页面数据
-                    queryFinanceCarList();
-                } else {
-                    swal(data.msg, "", "error");
-                }
-            })
-        } else {
-            swal("请填写完整车辆信息！", "", "warning");
-        }
-    };
-
-    /**
-     * 修改金融车。
+     * 新增 / 修改金融车。
      */
     $scope.updateFinanceCar = function () {
+
+        // 委托方ID
+        var entrustId = "";
+
+        // 新增金融车。
+        if ($scope.newFinanceCar) {
+            // 委托方 下拉选中 内容
+            if ($("#addEntrustSelect").val() != null && $("#addEntrustSelect").val() !== "") {
+                entrustId = $("#addEntrustSelect").select2("data")[0].id;
+            }
+        } else {
+            // 委托方 下拉选中 内容
+            if ($("#editEntrustSelect").val() != null && $("#editEntrustSelect").val() !== "") {
+                entrustId = $("#editEntrustSelect").select2("data")[0].id;
+            } else {
+                if ($('#select2-editEntrustSelect-container').text() !== "委托方") {
+                    entrustId = $scope.carInfo.entrustId;
+                }
+            }
+        }
+
         if ($scope.carInfo.vin !== "" && $scope.carInfo.proDate !== ""
             && $scope.carInfo.makerId !== "" && $scope.carInfo.modelId !== "" && $scope.carInfo.colour !== ""
-            && $scope.carInfo.entrustId !== "" && $scope.carInfo.entrustId != null && $scope.carInfo.engineNum !== ""
+            && entrustId !== "" && $scope.carInfo.engineNum !== ""
             && $scope.carInfo.valuation !== "" && $scope.carInfo.msoStatus !== "" && $scope.carInfo.purchaseType !== "") {
             var obj = {
                 // vin
@@ -324,7 +291,7 @@ app.controller("finance_car_controller", ["$scope", "$rootScope", "_host", "_bas
                 // 发动机号
                 engineNum: $scope.carInfo.engineNum,
                 // 委托方
-                entrustId: $scope.carInfo.entrustId,
+                entrustId: entrustId,
                 // 车价(美元)
                 valuation: $scope.carInfo.valuation,
                 // 是否MSO车辆
@@ -335,16 +302,30 @@ app.controller("finance_car_controller", ["$scope", "$rootScope", "_host", "_bas
                 remark: $scope.carInfo.remark
             };
 
-            _basic.put(_host.api_url + "/user/" + userId + "/car/" + $scope.carInfo.carId, obj).then(function (data) {
-                if (data.success) {
-                    $('#newFinanceCarDiv').modal('close');
-                    swal("修改成功", "", "success");
-                    // 成功后，刷新页面数据
-                    queryFinanceCarList();
-                } else {
-                    swal(data.msg, "", "error");
-                }
-            })
+            // 新增金融车。
+            if ($scope.newFinanceCar) {
+                _basic.post(_host.api_url + "/user/" + userId + "/car", obj).then(function (data) {
+                    if (data.success) {
+                        $('#newFinanceCarDiv').modal('close');
+                        swal("新增成功", "", "success");
+                        // 成功后，刷新页面数据
+                        queryFinanceCarList();
+                    } else {
+                        swal(data.msg, "", "error");
+                    }
+                })
+            } else {
+                _basic.put(_host.api_url + "/user/" + userId + "/car/" + $scope.carInfo.carId, obj).then(function (data) {
+                    if (data.success) {
+                        $('#newFinanceCarDiv').modal('close');
+                        swal("修改成功", "", "success");
+                        // 成功后，刷新页面数据
+                        queryFinanceCarList();
+                    } else {
+                        swal(data.msg, "", "error");
+                    }
+                })
+            }
         } else {
             swal("请填写完整车辆信息！", "", "warning");
         }
