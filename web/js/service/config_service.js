@@ -41,10 +41,24 @@ baseService.factory("_config", function () {
             qr: []
         },
         {
+            type: 51,
+            name: "海运部操作员",
+            subType: [],
+            index: 'trans_home.html',
+            qr: []
+        },
+        {
             type: 59,
             name: "海运部管理员",
             subType: [],
             index: 'trans_manager.html',
+            qr: []
+        },
+        {
+            type: 61,
+            name: "信用证操作员",
+            subType: [],
+            index: 'credit_home.html',
             qr: []
         },
         {
