@@ -16,16 +16,12 @@ app.controller("car_demand_details_controller", ["$state", "$stateParams", "_con
     // 状态船运 列表
     $scope.shipTransStatus = _config.shipTransStatus;
 
-
     /**
      * 返回到前画面（车辆查询）。
      */
-
     $scope.return = function () {
-        $state.go($stateParams.from, {}, {reload: true})
+        $state.go($stateParams.from, {from:"car_demand_details"}, {reload: true})
     };
-
-
 
     /**
      * 仓储车辆基本信息 仓储车辆照片 仓储操作记录 跳转

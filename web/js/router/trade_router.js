@@ -68,6 +68,13 @@ app.config(['$stateProvider',"$urlRouterProvider",function($stateProvider,$urlRo
             templateUrl: "/view/finance/payment_detail.html",
             controller:"payment_detail_controller"
         })
+        // 财务管理->金融车辆
+        .state("finance_car", {
+            url:"/finance_car",
+            params: {"from": null},
+            templateUrl: "/view/finance/finance_car.html",
+            controller:"finance_car_controller"
+        })
 
         // 海运管理->订单管理
         .state("sea_transport_order", {
