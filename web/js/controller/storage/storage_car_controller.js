@@ -140,7 +140,7 @@ app.controller("storage_car_controller", ["$scope", "$rootScope", "$stateParams"
             "storageId": $scope.storageIdItem,
             "makeId":$scope.makeIdItem,
             "modelId": $scope.modelIdItem,
-            "vin":$scope.search_vin,
+            "vin":$scope.vinItem,
             "enterStart":$scope.search_enterTime_start,
             "enterEnd":$scope.search_enterTime_end,
             "planStart":$scope.search_planTime_start,
