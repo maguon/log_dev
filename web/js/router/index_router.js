@@ -11,8 +11,8 @@ app.config(['$stateProvider',"$urlRouterProvider",function($stateProvider,$urlRo
             controller:'storage_index_controller'
         })
         // 财务主控
-        .state("trade_index", {
-            url: "/trade_index",
+        .state("finance_index", {
+            url: "/finance_index",
             templateUrl: "/view/finance/finance_index.html",
             controller:'finance_index_controller'
         })

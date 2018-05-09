@@ -28,16 +28,16 @@ baseService.factory("_config", function () {
         },
         {
             type: 41,
-            name: "国贸部操作员",
+            name: "财务部操作员",
             subType: [],
-            index: 'trade_home.html',
+            index: 'finance_home.html',
             qr: []
         },
         {
             type: 49,
-            name: "国贸部管理员",
+            name: "财务部管理员",
             subType: [],
-            index: 'trade_manager.html',
+            index: 'finance_manager.html',
             qr: []
         },
         {

@@ -1,12 +1,12 @@
 /**
- * 国贸管理员-使用画面 路由配置.
+ * 财务管理员-使用画面 路由配置.
  */
 app.config(['$stateProvider',"$urlRouterProvider",function($stateProvider,$urlRouterProvider) {
-    $urlRouterProvider.when("","/trade_index");
+    $urlRouterProvider.when("","/finance_index");
     $stateProvider
         // 主菜单：主控面板
-        .state("trade_index", {
-            url: "/trade_index",
+        .state("finance_index", {
+            url: "/finance_index",
             templateUrl: "/view/finance/finance_index.html",
             controller:'finance_index_controller'
         })
