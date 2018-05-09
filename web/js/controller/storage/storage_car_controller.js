@@ -584,7 +584,7 @@ app.controller("storage_car_controller", ["$scope", "$rootScope", "$stateParams"
         })
     };
     //从添加相片跳转到添加钥匙
-    $scope.nextp =function (){
+    $scope.nextStep =function (){
         step3();
     };
     //列表中点击钥匙 查看钥匙位置
