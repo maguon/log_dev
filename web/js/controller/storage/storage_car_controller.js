@@ -284,8 +284,6 @@ app.controller("storage_car_controller", ["$scope", "$rootScope", "$stateParams"
             }
         })
     };
-
-
     //点击新增入库车辆
     $scope.addStorageCar = function () {
         step0();
@@ -944,7 +942,6 @@ app.controller("storage_car_controller", ["$scope", "$rootScope", "$stateParams"
         getCarMakeName();
         getStorageName();
         getEntrust();
-        /*  $scope.getStorageCar();*/
         addCarKeyCabinet();
     };
     $scope.queryData();
