@@ -1,0 +1,68 @@
+<!-- 主菜单：海运管理 -> 海运统计 画面 -->
+<div style="width: 95%;margin: 0 auto;">
+
+    <!-- 海运信息-按月统计 title -->
+    <div class="row z-depth-2">
+        <div class="col s12 cyan lighten-1 lighten-4 bold white-text text-darken-1 no-mp" style="height: 50px;">
+            <div class="col s6 left">
+                <p>海运信息-按月统计</p>
+            </div>
+
+            <div class="col s6 right">
+                <div class="col s3 left"></div>
+                <div class="col s3">
+                    <input type="text" id="monthStart" ng-value="startInitial" readonly>
+                    <i class="mdi  mdi-table-large" style="position: relative;left: 95px;bottom: 36px;"></i>
+                </div>
+                <div class="col s1 center">
+                    <p>至</p>
+                </div>
+                <div class="col s3">
+                    <input type="text" id="monthEnd" ng-value="endInitial" readonly>
+                    <i class="mdi  mdi-table-large" style="position: relative;left: 95px;bottom: 36px;"></i>
+                </div>
+                <div class="col s2 center">
+                    <i class="mdi mdi-magnify" ng-click="getShipTransMonthInfo()"
+                       style="margin:25px 0 0 10px;font-size: 30px;cursor: pointer"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 发运车数统计 -->
+    <div class="row z-depth-2 white">
+        <div id="shipTransCarCountMonthDiv" style="min-width:400px;height:350px;padding-top: 20px;"></div>
+    </div>
+
+    <!-- 发运舱数统计 -->
+    <div class="row z-depth-2 white">
+        <div id="shipTransCountMonthDiv" style="min-width:400px;height:350px;padding-top: 20px;"></div>
+    </div>
+
+    <!-- 海运信息-按日统计 -->
+    <div class="row z-depth-2 white-text text-darken-1" style="margin-top: 30px">
+        <!-- 海运信息-按日统计 title -->
+        <div class="col s12 cyan lighten-1 lighten-4 bold no-mp" style="height: 50px;">
+            <div class="col s8 left">
+                <p>海运信息-按日统计</p>
+            </div>
+            <div class="col s4">
+                <select class="col s6 right" material-select watch
+                        ng-change="getShipTransDayInfo()" ng-model="daySize">
+                    <option value="30">近30天</option>
+                    <option value="10">近10天</option>
+                </select>
+            </div>
+        </div>
+    </div>
+
+    <!-- 发运车数统计 -->
+    <div class="row z-depth-2 white">
+        <div id="shipTransCarCountDayDiv" style="min-width:400px;height:350px;padding-top: 20px;"></div>
+    </div>
+
+    <!-- 发运舱数统计 -->
+    <div class="row z-depth-2 white">
+        <div id="shipTransCountDayDiv" style="min-width:400px;height:350px;padding-top: 20px;"></div>
+    </div>
+</div>

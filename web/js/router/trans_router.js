@@ -63,6 +63,12 @@ app.config(['$stateProvider',"$urlRouterProvider",function($stateProvider,$urlRo
             templateUrl: "/view/sea_transport/ship_trans_calendar.html",
             controller:"ship_trans_calendar_controller"
         })
+        // 海运管理->海运统计
+        .state("ship_trans_statistics", {
+            url:"/ship_trans_statistics",
+            templateUrl: "/view/sea_transport/ship_trans_statistics.html",
+            controller:"ship_trans_statistics_controller"
+        })
 
         // 管理员设置 -> 用户管理
         .state("setting_users", {

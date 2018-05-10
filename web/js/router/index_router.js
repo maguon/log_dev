@@ -119,6 +119,12 @@ app.config(['$stateProvider',"$urlRouterProvider",function($stateProvider,$urlRo
             templateUrl: "/view/sea_transport/sea_transport_order_detail.html",
             controller:"sea_transport_order_detail_controller"
         })
+        // 海运管理->海运统计
+        .state("ship_trans_statistics", {
+            url:"/ship_trans_statistics",
+            templateUrl: "/view/sea_transport/ship_trans_statistics.html",
+            controller:"ship_trans_statistics_controller"
+        })
 
         // 仓储管理->工作日历
         .state("calendar", {
