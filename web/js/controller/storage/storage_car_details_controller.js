@@ -11,6 +11,7 @@ app.controller("storage_car_details_controller", [ "$scope","$state", "$statePar
     $scope.storage_imageBox = [];// 预览详情照片
     $scope.storage_image_i = [];// 照片索引
     $scope.color = _config.config_color;// 颜色
+    $scope.purchaseTypes = _config.purchaseTypes; //是否是金融車輛
     $scope.Picture_carId = "";
     $scope.getCarKeyCabinetId = "";
     $scope.carKeyCabinetParkingArray ='';
@@ -496,6 +497,7 @@ app.controller("storage_car_details_controller", [ "$scope","$state", "$statePar
             "engineNum": $scope.self_car.engine_num,
             "entrustId":  $scope.self_car.entrust_id,
             "valuation":  $scope.self_car.valuation,
+            "purchaseType":$scope.self_car.purchase_type,
             "msoStatus":  $scope.self_car.mso_status,
             "remark": $scope.self_car.remark
         };
@@ -506,7 +508,7 @@ app.controller("storage_car_details_controller", [ "$scope","$state", "$statePar
             }).then(function (data) {
             });
             // 修改仓库信息
-            _basic.put(_host.api_url + "/user/" + userId + "/car/" + id, _basic.removeNullProps(obj)).then(function (data) {
+            _basic.put(_host.api_url + "/user/" + userId + "/car/" + id, obj).then(function (data) {
                 if (data.success == true) {
                     swal("修改成功", "", "success");
                 } else {
