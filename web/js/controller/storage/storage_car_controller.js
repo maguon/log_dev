@@ -68,6 +68,10 @@ app.controller("storage_car_controller", ["$scope", "$rootScope", "$stateParams"
     $scope.storageParkingArray = [];
     $scope.baseList = [];
 
+    $scope.relCarStatus = '';
+
+    //是否是金融車輛
+    $scope.purchaseTypes = _config.purchaseTypes;
     // 获取车辆品牌
     function getCarMakeName() {
         _basic.get(_host.api_url + "/carMake").then(function (data) {
@@ -338,6 +342,7 @@ app.controller("storage_car_controller", ["$scope", "$rootScope", "$stateParams"
         $scope.engineNum='';
         $scope.entrustId='';
         $scope.carValuation='';
+        $scope.condPurchaseType='';
         $scope.MSO='';
         $scope.remark=''
         $scope.putEntrust=$scope.baseList.entrust_id;
@@ -424,11 +429,24 @@ app.controller("storage_car_controller", ["$scope", "$rootScope", "$stateParams"
                 $('#autocomplete-input').autocomplete({minLength:6});
                 $scope.vinMsg={}
             }
+            queryRelStatus();
         }
     };
+    function queryRelStatus(){
+        _basic.get(_host.api_url+"/user/"+userId+"/car?vin="+$scope.demandVin+'&active=1').then(function (data) {
+            if(data.success=true){
+                if(data.result.length==0){
+                    $scope.relCarStatus='';
+                    return;
+                }else{
+                    $scope.relCarStatus=data.result[0].rel_status;
+                }
+            }
+        })
+    }
     // 查询vin码
     $scope.demandCar=function () {
-        _basic.get(_host.api_url+"/user/"+ userId+"/car?vin="+$scope.demandVin+"&active=1").then(function (data) {
+        _basic.get(_host.api_url+"/carList?vin="+$scope.demandVin).then(function (data) {
             if(data.success=true){
                 if(data.result.length==0){
                     $scope.showStorageData = 2;
@@ -442,7 +460,7 @@ app.controller("storage_car_controller", ["$scope", "$rootScope", "$stateParams"
                             $scope.baseListColor = _config.config_color[i].colorName;
                         }
                     }
-                    if(data.result[data.result.length-1].rel_status==1){
+                    if( $scope.relCarStatus==1){
                         swal('本车已在库中', "", "error");
                     }else {
                         $scope.pictureCarId = $scope.baseList.id;
@@ -472,6 +490,7 @@ app.controller("storage_car_controller", ["$scope", "$rootScope", "$stateParams"
                 engineNum: $scope.engineNum,
                 entrustId:entrust.id,
                 valuation:$scope.carValuation,
+                purchaseType:$scope.condPurchaseType,
                 msoStatus:$scope.MSO,
                 remark: $scope.remark
             };
@@ -501,6 +520,7 @@ app.controller("storage_car_controller", ["$scope", "$rootScope", "$stateParams"
                 "engineNum": $scope.baseList.engine_num,
                 "entrustId":$scope.baseList.entrust_id,
                 "valuation":$scope.baseList.valuation,
+                'purchaseType':$scope.baseList.purchase_type,
                 "msoStatus":$scope.baseList.mso_status,
                 "remark": $scope.baseList.remark
             };

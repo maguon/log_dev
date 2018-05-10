@@ -83,13 +83,20 @@
                                 <label for="carValuation"><span style="color: red;margin-right: 5px">*</span>车辆估值(美元)</label>
                             </div>
                             <!--是否MSO车辆-->
-                            <div class="input-field col s4">
+                            <div class="input-field col s2">
                                 <select material-select watch id="MSO" name="MSO"  ng-model="MSO" >
                                     <option value="" disabled selected>请选择</option>
                                     <option value="2">是</option>
                                     <option value="1">否</option>
                                 </select>
                                 <label for="MSO"><span style="color: red;margin-right: 5px">*</span>是否MSO车辆</label>
+                            </div>
+                            <!--是否金融车辆-->
+                            <div class="input-field col s2">
+                                <select material-select watch ng-model="condPurchaseType">
+                                    <option value="">是否金融车</option>
+                                    <option ng-repeat="el in purchaseTypes" ng-value="el.id">{{el.name}}</option>
+                                </select>
                             </div>
                         </div>
                         <div class="row">
@@ -166,7 +173,7 @@
                                 <label for="carValuation1"><span style="color: red;margin-right: 5px">*</span>车辆估值(美元)</label>
                             </div>
                             <!--是否MSO车辆-->
-                            <div class="input-field col s4">
+                            <div class="input-field col s2">
                                 <select material-select watch id="MSO1" name="MSO1" ng-model="baseList.mso_status" >
                                     <option value="" disabled selected>请选择</option>
                                     <option ng-value="2">是</option>
@@ -174,6 +181,15 @@
                                 </select>
                                 <label for="MSO1"><span style="color: red;margin-right: 5px">*</span>是否MSO车辆</label>
                             </div>
+                            <!--是否金融车辆-->
+                            <div class="input-field col s2">
+                                <select material-select watch ng-model="baseList.purchase_type" id="purchase_type">
+                                    <option value="" disabled selected>请选择</option>
+                                    <option ng-repeat="el in purchaseTypes" ng-value="el.id">{{el.name}}</option>
+                                </select>
+                                <label for="purchase_type"><span style="color: red;margin-right: 5px">*</span>是否金融车</label>
+                            </div>
+
                         </div>
                         <div class="row">
                             <p class="col 12 min-width-2 left-align  grey-text darken-2">
