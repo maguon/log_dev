@@ -16,6 +16,12 @@ app.config(['$stateProvider',"$urlRouterProvider",function($stateProvider,$urlRo
             templateUrl: "/view/finance/finance_index.html",
             controller:'finance_index_controller'
         })
+        // 海运主控
+        .state("sea_trans_index", {
+            url: "/sea_trans_index",
+            templateUrl: "/view/sea_transport/sea_trans_index.html",
+            controller:'sea_trans_index_controller'
+        })
 
         // 用户信息
         .state("user_info",{

@@ -1,0 +1,97 @@
+<!-- 主控面板 -> 海运主控 -->
+<div class="finance_index">
+    <div class="finance_content" style="width: 95%;margin: 0 auto">
+        <div class="row ">
+
+            <!-- 委托方总数 -->
+            <div class="col s12" style="font-weight: bold;color: white">
+                <div class="center-align cyan-text z-depth-1" style="height: 240px;margin-top: 10px;">
+
+                    <!-- 卡片整体 -->
+                    <div class="col s12" style="height: 240px;">
+
+                        <!-- 左侧 图标/名称 -->
+                        <div class="col" style="width:20%; height: 200px;margin-top:20px;margin-bottom:20px;">
+                            <div class="col s12" style="height: 100px;padding-top:30px;">
+                                <i class="mdi mdi-ferry fz50"></i>
+                            </div>
+                            <div class="col s12 fz24" style="height: 100px;padding-top:10px;">
+                                海运综合统计
+                            </div>
+                        </div>
+
+                        <!-- 右侧 图标/信息 -->
+                        <div class="col" style="width:80%; height: 200px;margin-top:20px;margin-bottom:20px;">
+
+                            <!-- 上部分 -->
+                            <div class="col s12" style="height: 100px;">
+                                <!-- 左侧 -->
+                                <div class="col s7 vc-center" style="height: 80px;border-right: 1px solid #c2c0c2;">
+                                    <div class="col s5 left-align">
+                                        <a class="btn-floating btn-large waves-light waves-effect cyan lighten-2" style="left:1px;cursor: default">
+                                            <i class="mdi mdi-cube-send"></i>
+                                        </a>
+                                        <span class="" style="padding-left: 20px;">海运订舱</span>
+                                    </div>
+                                    <div class="col s4 right-align">
+                                        <span class="fz20"><i class="mdi mdi-cube-outline"></i></span>
+                                        <span class="grey-text" style="padding-left: 10px;">待发运舱数</span>
+                                    </div>
+                                    <div class="col s3 right-align">
+                                        {{waitShipTransCount | number}}
+                                    </div>
+                                </div>
+
+                                <!-- 右侧 -->
+                                <div class="col s5 vc-center" style="height: 80px;">
+                                    <div class="col s7 left-align">
+                                        <span class="fz20"><i class="mdi mdi-cube-outline"></i></span>
+                                        <span class="grey-text" style="padding-left: 10px;">已发在途舱数</span>
+                                    </div>
+                                    <div class="col s5 right-align">
+                                        {{sendShipTransCount | number}}
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- 分割线 -->
+                            <div class="divider col s12" style="background-color: #c2c0c2;"></div>
+
+                            <!-- 下部分 -->
+                            <div class="col s12" style="height: 100px;margin-top:20px;">
+                                <!-- 左侧 -->
+                                <div class="col s7 vc-center" style="height: 80px;border-right: 1px solid #c2c0c2;">
+                                    <div class="col s5 left-align">
+                                        <a class="btn-floating btn-large waves-light waves-effect cyan lighten-2" style="left:1px;cursor: default">
+                                            <i class="mdi mdi-content-copy"></i>
+                                        </a>
+                                        <span class="" style="padding-left: 20px;">海运订单</span>
+                                    </div>
+                                    <div class="col s4 right-align">
+                                        <span class="fz20"><i class="mdi mdi-cube-outline"></i></span>
+                                        <span class="grey-text" style="padding-left: 10px;">待发运车辆</span>
+                                    </div>
+                                    <div class="col s3 right-align">
+                                        {{waitShipTransOrderCount | number}}
+                                    </div>
+                                </div>
+
+                                <!-- 右侧 -->
+                                <div class="col s5 vc-center" style="height: 80px;">
+                                    <div class="col s7 left-align">
+                                        <span class="fz20"><i class="mdi mdi-cube-outline"></i></span>
+                                        <span class="grey-text" style="padding-left: 10px;">已发在途车辆</span>
+                                    </div>
+                                    <div class="col s5 right-align">
+                                        {{sendShipTransOrderCount | number}}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

@@ -2,14 +2,14 @@
  * 海运管理员-使用画面 路由配置.
  */
 app.config(['$stateProvider',"$urlRouterProvider",function($stateProvider,$urlRouterProvider) {
-    $urlRouterProvider.when("","/user_info");
+    $urlRouterProvider.when("","/sea_trans_index");
     $stateProvider
         // 主菜单：主控面板
-        // .state("trade_index", {
-        //     url: "/trade_index",
-        //     templateUrl: "/view/finance/finance_index.html",
-        //     controller:'finance_index_controller'
-        // })
+        .state("sea_trans_index", {
+            url: "/sea_trans_index",
+            templateUrl: "/view/sea_transport/sea_trans_index.html",
+            controller:'sea_trans_index_controller'
+        })
 
         // 主菜单：用户信息
         .state("user_info",{
