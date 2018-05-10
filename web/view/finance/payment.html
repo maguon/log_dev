@@ -160,7 +160,7 @@
             <tr ng-repeat="el in storagePaymentArray" class="grey-text text-darken-1">
                 <td ng-bind="el.id"></td>
                 <td ng-bind="el.short_name"></td>
-                <td>${{el.payment_money |number:2}}</td>
+                <td class="red-text">${{el.payment_money |number:2}}</td>
                 <td>{{paymentTypeList[el.payment_type-1].name}}</td>
                 <td ng-bind="el.number"></td>
                 <td ng-bind="el.created_on |date:'yyyy-MM-dd hh:mm'"></td>

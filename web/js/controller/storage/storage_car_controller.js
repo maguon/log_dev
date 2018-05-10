@@ -122,50 +122,48 @@ app.controller("storage_car_controller", ["$scope", "$rootScope", "$stateParams"
         $scope.getStorageCar();
     };
 
-    //查询列表 条件查询
-    $scope.getStorageCar = function () {
-        var reqUrl = _host.api_url + "/user/" + userId + "/car?active=" + 1 + "&start=" + $scope.start + "&size=" + $scope.size;
-        var entrust = $("#entrustSelect").select2("data")[0] ;
-        if ($scope.getRelStatus != null) {
-            reqUrl = reqUrl + "&relStatus=" + $scope.getRelStatus
-        }
-        if ($scope.storageIdItem != null) {
-            reqUrl = reqUrl + "&storageId=" + $scope.storageIdItem
-        }
-        if ($scope.makeIdItem != null) {
-            reqUrl = reqUrl + "&makeId=" + $scope.makeIdItem
-        }
-        if ($scope.modelIdItem != null) {
-            reqUrl = reqUrl + "&modelId=" + $scope.modelIdItem
-        }
-        if ($scope.vinItem != null) {
-            reqUrl = reqUrl + "&vin=" + $scope.vinItem
-        }
-        if ($scope.search_enterTime_start != null) {
-            reqUrl = reqUrl + "&enterStart=" + $scope.search_enterTime_start
-        }
-        if ($scope.search_enterTime_end != null) {
-            reqUrl = reqUrl + "&enterEnd=" + $scope.search_enterTime_end
-        }
-        if ($scope.search_planTime_start != null) {
-            reqUrl = reqUrl + "&planStart=" + $scope.search_planTime_start
-        }
-        if ($scope.search_planTime_end != null) {
-            reqUrl = reqUrl + "&planEnd=" + $scope.search_planTime_end
-        }
-        if ($scope.search_outTime_start != null) {
-            reqUrl = reqUrl + "&realStart=" + $scope.search_outTime_start
-        }
-        if ($scope.search_outTime_end != null) {
-            reqUrl = reqUrl + "&realEnd=" + $scope.search_outTime_end
-        }
-        if ($scope.MSOItem != null) {
-            reqUrl = reqUrl + "&msoStatus=" + $scope.MSOItem
-        }
-        if (entrust.id != null) {
-            reqUrl = reqUrl + "&entrustId=" + entrust.id
+    /**
+     * 组装检索条件。
+     */
+    function makeConditions() {
+        var entrust = {};
+
+        if ($("#entrustSelect").val() == "") {
+            entrust = {id:"",text:""};
+        } else {
+            entrust = $("#entrustSelect").select2("data")[0] ;
         }
 
+        var obj = {
+            "active":1,
+            "relStatus": $scope.getRelStatus,
+            "storageId": $scope.storageIdItem,
+            "makeId":$scope.makeIdItem,
+            "modelId": $scope.modelIdItem,
+            "vin":$scope.vinItem,
+            "enterStart":$scope.search_enterTime_start,
+            "enterEnd":$scope.search_enterTime_end,
+            "planStart":$scope.search_planTime_start,
+            "planEnd":$scope.search_planTime_end,
+            "realStart":$scope.search_outTime_start,
+            "realEnd":$scope.search_outTime_end,
+            "msoStatus":$scope.MSOItem,
+            "entrustId":entrust.id,
+            "start":$scope.start,
+            "size":$scope.size
+        };
+        return obj;
+    }
+
+
+    //查询列表 条件查询
+    $scope.getStorageCar = function () {
+        // 基本检索URL
+        var reqUrl = _host.api_url + "/user/" + userId + "/car?";
+        // 检索条件
+        var conditions = _basic.objToUrl(makeConditions());
+        // 检索URL
+        reqUrl = conditions.length > 0 ? reqUrl + "&" + conditions : reqUrl;
         _basic.get(reqUrl).then(function (data) {
             if (data.success == true) {
                 $scope.storageCarBoxList = data.result;
@@ -190,23 +188,14 @@ app.controller("storage_car_controller", ["$scope", "$rootScope", "$stateParams"
 
     // 数据导出
     $scope.export = function () {
-        var obj = {
-            "active":1,
-            "relStatus": $scope.getRelStatus,
-            "storageId": $scope.search_storage,
-            "makeId":$scope.search_makeId,
-            "modelId": $scope.search_modelId,
-            "vin":$scope.search_vin,
-            "enterStart":$scope.search_enterTime_start,
-            "enterEnd":$scope.search_enterTime_end,
-            "planStart":$scope.search_planTime_start,
-            "planEnd":$scope.search_planTime_end,
-            "realStart":$scope.search_outTime_start,
-            "realEnd":$scope.search_outTime_end,
-            "msoStatus":$scope.getMSO,
-            "entrustId":$scope.getEntrustId
-        };
-        window.open(_host.api_url + "/car.csv?" + _basic.objToUrl(obj));
+        // 基本检索URL
+        var url = _host.api_url + "/car.csv";
+        // 检索条件
+        var conditions = _basic.objToUrl(makeConditions());
+        // 检索URL
+        url = conditions.length > 0 ? url + "?" + conditions : url;
+        // 调用接口下载
+        window.open(url);
     };
     // 存放位置联动查询--扇区
     $scope.getStorageId = function (val) {
@@ -295,8 +284,6 @@ app.controller("storage_car_controller", ["$scope", "$rootScope", "$stateParams"
             }
         })
     };
-
-
     //点击新增入库车辆
     $scope.addStorageCar = function () {
         step0();
@@ -955,7 +942,6 @@ app.controller("storage_car_controller", ["$scope", "$rootScope", "$stateParams"
         getCarMakeName();
         getStorageName();
         getEntrust();
-        /*  $scope.getStorageCar();*/
         addCarKeyCabinet();
     };
     $scope.queryData();
