@@ -63,22 +63,18 @@ app.controller("ship_trans_statistics_controller", ["$scope", "_host", "_basic",
     $scope.getShipTransMonthInfo = function () {
         // 统计开始月份
         var monthStart = $('#monthStart').val();
-        // 统计结束月份
-        var monthEnd = $('#monthEnd').val();
-
         if(monthStart === "" || monthStart === undefined){
             monthStart = $scope.startInitial;
-            $('#monthStart').val($scope.startInitial);
         }
+
+        // 统计结束月份
+        var monthEnd = $('#monthEnd').val();
         if(monthEnd === "" || monthEnd === undefined){
             monthEnd = $scope.endInitial;
-            $('#monthEnd').val($scope.endInitial);
         }
 
         // 检索用url
         var url = _host.api_url + "/shipTransMonthStat?monthStart=" + monthStart + "&monthEnd=" + monthEnd;
-
-        console.log(url);
 
         // 取得指定月份数据
         _basic.get(url).then(function (data) {
@@ -189,6 +185,12 @@ app.controller("ship_trans_statistics_controller", ["$scope", "_host", "_basic",
             credits: {
                 enabled: false
             },
+            legend: {
+                layout: 'vertical',
+                align: 'right',
+                verticalAlign: 'middle',
+                borderWidth: 0
+            },
             series: shipTransCarCountMonth
         });
     }
@@ -239,6 +241,12 @@ app.controller("ship_trans_statistics_controller", ["$scope", "_host", "_basic",
             },
             credits: {
                 enabled: false
+            },
+            legend: {
+                layout: 'vertical',
+                align: 'right',
+                verticalAlign: 'middle',
+                borderWidth: 0
             },
             series: shipTransCountMonth
         });
@@ -291,6 +299,12 @@ app.controller("ship_trans_statistics_controller", ["$scope", "_host", "_basic",
             credits: {
                 enabled: false
             },
+            legend: {
+                layout: 'vertical',
+                align: 'right',
+                verticalAlign: 'middle',
+                borderWidth: 0
+            },
             series: shipTransCarCountDay
         });
     }
@@ -342,12 +356,12 @@ app.controller("ship_trans_statistics_controller", ["$scope", "_host", "_basic",
             credits: {
                 enabled: false
             },
-            // legend: {
-            //     layout: 'vertical',
-            //     align: 'right',
-            //     verticalAlign: 'middle',
-            //     borderWidth: 0
-            // },
+            legend: {
+                layout: 'vertical',
+                align: 'right',
+                verticalAlign: 'middle',
+                borderWidth: 0
+            },
             series: shipTransCountDay
         });
     }
