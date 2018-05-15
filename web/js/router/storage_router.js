@@ -44,38 +44,6 @@ app.config(['$stateProvider',"$urlRouterProvider",function($stateProvider,$urlRo
             controller:'client_info_detail_controller'
         })
 
-        // 海运管理->海运信息
-        .state("ship_trans_info", {
-            url:"/ship_trans_info",
-            params: {"from": null},
-            templateUrl: "/view/sea_transport/ship_trans_info.html",
-            controller:"ship_trans_info_controller"
-        })
-        // 海运管理->海运信息（订单详情）
-        .state("ship_trans_info_detail", {
-            url:"/ship_trans_info_detail/{id}?from",
-            templateUrl: "/view/sea_transport/ship_trans_info_detail.html",
-            controller:"ship_trans_info_detail_controller"
-        })
-        // 海运管理->海运日历
-        .state("ship_trans_calendar", {
-            url:"/ship_trans_calendar",
-            templateUrl: "/view/sea_transport/ship_trans_calendar.html",
-            controller:"ship_trans_calendar_controller"
-        })
-        // 海运管理->订单管理
-        .state("sea_transport_order", {
-            url:"/sea_transport_order",
-            templateUrl: "/view/sea_transport/sea_transport_order.html",
-            controller:"sea_transport_order_controller"
-        })
-        // 海运管理->订单管理详情
-        .state("sea_transport_order_detail", {
-            url:"/sea_transport_order_detail/{id}?from",
-            templateUrl: "/view/sea_transport/sea_transport_order_detail.html",
-            controller:"sea_transport_order_detail_controller"
-        })
-
         // 仓储管理 -> 工作日历
         .state("calendar", {
             url:"/calendar",
