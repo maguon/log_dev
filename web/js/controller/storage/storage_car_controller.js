@@ -211,13 +211,13 @@ app.controller("storage_car_controller", ["$scope", "$rootScope", "$stateParams"
                         return;
                     }
                     $scope.storageAreaParking = data.result;
-                    $scope.area = '';
+                   /* $scope.area = '';
                     $scope.addRow = '';
                     $scope.addCol = '';
                     $scope.parking_id = "";
                     $scope.parkingArrayRow=[];
                     $scope.colArr=[];
-                    $scope.parkingArrayLot=[];
+                    $scope.parkingArrayLot=[];*/
                 }
                 else if(data.success == true&&data.result.length==0){
                     $scope.storageAreaParking = "";
@@ -228,40 +228,78 @@ app.controller("storage_car_controller", ["$scope", "$rootScope", "$stateParams"
             });
         }
     };
+
     // 存放位置联动查询--行
     $scope.getStorageAreaParking = function (val) {
-        _basic.get(_host.api_url + "/storageParking?storageId=" + $scope.val+"&areaId="+val).then(function (data) {
+        if (val) {
+            $scope.areaVal = val;
+            _basic.get(_host.api_url + "/storageParkingRow?storageId=" + $scope.val + "&areaId=" + val).then(function (data) {
+                if (data.success == true) {
+                    if (data.result.length == 0) {
+                        return;
+                    }
+                    $scope.storageParking = data.result;
+                    /*$scope.parkingArrayR=[];
+                    $scope.parkingArrayL=[];
+                    $scope.parkingArray =_baseService.storageParking2($scope.storageParking);
+                    for(var i=0;i<$scope.parkingArray.length;i++){
+                        $scope.parkingArrayR.push($scope.parkingArray[i].row);
+                        $scope.parkingArrayL.push($scope.parkingArray[i].col);
+                        $scope.parkingArrayRow = _baseService.array($scope.parkingArrayR);
+                        $scope.parkingArrayCol =  _baseService.array($scope.parkingArrayL);
+                    }*/
+                }
+                else if (data.success == true && data.result.length == 0) {
+                    $scope.storageParking = "";
+                }
+                else {
+                    swal(data.msg, "", "error");
+                }
+            });
+        }
+    };
+
+    // 存放位置联动查询--列
+    $scope.getStorageRow = function (Row) {
+        _basic.get(_host.api_url + "/storageParkingCol?storageId=" + $scope.val+"&areaId="+ $scope.areaVal+'&row='+Row).then(function (data) {
             if (data.success == true) {
                 if(data.result.length==0){
                     return;
                 }
-                $scope.storageParking = data.result;
-                $scope.parkingArrayR=[];
-                $scope.parkingArrayL=[];
-                $scope.parkingArray =_baseService.storageParking2($scope.storageParking);
-                for(var i=0;i<$scope.parkingArray.length;i++){
-                    $scope.parkingArrayR.push($scope.parkingArray[i].row);
-                    $scope.parkingArrayL.push($scope.parkingArray[i].col);
-                    $scope.parkingArrayRow = _baseService.array($scope.parkingArrayR);
-                    $scope.parkingArrayCol =  _baseService.array($scope.parkingArrayL);
-                }
+                $scope.storageRow = data.result;
             }
             else if(data.success == true&&data.result.length==0){
-                $scope.parkingArray = "";
+                $scope.storageRow = "";
             }
             else {
                 swal(data.msg, "", "error");
             }
         });
-    };
-    // 存放位置联动查询--列
-    $scope.getStorageRow = function (Row,Col) {
+    }
+    //存放位置联动查询--格
+    $scope.getStorageCol = function (Row,Col) {
+        _basic.get(_host.api_url + "/storageParkingLot?storageId=" + $scope.val+"&areaId="+ $scope.areaVal+'&row='+Row+'&col='+Col).then(function (data) {
+            if (data.success == true) {
+                if(data.result.length==0){
+                    return;
+                }
+                $scope.storageCol = data.result;
+            }
+            else if(data.success == true&&data.result.length==0){
+                $scope.storageCol = "";
+            }
+            else {
+                swal(data.msg, "", "error");
+            }
+        });
+    }
+   /* $scope.getStorageRow = function (Row,Col) {
         for(var i =0;i<$scope.parkingArray.length;i++){
             if($scope.parkingArray[i].row==Row&&$scope.parkingArray[i].col== Col) {
                 $scope.colArr =$scope.parkingArray[i].lot;
             }
         }
-    };
+    };*/
     // 车辆型号联动查询
     $scope.getMakeId = function (val) {
         $scope.curruntId = val;
@@ -576,19 +614,25 @@ app.controller("storage_car_controller", ["$scope", "$rootScope", "$stateParams"
     };
     //新增车辆仓储
     $scope.addStorageCarOnce = function (id, name, p_id, p_time) {
-        var obj = {
-            "parkingId": p_id,
-            "storageId": id,
-            "storageName": name,
-            "planOutTime": p_time
-        }
-        _basic.put(_host.api_url + "/user/" + userId +'/car/'+ $scope.pictureCarId+ "/vin/" + $scope.demandVin+ "/carStorageRel" , obj).then(function (data) {
-            if (data.success == true) {
-                step2();
-            } else {
-                swal(data.msg, "", "error")
+        if(id!==''&& name!==''&& p_id!==''&& p_time!==''){
+            var obj = {
+                "parkingId": p_id,
+                "storageId": id,
+                "storageName": name,
+                "planOutTime": p_time
             }
-        })
+            _basic.put(_host.api_url + "/user/" + userId +'/car/'+ $scope.pictureCarId+ "/vin/" + $scope.demandVin+ "/carStorageRel" , obj).then(function (data) {
+                if (data.success == true) {
+                    step2();
+                } else {
+                    swal(data.msg, "", "error")
+                }
+            })
+        }
+        else{
+            swal('请填写完整入库信息','','error')
+        }
+
     };
     //从添加相片跳转到添加钥匙
     $scope.nextStep =function (){

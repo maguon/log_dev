@@ -242,26 +242,26 @@
                     <div class="row  p0 storage_position"  style="padding-bottom: 5px" >
                         <div class="col s4">
                             <div class="input-field  valign-wrapper cyan white-text" >
-                                <select material-select watch id="row" name="row" class="col s12"  ng-model="addRow" required>
+                                <select material-select watch class="col s12" ng-change="getStorageRow(addRow)"  ng-model="addRow"  required>
                                     <option value=""  disabled>存放排数</option>
-                                    <option ng-repeat="el in parkingArrayRow"  ng-value="$index+1" >{{$index+1}}排</option>
+                                    <option ng-repeat="el in storageParking"  ng-value="el.row" >{{el.row}}排</option>
                                 </select>
                             </div>
                         </div>
                         <div class="col s4">
                             <div class="input-field  valign-wrapper cyan white-text" >
-                                <select material-select watch id="col" name="col_id" class=" col s12" ng-model="addCol"  ng-change="getStorageRow(addRow,addCol)"  required>
+                                <select material-select watch class="col s12" ng-change="getStorageCol(addRow,addCol)" ng-model="addCol" required>
                                     <option value=""  disabled>存放列位</option>
-                                    <option ng-repeat="el in parkingArrayCol"  ng-value="$index+1">{{$index+1}}列</option>
+                                    <option ng-repeat="el in storageRow"  ng-value="el.col">{{el.col}}列</option>
                                 </select>
                             </div>
                         </div>
                         <div class="col s4">
                             <div class="input-field  valign-wrapper cyan white-text" >
-                                <select material-select watch id="lattice" name="lattice" class="col s12"  ng-model="parking_id" required>
+                                <select material-select watch class="col s12" ng-model="parking_id" required>
                                     <option value=''  disabled>存放格位</option>
-                                    <option ng-repeat="el in colArr" ng-if="el.carId==0"  ng-value="el.id" ng-bind="characters[el.lot-1].name">{{el.lot}}</option>
-                                    <option ng-repeat="el in colArr" ng-if="el.carId!=0" ng-bind="characters[el.lot-1].name" disabled  >{{el.lot}}</option>
+                                    <option ng-repeat="el in storageCol" ng-if="el.car_id==0"  ng-value="el.id" ng-bind="characters[el.lot-1].name">{{el.lot}}</option>
+                                    <option ng-repeat="el in storageCol" ng-if="el.car_id!==0" ng-bind="characters[el.lot-1].name" disabled  >{{el.lot}}</option>
 
                                 </select>
                             </div>
@@ -518,22 +518,22 @@
                     </select>
                 </div>
                 <div class="input-field col s4 cyan white-text">
-                    <select material-select watch  name="row" class="col s12"  ng-model="outRow" required>
+                    <select material-select watch  ng-change="getStorageRow(outRow)" ng-model="outRow"  required>
                         <option value=""  disabled>存放排数</option>
-                        <option ng-repeat="el in parkingArrayRow"  ng-value="$index+1" >{{$index+1}}排</option>
+                        <option ng-repeat="el in storageParking"  ng-value="el.row" >{{el.row}}排</option>
                     </select>
                 </div>
                 <div class="input-field col s4 cyan white-text">
-                    <select material-select watch  name="col_id" class=" col s12" ng-model="outCol"  ng-change="getStorageRow(outRow,outCol)"  required>
+                    <select material-select watch  ng-change="getStorageCol(outRow,outCol)" ng-model="outCol"    required>
                         <option value=""  disabled>存放列位</option>
-                        <option ng-repeat="el in parkingArrayCol"  ng-value="$index+1">{{$index+1}}列</option>
+                        <option ng-repeat="el in storageRow"  ng-value="el.col">{{el.col}}列</option>
                     </select>
                 </div>
                 <div class="input-field col s4 cyan white-text">
-                    <select material-select watch  name="lattice" class="col s12"ng-model="parking_id" required>
+                    <select material-select watch  ng-model="parking_id" required>
                         <option value=''  disabled>存放格位</option>
-                        <option ng-repeat="el in colArr" ng-if="el.carId==0"  ng-value="el.id" ng-bind="characters[el.lot-1].name">{{el.lot}}</option>
-                        <option ng-repeat="el in colArr" ng-if="el.carId!=0" ng-bind="characters[el.lot-1].name" disabled  >{{el.lot}}</option>
+                        <option ng-repeat="el in storageCol" ng-if="el.car_id==0"  ng-value="el.id" ng-bind="characters[el.lot-1].name">{{el.lot}}</option>
+                        <option ng-repeat="el in storageCol" ng-if="el.car_id!=0" ng-bind="characters[el.lot-1].name" disabled  >{{el.lot}}</option>
 
                     </select>
                 </div>
