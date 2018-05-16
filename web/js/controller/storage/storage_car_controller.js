@@ -34,12 +34,6 @@ app.controller("storage_car_controller", ["$scope", "$rootScope", "$stateParams"
     //添加入库车辆 判断基本信息
     $scope.showStorageData = 2;
 
-    //入库时的道列排
-    $scope.parkingArrayRow=[];
-    $scope.parkingArrayLot =[];
-    $scope.parkingArrayR =[];
-    $scope.parkingArrayL =[];
-
     // 仓库详情（头部）
     $scope.storageNm = "";
 
@@ -66,12 +60,15 @@ app.controller("storage_car_controller", ["$scope", "$rootScope", "$stateParams"
 
     // 画面显示停车情况数据
     $scope.storageParkingArray = [];
+
     $scope.baseList = [];
 
     $scope.relCarStatus = '';
 
     //是否是金融車輛
     $scope.purchaseTypes = _config.purchaseTypes;
+
+
     // 获取车辆品牌
     function getCarMakeName() {
         _basic.get(_host.api_url + "/carMake").then(function (data) {
@@ -126,9 +123,8 @@ app.controller("storage_car_controller", ["$scope", "$rootScope", "$stateParams"
         $scope.getStorageCar();
     };
 
-    /**
-     * 组装检索条件。
-     */
+
+    //组装检索条件。
     function makeConditions() {
         var entrust = {};
 
@@ -139,21 +135,20 @@ app.controller("storage_car_controller", ["$scope", "$rootScope", "$stateParams"
         }
 
         var obj = {
-            "active":1,
-            "relStatus": $scope.getRelStatus,
-            "storageId": $scope.storageIdItem,
-            "makeId":$scope.makeIdItem,
-            "modelId": $scope.modelIdItem,
-            "vin":$scope.vinItem,
-            "enterStart":$scope.search_enterTime_start,
-            "enterEnd":$scope.search_enterTime_end,
-            "planStart":$scope.search_planTime_start,
-            "planEnd":$scope.search_planTime_end,
-            "realStart":$scope.search_outTime_start,
-            "realEnd":$scope.search_outTime_end,
-            "msoStatus":$scope.MSOItem,
-            "entrustId":entrust.id
-
+            active:1,
+            relStatus: $scope.getRelStatus,
+            storageId: $scope.storageIdItem,
+            makeId:$scope.makeIdItem,
+            modelId: $scope.modelIdItem,
+            vin:$scope.vinItem,
+            enterStart:$scope.search_enterTime_start,
+            enterEnd:$scope.search_enterTime_end,
+            planStart:$scope.search_planTime_start,
+            planEnd:$scope.search_planTime_end,
+            realStart:$scope.search_outTime_start,
+            realEnd:$scope.search_outTime_end,
+            msoStatus:$scope.MSOItem,
+            entrustId:entrust.id
         };
         return obj;
     }
@@ -210,13 +205,6 @@ app.controller("storage_car_controller", ["$scope", "$rootScope", "$stateParams"
                         return;
                     }
                     $scope.storageAreaParking = data.result;
-                   /* $scope.area = '';
-                    $scope.addRow = '';
-                    $scope.addCol = '';
-                    $scope.parking_id = "";
-                    $scope.parkingArrayRow=[];
-                    $scope.colArr=[];
-                    $scope.parkingArrayLot=[];*/
                 }
                 else if(data.success == true&&data.result.length==0){
                     $scope.storageAreaParking = "";
@@ -238,15 +226,6 @@ app.controller("storage_car_controller", ["$scope", "$rootScope", "$stateParams"
                         return;
                     }
                     $scope.storageParking = data.result;
-                    /*$scope.parkingArrayR=[];
-                    $scope.parkingArrayL=[];
-                    $scope.parkingArray =_baseService.storageParking2($scope.storageParking);
-                    for(var i=0;i<$scope.parkingArray.length;i++){
-                        $scope.parkingArrayR.push($scope.parkingArray[i].row);
-                        $scope.parkingArrayL.push($scope.parkingArray[i].col);
-                        $scope.parkingArrayRow = _baseService.array($scope.parkingArrayR);
-                        $scope.parkingArrayCol =  _baseService.array($scope.parkingArrayL);
-                    }*/
                 }
                 else if (data.success == true && data.result.length == 0) {
                     $scope.storageParking = "";
@@ -292,13 +271,6 @@ app.controller("storage_car_controller", ["$scope", "$rootScope", "$stateParams"
             }
         });
     }
-   /* $scope.getStorageRow = function (Row,Col) {
-        for(var i =0;i<$scope.parkingArray.length;i++){
-            if($scope.parkingArray[i].row==Row&&$scope.parkingArray[i].col== Col) {
-                $scope.colArr =$scope.parkingArray[i].lot;
-            }
-        }
-    };*/
     // 车辆型号联动查询
     $scope.getMakeId = function (val) {
         $scope.curruntId = val;
@@ -331,7 +303,6 @@ app.controller("storage_car_controller", ["$scope", "$rootScope", "$stateParams"
         $scope.create_time = "";
         $scope.storage_name = "";
         $scope.parking_area ="";
-        $scope.lattice = "";
         $scope.addCarKeyCabinet = '';
         $scope.addCarKeyCabinetArea = '';
         // 照片清空
@@ -340,12 +311,7 @@ app.controller("storage_car_controller", ["$scope", "$rootScope", "$stateParams"
         $scope.carModelName = "";
         // 存放位置清空
         $scope.area = '';
-        $scope.addRow = '';
-        $scope.addCol = '';
         $scope.parking_id = "";
-        $scope.parkingArrayRow=[];
-        $scope.colArr=[];
-        $scope.parkingArrayCol=[];
         $scope.storageAreaParking=[];
         $scope.plan_out_time = "";
         $(".modal").modal({
@@ -429,16 +395,21 @@ app.controller("storage_car_controller", ["$scope", "$rootScope", "$stateParams"
         $('.tabWrap .test4').addClass("active");
         $("#test4").addClass("active");
         $("#test4").show();
+        $scope.addRow="";
+        $scope.addCol="";
+        $scope.addLot="";
+        $scope.storageParking=[];
+        $scope.storageRow=[];
+        $scope.storageCol=[];
     }
     //模糊查询
     var vinObjs ={}
     $('#autocomplete-input').autocomplete({
         data: vinObjs,
-        limit: 10, // The max amount of results that can be shown at once. Default: Infinity.
+        limit: 10,
         onAutocomplete: function(val) {
-            // Callback function when value is autcompleted.
         },
-        minLength: 6, // The minimum length of the input for the autocomplete to start. Default: 1.
+        minLength: 6,
     });
     $scope.shortSearch=function () {
         if($scope.demandVin!=undefined){
@@ -547,19 +518,19 @@ app.controller("storage_car_controller", ["$scope", "$rootScope", "$stateParams"
     $scope.putCarDataItem = function (){
         if ( $scope.baseList.vin!==""&& $scope.baseList.entrust_id!==""&&$scope.baseList.valuation!==""&&$scope.baseList.mso_status!=="") {
             var obj_car = {
-                "vin": $scope.baseList.vin,
-                "makeId": $scope.baseList.make_id,
-                "makeName": $("#makecarName1").find("option:selected").text(),
-                "modelId": $scope.baseList.model_id,
-                "modelName": $("#model_name1").find("option:selected").text(),
-                "proDate": $scope.baseListDate,
-                "colour": $scope.baseList.colour,
-                "engineNum": $scope.baseList.engine_num,
-                "entrustId":$scope.baseList.entrust_id,
-                "valuation":$scope.baseList.valuation,
-                'purchaseType':$scope.baseList.purchase_type,
-                "msoStatus":$scope.baseList.mso_status,
-                "remark": $scope.baseList.remark
+                vin: $scope.baseList.vin,
+                makeId: $scope.baseList.make_id,
+                makeName: $("#makecarName1").find("option:selected").text(),
+                modelId: $scope.baseList.model_id,
+                modelName: $("#model_name1").find("option:selected").text(),
+                proDate: $scope.baseListDate,
+                colour: $scope.baseList.colour,
+                engineNum: $scope.baseList.engine_num,
+                entrustId:$scope.baseList.entrust_id,
+                valuation:$scope.baseList.valuation,
+                purchaseType:$scope.baseList.purchase_type,
+                msoStatus:$scope.baseList.mso_status,
+                remark: $scope.baseList.remark
             };
             _basic.put(_host.api_url + "/user/" + userId + '/car/'+$scope.pictureCarId, obj_car).then(function (data) {
                 if (data.success == true) {
@@ -615,10 +586,10 @@ app.controller("storage_car_controller", ["$scope", "$rootScope", "$stateParams"
     $scope.addStorageCarOnce = function (id, name, p_id, p_time) {
         if(id!==''&& name!==''&& p_id!==''&& p_time!==''){
             var obj = {
-                "parkingId": p_id,
-                "storageId": id,
-                "storageName": name,
-                "planOutTime": p_time
+                parkingId: p_id,
+                storageId: id,
+                storageName: name,
+                planOutTime: p_time
             }
             _basic.put(_host.api_url + "/user/" + userId +'/car/'+ $scope.pictureCarId+ "/vin/" + $scope.demandVin+ "/carStorageRel" , obj).then(function (data) {
                 if (data.success == true) {
@@ -922,12 +893,9 @@ app.controller("storage_car_controller", ["$scope", "$rootScope", "$stateParams"
     $scope.loginStorageCar = function (el, id) {
         $scope.storage_name = "";
         $scope.area = '';
-        $scope.addRow = '';
-        $scope.addCol = '';
+        $scope.outRow= '';
+        $scope.outCol= '';
         $scope.parking_id = "";
-        $scope.parkingArrayRow=[];
-        $scope.colArr=[];
-        $scope.parkingArrayCol=[];
         $scope.storageAreaParking=[];
         $scope.plan_out_time = "";
         $scope.self_vin = el;
@@ -937,7 +905,6 @@ app.controller("storage_car_controller", ["$scope", "$rootScope", "$stateParams"
     };
     //车辆重新入库
     $scope.loginStorageCarOnce = function (valid, id, name, p_id, p_time) {
-        $scope.submitted = true;
         if (valid) {
             var obj = {
                 "parkingId": p_id,
@@ -960,7 +927,7 @@ app.controller("storage_car_controller", ["$scope", "$rootScope", "$stateParams"
     };
     // 移动位置
     $scope.getCarInfo = function (parkingId, row, col,lot) {
-        lot =$scope.characters[lot-1].name
+        lot =$scope.characters[lot-1].name;
         swal({
                 title: "该车辆确定移位到" + row + "排" + col + "列"+lot+"?",
                 text: "",
