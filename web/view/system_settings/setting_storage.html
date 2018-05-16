@@ -94,7 +94,7 @@
                         存放位置： <span ng-class="{ 'cyan-text':storage.storage_status==1}" style="display: block">{{(storage.total_seats == undefined || storage.total_seats == null) ? '0' : storage.total_seats}}</span>
                     </div>
                     <div class="col s3 vc-center">
-                        <a href="#" ui-sref="setting_storage_detail({id:storage.id,status:storage.storage_status,from:'setting_storage'})"
+                        <a href="#" ui-sref="setting_storage_detail({id:storage.id,from:'setting_storage'})"
                            class="right btn-floating  setting_shipments_btn  btn waves-effect cyan  lighten-2 waves-light" ng-class="{ 'blue-grey':storage.storage_status==0}">
                             <i class=" mdi mdi-file-document look_icon white-text  lighten-1"></i>
                         </a>

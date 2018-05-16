@@ -17,7 +17,7 @@ app.controller("setting_storage_detail_controller", ["$scope", "$state", "$state
         remark: "",
         zoneSize: "",
         // 仓库 状态
-        status: $stateParams.status
+        status: ""
     };
 
     // 仓库信息(更新画面用)
@@ -73,6 +73,8 @@ app.controller("setting_storage_detail_controller", ["$scope", "$state", "$state
                 $scope.storageInfo.name = data.result[0].storage_name;
                 // 画面仓库 备注（表示用）
                 $scope.storageInfo.remark = data.result[0].remark;
+                // 画面仓库 仓库 状态
+                $scope.storageInfo.status = data.result[0].storage_status;
 
                 // 获取仓库分区信息列表
                 getStorageZoneList();

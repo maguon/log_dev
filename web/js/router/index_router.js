@@ -183,7 +183,7 @@ app.config(['$stateProvider',"$urlRouterProvider",function($stateProvider,$urlRo
         })
         // 管理员设置 -> 仓库设置 -> 详情
         .state("setting_storage_detail",{
-            url:"/setting_storage_detail/{id}/{status}?from",
+            url:"/setting_storage_detail/{id}?from",
             templateUrl: "/view/system_settings/setting_storage_detail.html",
             controller:'setting_storage_detail_controller'
         })
