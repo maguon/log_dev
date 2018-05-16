@@ -285,17 +285,20 @@ app.controller("storage_car_controller", ["$scope", "$rootScope", "$stateParams"
             }
         })
     };
-    function getCarMakeId() {
-        _basic.get(_host.api_url + "/carMake/" + $scope.baseList.make_id + "/carModel").then(function (data) {
-            if (data.success == true) {
-                if(data.result.length==0){
-                    return;
+    //添加页面的车辆型号联动查询
+    function addCarMakeId() {
+        if($scope.baseList.make_id&&$scope.baseList.make_id!==null){
+            _basic.get(_host.api_url + "/carMake/" + $scope.baseList.make_id + "/carModel").then(function (data) {
+                if (data.success == true) {
+                    if(data.result.length==0){
+                        return;
+                    }
+                    $scope.carModelName = data.result;
+                } else {
+                    swal(data.msg, "", "error")
                 }
-                $scope.carModelName = data.result;
-            } else {
-                swal(data.msg, "", "error")
-            }
-        })
+            })
+        }
     };
     //点击新增入库车辆
     $scope.addStorageCar = function () {
@@ -462,6 +465,12 @@ app.controller("storage_car_controller", ["$scope", "$rootScope", "$stateParams"
                 }
                 else{
                     $scope.baseList=data.result[0];
+                    $scope.baseList.model_id=data.result[0].model_id;
+                    $scope.baseList.make_id=data.result[0].make_id;
+                    if( $scope.baseList.model_id==0|| $scope.baseList.make_id==0){
+                        $scope.baseList.model_id='';
+                        $scope.baseList.make_id='';
+                    }
                     $scope.baseListDate = moment( $scope.baseList.created_on).format("YYYY-MM-DD");
                     for (var i in _config.config_color) {
                         if (_config.config_color[i].colorId == $scope.baseList.colour) {
@@ -474,7 +483,7 @@ app.controller("storage_car_controller", ["$scope", "$rootScope", "$stateParams"
                         $scope.pictureCarId = $scope.baseList.id;
                         $scope.showStorageData = 1;
                         step1();
-                        getCarMakeId();
+                        addCarMakeId();
                     }
                 }
             }
