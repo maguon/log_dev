@@ -120,7 +120,7 @@
                         存放位置： <span ng-class="{ 'cyan-text':key.key_cabinet_status==1}" style="display: block">{{(key.position_count == undefined || key.position_count == null) ? '0' : key.position_count}}</span>
                     </div>
                     <div class="col s3 vc-center">
-                        <a href="#" ui-sref="setting_key_cabinet_detail({id:key.id,status:key.key_cabinet_status,from:'setting_key_cabinet'})"
+                        <a href="#" ui-sref="setting_key_cabinet_detail({id:key.id,from:'setting_key_cabinet'})"
                            class="right btn-floating  setting_shipments_btn  btn waves-effect cyan  lighten-2 waves-light" ng-class="{ 'blue-grey':key.key_cabinet_status==0}">
                             <i class=" mdi mdi-file-document look_icon white-text  lighten-1" ></i>
                         </a>

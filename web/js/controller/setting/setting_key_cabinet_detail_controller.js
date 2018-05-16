@@ -17,7 +17,7 @@ app.controller("setting_key_cabinet_detail_controller", ["$scope", "$state", "$s
         remark: "",
         zoneSize: "",
         // 钥匙柜 状态
-        status: $stateParams.status
+        status: ""
     };
 
     // 钥匙柜信息(更新画面用)
@@ -72,6 +72,8 @@ app.controller("setting_key_cabinet_detail_controller", ["$scope", "$state", "$s
                 $scope.carKeyCabinetInfo.name = data.result[0].key_cabinet_name;
                 // 画面钥匙柜 备注（表示用）
                 $scope.carKeyCabinetInfo.remark = data.result[0].remark;
+                // 画面钥匙柜 钥匙柜 状态（表示用）
+                $scope.carKeyCabinetInfo.status = data.result[0].key_cabinet_status;
 
                 // 获取钥匙柜分区信息列表
                 getKeyCabinetZoneList();
