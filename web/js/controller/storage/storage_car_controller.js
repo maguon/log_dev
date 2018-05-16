@@ -152,9 +152,8 @@ app.controller("storage_car_controller", ["$scope", "$rootScope", "$stateParams"
             "realStart":$scope.search_outTime_start,
             "realEnd":$scope.search_outTime_end,
             "msoStatus":$scope.MSOItem,
-            "entrustId":entrust.id,
-            "start":$scope.start,
-            "size":$scope.size
+            "entrustId":entrust.id
+
         };
         return obj;
     }
@@ -163,7 +162,7 @@ app.controller("storage_car_controller", ["$scope", "$rootScope", "$stateParams"
     //查询列表 条件查询
     $scope.getStorageCar = function () {
         // 基本检索URL
-        var reqUrl = _host.api_url + "/user/" + userId + "/car?";
+        var reqUrl = _host.api_url + "/user/" + userId + "/car?start="+ $scope.start+"&size="+ $scope.size;
         // 检索条件
         var conditions = _basic.objToUrl(makeConditions());
         // 检索URL
