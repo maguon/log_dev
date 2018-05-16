@@ -96,7 +96,10 @@
                 <!-- 车型 -->
                 <td>{{el.make_name}}/{{el.model_name}}</td>
                 <!-- 颜色-->
-                <td><div class="z-depth-1" style="width:20px;height:20px; background-color: {{'#' + el.colour}}"></div></td>
+                <td>
+                    <div ng-if="el.colour==''"></div>
+                    <div ng-if="el.colour!=''" class="z-depth-1" style="width:20px;height:20px; background-color: {{'#' + el.colour}}"></div>
+                </td>
                 <!-- 生产日期 -->
                 <td ng-bind="el.pro_date|date:'yyyy-MM-dd'"></td>
                 <!-- 委托方 -->
@@ -166,7 +169,7 @@
                     <div class="input-field col s4">
                         <input id="proDateText" type="text" ng-model="carInfo.proDate" class="datepicker" date>
                         <i class="mdi dataIcon mdi-table-large"></i>
-                        <label for="proDateText"><span class="red-text">*</span> 生产日期</label>
+                        <label for="proDateText"> 生产日期</label>
                     </div>
 
                     <!-- 制造商 -->
@@ -218,7 +221,7 @@
                     <!-- 发动机号 -->
                     <div class="input-field col s4">
                             <input type="text" id="engineNumText" ng-model="carInfo.engineNum">
-                            <label for="engineNumText"><span class="red-text">*</span> 发动机号</label>
+                            <label for="engineNumText"> 发动机号</label>
                     </div>
 
                     <!-- 车辆估值(美元) -->

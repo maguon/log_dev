@@ -271,10 +271,8 @@ app.controller("finance_car_controller", ["$scope", "$rootScope", "_host", "_bas
             }
         }
 
-        if ($scope.carInfo.vin !== "" && $scope.carInfo.proDate !== ""
-            && $scope.carInfo.makerId !== "" && $scope.carInfo.modelId !== "" && $scope.carInfo.colour !== ""
-            && entrustId !== "" && $scope.carInfo.engineNum !== ""
-            && $scope.carInfo.valuation !== "" && $scope.carInfo.msoStatus !== "" && $scope.carInfo.purchaseType !== "") {
+        if ($scope.carInfo.vin !== "" && $scope.carInfo.makerId !== "" && $scope.carInfo.modelId !== ""
+            && entrustId !== "" && $scope.carInfo.valuation !== "" && $scope.carInfo.msoStatus !== "" && $scope.carInfo.purchaseType !== "") {
             var obj = {
                 // vin
                 vin: $scope.carInfo.vin,
@@ -301,6 +299,11 @@ app.controller("finance_car_controller", ["$scope", "$rootScope", "_host", "_bas
                 // 备注
                 remark: $scope.carInfo.remark
             };
+
+            // 如果生产日期没有输入，就去掉此属性
+            if ($scope.carInfo.proDate === "") {
+                delete obj.proDate;
+            }
 
             // 新增金融车。
             if ($scope.newFinanceCar) {
