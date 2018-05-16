@@ -65,14 +65,17 @@
 
     <!-- body -->
     <div class="col s12 lighten-1 white grey-text vc-center fz13" style="height:50px;">
-        <div class="input-field col s4">
+        <div class="input-field col s3">
             始发港口：{{paymentInfo.start_port_name}}
         </div>
-        <div class="input-field col s4">
+        <div class="input-field col s3">
             目的港口：{{paymentInfo.end_port_name}}
         </div>
-        <div class="input-field col s4">
-            开船日期：{{paymentInfo.start_ship_date | date:'yyyy-MM-dd' }}
+        <div class="input-field col s3">
+            预计开船日期：{{paymentInfo.start_ship_date | date:'yyyy-MM-dd' }}
+        </div>
+        <div class="input-field col s3">
+            实际开船日期：{{paymentInfo.actual_start_date | date:'yyyy-MM-dd' }}
         </div>
     </div>
     <div class="col s12 white">
@@ -80,14 +83,17 @@
     </div>
     <!-- body -->
     <div class="col s12 lighten-1 white grey-text vc-center fz13" style="height:50px;">
-        <div class="input-field col s4">
+        <div class="input-field col s3">
             船公司：{{paymentInfo.ship_company_name}}
         </div>
-        <div class="input-field col s4">
+        <div class="input-field col s3">
             船名：{{paymentInfo.ship_name}}
         </div>
-        <div class="input-field col s4">
-            到港日期：{{paymentInfo.end_ship_date | date:'yyyy-MM-dd'}}
+        <div class="input-field col s3">
+            预计到港日期：{{paymentInfo.end_ship_date | date:'yyyy-MM-dd'}}
+        </div>
+        <div class="input-field col s3">
+            实际到港日期：{{paymentInfo.actual_end_date | date:'yyyy-MM-dd'}}
         </div>
     </div>
     <div class="col s12 white">
@@ -95,14 +101,16 @@
     </div>
     <!-- body -->
     <div class="col s12 lighten-1 white grey-text vc-center fz13" style="height:50px;">
-        <div class="input-field col s4">
+        <div class="input-field col s3">
             货柜：{{paymentInfo.container}}
         </div>
-        <div class="input-field col s4">
+        <div class="input-field col s3">
             booking：{{paymentInfo.booking}}
         </div>
-        <div class="input-field col s4">
+        <div class="input-field col s3">
             封签：{{paymentInfo.tab}}
+        </div>
+        <div class="input-field col s3">
         </div>
     </div>
 

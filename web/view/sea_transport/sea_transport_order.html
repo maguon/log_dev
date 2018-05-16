@@ -5,119 +5,136 @@
     <div class="row col s12">
         <!-- 左侧：输入区 -->
         <div class="col s10">
-            <div class="col s7">
-                <!-- VIN -->
-                <div class="input-field col s4">
-                    <input type="text" id="orderVIN" ng-model="conditionOrderVIN">
-                    <label for="orderVIN"> VIN</label>
-                </div>
 
-                <!-- 制造商 -->
-                <div class="input-field col s4">
-                    <select material-select watch ng-model="conditionMakeId"
-                            ng-change="changeMakerId(conditionMakeId)">
-                        <option value="" selected>制造商</option>
-                        <option ng-repeat="el in carMakerList" ng-value="el.id">{{el.make_name}}</option>
-                    </select>
-                </div>
+            <!-- 行1 -->
 
-                <!-- 型号 -->
-                <div class="input-field col s4">
-                    <select material-select watch ng-model="conditionModelId">
-                        <option value="" selected>型号</option>
-                        <option ng-repeat="el in carModelList" ng-value="el.id">{{el.model_name}}</option>
-                    </select>
-                </div>
-                <!-- 船公司 -->
-                <div class="input-field col s4">
-                    <select material-select watch ng-model="conditionShipCompanyId">
-                        <option value="">船公司</option>
-                        <option ng-repeat="el in shippingCoList" ng-value="el.id">{{el.ship_company_name}}</option>
-                    </select>
-                </div>
-
-                <!-- 船名-->
-                <div class="input-field col s4">
-                    <input type="text" id="shipNameText" ng-model="conditionShipName">
-                    <label for="shipNameText">船名</label>
-                </div>
-
-                <!-- 货柜 -->
-                <div class="input-field col s4">
-                    <input type="text" id="counterText" ng-model="conditionContainer">
-                    <label for="counterText">货柜</label>
-                </div>
-
-                <!-- 开船日期(始) -->
-                <div class="input-field col s4">
-                    <input type="text" id="sailTimeStart" ng-model="conditionStartShipDateStart" class="datepicker" date><i
-                        class="mdi dataIcon mdi-table-large"></i>
-                    <label for="sailTimeStart">开船日期(始)</label>
-                </div>
-
-                <!-- 开船日期(终)-->
-                <div class="input-field col s4">
-                    <input id="sailTimeEnd" type="text" ng-model="conditionStartShipDateEnd" class="datepicker" date><i
-                        class="mdi dataIcon mdi-table-large"></i>
-                    <label for="sailTimeEnd">开船日期(终)</label>
-                </div>
-
-                <!-- 到港日期(始) -->
-                <div class="input-field col s4">
-                    <input id="arrivalTimeStart" type="text" ng-model="conditionEndShipDateStart" class="datepicker" date><i
-                        class="mdi dataIcon mdi-table-large"></i>
-                    <label for="arrivalTimeStart">到港日期(始)</label>
-                </div>
+            <!-- VIN -->
+            <div class="input-field col" style="width:20%;">
+                <input type="text" id="orderVIN" ng-model="conditionOrderVIN">
+                <label for="orderVIN"> VIN</label>
             </div>
-            <div class="col s5">
-                <!-- 委托方 -->
-                <div class="input-field col s6">
-                    <select  id="entrustSelect"   style="width: 100%">
-                        <option value="" ></option>
-                        <option ng-repeat="el in entrustList" ng-value="el.id">{{el.short_name}}</option>
-                    </select>
-                    <!--<input type="text" id="entrustId" ng-model="conditionEntrust">
-                    <label for="entrustId">委托方</label>-->
-                </div>
-
-                <!-- 支付状态 -->
-                <div class="input-field col s6">
-                    <select material-select watch ng-model="conditionPayStatus">
-                        <option value="" selected>支付状态</option>
-                        <option ng-repeat="el in payStatusList" ng-value="el.id">{{el.name}}</option>
-                    </select>
-                </div>
-
-                <!-- 始发港口 -->
-                <div class="input-field col s6">
-                    <select material-select watch ng-model="conditionStartPortId">
-                        <option value="">始发港口</option>
-                        <option ng-repeat="el in portList" ng-value="el.id">{{el.port_name}}</option>
-                    </select>
-                </div>
-
-                <!-- 目的港口 -->
-                <div class="input-field col s6">
-                    <select material-select watch ng-model="conditionEndPortId">
-                        <option value="">目的港口</option>
-                        <option ng-repeat="el in portList" ng-value="el.id">{{el.port_name}}</option>
-                    </select>
-                </div>
-
-                <!--到港日期(终)-->
-                <div class="input-field col s6">
-                    <input id="arrivalTimeEnd" type="text" ng-model="conditionEndShipDateEnd" class="datepicker" date><i
-                        class="mdi dataIcon mdi-table-large"></i>
-                    <label for="arrivalTimeEnd">到港日期(终)</label>
-                </div>
-
-                <!-- booking -->
-                <div class="input-field col s6">
-                    <input type="text" id="bookingText" ng-model="conditionBooking">
-                    <label for="bookingText">booking</label>
-                </div>
+            <!-- 制造商 -->
+            <div class="input-field col" style="width:20%;">
+                <select material-select watch ng-model="conditionMakeId"
+                        ng-change="changeMakerId(conditionMakeId)">
+                    <option value="" selected>制造商</option>
+                    <option ng-repeat="el in carMakerList" ng-value="el.id">{{el.make_name}}</option>
+                </select>
+            </div>
+            <!-- 型号 -->
+            <div class="input-field col" style="width:20%;">
+                <select material-select watch ng-model="conditionModelId">
+                    <option value="" selected>型号</option>
+                    <option ng-repeat="el in carModelList" ng-value="el.id">{{el.model_name}}</option>
+                </select>
+            </div>
+            <!-- 委托方 -->
+            <div class="input-field col" style="width:20%;">
+                <select id="entrustSelect" style="width: 100%">
+                    <option value=""></option>
+                    <option ng-repeat="el in entrustList" ng-value="el.id">{{el.short_name}}</option>
+                </select>
+                <!--<input type="text" id="entrustId" ng-model="conditionEntrust">
+                <label for="entrustId">委托方</label>-->
+            </div>
+            <!-- 支付状态 -->
+            <div class="input-field col" style="width:20%;">
+                <select material-select watch ng-model="conditionPayStatus">
+                    <option value="" selected>支付状态</option>
+                    <option ng-repeat="el in payStatusList" ng-value="el.id">{{el.name}}</option>
+                </select>
             </div>
 
+            <!-- 行2 -->
+
+            <!-- 船公司 -->
+            <div class="input-field col" style="width:20%;">
+                <select material-select watch ng-model="conditionShipCompanyId">
+                    <option value="">船公司</option>
+                    <option ng-repeat="el in shippingCoList" ng-value="el.id">{{el.ship_company_name}}</option>
+                </select>
+            </div>
+            <!-- 船名-->
+            <div class="input-field col" style="width:20%;">
+                <input type="text" id="shipNameText" ng-model="conditionShipName">
+                <label for="shipNameText">船名</label>
+            </div>
+            <!-- 货柜 -->
+            <div class="input-field col" style="width:20%;">
+                <input type="text" id="counterText" ng-model="conditionContainer">
+                <label for="counterText">货柜</label>
+            </div>
+            <!-- 始发港口 -->
+            <div class="input-field col" style="width:20%;">
+                <select material-select watch ng-model="conditionStartPortId">
+                    <option value="">始发港口</option>
+                    <option ng-repeat="el in portList" ng-value="el.id">{{el.port_name}}</option>
+                </select>
+            </div>
+            <!-- 目的港口 -->
+            <div class="input-field col" style="width:20%;">
+                <select material-select watch ng-model="conditionEndPortId">
+                    <option value="">目的港口</option>
+                    <option ng-repeat="el in portList" ng-value="el.id">{{el.port_name}}</option>
+                </select>
+            </div>
+
+            <!-- 行3 -->
+
+            <!-- 预计开船日期(始) -->
+            <div class="input-field col" style="width:20%;">
+                <input type="text" id="sailTimeStart" ng-model="conditionStartShipDateStart" class="datepicker" date><i
+                    class="mdi dataIcon mdi-table-large"></i>
+                <label for="sailTimeStart">预计开船日期(始)</label>
+            </div>
+            <!-- 预计开船日期(终)-->
+            <div class="input-field col" style="width:20%;">
+                <input id="sailTimeEnd" type="text" ng-model="conditionStartShipDateEnd" class="datepicker" date><i
+                    class="mdi dataIcon mdi-table-large"></i>
+                <label for="sailTimeEnd">预计开船日期(终)</label>
+            </div>
+            <!-- 预计到港日期(始) -->
+            <div class="input-field col" style="width:20%;">
+                <input id="arrivalTimeStart" type="text" ng-model="conditionEndShipDateStart" class="datepicker" date><i
+                    class="mdi dataIcon mdi-table-large"></i>
+                <label for="arrivalTimeStart">预计到港日期(始)</label>
+            </div>
+            <!--预计到港日期(终)-->
+            <div class="input-field col" style="width:20%;">
+                <input id="arrivalTimeEnd" type="text" ng-model="conditionEndShipDateEnd" class="datepicker" date><i
+                    class="mdi dataIcon mdi-table-large"></i>
+                <label for="arrivalTimeEnd">预计到港日期(终)</label>
+            </div>
+            <!-- booking -->
+            <div class="input-field col" style="width:20%;">
+                <input type="text" id="bookingText" ng-model="conditionBooking">
+                <label for="bookingText">booking</label>
+            </div>
+
+            <!-- 行4 -->
+            <!-- 实际开船日期 -->
+            <div class="input-field col" style="width: 20%;">
+                <input type="text" id="actualStartDateStartText" ng-model="condActualStartDateStart" class="datepicker" date><i
+                    class="mdi dataIcon mdi-table-large"></i>
+                <label for="actualStartDateStartText">实际开船日期(始)</label>
+            </div>
+            <div class="input-field col" style="width: 20%;">
+                <input id="actualStartDateEndText" type="text" ng-model="condActualStartDateEnd" class="datepicker" date><i
+                    class="mdi dataIcon mdi-table-large"></i>
+                <label for="actualStartDateEndText">实际开船日期(终)</label>
+            </div>
+
+            <!-- 实际到港日期 -->
+            <div class="input-field col" style="width: 20%;">
+                <input id="actualEndDateStartText" type="text" ng-model="condActualEndDateStart" class="datepicker" date><i
+                    class="mdi dataIcon mdi-table-large"></i>
+                <label for="actualEndDateStartText">实际到港日期(始)</label>
+            </div>
+            <div class="input-field col" style="width: 20%;">
+                <input id="actualEndDateEndText" type="text" ng-model="condActualEndDateEnd" class="datepicker" date><i
+                    class="mdi dataIcon mdi-table-large"></i>
+                <label for="actualEndDateEndText">实际到港日期(终)</label>
+            </div>
         </div>
 
         <!-- 右侧：按钮区 -->
@@ -153,8 +170,8 @@
                 <th data-field="">船公司</th>
                 <th data-field="">货柜</th>
                 <th data-field="">运费(美元)</th>
-                <th data-field="">开船日期</th>
-                <th data-field="">到港日期</th>
+                <th data-field="">预计开船日期</th>
+                <th data-field="">实际开船日期</th>
                 <th data-field="">委托方</th>
                 <th data-field="">支付状态</th>
                 <th>操作</th>
@@ -180,10 +197,10 @@
                 <td  ng-bind="el.container"></td>
                 <!--运费(美元)-->
                 <td class="red-text" ng-bind="el.ship_trans_fee"></td>
-                <!--开船日期-->
+                <!--预计开船日期-->
                 <td ng-bind="el.start_ship_date|date:'yyyy-MM-dd'"></td>
-                <!--到港日期-->
-                <td ng-bind="el.end_ship_date|date:'yyyy-MM-dd'"></td>
+                <!--实际开船日期-->
+                <td ng-bind="el.actual_start_date|date:'yyyy-MM-dd'"></td>
                 <!--委托方-->
                 <td>{{el.short_name}}</td>
                 <!--支付状态-->

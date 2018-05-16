@@ -182,6 +182,14 @@ app.controller("sea_transport_order_controller", ["$scope", "$rootScope", "_host
             startShipDateEnd:$scope.conditionStartShipDateEnd,
             endShipDateStart:$scope.conditionEnterTimeStart,
             endShipDateEnd:$scope.conditionEndShipDateEnd,
+            // 实际开始日期 开始
+            actualStartDateStart: $scope.condActualStartDateStart,
+            // 实际开始日期 终了
+            actualStartDateEnd: $scope.condActualStartDateEnd,
+            // 实际到港日期 开始
+            actualEndDateStart: $scope.condActualEndDateStart,
+            // 实际到港日期 终了
+            actualEndDateEnd: $scope.condActualEndDateEnd,
             booking:$scope.conditionBooking
     };
         return obj;
