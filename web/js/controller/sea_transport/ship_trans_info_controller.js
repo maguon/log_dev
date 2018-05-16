@@ -193,14 +193,22 @@ app.controller("ship_trans_info_controller", ["$scope", "$rootScope", "_host", "
         $scope.condEndPortId = conditions.endPortId;
         // 运送状态
         $scope.condShipTransStatus = conditions.shipTransStatus;
-        // 开始日期 开始
+        // 预计开始日期 开始
         $scope.condStartShipDateStart = conditions.startShipDateStart;
-        // 开始日期 终了
+        // 预计开始日期 终了
         $scope.condStartShipDateEnd = conditions.startShipDateEnd;
-        // 到港日期 开始
+        // 预计到港日期 开始
         $scope.condEndShipDateStart = conditions.endShipDateStart;
-        // 到港日期 终了
+        // 预计到港日期 终了
         $scope.condEndShipDateEnd = conditions.endShipDateEnd;
+        // 实际开始日期 开始
+        $scope.condActualStartDateStart = conditions.actualStartDateStart;
+        // 实际开始日期 终了
+        $scope.condActualStartDateEnd = conditions.actualStartDateEnd;
+        // 实际到港日期 开始
+        $scope.condActualEndDateStart = conditions.actualEndDateStart;
+        // 实际到港日期 终了
+        $scope.condActualEndDateEnd = conditions.actualEndDateEnd;
         // 船公司
         $scope.condShipCompanyId = conditions.shipCompanyId;
         // 船名
@@ -230,14 +238,22 @@ app.controller("ship_trans_info_controller", ["$scope", "$rootScope", "_host", "
             endPortId: $scope.condEndPortId,
             // 运送状态
             shipTransStatus: $scope.condShipTransStatus,
-            // 开始日期 开始
+            // 预计开始日期 开始
             startShipDateStart: $scope.condStartShipDateStart,
-            // 开始日期 终了
+            // 预计开始日期 终了
             startShipDateEnd: $scope.condStartShipDateEnd,
-            // 到港日期 开始
+            // 预计到港日期 开始
             endShipDateStart: $scope.condEndShipDateStart,
-            // 到港日期 终了
+            // 预计到港日期 终了
             endShipDateEnd: $scope.condEndShipDateEnd,
+            // 实际开始日期 开始
+            actualStartDateStart: $scope.condActualStartDateStart,
+            // 实际开始日期 终了
+            actualStartDateEnd: $scope.condActualStartDateEnd,
+            // 实际到港日期 开始
+            actualEndDateStart: $scope.condActualEndDateStart,
+            // 实际到港日期 终了
+            actualEndDateEnd: $scope.condActualEndDateEnd,
             // 船公司
             shipCompanyId: $scope.condShipCompanyId,
             // 船名

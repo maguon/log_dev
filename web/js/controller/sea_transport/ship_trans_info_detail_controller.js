@@ -32,10 +32,14 @@ app.controller("ship_trans_info_detail_controller", ["$scope", "$state", "$state
         // 目的港口
         endPortId: "",
         endPortNm: "",
-        // 开船日期
+        // 预计开船日期
         sailingDay: "",
-        // 到港日期
+        // 预计到港日期
         arrivalDay: "",
+        // 实际开船日期
+        actualStartDay: "",
+        // 实际到港日期
+        actualEndDay: "",
         // 船公司
         shippingCoId: "",
         shippingCoNm: "",
@@ -138,10 +142,14 @@ app.controller("ship_trans_info_detail_controller", ["$scope", "$state", "$state
                 // 目的港口
                 $scope.shippingOrder.endPortId = data.result[0].end_port_id;
                 $scope.shippingOrder.endPortNm = data.result[0].end_port_name;
-                // 开船日期
+                // 预计开船日期
                 $scope.shippingOrder.sailingDay = $filter("date")(data.result[0].start_ship_date, 'yyyy-MM-dd');
-                // 到港日期
+                // 预计到港日期
                 $scope.shippingOrder.arrivalDay = $filter("date")(data.result[0].end_ship_date, 'yyyy-MM-dd');
+                // 实际开船日期
+                $scope.shippingOrder.actualStartDay = $filter("date")(data.result[0].actual_start_date, 'yyyy-MM-dd');
+                // 实际到港日期
+                $scope.shippingOrder.actualEndDay = $filter("date")(data.result[0].actual_end_date, 'yyyy-MM-dd');
                 // 船公司
                 $scope.shippingOrder.shippingCoId = data.result[0].ship_company_id;
                 $scope.shippingOrder.shippingCoNm = data.result[0].ship_company_name;

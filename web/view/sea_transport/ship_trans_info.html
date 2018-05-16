@@ -6,6 +6,8 @@
         <!-- 左侧：输入区 -->
         <div class="col s10">
 
+            <!-- 行1 -->
+
             <!-- 海运编号 -->
             <div class="input-field col" style="width: 20%;">
                 <input type="text" id="orderIdText" ng-model="condShipTransId">
@@ -39,37 +41,7 @@
                 </select>
             </div>
 
-            <!-- 运送状态 -->
-            <div class="input-field col" style="width: 20%;">
-                <select material-select watch ng-model="condShipTransStatus">
-                    <option value="">运送状态</option>
-                    <option ng-repeat="el in shipTransStatus" ng-value="el.id">{{el.name}}</option>
-                </select>
-            </div>
-
-            <!-- 开船日期 -->
-            <div class="input-field col" style="width: 20%;">
-                <input type="text" id="sailTimeStart" ng-model="condStartShipDateStart" class="datepicker" date><i
-                    class="mdi dataIcon mdi-table-large"></i>
-                <label for="sailTimeStart">开船日期(始)</label>
-            </div>
-            <div class="input-field col" style="width: 20%;">
-                <input id="sailTimeEnd" type="text" ng-model="condStartShipDateEnd" class="datepicker" date><i
-                    class="mdi dataIcon mdi-table-large"></i>
-                <label for="sailTimeEnd">开船日期(终)</label>
-            </div>
-
-            <!-- 到港日期 -->
-            <div class="input-field col" style="width: 20%;">
-                <input id="arrivalTimeStart" type="text" ng-model="condEndShipDateStart" class="datepicker" date><i
-                    class="mdi dataIcon mdi-table-large"></i>
-                <label for="arrivalTimeStart">到港日期(始)</label>
-            </div>
-            <div class="input-field col" style="width: 20%;">
-                <input id="arrivalTimeEnd" type="text" ng-model="condEndShipDateEnd" class="datepicker" date><i
-                    class="mdi dataIcon mdi-table-large"></i>
-                <label for="arrivalTimeEnd">到港日期(终)</label>
-            </div>
+            <!-- 行2 -->
 
             <!-- 船公司 -->
             <div class="input-field col" style="width: 20%;">
@@ -102,10 +74,70 @@
                 <input type="text" id="sealText" ng-model="condTab">
                 <label for="sealText">封签</label>
             </div>
+
+            <!-- 行3 -->
+
+            <!-- 预计开船日期 -->
+            <div class="input-field col" style="width: 20%;">
+                <input type="text" id="sailTimeStart" ng-model="condStartShipDateStart" class="datepicker" date><i
+                    class="mdi dataIcon mdi-table-large"></i>
+                <label for="sailTimeStart">预计开船日期(始)</label>
+            </div>
+            <div class="input-field col" style="width: 20%;">
+                <input id="sailTimeEnd" type="text" ng-model="condStartShipDateEnd" class="datepicker" date><i
+                    class="mdi dataIcon mdi-table-large"></i>
+                <label for="sailTimeEnd">预计开船日期(终)</label>
+            </div>
+
+            <!-- 预计到港日期 -->
+            <div class="input-field col" style="width: 20%;">
+                <input id="arrivalTimeStart" type="text" ng-model="condEndShipDateStart" class="datepicker" date><i
+                    class="mdi dataIcon mdi-table-large"></i>
+                <label for="arrivalTimeStart">预计到港日期(始)</label>
+            </div>
+            <div class="input-field col" style="width: 20%;">
+                <input id="arrivalTimeEnd" type="text" ng-model="condEndShipDateEnd" class="datepicker" date><i
+                    class="mdi dataIcon mdi-table-large"></i>
+                <label for="arrivalTimeEnd">预计到港日期(终)</label>
+            </div>
+
+            <!-- 运送状态 -->
+            <div class="input-field col" style="width: 20%;">
+                <select material-select watch ng-model="condShipTransStatus">
+                    <option value="">运送状态</option>
+                    <option ng-repeat="el in shipTransStatus" ng-value="el.id">{{el.name}}</option>
+                </select>
+            </div>
+
+            <!-- 行4 -->
+
+            <!-- 实际开船日期 -->
+            <div class="input-field col" style="width: 20%;">
+                <input type="text" id="actualStartDateStartText" ng-model="condActualStartDateStart" class="datepicker" date><i
+                    class="mdi dataIcon mdi-table-large"></i>
+                <label for="actualStartDateStartText">实际开船日期(始)</label>
+            </div>
+            <div class="input-field col" style="width: 20%;">
+                <input id="actualStartDateEndText" type="text" ng-model="condActualStartDateEnd" class="datepicker" date><i
+                    class="mdi dataIcon mdi-table-large"></i>
+                <label for="actualStartDateEndText">实际开船日期(终)</label>
+            </div>
+
+            <!-- 实际到港日期 -->
+            <div class="input-field col" style="width: 20%;">
+                <input id="actualEndDateStartText" type="text" ng-model="condActualEndDateStart" class="datepicker" date><i
+                    class="mdi dataIcon mdi-table-large"></i>
+                <label for="actualEndDateStartText">实际到港日期(始)</label>
+            </div>
+            <div class="input-field col" style="width: 20%;">
+                <input id="actualEndDateEndText" type="text" ng-model="condActualEndDateEnd" class="datepicker" date><i
+                    class="mdi dataIcon mdi-table-large"></i>
+                <label for="actualEndDateEndText">实际到港日期(终)</label>
+            </div>
         </div>
 
         <!-- 右侧：按钮区 -->
-        <div class="col s2" style="margin-top:45px;">
+        <div class="col s2" style="margin-top:85px;">
             <!--查询按钮-->
             <div class="col s4 center">
                 <a class="btn-floating btn-large waves-light waves-effect red lighten-2  btn " ng-click="queryShipTransOrder()">
@@ -142,8 +174,8 @@
                 <th data-field="">货柜</th>
                 <th data-field="">装载数</th>
                 <th data-field="">运送费(美元)</th>
-                <th data-field="">开船日期</th>
-                <th data-field="">到港日期</th>
+                <th data-field="">预计开船日期</th>
+                <th data-field="">实际开船日期</th>
                 <th data-field="">分单</th>
                 <th data-field="">运送状态</th>
                 <th>操作</th>
@@ -167,10 +199,10 @@
                 <td ng-bind="el.ship_trans_count"></td>
                 <!--运送费(美元)-->
                 <td ng-bind="el.ship_trans_fee"></td>
-                <!--开船日期-->
+                <!--预计开船日期-->
                 <td ng-bind="el.start_ship_date|date:'yyyy-MM-dd'"></td>
-                <!--到港日期-->
-                <td ng-bind="el.end_ship_date|date:'yyyy-MM-dd'"></td>
+                <!--实际开船日期-->
+                <td ng-bind="el.actual_start_date|date:'yyyy-MM-dd'"></td>
                 <!--分单-->
                 <td>{{partTypes[el.part_status-1].name}}</td>
                 <!--运送状态-->
@@ -233,12 +265,12 @@
                     </select>
                     </div>
                 </div>
-                <!-- 开船日期 -->
+                <!-- 预计开船日期 -->
                 <div class="input-field col s4">
                     <div class="col s12">
                         <input id="sailingDayText" type="text" ng-model="newShippingOrder.sailingDay" class="datepicker" date>
                         <i class="mdi dataIcon mdi-table-large" style="right: 22px;"></i>
-                        <label for="sailingDayText"><span class="red-text">*</span> 开船日期</label>
+                        <label for="sailingDayText"><span class="red-text">*</span> 预计开船日期</label>
                     </div>
                 </div>
 
@@ -258,12 +290,12 @@
                         <label for="newShipNameText"><span class="red-text">*</span> 船名</label>
                     </div>
                 </div>
-                <!-- 到港日期 -->
+                <!-- 预计到港日期 -->
                 <div class="input-field col s4">
                     <div class="col s12">
                         <input id="arrivalDayText" type="text" ng-model="newShippingOrder.arrivalDay" class="datepicker" date>
                         <i class="mdi dataIcon mdi-table-large" style="right: 22px;"></i>
-                        <label for="arrivalDayText" style="position: absolute;padding-left: 12px;">到港日期</label>
+                        <label for="arrivalDayText" style="position: absolute;padding-left: 12px;">预计到港日期</label>
                     </div>
                 </div>
 

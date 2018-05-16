@@ -32,7 +32,7 @@
     <!-- 可编辑 海运订舱 基本信息 ：待出发/已出发 -->
     <div ng-if="shippingOrder.status==1 || shippingOrder.status==2" class="col s12 lighten-1 white grey-text fz13">
         <!-- 始发港口 -->
-        <div class="input-field col s4">
+        <div class="input-field col s3">
             <div class="col s12">
                 <select material-select watch ng-model="shippingOrder.startPortId" id="startPortSelect" style="width:95%;">
                     <option value="">始发港口</option>
@@ -41,7 +41,7 @@
             </div>
         </div>
         <!-- 目的港口 -->
-        <div class="input-field col s4">
+        <div class="input-field col s3">
             <div class="col s12">
                 <select material-select watch ng-model="shippingOrder.endPortId" id="endPortSelect" style="width:95%;">
                     <option value="">目的港口</option>
@@ -49,17 +49,25 @@
                 </select>
             </div>
         </div>
-        <!-- 开船日期 -->
-        <div class="input-field col s4">
+        <!-- 预计开船日期 -->
+        <div class="input-field col s3">
             <div class="col s12">
                 <input id="sailingDayText" type="text" ng-model="shippingOrder.sailingDay" class="datepicker" date>
                 <i class="mdi dataIcon mdi-table-large" style="right: 22px;"></i>
-                <label for="sailingDayText"><span class="red-text">*</span> 开船日期</label>
+                <label for="sailingDayText"><span class="red-text">*</span> 预计开船日期</label>
+            </div>
+        </div>
+        <!-- 实际开船日期 -->
+        <div class="input-field col s3">
+            <div class="col s12">
+                <input id="actualStartDayText" type="text" ng-model="shippingOrder.actualStartDay" class="datepicker grey-text" date disabled>
+                <i class="mdi dataIcon mdi-table-large" style="right: 22px;"></i>
+                <label for="actualStartDayText" style="position: absolute;padding-left: 12px;">实际开船日期</label>
             </div>
         </div>
 
         <!-- 船公司 -->
-        <div class="input-field col s4">
+        <div class="input-field col s3">
             <div class="col s12">
                 <select material-select watch ng-model="shippingOrder.shippingCoId">
                     <option value="">船公司</option>
@@ -68,23 +76,32 @@
             </div>
         </div>
         <!-- 船名 -->
-        <div class="input-field col s4">
+        <div class="input-field col s3">
             <div class="col s12">
                 <input type="text" id="newShipNameText" ng-model="shippingOrder.shipName">
                 <label for="newShipNameText"><span class="red-text">*</span> 船名</label>
             </div>
         </div>
-        <!-- 到港日期 -->
-        <div class="input-field col s4">
+        <!-- 预计到港日期 -->
+        <div class="input-field col s3">
             <div class="col s12">
                 <input id="arrivalDayText" type="text" ng-model="shippingOrder.arrivalDay" class="datepicker" date>
                 <i class="mdi dataIcon mdi-table-large" style="right: 22px;"></i>
-                <label for="arrivalDayText" style="position: absolute;padding-left: 12px;">到港日期</label>
+                <label for="arrivalDayText" style="position: absolute;padding-left: 12px;">预计到港日期</label>
+            </div>
+        </div>
+        <!-- 实际到港日期 -->
+        <div class="input-field col s3">
+            <div class="col s12">
+                <input id="actualEndDayText" type="text" ng-model="shippingOrder.actualEndDay" class="datepicker grey-text" date disabled>
+                <i class="mdi dataIcon mdi-table-large" style="right: 22px;"></i>
+                <label for="actualEndDayText" style="position: absolute;padding-left: 12px;">实际到港日期</label>
             </div>
         </div>
 
+
         <!-- 货柜 -->
-        <div class="input-field col s4">
+        <div class="input-field col s3">
             <div class="col s12">
                 <input type="text" id="newCounterText" ng-model="shippingOrder.container">
                 <label for="newCounterText"><span class="red-text">*</span> 货柜</label>
@@ -92,7 +109,7 @@
         </div>
 
         <!-- booking -->
-        <div class="input-field col s4">
+        <div class="input-field col s3">
             <div class="col s12">
                 <input type="text" id="newBookingText" ng-model="shippingOrder.booking">
                 <label for="newBookingText"><span class="red-text">*</span> booking</label>
@@ -100,7 +117,7 @@
         </div>
 
         <!-- 封签 -->
-        <div class="input-field col s4">
+        <div class="input-field col s3">
             <div class="col s12">
                 <input type="text" id="newSealText" ng-model="shippingOrder.tab">
                 <label for="newSealText" style="position: absolute;padding-left: 12px;">封签</label>
@@ -119,43 +136,51 @@
     <!-- 显示用 海运详情 基本信息 ：已送达状态 -->
     <div ng-if="shippingOrder.status==3"  class="col s12 lighten-1 white grey-text fz15">
         <!-- 始发港口 -->
-        <div class="col s12 vc-center" style="height: 40px;">
-            <div class="col s4">
+        <div class="col s12 vc-center" style="height: 46px;">
+            <div class="col s3">
                 <label>始发港口: {{shippingOrder.startPortNm}}</label>
             </div>
-            <div class="col s4">
+            <div class="col s3">
                 <label>目的港口: {{shippingOrder.endPortNm}}</label>
             </div>
-            <div class="col s4">
-                <label>开船日期: {{shippingOrder.sailingDay | date:'yyyy-MM-dd'}}</label>
+            <div class="col s3">
+                <label>预计开船日期: {{shippingOrder.sailingDay | date:'yyyy-MM-dd'}}</label>
+            </div>
+            <div class="col s3">
+                <label>实际开船日期: {{shippingOrder.actualStartDay | date:'yyyy-MM-dd'}}</label>
             </div>
         </div>
 
         <div class="divider col s12" style="height:1px;border-bottom: 1px solid #ccc;width:96%;margin-left: 2%"></div>
 
-        <div class="col s12 vc-center" style="height: 40px;">
-            <div class="col s4">
+        <div class="col s12 vc-center" style="height: 46px;">
+            <div class="col s3">
                 <label>船公司: {{shippingOrder.shippingCoNm}}</label>
             </div>
-            <div class="col s4">
+            <div class="col s3">
                 <label>船名: {{shippingOrder.shipName}}</label>
             </div>
-            <div class="col s4">
-                <label>到港日期: {{shippingOrder.arrivalDay | date:'yyyy-MM-dd'}}</label>
+            <div class="col s3">
+                <label>预计到港日期: {{shippingOrder.arrivalDay | date:'yyyy-MM-dd'}}</label>
+            </div>
+            <div class="col s3">
+                <label>实际到港日期: {{shippingOrder.actualEndDay | date:'yyyy-MM-dd'}}</label>
             </div>
         </div>
 
         <div class="divider col s12" style="height:1px;border-bottom: 1px solid #ccc;width:96%;margin-left: 2%"></div>
 
-        <div class="col s12 vc-center" style="height: 40px;">
-            <div class="col s4">
+        <div class="col s12 vc-center left-align" style="height: 46px;">
+            <div class="col s3">
                 <label>货柜: {{shippingOrder.container}}</label>
             </div>
-            <div class="col s4">
+            <div class="col s3">
                 <label>booking: {{shippingOrder.booking}}</label>
             </div>
-            <div class="col s4">
+            <div class="col s3">
                 <label>封签: {{shippingOrder.tab}}</label>
+            </div>
+            <div class="col s3">
             </div>
         </div>
 
