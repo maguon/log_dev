@@ -93,10 +93,11 @@
                             </div>
                             <!--是否金融车辆-->
                             <div class="input-field col s2">
-                                <select material-select watch ng-model="condPurchaseType">
-                                    <option value="">是否金融车</option>
+                                <select material-select watch id="condPurchaseType" name="condPurchaseType" ng-model="condPurchaseType">
+                                    <option value="" disabled selected>请选择</option>
                                     <option ng-repeat="el in purchaseTypes" ng-value="el.id">{{el.name}}</option>
                                 </select>
+                                <label for="condPurchaseType"><span style="color: red;margin-right: 5px">*</span>是否金融车</label>
                             </div>
                         </div>
                         <div class="row">
