@@ -486,7 +486,12 @@ app.controller("storage_car_controller", ["$scope", "$rootScope", "$stateParams"
     // 新增信息
     $scope.addCarDataItem = function () {
         var entrust = $("#addEntrustSelect").select2("data")[0] ;
-        if ( entrust.id!==""&& $scope.carValuation!==""&&$scope.MSO!=="") {
+        if ( entrust.id!==""&& $scope.carValuation!==""&&$scope.MSO!==""&&$scope.condPurchaseType!=="") {
+            if($scope.create_time==''|| $scope.makeNameId==""||$scope.modelNameId==''){
+                $scope.create_time=null;
+                $scope.makeNameId=0;
+                $scope.modelNameId=0;
+            }
             var objCar = {
                 vin: $scope.demandVin,
                 makeName:  $("#makeNameId").find("option:selected").text(),
@@ -516,7 +521,12 @@ app.controller("storage_car_controller", ["$scope", "$rootScope", "$stateParams"
     };
     //出库后入库
     $scope.putCarDataItem = function (){
-        if ( $scope.baseList.vin!==""&& $scope.baseList.entrust_id!==""&&$scope.baseList.valuation!==""&&$scope.baseList.mso_status!=="") {
+        if ( $scope.baseList.vin!==""&& $scope.baseList.entrust_id!==""&&$scope.baseList.valuation!==null&&$scope.baseList.mso_status!==""&&$scope.baseList.purchase_type!=='') {
+            if($scope.baseListDate==''|| $scope.baseList.model_id==""||$scope.baseList.make_id==''){
+                $scope.baseListDate=null;
+                $scope.baseList.model_id=0;
+                $scope.baseList.make_id=0;
+            }
             var obj_car = {
                 vin: $scope.baseList.vin,
                 makeId: $scope.baseList.make_id,
