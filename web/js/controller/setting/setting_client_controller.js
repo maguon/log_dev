@@ -72,6 +72,7 @@ app.controller("setting_client_controller", ["$scope", "_basic", "_config", "_ho
         $scope.addShortName="";
         $scope.addEntrustName="";
         $scope.addContactsName="";
+        $scope.addMail="";
         $scope.addTel="";
         $scope.addAddress="";
         $scope.addRemark="";
@@ -90,6 +91,7 @@ app.controller("setting_client_controller", ["$scope", "_basic", "_config", "_ho
                 entrustType: $scope.addEntrustType,
                 contactsName:  $scope.addContactsName,
                 tel:  $scope.addTel,
+                email:$scope.addMail,
                 address:$scope.addAddress,
                 remark: $scope.addRemark
             }).then(function (data) {
@@ -133,6 +135,7 @@ app.controller("setting_client_controller", ["$scope", "_basic", "_config", "_ho
                 entrustType: $scope.clientList.entrust_type,
                 contactsName:  $scope.clientList.contacts_name,
                 tel:  $scope.clientList.tel,
+                email:$scope.clientList.email,
                 address:$scope.clientList.address,
                 remark: $scope.clientList.remark
             };
