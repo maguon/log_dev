@@ -301,7 +301,7 @@ app.controller("finance_car_controller", ["$scope", "$rootScope", "_host", "_bas
             };
 
             // 如果生产日期没有输入，就去掉此属性
-            if ($scope.carInfo.proDate === "") {
+            if ($scope.carInfo.proDate == null || $scope.carInfo.proDate === "") {
                 delete obj.proDate;
             }
 
