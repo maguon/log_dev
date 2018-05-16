@@ -10,9 +10,6 @@ app.controller("key_info_detail_controller", ["$scope", "$state", "$stateParams"
     var keyCabinetId = $stateParams.id;
 
     // 钥匙柜信息 名称
-    var keyCabinetNm = $stateParams.name;
-
-    // 钥匙柜信息 名称
     $scope.keyCabinetNm = "";
 
     // 是否MSO车辆
@@ -20,9 +17,6 @@ app.controller("key_info_detail_controller", ["$scope", "$state", "$stateParams"
 
     // 颜色列表
     $scope.configColor = _config.config_color;
-
-    // 总位置
-    $scope.totalPosition = $stateParams.position;
 
     // 剩余位置
     $scope.leftPosition = 0;
@@ -94,7 +88,7 @@ app.controller("key_info_detail_controller", ["$scope", "$state", "$stateParams"
         $scope.keyInfo.col = col;
 
         // 车辆信息
-        var url = _host.api_url + "/user/" + userId + "/car?active=1&carId=" + id;
+        url = _host.api_url + "/user/" + userId + "/car?active=1&carId=" + id;
 
         _basic.get(url).then(function (data) {
             if (data.success == true) {
@@ -193,8 +187,6 @@ app.controller("key_info_detail_controller", ["$scope", "$state", "$stateParams"
      */
     $scope.getLeftPosition = function (selectZoneId) {
 
-        // GET /carKeyCabinet/{carKeyCabinetId}/carKeyPositionCount
-
         // 检索钥匙柜详细信息URL
         var url = _host.api_url + "/carKeyCabinet/" + keyCabinetId + "/carKeyPositionCount?areaId=" + selectZoneId;
 
@@ -214,8 +206,23 @@ app.controller("key_info_detail_controller", ["$scope", "$state", "$stateParams"
      */
     $scope.getKeyCabinetAreaInfo = function () {
 
+        // 检索URL组装
+        var url = _host.api_url + "/carKeyCabinet?keyCabinetStatus=1&carKeyCabinetId=" + keyCabinetId;
+
+        // 调用API取得，画面数据
+        _basic.get(url).then(function (data) {
+            if (data.success) {
+                // 画面钥匙柜 名称
+                $scope.keyCabinetNm = data.result[0].key_cabinet_name;
+                // 画面钥匙柜 总位置
+                $scope.totalPosition = data.result[0].position_count;
+            } else {
+                swal(data.msg, "", "error");
+            }
+        });
+
         // 检索钥匙柜详细信息URL
-        var url = _host.api_url + "/carKeyCabinetArea?areaStatus=1&carKeyCabinetId=" + keyCabinetId;
+        url = _host.api_url + "/carKeyCabinetArea?areaStatus=1&carKeyCabinetId=" + keyCabinetId;
 
         // 调用API取得，画面数据
         _basic.get(url).then(function (data) {
@@ -226,10 +233,8 @@ app.controller("key_info_detail_controller", ["$scope", "$state", "$stateParams"
                 // 画面钥匙柜 名称
                 if (data.result.length > 0) {
                     $scope.selectedZone = $scope.zoneList[0].id;
-                    $scope.keyCabinetNm = data.result[0].key_cabinet_name;
                     $scope.getKeyCabinetZoneList($scope.selectedZone);
                 } else {
-                    $scope.keyCabinetNm = keyCabinetNm;
                     swal("该钥匙没有对应的扇区信息！", "", "warning");
                 }
             } else {
