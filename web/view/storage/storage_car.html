@@ -42,14 +42,14 @@
                                     <option value="" disabled selected>请选择</option>
                                     <option ng-repeat="el in makecarName" ng-value="el.id" >{{el.make_name}}</option>
                                 </select>
-                                <label for="makeNameId">制造商</label>
+                                <label for="makeNameId"><span style="color: red;margin-right: 5px">*</span>制造商</label>
                             </div>
                             <div class="input-field col s4">
                                 <select material-select watch id="modelNameId" name="modelName"   ng-model="modelNameId" >
                                     <option value="" disabled selected>请选择</option>
                                     <option  ng-repeat="el in carModelName" ng-value="el.id">{{el.model_name}}</option>
                                 </select>
-                                <label for="modelNameId">型号</label>
+                                <label for="modelNameId"><span style="color: red;margin-right: 5px">*</span>型号</label>
                             </div>
                         </div>
                         <div class="row" >

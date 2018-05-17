@@ -472,7 +472,12 @@ app.controller("storage_car_controller", ["$scope", "$rootScope", "$stateParams"
                         $scope.baseList.model_id='';
                         $scope.baseList.make_id='';
                     }
-                    $scope.baseListDate = moment( $scope.baseList.created_on).format("YYYY-MM-DD");
+                    if($scope.baseList.pro_date!==null){
+                        $scope.baseListDate = moment( $scope.baseList.pro_date).format("YYYY-MM-DD");
+                    }
+                   else{
+                        $scope.baseListDate ='';
+                    }
                     for (var i in _config.config_color) {
                         if (_config.config_color[i].colorId == $scope.baseList.colour) {
                             $scope.baseListColor = _config.config_color[i].colorName;
@@ -496,12 +501,7 @@ app.controller("storage_car_controller", ["$scope", "$rootScope", "$stateParams"
     // 新增信息
     $scope.addCarDataItem = function () {
         var entrust = $("#addEntrustSelect").select2("data")[0] ;
-        if ( entrust.id!==""&& $scope.carValuation!==""&&$scope.MSO!==""&&$scope.condPurchaseType!=="") {
-            if($scope.create_time==''|| $scope.makeNameId==""||$scope.modelNameId==''){
-                $scope.create_time=null;
-                $scope.makeNameId=0;
-                $scope.modelNameId=0;
-            }
+        if ( entrust.id!==""&& $scope.carValuation!==""&&$scope.MSO!==""&&$scope.condPurchaseType!==""&& $scope.makeNameId!==""&&$scope.modelNameId!=='') {
             var objCar = {
                 vin: $scope.demandVin,
                 makeName:  $("#makeNameId").find("option:selected").text(),
@@ -517,6 +517,10 @@ app.controller("storage_car_controller", ["$scope", "$rootScope", "$stateParams"
                 msoStatus:$scope.MSO,
                 remark: $scope.remark
             };
+            // 如果生产日期没有输入，就去掉此属性
+            if ($scope.create_time == null || $scope.create_time === "") {
+                delete objCar.proDate;
+            }
             _basic.post(_host.api_url + "/user/" + userId + '/car', objCar).then(function (data) {
                 if (data.success == true) {
                     $scope.pictureCarId = data.id;
