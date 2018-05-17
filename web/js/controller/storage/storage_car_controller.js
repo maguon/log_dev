@@ -273,17 +273,18 @@ app.controller("storage_car_controller", ["$scope", "$rootScope", "$stateParams"
     }
     // 车辆型号联动查询
     $scope.getMakeId = function (val) {
-        $scope.curruntId = val;
-        _basic.get(_host.api_url + "/carMake/" + val + "/carModel").then(function (data) {
-            if (data.success == true) {
-                if(data.result.length==0){
-                    return;
+        if(val&&val!==null){
+            _basic.get(_host.api_url + "/carMake/" + val + "/carModel").then(function (data) {
+                if (data.success == true) {
+                    if(data.result.length==0){
+                        return;
+                    }
+                    $scope.carModelName = data.result;
+                } else {
+                    swal(data.msg, "", "error")
                 }
-                $scope.carModelName = data.result;
-            } else {
-                swal(data.msg, "", "error")
-            }
-        })
+            })
+        }
     };
     //添加页面的车辆型号联动查询
     function addCarMakeId() {
@@ -530,9 +531,10 @@ app.controller("storage_car_controller", ["$scope", "$rootScope", "$stateParams"
     };
     //出库后入库
     $scope.putCarDataItem = function (){
-        if ( $scope.baseList.vin!==""&& $scope.baseList.entrust_id!==""&&$scope.baseList.valuation!==null&&$scope.baseList.mso_status!==""&&$scope.baseList.purchase_type!=='') {
-            if($scope.baseListDate==''|| $scope.baseList.model_id==""||$scope.baseList.make_id==''){
+        if ( $scope.baseList.vin!==""&& $scope.baseList.entrust_id!==0&&$scope.baseList.valuation!==null&&$scope.baseList.mso_status!==""&&$scope.baseList.purchase_type!=='') {
+            if($scope.baseListDate==''|| $scope.baseList.model_id==""||$scope.baseList.make_id==''|| $scope.baseList.colour==''){
                 $scope.baseListDate=null;
+                $scope.baseList.colour==null;
                 $scope.baseList.model_id=0;
                 $scope.baseList.make_id=0;
             }
