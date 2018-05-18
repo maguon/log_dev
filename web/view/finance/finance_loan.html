@@ -1,0 +1,224 @@
+<!-- 主菜单：财务管理 -> 金融车辆 画面 -->
+<div class="row">
+
+    <!-- 上部分：检索条件输入区域 -->
+    <div class="row col s12">
+        <!-- 左侧：输入区 -->
+        <div class="col s10">
+
+            <!-- 查询条件：贷出编号 -->
+            <div class="input-field col s3">
+                <input type="text" id="loanIdText" ng-model="condLoanId">
+                <label for="loanIdText">贷出编号</label>
+            </div>
+
+            <!-- 查询条件：委托方性质 -->
+            <div class="input-field col s3">
+                <select material-select watch ng-model="condEntrustType" ng-change="getEntrustInfo(condEntrustType,'委托方')">
+                    <option value="" disabled>委托方性质</option>
+                    <option ng-repeat="el in entrustTypeList" ng-value="el.entrust_type">{{el.name}}</option>
+                </select>
+            </div>
+
+            <!-- 查询条件：委托方 -->
+            <div class="input-field col s3">
+                <select id="condEntrustSelect" style="width: 100%">
+                    <option value=""></option>
+                    <option ng-repeat="el in entrustList" ng-value="el.id">{{el.short_name}}</option>
+                </select>
+            </div>
+
+            <!-- 查询条件：订单状态 -->
+            <div class="input-field col s3">
+                <select material-select watch ng-model="condLoanStatus">
+                    <option value="" disabled>订单状态</option>
+                    <option ng-repeat="el in loanStatus" ng-value="el.id">{{el.name}}</option>
+                </select>
+            </div>
+
+            <!-- 贷款时间 -->
+            <div class="input-field col s3">
+                <input type="text" id="createdOnStartText" ng-model="condCreatedOnStart" class="datepicker" date>
+                <i class="mdi dataIcon mdi-table-large"></i>
+                <label for="createdOnStartText">贷款时间(始)</label>
+            </div>
+            <div class="input-field col s3">
+                <input id="createdOnEndText" type="text" ng-model="condCreatedOnEnd" class="datepicker" date>
+                <i class="mdi dataIcon mdi-table-large"></i>
+                <label for="createdOnEndText">贷款时间(终)</label>
+            </div>
+
+            <!-- 完结时间 -->
+            <div class="input-field col s3">
+                <input type="text" id="loanEndDateStartText" ng-model="condLoanEndDateStart" class="datepicker" date>
+                <i class="mdi dataIcon mdi-table-large"></i>
+                <label for="loanEndDateStartText">完结时间(始)</label>
+            </div>
+            <div class="input-field col s3">
+                <input id="loanEndDateEndText" type="text" ng-model="condLoanEndDateEnd" class="datepicker" date>
+                <i class="mdi dataIcon mdi-table-large"></i>
+                <label for="loanEndDateEndText">完结时间(终)</label>
+            </div>
+        </div>
+
+        <!-- 右侧：按钮区 -->
+        <div class="col s2" style="margin-top:45px;">
+            <!-- 查询按钮-->
+            <div class="col s6 center">
+                <a class="btn-floating btn-large waves-light waves-effect red lighten-2 btn" ng-click="queryFinanceLoanInfo()">
+                    <i class="mdi mdi-magnify"></i>
+                </a>
+            </div>
+            <!-- 新增按钮 -->
+            <div class="col s6 center">
+                <a class=" btn-floating btn-large waves-light waves-effect cyan lighten-1 btn"
+                   ng-click="openNewFinanceCarDiv()">
+                    <i class="mdi mdi-plus"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- 下部分：检索结果显示区域 -->
+    <div class="col s12">
+        <div class="divider" style="background: #4e84cb;height: 2px;"></div>
+        <table class=" bordered striped">
+            <thead class="blue-grey lighten-5">
+            <tr class="grey-text text-darken-2">
+                <th>贷款编号</th>
+                <th>委托方</th>
+                <th>抵押车辆</th>
+                <th>抵押车值(美元)</th>
+                <th>定金(美元)</th>
+                <th>购买车辆</th>
+                <th>贷款金额</th>
+                <th>贷款时间</th>
+                <th>未还金额</th>
+                <th>完结时间</th>
+                <th>状态</th>
+                <th style="padding-left: 15px;">操作</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="el in financeLoanList" class="grey-text text-darken-1">
+                <!-- 贷款编号 -->
+                <td ng-bind="el.id"></td>
+                <!-- 委托方 -->
+                <td ng-bind="el.short_name"></td>
+                <!-- 抵押车辆 -->
+                <td ng-bind="el.short_name"></td>
+                <!-- 抵押车值(美元) -->
+                <td ng-bind="el.loan_money | number"></td>
+                <!-- 定金(美元) -->
+                <td ng-bind="el.deposit | number"></td>
+                <!-- 购买车辆 -->
+                <td ng-bind="el.short_name"></td>
+                <!-- 贷款金额 -->
+                <td ng-bind="el.loan_money | number"></td>
+                <!-- 贷款时间 -->
+                <td ng-bind="el.created_on|date:'yyyy-MM-dd hh:mm'"></td>
+                <!-- 未还金额 -->
+                <td ng-bind="el.valuation | number"></td>
+                <!-- 完结时间 -->
+                <td ng-bind="el.loan_end_date|date:'yyyy-MM-dd hh:mm'"></td>
+                <!-- 状态 -->
+                <td>{{loanStatus[el.loan_status - 1].name}}</td>
+                <!--操作-->
+                <td class="operation">
+                    <!-- 详情 -->
+                    <a href="#" ui-sref="car_demand_details({id:el.id,vin:el.vin,from:'finance_car'})">
+                        <i class="mdi mdi-file-outline look_icon cyan-text lighten-1"></i>
+                    </a>
+                </td>
+            </tr>
+            <tr class="grey-text text-darken-1" ng-if="financeLoanList.length == 0">
+                <td colspan="12" style="letter-spacing: 2px;text-align: center;">暂无数据</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <!-- 上下页按钮 -->
+    <div class="paging_box col s12">
+        <div class="right">
+            <a class="waves-light waves-effect cyan lighten-1 btn" id="pre" ng-click="preBtn()">
+                上一页
+            </a>
+            <a class="waves-light waves-effect cyan lighten-1 btn " id="next" ng-click="nextBtn()">
+                下一页
+            </a>
+        </div>
+    </div>
+</div>
+
+<!-- 画面【新增贷出订单】 模态框 -->
+<div class="row" style="margin: 0">
+    <div id="newFinanceLoanDiv" class="modal" style="width: 35%;height: 460px">
+        <div class="modal-content center fz20" style="font-weight: 500;padding: 0">
+
+            <!-- 显示画面【新增贷出订单】 Header -->
+            <div class="col s12 vc-center cyan"
+                 style="color: white;letter-spacing:1px;font-weight: bold;height: 50px;">
+                <p>新增贷出订单</p>
+            </div>
+
+            <!-- 显示画面【新增贷出订单】 Body -->
+            <div class="col" style="width:95%; margin-left: 20px;">
+                <!-- 贷出订单信息 -->
+                <div class="col s12" style="margin-top: 40px;">
+                    <!-- 委托方性质 -->
+                    <div class="input-field col s6">
+                        <select material-select watch ng-model="loanInfo.entrustType" ng-change="getEntrustInfo(loanInfo.entrustType,'委托方')">
+                            <option value="" disabled>委托方性质</option>
+                            <option ng-repeat="el in entrustTypeList" ng-value="el.entrust_type">{{el.name}}</option>
+                        </select>
+                    </div>
+
+                    <!-- 委托方 -->
+                    <div class="input-field col s6">
+                        <select id="addEntrustSelect" style="width: 100%">
+                            <option value=""></option>
+                            <option ng-repeat="el in entrustList" ng-value="el.id">{{el.short_name}}</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- 贷出订单信息 -->
+                <div class="col s12">
+                    <!-- 定金 -->
+                    <div class="input-field col s6">
+                        <input type="text" id="depositText" maxlength="10" valid-money ng-model="loanInfo.deposit" class="red-text">
+                        <label id="earnestMoneyLabel" for="depositText"> 定金</label>
+                    </div>
+
+                    <!-- 贷出金额(美元) -->
+                    <div class="input-field col s6">
+                        <input type="text" id="loanMoneyText" maxlength="10" valid-money ng-model="loanInfo.loanMoney">
+                        <label for="loanMoneyText"><span class="red-text">*</span> 贷出金额(美元)</label>
+                    </div>
+                </div>
+
+                <!-- 贷出备注 -->
+                <div class="col s12">
+                    <div class="input-field col s12">
+                        <input type="text" id="remarkText" ng-model="loanInfo.remark">
+                        <label for="remarkText">贷出备注</label>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 分割线 -->
+            <div class="divider col s12" style="margin-top: 80px;"></div>
+
+            <!-- 取消/确认 按钮 -->
+            <div class="row col right-align" style="width: 96%;margin-top: 20px;">
+                <a class="btn-floating waves-effect waves-light grey btn modal-close">
+                    <i class="mdi mdi-close"></i>
+                </a>
+                <a class="btn-floating waves-effect waves-light cyan lighten-1 btn" style="margin-left: 20px;"
+                   ng-click="addFinanceLoan()">
+                    <i class="mdi mdi-check"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
