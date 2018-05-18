@@ -360,6 +360,7 @@ app.controller("storage_car_controller", ["$scope", "$rootScope", "$stateParams"
 
     //点击新增入库车辆
     $scope.addStorageCar = function () {
+        $scope.demandVin='';
         step0();
         $(".modal").modal({
             height: 500
@@ -378,7 +379,7 @@ app.controller("storage_car_controller", ["$scope", "$rootScope", "$stateParams"
         minLength: 6,
     });
     $scope.shortSearch=function () {
-        if($scope.demandVin!=undefined){
+        if($scope.demandVin!==undefined&&$scope.demandVin!==""){
             if($scope.demandVin.length>=6){
                 _basic.get(_host.api_url+"/carList?vinCode="+$scope.demandVin,{}).then(function (data) {
                     if(data.success==true&&data.result.length>0){
@@ -405,6 +406,9 @@ app.controller("storage_car_controller", ["$scope", "$rootScope", "$stateParams"
             }
             queryRelStatus();
         }
+        else{
+            swal('请输入VIN码','','error')
+        }
     };
     function queryRelStatus(){
         _basic.get(_host.api_url+"/user/"+userId+"/car?vin="+$scope.demandVin+'&active=1').then(function (data) {
@@ -422,45 +426,50 @@ app.controller("storage_car_controller", ["$scope", "$rootScope", "$stateParams"
 
     // 查询vin码
     $scope.demandCar=function () {
-        _basic.get(_host.api_url+"/carList?vin="+$scope.demandVin).then(function (data) {
-            if(data.success=true){
-                if(data.result.length==0){
-                    $scope.showStorageData = 1;
-                    step1();
-                }
-                else{
-                    $scope.baseList=data.result[0];
-                    $scope.baseList.model_id=data.result[0].model_id;
-                    $scope.baseList.make_id=data.result[0].make_id;
-                    if( $scope.baseList.model_id==0|| $scope.baseList.make_id==0){
-                        $scope.baseList.model_id='';
-                        $scope.baseList.make_id='';
+        if($scope.demandVin!==undefined&&$scope.demandVin!=="") {
+            _basic.get(_host.api_url + "/carList?vin=" + $scope.demandVin).then(function (data) {
+                if (data.success = true) {
+                    if (data.result.length == 0) {
+                        $scope.showStorageData = 1;
+                        step1();
                     }
-                    if($scope.baseList.pro_date!==null){
-                        $scope.baseListDate = moment( $scope.baseList.pro_date).format("YYYY-MM-DD");
-                    }
-                    else{
-                        $scope.baseListDate ='';
-                    }
-                    for (var i in _config.config_color) {
-                        if (_config.config_color[i].colorId == $scope.baseList.colour) {
-                            $scope.baseListColor = _config.config_color[i].colorName;
+                    else {
+                        $scope.baseList = data.result[0];
+                        $scope.baseList.model_id = data.result[0].model_id;
+                        $scope.baseList.make_id = data.result[0].make_id;
+                        if ($scope.baseList.model_id == 0 || $scope.baseList.make_id == 0) {
+                            $scope.baseList.model_id = '';
+                            $scope.baseList.make_id = '';
+                        }
+                        if ($scope.baseList.pro_date !== null) {
+                            $scope.baseListDate = moment($scope.baseList.pro_date).format("YYYY-MM-DD");
+                        }
+                        else {
+                            $scope.baseListDate = '';
+                        }
+                        for (var i in _config.config_color) {
+                            if (_config.config_color[i].colorId == $scope.baseList.colour) {
+                                $scope.baseListColor = _config.config_color[i].colorName;
+                            }
+                        }
+                        if ($scope.relCarStatus == 1) {
+                            swal('本车已在库中', "", "error");
+                        } else {
+                            $scope.pictureCarId = $scope.baseList.id;
+                            $scope.showStorageData = 2;
+                            step1();
+                            addCarMakeId();
                         }
                     }
-                    if( $scope.relCarStatus==1){
-                        swal('本车已在库中', "", "error");
-                    }else {
-                        $scope.pictureCarId = $scope.baseList.id;
-                        $scope.showStorageData = 2;
-                        step1();
-                        addCarMakeId();
-                    }
                 }
-            }
-            else{
-                swal(data.msg, "", "error");
-            }
-        })
+                else {
+                    swal(data.msg, "", "error");
+                }
+            })
+        }
+        else{
+            swal('请输入VIN码','','error')
+        }
     };
 
 
