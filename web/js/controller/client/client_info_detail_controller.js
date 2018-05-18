@@ -658,24 +658,24 @@ app.controller("client_info_detail_controller", ["$scope", "$rootScope","$state"
         getMsoStatus();
     };
     // 上一页
-    $scope.preBtn3 = function () {
+    $scope.preBtn4 = function () {
         $scope.start = $scope.start - ($scope.size - 1) ;
-
+        queryOrderData();
     };
     // 下一页
-    $scope.nextBtn3 = function () {
+    $scope.nextBtn4 = function () {
         $scope.start = $scope.start + ($scope.size - 1) ;
-
+        queryOrderData();
     };
     // 上一页
     $scope.preBtn5 = function () {
         $scope.start = $scope.start - ($scope.size - 1);
-        queryOrderData();
+        querySeaTransportOrder();
     };
     // 下一页
     $scope.nextBtn5 = function () {
         $scope.start = $scope.start + ($scope.size - 1);
-        queryOrderData();
+        querySeaTransportOrder();
     };
     // 上一页
     $scope.preBtn6 = function () {

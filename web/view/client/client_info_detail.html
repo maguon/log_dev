@@ -612,6 +612,10 @@
                     <i class="mdi mdi-phone" style="color: #4e84cb"></i>
                     <span  ng-bind="headerInfoList.tel"></span>
                 </div>
+                <div class="" ng-show="headerInfoList.email!==null">
+                    <i class="mdi mdi-email" style="color: #4e84cb"></i>
+                    <span  ng-bind="headerInfoList.email"></span>
+                </div>
                 <div class="">
                     <i class="mdi mdi-clock" style="color: #4e84cb"></i>
                     <span  ng-bind="headerInfoList.created_on | date:'yyyy-MM-dd HH:mm:ss'" ></span>

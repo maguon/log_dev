@@ -332,12 +332,14 @@ app.controller("storage_car_details_controller", [ "$scope","$state", "$statePar
                 $scope.look_make_id = $scope.self_car.make_id,
                 $scope.changeMakeId($scope.look_make_id);
                 $scope.look_model_id = $scope.self_car.model_id;
-                    if($scope.self_car.pro_date==null){
-                        $scope.look_create_time="1970-01-01";
+                    if($scope.self_car.pro_date!==null){
+                         $scope.look_create_time = moment($scope.self_car.pro_date).format('YYYY-MM-DD');
                     }else {
-                        $scope.look_create_time = moment($scope.self_car.pro_date).format('YYYY-MM-DD');
+                        $scope.look_create_time='';
                     }
-               var selfLot = $scope.characters[$scope.self_car.lot-1].name;
+                    if($scope.self_car.lot&&$scope.self_car.lot!==null){
+                        var selfLot = $scope.characters[$scope.self_car.lot-1].name;
+                    }
                 $scope.look_storageName = $scope.self_car.storage_name + " " +$scope.self_car.area_name+"扇区"+ $scope.self_car.row + "排" + $scope.self_car.col + "列"+selfLot;
                 // 车辆id
                 $scope.look_car_id = $scope.self_car.id;
