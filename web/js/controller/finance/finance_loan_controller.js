@@ -48,12 +48,9 @@ app.controller("finance_loan_controller", ["$scope", "$rootScope", "_host", "_ba
         var url = _host.api_url + "/financialLoan?start=" + $scope.start + "&size=" + $scope.size;
         // 检索条件
         var conditionsObj = makeConditions();
-        console.log(conditionsObj);
-
         var conditions = _basic.objToUrl(conditionsObj);
         // 检索URL
         url = conditions.length > 0 ? url + "&" + conditions : url;
-        console.log(url);
 
         _basic.get(url).then(function (data) {
             if (data.success === true) {
@@ -83,7 +80,6 @@ app.controller("finance_loan_controller", ["$scope", "$rootScope", "_host", "_ba
                 else {
                     $("#next").show();
                 }
-                $('#earnestMoneyText').focus();
             } else {
                 swal(data.msg, "", "error");
             }
@@ -92,24 +88,25 @@ app.controller("finance_loan_controller", ["$scope", "$rootScope", "_host", "_ba
 
     /**
      * 设置检索条件。
+     * @param conditions 上次检索条件
      */
     function setConditions(conditions) {
-        // vin码
-        $scope.condVin = conditions.vin;
-        // 制造商
-        $scope.conditionMakeId = conditions.makeId;
-        // 根据制造商，取得品牌列表
-        $scope.changeMakerId($scope.conditionMakeId);
-        // 品牌
-        $scope.conditionModelId = conditions.modelId;
-        // 录入时间 开始
-        $scope.condEntryDateStart = conditions.createdOnStart;
-        // 录入时间 终了
-        $scope.condEntryDateEnd = conditions.createdOnEnd;
-        // 委托方
-        $scope.condEntrustId = conditions.entrustId;
-        // 是否金融车
-        $scope.condPurchaseType = conditions.purchaseType;
+        // 贷出编号
+        $scope.condLoanId = financialLoanId;
+            // 委托方性质
+        $scope.condEntrustType = entrustType;
+            // 委托方
+        $scope.condEntrustId = entrustId;
+            // 订单状态
+        $scope.condLoanStatus = loanStatus;
+            // 贷款时间 开始
+        $scope.condCreatedOnStart = createdOnStart;
+            // 贷款时间 终了
+        $scope.condCreatedOnEnd = createdOnEnd;
+            // 完结时间 开始
+        $scope.condLoanEndDateStart = createdOnStart;
+            // 完结时间 终了
+        $scope.condLoanEndDateEnd = createdOnEnd;
     }
 
     /**
@@ -155,7 +152,7 @@ app.controller("finance_loan_controller", ["$scope", "$rootScope", "_host", "_ba
         // 默认第一页
         $scope.start = 0;
         // 检索条件 委托方
-        $scope.condEntrustId =getEntrustId();
+        $scope.condEntrustId = getEntrustId();
         queryFinanceLoanList();
     };
 
@@ -165,7 +162,7 @@ app.controller("finance_loan_controller", ["$scope", "$rootScope", "_host", "_ba
     $scope.preBtn = function () {
         $scope.start = $scope.start - ($scope.size - 1);
         // 检索条件 委托方
-        $scope.condEntrustId =getEntrustId();
+        $scope.condEntrustId = getEntrustId();
         queryFinanceLoanList();
     };
 
@@ -175,16 +172,17 @@ app.controller("finance_loan_controller", ["$scope", "$rootScope", "_host", "_ba
     $scope.nextBtn = function () {
         $scope.start = $scope.start + ($scope.size - 1);
         // 检索条件 委托方
-        $scope.condEntrustId =getEntrustId();
+        $scope.condEntrustId = getEntrustId();
         queryFinanceLoanList();
     };
 
     /**
      * 打开【新增金融贷出】模态画面。
      */
-    $scope.openNewFinanceCarDiv = function () {
+    $scope.openNewFinanceLoanDiv = function () {
         $('.modal').modal();
         $('#newFinanceLoanDiv').modal('open');
+        // 激活定金label状态
         $('#earnestMoneyLabel').addClass('active');
         // 初始数据
         angular.copy($scope.newLoanInfo, $scope.loanInfo);
@@ -205,56 +203,33 @@ app.controller("finance_loan_controller", ["$scope", "$rootScope", "_host", "_ba
             entrustId = $("#addEntrustSelect").select2("data")[0].id;
         }
 
-        if ($scope.loanInfo.vin !== "" && $scope.loanInfo.makerId !== "" && $scope.loanInfo.modelId !== ""
-            && entrustId !== "" && $scope.loanInfo.valuation !== "" && $scope.loanInfo.msoStatus !== "" && $scope.loanInfo.purchaseType !== "") {
+        if (entrustId !== "" && $scope.loanInfo.loanMoney !== "") {
             var obj = {
-                // vin
-                vin: $scope.loanInfo.vin,
-                // 制造商
-                makeId: $scope.loanInfo.makerId,
-                makeName: $('#makerSelect').find("option:selected").text(),
-                // 型号
-                modelId: $scope.loanInfo.modelId,
-                modelName: $('#modelSelect').find("option:selected").text(),
-                // 生产日期
-                proDate: $scope.loanInfo.proDate,
-                // 颜色
-                colour: $scope.loanInfo.colour,
-                // 发动机号
-                engineNum: $scope.loanInfo.engineNum,
                 // 委托方
                 entrustId: entrustId,
-                // 车价(美元)
-                valuation: $scope.loanInfo.valuation,
-                // 是否MSO车辆
-                msoStatus: $scope.loanInfo.msoStatus,
-                // 是否金融车
-                purchaseType: $scope.loanInfo.purchaseType,
+                // 定金
+                deposit: $scope.loanInfo.deposit === "" ? 0 : $scope.loanInfo.deposit,
+                // 贷出金额(美元)
+                loanMoney: $scope.loanInfo.loanMoney,
                 // 备注
                 remark: $scope.loanInfo.remark
             };
 
-            // 如果生产日期没有输入，就去掉此属性
-            if ($scope.loanInfo.proDate == null || $scope.loanInfo.proDate === "") {
-                delete obj.proDate;
-            }
-
             // 新增金融贷出。
-                _basic.post(_host.api_url + "/user/" + userId + "/car", obj).then(function (data) {
-                    if (data.success) {
-                        $('#newFinanceLoanDiv').modal('close');
-                        swal("新增成功", "", "success");
-                        // 成功后，刷新页面数据
-                        queryFinanceLoanList();
-                    } else {
-                        swal(data.msg, "", "error");
-                    }
-                })
+            _basic.post(_host.api_url + "/user/" + userId + "/financialLoan", obj).then(function (data) {
+                if (data.success) {
+                    $('#newFinanceLoanDiv').modal('close');
+                    swal("新增成功", "", "success");
+                    // 成功后，刷新页面数据
+                    queryFinanceLoanList();
+                } else {
+                    swal(data.msg, "", "error");
+                }
+            })
         } else {
-            swal("请填写完整车辆信息！", "", "warning");
+            swal("请填写完整贷出信息！", "", "warning");
         }
     };
-
 
     /**
      * 获取委托方信息
@@ -287,35 +262,6 @@ app.controller("finance_loan_controller", ["$scope", "$rootScope", "_host", "_ba
             }
         });
     };
-
-    /**
-     * 获取委托方信息
-     */
-    function getAllEntrustInfo() {
-        _basic.get(_host.api_url + "/entrust").then(function (data) {
-            if (data.success) {
-                var entrustList = [{
-                    id: "",
-                    text: "委托方"
-                }];
-                for (var i = 0; i < data.result.length; i++) {
-                    entrustList.push({
-                        id: data.result[i].id,
-                        text: data.result[i].short_name
-                    });
-                }
-                // 检索画面用
-                $('#condEntrustSelect').select2({
-                    placeholder: '委托方',
-                    containerCssClass: 'select2_dropdown',
-                    data: entrustList,
-                    allowClear: true
-                });
-                // 委托方（select2）默认选择项
-                $("#condEntrustSelect").val($scope.condEntrustId).trigger("change");
-            }
-        });
-    }
 
     /**
      * 画面初期显示时，用来获取画面必要信息的初期方法。
