@@ -422,15 +422,15 @@ baseService.factory("_config", function () {
     // 金融贷出 状态
     _this.loanStatus = [
         {
-            id: 0,
+            id: 1,
             name: "已贷"
         },
         {
-            id: 1,
+            id: 2,
             name: "还款中"
         },
         {
-            id: 2,
+            id: 3,
             name: "完结"
         }
     ];
