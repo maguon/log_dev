@@ -94,6 +94,12 @@ app.config(['$stateProvider',"$urlRouterProvider",function($stateProvider,$urlRo
             templateUrl: "/view/finance/finance_loan.html",
             controller:"finance_loan_controller"
         })
+        // 财务管理->金融贷出->详细
+        .state("finance_loan_detail", {
+            url:"/finance_loan_detail/{id}?from",
+            templateUrl: "/view/finance/finance_loan_detail.html",
+            controller:"finance_loan_detail_controller"
+        })
         // 财务管理->信用证
         .state("credit_card", {
             url:"/credit_card",

@@ -1,4 +1,4 @@
-<!-- 主菜单：财务管理 -> 金融车辆 画面 -->
+<!-- 主菜单：财务管理 -> 金融贷出 画面 -->
 <div class="row">
 
     <!-- 上部分：检索条件输入区域 -->
@@ -106,18 +106,18 @@
                 <!-- 委托方 -->
                 <td ng-bind="el.short_name"></td>
                 <!-- 抵押车辆 -->
-                <td ng-bind="el.short_name"></td>
+                <td ng-bind="el.mortgage_car_count | number"></td>
                 <!-- 抵押车值(美元) -->
-                <td ng-bind="el.loan_money | number"></td>
+                <td ng-bind="el.mortgage_valuation | number"></td>
                 <!-- 定金(美元) -->
                 <td ng-bind="el.deposit | number"></td>
                 <!-- 购买车辆 -->
-                <td ng-bind="el.short_name"></td>
+                <td ng-bind="el.buy_car_count| number"></td>
                 <!-- 贷款金额 -->
                 <td ng-bind="el.loan_money | number"></td>
                 <!-- 贷款时间 -->
                 <td ng-bind="el.created_on|date:'yyyy-MM-dd hh:mm'"></td>
-                <!-- 未还金额 -->
+                <!-- 未还金额 TODO -->
                 <td ng-bind="el.valuation | number"></td>
                 <!-- 完结时间 -->
                 <td ng-bind="el.loan_end_date|date:'yyyy-MM-dd hh:mm'"></td>
@@ -126,7 +126,7 @@
                 <!--操作-->
                 <td class="operation">
                     <!-- 详情 -->
-                    <a href="#" ui-sref="car_demand_details({id:el.id,vin:el.vin,from:'finance_car'})">
+                    <a href="#" ui-sref="finance_loan_detail({id:el.id,from:'finance_loan'})" style="margin-left: 15px;">
                         <i class="mdi mdi-file-outline look_icon cyan-text lighten-1"></i>
                     </a>
                 </td>

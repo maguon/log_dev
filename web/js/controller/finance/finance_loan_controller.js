@@ -1,7 +1,7 @@
 /**
  * 主菜单：财务管理 -> 金融贷出 控制器
  */
-app.controller("finance_loan_controller", ["$scope", "$rootScope", "_host", "_basic", "_config", "$state", "$stateParams","$filter", function ($scope, $rootScope, _host, _basic, _config, $state, $stateParams,$filter) {
+app.controller("finance_loan_controller", ["$scope", "$rootScope", "_host", "_basic", "_config", "$state", "$stateParams", function ($scope, $rootScope, _host, _basic, _config, $state, $stateParams) {
 
     // 取得当前画面 登录用户
     var userId = _basic.getSession(_basic.USER_ID);
@@ -33,13 +33,6 @@ app.controller("finance_loan_controller", ["$scope", "$rootScope", "_host", "_ba
         remark: ""
     };
 
-    /***************************** 华丽的分割线 TODO start ***********************************/
-
-    // 检索条件 委托方
-    $scope.condEntrustId = "";
-
-    /***************************** 华丽的分割线 TODO end ***********************************/
-
     /**
      * 根据画面输入的查询条件，进行数据查询。
      */
@@ -55,6 +48,8 @@ app.controller("finance_loan_controller", ["$scope", "$rootScope", "_host", "_ba
         _basic.get(url).then(function (data) {
             if (data.success === true) {
 
+                // 保存选中委托方名称
+                conditionsObj.entrustNm = getEntrustNm();
                 // 当前画面的检索信息
                 var pageItems = {
                     pageId: "finance_loan",
@@ -92,21 +87,22 @@ app.controller("finance_loan_controller", ["$scope", "$rootScope", "_host", "_ba
      */
     function setConditions(conditions) {
         // 贷出编号
-        $scope.condLoanId = financialLoanId;
-            // 委托方性质
-        $scope.condEntrustType = entrustType;
-            // 委托方
-        $scope.condEntrustId = entrustId;
-            // 订单状态
-        $scope.condLoanStatus = loanStatus;
-            // 贷款时间 开始
-        $scope.condCreatedOnStart = createdOnStart;
-            // 贷款时间 终了
-        $scope.condCreatedOnEnd = createdOnEnd;
-            // 完结时间 开始
-        $scope.condLoanEndDateStart = createdOnStart;
-            // 完结时间 终了
-        $scope.condLoanEndDateEnd = createdOnEnd;
+        $scope.condLoanId = conditions.financialLoanId;
+        // 委托方性质
+        $scope.condEntrustType = conditions.entrustType;
+        // 委托方
+        $scope.condEntrustId = conditions.entrustId;
+        $scope.condEntrustNm = conditions.entrustNm;
+        // 订单状态
+        $scope.condLoanStatus = conditions.loanStatus;
+        // 贷款时间 开始
+        $scope.condCreatedOnStart = conditions.createdOnStart;
+        // 贷款时间 终了
+        $scope.condCreatedOnEnd = conditions.createdOnEnd;
+        // 完结时间 开始
+        $scope.condLoanEndDateStart = conditions.loanEndDateStart;
+        // 完结时间 终了
+        $scope.condLoanEndDateEnd = conditions.loanEndDateEnd;
     }
 
     /**
@@ -127,9 +123,9 @@ app.controller("finance_loan_controller", ["$scope", "$rootScope", "_host", "_ba
             // 贷款时间 终了
             createdOnEnd: $scope.condCreatedOnEnd,
             // 完结时间 开始
-            createdOnStart: $scope.condLoanEndDateStart,
+            loanEndDateStart: $scope.condLoanEndDateStart,
             // 完结时间 终了
-            createdOnEnd: $scope.condLoanEndDateEnd
+            loanEndDateEnd: $scope.condLoanEndDateEnd
         };
     }
 
@@ -137,12 +133,24 @@ app.controller("finance_loan_controller", ["$scope", "$rootScope", "_host", "_ba
      * 取得检索条件委托方ID。
      */
     function getEntrustId() {
-        // 委托方ID
+        // 委托方ID 默认值
         var entrustId = "";
         if ($("#condEntrustSelect").val() != null && $("#condEntrustSelect").val() !== "") {
             entrustId = $("#condEntrustSelect").select2("data")[0].id;
         }
         return entrustId;
+    }
+
+    /**
+     * 取得检索条件委托方名称。
+     */
+    function getEntrustNm() {
+        // 委托方名称 默认值
+        var entrustNm = "委托方";
+        if ($("#condEntrustSelect").val() != null && $("#condEntrustSelect").val() !== "") {
+            entrustNm = $("#condEntrustSelect").select2("data")[0].text;
+        }
+        return entrustNm;
     }
 
     /**
@@ -254,11 +262,10 @@ app.controller("finance_loan_controller", ["$scope", "$rootScope", "_host", "_ba
 
                 // 委托方select2初期化
                 $('#condEntrustSelect').select2({
-                    placeholder: '委托方',
+                    placeholder: selectText,
                     containerCssClass: 'select2_dropdown',
                     allowClear: true
                 });
-                $("#condEntrustSelect").val(null).trigger("change");
             }
         });
     };
@@ -267,8 +274,9 @@ app.controller("finance_loan_controller", ["$scope", "$rootScope", "_host", "_ba
      * 画面初期显示时，用来获取画面必要信息的初期方法。
      */
     $scope.initData = function () {
-        // 如果是从后画面跳回来时，取得上次检索条件 TODO
-        if ($stateParams.from === "finance_loan_details" && $rootScope.refObj !== undefined && $rootScope.refObj.pageArray.length > 0) {
+
+        // 如果是从后画面跳回来时，取得上次检索条件
+        if ($stateParams.from === "finance_loan_detail" && $rootScope.refObj !== undefined && $rootScope.refObj.pageArray.length > 0) {
             var pageItems = $rootScope.refObj.pageArray.pop();
             if (pageItems.pageId === "finance_loan") {
                 // 设定画面翻页用数据
@@ -278,10 +286,16 @@ app.controller("finance_loan_controller", ["$scope", "$rootScope", "_host", "_ba
                 setConditions(pageItems.conditions);
             }
         } else {
+            // 初始显示时，没有前画面，所以没有基本信息
             $rootScope.refObj = {pageArray: []};
+            // 初始显示时，委托方性质 默认项：空
+            $scope.condEntrustType = null;
+            // 初始显示时，委托方名称 默认项：委托方
+            $scope.condEntrustNm = "委托方";
         }
+
         // 取得 检索条件：委托方信息
-        $scope.getEntrustInfo();
+        $scope.getEntrustInfo($scope.condEntrustType, $scope.condEntrustNm);
 
         // 查询数据
         queryFinanceLoanList();
