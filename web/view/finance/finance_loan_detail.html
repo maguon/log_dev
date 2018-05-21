@@ -24,147 +24,56 @@
         </ul>
     </div>
 
-    <!-- TAB 贷出信息 -->
+    <!-- TAB 1 贷出信息 -->
     <div id="lookLoanFinfoDiv" class="col s12 tab_box" style="width: 90%; margin:0 5% ">
-        <!--未完结状态下-->
-        <div  ng-if='paymentStatus==1'>
-            <div class="modal-content">
-                <div class="row col s12 bold" style="color:#4e84cb ;margin-top: 20px;">
-                    <div class="col s6 fz18" >支付编号:{{storagePaymentArray.id}}</div>
-                    <div class="col s6 right-align" ng-class="{'red-text':storagePaymentArray.payment_status==1}">{{paymentStatusList[storagePaymentArray.payment_status-1].name}}</div>
+        <!-- TODO 未完结状态下 -->
+        <div class="modal-content">
+            <div class="row col s12 bold" style="color:#4e84cb ;margin-top: 40px;">
+                <div class="col s6 fz18" >贷出编号: {{loanInfo.id}}</div>
+                <div class="col s6 right-align">{{loanStatus[loanInfo.loanStatus-1].name}}</div>
+                <!--<div class="col s6 right-align" ng-class="{'red-text':storagePaymentArray.payment_status==1}">{{loanStatus[storagePaymentArray.payment_status-1].name}}</div>-->
+            </div>
+
+            <!--实分割线-->
+            <div class="row col s12" style="height:2px;border-bottom: 1px solid #ccc;width:96%;margin-left: 2%"></div>
+
+            <div class="row col s12 cyan-text">
+                <div class="col s6" >委托方: {{loanInfo.entrustName}}</div>
+                <div class="col s6 grey-text right-align">贷出时间: {{loanInfo.createdOn |date:'yyyy-MM-dd hh:mm'}}</div>
+            </div>
+
+            <!-- 抵押金额，贷款金额 -->
+            <div class="row col s12" style="margin-top: 40px;">
+                <!-- 抵押金额 -->
+                <div class="input-field col s6">
+                    <input type="text" id="mortgageText" maxlength="10" valid-money ng-model="loanInfo.mortgageValuation" class="red-text">
+                    <label for="mortgageText" id="mortgageLabel"> 抵押金额(美元)</label>
                 </div>
-                <div class="row col s12">
-                    <div class="col s6 input-field">
-                        <select material-select watch ng-model="storagePaymentArray.entrust_type" ng-change="getEntrustInfo(storagePaymentArray.entrust_type)">
-                            <option value=""  ><span style="color: red">*</span>委托方性质</option>
-                            <option ng-repeat="el in entrustTypeList" ng-value="el.entrust_type">{{el.name}}</option>
-                        </select>
-                    </div>
-                    <div class="col s6 input-field">
-                        <select material-select watch id="entrustSelect"  ng-model="storagePaymentArray.entrust_id" style="width: 100%">
-                            <option value="" ></option>
-                            <option ng-repeat="el in entrustList" ng-value="el.id">{{el.short_name}}</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="row col s12">
-                    <div class="col s6 input-field">
-                        <select material-select watch ng-model="storagePaymentArray.payment_type">
-                            <option value=""  ><span style="color: red">*</span>支付方式</option>
-                            <option ng-repeat="el in paymentTypeList" ng-value="el.id">{{el.name}}</option>
-                        </select>
-                    </div>
-                    <div class="col s6 input-field">
-                        <input  id="addPatmentNumber" name="addPatmentNumber" autocomplete="off" ng-model="storagePaymentArray.number" type="text"   required >
-                        <label for="addPatmentNumber"><span style="color: red">*</span>票号</label>
-                    </div>
-                </div>
-                <div class="row col s12">
-                    <div class="col s12 input-field">
-                        <input type="number" name="addPaymentMoney" id="addPaymentMoney" class="red-text" ng-model="storagePaymentArray.payment_money">
-                        <label for="addPaymentMoney"><span style="color: red">*</span>支付金额(美元)</label>
-                    </div>
-                </div>
-                <div class="row col s12">
-                    <div class="col s12 input-field">
-                        <input type="text" name="addRemark" id="addRemark" ng-model="storagePaymentArray.remark">
-                        <label for="addRemark">备注</label>
-                    </div>
-                </div>
-                <div class="row col s12" style="margin-bottom: 35px;color:grey;">
-                    <div class="col s6 ">操作人:{{storagePaymentArray.payment_user_name}}</div>
-                    <div class="col s6 right-align">支付时间:{{storagePaymentArray.created_on |date:'yyyy-MM-dd hh:mm'}}</div>
+
+                <!-- 贷款金额(美元) -->
+                <div class="input-field col s6">
+                    <input type="text" id="loanMoneyText" maxlength="10" valid-money ng-model="loanInfo.loanMoney" class="red-text">
+                    <label for="loanMoneyText" id="loanMoneyLabel"> 贷出金额(美元)</label>
                 </div>
             </div>
-            <div class="row col s12" style="margin-top: 30px">
-                <div class="col s2 offset-s3">
-                    <a ng-click="updatePaymentInfo()" style="width: 100%" class="waves-light waves-effect cyan lighten-2 btn">保存</a>
-                </div>
-                <div class="col s2 offset-s2">
-                    <a ng-click="updatePaymentStatus()" style="width: 100%;background-color:#f0ad4e;" class="waves-light waves-effect  lighten-1 btn">完结</a>
+
+            <!-- 备注 -->
+            <div class="row col s12">
+                <div class="col s12 input-field">
+                    <input type="text" name="addRemark" id="addRemark" ng-model="loanInfo.remark">
+                    <label for="addRemark">备注</label>
                 </div>
             </div>
         </div>
-        <!--已完结状态下-->
-        <div  ng-if='paymentStatus==2'>
-            <div class="modal-content">
-                <div class="row col s12 bold" style="color:#4e84cb ;margin-top: 20px;">
-                    <div class="col s6 fz18" >支付编号:{{storagePaymentArray.id}}</div>
-                    <div class="col s6 right-align">{{paymentStatusList[storagePaymentArray.payment_status-1].name}}</div>
-                </div>
-                <!--实分割线-->
-                <div  class="row col s12" style="height:2px;border-bottom: 1px solid #ccc;width:96%;margin-left: 2%"></div>
-
-                <!-- 委托方性质 委托方-->
-                <div class="row col s12">
-                    <div class="col s6 left-align">
-                        <div class="col s12">
-                            委托方性质:{{entrustTypeList[storagePaymentArray.entrust_type-1].name}}
-                        </div>
-                    </div>
-                    <div class="col s6 valign-wrapper">
-                        <div class="col s12 left-align">
-                            委托方:{{storagePaymentArray.entrust_name}}
-                        </div>
-                    </div>
-                </div>
-                <!--虚分割线-->
-                <div  class="row col s12" style="height:1px;border-bottom: 1px dotted #ccc;width:96%;margin-left: 2%"></div>
-
-                <!-- 支付方式 票号-->
-                <div class="row col s12">
-                    <div class="col s6 left-align">
-                        <div class="col s12">
-                            支付方式:{{paymentTypeList[storagePaymentArray.payment_type-1].name}}
-                        </div>
-                    </div>
-                    <div class="col s6 valign-wrapper">
-                        <div class="col s12 left-align">
-                            票号:{{storagePaymentArray.number}}
-                        </div>
-                    </div>
-                </div>
-                <!--虚分割线-->
-                <div  class="row col s12" style="height:1px;border-bottom: 1px dotted #ccc;width:96%;margin-left: 2%"></div>
-
-                <!-- 备注-->
-                <div class="row col s12">
-                    <div class="col s6 left-align">
-                        <div class="col s12">
-                            备注:{{storagePaymentArray.remark}}
-                        </div>
-                    </div>
-                </div>
-                <!--实分割线-->
-                <div  class="row col s12" style="height:2px;border-bottom: 1px solid #ccc;width:96%;margin-left: 2%"></div>
-
-                <!--支付金额 操作人-->
-                <div class="row col s12">
-                    <div class="col s6 left-align">
-                        <div class="col s12">
-                            支付金额(美元):<span style="color: red">{{storagePaymentArray.payment_money|currency}}</span>
-                        </div>
-                    </div>
-                    <div class="col s6 right-align">
-                        <div class="col s12">
-                            操作人:{{storagePaymentArray.payment_user_name}}
-                        </div>
-                    </div>
-                </div>
-
-                <!--支付时间-->
-                <div class="row col s12">
-                    <div class="col s12 right-align">
-                        <div class="col s12">
-                            支付时间:{{storagePaymentArray.updated_on | date:'yyyy-MM-dd hh:mm'}}
-                        </div>
-                    </div>
-                </div>
+        <div class="row col s12 right-align" style="margin-top: 50px">
+            <div class="col s10"></div>
+            <div class="col s2 right-align">
+                <a ng-click="updatePaymentInfo()" style="width: 100%" class="waves-light waves-effect cyan lighten-2 btn">修改</a>
             </div>
         </div>
     </div>
 
-    <!-- TAB 抵押车辆 -->
+    <!-- TAB 2 抵押车辆 -->
     <div id="lookMortgageCar" class="col s12 tab_box" style="width: 100%; margin:30px 0">
 
         <!-- 第一行 委托方，贷出金额，抵押总金额 信息 -->
@@ -299,7 +208,7 @@
         </div>
     </div>
 
-    <!-- TAB 购买车辆 -->
+    <!-- TAB 3 购买车辆 -->
     <div id="lookBuyingCars" class="col s12 tab_box" style="width: 100%; margin:30px 0">
         <!--条件分支 未完结-->
         <div ng-if='paymentStatus==1'>
@@ -501,7 +410,7 @@
         </div>
     </div>
 
-    <!-- TAB 还款记录-->
+    <!-- TAB 4 还款记录-->
     <div id="lookPaymentHistory" class="col s12 tab_box" style="width: 100%; margin:30px 0">
         <!--条件分支 未完结-->
         <div ng-if='paymentStatus==1'>
