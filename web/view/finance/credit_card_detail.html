@@ -1,0 +1,175 @@
+<!-- 主菜单：信用证 -> 详情信息 画面 -->
+<div class="credit_car_detail">
+    <div class="modal-content grey-text text-darken-2">
+
+        <!-- 返回前画面 按钮 -->
+        <div class="storage_storeTitle vc-center ">
+            <a class=" storage_goback_btn btn-floating btn waves-effect cyan lighten-1 waves-light " ng-click="return()">
+                <i class="mdi mdi-arrow-left-bold"></i>
+            </a>
+            <h4 class="center-align cyan-text text-lighten-1">信用证详情</h4>
+
+        </div>
+        <!-- 车辆信息画面 主体内容 -->
+        <div class="row no-marBottom" ul-tabs>
+            <!-- 功能选项卡 -->
+            <div class="col s12 p0">
+                <ul class="tabWrap grey lighten-4 ">
+                    <li class="tab col s6 lookMsg vc-center" ng-click="showMsgInfo()">基本信息</li>
+                    <li class="tab col s6 lookLinkCar vc-center" ng-click="showLinkCar()">关联车辆</li>
+                </ul>
+            </div>
+
+
+            <!-- 基本信息 显示区域 -->
+            <div id="lookMsg" class="col s12 tab_box " style="width: 80%; margin:0 10% ;">
+
+                <!--第一行-->
+                <div class="input-field col s12 right-align red-text" ng-if="baseInfoList.credit_status==1">{{statusList[baseInfoList.credit_status-1].name}}</div>
+                <div class="input-field col s12 right-align cyan-text" ng-if="baseInfoList.credit_status!==1">{{statusList[baseInfoList.credit_status-1].name}}</div>
+
+                <!--第二行-->
+                <div class="row col s12" >
+                    <!-- 信用证编码 -->
+                    <div class="input-field col s4" >
+                        <input type="text" id="putCreditId" ng-model="baseInfoList.credit_number">
+                        <label for="putCreditId"><span class="red-text">*</span>信用证编码</label>
+                    </div>
+
+                    <!-- 委托方性质 -->
+                    <div class="input-field col s4">
+                        <select material-select watch id="putEntrustType" ng-model="baseInfoList.entrust_type" ng-change="getEntrustInfo(baseInfoList.entrust_type,'委托方')">
+                            <option value="" disabled>请选择</option>
+                            <option ng-repeat="el in entrustTypeList" ng-value="el.entrust_type">{{el.name}}</option>
+                        </select>
+                        <label for="putEntrustType">委托方性质</label>
+                    </div>
+
+                    <!--委托方-->
+                    <div class="input-field col s4">
+                        <select  id="putEntrustSelect" style="width: 100%">
+                            <option value="" ></option>
+                            <option ng-repeat="el in putEntrustList" ng-value="el.id">{{el.short_name}}</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!--第三行-->
+                <div class="row col s12">
+                    <!-- 新增條件：信用证金额(美元) -->
+                    <div class="input-field col" style="width: 33.3%">
+                        <input type="number" id="putCreditMoney" ng-model="baseInfoList.credit_money">
+                        <label for="putCreditMoney"><span class="red-text">*</span>信用证金额(美元)</label>
+                    </div>
+
+                    <!-- 新增條件：实际到款金额(美元) -->
+                    <div class="input-field col" style="width: 33.3%">
+                        <input type="number" id="putActualMoney" ng-model="baseInfoList.actual_money">
+                        <label for="putActualMoney"><span class="red-text">*</span>实际到款金额(美元)</label>
+                    </div>
+
+                    <!-- 预计回款日期 -->
+                    <div class="input-field col s4">
+                        <input type="text" id="putPlanReturnDate" ng-model="baseInfoList.plan_return_date" class="datepicker" date>
+                        <i class="mdi dataIcon mdi-table-large"></i>
+                        <label for="putPlanReturnDate">预计回款日期</label>
+                    </div>
+                </div>
+
+                <!--第四行-->
+                <div class="row col s12">
+                    <!--接证日期-->
+                    <div class="input-field col s4">
+                        <input id="putReceiveCardDate" type="text" ng-model="baseInfoList.receive_card_date" class="datepicker" date>
+                        <i class="mdi dataIcon mdi-table-large"></i>
+                        <label for="putReceiveCardDate">接证日期</label>
+                    </div>
+
+                    <!-- 交单日期 -->
+                    <div class="input-field col s4">
+                        <input type="text" id="putDocumentsDate" ng-model="baseInfoList.documents_date" class="datepicker" date>
+                        <i class="mdi dataIcon mdi-table-large"></i>
+                        <label for="putDocumentsDate">交单日期</label>
+                    </div>
+
+                    <!--实际回款日期-->
+                    <div class="input-field col s4">
+                        <input id="putActualReturnDate" type="text" ng-model="baseInfoList.actual_return_date" class="datepicker" date>
+                        <i class="mdi dataIcon mdi-table-large"></i>
+                        <label for="putActualReturnDate">实际回款日期</label>
+                    </div>
+                </div>
+
+                <!--第五行-->
+                <div class="row col s12">
+                    <!--文件发出日期-->
+                    <div class="input-field col s4">
+                        <input id="putDocumentsSendDate" type="text" ng-model="baseInfoList.documents_send_date" class="datepicker" date>
+                        <i class="mdi dataIcon mdi-table-large"></i>
+                        <label for="putDocumentsSendDate">文件发出日期</label>
+                    </div>
+
+                    <!--开户行文件接收日期-->
+                    <div class="input-field col s4">
+                        <input id="putDocumentsReceiveDate" type="text" ng-model="baseInfoList.documents_receive_date" class="datepicker" date>
+                        <i class="mdi dataIcon mdi-table-large"></i>
+                        <label for="putDocumentsReceiveDate">开户行文件接收日期</label>
+                    </div>
+
+                    <!--实际汇款日期-->
+                    <div class="input-field col s4">
+                        <input id="putActualRemitDate" type="text" ng-model="baseInfoList.actual_remit_date" class="datepicker" date>
+                        <i class="mdi dataIcon mdi-table-large"></i>
+                        <label for="putActualRemitDate">实际汇款日期</label>
+                    </div>
+                </div>
+
+                <!--第六行-->
+                <div class="row col s12">
+                    <div class="input-field col s4">
+                        <input type="text" id="putInvoiceNumber" ng-model="baseInfoList.invoice_number">
+                        <label for="putInvoiceNumber">发票号码</label>
+                    </div>
+                    <div class="input-field col s4" style="margin-top: 40px;color: grey;border-bottom: 1px dotted #ccc" ng-if="baseInfoList.repayment_id==0">关联还款编号:无</div>
+                    <div class="input-field col s4" style="margin-top: 40px;color: grey;border-bottom: 1px dotted #ccc" ng-if="baseInfoList.repayment_id!==0">关联还款编号:{{baseInfoList.repayment_id}}</div>
+                </div>
+
+                <!--第七行-->
+                <div class="row col s12">
+                    <div class="input-field col s12">
+                        <input type="text" id="putRemarkText" ng-model="baseInfoList.remark">
+                        <label for="putRemarkText">备注</label>
+                    </div>
+                </div>
+
+                <!--第八行-->
+                <div class="row col s12">
+                    <div class="input-field col s12 right-align">录入时间：{{baseInfoList.created_on |date:'yyyy-MM-dd hh-mm'}}</div>
+                </div>
+
+                <div class="row col s12" style="margin: 40px 0 15px 0" ng-if="baseInfoList.credit_status == 1">
+                    <div class="col s4 offset-s8">
+                        <div class="col s6">
+                            <a ng-click="saveCurrentAccidentInfo()" style="width: 100%" class="waves-light waves-effect cyan lighten-1 btn">
+                                保存
+                            </a>
+                        </div>
+                        <div class="col s6">
+                            <a ng-click="endOfProcessing()" style="width: 100%;background-color:#f0ad4e;" class="waves-light waves-effect lighten-1 btn">
+                                完结
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <!-- 关联车辆 显示区域 -->
+            <div id="lookLinkCar" class="col s12 tab_box" style="width: 95%; margin:0 2% ">
+
+
+            </div>
+
+        </div>
+    </div>
+</div>
