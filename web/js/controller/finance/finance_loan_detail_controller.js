@@ -3,14 +3,16 @@
  */
 app.controller("finance_loan_detail_controller", ["$scope", "$stateParams", "_basic", "_host", "_config", "$state", function ($scope, $stateParams, _basic, _host, _config, $state) {
     var userId = _basic.getSession(_basic.USER_ID);
-    // 支付编号
-    var orderPaymentId = $stateParams.id;
+    // 贷款编号
+    var financialLoanId = $stateParams.id;
     // 委托方性质
     $scope.entrustTypeList = _config.entrustType;
     // 支付状态
     $scope.paymentStatusList = _config.paymentStatus;
     // 支付方式
     $scope.paymentTypeList = _config.paymentType;
+    // 抵押状态
+    $scope.mortgageStatus = _config.mortgageStatus;
 
     // // 金融贷出 状态
     // $scope.loanStatus = _config.loanStatus;
@@ -24,9 +26,10 @@ app.controller("finance_loan_detail_controller", ["$scope", "$stateParams", "_ba
     // $scope.msoFlags = _config.msoFlags;
 
 
+    $scope.loanInfo = {};
 
-    // 合计应付
-    $scope.totalMoney = 0;
+    // 抵押总金额(美元)
+    $scope.totalMortgageMoney = 0;
 
     /**
      *返回上层
@@ -36,7 +39,7 @@ app.controller("finance_loan_detail_controller", ["$scope", "$stateParams", "_ba
     };
 
     /**
-     * Tab跳转 支付信息详情
+     * Tab跳转 贷出信息
      */
     $scope.lookLoanInfo = function () {
         $('.tabWrap .tab').removeClass("active");
@@ -48,7 +51,7 @@ app.controller("finance_loan_detail_controller", ["$scope", "$stateParams", "_ba
     };
 
     /**
-     * Tab跳转 关联仓储订单
+     * Tab跳转 抵押车辆
      */
     $scope.lookMortgageCar = function () {
         $('.tabWrap .tab').removeClass("active");
@@ -57,25 +60,29 @@ app.controller("finance_loan_detail_controller", ["$scope", "$stateParams", "_ba
         $('.tabWrap .lookMortgageCar').addClass("active");
         $("#lookMortgageCar").addClass("active");
         $("#lookMortgageCar").show();
-        // 左侧 未完结 列表
-        _basic.get(_host.api_url + "/storageOrder?entrustId=" + $scope.storagePaymentArray.entrust_id + '&orderStatus=' + $scope.paymentStatusList[0].id).then(function (data) {
-            if (data.success == true) {
-                $scope.storageOrderList = data.result;
+
+        // 左侧 委托方拥有车辆 列表
+        _basic.get(_host.api_url + "/user/" + userId + "/car?relStatus=1&entrustId=" + $scope.loanInfo.entrustId).then(function (data) {
+            if (data.success) {
+                $scope.entrustCarList = data.result;
             } else {
                 swal(data.msg, "", "error");
             }
         });
-        var url = _host.api_url + "/orderPaymentRel?orderPaymentId=" + orderPaymentId;
+        var url = _host.api_url + "/financialLoanMortgageCarRel?financialLoanId=" + financialLoanId;
         //右侧关联列表
         _basic.get(url).then(function (data) {
             if (data.success == true) {
-                $scope.storageOrderPaymentRelList = data.result;
-                $scope.totalMoney = 0;
-                for (var i = 0; i < $scope.storageOrderPaymentRelList.length; i++) {
-                    if ($scope.storageOrderPaymentRelList[i].actual_fee == null) {
-                        $scope.storageOrderPaymentRelList[i].actual_fee = 0;
+                // 本次贷款抵押车辆列表
+                $scope.mortgageCarRelList = data.result;
+                // 抵押总金额
+                $scope.totalMortgageMoney = 0;
+                // 计算抵押总金额
+                for (var i = 0; i < $scope.mortgageCarRelList.length; i++) {
+                    if ($scope.mortgageCarRelList[i].valuation == null) {
+                        $scope.mortgageCarRelList[i].valuation = 0;
                     }
-                    $scope.totalMoney = $scope.storageOrderPaymentRelList[i].actual_fee + $scope.totalMoney;
+                    $scope.totalMortgageMoney = $scope.mortgageCarRelList[i].valuation + $scope.totalMortgageMoney;
                 }
             } else {
                 swal(data.msg, "", "error");
@@ -95,18 +102,17 @@ app.controller("finance_loan_detail_controller", ["$scope", "$stateParams", "_ba
         $("#lookBuyingCars").show();
     };
 
-
     /**
-     * *
-     * 添加仓储关联
-     * */
-    $scope.addOderRel = function (id) {
+     * 添加贷款抵押车辆信息。
+     * @param carId 汽车ID
+     */
+    $scope.addMortgageCarRel = function (carId) {
         // 追加画面数据
         var obj = {
-            storageOrderId: id,
-            orderPaymentId: orderPaymentId
+            financialLoanId: financialLoanId,
+            carId: carId
         };
-        _basic.post(_host.api_url + "/user/" + userId + "/orderPaymentRel", obj).then(function (data) {
+        _basic.post(_host.api_url + "/user/" + userId + "/financialLoanMortgageCarRel", obj).then(function (data) {
             if (data.success) {
                 // 成功后，刷新页面数据
                 $scope.lookMortgageCar();
@@ -117,12 +123,12 @@ app.controller("finance_loan_detail_controller", ["$scope", "$stateParams", "_ba
     };
 
     /**
-     * *
-     * 删除仓储关联
-     * */
-    $scope.deleteOderRel = function (id) {
+     * 删除贷款抵押车辆信息。
+     * @param carId 汽车ID
+     */
+    $scope.deleteMortgageCarRel = function (carId) {
         swal({
-                title: "确定要移除当前订单与该次支付的关联吗？",
+                title: "确定要移除当前抵押车与该次贷出订单的关联吗？",
                 type: "warning",
                 showCancelButton: true,
                 confirmButtonColor: "#DD6B55",
@@ -131,7 +137,7 @@ app.controller("finance_loan_detail_controller", ["$scope", "$stateParams", "_ba
                 closeOnConfirm: true
             },
             function () {
-                _basic.delete(_host.api_url + "/user/" + userId + "/storageOrder/" + id + '/orderPayment/' + orderPaymentId, {}).then(
+                _basic.delete(_host.api_url + "/user/" + userId + "/financialLoan/" + financialLoanId + '/car/' + carId, {}).then(
                     function (data) {
                         if (data.success === true) {
                             $scope.lookMortgageCar();
@@ -163,7 +169,7 @@ app.controller("finance_loan_detail_controller", ["$scope", "$stateParams", "_ba
         });
 
         // 右侧，已关联
-        var url = _host.api_url + "/shipTransOrderPaymentRel?orderPaymentId=" + orderPaymentId;
+        var url = _host.api_url + "/shipTransOrderPaymentRel?financialLoanId=" + financialLoanId;
         _basic.get(url).then(function (data) {
             if (data.success == true) {
                 $scope.shipTransOrderRelList = data.result;
@@ -188,7 +194,7 @@ app.controller("finance_loan_detail_controller", ["$scope", "$stateParams", "_ba
         // 追加画面数据
         var obj = {
             shipTransOrderId: shipTransOrderId,
-            orderPaymentId: orderPaymentId
+            financialLoanId: financialLoanId
         };
         _basic.post(_host.api_url + "/user/" + userId + "/shipTransOrderPaymentRel", obj).then(function (data) {
             if (data.success) {
@@ -215,7 +221,7 @@ app.controller("finance_loan_detail_controller", ["$scope", "$stateParams", "_ba
                 closeOnConfirm: true
             },
             function () {
-                _basic.delete(_host.api_url + "/user/" + userId + "/shipTransOrder/" + shipTransOrderId + '/orderPayment/' + orderPaymentId, {}).then(
+                _basic.delete(_host.api_url + "/user/" + userId + "/shipTransOrder/" + shipTransOrderId + '/orderPayment/' + financialLoanId, {}).then(
                     function (data) {
                         if (data.success === true) {
                             $scope.lookPaymentHistory();
@@ -241,7 +247,7 @@ app.controller("finance_loan_detail_controller", ["$scope", "$stateParams", "_ba
                 paymentMoney: $scope.storagePaymentArray.payment_money,
                 remark: $scope.storagePaymentArray.remark
             };
-            _basic.put(_host.api_url + "/user/" + userId + "/orderPayment/" + orderPaymentId, obj).then(function (data) {
+            _basic.put(_host.api_url + "/user/" + userId + "/orderPayment/" + financialLoanId, obj).then(function (data) {
                 if (data.success == true) {
                     swal("修改成功", "", "success");
                     getBaseInfo();
@@ -269,7 +275,7 @@ app.controller("finance_loan_detail_controller", ["$scope", "$stateParams", "_ba
             },
             function () {
                 // 修改状态为已完结【2：已完结】
-                var url = _host.api_url + "/user/" + userId + "/orderPayment/" + orderPaymentId + "/paymentStatus/" + $scope.paymentStatusList[1].id;
+                var url = _host.api_url + "/user/" + userId + "/orderPayment/" + financialLoanId + "/paymentStatus/" + $scope.paymentStatusList[1].id;
                 _basic.put(url, {}).then(function (data) {
                     if (data.success == true) {
                         getBaseInfo();
@@ -304,14 +310,15 @@ app.controller("finance_loan_detail_controller", ["$scope", "$stateParams", "_ba
     };
 
     /**
-     * 取得订单详情
+     * 取得贷出信息详情。
      */
-    function getOrderDetails() {
+    function getLoanInfo() {
         // 检索用url
-        var url = _host.api_url + "/storageOrder?storageOrderId=" + $scope.storageOrderId;
+        var url = _host.api_url + "/financialLoan?financialLoanId=" + financialLoanId;
 
+        console.log(url);
         _basic.get(url).then(function (data) {
-            if (data.success == true) {
+            if (data.success) {
 
                 if (data.result.length == 0) {
                     return;
@@ -319,36 +326,36 @@ app.controller("finance_loan_detail_controller", ["$scope", "$stateParams", "_ba
 
                 // 订单是已支付时，取得支付详情
                 if (data.result[0].order_status == 2) {
-                    getPaymentDetails();
+                    // getPaymentDetails();
                 }
-                // 支付状态
-                $scope.orderInfo.orderStatus = data.result[0].order_status == null ? '0' : data.result[0].order_status;
+                // 委托方性质
+                $scope.loanInfo.entrustType = data.result[0].entrust_type;
                 // 委托方
-                $scope.orderInfo.entrustId = data.result[0].entrust_id == null ? 0 : data.result[0].entrust_id;
-                $scope.orderInfo.entrustName = data.result[0].short_name == null ? '未知' : data.result[0].short_name;
-                // vin
-                $scope.orderInfo.vin = data.result[0].vin == null ? '未知' : data.result[0].vin;
-                // 制造商
-                $scope.orderInfo.makeName = data.result[0].make_name == null ? '未知' : data.result[0].make_name;
-                // 型号
-                $scope.orderInfo.modelName = data.result[0].model_name == null ? '未知' : data.result[0].model_name;
-                // 颜色
-                $scope.orderInfo.color = '未知';
-                for (var i = 0; i < $scope.configColor.length; i++) {
-                    if ($scope.configColor[i].colorId == data.result[0].colour) {
-                        $scope.orderInfo.color = $scope.configColor[i].colorName;
-                    }
-                }
-                // 入库
-                $scope.orderInfo.enterTime = data.result[0].enter_time == null ? '未知' : data.result[0].enter_time;
-                // 出库
-                $scope.orderInfo.realOutTime = data.result[0].real_out_time == null ? '未知' : data.result[0].real_out_time;
-                // 合计天数
-                $scope.orderInfo.dayCount = data.result[0].day_count == null ? 0 : data.result[0].day_count;
-                // 预计支付(美元)：
-                $scope.orderInfo.planFee = data.result[0].plan_fee == null ? 0 : data.result[0].plan_fee;
-                // 实际应付(美元)：
-                $scope.orderInfo.actualFee = data.result[0].plan_fee == null ? 0 : data.result[0].actual_fee;
+                $scope.loanInfo.entrustId = data.result[0].entrust_id;
+                $scope.loanInfo.entrustName = data.result[0].short_name == null ? '未知' : data.result[0].short_name;
+                // 贷出金额
+                $scope.loanInfo.loanMoney = data.result[0].loan_money;
+                // // 制造商
+                // $scope.loanInfo.makeName = data.result[0].make_name == null ? '未知' : data.result[0].make_name;
+                // // 型号
+                // $scope.loanInfo.modelName = data.result[0].model_name == null ? '未知' : data.result[0].model_name;
+                // // 颜色
+                // $scope.loanInfo.color = '未知';
+                // for (var i = 0; i < $scope.configColor.length; i++) {
+                //     if ($scope.configColor[i].colorId == data.result[0].colour) {
+                //         $scope.loanInfo.color = $scope.configColor[i].colorName;
+                //     }
+                // }
+                // // 入库
+                // $scope.loanInfo.enterTime = data.result[0].enter_time == null ? '未知' : data.result[0].enter_time;
+                // // 出库
+                // $scope.loanInfo.realOutTime = data.result[0].real_out_time == null ? '未知' : data.result[0].real_out_time;
+                // // 合计天数
+                // $scope.loanInfo.dayCount = data.result[0].day_count == null ? 0 : data.result[0].day_count;
+                // // 预计支付(美元)：
+                // $scope.loanInfo.planFee = data.result[0].plan_fee == null ? 0 : data.result[0].plan_fee;
+                // // 实际应付(美元)：
+                // $scope.loanInfo.actualFee = data.result[0].plan_fee == null ? 0 : data.result[0].actual_fee;
             } else {
                 swal(data.msg, "", "error");
             }
@@ -360,7 +367,8 @@ app.controller("finance_loan_detail_controller", ["$scope", "$stateParams", "_ba
      */
     $scope.initData = function () {
         // 取得订单详情
-        // getOrderDetails();
+        getLoanInfo();
+        // 默认显示 贷出信息 TAB
         $scope.lookLoanInfo();
     };
     $scope.initData();

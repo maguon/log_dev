@@ -435,5 +435,17 @@ baseService.factory("_config", function () {
         }
     ];
 
+    // 抵押状态
+    _this.mortgageStatus = [
+        {
+            id: 1,
+            name: "未抵押"
+        },
+        {
+            id: 2,
+            name: "抵押"
+        }
+    ];
+
     return _this
 });
