@@ -108,6 +108,13 @@ app.config(['$stateProvider',"$urlRouterProvider",function($stateProvider,$urlRo
             controller:"credit_card_controller"
         })
 
+        .state("credit_card_detail", {
+            url:"/credit_card_detail/{id}?from",
+            params: {"from": null},
+            templateUrl: "/view/finance/credit_card_detail.html",
+            controller:"credit_card_detail_controller"
+        })
+
         // 海运管理->海运信息
         .state("ship_trans_info", {
             url:"/ship_trans_info",
