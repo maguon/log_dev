@@ -15,7 +15,6 @@ app.controller("credit_card_controller", ["$scope", "$rootScope", "_host", "_bas
     // 状态
     $scope.statusList = _config.paymentStatus;
 
-
     /**
      * 页面跳转
      */
@@ -154,7 +153,8 @@ app.controller("credit_card_controller", ["$scope", "$rootScope", "_host", "_bas
         $('.modal').modal();
         $('#newCreditCardDiv').modal('open');
         $scope.getEntrustInfo();
-        $scope.baseMsg();
+        //$scope.baseMsg();
+        $scope.linkFinanceCar();
     };
 
     /**
@@ -201,6 +201,90 @@ app.controller("credit_card_controller", ["$scope", "$rootScope", "_host", "_bas
             swal("请输入完整信息！", "", "warning");
         }
     };
+
+
+    //模糊查询
+    var vinObjs ={}
+    $('#autocomplete-input').autocomplete({
+        data: vinObjs,
+        limit: 10,
+        onAutocomplete: function(val) {
+        },
+        minLength: 6,
+    });
+    $scope.shortSearch=function () {
+        if($scope.demandVin!=="") {
+            if ($scope.creditVin.length >= 6) {
+                _basic.get(_host.api_url + "/carList?vinCode=" + $scope.creditVin, {}).then(function (data) {
+                    if (data.success == true && data.result.length > 0) {
+                        $scope.vinMsg = data.result;
+                        vinObjs = {};
+                        for (var i in $scope.vinMsg) {
+                            vinObjs[$scope.vinMsg[i].vin] = null;
+                        }
+                        return vinObjs;
+                    } else {
+                        swal('没有您输入的VIN码','','error')
+                        return {};
+                    }
+                }).then(function (vinObjs) {
+                    $('#autocomplete-input').autocomplete({
+                        data: vinObjs,
+                        minLength: 6
+                    });
+                    $('#autocomplete-input').focus();
+
+                })
+            } else {
+                $('#autocomplete-input').autocomplete({minLength: 6});
+                $scope.vinMsg = {}
+            }
+        }
+        else{
+            swal('没有您输入的VIN码','','error')
+        }
+    };
+    // 查询vin码
+    $scope.addLinkCar=function () {
+        _basic.get(_host.api_url + "/carList?vin=" + $scope.creditVin).then(function (data) {
+            if (data.success = true) {
+                if (data.result.length == 0) {
+                    $scope.showStorageData = 1;
+                    step1();
+                }
+                else {
+                    $scope.baseList = data.result[0];
+                    $scope.baseList.model_id = data.result[0].model_id;
+                    $scope.baseList.make_id = data.result[0].make_id;
+                    if ($scope.baseList.model_id == 0 || $scope.baseList.make_id == 0) {
+                        $scope.baseList.model_id = '';
+                        $scope.baseList.make_id = '';
+                    }
+                    if ($scope.baseList.pro_date !== null) {
+                        $scope.baseListDate = moment($scope.baseList.pro_date).format("YYYY-MM-DD");
+                    }
+                    else {
+                        $scope.baseListDate = '';
+                    }
+                    for (var i in _config.config_color) {
+                        if (_config.config_color[i].colorId == $scope.baseList.colour) {
+                            $scope.baseListColor = _config.config_color[i].colorName;
+                        }
+                    }
+                    if ($scope.relCarStatus == 1) {
+                        swal('本车已在库中', "", "error");
+                    } else {
+                        $scope.pictureCarId = $scope.baseList.id;
+                    }
+                }
+            }
+            else {
+                swal(data.msg, "", "error");
+            }
+        })
+    };
+
+
 
 
     /**

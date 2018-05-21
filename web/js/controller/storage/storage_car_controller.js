@@ -379,7 +379,7 @@ app.controller("storage_car_controller", ["$scope", "$rootScope", "$stateParams"
         minLength: 6,
     });
     $scope.shortSearch=function () {
-        if($scope.demandVin!==undefined&&$scope.demandVin!==""){
+        if($scope.demandVin!==""){
             if($scope.demandVin.length>=6){
                 _basic.get(_host.api_url+"/carList?vinCode="+$scope.demandVin,{}).then(function (data) {
                     if(data.success==true&&data.result.length>0){
