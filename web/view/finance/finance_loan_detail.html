@@ -210,405 +210,141 @@
 
     <!-- TAB 3 购买车辆 -->
     <div id="lookBuyingCars" class="col s12 tab_box" style="width: 100%; margin:30px 0">
-        <!--条件分支 未完结-->
-        <div ng-if='paymentStatus==1'>
 
-            <!--委托方未结仓海运订单 无订单-->
-            <div class="col s6" ng-if="shipTransOrderList.length==0">
-                <div  class="col s12 left">
-                    <div class="card" style="border: 2px solid #ccc">
-                        <div class="card-content bold cyan-text fz18 left-align grey lighten-4" style="border-bottom: 2px solid #ccc">
-                            委托方未结仓海运订单
-                        </div>
-                        <div class="card-content">
-                            <div style="height:200px;line-height: 200px;text-align: center">
-                                <i class="mdi  mdi-alert-circle-outline red-text fz30"></i>
-                                <span class="bold grey-text fz22">委托方暂无未支付海运订单</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!--委托方未结仓储订单 有订单-->
-            <div class="col s6" ng-if="shipTransOrderList.length!==0">
-                <div  class="col s12 left">
-                    <div class="card" style="border: 2px solid #ccc;height:auto">
-                        <div class="card-content bold cyan-text fz18 left-align grey lighten-4" style="border-bottom: 2px solid #ccc">
-                            委托方未结仓海运订单
-                        </div>
-                        <div class="card-content">
-                            <table class="bordered centered" style="width: 100%;">
-                                <thead>
-                                <tr class="grey-text text-darken-2">
-                                    <th data-field="">订单编号</th>
-                                    <th data-field="">VIN码</th>
-                                    <th data-field="">车型</th>
-                                    <th data-field="">始发港口</th>
-                                    <th data-field="">目的港口</th>
-                                    <th data-field="">开船日期</th>
-                                    <th data-field="">到港日期</th>
-                                    <th data-field="">运费(美元)</th>
-                                    <th></th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                <tr ng-repeat="el in shipTransOrderList" class="grey-text text-darken-1" style="height:30px">
-                                    <!-- 订单编号 -->
-                                    <td ng-bind="el.id"></td>
-                                    <!-- VIN码 -->
-                                    <td ng-bind="el.vin"></td>
-                                    <!-- 车型 -->
-                                    <td>{{el.make_name==null ? '未知' : el.make_name}}/{{el.model_name==null ? '未知' : el.model_name}}</td>
-                                    <!-- 始发港口 -->
-                                    <td>{{el.start_port_name}}</td>
-                                    <!-- 目的港口 -->
-                                    <td>{{el.end_port_name}}</td>
-                                    <!-- 开船日期 -->
-                                    <td>{{el.start_ship_date |date:'yyyy-MM-dd'}}</td>
-                                    <!-- 到港日期 -->
-                                    <td>{{el.end_ship_date |date:'yyyy-MM-dd'}}</td>
-                                    <!-- 运费(美元) -->
-                                    <td class="red-text">{{el.ship_trans_fee|currency}}</td>
-                                    <!-- 显示画面按钮 -->
-                                    <td class="operation">
-                                        <a  ng-click="addShipTransOderRel(el.id)" class="col s2 left" style="cursor: pointer">
-                                            <i class="mdi mdi-plus-circle look_icon cyan-text lighten-1 fz25"></i>
-                                        </a>
-                                    </td>
-                                </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-            </div>
+        <div class="row col s12 bold" style="color:#4e84cb ;margin-top: 0px;">
+            <div class="col s6" >购买车辆: {{buyingCar.carLength | number}}</div>
+            <div class="col s6 right-align">车价总额(美元): <span class="red-text">{{buyingCar.totalMoney | number}}</span></div>
+        </div>
 
-            <!--此项支付关联存车订单 无订单-->
-            <div class="col s6"  ng-if="shipTransOrderRelList.length==0">
-                <div  class="col s12 right">
-                    <div class="card" style="border: 2px solid #ccc">
-                        <div class="card-content bold cyan-text fz18 left-align grey lighten-4" style="border-bottom: 2px solid #ccc">
-                            此项支付关联海运订单
-                        </div>
-                        <div class="card-content">
-                            <div style="height:200px;line-height: 200px;text-align: center">
-                                <i class="mdi  mdi-alert-circle-outline red-text fz30"></i>
-                                <span class="bold grey-text fz22">委托方暂无海运支付订单</span>
-                            </div>
-                        </div>
+        <!--虚分割线-->
+        <div  class="row col s12" style="height:1px;border-bottom: 1px dotted #ccc;width:96%;margin-left: 2%"></div>
+
+        <!-- VIN -->
+        <div class="col s12">
+            <div class="input-field col s12">
+                <input type="text" placeholder="模糊查询至少6位，新增车辆完整17位" id="autocomplete-input" ng-change="changeVin()" class="autocomplete" ng-model="buyingCar.vin" >
+                <a ng-if="addCarInfoFlg" ng-click="addCarInfo()" class="dataIcon btn-floating cyan" style="width:20px;height: 20px;">
+                    <i class="mdi mdi-plus" style="position: absolute;right:0px;bottom:0px;font-size:15px;line-height: 20px;"></i>
+                </a>
+                <a ng-if="!addCarInfoFlg" class="dataIcon btn-floating grey" style="width:20px;height: 20px;cursor: default">
+                    <i class="mdi mdi-plus" style="position: absolute;right:0px;bottom:0px;font-size:15px;line-height: 20px;"></i>
+                </a>
+
+                <label for="autocomplete-input" class="active" style="padding-left: 2px;"> 购买车辆VIN码</label>
+            </div>
+        </div>
+
+        <!-- 新增车辆信息(自定义) -->
+        <div ng-show="showCustomCarDiv" class="col s12">
+            <div class="row blue-grey lighten-5" style="width: 98%; border:1px solid #bdbdbd;border-top:0;">
+                <!-- header -->
+                <div class="col s12 lighten-1 cyan-text fz14 left-align vc-center" style="height:46px;">
+                    <div class="col s12 left-align">
+                        新增车辆信息
                     </div>
                 </div>
-            </div>
-            <!--此项支付关联存车订单 有订单-->
-            <div class="col s6"  ng-if="shipTransOrderRelList.length!==0">
-                <div  class="col s12 right">
-                    <div class="card" style="border: 2px solid #ccc">
-                        <div class="card-content bold cyan-text fz18 left-align grey lighten-4" style="border-bottom: 2px solid #ccc">
-                            此项支付关联海运订单
-                        </div>
-                        <div class="card-content">
-                            <table class="bordered centered" style="width: 100%;">
-                                <thead>
-                                <tr class="grey-text text-darken-2">
-                                    <th data-field="">订单编号</th>
-                                    <th data-field="">VIN码</th>
-                                    <th data-field="">车型</th>
-                                    <th data-field="">始发港口</th>
-                                    <th data-field="">目的港口</th>
-                                    <th data-field="">开船日期</th>
-                                    <th data-field="">到港日期</th>
-                                    <th data-field="">运费(美元)</th>
-                                    <th></th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                <tr ng-repeat="el in shipTransOrderRelList" class="grey-text text-darken-1" style="height:30px">
-                                    <!-- 订单编号 -->
-                                    <td ng-bind="el.ship_trans_order_id"></td>
-                                    <!-- VIN码 -->
-                                    <td ng-bind="el.vin"></td>
-                                    <!-- 车型 -->
-                                    <td>{{el.make_name==null ? '未知' : el.make_name}}/{{el.model_name==null ? '未知' : el.model_name}}</td>
-                                    <!-- 始发港口 -->
-                                    <td>{{el.start_port_name}}</td>
-                                    <!-- 目的港口 -->
-                                    <td>{{el.end_port_name}}</td>
-                                    <!-- 开船日期 -->
-                                    <td>{{el.start_ship_date |date:'yyyy-MM-dd'}}</td>
-                                    <!-- 到港日期 -->
-                                    <td>{{el.end_ship_date |date:'yyyy-MM-dd'}}</td>
-                                    <!-- 运费(美元) -->
-                                    <td class="red-text">{{el.ship_trans_fee|currency}}</td>
-                                    <!-- 显示画面按钮 -->
-                                    <td class="operation">
-                                        <a  ng-click="deleteShipTransOderRel(el.ship_trans_order_id)" class="col s2 left" style="cursor: pointer">
-                                            <i class="mdi mdi-do-not-disturb look_icon red-text lighten-1 fz25"></i>
-                                        </a>
-                                    </td>
-                                </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                        <div class="right-align" style="padding-right: 25px;padding-bottom: 15px;">合计应付(美元): <span class="red-text">{{totalShipTransMoney | currency}}</span></div>
+
+                <!-- body -->
+                <div class="col s12 lighten-1 white grey-text vc-center">
+                    <!-- VIN码 -->
+                    <div class="input-field col s3 left-align fz15">VIN码:{{customCarInfo.vin}}
                     </div>
+                    <!-- 制造商 -->
+                    <div class="input-field col s3 left-align">
+                        <select material-select watch ng-model="customCarInfo.maker" ng-change="changeMakerId(customCarInfo.maker.id)">
+                            <option value="" disabled>制造商</option>
+                            <option ng-repeat="el in carMakerList" ng-value="el">{{el.make_name}}</option>
+                        </select>
+                    </div>
+                    <!-- 型号 -->
+                    <div class="input-field col s3 left-align">
+                        <select material-select watch ng-model="customCarInfo.model">
+                            <option value="" disabled>型号</option>
+                            <option ng-repeat="el in carModelList" ng-value="el">{{el.model_name}}</option>
+                        </select>
+                    </div>
+                    <!-- 颜色 -->
+                    <div class="input-field col s3 left-align">
+                        <select material-select watch ng-model="customCarInfo.colour">
+                            <option value="" disabled>颜色</option>
+                            <option ng-repeat="el in configColor" ng-value="el.colorId">{{el.colorName}}</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="col s12 lighten-1 white grey-text vc-center">
+                    <!-- 生产日期 -->
+                    <div class="input-field col s3 left-align">
+                        <input id="proDateText" type="text" ng-model="customCarInfo.proDate" class="datepicker" date><i
+                            class="mdi dataIcon mdi-table-large"></i>
+                        <label for="proDateText">生产日期</label>
+                    </div>
+                    <!-- 发动机号 -->
+                    <div class="input-field col s3 left-align">
+                        <input type="text" id="engineNumText" ng-model="customCarInfo.engineNum">
+                        <label for="engineNumText">发动机号</label>
+                    </div>
+                    <!-- 是否MSO -->
+                    <div class="input-field col s3">
+                        <select material-select watch id="msoSelect" ng-model="customCarInfo.msoStatus" >
+                            <option value="" disabled>是否MSO</option>
+                            <option ng-repeat="el in msoFlags" ng-value="el.id">{{el.name}}</option>
+                        </select>
+                    </div>
+                    <!-- 车辆估值 -->
+                    <div class="input-field col s3 left-align">
+                        <input type="text" id="valuationText" maxlength="8" valid-money ng-model="customCarInfo.valuation">
+                        <label for="valuationText"><span class="red-text">*</span>车辆估值(美元)</label>
+                    </div>
+                </div>
+                <!-- 车辆备注 -->
+                <div class="col s12 lighten-1 white grey-text vc-center">
+                    <div class="input-field col s12 left-align">
+                        <input type="text" id="remarkText" maxlength="8" valid-money ng-model="customCarInfo.remark">
+                        <label for="remarkText">车辆备注</label>
+                    </div>
+                </div>
+                <!-- 取消/确认 按钮 -->
+                <div class="col s12 right-align white" style="padding-top: 15px;padding-right: 25px;padding-bottom: 15px;">
+                    <a class="btn-floating waves-effect waves-light grey" style="width:30px;height: 30px;" ng-click="closeCustomCarDiv()">
+                        <i class="mdi mdi-close add_brand"  style="position: absolute;right:0;bottom:3px;font-size:20px;line-height: 20px;"></i>
+                    </a>
+
+                    <a class="btn-floating waves-effect waves-light cyan lighten-1" style="margin-left: 20px;width:30px;height: 30px;"
+                       ng-click="createCustomCar()">
+                        <i class="mdi mdi-check add_brand"  style="position: absolute;right:0;bottom:3px;font-size:20px;line-height: 20px;"></i>
+                    </a>
                 </div>
             </div>
         </div>
 
-        <!--条件分支 已完结-->
-        <div ng-if='paymentStatus==2'>
-            <!--条件分支 无订单-->
-            <div  ng-if="shipTransOrderRelList.length==0" >
-                <div style="height:400px;line-height: 400px;text-align: center">
-                    <i class="mdi  mdi-alert-circle-outline red-text fz30"></i>
-                    <span class="bold grey-text fz22">委托方暂无海运支付订单信息</span>
-                </div>
-            </div>
-
-            <div ng-if='shipTransOrderRelList.length!==0'>
-                <div class="card" style="border: 2px solid #ccc;width:90%;margin:0 auto">
-                    <div class="card-content">
-
-                        <table class="bordered centered" style="width: 100%;">
-                            <thead>
-                            <tr class="grey-text text-darken-2">
-                                <th data-field="">订单编号</th>
-                                <th data-field="">VIN码</th>
-                                <th data-field="">车型</th>
-                                <th data-field="">始发港口</th>
-                                <th data-field="">目的港口</th>
-                                <th data-field="">开船日期</th>
-                                <th data-field="">到港日期</th>
-                                <th data-field="">运费(美元)</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <tr ng-repeat="el in shipTransOrderRelList" class="grey-text text-darken-1" style="height:30px">
-                                <!-- 订单编号 -->
-                                <td ng-bind="el.ship_trans_order_id"></td>
-                                <!-- VIN码 -->
-                                <td ng-bind="el.vin"></td>
-                                <!-- 车型 -->
-                                <td>{{el.make_name==null ? '未知' : el.make_name}}/{{el.model_name==null ? '未知' : el.model_name}}</td>
-                                <!-- 始发港口 -->
-                                <td>{{el.start_port_name}}</td>
-                                <!-- 目的港口 -->
-                                <td>{{el.end_port_name}}</td>
-                                <!-- 开船日期 -->
-                                <td>{{el.start_ship_date |date:'yyyy-MM-dd'}}</td>
-                                <!-- 到港日期 -->
-                                <td>{{el.end_ship_date |date:'yyyy-MM-dd'}}</td>
-                                <!-- 运费(美元) -->
-                                <td class="red-text">{{el.ship_trans_fee|currency}}</td>
-                            </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <div class="right-align" style="padding-right: 25px;padding-bottom: 15px;">合计支付(美元): <span class="red-text">{{totalShipTransMoney | currency}}</span></div>
-                </div>
+        <!-- 新增运送车辆信息列表 -->
+        <div class="col s12">
+            <div class="col s12">
+                <table class="bordered">
+                    <tbody>
+                    <tr ng-repeat="el in buyingCarList" class="grey-text text-darken-1">
+                        <!-- VIN码 -->
+                        <td>VIN码：{{el.vin}}</td>
+                        <!-- 车型 -->
+                        <td>{{el.make_name}}/{{el.model_name}}</td>
+                        <!-- 生产日期 -->
+                        <td ng-bind="el.pro_date|date:'yyyy-MM-dd'"></td>
+                        <!-- 车辆估值 -->
+                        <td ng-bind="el.valuation | number"></td>
+                        <!-- 操作 删除 -->
+                        <td class="operation right-align">
+                            <i class="mdi mdi-close red-text right-align" ng-click="deleteBuyingCarRel(el.car_id)" style="cursor:pointer; right: 22px;"></i>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>
 
-    <!-- TAB 4 还款记录-->
+    <!-- TAB 4 还款记录 -->
     <div id="lookPaymentHistory" class="col s12 tab_box" style="width: 100%; margin:30px 0">
-        <!--条件分支 未完结-->
-        <div ng-if='paymentStatus==1'>
 
-            <!--委托方未结仓海运订单 无订单-->
-            <div class="col s6" ng-if="shipTransOrderList.length==0">
-                <div  class="col s12 left">
-                    <div class="card" style="border: 2px solid #ccc">
-                        <div class="card-content bold cyan-text fz18 left-align grey lighten-4" style="border-bottom: 2px solid #ccc">
-                            委托方未结仓海运订单
-                        </div>
-                        <div class="card-content">
-                            <div style="height:200px;line-height: 200px;text-align: center">
-                                <i class="mdi  mdi-alert-circle-outline red-text fz30"></i>
-                                <span class="bold grey-text fz22">委托方暂无未支付海运订单</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!--委托方未结仓储订单 有订单-->
-            <div class="col s6" ng-if="shipTransOrderList.length!==0">
-                <div  class="col s12 left">
-                    <div class="card" style="border: 2px solid #ccc;height:auto">
-                        <div class="card-content bold cyan-text fz18 left-align grey lighten-4" style="border-bottom: 2px solid #ccc">
-                            委托方未结仓海运订单
-                        </div>
-                        <div class="card-content">
-                            <table class="bordered centered" style="width: 100%;">
-                                <thead>
-                                <tr class="grey-text text-darken-2">
-                                    <th data-field="">订单编号</th>
-                                    <th data-field="">VIN码</th>
-                                    <th data-field="">车型</th>
-                                    <th data-field="">始发港口</th>
-                                    <th data-field="">目的港口</th>
-                                    <th data-field="">开船日期</th>
-                                    <th data-field="">到港日期</th>
-                                    <th data-field="">运费(美元)</th>
-                                    <th></th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                <tr ng-repeat="el in shipTransOrderList" class="grey-text text-darken-1" style="height:30px">
-                                    <!-- 订单编号 -->
-                                    <td ng-bind="el.id"></td>
-                                    <!-- VIN码 -->
-                                    <td ng-bind="el.vin"></td>
-                                    <!-- 车型 -->
-                                    <td>{{el.make_name==null ? '未知' : el.make_name}}/{{el.model_name==null ? '未知' : el.model_name}}</td>
-                                    <!-- 始发港口 -->
-                                    <td>{{el.start_port_name}}</td>
-                                    <!-- 目的港口 -->
-                                    <td>{{el.end_port_name}}</td>
-                                    <!-- 开船日期 -->
-                                    <td>{{el.start_ship_date |date:'yyyy-MM-dd'}}</td>
-                                    <!-- 到港日期 -->
-                                    <td>{{el.end_ship_date |date:'yyyy-MM-dd'}}</td>
-                                    <!-- 运费(美元) -->
-                                    <td class="red-text">{{el.ship_trans_fee|currency}}</td>
-                                    <!-- 显示画面按钮 -->
-                                    <td class="operation">
-                                        <a  ng-click="addShipTransOderRel(el.id)" class="col s2 left" style="cursor: pointer">
-                                            <i class="mdi mdi-plus-circle look_icon cyan-text lighten-1 fz25"></i>
-                                        </a>
-                                    </td>
-                                </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!--此项支付关联存车订单 无订单-->
-            <div class="col s6"  ng-if="shipTransOrderRelList.length==0">
-                <div  class="col s12 right">
-                    <div class="card" style="border: 2px solid #ccc">
-                        <div class="card-content bold cyan-text fz18 left-align grey lighten-4" style="border-bottom: 2px solid #ccc">
-                            此项支付关联海运订单
-                        </div>
-                        <div class="card-content">
-                            <div style="height:200px;line-height: 200px;text-align: center">
-                                <i class="mdi  mdi-alert-circle-outline red-text fz30"></i>
-                                <span class="bold grey-text fz22">委托方暂无海运支付订单</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!--此项支付关联存车订单 有订单-->
-            <div class="col s6"  ng-if="shipTransOrderRelList.length!==0">
-                <div  class="col s12 right">
-                    <div class="card" style="border: 2px solid #ccc">
-                        <div class="card-content bold cyan-text fz18 left-align grey lighten-4" style="border-bottom: 2px solid #ccc">
-                            此项支付关联海运订单
-                        </div>
-                        <div class="card-content">
-                            <table class="bordered centered" style="width: 100%;">
-                                <thead>
-                                <tr class="grey-text text-darken-2">
-                                    <th data-field="">订单编号</th>
-                                    <th data-field="">VIN码</th>
-                                    <th data-field="">车型</th>
-                                    <th data-field="">始发港口</th>
-                                    <th data-field="">目的港口</th>
-                                    <th data-field="">开船日期</th>
-                                    <th data-field="">到港日期</th>
-                                    <th data-field="">运费(美元)</th>
-                                    <th></th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                <tr ng-repeat="el in shipTransOrderRelList" class="grey-text text-darken-1" style="height:30px">
-                                    <!-- 订单编号 -->
-                                    <td ng-bind="el.ship_trans_order_id"></td>
-                                    <!-- VIN码 -->
-                                    <td ng-bind="el.vin"></td>
-                                    <!-- 车型 -->
-                                    <td>{{el.make_name==null ? '未知' : el.make_name}}/{{el.model_name==null ? '未知' : el.model_name}}</td>
-                                    <!-- 始发港口 -->
-                                    <td>{{el.start_port_name}}</td>
-                                    <!-- 目的港口 -->
-                                    <td>{{el.end_port_name}}</td>
-                                    <!-- 开船日期 -->
-                                    <td>{{el.start_ship_date |date:'yyyy-MM-dd'}}</td>
-                                    <!-- 到港日期 -->
-                                    <td>{{el.end_ship_date |date:'yyyy-MM-dd'}}</td>
-                                    <!-- 运费(美元) -->
-                                    <td class="red-text">{{el.ship_trans_fee|currency}}</td>
-                                    <!-- 显示画面按钮 -->
-                                    <td class="operation">
-                                        <a  ng-click="deleteShipTransOderRel(el.ship_trans_order_id)" class="col s2 left" style="cursor: pointer">
-                                            <i class="mdi mdi-do-not-disturb look_icon red-text lighten-1 fz25"></i>
-                                        </a>
-                                    </td>
-                                </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                        <div class="right-align" style="padding-right: 25px;padding-bottom: 15px;">合计应付(美元): <span class="red-text">{{totalShipTransMoney | currency}}</span></div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!--条件分支 已完结-->
-        <div ng-if='paymentStatus==2'>
-            <!--条件分支 无订单-->
-            <div  ng-if="shipTransOrderRelList.length==0" >
-                <div style="height:400px;line-height: 400px;text-align: center">
-                    <i class="mdi  mdi-alert-circle-outline red-text fz30"></i>
-                    <span class="bold grey-text fz22">委托方暂无海运支付订单信息</span>
-                </div>
-            </div>
-
-            <div ng-if='shipTransOrderRelList.length!==0'>
-                <div class="card" style="border: 2px solid #ccc;width:90%;margin:0 auto">
-                    <div class="card-content">
-
-                        <table class="bordered centered" style="width: 100%;">
-                            <thead>
-                            <tr class="grey-text text-darken-2">
-                                <th data-field="">订单编号</th>
-                                <th data-field="">VIN码</th>
-                                <th data-field="">车型</th>
-                                <th data-field="">始发港口</th>
-                                <th data-field="">目的港口</th>
-                                <th data-field="">开船日期</th>
-                                <th data-field="">到港日期</th>
-                                <th data-field="">运费(美元)</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <tr ng-repeat="el in shipTransOrderRelList" class="grey-text text-darken-1" style="height:30px">
-                                <!-- 订单编号 -->
-                                <td ng-bind="el.ship_trans_order_id"></td>
-                                <!-- VIN码 -->
-                                <td ng-bind="el.vin"></td>
-                                <!-- 车型 -->
-                                <td>{{el.make_name==null ? '未知' : el.make_name}}/{{el.model_name==null ? '未知' : el.model_name}}</td>
-                                <!-- 始发港口 -->
-                                <td>{{el.start_port_name}}</td>
-                                <!-- 目的港口 -->
-                                <td>{{el.end_port_name}}</td>
-                                <!-- 开船日期 -->
-                                <td>{{el.start_ship_date |date:'yyyy-MM-dd'}}</td>
-                                <!-- 到港日期 -->
-                                <td>{{el.end_ship_date |date:'yyyy-MM-dd'}}</td>
-                                <!-- 运费(美元) -->
-                                <td class="red-text">{{el.ship_trans_fee|currency}}</td>
-                            </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <div class="right-align" style="padding-right: 25px;padding-bottom: 15px;">合计支付(美元): <span class="red-text">{{totalShipTransMoney | currency}}</span></div>
-                </div>
-            </div>
-        </div>
     </div>
 </div>
