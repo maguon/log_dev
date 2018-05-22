@@ -163,15 +163,15 @@ app.controller("credit_card_controller", ["$scope", "$rootScope", "_host", "_bas
     $scope.addCreditCardInfo = function () {
 
         // 委托方 下拉选中 内容
-        var entrust = $("#addEntrustSelect").select2("data")[0]; //单选
+        $scope.entrust = $("#addEntrustSelect").select2("data")[0]; //单选
 
-        if (entrust.id !== "" && $scope.addCreditId !== "" && $scope.addCreditMoney !== "" && $scope.addActualMoney !== "") {
+        if ( $scope.entrust.id !== "" && $scope.addCreditId !== "" && $scope.addCreditMoney !== "" && $scope.addActualMoney !== "") {
 
 
             // 追加画面数据
             var obj = {
                 creditNumber: $scope.addCreditMoney,
-                entrustId: entrust.id,
+                entrustId: $scope.entrust.id,
                 creditMoney: $scope.addCreditMoney,
                 actualMoney: $scope.addActualMoney,
                 planReturnDate: $scope.addPlanReturnDate,
@@ -246,7 +246,7 @@ app.controller("credit_card_controller", ["$scope", "$rootScope", "_host", "_bas
     };
     // 查询vin码
     $scope.addLinkCar=function () {
-        _basic.get(_host.api_url + "/carList?vin=" + $scope.creditVin).then(function (data) {
+        _basic.get(_host.api_url + "/shipTransCarRel?vin=" + $scope.creditVin+"/entrustId/"+ $scope.entrust.id).then(function (data) {
             if (data.success = true) {
                 if (data.result.length == 0) {
                     $scope.showStorageData = 1;
