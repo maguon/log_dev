@@ -4,7 +4,7 @@
 app.controller("finance_loan_detail_controller", ["$scope", "$stateParams", "_basic", "_host", "_config", "$state", function ($scope, $stateParams, _basic, _host, _config, $state) {
     var userId = _basic.getSession(_basic.USER_ID);
     // 贷款编号
-    var financialLoanId = $stateParams.id;
+    var loanId = $stateParams.id;
     // 委托方性质
     $scope.entrustTypeList = _config.entrustType;
     // 抵押状态
@@ -49,22 +49,39 @@ app.controller("finance_loan_detail_controller", ["$scope", "$stateParams", "_ba
         mso: ""
     };
 
+    // 还款记录(TAB4) 基本信息
+    $scope.paymentInfo = {};
+
+    // 还款记录(TAB4) 新增还款 基本信息
+    $scope.newPayment = {};
+
+    // 还款记录(TAB4) 新增还款 基本信息(默认数据)
+    $scope.newPayment = {
+        // 本次还贷金额(美元)
+        paymentMoney: "",
+        // 利率
+        rate: "",
+        // 产生利息金额(美元)
+        principal: "",
+        // 产生利息时长
+        interestDay: "",
+        // 利息
+        interest: "",
+        // 手续费
+        poundage: "",
+        // 利率
+        paymentMoney: "",
+        // 利率
+        paymentMoney: ""
+
+    };
+
     /***************************************************************************/
 
     // 支付状态
     $scope.paymentStatusList = _config.paymentStatus;
     // 支付方式
     $scope.paymentTypeList = _config.paymentType;
-    // // 金融贷出 状态
-    // $scope.loanStatus = _config.loanStatus;
-    // // 颜色列表
-    // $scope.configColor = _config.config_color;
-
-    // // 委托方性质
-    // $scope.entrustTypeList = _config.entrustType;
-    // // 是否MSO车辆
-    // $scope.msoFlags = _config.msoFlags;
-
 
 
     /**
@@ -95,7 +112,7 @@ app.controller("finance_loan_detail_controller", ["$scope", "$stateParams", "_ba
      */
     function getLoanInfo() {
         // 检索用url
-        var url = _host.api_url + "/financialLoan?financialLoanId=" + financialLoanId;
+        var url = _host.api_url + "/loan?loanId=" + loanId;
         _basic.get(url).then(function (data) {
             if (data.success) {
 
@@ -109,7 +126,7 @@ app.controller("finance_loan_detail_controller", ["$scope", "$stateParams", "_ba
                 }
 
                 // 贷出编号
-                $scope.loanInfo.id = financialLoanId;
+                $scope.loanInfo.id = loanId;
                 // 贷出订单 状态
                 $scope.loanInfo.loanStatus = data.result[0].loan_status;
 
@@ -143,14 +160,14 @@ app.controller("finance_loan_detail_controller", ["$scope", "$stateParams", "_ba
         var obj = {
             // 委托方
             entrustId: $scope.loanInfo.entrustId,
-            // 定金 TODO
+            // 定金
             deposit: $scope.loanInfo.deposit === "" ? 0 : $scope.loanInfo.deposit,
             // 贷出金额
             loanMoney: $scope.loanInfo.loanMoney === "" ? 0 : $scope.loanInfo.loanMoney,
             // 备注
             remark: $scope.loanInfo.remark
         };
-        _basic.put(_host.api_url + "/user/" + userId + "/financialLoan/" + financialLoanId, obj).then(function (data) {
+        _basic.put(_host.api_url + "/user/" + userId + "/loan/" + loanId, obj).then(function (data) {
             if (data.success) {
                 swal("修改成功", "", "success");
                 // 默认显示 贷出信息 TAB
@@ -183,7 +200,7 @@ app.controller("finance_loan_detail_controller", ["$scope", "$stateParams", "_ba
         });
 
         // 取得 右侧关联列表
-        var url = _host.api_url + "/financialLoanMortgageCarRel?financialLoanId=" + financialLoanId;
+        var url = _host.api_url + "/loanMortgageCarRel?loanId=" + loanId;
         _basic.get(url).then(function (data) {
             if (data.success == true) {
                 // 本次贷款抵押车辆列表
@@ -210,10 +227,10 @@ app.controller("finance_loan_detail_controller", ["$scope", "$stateParams", "_ba
     $scope.addMortgageCarRel = function (carId) {
         // 追加画面数据
         var obj = {
-            financialLoanId: financialLoanId,
+            loanId: loanId,
             carId: carId
         };
-        _basic.post(_host.api_url + "/user/" + userId + "/financialLoanMortgageCarRel", obj).then(function (data) {
+        _basic.post(_host.api_url + "/user/" + userId + "/loanMortgageCarRel", obj).then(function (data) {
             if (data.success) {
                 // 成功后，刷新页面数据
                 $scope.lookMortgageCar();
@@ -238,7 +255,7 @@ app.controller("finance_loan_detail_controller", ["$scope", "$stateParams", "_ba
                 closeOnConfirm: true
             },
             function () {
-                _basic.delete(_host.api_url + "/user/" + userId + "/financialLoan/" + financialLoanId + '/car/' + carId, {}).then(
+                _basic.delete(_host.api_url + "/user/" + userId + "/loan/" + loanId + '/car/' + carId, {}).then(
                     function (data) {
                         if (data.success === true) {
                             $scope.lookMortgageCar();
@@ -263,7 +280,7 @@ app.controller("finance_loan_detail_controller", ["$scope", "$stateParams", "_ba
         $("#lookBuyingCars").show();
 
         // 取得 该贷款 购买的金融车列表
-        _basic.get(_host.api_url + "/financialLoanBuyCarRel?financialLoanId=" + financialLoanId).then(function (data) {
+        _basic.get(_host.api_url + "/loanBuyCarRel?loanId=" + loanId).then(function (data) {
             if (data.success) {
                 // 购买车辆 列表
                 $scope.buyingCarList = data.result;
@@ -445,10 +462,10 @@ app.controller("finance_loan_detail_controller", ["$scope", "$stateParams", "_ba
     $scope.addBuyingCarRel = function (carId) {
         // 追加画面数据
         var obj = {
-            financialLoanId: financialLoanId,
+            loanId: loanId,
             carId: carId
         };
-        _basic.post(_host.api_url + "/user/" + userId + "/financialLoanBuyCarRel", obj).then(function (data) {
+        _basic.post(_host.api_url + "/user/" + userId + "/loanBuyCarRel", obj).then(function (data) {
             if (data.success) {
                 // 成功后，刷新页面数据
                 $scope.lookBuyingCars();
@@ -473,7 +490,7 @@ app.controller("finance_loan_detail_controller", ["$scope", "$stateParams", "_ba
                 closeOnConfirm: true
             },
             function () {
-                _basic.delete(_host.api_url + "/user/" + userId + "/financialLoan/" + financialLoanId + '/car/' + carId + '/financialLoanBuyCarRel', {}).then(
+                _basic.delete(_host.api_url + "/user/" + userId + "/loan/" + loanId + '/car/' + carId + '/loanBuyCarRel', {}).then(
                     function (data) {
                         if (data.success === true) {
                             $scope.lookBuyingCars();
@@ -498,32 +515,168 @@ app.controller("finance_loan_detail_controller", ["$scope", "$stateParams", "_ba
         $("#lookPaymentHistory").addClass("active");
         $("#lookPaymentHistory").show();
 
-        // 取得 左侧一览 未完结
-        _basic.get(_host.api_url + "/shipTransOrder?entrustId=" + $scope.storagePaymentArray.entrust_id + '&orderStatus=' + $scope.paymentStatusList[0].id).then(function (data) {
-            if (data.success == true) {
-                $scope.shipTransOrderList = data.result;
-            } else {
-                swal(data.msg, "", "error");
-            }
-        });
+        // TODO
+        // 基本信息 合计归还本金(美元)
+        $scope.paymentInfo.paymentMoney = 10000;
+        // 基本信息 合计利息(美元)
+        $scope.paymentInfo.totalInterest = 100;
+        // 基本信息 合计手续费(美元)
+        $scope.paymentInfo.paymentPoundage = 100;
+        // 基本信息 未还金额(美元)
+        $scope.paymentInfo.leftPaymentMoney = 530.33;
+        // 基本信息 起始时间
+        $scope.paymentInfo.startDay = 0;
+        // 基本信息 产生利息时长
+        $scope.paymentInfo.interestDay = 10;
 
-        // 取得 右侧，已关联
-        var url = _host.api_url + "/shipTransOrderPaymentRel?financialLoanId=" + financialLoanId;
-        _basic.get(url).then(function (data) {
-            if (data.success == true) {
-                $scope.shipTransOrderRelList = data.result;
-                $scope.totalShipTransMoney = 0;
-                for (var i = 0; i < $scope.shipTransOrderRelList.length; i++) {
-                    if ($scope.shipTransOrderRelList[i].ship_trans_fee == null) {
-                        $scope.shipTransOrderRelList[i].ship_trans_fee = 0;
-                    }
-                    $scope.totalShipTransMoney = $scope.shipTransOrderRelList[i].ship_trans_fee + $scope.totalShipTransMoney;
-                }
-            } else {
-                swal(data.msg, "", "error");
-            }
-        });
+
+
+        // // 取得 左侧一览 未完结
+        // _basic.get(_host.api_url + "/shipTransOrder?entrustId=" + $scope.storagePaymentArray.entrust_id + '&orderStatus=' + $scope.paymentStatusList[0].id).then(function (data) {
+        //     if (data.success == true) {
+        //         $scope.shipTransOrderList = data.result;
+        //     } else {
+        //         swal(data.msg, "", "error");
+        //     }
+        // });
+        //
+        // // 取得 右侧，已关联
+        // var url = _host.api_url + "/shipTransOrderPaymentRel?loanId=" + loanId;
+        // _basic.get(url).then(function (data) {
+        //     if (data.success == true) {
+        //         $scope.shipTransOrderRelList = data.result;
+        //         $scope.totalShipTransMoney = 0;
+        //         for (var i = 0; i < $scope.shipTransOrderRelList.length; i++) {
+        //             if ($scope.shipTransOrderRelList[i].ship_trans_fee == null) {
+        //                 $scope.shipTransOrderRelList[i].ship_trans_fee = 0;
+        //             }
+        //             $scope.totalShipTransMoney = $scope.shipTransOrderRelList[i].ship_trans_fee + $scope.totalShipTransMoney;
+        //         }
+        //     } else {
+        //         swal(data.msg, "", "error");
+        //     }
+        // });
     };
+
+    /**
+     * 打开【新增金融贷出】模态画面。
+     */
+    $scope.openNewFinanceLoanPaymentDiv = function () {
+        $('.modal').modal();
+        $('#newFinanceLoanPaymentDiv').modal('open');
+        // // 激活定金label状态
+        // $('#earnestMoneyLabel').addClass('active');
+        // 初始数据
+        // angular.copy($scope.newLoanInfo, $scope.loanInfo);
+        // // 获取委托方信息
+        // $scope.getEntrustInfo();
+
+        $scope.lookPaymentInfo();
+    };
+
+    /**
+     * Tab跳转 贷出信息
+     */
+    $scope.lookPaymentInfo = function () {
+        // 显示画面
+        $('.tabWrap .modal_tab').removeClass("active");
+        $(".modal_tab_box ").removeClass("active");
+        $(".modal_tab_box ").hide();
+        $('.tabWrap .paymentInfoDiv').addClass("active");
+        $("#paymentInfoDiv").addClass("active");
+        $("#paymentInfoDiv").show();
+
+
+        // 本次还贷金额(美元)
+        $scope.newPayment.paymentMoney = "";
+        // 利率
+        $scope.newPayment.rate = 0;
+        // 产生利息金额(美元)
+        $scope.newPayment.principal = $scope.paymentInfo.leftPaymentMoney;
+        // 产生利息时长(天)
+        $scope.newPayment.interestDay = $scope.paymentInfo.interestDay;
+        // 利息(美元)
+        $scope.newPayment.interest = 0;
+        // 手续费(美元)
+        $scope.newPayment.poundage = "";
+        $("#rateLabel").addClass("active");
+        $("#interestLabel").addClass("active");
+        // 本次应还总金额(美元)
+        $scope.newPayment.totalPaymentMoney = "";
+        // 剩余未还金额(美元)
+        $scope.newPayment.leftPaymentMoney = "";
+    };
+
+    /**
+     * Tab跳转 贷出信息
+     */
+    $scope.lookCreditPayment = function () {
+        // 显示画面
+        $('.tabWrap .modal_tab').removeClass("active");
+        $(".modal_tab_box ").removeClass("active");
+        $(".modal_tab_box ").hide();
+        $('.tabWrap .creditPaymentDiv').addClass("active");
+        $("#creditPaymentDiv").addClass("active");
+        $("#creditPaymentDiv").show();
+
+    };
+
+    /**
+     * Tab跳转 贷出信息
+     */
+    $scope.lookOtherPayment = function () {
+        // 显示画面
+        $('.tabWrap .modal_tab').removeClass("active");
+        $(".modal_tab_box ").removeClass("active");
+        $(".modal_tab_box ").hide();
+        $('.tabWrap .otherPaymentDiv').addClass("active");
+        $("#otherPaymentDiv").addClass("active");
+        $("#otherPaymentDiv").show();
+
+    };
+
+
+    /**
+     * 利息计算用方法。
+     */
+    $scope.calculateInterest = function () {
+        if ($scope.newPayment.rate === "" || $scope.newPayment.principal === "") {
+            $scope.newPayment.interest = 0;
+        } else {
+            $scope.newPayment.interest = $scope.newPayment.rate * $scope.newPayment.principal * $scope.newPayment.interestDay / 100;
+            $scope.newPayment.interest = $scope.newPayment.interest.toFixed(2);
+        }
+
+        // 计算 本次应还总金额/剩余未还金额
+        $scope.calculatePaymentMoney();
+    };
+
+    /**
+     * 本次应还总金额/剩余未还金额 计算用方法。
+     */
+    $scope.calculatePaymentMoney = function () {
+        // 手续费
+        var poundage = 0;
+        if ($scope.newPayment.poundage !== "") {
+            poundage = parseFloat($scope.newPayment.poundage);
+        }
+
+        // 本次还贷金额
+        if ($scope.newPayment.paymentMoney === "") {
+            $scope.newPayment.totalPaymentMoney = "";
+        } else {
+            // 本次应还总金额 = 本次还贷金额 + 利息 + 手续费
+            $scope.newPayment.totalPaymentMoney = parseFloat($scope.newPayment.paymentMoney) + parseFloat($scope.newPayment.interest) + poundage;
+            $scope.newPayment.totalPaymentMoney = $scope.newPayment.totalPaymentMoney.toFixed(2);
+            $scope.newPayment.leftPaymentMoney = parseFloat($scope.paymentInfo.leftPaymentMoney) - parseFloat($scope.newPayment.paymentMoney);
+            $scope.newPayment.leftPaymentMoney = $scope.newPayment.leftPaymentMoney.toFixed(2);
+        }
+    };
+
+
+
+
+
 
     /**
      * *
@@ -533,7 +686,7 @@ app.controller("finance_loan_detail_controller", ["$scope", "$stateParams", "_ba
         // 追加画面数据
         var obj = {
             shipTransOrderId: shipTransOrderId,
-            financialLoanId: financialLoanId
+            loanId: loanId
         };
         _basic.post(_host.api_url + "/user/" + userId + "/shipTransOrderPaymentRel", obj).then(function (data) {
             if (data.success) {
@@ -560,7 +713,7 @@ app.controller("finance_loan_detail_controller", ["$scope", "$stateParams", "_ba
                 closeOnConfirm: true
             },
             function () {
-                _basic.delete(_host.api_url + "/user/" + userId + "/shipTransOrder/" + shipTransOrderId + '/orderPayment/' + financialLoanId, {}).then(
+                _basic.delete(_host.api_url + "/user/" + userId + "/shipTransOrder/" + shipTransOrderId + '/orderPayment/' + loanId, {}).then(
                     function (data) {
                         if (data.success === true) {
                             $scope.lookPaymentHistory();
@@ -587,7 +740,7 @@ app.controller("finance_loan_detail_controller", ["$scope", "$stateParams", "_ba
             },
             function () {
                 // 修改状态为已完结【2：已完结】
-                var url = _host.api_url + "/user/" + userId + "/orderPayment/" + financialLoanId + "/paymentStatus/" + $scope.paymentStatusList[1].id;
+                var url = _host.api_url + "/user/" + userId + "/orderPayment/" + loanId + "/paymentStatus/" + $scope.paymentStatusList[1].id;
                 _basic.put(url, {}).then(function (data) {
                     if (data.success == true) {
                         getBaseInfo();

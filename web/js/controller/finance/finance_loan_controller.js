@@ -38,7 +38,7 @@ app.controller("finance_loan_controller", ["$scope", "$rootScope", "_host", "_ba
      */
     function queryFinanceLoanList() {
         // 基本检索URL
-        var url = _host.api_url + "/financialLoan?start=" + $scope.start + "&size=" + $scope.size;
+        var url = _host.api_url + "/loan?start=" + $scope.start + "&size=" + $scope.size;
         // 检索条件
         var conditionsObj = makeConditions();
         var conditions = _basic.objToUrl(conditionsObj);
@@ -87,7 +87,7 @@ app.controller("finance_loan_controller", ["$scope", "$rootScope", "_host", "_ba
      */
     function setConditions(conditions) {
         // 贷出编号
-        $scope.condLoanId = conditions.financialLoanId;
+        $scope.condLoanId = conditions.loanId;
         // 委托方性质
         $scope.condEntrustType = conditions.entrustType;
         // 委托方
@@ -111,7 +111,7 @@ app.controller("finance_loan_controller", ["$scope", "$rootScope", "_host", "_ba
     function makeConditions() {
         return {
             // 贷出编号
-            financialLoanId: $scope.condLoanId,
+            loanId: $scope.condLoanId,
             // 委托方性质
             entrustType: $scope.condEntrustType,
             // 委托方
@@ -224,7 +224,7 @@ app.controller("finance_loan_controller", ["$scope", "$rootScope", "_host", "_ba
             };
 
             // 新增金融贷出。
-            _basic.post(_host.api_url + "/user/" + userId + "/financialLoan", obj).then(function (data) {
+            _basic.post(_host.api_url + "/user/" + userId + "/loan", obj).then(function (data) {
                 if (data.success) {
                     $('#newFinanceLoanDiv').modal('close');
                     swal("新增成功", "", "success");

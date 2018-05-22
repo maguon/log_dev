@@ -27,44 +27,44 @@
     <!-- TAB 1 贷出信息 -->
     <div id="lookLoanFinfoDiv" class="col s12 tab_box" style="width: 90%; margin:0 5% ">
         <!-- TODO 未完结状态下 -->
-        <div class="modal-content">
-            <div class="row col s12 bold" style="color:#4e84cb ;margin-top: 40px;">
-                <div class="col s6 fz18" >贷出编号: {{loanInfo.id}}</div>
-                <div class="col s6 right-align">{{loanStatus[loanInfo.loanStatus-1].name}}</div>
-                <!--<div class="col s6 right-align" ng-class="{'red-text':storagePaymentArray.payment_status==1}">{{loanStatus[storagePaymentArray.payment_status-1].name}}</div>-->
+        <div class="row col s12 bold" style="color:#4e84cb ;margin-top: 40px;">
+            <div class="col s6 fz18" >贷出编号: {{loanInfo.id}}</div>
+            <div class="col s6 right-align">{{loanStatus[loanInfo.loanStatus-1].name}}</div>
+            <!--<div class="col s6 right-align" ng-class="{'red-text':storagePaymentArray.payment_status==1}">{{loanStatus[storagePaymentArray.payment_status-1].name}}</div>-->
+        </div>
+
+        <!--实分割线-->
+        <div class="row col s12" style="height:2px;border-bottom: 1px solid #ccc;width:96%;margin-left: 2%"></div>
+
+        <div class="row col s12 cyan-text">
+            <div class="col s6" >委托方: {{loanInfo.entrustName}}</div>
+            <div class="col s6 grey-text right-align">贷出时间: {{loanInfo.createdOn |date:'yyyy-MM-dd hh:mm'}}</div>
+        </div>
+
+        <!-- 定金，贷出金额 -->
+        <div class="row col s12" style="margin-top: 40px;">
+            <!-- 定金 -->
+            <div class="input-field col s6">
+                <input type="text" id="depositText" maxlength="10" valid-money ng-model="loanInfo.deposit" class="red-text">
+                <label for="depositText" id="depositLabel"> 定金</label>
             </div>
 
-            <!--实分割线-->
-            <div class="row col s12" style="height:2px;border-bottom: 1px solid #ccc;width:96%;margin-left: 2%"></div>
-
-            <div class="row col s12 cyan-text">
-                <div class="col s6" >委托方: {{loanInfo.entrustName}}</div>
-                <div class="col s6 grey-text right-align">贷出时间: {{loanInfo.createdOn |date:'yyyy-MM-dd hh:mm'}}</div>
-            </div>
-
-            <!-- 定金，贷出金额 -->
-            <div class="row col s12" style="margin-top: 40px;">
-                <!-- 定金 -->
-                <div class="input-field col s6">
-                    <input type="text" id="depositText" maxlength="10" valid-money ng-model="loanInfo.deposit" class="red-text">
-                    <label for="depositText" id="depositLabel"> 定金</label>
-                </div>
-
-                <!-- 贷出金额(美元) -->
-                <div class="input-field col s6">
-                    <input type="text" id="loanMoneyText" maxlength="10" valid-money ng-model="loanInfo.loanMoney" class="red-text">
-                    <label for="loanMoneyText" id="loanMoneyLabel"> 贷出金额(美元)</label>
-                </div>
-            </div>
-
-            <!-- 备注 -->
-            <div class="row col s12">
-                <div class="col s12 input-field">
-                    <input type="text" id="loadRemarkText" ng-model="loanInfo.remark">
-                    <label for="loadRemarkText">备注</label>
-                </div>
+            <!-- 贷出金额(美元) -->
+            <div class="input-field col s6">
+                <input type="text" id="loanMoneyText" maxlength="10" valid-money ng-model="loanInfo.loanMoney" class="red-text">
+                <label for="loanMoneyText" id="loanMoneyLabel"> 贷出金额(美元)</label>
             </div>
         </div>
+
+        <!-- 备注 -->
+        <div class="row col s12">
+            <div class="col s12 input-field">
+                <input type="text" id="loadRemarkText" ng-model="loanInfo.remark">
+                <label for="loadRemarkText">备注</label>
+            </div>
+        </div>
+
+        <!-- 修改 button -->
         <div class="row col s12 right-align" style="margin-top: 50px">
             <div class="col s10"></div>
             <div class="col s2 right-align">
@@ -346,7 +346,181 @@
     </div>
 
     <!-- TAB 4 还款记录 -->
-    <div id="lookPaymentHistory" class="col s12 tab_box" style="width: 100%; margin:30px 0">
+    <div id="lookPaymentHistory" class="col s12 tab_box" style="width: 90%; margin:0 5% ">
+        <div class="row col s12 bold" style="color:#4e84cb ;margin-top: 40px;">
+            <div class="col s6" ></div>
+            <div class="col s6 right-align">{{loanStatus[loanInfo.loanStatus-1].name}}</div>
+            <!--<div class="col s6 right-align" ng-class="{'red-text':storagePaymentArray.payment_status==1}">{{loanStatus[storagePaymentArray.payment_status-1].name}}</div>-->
+        </div>
 
+
+        <!-- 新增车辆信息(自定义) -->
+        <div class="col s12 ">
+            <div class="col s12">
+                <div class="row z-depth-1" style="border:1px solid #bdbdbd;">
+                    <!-- header -->
+                    <div class="col s12 lighten-1 cyan-text vc-center fz15" style="height:66px;border-bottom:1px solid #bdbdbd;">
+                        <div class="col s4 left-align">
+                            合计归还本金(美元)：<span class="red-text">{{paymentInfo.paymentMoney | number}}</span>
+                        </div>
+                        <div class="col s4 left-align">
+                            合计利息(美元)：<span class="red-text">{{paymentInfo.totalInterest | number}}</span>
+                        </div>
+                        <div class="col s4 left-align">
+                            合计手续费(美元)：<span class="red-text">{{paymentInfo.paymentPoundage | number}}</span>
+                        </div>
+                    </div>
+
+                    <!-- body -->
+                    <div class="col s12 lighten-1 white grey-text vc-center" style="height:66px;">
+                        <div class="col s4 left-align cyan-text">
+                            未还金额(美元)：<span class="red-text">{{paymentInfo.leftPaymentMoney | number}}</span>
+                        </div>
+                        <div class="col s4 left-align fz14">
+                            起始时间：{{paymentInfo.startDay |date:'yyyy-MM-dd hh:mm'}}
+                        </div>
+                        <div class="col s4 left-align fz14">
+                            产生利息时长：{{paymentInfo.interestDay}}天
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 新增还款 button -->
+        <div class="row col s12 right-align" style="margin-top: 20px">
+            <div class="col s10"></div>
+            <div class="col s2 right-align">
+                <a ng-click="openNewFinanceLoanPaymentDiv()" style="width: 100%" class="waves-light waves-effect cyan lighten-2 btn">新增还款</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- 画面【新增还款】 模态框 -->
+<div class="row" style="margin: 0">
+    <div id="newFinanceLoanPaymentDiv" class="modal" style="width: 35%;height: 750px">
+        <div class="modal-content center fz20" style="font-weight: 500;padding: 0">
+
+            <!-- 显示画面【新增还款】 Header -->
+            <div class="col s12 vc-center cyan"
+                 style="color: white;letter-spacing:1px;font-weight: bold;height: 50px;">
+                <p>新增还款</p>
+            </div>
+
+            <!-- 显示画面【新增还款】 Body -->
+            <div class="col ul-tabs" style="width:95%; margin-left: 20px;">
+
+                <div class="col s12" style="margin-top: 40px;">
+                    <!-- TAB [基本信息]，[信用证还款]，[其他方式还款] -->
+                    <ul class="tabWrap grey lighten-4 fz15" style="border-bottom: 1px solid #4e84cb">
+                        <li class="modal_tab col s4 paymentInfoDiv vc-center"  ng-click="lookPaymentInfo()">基本信息</li>
+                        <li class="modal_tab col s4 creditPaymentDiv vc-center"  ng-click="lookCreditPayment()">信用证还款</li>
+                        <li class="modal_tab col s4 otherPaymentDiv vc-center"  ng-click="lookOtherPayment()">其他方式还款</li>
+                    </ul>
+                </div>
+
+                <!-- TAB [基本信息] -->
+                <div id="paymentInfoDiv" class="modal_tab_box">
+                    <!-- 未还金额 起始时间 (只读) -->
+                    <div class="col s12 vc-center fz14" style="margin-top: 20px;margin-bottom: 20px;">
+                        <div class="col s6 left-align blue-grey lighten-5 cyan-text" style="height:40px; padding-top: 10px; border: 1px solid lightgrey;border-right: 0">
+                            未还金额(美元): <span class="red-text">{{paymentInfo.leftPaymentMoney | number}}</span>
+                        </div>
+                        <div class="col s6 right-align blue-grey lighten-5 grey-text" style="height:40px; padding-top: 10px; border: 1px solid lightgrey;border-left: 0">
+                            起始时间: {{paymentInfo.startDay |date:'yyyy-MM-dd hh:mm'}}
+                        </div>
+                    </div>
+
+                    <!-- 基本信息 (录入) -->
+
+                    <div class="col s12" style="margin-bottom: 5px;">
+                        <!-- 本次还贷金额(美元) -->
+                        <div class="input-field col s4">
+                            <input type="text" id="paymentMoneyText" maxlength="10" valid-money ng-model="newPayment.paymentMoney" class="red-text right-align" ng-change="calculatePaymentMoney()">
+                            <label for="paymentMoneyText"><span class="red-text">*</span>本次还贷金额(美元)</label>
+                        </div>
+
+                        <!-- 利率/天 -->
+                        <div class="input-field col s4">
+                            <input type="text" id="rateText" maxlength="10" valid-money ng-model="newPayment.rate" class="red-text right-align" ng-change="calculateInterest()">
+                            <i class="dataIcon" style="right: -1px"> %</i>
+                            <label for="rateText" id="rateLabel">利率/天</label>
+                        </div>
+
+                        <!-- 产生利息金额(美元) -->
+                        <div class="input-field col s4">
+                            <input type="text" id="principalText" maxlength="10" valid-money ng-model="newPayment.principal" class="red-text right-align" disabled>
+                            <label for="principalText">产生利息金额(美元)</label>
+                        </div>
+                    </div>
+
+                    <div class="col s12">
+                        <!-- 产生利息时长(天) -->
+                        <div class="input-field col s4">
+                            <input type="text" id="interestDayText" maxlength="10" valid-num ng-model="newPayment.interestDay" class="right-align" ng-change="calculateInterest()">
+                            <label for="interestDayText"><span class="red-text">*</span>产生利息时长(天)</label>
+                        </div>
+
+                        <!-- 利息(美元) -->
+                        <div class="input-field col s4">
+                            <input type="text" id="interestText" maxlength="10" valid-money ng-model="newPayment.interest" class="red-text right-align" disabled>
+                            <label for="interestText" id="interestLabel">利息(美元)</label>
+                        </div>
+
+                        <!-- 手续费(美元) -->
+                        <div class="input-field col s4">
+                            <input type="text" id="poundageText" maxlength="10" valid-money ng-model="newPayment.poundage" class="red-text right-align" ng-change="calculatePaymentMoney()">
+                            <label for="poundageText">手续费(美元)</label>
+                        </div>
+                    </div>
+
+                    <!-- 本次应还总金额(美元) 剩余未还金额(美元) (只读) -->
+                    <div class="col s12 vc-center cyan-text fz14" style="margin-top: 20px;">
+                        <div class="col s6 left-align" style="height:44px; padding-top: 10px;">
+                            本次应还总金额(美元): <span class="red-text">{{newPayment.totalPaymentMoney | number}}</span>
+                        </div>
+                        <div class="col s6 right-align" style="height:44px; padding-top: 10px;">
+                            剩余未还金额(美元): <span class="red-text">{{newPayment.leftPaymentMoney | number}}</span>
+                        </div>
+                    </div>
+
+                    <!-- 分割线 -->
+                        <div class="col divider" style="width:96%; margin-left: 20px;margin-bottom: 5px;">
+                        </div>
+
+                    <!-- 备注 -->
+                    <div class="col s12">
+                        <div class="input-field col s12">
+                            <input type="text" id="paymentRemarkText" ng-model="newPayment.remark">
+                            <label for="paymentRemarkText">备注</label>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- TAB [信用证还款] -->
+                <div id="creditPaymentDiv" class="modal_tab_box">
+                </div>
+
+                <!-- TAB [其他方式还款] -->
+                <div id="otherPaymentDiv" class="modal_tab_box">
+                </div>
+            </div>
+
+            <!-- 分割线 -->
+            <div class="divider col s12" style="margin-top: 80px;"></div>
+
+            <!-- 取消/确认 按钮 -->
+            <div class="row col right-align" style="width: 96%;margin-top: 20px;">
+                <a class="btn-floating waves-effect waves-light grey btn modal-close">
+                    <i class="mdi mdi-close"></i>
+                </a>
+                <a class="btn-floating waves-effect waves-light cyan lighten-1 btn" style="margin-left: 20px;"
+                   ng-click="addFinanceLoan()">
+                    <i class="mdi mdi-trending-neutral"></i>
+                </a>
+            </div>
+        </div>
     </div>
 </div>
