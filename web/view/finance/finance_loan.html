@@ -36,16 +36,16 @@
                 </select>
             </div>
 
-            <!-- 贷款时间 -->
+            <!-- 贷出时间 -->
             <div class="input-field col s3">
                 <input type="text" id="createdOnStartText" ng-model="condCreatedOnStart" class="datepicker" date>
                 <i class="mdi dataIcon mdi-table-large"></i>
-                <label for="createdOnStartText">贷款时间(始)</label>
+                <label for="createdOnStartText">贷出时间(始)</label>
             </div>
             <div class="input-field col s3">
                 <input id="createdOnEndText" type="text" ng-model="condCreatedOnEnd" class="datepicker" date>
                 <i class="mdi dataIcon mdi-table-large"></i>
-                <label for="createdOnEndText">贷款时间(终)</label>
+                <label for="createdOnEndText">贷出时间(终)</label>
             </div>
 
             <!-- 完结时间 -->
@@ -85,14 +85,14 @@
         <table class=" bordered striped">
             <thead class="blue-grey lighten-5">
             <tr class="grey-text text-darken-2">
-                <th>贷款编号</th>
+                <th>贷出编号</th>
                 <th>委托方</th>
                 <th>抵押车辆</th>
                 <th>抵押车值(美元)</th>
                 <th>定金(美元)</th>
                 <th>购买车辆</th>
-                <th>贷款金额</th>
-                <th>贷款时间</th>
+                <th>贷出金额</th>
+                <th>贷出时间</th>
                 <th>未还金额</th>
                 <th>完结时间</th>
                 <th>状态</th>
@@ -101,21 +101,21 @@
             </thead>
             <tbody>
             <tr ng-repeat="el in financeLoanList" class="grey-text text-darken-1">
-                <!-- 贷款编号 -->
+                <!-- 贷出编号 -->
                 <td ng-bind="el.id"></td>
                 <!-- 委托方 -->
                 <td ng-bind="el.short_name"></td>
                 <!-- 抵押车辆 -->
                 <td ng-bind="el.mortgage_car_count | number"></td>
                 <!-- 抵押车值(美元) -->
-                <td ng-bind="el.mortgage_valuation | number"></td>
+                <td>{{el.mortgage_valuation==null ? 0 : el.mortgage_valuation | number}}</td>
                 <!-- 定金(美元) -->
                 <td ng-bind="el.deposit | number"></td>
                 <!-- 购买车辆 -->
                 <td ng-bind="el.buy_car_count| number"></td>
-                <!-- 贷款金额 -->
+                <!-- 贷出金额 -->
                 <td ng-bind="el.loan_money | number"></td>
-                <!-- 贷款时间 -->
+                <!-- 贷出时间 -->
                 <td ng-bind="el.created_on|date:'yyyy-MM-dd hh:mm'"></td>
                 <!-- 未还金额 TODO -->
                 <td ng-bind="el.valuation | number"></td>

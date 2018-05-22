@@ -42,15 +42,15 @@
                 <div class="col s6 grey-text right-align">贷出时间: {{loanInfo.createdOn |date:'yyyy-MM-dd hh:mm'}}</div>
             </div>
 
-            <!-- 抵押金额，贷款金额 -->
+            <!-- 定金，贷出金额 -->
             <div class="row col s12" style="margin-top: 40px;">
-                <!-- 抵押金额 -->
+                <!-- 定金 -->
                 <div class="input-field col s6">
-                    <input type="text" id="mortgageText" maxlength="10" valid-money ng-model="loanInfo.mortgageValuation" class="red-text">
-                    <label for="mortgageText" id="mortgageLabel"> 抵押金额(美元)</label>
+                    <input type="text" id="depositText" maxlength="10" valid-money ng-model="loanInfo.deposit" class="red-text">
+                    <label for="depositText" id="depositLabel"> 定金</label>
                 </div>
 
-                <!-- 贷款金额(美元) -->
+                <!-- 贷出金额(美元) -->
                 <div class="input-field col s6">
                     <input type="text" id="loanMoneyText" maxlength="10" valid-money ng-model="loanInfo.loanMoney" class="red-text">
                     <label for="loanMoneyText" id="loanMoneyLabel"> 贷出金额(美元)</label>
@@ -60,15 +60,15 @@
             <!-- 备注 -->
             <div class="row col s12">
                 <div class="col s12 input-field">
-                    <input type="text" name="addRemark" id="addRemark" ng-model="loanInfo.remark">
-                    <label for="addRemark">备注</label>
+                    <input type="text" id="loadRemarkText" ng-model="loanInfo.remark">
+                    <label for="loadRemarkText">备注</label>
                 </div>
             </div>
         </div>
         <div class="row col s12 right-align" style="margin-top: 50px">
             <div class="col s10"></div>
             <div class="col s2 right-align">
-                <a ng-click="updatePaymentInfo()" style="width: 100%" class="waves-light waves-effect cyan lighten-2 btn">修改</a>
+                <a ng-click="updateFinanceLoan()" style="width: 100%" class="waves-light waves-effect cyan lighten-2 btn">修改</a>
             </div>
         </div>
     </div>
@@ -235,8 +235,9 @@
         </div>
 
         <!-- 新增车辆信息(自定义) -->
-        <div ng-show="showCustomCarDiv" class="col s12">
-            <div class="row blue-grey lighten-5" style="width: 98%; border:1px solid #bdbdbd;border-top:0;">
+        <div ng-show="showCustomCarDiv" class="col s12 ">
+            <div class="col s12">
+                <div class="row z-depth-1" style="border:1px solid #bdbdbd;">
                 <!-- header -->
                 <div class="col s12 lighten-1 cyan-text fz14 left-align vc-center" style="height:46px;">
                     <div class="col s12 left-align">
@@ -315,6 +316,7 @@
                         <i class="mdi mdi-check add_brand"  style="position: absolute;right:0;bottom:3px;font-size:20px;line-height: 20px;"></i>
                     </a>
                 </div>
+            </div>
             </div>
         </div>
 

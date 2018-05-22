@@ -121,17 +121,45 @@ app.controller("finance_loan_detail_controller", ["$scope", "$stateParams", "_ba
                 // 贷出时间
                 $scope.loanInfo.createdOn = data.result[0].created_on;
 
-                // 抵押金额
-                $scope.loanInfo.mortgageValuation = data.result[0].mortgage_valuation == null ? 0 : data.result[0].mortgage_valuation;
+                // 定金
+                $scope.loanInfo.deposit = data.result[0].deposit == null ? 0 : data.result[0].deposit;
                 // 贷出金额
                 $scope.loanInfo.loanMoney = data.result[0].loan_money == null ? 0 : data.result[0].loan_money;
-                $("#mortgageLabel").addClass("active");
+                $("#depositLabel").addClass("active");
                 $("#loanMoneyLabel").addClass("active");
+
+                // 备注
+                $scope.loanInfo.remark = data.result[0].remark;
             } else {
                 swal(data.msg, "", "error");
             }
         });
     }
+
+    /**
+     * 修改贷出信息。
+     * */
+    $scope.updateFinanceLoan = function () {
+        var obj = {
+            // 委托方
+            entrustId: $scope.loanInfo.entrustId,
+            // 定金 TODO
+            deposit: $scope.loanInfo.deposit === "" ? 0 : $scope.loanInfo.deposit,
+            // 贷出金额
+            loanMoney: $scope.loanInfo.loanMoney === "" ? 0 : $scope.loanInfo.loanMoney,
+            // 备注
+            remark: $scope.loanInfo.remark
+        };
+        _basic.put(_host.api_url + "/user/" + userId + "/financialLoan/" + financialLoanId, obj).then(function (data) {
+            if (data.success) {
+                swal("修改成功", "", "success");
+                // 默认显示 贷出信息 TAB
+                $scope.lookLoanInfo();
+            } else {
+                swal(data.msg, "", "error");
+            }
+        })
+    };
 
     /**
      * Tab跳转 2: 抵押车辆
@@ -543,33 +571,6 @@ app.controller("finance_loan_detail_controller", ["$scope", "$stateParams", "_ba
             });
     };
 
-    /**
-     * 保存修改信息 TODO tab1
-     * */
-    $scope.updatePaymentInfo = function () {
-        if ($scope.storagePaymentArray.entrust_id !== ""
-            && $scope.storagePaymentArray.payment_type !== ""
-            && $scope.storagePaymentArray.number !== ""
-            && $scope.storagePaymentArray.payment_money !== "") {
-            var obj = {
-                entrustId: $scope.storagePaymentArray.entrust_id,
-                paymentType: $scope.storagePaymentArray.payment_type,
-                number: $scope.storagePaymentArray.number,
-                paymentMoney: $scope.storagePaymentArray.payment_money,
-                remark: $scope.storagePaymentArray.remark
-            };
-            _basic.put(_host.api_url + "/user/" + userId + "/orderPayment/" + financialLoanId, obj).then(function (data) {
-                if (data.success == true) {
-                    swal("修改成功", "", "success");
-                    getBaseInfo();
-                } else {
-                    swal(data.msg, "", "error");
-                }
-            })
-        } else {
-            swal("请填写完整信息！", "", "warning");
-        }
-    };
 
     /**
      * 点击完结
