@@ -244,6 +244,7 @@ app.controller("credit_card_controller", ["$scope", "$rootScope", "_host", "_bas
                 if (data.success) {
                     $scope.creditCarRelId = data.id;
                     linkFinanceCar();
+                    queryLinkCar($scope.creditCarRelId);
 
                 } else {
                     swal(data.msg, "", "error");
@@ -253,6 +254,24 @@ app.controller("credit_card_controller", ["$scope", "$rootScope", "_host", "_bas
             swal("请输入完整信息！", "", "warning");
         }
     };
+
+
+    /**
+     * 获取关联车辆信息
+     */
+    function queryLinkCar(val){
+        _basic.get(_host.api_url + "/creditCarRel?creditId="+val).then(function (data) {
+            if (data.success == true) {
+                if(data.result.length==0){
+                    $scope.getLinkCarList=[];
+                }else{
+                    $scope.getLinkCarList =data.result;
+                    $scope.carId = undefined;
+                }
+            }
+
+        })
+    }
 
 
     //模糊查询
@@ -268,11 +287,7 @@ app.controller("credit_card_controller", ["$scope", "$rootScope", "_host", "_bas
         if($scope.creditVin!=="") {
             if ($scope.creditVin.length >= 6) {
                 _basic.get(_host.api_url + "/shipTransCarRel?entrustId="+$scope.entrust.id+"&vinCode=" + $scope.creditVin, {}).then(function (data) {
-                    if (data.success == true) {
-                        if(data.result.length==0){
-                            swal('此委托方没有您输入的VIN码','','error')
-                            return;
-                        }else{
+                    if (data.success == true&& data.result.length > 0) {
                             $scope.vinMsg = data.result;
                             $scope.carId= data.result[0].car_id;
                             vinObjs = {};
@@ -282,7 +297,7 @@ app.controller("credit_card_controller", ["$scope", "$rootScope", "_host", "_bas
                             return vinObjs;
                         }
 
-                    } else {
+                     else {
                         return {};
                     }
                 }).then(function (vinObjs) {
@@ -304,31 +319,26 @@ app.controller("credit_card_controller", ["$scope", "$rootScope", "_host", "_bas
 
     // 查询vin码
     $scope.addLinkCar=function () {
-        $scope.creditVin ='';
         _basic.post(_host.api_url + "/user/"+userId+"/creditCarRel" ,{
             creditId: $scope.creditCarRelId,
             carId: $scope.carId
         }).then(function (data) {
-            if (data.success = true) {
+            if (data.success == true) {
                 $scope.linkCarId =data.id;
+                queryLinkCar($scope.creditCarRelId)
             }
             else {
                 swal(data.msg, "", "error");
             }
         })
-        _basic.get(_host.api_url + "/creditCarRel?creditId=" +$scope.creditCarRelId).then(function (data) {
-            if (data.success = true) {
-                $scope.getLinkCarList =data.result;
-            }
-        });
     };
 
     //刪除
-    $scope.deleteLinkCar = function(){
-        _basic.delete(_host.api_url + "/user/" + userId + "/credit/" + $scope.creditCarRelId + '/car/' + $scope.carId, {}).then(
+    $scope.deleteLinkCar = function(id){
+        _basic.delete(_host.api_url + "/user/" + userId + "/credit/" + $scope.creditCarRelId + '/car/' + id, {}).then(
             function (data) {
                 if (data.success === true) {
-                    linkFinanceCar()
+                    queryLinkCar($scope.creditCarRelId);
                 }
                 else {
                     swal(data.msg, "", "error");

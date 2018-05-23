@@ -325,7 +325,7 @@
 
                 <!--关联金融车-->
                 <div id="linkFinanceCar" class="col s12 tab_box">
-                    <div class="row col" style="width:94%; margin-left: 3%; height: 600px">
+                    <div class="row col" style="width:94%; margin-left: 3%; height: 685px">
 
                        <!--上部分：查询功能-->
                         <div class="row col" style="width: 100%;position: relative">
@@ -333,7 +333,10 @@
                                 <input type="text" id="autocomplete-input" name="vin" placeholder="          模糊查询至少需要6位vin码"  ng-model="creditVin" ng-change="shortSearch()"  style="margin: 0 0 20px 0" autocomplete="off" class="autocomplete" required minlength="6">
                                 <label for="autocomplete-input">VIN码</label>
                             </div>
-                            <button class=" btn btn-floating btn-small waves-effect cyan lighten-1" ng-click="addLinkCar()"  style="position: absolute;top: 15px;right: 10px;">
+                            <button class=" btn btn-floating btn-small waves-effect cyan lighten-1" ng-if="carId!==undefined" ng-click="addLinkCar()"  style="position: absolute;top: 15px;right: 10px;">
+                                <i class="mdi white-text mdi-plus fz30"></i>
+                            </button>
+                            <button class=" btn btn-floating btn-small waves-effect cyan lighten-1" ng-if="carId==undefined" disabled style="position: absolute;top: 15px;right: 10px;">
                                 <i class="mdi white-text mdi-plus fz30"></i>
                             </button>
                         </div>
@@ -346,19 +349,22 @@
                                      <div class="col s4 ">
                                          VIN码：{{linkCar.vin}}
                                      </div>
-                                     <div class="col s1">
-                                         <div class="col s6" ng-if="linkCar.purchase_type!==0"> <i class="mdi mdi-slackware" style="color: #f0ad4e"></i></div>
-                                         <div class="col s6" ng-if="linkCar.purchase_type==0"> <i class="mdi mdi-slackware grey-text"></i></div>
-                                         <div class="col s6 right-align" ng-if="linkCar.purchase_type==1"><i class="mdi mdi-briefcase grey-text"></i></div>
-                                         <div class="col s6 right-align" ng-if="linkCar.purchase_type!==1"><i class="mdi mdi-briefcase cyan-text"></i></div>
+                                     <div class="col s4">
+                                         <div class="col s4">
+                                             <div class="col s6" ng-if="linkCar.purchase_type!==0"> <i class="mdi mdi-slackware" style="color: #f0ad4e"></i></div>
+                                             <div class="col s6" ng-if="linkCar.purchase_type==0"> <i class="mdi mdi-slackware grey-text"></i></div>
+                                             <div class="col s6 right-align" ng-if="linkCar.mortgage_status!==2"><i class="mdi mdi-briefcase grey-text"></i></div>
+                                             <div class="col s6 right-align" ng-if="linkCar.mortgage_status==2"><i class="mdi mdi-briefcase cyan-text"></i></div>
+                                         </div>
+                                         <div class="col s8 grey-text right-align">
+                                             {{linkCar.make_name}} /{{linkCar.model_name}}
+                                         </div>
                                      </div>
-                                     <div class="col s3 grey-text">
-                                         {{linkCar.make_name}} /{{linkCar.model_name}}
-                                     </div>
-                                     <div class="col s2 right-align red-text">
+
+                                     <div class="col s3 right-align red-text">
                                         {{linkCar.valuation| currency }}
                                      </div>
-                                     <div class="col s1 right-align red-text" style="cursor: pointer" ng-click="deleteLinkCar()">x</div>
+                                     <div class="col s1 right-align red-text" style="cursor: pointer" ng-click="deleteLinkCar(linkCar.car_id)">x</div>
                                  </div>
 
                                  <!-- body -->
@@ -417,11 +423,8 @@
                              </div>
                          </div>
 
-                        <!-- 分割线 -->
-                        <div class="divider col s12" style="margin-top: 50px;"></div>
-
                         <!-- 取消/确认 按钮 -->
-                        <div class="row col right-align" style="width: 96%;margin-top: 20px;">
+                        <div class="row col right-align" style="width: 96%;" ng-if="getLinkCarList.length!==0">
                             <a class="btn-floating waves-effect waves-light grey btn modal-close">
                                 <i class="mdi mdi-close"></i>
                             </a>
