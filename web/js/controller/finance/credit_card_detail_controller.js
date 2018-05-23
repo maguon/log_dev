@@ -57,6 +57,7 @@ app.controller("credit_card_detail_controller", ["$scope", "$rootScope", "_host"
         $('ul.tabWrap li.lookLinkCar ').addClass("active");
         $("#lookLinkCar").addClass("active");
         $("#lookLinkCar").show();
+        $scope.carId = undefined;
     };
 
 
@@ -103,17 +104,19 @@ app.controller("credit_card_detail_controller", ["$scope", "$rootScope", "_host"
 
             }
         })
+    }
+
+    /**
+     * 获取关联车辆信息
+     */
+    function queryLinkCar(){
         _basic.get(_host.api_url + "/creditCarRel?creditId="+val).then(function (data) {
             if (data.success == true) {
                 if(data.result.length==0){
                     $scope.getLinkCarList=[];
                 }else{
                     $scope.getLinkCarList =data.result;
-                    for (var i in _config.config_color) {
-                        if (_config.config_color[i].colorId == $scope.getLinkCarList[0].colour) {
-                            $scope.carColor = _config.config_color[i].colorName;
-                        }
-                    }
+                    $scope.carId = undefined;
                 }
             }
 
@@ -240,29 +243,18 @@ app.controller("credit_card_detail_controller", ["$scope", "$rootScope", "_host"
 
     // 查询vin码
     $scope.addLinkCar=function () {
-        $scope.creditVin ='';
         _basic.post(_host.api_url + "/user/"+userId+"/creditCarRel" ,{
             creditId: val,
             carId: $scope.carId
         }).then(function (data) {
-            if (data.success = true) {
+            if (data.success == true) {
                 $scope.linkCarId =data.id;
+                queryLinkCar();
             }
             else {
                 swal(data.msg, "", "error");
             }
         })
-        queryBaseItem ();
-        // _basic.get(_host.api_url + "/creditCarRel?creditId=" +val).then(function (data) {
-        //     if (data.success = true) {
-        //         $scope.getLinkCarList =data.result;
-        //         for (var i in _config.config_color) {
-        //             if (_config.config_color[i].colorId == $scope.getLinkCarList[0].colour) {
-        //                 $scope.carColor = _config.config_color[i].colorName;
-        //             }
-        //         }
-        //     }
-        // });
     };
 
     //刪除
@@ -270,7 +262,7 @@ app.controller("credit_card_detail_controller", ["$scope", "$rootScope", "_host"
         _basic.delete(_host.api_url + "/user/" + userId + "/credit/" + val + '/car/' + carId, {}).then(
             function (data) {
                 if (data.success === true) {
-                    $scope.showLinkCar();
+                    queryLinkCar();
                 }
                 else {
                     swal(data.msg, "", "error");
@@ -281,17 +273,23 @@ app.controller("credit_card_detail_controller", ["$scope", "$rootScope", "_host"
 
     //完結
     $scope.endOfProcessing = function(){
-        _basic.put(_host.api_url + "/user/" + userId + "/credit/" + val + '/creditStatus/2' , {}).then(
-            function (data) {
-                if (data.success === true) {
-                    $scope.showLinkCar();
-                }
-                else {
-                    swal(data.msg, "", "error");
-                }
-            });
+        if($scope.getLinkCarList.length==0){
+            swal("请先关联车辆", "", "error")
+        }else{
+            _basic.put(_host.api_url + "/user/" + userId + "/credit/" + val + '/creditStatus/2' , {}).then(
+                function (data) {
+                    if (data.success === true) {
+                        queryBaseItem();
+                        queryLinkCar();
+                    }
+                    else {
+                        swal(data.msg, "", "error");
+                    }
+                });
+        }
     }
 
 
     queryBaseItem ();
+    queryLinkCar();
 }])
