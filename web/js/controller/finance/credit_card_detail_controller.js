@@ -64,11 +64,12 @@ app.controller("credit_card_detail_controller", ["$scope", "$rootScope", "_host"
      * 获取基本信息
      */
     function queryBaseItem (){
-        _basic.get(_host.api_url + "/financialCredit?financialCreditId="+val).then(function (data) {
+        _basic.get(_host.api_url + "/credit?creditId="+val).then(function (data) {
             if (data.success == true) {
                 $scope.showMsgInfo();
                 $scope.baseInfoList =data.result[0];
                 $scope.baseInfoList.short_name =data.result[0].short_name;
+                $scope.baseInfoList.entrust_id =data.result[0].entrust_id;
                 $scope.baseInfoList.entrust_type =data.result[0].entrust_type;
                 $scope.getEntrustInfo($scope.baseInfoList.entrust_type, $scope.baseInfoList.short_name);
                 $scope.baseInfoList.plan_return_date =  moment($scope.baseInfoList.plan_return_date).format("YYYY-MM-DD");
@@ -78,12 +79,218 @@ app.controller("credit_card_detail_controller", ["$scope", "$rootScope", "_host"
                 $scope.baseInfoList.documents_send_date =  moment($scope.baseInfoList.documents_send_date).format("YYYY-MM-DD");
                 $scope.baseInfoList.documents_receive_date =  moment($scope.baseInfoList.documents_receive_date).format("YYYY-MM-DD");
                 $scope.baseInfoList.actual_remit_date =  moment($scope.baseInfoList.actual_remit_date).format("YYYY-MM-DD");
+                if($scope.baseInfoList.plan_return_date=='Invalid date'){
+                    $scope.baseInfoList.plan_return_date=""
+                }
+                if($scope.baseInfoList.receive_card_date=='Invalid date'){
+                    $scope.baseInfoList.receive_card_date=""
+                }
+                if($scope.baseInfoList.documents_date=='Invalid date'){
+                    $scope.baseInfoList.documents_date=""
+                }
+                if($scope.baseInfoList.actual_return_date=='Invalid date'){
+                    $scope.baseInfoList.actual_return_date=""
+                }
+                if($scope.baseInfoList.documents_send_date=='Invalid date'){
+                    $scope.baseInfoList.documents_send_date=""
+                }
+                if($scope.baseInfoList.documents_receive_date=='Invalid date'){
+                    $scope.baseInfoList.documents_receive_date=""
+                }
+                if($scope.baseInfoList.actual_remit_date=='Invalid date'){
+                    $scope.baseInfoList.actual_remit_date=""
+                }
 
             }
         })
+        _basic.get(_host.api_url + "/creditCarRel?creditId="+val).then(function (data) {
+            if (data.success == true) {
+                if(data.result.length==0){
+                    $scope.getLinkCarList=[];
+                }else{
+                    $scope.getLinkCarList =data.result;
+                    for (var i in _config.config_color) {
+                        if (_config.config_color[i].colorId == $scope.getLinkCarList[0].colour) {
+                            $scope.carColor = _config.config_color[i].colorName;
+                        }
+                    }
+                }
+            }
+
+        })
+    }
+
+    /**
+     * 修改基本信息
+     */
+    $scope.putCurrentBaseInfo = function(){
+        // 委托方 下拉选中 内容
+        if ($("#putEntrustSelect").val() != null && $("#putEntrustSelect").val() !== "") {
+            $scope.entrustId = $("#putEntrustSelect").select2("data")[0].id;
+        } else {
+            if ($('#select2-editEntrustSelect-container').text() !== "委托方") {
+                $scope.entrustId = $scope.baseInfoList.entrust_id;
+            }
+        }
+
+        if ( $scope.entrustId !== "" && $scope.baseInfoList.credit_number !== "" && $scope.baseInfoList.credit_money!== "" && $scope.baseInfoList.actual_money !== "") {
+            var obj = {
+                creditNumber:  $scope.baseInfoList.credit_number,
+                entrustId:  $scope.entrustId,
+                creditMoney:  $scope.baseInfoList.credit_money,
+                actualMoney: $scope.baseInfoList.actual_money,
+                planReturnDate:  $scope.baseInfoList.plan_return_date,
+                actualReturnDate:  $scope.baseInfoList.actual_return_date,
+                receiveCardDate:  $scope.baseInfoList.receive_card_date,
+                documentsDate:  $scope.baseInfoList.documents_date,
+                documentsSendDate:  $scope.baseInfoList.documents_send_date,
+                documentsReceiveDate:  $scope.baseInfoList.documents_receive_date,
+                actualRemitDate:  $scope.baseInfoList.actual_remit_date,
+                invoiceNumber: $scope.baseInfoList.invoice_number,
+                remark:  $scope.baseInfoList.remark
+            };
+
+            // 如果日期没有输入，就去掉此属性
+            if ($scope.baseInfoList.plan_return_date ==  "") {
+                delete obj.planReturnDate;
+            }
+            if ($scope.baseInfoList.actual_return_date ==  "") {
+                delete obj.actualReturnDate;
+            }
+            if ( $scope.baseInfoList.receive_card_date ==  "") {
+                delete obj.receiveCardDate;
+            }
+            if ($scope.baseInfoList.documents_date ==  "") {
+                delete obj.documentsDate;
+            }
+            if ($scope.baseInfoList.documents_send_date ==  "") {
+                delete obj.documentsSendDate;
+            }
+            if ($scope.baseInfoList.documents_receive_date ==  "") {
+                delete obj.documentsReceiveDate;
+            }
+            if (  $scope.baseInfoList.actual_remit_date ==  "") {
+                delete obj.actualRemitDate;
+            }
+
+
+
+            _basic.put(_host.api_url + "/user/" + userId + "/credit/"+val, obj).then(function (data) {
+                if (data.success) {
+                    swal('修改成功!', "", "success");
+
+                } else {
+                    swal(data.msg, "", "error");
+                }
+            });
+        } else {
+            swal("请输入完整信息！", "", "warning");
+        }
     }
 
 
+    //模糊查询
+    var vinObjs ={}
+    $('#autocomplete-input').autocomplete({
+        data: vinObjs,
+        limit: 10,
+        onAutocomplete: function(val) {
+        },
+        minLength: 6,
+    });
+    $scope.shortSearch=function (vin) {
+        // 委托方 下拉选中 内容
+        if ($("#putEntrustSelect").val() != null && $("#putEntrustSelect").val() !== "") {
+            $scope.entrustId = $("#putEntrustSelect").select2("data")[0].id;
+        } else {
+            if ($('#select2-editEntrustSelect-container').text() !== "委托方") {
+                $scope.entrustId = $scope.baseInfoList.entrust_id;
+            }
+        }
+        if(vin!=="") {
+            if (vin.length >= 6) {
+                _basic.get(_host.api_url + "/shipTransCarRel?entrustId="+$scope.entrustId+"&vinCode=" +vin, {}).then(function (data) {
+                    if (data.success == true && data.result.length > 0) {
+                        $scope.vinMsg = data.result;
+                        $scope.carId= data.result[0].car_id;
+                        vinObjs = {};
+                        for (var i in $scope.vinMsg) {
+                            vinObjs[$scope.vinMsg[i].vin] = null;
+                        }
+                        return vinObjs;
+                    } else {
+                        return {};
+                    }
+                }).then(function (vinObjs) {
+                    $('#autocomplete-input').autocomplete({
+                        data: vinObjs,
+                        minLength: 6
+                    });
+                    $('#autocomplete-input').focus();
+                })
+            } else {
+                $('#autocomplete-input').autocomplete({minLength: 6});
+                $scope.vinMsg = {}
+            }
+        }
+        else{
+            swal('此委托方没有您输入的VIN码','','error')
+        }
+    };
+
+    // 查询vin码
+    $scope.addLinkCar=function () {
+        $scope.creditVin ='';
+        _basic.post(_host.api_url + "/user/"+userId+"/creditCarRel" ,{
+            creditId: val,
+            carId: $scope.carId
+        }).then(function (data) {
+            if (data.success = true) {
+                $scope.linkCarId =data.id;
+            }
+            else {
+                swal(data.msg, "", "error");
+            }
+        })
+        queryBaseItem ();
+        // _basic.get(_host.api_url + "/creditCarRel?creditId=" +val).then(function (data) {
+        //     if (data.success = true) {
+        //         $scope.getLinkCarList =data.result;
+        //         for (var i in _config.config_color) {
+        //             if (_config.config_color[i].colorId == $scope.getLinkCarList[0].colour) {
+        //                 $scope.carColor = _config.config_color[i].colorName;
+        //             }
+        //         }
+        //     }
+        // });
+    };
+
+    //刪除
+    $scope.deleteLinkCar = function(carId){
+        _basic.delete(_host.api_url + "/user/" + userId + "/credit/" + val + '/car/' + carId, {}).then(
+            function (data) {
+                if (data.success === true) {
+                    $scope.showLinkCar();
+                }
+                else {
+                    swal(data.msg, "", "error");
+                }
+            });
+
+    }
+
+    //完結
+    $scope.endOfProcessing = function(){
+        _basic.put(_host.api_url + "/user/" + userId + "/credit/" + val + '/creditStatus/2' , {}).then(
+            function (data) {
+                if (data.success === true) {
+                    $scope.showLinkCar();
+                }
+                else {
+                    swal(data.msg, "", "error");
+                }
+            });
+    }
 
 
     queryBaseItem ();

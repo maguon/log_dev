@@ -25,7 +25,7 @@
             <div id="lookMsg" class="col s12 tab_box " style="width: 80%; margin:0 10% ;">
 
                 <!--未完结-->
-                <div class="row col s12" ng-if="baseInfoList.credit_status!==1">
+                <div class="row col s12" ng-if="baseInfoList.credit_status==1">
                     <!--第一行-->
                     <div class="input-field col s12 right-align red-text" >{{statusList[baseInfoList.credit_status-1].name}}</div>
 
@@ -39,7 +39,7 @@
 
                         <!-- 委托方性质 -->
                         <div class="input-field col s4">
-                            <select material-select watch id="putEntrustType" ng-model="baseInfoList.entrust_type" ng-change="getEntrustInfo(baseInfoList.entrust_type,'委托方')">
+                            <select material-select watch id="putEntrustType" disabled ng-model="baseInfoList.entrust_type" ng-change="getEntrustInfo(baseInfoList.entrust_type,'委托方')">
                                 <option value="" disabled>请选择</option>
                                 <option ng-repeat="el in entrustTypeList" ng-value="el.entrust_type">{{el.name}}</option>
                             </select>
@@ -48,7 +48,7 @@
 
                         <!--委托方-->
                         <div class="input-field col s4">
-                            <select  id="putEntrustSelect" style="width: 100%">
+                            <select  id="putEntrustSelect" style="width: 100%" disabled>
                                 <option value="" ></option>
                                 <option ng-repeat="el in putEntrustList" ng-value="el.id">{{el.short_name}}</option>
                             </select>
@@ -112,7 +112,7 @@
 
                         <!--开户行文件接收日期-->
                         <div class="input-field col s4">
-                            <input id="putDocumentsReceiveDate" type="text" ng-model="baseInfoList.documents_receive_date|date:'yyyy-MM-dd'" class="datepicker" date>
+                            <input id="putDocumentsReceiveDate" type="text" ng-model="baseInfoList.documents_receive_date" class="datepicker" date>
                             <i class="mdi dataIcon mdi-table-large"></i>
                             <label for="putDocumentsReceiveDate">开户行文件接收日期</label>
                         </div>
@@ -151,7 +151,7 @@
                     <div class="row col s12" style="margin: 40px 0 15px 0" ng-if="baseInfoList.credit_status == 1">
                         <div class="col s4 offset-s8">
                             <div class="col s6">
-                                <a ng-click="saveCurrentAccidentInfo()" style="width: 100%" class="waves-light waves-effect cyan lighten-1 btn">
+                                <a ng-click="putCurrentBaseInfo()" style="width: 100%" class="waves-light waves-effect cyan lighten-1 btn">
                                     保存
                                 </a>
                             </div>
@@ -165,21 +165,21 @@
                 </div>
 
                 <!--已完结-->
-                <div class="row col s12" ng-if="baseInfoList.credit_status==1">
+                <div class="row col s12" ng-if="baseInfoList.credit_status!==1">
 
                     <!--第一行-->
                     <div class="row col s12 cyan-text" >
                         <div class="input-field col s6 left-align bold fz20">
-                            信用证号:{{111111}}
+                            信用证号:{{baseInfoList.credit_number}}
                         </div>
-                        <div class="input-field col s6 right-align ">{{statusList[baseInfoList.credit_status-1].name}}</div>
+                        <div class="input-field col s6 right-align bold">{{statusList[baseInfoList.credit_status-1].name}}</div>
                     </div>
 
                     <!--第二行-->
                     <div class="row col s12 white cyan-text fz18 bold" style="border:1px solid #ccc;height: 80px;line-height: 50px">
-                        <div class="col s4 input-field">委托方：{{}}</div>
-                        <div class="col s4 input-field center-align">信用金额(美元)：<span class="red-text">{{11111}}</span></div>
-                        <div class="col s4 input-field right-align">实际到款金额(美元)：<span class="red-text">{{11111}}</span></div>
+                        <div class="col s4 input-field">委托方：{{baseInfoList.short_name}}({{entrustTypeList[baseInfoList.entrust_type-1].name}})</div>
+                        <div class="col s4 input-field center-align">信用金额(美元)：<span class="red-text">{{baseInfoList.credit_money}}</span></div>
+                        <div class="col s4 input-field right-align">实际到款金额(美元)：<span class="red-text">{{baseInfoList.actual_money}}</span></div>
                     </div>
 
                     <!--第三行-->
@@ -190,7 +190,7 @@
                         <div class="col s4">
                             交单日期：{{baseInfoList.documents_date |date:'yyyy-MM-dd'}}
                         </div>
-                        <div class="col s4 right-align">
+                        <div class="col s4">
                             文件发出日期：{{baseInfoList.documents_send_date|date:'yyyy-MM-dd'}}
                         </div>
                     </div>
@@ -205,7 +205,7 @@
                         <div class="col s4">
                             预计回款日期：{{baseInfoList.plan_return_date|date:'yyyy-MM-dd'}}
                         </div>
-                        <div class="col s4 right-align">
+                        <div class="col s4">
                             实际回款日期：{{baseInfoList.actual_return_date|date:'yyyy-MM-dd'}}
 
                         </div>
@@ -221,7 +221,7 @@
                         <div class="col s4">
                             发票号：{{baseInfoList.invoice_number}}
                         </div>
-                        <div class="col s4 right-align">
+                        <div class="col s4">
                             关联还款编号：{{baseInfoList.repayment_id}}
                         </div>
                     </div>
@@ -243,7 +243,7 @@
                             录入时间：{{baseInfoList.created_on|date:'yyyy-MM-dd hh:mm'}}
                         </div>
                         <div class="col s6 right-align">
-                            完结时间：{{baseInfoList.end_date|date:'yyyy-MM-dd hh:mm'}}
+                            完结时间：{{baseInfoList.credit_end_date|date:'yyyy-MM-dd hh:mm'}}
                         </div>
                     </div>
 
@@ -254,6 +254,221 @@
 
             <!-- 关联车辆 显示区域 -->
             <div id="lookLinkCar" class="col s12 tab_box" style="width: 95%; margin:0 2% ">
+
+                <!--未完結-->
+                <div class="row col s12" ng-if="baseInfoList.credit_status==1" style="width: 60%;margin-left:20% ">
+                    <!--上部分：查询功能-->
+                    <div class="row col" style="width: 100%;position: relative">
+
+                        <div class="input-field col s12">
+                            <input type="text" id="autocomplete-input" name="vin" placeholder="                  模糊查询至少需要6位vin码" ng-change="shortSearch(creditVin)" ng-model="creditVin" style="margin: 0 0 20px 0" autocomplete="off" class="autocomplete" required minlength="6">
+                            <label for="autocomplete-input">VIN码</label>
+                        </div>
+                        <button class=" btn btn-floating btn-small waves-effect cyan lighten-1" ng-click="addLinkCar()"  style="position: absolute;top: 15px;right: 10px;">
+                            <i class="mdi white-text mdi-plus fz30"></i>
+                        </button>
+                    </div>
+
+
+                    <!--表格部分：查询结果-->
+                    <div class="col s12" ng-if="getLinkCarList.length!==0" ng-repeat="linkCar in getLinkCarList" style="height:270px">
+                        <div class="row blue-grey lighten-5" style="width:98%;border:1px solid #bdbdbd">
+                            <!-- header -->
+                            <div class="col s12 lighten-1 cyan-text vc-center left-align" style="height:50px;">
+                                <div class="col s4 ">
+                                    VIN码：{{linkCar.vin}}
+                                </div>
+                                <div class="col s1">
+                                    <i class="mdi mdi-slackware"></i>
+                                </div>
+                                <div class="col s1 ">
+                                    <i class="mdi mdi-briefcase"></i>
+                                </div>
+                                <div class="col s2 grey-text">
+                                    {{linkCar.make_name}} /{{linkCar.model_name}}({{carColor}})
+                                </div>
+                                <div class="col s2 right-align red-text">
+                                    {{linkCar.valuation| currency }}
+                                </div>
+                                <div class="col s1 right-align red-text" style="cursor: pointer" ng-click="deleteLinkCar(linkCar.car_id)">x</div>
+                            </div>
+
+                            <!-- body -->
+                            <div class="col s12 lighten-1 white grey-text vc-center fz13 left-align" style="height:40px;">
+                                <div class="input-field col s4">
+                                    始发港口：{{linkCar.start_port_name}}
+                                </div>
+                                <div class="input-field col s4">
+                                    目的港口：{{linkCar.end_port_name}}
+                                </div>
+                                <div class="input-field col s4">
+                                    开船日期：{{linkCar.start_ship_date | date:'yyyy-MM-dd' }}
+                                </div>
+                            </div>
+                            <div class="col s12 white">
+                                <div class="s12 center" style="width:98%; margin-left: 10px;margin-right: 10px;margin-top: 10px;border: 1px dotted #ccc"></div>
+                            </div>
+                            <!-- body -->
+                            <div class="col s12 lighten-1 white grey-text vc-center fz13 left-align" style="height:40px;">
+                                <div class="input-field col s4">
+                                    船公司：{{linkCar.ship_company_name}}
+                                </div>
+                                <div class="input-field col s4">
+                                    船名：{{linkCar.ship_name}}
+                                </div>
+                                <div class="input-field col s4">
+                                    到港日期：{{linkCar.end_ship_date | date:'yyyy-MM-dd'}}
+                                </div>
+                            </div>
+                            <div class="col s12 white">
+                                <div class="s12 center" style="width:98%; margin-left: 10px;margin-right: 10px;margin-top: 10px;border: 1px dotted #ccc"></div>
+                            </div>
+                            <!-- body -->
+                            <div class="col s12 lighten-1 white grey-text vc-center fz13 left-align" style="height:40px;">
+                                <div class="input-field col s4">
+                                    货柜：{{linkCar.container}}
+                                </div>
+                                <div class="input-field col s4">
+                                    booking：{{linkCar.booking}}
+                                </div>
+                                <div class="input-field col s4">
+                                    封签：{{linkCar.tab}}
+                                </div>
+                            </div>
+
+                            <div class="col s12 white">
+                                <div class="divider s12 center" style="width:98%; margin-left: 10px;margin-right: 10px;margin-top: 10px;"></div>
+                            </div>
+
+
+                            <div class="col s12 lighten-1 white grey-text vc-center fz13 left-align" style="height:40px;">
+                                <div class="col s12">
+                                    备注：{{linkCar.remark}}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!--关联车辆为o情况下-->
+                    <div class="row col s12" ng-if="getLinkCarList.length==0">
+
+                        <div class="vc-center grey-text fz26" style="margin-top:100px; width: 100%;height: 100px;">
+                            <i class="mdi mdi-alert-circle-outline" style="color: red;font-size: 30px"></i>
+                            <span style="margin-left: 10px;">暂无关联车辆</span>
+                        </div>
+                    </div>
+
+
+                    <!--下部分：完结-->
+                    <div class="row col s12" ng-if="getLinkCarList.length!==0" style="margin: 40px 0 15px 0">
+                        <div class="col s2 offset-s10">
+                            <div class="col s12">
+                                <a ng-click="endOfProcessing()" style="width: 100%;background-color:#f0ad4e;" class="waves-light waves-effect lighten-1 btn">
+                                    完结
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!--已完結-->
+                <div class="row col s12" ng-if="baseInfoList.credit_status!==1">
+                    <div class="row col s12" style="margin-top: 50px"></div>
+                    <div class="col s12" ng-repeat="linkCar in getLinkCarList" style="height:270px;margin-top: 10px">
+                        <div class="row blue-grey lighten-5" style="width:60%;border:1px solid #bdbdbd">
+                            <!-- header -->
+                            <div class="col s12 lighten-1 cyan-text vc-center left-align" style="height:55px;">
+                                <div class="input-field col s4">
+                                    VIN码：{{linkCar.vin}}
+                                </div>
+                                <div class="input-field col s1">
+                                    <i class="mdi mdi-slackware"></i>
+                                </div>
+                                <div class="input-field col s1 ">
+                                    <i class="mdi mdi-briefcase"></i>
+                                </div>
+                                <div class="input-field col s2 grey-text">
+                                    {{linkCar.make_name}} /{{linkCar.model_name}}({{carColor}})
+                                </div>
+                                <div class="input-field col s2 right-align red-text">
+                                    {{linkCar.valuation| currency }}
+                                </div>
+                            </div>
+
+                            <!-- body -->
+                            <div class="col s12 lighten-1 white grey-text vc-center fz13" style="height:40px;">
+                                <div class="input-field col s4">
+                                    始发港口：{{linkCar.start_port_name}}
+                                </div>
+                                <div class="input-field col s4">
+                                    目的港口：{{linkCar.end_port_name}}
+                                </div>
+                                <div class="input-field col s4">
+                                    开船日期：{{linkCar.start_ship_date | date:'yyyy-MM-dd' }}
+                                </div>
+                            </div>
+                            <div class="col s12 white">
+                                <div class="s12 center" style="width:98%; margin-left: 10px;margin-right: 10px;margin-top: 10px;border: 1px dotted #ccc"></div>
+                            </div>
+                            <!-- body -->
+                            <div class="col s12 lighten-1 white grey-text vc-center fz13" style="height:40px;">
+                                <div class="input-field col s4">
+                                    船公司：{{linkCar.ship_company_name}}
+                                </div>
+                                <div class="input-field col s4">
+                                    船名：{{linkCar.ship_name}}
+                                </div>
+                                <div class="input-field col s4">
+                                    到港日期：{{linkCar.end_ship_date | date:'yyyy-MM-dd'}}
+                                </div>
+                            </div>
+                            <div class="col s12 white">
+                                <div class="s12 center" style="width:98%; margin-left: 10px;margin-right: 10px;margin-top: 10px;border: 1px dotted #ccc"></div>
+                            </div>
+                            <!-- body -->
+                            <div class="col s12 lighten-1 white grey-text vc-center fz13" style="height:40px;">
+                                <div class="input-field col s4">
+                                    货柜：{{linkCar.container}}
+                                </div>
+                                <div class="input-field col s4">
+                                    booking：{{linkCar.booking}}
+                                </div>
+                                <div class="input-field col s4">
+                                    封签：{{linkCar.tab}}
+                                </div>
+                            </div>
+
+                            <div class="col s12 white">
+                                <div class="divider s12 center" style="width:98%; margin-left: 10px;margin-right: 10px;margin-top: 10px;"></div>
+                            </div>
+
+
+                            <div class="col s12 lighten-1 white grey-text vc-center fz13 left-align" style="height:40px;">
+                                <div class="col s12">
+                                    备注：{{linkCar.remark}}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
             </div>
