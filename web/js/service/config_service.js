@@ -294,7 +294,7 @@ baseService.factory("_config", function () {
 
     ];
 
-    // 支付状态
+    // 支付状态(支票，电汇，信用证)
     _this.paymentStatus = [
         {
             id:1,
@@ -423,14 +423,18 @@ baseService.factory("_config", function () {
     _this.loanStatus = [
         {
             id: 1,
-            name: "已贷"
+            name: "未贷"
         },
         {
             id: 2,
-            name: "还款中"
+            name: "已贷"
         },
         {
             id: 3,
+            name: "还款中"
+        },
+        {
+            id: 4,
             name: "完结"
         }
     ];
