@@ -172,6 +172,7 @@ app.controller("credit_card_controller", ["$scope", "$rootScope", "_host", "_bas
         $('.modal').modal();
         $('#newCreditCardDiv').modal('open');
         $scope.getEntrustInfo();
+        $scope.addCreditId = '';
         $scope.creditVin ='';
         $scope.addCreditMoney='';
         $scope.addEntrustType ='';
@@ -202,7 +203,7 @@ app.controller("credit_card_controller", ["$scope", "$rootScope", "_host", "_bas
 
             // 追加画面数据
             var obj = {
-                creditNumber: $scope.addCreditMoney,
+                creditNumber: $scope.addCreditId,
                 entrustId: $scope.entrust.id,
                 creditMoney: $scope.addCreditMoney,
                 actualMoney: $scope.addActualMoney,

@@ -140,8 +140,8 @@
                 <!-- 实际回款日期 -->
                 <td ng-bind="el.actual_return_date|date:'yyyy-MM-dd'"></td>
                 <!-- 关联还款编号 -->
-                <td ng-if="el.repayment_id==0"></td>
-                <td ng-if="el.repayment_id!==0">{{el.repayment_id}}</td>
+                <td ng-if="el.repayment_id==null"></td>
+                <td ng-if="el.repayment_id!==null">{{el.repayment_id}}</td>
                 <!-- 状态 -->
                 <td  ng-bind="statusList[el.credit_status-1].name"></td>
                 <!--操作-->
