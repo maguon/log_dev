@@ -15,10 +15,13 @@ app.controller("credit_card_controller", ["$scope", "$rootScope", "_host", "_bas
     // 状态
     $scope.statusList = _config.paymentStatus;
 
+    //添加关联车辆是时
+    $scope.creditCarRelId=0;
+
     /**
      * 页面跳转
      */
-    $scope.baseMsg = function () {
+   function baseMsg() {
         $('ul.tabWrap li').removeClass("active");
         $(".tab_box").removeClass("active");
         $(".tab_box").hide();
@@ -26,13 +29,14 @@ app.controller("credit_card_controller", ["$scope", "$rootScope", "_host", "_bas
         $("#baseMsg").addClass("active");
         $("#baseMsg").show();
     };
-    $scope.linkFinanceCar = function () {
+   function linkFinanceCar() {
         $('ul.tabWrap li').removeClass("active");
         $(".tab_box").removeClass("active");
         $(".tab_box").hide();
         $('ul.tabWrap li.linkFinanceCar ').addClass("active");
         $("#linkFinanceCar").addClass("active");
         $("#linkFinanceCar").show();
+        $scope.getLinkCarList =[];
     };
 
     /**
@@ -78,6 +82,21 @@ app.controller("credit_card_controller", ["$scope", "$rootScope", "_host", "_bas
 
 
     /**
+     * 数据导出
+     */
+    $scope.export = function () {
+        // 基本检索URL
+        var url = _host.api_url + "/credit.csv";
+        // 检索条件
+        var conditions = _basic.objToUrl(makeConditions());
+        // 检索URL
+        url = conditions.length > 0 ? url + "?" + conditions : url;
+        // 调用接口下载
+        window.open(url);
+    };
+
+
+    /**
      * 组装检索条件。
      */
     function makeConditions() {
@@ -90,9 +109,9 @@ app.controller("credit_card_controller", ["$scope", "$rootScope", "_host", "_bas
         }
 
         var obj = {
-            financialCreditId: $scope.condCreditId,
-            entrustType: $scope.condVin,
-            entrustId: entrust.condLoan,
+            creditNumber: $scope.condCreditNumber,
+            vin:$scope.condVin,
+            repaymentId:$scope.condLoan,
             creditStatus: $scope.condStatus,
             entrustId: entrust.id,
             planReturnDateStart: $scope.expectedDateStart,
@@ -108,7 +127,7 @@ app.controller("credit_card_controller", ["$scope", "$rootScope", "_host", "_bas
      * 根据画面输入的查询条件，进行数据查询。
      */
     function queryCreditCardList() {
-        var reqUrl = _host.api_url + "/financialCredit?start=" + $scope.start + "&size=" + $scope.size;
+        var reqUrl = _host.api_url + "/credit?start=" + $scope.start + "&size=" + $scope.size;
         // 检索条件
         var conditions = _basic.objToUrl(makeConditions());
         // 检索URL
@@ -153,8 +172,22 @@ app.controller("credit_card_controller", ["$scope", "$rootScope", "_host", "_bas
         $('.modal').modal();
         $('#newCreditCardDiv').modal('open');
         $scope.getEntrustInfo();
-        //$scope.baseMsg();
-        $scope.linkFinanceCar();
+        $scope.addCreditId = '';
+        $scope.creditVin ='';
+        $scope.addCreditMoney='';
+        $scope.addEntrustType ='';
+        $scope.addCreditMoney='';
+        $scope.addActualMoney='';
+        $scope.addPlanReturnDate='';
+        $scope.addActualReturnDate='';
+        $scope.addReceiveCardDate='';
+        $scope.addDocumentsDate='';
+        $scope.addDocumentsSendDate='';
+        $scope.addDocumentsReceiveDate='';
+        $scope.addActualRemitDate='';
+        $scope.addInvoiceNumber='';
+        $scope.addRemarkText='';
+        baseMsg();
     };
 
     /**
@@ -170,7 +203,7 @@ app.controller("credit_card_controller", ["$scope", "$rootScope", "_host", "_bas
 
             // 追加画面数据
             var obj = {
-                creditNumber: $scope.addCreditMoney,
+                creditNumber: $scope.addCreditId,
                 entrustId: $scope.entrust.id,
                 creditMoney: $scope.addCreditMoney,
                 actualMoney: $scope.addActualMoney,
@@ -185,13 +218,34 @@ app.controller("credit_card_controller", ["$scope", "$rootScope", "_host", "_bas
                 remark: $scope.addRemarkText
             };
 
+            // 如果日期没有输入，就去掉此属性
+            if ($scope.addPlanReturnDate ==  "") {
+                delete obj.planReturnDate;
+            }
+            if ($scope.addActualReturnDate ==  "") {
+                delete obj.actualReturnDate;
+            }
+            if ( $scope.addReceiveCardDate ==  "") {
+                delete obj.receiveCardDate;
+            }
+            if ($scope.addDocumentsDate ==  "") {
+                delete obj.documentsDate;
+            }
+            if ($scope.addDocumentsSendDate ==  "") {
+                delete obj.documentsSendDate;
+            }
+            if ($scope.addDocumentsReceiveDate ==  "") {
+                delete obj.documentsReceiveDate;
+            }
+            if ($scope.addActualRemitDate ==  "") {
+                delete obj.actualRemitDate;
+            }
 
-            _basic.post(_host.api_url + "/user/" + userId + "/financialCredit", obj).then(function (data) {
+            _basic.post(_host.api_url + "/user/" + userId + "/credit", obj).then(function (data) {
                 if (data.success) {
-                    $scope.linkFinanceCar();
-                    /*$('#addPaymentModal').modal('close');
-                    queryCreditCardList();
-                    swal("新增成功", "", "success");*/
+                    $scope.creditCarRelId = data.id;
+                    linkFinanceCar();
+                    queryLinkCar($scope.creditCarRelId);
 
                 } else {
                     swal(data.msg, "", "error");
@@ -201,6 +255,24 @@ app.controller("credit_card_controller", ["$scope", "$rootScope", "_host", "_bas
             swal("请输入完整信息！", "", "warning");
         }
     };
+
+
+    /**
+     * 获取关联车辆信息
+     */
+    function queryLinkCar(val){
+        _basic.get(_host.api_url + "/creditCarRel?creditId="+val).then(function (data) {
+            if (data.success == true) {
+                if(data.result.length==0){
+                    $scope.getLinkCarList=[];
+                }else{
+                    $scope.getLinkCarList =data.result;
+                    $scope.carId = undefined;
+                }
+            }
+
+        })
+    }
 
 
     //模糊查询
@@ -213,18 +285,20 @@ app.controller("credit_card_controller", ["$scope", "$rootScope", "_host", "_bas
         minLength: 6,
     });
     $scope.shortSearch=function () {
-        if($scope.demandVin!=="") {
+        if($scope.creditVin!=="") {
             if ($scope.creditVin.length >= 6) {
-                _basic.get(_host.api_url + "/carList?vinCode=" + $scope.creditVin, {}).then(function (data) {
-                    if (data.success == true && data.result.length > 0) {
-                        $scope.vinMsg = data.result;
-                        vinObjs = {};
-                        for (var i in $scope.vinMsg) {
-                            vinObjs[$scope.vinMsg[i].vin] = null;
+                _basic.get(_host.api_url + "/shipTransCarRel?entrustId="+$scope.entrust.id+"&vinCode=" + $scope.creditVin, {}).then(function (data) {
+                    if (data.success == true&& data.result.length > 0) {
+                            $scope.vinMsg = data.result;
+                            $scope.carId= data.result[0].car_id;
+                            vinObjs = {};
+                            for (var i in $scope.vinMsg) {
+                                vinObjs[$scope.vinMsg[i].vin] = null;
+                            }
+                            return vinObjs;
                         }
-                        return vinObjs;
-                    } else {
-                        swal('没有您输入的VIN码','','error')
+
+                     else {
                         return {};
                     }
                 }).then(function (vinObjs) {
@@ -233,7 +307,6 @@ app.controller("credit_card_controller", ["$scope", "$rootScope", "_host", "_bas
                         minLength: 6
                     });
                     $('#autocomplete-input').focus();
-
                 })
             } else {
                 $('#autocomplete-input').autocomplete({minLength: 6});
@@ -241,42 +314,19 @@ app.controller("credit_card_controller", ["$scope", "$rootScope", "_host", "_bas
             }
         }
         else{
-            swal('没有您输入的VIN码','','error')
+            swal('此委托方没有您输入的VIN码','','error')
         }
     };
+
     // 查询vin码
     $scope.addLinkCar=function () {
-        _basic.get(_host.api_url + "/shipTransCarRel?vin=" + $scope.creditVin+"/entrustId/"+ $scope.entrust.id).then(function (data) {
-            if (data.success = true) {
-                if (data.result.length == 0) {
-                    $scope.showStorageData = 1;
-                    step1();
-                }
-                else {
-                    $scope.baseList = data.result[0];
-                    $scope.baseList.model_id = data.result[0].model_id;
-                    $scope.baseList.make_id = data.result[0].make_id;
-                    if ($scope.baseList.model_id == 0 || $scope.baseList.make_id == 0) {
-                        $scope.baseList.model_id = '';
-                        $scope.baseList.make_id = '';
-                    }
-                    if ($scope.baseList.pro_date !== null) {
-                        $scope.baseListDate = moment($scope.baseList.pro_date).format("YYYY-MM-DD");
-                    }
-                    else {
-                        $scope.baseListDate = '';
-                    }
-                    for (var i in _config.config_color) {
-                        if (_config.config_color[i].colorId == $scope.baseList.colour) {
-                            $scope.baseListColor = _config.config_color[i].colorName;
-                        }
-                    }
-                    if ($scope.relCarStatus == 1) {
-                        swal('本车已在库中', "", "error");
-                    } else {
-                        $scope.pictureCarId = $scope.baseList.id;
-                    }
-                }
+        _basic.post(_host.api_url + "/user/"+userId+"/creditCarRel" ,{
+            creditId: $scope.creditCarRelId,
+            carId: $scope.carId
+        }).then(function (data) {
+            if (data.success == true) {
+                $scope.linkCarId =data.id;
+                queryLinkCar($scope.creditCarRelId)
             }
             else {
                 swal(data.msg, "", "error");
@@ -284,8 +334,28 @@ app.controller("credit_card_controller", ["$scope", "$rootScope", "_host", "_bas
         })
     };
 
+    //刪除
+    $scope.deleteLinkCar = function(id){
+        _basic.delete(_host.api_url + "/user/" + userId + "/credit/" + $scope.creditCarRelId + '/car/' + id, {}).then(
+            function (data) {
+                if (data.success === true) {
+                    queryLinkCar($scope.creditCarRelId);
+                }
+                else {
+                    swal(data.msg, "", "error");
+                }
+            });
 
+    }
 
+    //关闭模态框
+    $scope.addCarLinkInfo = function(){
+        $('.modal').modal();
+        $('#newCreditCardDiv').modal('close');
+        queryCreditCardList();
+        swal("新增成功", "", "success");
+
+    }
 
     /**
      * 上一页
