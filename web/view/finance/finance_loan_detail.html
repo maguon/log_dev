@@ -38,20 +38,20 @@
 
         <div class="row col s12 cyan-text">
             <div class="col s6" >委托方: {{loanInfo.entrustName}}</div>
-            <div class="col s6 grey-text right-align">贷出时间: {{loanInfo.createdOn |date:'yyyy-MM-dd hh:mm'}}</div>
+            <div class="col s6 grey-text right-align">贷出时间: {{loanInfo.loanStartDate |date:'yyyy-MM-dd hh:mm'}}</div>
         </div>
 
         <!-- 定金，贷出金额 -->
         <div class="row col s12" style="margin-top: 40px;">
             <!-- 定金 -->
             <div class="input-field col s6">
-                <input type="text" id="depositText" maxlength="10" valid-money ng-model="loanInfo.deposit" class="red-text">
+                <input type="text" id="depositText" maxlength="10" valid-money ng-model="loanInfo.deposit" class="red-text" ng-disabled="loanInfo.loanStatus!=1">
                 <label for="depositText" id="depositLabel"> 定金</label>
             </div>
 
             <!-- 贷出金额(美元) -->
             <div class="input-field col s6">
-                <input type="text" id="loanMoneyText" maxlength="10" valid-money ng-model="loanInfo.loanMoney" class="red-text">
+                <input type="text" id="loanMoneyText" maxlength="10" valid-money ng-model="loanInfo.loanMoney" class="red-text" ng-disabled="loanInfo.loanStatus!=1">
                 <label for="loanMoneyText" id="loanMoneyLabel"> 贷出金额(美元)</label>
             </div>
         </div>
@@ -59,13 +59,13 @@
         <!-- 备注 -->
         <div class="row col s12">
             <div class="col s12 input-field">
-                <input type="text" id="loadRemarkText" ng-model="loanInfo.remark">
+                <input type="text" id="loadRemarkText" ng-model="loanInfo.remark" ng-disabled="loanInfo.loanStatus!=1">
                 <label for="loadRemarkText">备注</label>
             </div>
         </div>
 
         <!-- 修改 button -->
-        <div class="row col s12 right-align" style="margin-top: 50px">
+        <div class="row col s12 right-align" ng-show="loanInfo.loanStatus==1" style="margin-top: 50px">
             <div class="col s8"></div>
             <div class="col s2 right-align">
                 <a ng-click="updateFinanceLoan()" style="width: 150px;" class="waves-light waves-effect cyan lighten-2 btn">修改</a>
@@ -330,15 +330,15 @@
                     <tbody>
                     <tr ng-repeat="el in buyingCarList" class="grey-text text-darken-1">
                         <!-- VIN码 -->
-                        <td>VIN码：{{el.vin}}</td>
+                        <td width="25%">VIN码：{{el.vin}}</td>
                         <!-- 车型 -->
-                        <td>{{el.make_name}}/{{el.model_name}}</td>
+                        <td width="30%">{{el.make_name}}/{{el.model_name}}</td>
                         <!-- 生产日期 -->
-                        <td ng-bind="el.pro_date|date:'yyyy-MM-dd'"></td>
+                        <td width="15%" ng-bind="el.pro_date|date:'yyyy'"></td>
                         <!-- 车辆估值 -->
-                        <td ng-bind="el.valuation | number"></td>
+                        <td width="20%" class="red-text">{{el.valuation | currency}}</td>
                         <!-- 操作 删除 -->
-                        <td class="operation right-align">
+                        <td width="10%" class="operation right-align">
                             <i class="mdi mdi-close red-text right-align" ng-click="deleteBuyingCarRel(el.car_id)" style="cursor:pointer; right: 22px;"></i>
                         </td>
                     </tr>
@@ -380,7 +380,7 @@
                             未还金额(美元)：<span class="red-text">{{paymentInfo.leftPaymentMoney | number}}</span>
                         </div>
                         <div class="col s4 left-align fz14">
-                            起始时间：{{paymentInfo.startDay |date:'yyyy-MM-dd hh:mm'}}
+                            起始时间：{{paymentInfo.loanStartDate |date:'yyyy-MM-dd hh:mm'}}
                         </div>
                         <div class="col s4 left-align fz14">
                             产生利息时长：{{paymentInfo.interestDay}}天
@@ -408,7 +408,7 @@
                             还款记录
                         </div>
                         <div class="col s6 right-align">
-                            还贷总金额(美元)：<span class="red-text">TODO{{paymentInfo.paymentPoundage | number}}</span>
+                            本金/总金额(美元)：<span class="red-text">{{paymentInfo.paymentMoney | number}} / {{paymentInfo.paymentMoney + paymentInfo.totalInterest + paymentInfo.paymentPoundage | number}}</span>
                         </div>
                     </div>
 
@@ -419,7 +419,7 @@
                                 还款编号：{{el.id}}
                             </div>
                             <div class="col s4 left-align fz14">
-                                还款金额(美元)：<span class="red-text">{{el.repayment_money | number}}</span>
+                                本金/总金额(美元)：<span class="red-text">{{el.repayment_money | number}} / {{el.repayment_money + el.interest_money + el.fee | number}}</span>
                             </div>
                             <div class="col s2 left-align fz14">
                                 {{el.repayment_end_date |date:'yyyy-MM-dd hh:mm'}}
@@ -494,7 +494,7 @@
                             未还金额(美元): <span class="red-text">{{paymentInfo.leftPaymentMoney | number}}</span>
                         </div>
                         <div class="col s6 right-align blue-grey lighten-5 grey-text" style="height:50px; padding-top: 15px; border: 1px solid lightgrey;border-left: 0">
-                            起始时间: {{paymentInfo.startDay |date:'yyyy-MM-dd hh:mm'}}
+                            起始时间: {{paymentInfo.loanStartDate |date:'yyyy-MM-dd hh:mm'}}
                         </div>
                     </div>
 
@@ -581,10 +581,10 @@
                             本次应还总额(美元): <span class="red-text">{{newPayment.totalPaymentMoney | number}}</span>
                         </div>
                         <div class="col s4 left-align" style="height:44px; padding-top: 10px;">
-                            信用证还款金额(美元): <span class="red-text">TODO{{newPayment.leftPaymentMoney | number}}</span>
+                            信用证还款金额(美元): <span class="red-text">{{newPayment.creditRepMoney | number}}</span>
                         </div>
                         <div class="col s4 left-align" style="height:44px; padding-top: 10px;">
-                            其他方式还款金额(美元): <span class="red-text">TODO{{newPayment.leftPaymentMoney | number}}</span>
+                            其他方式还款金额(美元): <span class="red-text">{{newPayment.otherRepMoney | number}}</span>
                         </div>
                     </div>
                     <!-- 分割线 -->
@@ -622,7 +622,7 @@
                     <div class="col s12 vc-center cyan-text fz14" style="margin-top: 20px;margin-bottom: 20px;">
                         <div class="col s6"></div>
                         <div class="col s6 right-align" style="height:50px; padding-top: 15px;">
-                            已还金额(美元): <span class="red-text">{{creditPayment.leftPaymentMoney | number}}</span>
+                            已还金额(美元): <span class="red-text">{{creditPayment.paymentMoney | number}}</span>
                         </div>
                     </div>
 
@@ -678,11 +678,7 @@
                                         </table>
                                     </div>
                                 </div>
-
-
-
                             </li>
-
 
 
                         </ul>
@@ -695,102 +691,96 @@
                     <!-- 本次应还总金额 本还金额 (只读) -->
                     <div class="col s12 vc-center cyan-text fz14" style="margin-top: 20px;margin-bottom: 20px;">
                         <div class="col s6 left-align blue-grey lighten-5" style="height:50px; padding-top: 15px; border: 1px solid lightgrey;border-right: 0">
-                            本次应还总金额(美元): <span class="red-text">{{creditPayment.totalPaymentMoney | number}}</span>
+                            本次应还总金额(美元): <span class="red-text">{{otherPayment.totalPaymentMoney | number}}</span>
                         </div>
                         <div class="col s6 right-align blue-grey lighten-5" style="height:50px; padding-top: 15px; border: 1px solid lightgrey;border-left: 0">
-                            未还金额(美元): <span class="red-text">{{creditPayment.leftPaymentMoney | number}}</span>
+                            未还金额(美元): <span class="red-text">{{otherPayment.leftPaymentMoney | number}}</span>
                         </div>
                     </div>
 
-
-
-                    <!-- 信用证号 TODO -->
+                    <!-- 支付编号 -->
                     <div class="col s12">
-                        <div class="col s12" style="border:1px solid lightgrey" style="margin-top: 20px;margin-bottom: 20px;height: 200px;">
+                        <div class="col s12 z-depth-1" style="border:1px solid lightgrey" style="margin-top: 20px;margin-bottom: 20px;height: 200px;">
                             <div class="input-field col s12" style="margin-top: 30px;margin-bottom: 20px;">
-                                <input type="text" placeholder="模糊查询至少6位，新增车辆完整17位" id="autocomplete-payment-text" ng-change="changeCredit()" class="autocomplete" ng-model="buyingCar.vin" >
-                                <a ng-if="addCarInfoFlg" ng-click="addCarInfo()" class="dataIcon btn-floating cyan" style="width:20px;height: 20px;">
+                                <input type="text" id="newOtherPaymentIdText" ng-model="newOtherPaymentId" >
+                                <a ng-click="addOtherPayment()" class="dataIcon btn-floating cyan" style="width:20px;height: 20px;">
                                     <i class="mdi mdi-plus" style="position: absolute;right:0px;bottom:0px;font-size:15px;line-height: 20px;"></i>
                                 </a>
-                                <a ng-if="!addCarInfoFlg" class="dataIcon btn-floating grey" style="width:20px;height: 20px;cursor: default">
-                                    <i class="mdi mdi-plus" style="position: absolute;right:0px;bottom:0px;font-size:15px;line-height: 20px;"></i>
-                                </a>
-
-                                <label for="autocomplete-input" class="active" style="padding-left: 2px;">信用证号</label>
+                                <label for="newOtherPaymentIdText" class="active" style="padding-left: 2px;">支付编号</label>
                             </div>
                         </div>
                     </div>
-
-
 
                     <!-- 已还金额 (只读) -->
                     <div class="col s12 vc-center cyan-text fz14" style="margin-top: 20px;margin-bottom: 20px;">
                         <div class="col s6"></div>
                         <div class="col s6 right-align" style="height:50px; padding-top: 15px;">
-                            已还金额(美元): <span class="red-text">{{creditPayment.leftPaymentMoney | number}}</span>
+                            已还金额(美元): <span class="red-text">{{otherPayment.paymentMoney | number}}</span>
                         </div>
                     </div>
 
 
 
 
+                    <!-- 其他方式还款列表 区域 -->
+                    <div class="col s12" ng-repeat="el in loanRepPaymentRelList" style="margin-bottom: 15px;">
 
-
-
-
-
-
-
-
-                    <!-- 新增运送车辆信息列表 -->
-                    <div class="col s12 vc-center">
-                        <div class="row" style="width: 95%;margin-top: 20px;">
-                            <div class="col s12" ng-repeat="transCar in shipTransCarList" style="margin-bottom: 20px;">
-                                <!-- header -->
-                                <div class="col s12 lighten-1 cyan-text fz14 vc-center" style="height:40px;border:1px solid #bdbdbd;">
-                                    <div class="col s6 left-align">
-                                        委托方：{{transCar.short_name}}
-                                    </div>
-                                    <div class="col s6 right-align">
-                                        <span ng-class="{'red-text':transCar.order_status == 1}">{{payStatus[transCar.order_status - 1].name}}</span>
-                                        <span ng-show="shippingOrder.status==1 && transCar.order_status==1" ng-click="removeCar($index, transCar)"><i class="mdi mdi-close red-text right-align" style="padding-left:5px; cursor:pointer; right: 22px;"></i></span>
-                                    </div>
+                        <div class="row z-depth-1">
+                            <!-- header -->
+                            <div class="col s12 lighten-1 cyan-text fz14 vc-center" style="height:40px;border:1px solid #bdbdbd;">
+                                <div class="col s6 left-align">
+                                    支付编号：{{el.payment_id}}
                                 </div>
-
-                                <div class="col s12 lighten-1 white grey-text vc-center fz12"  style="height:64px;border:1px solid #bdbdbd;border-top:0px solid #bdbdbd;">
-                                    <div class="col s4 left-align">VIN码:{{transCar.vin}}
-                                    </div>
-                                    <div class="col s4 left-align">制造商:{{transCar.make_name}}
-                                    </div>
-                                    <div class="col s4 left-align">品牌:{{transCar.model_name}}
-                                    </div>
+                                <div class="col s6 right-align grey-text">
+                                    {{el.created_payment_date |date:'yyyy-MM-dd hh:mm'}}
+                                    <span ng-click="deleteOtherPayment($event, el.payment_id)"><i class="mdi mdi-close red-text right-align" style="padding-left:5px; cursor:pointer; right: 22px;"></i></span>
                                 </div>
+                            </div>
 
-                                <div class="col s12 lighten-1 white grey-text vc-center fz12"  style="height:64px;border:1px solid #bdbdbd;border-top:0px solid #bdbdbd;">
-                                    <div class="col s4 left-align">车辆年份:{{transCar.pro_date | date: 'yyyy'}}
-                                    </div>
-                                    <div class="col s4 left-align">车价(美元):<span class="red-text">{{transCar.valuation | currency}}</span>
-                                    </div>
-                                    <div class="col s4 input-field left-align" ng-switch="transCar.order_status">
-                                        <div ng-switch-when="2" class="col s12 right-align">
-                                            运费(美元):<span class="red-text">{{transCar.ship_trans_fee | currency}}</span>
+                            <div class="col s12 lighten-1 white grey-text vc-center fz12"  style="height:64px;border:1px solid #bdbdbd;border-top:0px solid #bdbdbd;">
+                                <div class="col s4 left-align">
+                                    <span class="cyan-text">{{el.payment_type == '1' ? '(电汇)': '(支票)'}}</span>
+                                    <span style="margin-left: 5px;">{{el.number}}</span>
+                                </div>
+                                <div class="col s4 left-align">
+                                    金额(美元):<span class="red-text">{{el.payment_money | number}}</span>
+                                </div>
+                                <!--<div class="col s4 input-field left-align" ng-switch="transCar.order_status">-->
+                                <div class="col s4 left-align">
+                                    <!--<div ng-switch-when="2" class="col s12 right-align">-->
+                                        <!--本次支付金额(美元):<span class="red-text">{{el.this_payment_money | currency}}</span>-->
+                                    <!--</div>-->
+                                    <!--<div ng-switch-default class="col s12">-->
+                                    <!--<div class="col s12">-->
+                                        <div class="col s10 input-field">
+                                            <input type="text" id="thisPaymentMoneyText" maxlength="10" valid-money ng-blur="calcTotalFees()" class="red-text" ng-model="el.this_payment_money">
+                                            <label for="thisPaymentMoneyText" class="active">本次支付金额(美元)</label>
                                         </div>
-                                        <div ng-switch-default class="col s12">
-                                            <div class="col s10">
-                                                <input type="text" id="shipTransFeesText" maxlength="8" valid-money ng-blur="calcTotalFees()" class="red-text" ng-model="transCar.ship_trans_fee">
-                                                <label for="shipTransFeesText" class="active"><span class="red-text">*</span>运费(美元):</label>
-                                            </div>
-                                            <div class="col s2 left-align">
-                                                <a class="btn-floating waves-effect waves-light cyan lighten-1" style="left: 1px;width:30px;height: 30px;" ng-click="modifyCarInfo(transCar)">
-                                                    <i class="mdi mdi-check add_brand" style="position: absolute;right:0;bottom:3px;font-size:20px;line-height: 20px;"></i>
-                                                </a>
-                                            </div>
+                                        <div class="col s2 left-align">
+                                            <a class="btn-floating waves-effect waves-light cyan lighten-1" style="left: 1px;width:30px;height: 30px;margin-top: 20px;" ng-click="updatePaymentMoney(el)">
+                                                <i class="mdi mdi-check add_brand" style="position: absolute;right:0;bottom:3px;font-size:20px;line-height: 20px;"></i>
+                                            </a>
                                         </div>
-                                    </div>
+                                    <!--</div>-->
                                 </div>
                             </div>
                         </div>
+
+
+
                     </div>
+
+
+
+
+
+
+
+
+
+
+
+
                 </div>
             </div>
 
@@ -799,14 +789,14 @@
 
             <!-- 取消/确认 按钮 -->
             <div class="row col right-align" style="width: 96%;margin-top: 20px;">
-                <a class="btn-floating waves-effect waves-light grey btn modal-close">
+                <a class="btn-floating waves-effect waves-light grey btn modal-close" ng-show="modalFlag=='editPaymentInfo' || (modalFlag=='newPaymentInfo' && tabId == 'paymentInfo')" >
                     <i class="mdi mdi-close"></i>
                 </a>
                 <a class="btn-floating waves-effect waves-light cyan lighten-1 btn" ng-show="modalFlag=='newPaymentInfo'" style="margin-left: 20px;"
                    ng-click="gotoNextPage()">
                     <i class="mdi mdi-trending-neutral"></i>
                 </a>
-                <a class="btn-floating waves-effect waves-light cyan lighten-1 btn" ng-show="modalFlag!='newPaymentInfo'" style="margin-left: 20px;"
+                <a class="btn-floating waves-effect waves-light cyan lighten-1 btn" ng-show="modalFlag=='editPaymentInfo'" style="margin-left: 20px;"
                    ng-click="updatePayment()">
                     <i class="mdi mdi-check"></i>
                 </a>
