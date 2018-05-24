@@ -11,6 +11,9 @@ app.controller("credit_card_detail_controller", ["$scope", "$rootScope", "_host"
     // 委托方性质
     $scope.entrustTypeList = _config.entrustType;
 
+    // 颜色列表
+    $scope.configColor = _config.config_color;
+
 
     //获取委托方信息
 
@@ -210,7 +213,7 @@ app.controller("credit_card_detail_controller", ["$scope", "$rootScope", "_host"
                 $scope.entrustId = $scope.baseInfoList.entrust_id;
             }
         }
-        if(vin!=="") {
+        if(vin!==undefined&&vin!=="") {
             if (vin.length >= 6) {
                 _basic.get(_host.api_url + "/shipTransCarRel?entrustId="+$scope.entrustId+"&vinCode=" +vin, {}).then(function (data) {
                     if (data.success == true && data.result.length > 0) {
@@ -235,9 +238,6 @@ app.controller("credit_card_detail_controller", ["$scope", "$rootScope", "_host"
                 $('#autocomplete-input').autocomplete({minLength: 6});
                 $scope.vinMsg = {}
             }
-        }
-        else{
-            swal('此委托方没有您输入的VIN码','','error')
         }
     };
 
@@ -290,6 +290,15 @@ app.controller("credit_card_detail_controller", ["$scope", "$rootScope", "_host"
     }
 
 
-    queryBaseItem ();
-    queryLinkCar();
+
+    /**
+     * 画面初期显示时，用来获取画面必要信息的初期方法。
+     */
+    $scope.initData = function () {
+        queryBaseItem ();
+        queryLinkCar();
+    };
+    $scope.initData();
+
+
 }])

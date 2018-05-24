@@ -261,7 +261,7 @@
                     <div class="row col" style="width: 100%;position: relative">
 
                         <div class="input-field col s12">
-                            <input type="text" id="autocomplete-input" name="vin" placeholder="       模糊查询至少需要6位vin码" ng-change="shortSearch(creditVin)" ng-model="creditVin" style="margin: 0 0 20px 0" autocomplete="off" class="autocomplete" required minlength="6">
+                            <input type="text" id="autocomplete-input" placeholder="       模糊查询至少需要6位vin码" ng-change="shortSearch(creditVin)" ng-model="creditVin" style="margin: 0 0 20px 0" class="autocomplete">
                             <label for="autocomplete-input">VIN码</label>
                         </div>
                         <button class=" btn btn-floating btn-small waves-effect cyan lighten-1" ng-if="carId!==undefined" ng-click="addLinkCar()"  style="position: absolute;top: 15px;right: 10px;">
@@ -278,24 +278,29 @@
                         <div class="row blue-grey lighten-5" style="width:98%;border:1px solid #bdbdbd">
                             <!-- header -->
                             <div class="col s12 lighten-1 cyan-text vc-center left-align" style="height:50px;">
-                                <div class="col s4 ">
+                                <div class="col s4">
                                     VIN码：{{linkCar.vin}}
                                 </div>
-                                <div class="col s4 ">
+                                <div class="col s5 ">
                                     <div class="col s4">
                                         <div class="col s6" ng-if="linkCar.purchase_type!==0"> <i class="mdi mdi-slackware" style="color: #f0ad4e"></i></div>
                                         <div class="col s6" ng-if="linkCar.purchase_type==0"> <i class="mdi mdi-slackware grey-text"></i></div>
                                         <div class="col s6 right-align" ng-if="linkCar.mortgage_status!==2"><i class="mdi mdi-briefcase grey-text"></i></div>
                                         <div class="col s6 right-align" ng-if="linkCar.mortgage_status==2"><i class="mdi mdi-briefcase cyan-text"></i></div>
                                     </div>
-                                    <div class="col s8 grey-text">
-                                        {{linkCar.make_name}} /{{linkCar.model_name}}
+                                    <div class="col s8">
+                                        <div class="col s10 grey-text right-align"> {{linkCar.make_name}} /{{linkCar.model_name}}</div>
+                                        <div class="col s2" ng-if="linkCar.colour==''"></div>
+                                        <div class="col s2 z-depth-1" ng-if="linkCar.colour!=''"  style="width:20px;height:20px; background-color: {{'#' + linkCar.colour}}"></div>
                                     </div>
                                 </div>
-                                <div class="col s3 right-align red-text">
-                                    {{linkCar.valuation| currency }}
+                                <div class="col s3 red-text">
+                                    <div class="col s9">
+                                        {{linkCar.valuation| currency }}
+                                    </div>
+                                    <div class="col s3" style="cursor: pointer" ng-click="deleteLinkCar(linkCar.car_id)">x</div>
                                 </div>
-                                <div class="col s1 right-align red-text" style="cursor: pointer" ng-click="deleteLinkCar(linkCar.car_id)">x</div>
+
                             </div>
 
                             <!-- body -->
@@ -384,16 +389,19 @@
                             <!-- header -->
                             <div class="col s12 lighten-1 cyan-text vc-center" style="height:55px;">
                                 <div class="input-field col s4"> VIN码：{{linkCar.vin}}</div>
-                                <div class="input-field col s4">
-                                    <div class="col s2" ng-if="linkCar.purchase_type!==0"> <i class="mdi mdi-slackware" style="color: #f0ad4e"></i></div>
-                                    <div class="col s2" ng-if="linkCar.purchase_type==0"> <i class="mdi mdi-slackware grey-text"></i></div>
-                                    <div class="col s2 right-align" ng-if="linkCar.mortgage_status!==2"><i class="mdi mdi-briefcase grey-text"></i></div>
-                                    <div class="col s2 right-align" ng-if="linkCar.mortgage_status==2"><i class="mdi mdi-briefcase cyan-text"></i></div>
-                                    <div class="col s8 grey-text right-align">
-                                        {{linkCar.make_name}} /{{linkCar.model_name}}
+                                <div class="input-field col s6">
+                                    <div class="col s1" ng-if="linkCar.purchase_type!==0"> <i class="mdi mdi-slackware" style="color: #f0ad4e"></i></div>
+                                    <div class="col s1" ng-if="linkCar.purchase_type==0"> <i class="mdi mdi-slackware grey-text"></i></div>
+                                    <div class="col s1" ng-if="linkCar.mortgage_status!==2"><i class="mdi mdi-briefcase grey-text"></i></div>
+                                    <div class="col s1" ng-if="linkCar.mortgage_status==2"><i class="mdi mdi-briefcase cyan-text"></i></div>
+                                    <div class="col s10">
+                                        <div class="col s6 grey-text right-align"> {{linkCar.make_name}} /{{linkCar.model_name}}</div>
+                                        <div class="col s2" ng-if="linkCar.colour==''"></div>
+                                        <div class="col s2 z-depth-1" ng-if="linkCar.colour!=''"  style="width:20px;height:20px; background-color: {{'#' + linkCar.colour}}"></div>
                                     </div>
+
                                 </div>
-                                <div class="input-field col s4 right-align red-text"> {{linkCar.valuation| currency }}</div>
+                                <div class="input-field col s2 right-align red-text"> {{linkCar.valuation| currency }}</div>
                             </div>
 
                             <!-- body -->
