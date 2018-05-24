@@ -285,7 +285,7 @@ app.controller("credit_card_controller", ["$scope", "$rootScope", "_host", "_bas
         minLength: 6,
     });
     $scope.shortSearch=function () {
-        if($scope.creditVin!=="") {
+        if($scope.creditVin!==""&&$scope.creditVin!==undefined) {
             if ($scope.creditVin.length >= 6) {
                 _basic.get(_host.api_url + "/shipTransCarRel?entrustId="+$scope.entrust.id+"&vinCode=" + $scope.creditVin, {}).then(function (data) {
                     if (data.success == true&& data.result.length > 0) {
@@ -312,9 +312,6 @@ app.controller("credit_card_controller", ["$scope", "$rootScope", "_host", "_bas
                 $('#autocomplete-input').autocomplete({minLength: 6});
                 $scope.vinMsg = {}
             }
-        }
-        else{
-            swal('此委托方没有您输入的VIN码','','error')
         }
     };
 

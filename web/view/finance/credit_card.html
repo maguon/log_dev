@@ -330,7 +330,7 @@
                        <!--上部分：查询功能-->
                         <div class="row col" style="width: 100%;position: relative">
                             <div class="input-field col s12">
-                                <input type="text" id="autocomplete-input" name="vin" placeholder="          模糊查询至少需要6位vin码"  ng-model="creditVin" ng-change="shortSearch()"  style="margin: 0 0 20px 0" autocomplete="off" class="autocomplete" required minlength="6">
+                                <input type="text" id="autocomplete-input"  placeholder="           模糊查询至少需要6位vin码"  ng-model="creditVin" ng-change="shortSearch()"  style="margin: 0 0 20px 0"  class="autocomplete">
                                 <label for="autocomplete-input">VIN码</label>
                             </div>
                             <button class=" btn btn-floating btn-small waves-effect cyan lighten-1" ng-if="carId!==undefined" ng-click="addLinkCar()"  style="position: absolute;top: 15px;right: 10px;">
@@ -356,8 +356,10 @@
                                              <div class="col s6 right-align" ng-if="linkCar.mortgage_status!==2"><i class="mdi mdi-briefcase grey-text"></i></div>
                                              <div class="col s6 right-align" ng-if="linkCar.mortgage_status==2"><i class="mdi mdi-briefcase cyan-text"></i></div>
                                          </div>
-                                         <div class="col s8 grey-text right-align">
-                                             {{linkCar.make_name}} /{{linkCar.model_name}}
+                                         <div class="col s8">
+                                             <div class="col s10 grey-text right-align"> {{linkCar.make_name}} /{{linkCar.model_name}}</div>
+                                             <div class="col s2" ng-if="linkCar.colour==''"></div>
+                                             <div class="col s2 z-depth-1" ng-if="linkCar.colour!=''"  style="width:20px;height:20px; background-color: {{'#' + linkCar.colour}}"></div>
                                          </div>
                                      </div>
 
