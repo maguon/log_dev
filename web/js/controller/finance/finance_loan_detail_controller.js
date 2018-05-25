@@ -19,6 +19,8 @@ app.controller("finance_loan_detail_controller", ["$scope", "$stateParams", "_ba
     $scope.purchaseTypes = _config.purchaseTypes;
     // 支付状态
     $scope.paymentStatus = _config.paymentStatus;
+    // 支付方式
+    $scope.paymentType = _config.paymentType;
 
     // 金融贷出(TAB1) 订单 基本信息
     $scope.loanInfo = {};
@@ -62,13 +64,6 @@ app.controller("finance_loan_detail_controller", ["$scope", "$stateParams", "_ba
 
     // 还款记录(TAB4) 新增还款 其他方式还款
     $scope.otherPayment = {};
-
-    /***************************************************************************/
-
-
-    // 支付方式
-    $scope.paymentTypeList = _config.paymentType;
-
 
     /**
      * 返回前画面。
@@ -181,10 +176,11 @@ app.controller("finance_loan_detail_controller", ["$scope", "$stateParams", "_ba
     };
 
     /**
-     * 放款。
-     * */
-    $scope.changeLoanStatus = function () {
-        _basic.put(_host.api_url + "/user/" + userId + "/loan/" + loanId + "/loanStatus/" + $scope.loanStatus[1].id, {}).then(function (data) {
+     * 修改贷款订单状态。(放款/完结 按钮动作)
+     * @param status 状态
+     */
+    $scope.changeLoanStatus = function (status) {
+        _basic.put(_host.api_url + "/user/" + userId + "/loan/" + loanId + "/loanStatus/" + status, {}).then(function (data) {
             if (data.success) {
                 swal("修改成功", "", "success");
                 // 默认显示 贷出信息 TAB
@@ -518,8 +514,6 @@ app.controller("finance_loan_detail_controller", ["$scope", "$stateParams", "_ba
             });
     };
 
-    /*********************************************************************************************/
-
     /**
      * Tab跳转 4: 还款记录
      */
@@ -592,6 +586,7 @@ app.controller("finance_loan_detail_controller", ["$scope", "$stateParams", "_ba
         $('#newLoanPaymentDiv').modal('open');
         // 画面ID：新增还款
         $scope.modalFlag = "newPaymentInfo";
+        $scope.newPayment.repaymentStatus = "-1";
 
         $scope.lookPaymentInfo();
     };
@@ -668,10 +663,12 @@ app.controller("finance_loan_detail_controller", ["$scope", "$stateParams", "_ba
         _basic.get(url).then(function (data) {
             if (data.success) {
                 if (data.result.length > 0) {
+                    // 还款状态
+                    $scope.newPayment.repaymentStatus = data.result[0].repayment_status;
                     // 还款编号
                     $scope.newPayment.repaymentId = repaymentId;
                     // 还款时间
-                    $scope.newPayment.repaymentEndDate = data.result[0].repayment_end_date;
+                    $scope.newPayment.repaymentDate = data.result[0].created_on;
                     // 本次还贷金额(美元)
                     $scope.newPayment.paymentMoney = data.result[0].repayment_money;
                     // 利率
@@ -819,7 +816,8 @@ app.controller("finance_loan_detail_controller", ["$scope", "$stateParams", "_ba
                     $scope.creditPayment.totalPaymentMoney = $scope.newPayment.totalPaymentMoney;
                     // 未还金额(美元)
                     $scope.creditPayment.leftPaymentMoney = $scope.newPayment.totalPaymentMoney;
-
+                    //
+                    $scope.newPayment.oldTotalPaymentMoney = $scope.newPayment.totalPaymentMoney;
                     // 刷新 还款记录 画面
                     $scope.lookPaymentHistory();
                 } else {
@@ -928,11 +926,11 @@ app.controller("finance_loan_detail_controller", ["$scope", "$stateParams", "_ba
         $("#creditPaymentDiv").addClass("active");
         $("#creditPaymentDiv").show();
 
-        // TAB 画面ID：其他方式还款
+        // TAB 画面ID：信用证还款
         $scope.tabId = "creditPayment";
-
-        // TODO
+        // 清空 信用证号
         $scope.newCreditId = "";
+
         // 取得信用证 还款信息
         getCreditPaymentInfo();
     };
@@ -941,9 +939,15 @@ app.controller("finance_loan_detail_controller", ["$scope", "$stateParams", "_ba
      * 取得信用证 还款信息。
      */
     function getCreditPaymentInfo() {
-        $scope.otherPayment.paymentMoney = 0;
 
+        // 本次应还总金额 = 本次应还总额 - 其他方式还款金额
+        $scope.creditPayment.totalPaymentMoney = $scope.newPayment.oldTotalPaymentMoney - $scope.otherPayment.paymentMoney;
+        // 如果小于0 ，则显示0
+        $scope.creditPayment.totalPaymentMoney = $scope.creditPayment.totalPaymentMoney < 0 ? 0 : $scope.creditPayment.totalPaymentMoney;
+
+        // 信用证 已还金额
         $scope.creditPayment.paymentMoney = 0;
+
             // 取得信用证还款列表
         _basic.get(_host.api_url + "/loanRepCreditRel?repaymentId=" + $scope.newPayment.repaymentId).then(function (data) {
             if (data.success) {
@@ -983,10 +987,11 @@ app.controller("finance_loan_detail_controller", ["$scope", "$stateParams", "_ba
         $("#otherPaymentDiv").addClass("active");
         $("#otherPaymentDiv").show();
 
+        // TAB 画面ID：其他方式还款
         $scope.tabId = "otherPayment";
-
-        // TODO
+        // 清空 支付编号
         $scope.newOtherPaymentId = "";
+
         // 取得其他还款 还款信息
         getOtherPaymentInfo();
     };
@@ -1022,6 +1027,7 @@ app.controller("finance_loan_detail_controller", ["$scope", "$stateParams", "_ba
             }
         })
     }
+
     /**
      * 点击 追加信用证还款按钮
      */
@@ -1222,35 +1228,13 @@ app.controller("finance_loan_detail_controller", ["$scope", "$stateParams", "_ba
             });
     };
 
-    // /**
-    //  * 取得指定信用证关联车辆。
-    //  * @param creditId 信用证ID
-    //  */
-    // $scope.getCreditCarRel = function ($event, creditId) {
-    //
-    //     // $event.stopPropagation();
-    //
-    //     // 检索用url
-    //     var url = _host.api_url + "/creditCarRel?creditId=" + creditId;
-    //     console.log(url)
-    //     _basic.get(url).then(function (data) {
-    //         if (data.success) {
-    //             $scope.creditCarRelList = data.result;
-    //         } else {
-    //             swal(data.msg, "", "error");
-    //         }
-    //     });
-    // };
-
-
-
-
     /**
-     * 点击完结
-     * */
-    $scope.updatePaymentStatus = function () {
+     * 本次还款确定完结。
+     * @param repaymentId 还款编号
+     */
+    $scope.updatePaymentStatus = function (repaymentId) {
         swal({
-                title: "确定支付完结吗？",
+                title: "本次还款确定完结吗？",
                 type: "warning",
                 showCancelButton: true,
                 confirmButtonColor: "#DD6B55",
@@ -1259,25 +1243,21 @@ app.controller("finance_loan_detail_controller", ["$scope", "$stateParams", "_ba
                 closeOnConfirm: true
             },
             function () {
+            console.log(repaymentId);
+
                 // 修改状态为已完结【2：已完结】
-                var url = _host.api_url + "/user/" + userId + "/orderPayment/" + loanId + "/paymentStatus/" + $scope.paymentStatusList[1].id;
+                var url = _host.api_url + "/user/" + userId + "/repayment/" + repaymentId + "/repaymentStatus/" + $scope.paymentStatus[1].id;
+                console.log(url);
+
                 _basic.put(url, {}).then(function (data) {
-                    if (data.success == true) {
-                        getBaseInfo();
+                    if (data.success) {
+                        $scope.lookPaymentHistory();
                     } else {
                         swal(data.msg, "", "error");
                     }
                 })
             });
     };
-
-
-
-
-
-
-
-    /*********************************************************************************************/
 
     /**
      * 车辆品牌列表查询，用来填充查询条件：车辆品牌
