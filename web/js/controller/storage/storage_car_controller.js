@@ -882,9 +882,12 @@ app.controller("storage_car_controller", ["$scope", "$rootScope", "$stateParams"
                     storageId: s_id,
                     carId: car_id
                 }).then(function (data) {
-                    if (data.success = true) {
+                    if (data.success == true) {
                         swal("出库成功!", "", "success");
                         $scope.getStorageCar();
+                    }
+                    else {
+                        swal(data.msg, "", "error")
                     }
                 });
             }
