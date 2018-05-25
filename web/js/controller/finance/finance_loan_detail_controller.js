@@ -101,11 +101,6 @@ app.controller("finance_loan_detail_controller", ["$scope", "$stateParams", "_ba
                     return;
                 }
 
-                // 订单是已支付时，取得支付详情 TODO
-                if (data.result[0].order_status == 2) {
-                    // getPaymentDetails();
-                }
-
                 // 贷出编号
                 $scope.loanInfo.id = loanId;
                 // 贷出订单 状态
