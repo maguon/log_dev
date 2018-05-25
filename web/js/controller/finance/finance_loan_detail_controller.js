@@ -768,6 +768,10 @@ app.controller("finance_loan_detail_controller", ["$scope", "$stateParams", "_ba
             $scope.otherPayment.totalPaymentMoney = $scope.creditPayment.leftPaymentMoney;
             // 未还金额(美元)
             $scope.otherPayment.leftPaymentMoney = $scope.creditPayment.leftPaymentMoney;
+            // 清空 支付编号
+            $scope.newOtherPaymentId = "";
+            // 清空其他方式列表
+            $scope.loanRepPaymentRelList = {};
 
         } else {
             // 关闭模态
@@ -809,10 +813,14 @@ app.controller("finance_loan_detail_controller", ["$scope", "$stateParams", "_ba
 
                     // 本次应还总金额(美元)
                     $scope.creditPayment.totalPaymentMoney = $scope.newPayment.totalPaymentMoney;
+                    $scope.newPayment.oldTotalPaymentMoney = $scope.newPayment.totalPaymentMoney;
                     // 未还金额(美元)
                     $scope.creditPayment.leftPaymentMoney = $scope.newPayment.totalPaymentMoney;
-                    //
-                    $scope.newPayment.oldTotalPaymentMoney = $scope.newPayment.totalPaymentMoney;
+                    // 清空 信用证号
+                    $scope.newCreditId = "";
+                    // 清空信用证列表
+                    $scope.loanRepCreditRelList = {};
+
                     // 刷新 还款记录 画面
                     $scope.lookPaymentHistory();
                 } else {
