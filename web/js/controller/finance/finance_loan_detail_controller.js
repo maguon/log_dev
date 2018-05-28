@@ -1133,11 +1133,7 @@ app.controller("finance_loan_detail_controller", ["$scope", "$stateParams", "_ba
         var paymentId = $scope.newOtherPaymentId;
 
         // 检索用url
-        var url = _host.api_url + "/orderPayment?orderPaymentId=" + paymentId + "&entrustId=" + $scope.loanInfo.entrustId  + "&paymentStatus=" + unfinished;
-        console.log(url);
-
-        // 支付单号
-        // var url = _host.api_url + "/orderPayment?number=" + otherPaymentNumber + "&entrustId=" + $scope.loanInfo.entrustId  + "&paymentStatus" + unfinished;
+        var url = _host.api_url + "/payment?paymentId=" + paymentId + "&entrustId=" + $scope.loanInfo.entrustId  + "&paymentStatus=" + unfinished;
         _basic.get(url).then(function (data) {
             if (data.success) {
 
@@ -1219,7 +1215,6 @@ app.controller("finance_loan_detail_controller", ["$scope", "$stateParams", "_ba
                 var obj = {thisPaymentMoney : paymentInfo.this_payment_money};
                 // 修改本次支付金额
                 var url = _host.api_url + "/user/" + userId + "/repayment/" + paymentInfo.repayment_id + "/payment/" + paymentInfo.payment_id + "/repPaymentMoney" ;
-                console.log(url);
 
                 _basic.put(url, obj).then(function (data) {
                     if (data.success) {
@@ -1246,11 +1241,8 @@ app.controller("finance_loan_detail_controller", ["$scope", "$stateParams", "_ba
                 closeOnConfirm: true
             },
             function () {
-            console.log(repaymentId);
-
                 // 修改状态为已完结【2：已完结】
                 var url = _host.api_url + "/user/" + userId + "/repayment/" + repaymentId + "/repaymentStatus/" + $scope.paymentStatus[1].id;
-                console.log(url);
 
                 _basic.put(url, {}).then(function (data) {
                     if (data.success) {

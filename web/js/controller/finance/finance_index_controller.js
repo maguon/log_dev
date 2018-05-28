@@ -59,9 +59,9 @@ app.controller("finance_index_controller", ["$scope", "$rootScope", "_host", "_b
     /**
      * 委托方支付(未完结) 查询
      */
-    function getOrderPaymentCount() {
+    function getPaymentCount() {
         // 1：未完结
-        var url = _host.api_url + "/orderPaymentCount?paymentStatus=1";
+        var url = _host.api_url + "/paymentCount?paymentStatus=1";
         _basic.get(url).then(function (data) {
             if (data.success) {
                 if (data.result.length > 0) {
@@ -138,7 +138,7 @@ app.controller("finance_index_controller", ["$scope", "$rootScope", "_host", "_b
         // 委托方总数 查询
         getEntrustCount();
         // 委托方支付(未完结) 查询
-        getOrderPaymentCount();
+        getPaymentCount();
         // 仓储订单(未支付) 查询
         getStorageOrderCount();
         // 海运订单(未支付) 查询

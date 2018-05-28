@@ -78,7 +78,7 @@ app.controller("payment_controller", ["$scope", "_basic", "_host", "_config", fu
                 remark: $scope.addRemark
             };
 
-            _basic.post(_host.api_url + "/user/" + userId + "/orderPayment", obj).then(function (data) {
+            _basic.post(_host.api_url + "/user/" + userId + "/paymentOrder", obj).then(function (data) {
                 if (data.success) {
                     $('#addPaymentModal').modal('close');
                     seachPayment();
@@ -99,7 +99,7 @@ app.controller("payment_controller", ["$scope", "_basic", "_host", "_config", fu
      * */
     function seachPayment() {
         // 基本检索URL
-        var reqUrl = _host.api_url + "/orderPayment?start=" + $scope.start + "&size=" + $scope.size;
+        var reqUrl = _host.api_url + "/payment?start=" + $scope.start + "&size=" + $scope.size;
         // 检索条件
         var conditions = _basic.objToUrl(makeConditions());
         // 检索URL
@@ -142,7 +142,7 @@ app.controller("payment_controller", ["$scope", "_basic", "_host", "_config", fu
      */
     $scope.export = function () {
         // 基本检索URL
-        var url = _host.api_url + "/orderPayment.csv";
+        var url = _host.api_url + "/payment.csv";
         // 检索条件
         var conditions = _basic.objToUrl(makeConditions());
         // 检索URL
@@ -165,7 +165,7 @@ app.controller("payment_controller", ["$scope", "_basic", "_host", "_config", fu
         }
 
         var obj = {
-            orderPaymentId: $scope.paymentId,
+            paymentId: $scope.paymentId,
             entrustType: $scope.entrustType,
             entrustId: entrust.id,
             paymentStatus: $scope.paymentStatus,
@@ -176,8 +176,6 @@ app.controller("payment_controller", ["$scope", "_basic", "_host", "_config", fu
         };
         return obj;
     }
-
-
 
     /**
      * 上一页
@@ -194,7 +192,6 @@ app.controller("payment_controller", ["$scope", "_basic", "_host", "_config", fu
         $scope.start = $scope.start + ($scope.size - 1);
         seachPayment();
     };
-
 
     /**
      * 获取画面初期数据。

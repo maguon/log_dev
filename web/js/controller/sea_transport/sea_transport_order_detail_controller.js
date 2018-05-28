@@ -28,7 +28,7 @@ app.controller("sea_transport_order_detail_controller", ["$scope","$stateParams"
                     return;
                 }
                 $scope.paymentInfo = data.result[0];
-                getOrderPayment( $scope.paymentInfo.id);
+                getPaymentInfo( $scope.paymentInfo.id);
             } else {
                 swal(data.msg, "", "error");
             }
@@ -39,13 +39,13 @@ app.controller("sea_transport_order_detail_controller", ["$scope","$stateParams"
     /*
     * 获取支付信息
     * */
-    function getOrderPayment(id){
-        _basic.get( _host.api_url + "/orderPayment?shipTransOrderId="+id).then(function (data) {
-            if (data.success == true) {
-                if(data.result.length==0){
+    function getPaymentInfo(id){
+        _basic.get( _host.api_url + "/payment?shipTransOrderId="+id).then(function (data) {
+            if (data.success) {
+                if(data.result.length===0){
                     return;
                 }
-                $scope.orderPaymentList = data.result[0];
+                $scope.paymentList = data.result[0];
             } else {
                 swal(data.msg, "", "error");
             }

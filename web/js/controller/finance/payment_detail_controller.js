@@ -4,7 +4,7 @@
 app.controller("payment_detail_controller", ["$scope", "$stateParams", "_basic", "_host", "_config", "$state", function ($scope, $stateParams, _basic, _host, _config, $state) {
     var userId = _basic.getSession(_basic.USER_ID);
     // 支付编号
-    var orderPaymentId = $stateParams.id;
+    var paymentId = $stateParams.id;
     // 委托方性质
     $scope.entrustTypeList = _config.entrustType;
     // 支付状态
@@ -45,16 +45,16 @@ app.controller("payment_detail_controller", ["$scope", "$stateParams", "_basic",
         $("#lookRelatedOrder").show();
         // 左侧 未完结 列表
         _basic.get(_host.api_url + "/storageOrder?entrustId=" + $scope.storagePaymentArray.entrust_id + '&orderStatus=' + $scope.paymentStatusList[0].id).then(function (data) {
-            if (data.success == true) {
+            if (data.success) {
                 $scope.storageOrderList = data.result;
             } else {
                 swal(data.msg, "", "error");
             }
         });
-        var url = _host.api_url + "/orderPaymentRel?orderPaymentId=" + orderPaymentId;
+        var url = _host.api_url + "/paymentStorageOrderRel?paymentId=" + paymentId;
         //右侧关联列表
         _basic.get(url).then(function (data) {
-            if (data.success == true) {
+            if (data.success) {
                 $scope.storageOrderPaymentRelList = data.result;
                 $scope.totalMoney = 0;
                 for (var i = 0; i < $scope.storageOrderPaymentRelList.length; i++) {
@@ -77,9 +77,9 @@ app.controller("payment_detail_controller", ["$scope", "$stateParams", "_basic",
         // 追加画面数据
         var obj = {
             storageOrderId: id,
-            orderPaymentId: orderPaymentId
+            paymentId: paymentId
         };
-        _basic.post(_host.api_url + "/user/" + userId + "/orderPaymentRel", obj).then(function (data) {
+        _basic.post(_host.api_url + "/user/" + userId + "/paymentStorageOrderRel", obj).then(function (data) {
             if (data.success) {
                 // 成功后，刷新页面数据
                 $scope.lookRelatedOrder();
@@ -104,7 +104,7 @@ app.controller("payment_detail_controller", ["$scope", "$stateParams", "_basic",
                 closeOnConfirm: true
             },
             function () {
-                _basic.delete(_host.api_url + "/user/" + userId + "/storageOrder/" + id + '/orderPayment/' + orderPaymentId, {}).then(
+                _basic.delete(_host.api_url + "/user/" + userId + "/storageOrder/" + id + '/payment/' + paymentId, {}).then(
                     function (data) {
                         if (data.success === true) {
                             $scope.lookRelatedOrder();
@@ -136,9 +136,9 @@ app.controller("payment_detail_controller", ["$scope", "$stateParams", "_basic",
         });
 
         // 右侧，已关联
-        var url = _host.api_url + "/shipTransOrderPaymentRel?orderPaymentId=" + orderPaymentId;
+        var url = _host.api_url + "/paymentShipOrderRel?paymentId=" + paymentId;
         _basic.get(url).then(function (data) {
-            if (data.success == true) {
+            if (data.success) {
                 $scope.shipTransOrderRelList = data.result;
                 $scope.totalShipTransMoney = 0;
                 for (var i = 0; i < $scope.shipTransOrderRelList.length; i++) {
@@ -161,9 +161,9 @@ app.controller("payment_detail_controller", ["$scope", "$stateParams", "_basic",
         // 追加画面数据
         var obj = {
             shipTransOrderId: shipTransOrderId,
-            orderPaymentId: orderPaymentId
+            paymentId: paymentId
         };
-        _basic.post(_host.api_url + "/user/" + userId + "/shipTransOrderPaymentRel", obj).then(function (data) {
+        _basic.post(_host.api_url + "/user/" + userId + "/paymentShipOrderRel", obj).then(function (data) {
             if (data.success) {
                 // 成功后，刷新页面数据
                 $scope.lookShipTransOrder();
@@ -188,7 +188,7 @@ app.controller("payment_detail_controller", ["$scope", "$stateParams", "_basic",
                 closeOnConfirm: true
             },
             function () {
-                _basic.delete(_host.api_url + "/user/" + userId + "/shipTransOrder/" + shipTransOrderId + '/orderPayment/' + orderPaymentId, {}).then(
+                _basic.delete(_host.api_url + "/user/" + userId + "/shipTransOrder/" + shipTransOrderId + '/payment/' + paymentId, {}).then(
                     function (data) {
                         if (data.success === true) {
                             $scope.lookShipTransOrder();
@@ -214,7 +214,7 @@ app.controller("payment_detail_controller", ["$scope", "$stateParams", "_basic",
                 paymentMoney: $scope.storagePaymentArray.payment_money,
                 remark: $scope.storagePaymentArray.remark
             };
-            _basic.put(_host.api_url + "/user/" + userId + "/orderPayment/" + orderPaymentId, obj).then(function (data) {
+            _basic.put(_host.api_url + "/user/" + userId + "/payment/" + paymentId, obj).then(function (data) {
                 if (data.success == true) {
                     swal("修改成功", "", "success");
                     getBaseInfo();
@@ -242,7 +242,7 @@ app.controller("payment_detail_controller", ["$scope", "$stateParams", "_basic",
             },
             function () {
                 // 修改状态为已完结【2：已完结】
-                var url = _host.api_url + "/user/" + userId + "/orderPayment/" + orderPaymentId + "/paymentStatus/" + $scope.paymentStatusList[1].id;
+                var url = _host.api_url + "/user/" + userId + "/payment/" + paymentId + "/paymentStatus/" + $scope.paymentStatusList[1].id;
                 _basic.put(url, {}).then(function (data) {
                     if (data.success == true) {
                         getBaseInfo();
@@ -280,8 +280,8 @@ app.controller("payment_detail_controller", ["$scope", "$stateParams", "_basic",
      * 获取基本信息
      * */
     function getBaseInfo() {
-        _basic.get(_host.api_url + "/orderPayment?orderPaymentId=" + orderPaymentId).then(function (data) {
-            if (data.success == true) {
+        _basic.get(_host.api_url + "/payment?paymentId=" + paymentId).then(function (data) {
+            if (data.success) {
                 // 当前支付编号 对应的数据
                 $scope.storagePaymentArray = data.result[0];
                 // 当前画面的支付状态

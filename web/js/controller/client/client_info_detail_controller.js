@@ -379,8 +379,8 @@ app.controller("client_info_detail_controller", ["$scope", "$rootScope","$state"
                 swal(data.msg, "", "error");
             }
         });
-        _basic.get( _host.api_url + "/orderPayment?storageOrderId="+id).then(function (data) {
-            if (data.success == true) {
+        _basic.get( _host.api_url + "/payment?storageOrderId="+id).then(function (data) {
+            if (data.success) {
                 $scope.orderPaymentInfo = data.result[0];
 
             } else {
@@ -457,9 +457,9 @@ app.controller("client_info_detail_controller", ["$scope", "$rootScope","$state"
         $(".modal").modal();
         $("#openSeaTranModal").modal("open");
         _basic.get(_host.api_url + "/shipTransOrder?vin="+vin).then(function (data) {
-            if (data.success == true) {
+            if (data.success) {
                 $scope.paymentInfo = data.result[0];
-                getOrderPayment( $scope.paymentInfo.id);
+                getPaymentInfo( $scope.paymentInfo.id);
                 for (var i in _config.config_color) {
                     if (_config.config_color[i].colorId == $scope.paymentInfo.colour) {
                         $scope.SeaTranOrderColor = _config.config_color[i].colorName;
@@ -475,10 +475,10 @@ app.controller("client_info_detail_controller", ["$scope", "$rootScope","$state"
     /*
    * 获取支付信息
    * */
-    function getOrderPayment(id){
-        _basic.get( _host.api_url + "/orderPayment?shipTransOrderId="+id).then(function (data) {
-            if (data.success == true) {
-                if(data.result.length==0){
+    function getPaymentInfo(id){
+        _basic.get( _host.api_url + "/payment?shipTransOrderId="+id).then(function (data) {
+            if (data.success) {
+                if(data.result.length===0){
                     return;
                 }
                 $scope.orderPaymentList = data.result[0];
@@ -501,9 +501,9 @@ app.controller("client_info_detail_controller", ["$scope", "$rootScope","$state"
      */
     function querypaymentHistoryData() {
         // 检索用url
-        var reqUrl = _host.api_url + "/orderPayment?entrustId="+ val+'&';
+        var reqUrl = _host.api_url + "/payment?entrustId="+ val+'&';
         var obj={
-            orderPaymentId:$scope.paymentHistoryOrderPaymentId,
+            paymentId:$scope.paymentHistoryOrderPaymentId,
             entrustType:$scope.paymentHistoryPaymentType,
             number:$scope.paymentHistoryNumber,
             createdOnStart:$scope.createdOnStart,
@@ -513,7 +513,7 @@ app.controller("client_info_detail_controller", ["$scope", "$rootScope","$state"
             size:$scope.size
         };
         _basic.get(reqUrl+_basic.objToUrl(obj)).then(function (data) {
-            if (data.success == true) {
+            if (data.success) {
                 $scope.paymentHistoryResult = data.result;
                 $scope.paymentHistoryList = $scope.paymentHistoryResult.slice(0, 10);
                 if ($scope.start > 0) {
@@ -550,8 +550,8 @@ app.controller("client_info_detail_controller", ["$scope", "$rootScope","$state"
     $scope.openPaymentHistoryModal = function(id){
         $(".modal").modal();
         $("#openPaymentHistory").modal("open");
-        _basic.get(_host.api_url + "/orderPayment?orderPaymentId="+id).then(function (data) {
-            if (data.success == true) {
+        _basic.get(_host.api_url + "/payment?paymentId="+id).then(function (data) {
+            if (data.success) {
                 $scope.storagePaymentArray = data.result[0];
                 $scope.seaTransportOrderDetails();
                 $scope.storageOrderDetails();
@@ -564,7 +564,7 @@ app.controller("client_info_detail_controller", ["$scope", "$rootScope","$state"
     //仓储详情
     function getStorageOrderDetails(){
         $scope.actualFee=0;
-        _basic.get(_host.api_url + "/orderPaymentRel?orderPaymentId="+$scope.storagePaymentArray.id+"&start=" + $scope.start + "&size=" + $scope.sizeDetail).then(function (data) {
+        _basic.get(_host.api_url + "/paymentStorageOrderRel?paymentId="+$scope.storagePaymentArray.id+"&start=" + $scope.start + "&size=" + $scope.sizeDetail).then(function (data) {
             if (data.success == true) {
                 $scope.storageOrderDetailsBoxArray = data.result;
                 $scope.storageOrderDetailsArray = $scope.storageOrderDetailsBoxArray.slice(0, 5);
@@ -591,7 +591,7 @@ app.controller("client_info_detail_controller", ["$scope", "$rootScope","$state"
     //海运详情
     function getSeaTransportOrderDetails(){
         $scope.shipTransFee=0;
-        _basic.get(_host.api_url + "/shipTransOrderPaymentRel?orderPaymentId="+$scope.storagePaymentArray.id+"&start=" + $scope.start + "&size=" + $scope.sizeDetail).then(function (data) {
+        _basic.get(_host.api_url + "/paymentShipOrderRel?paymentId="+$scope.storagePaymentArray.id+"&start=" + $scope.start + "&size=" + $scope.sizeDetail).then(function (data) {
             if (data.success == true) {
                 $scope.seaTransportOrderDetailsBoxArray = data.result;
                 $scope.seaTransportOrderDetailsArray = $scope.seaTransportOrderDetailsBoxArray.slice(0,5);

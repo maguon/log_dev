@@ -251,26 +251,30 @@ app.controller("order_detail_controller", ["$scope", "$state", "$stateParams", "
      */
     function getPaymentDetails() {
         // 检索用url
-        var url = _host.api_url + "/orderPayment?storageOrderId=" + $scope.storageOrderId;
+        var url = _host.api_url + "/payment?storageOrderId=" + $scope.storageOrderId;
+
+        console.log(url);
 
         _basic.get(url).then(function (data) {
-            if (data.success == true) {
-                // 支付编号
-                $scope.paymentInfo.id = data.result[0].id == null ? '' : data.result[0].id;
-                // 支付方式
-                $scope.paymentInfo.paymentType = data.result[0].payment_type == null ? '未知' : data.result[0].payment_type;
-                // 编号
-                $scope.paymentInfo.number = data.result[0].number == null ? 0 : data.result[0].number;
-                // 支付金额(美元)
-                $scope.paymentInfo.paymentMoney = data.result[0].payment_money == null ? '未知' : data.result[0].payment_money;
-                // 支付描述
-                $scope.paymentInfo.remark = data.result[0].remark == null ? '' : data.result[0].remark;
-                // 操作员
-                $scope.paymentInfo.paymentUserName = data.result[0].payment_user_name == null ? '未知' : data.result[0].payment_user_name;
-                // 支付时间
-                $scope.paymentInfo.paymentEndDate = data.result[0].payment_end_date;
-                // 查看关联的仓储订单
-                getOrderPaymentRel(data.result[0].id);
+            if (data.success) {
+                if (data.result[0].length > 0) {
+                    // 支付编号
+                    $scope.paymentInfo.id = data.result[0].id == null ? '' : data.result[0].id;
+                    // 支付方式
+                    $scope.paymentInfo.paymentType = data.result[0].payment_type == null ? '未知' : data.result[0].payment_type;
+                    // 编号
+                    $scope.paymentInfo.number = data.result[0].number == null ? 0 : data.result[0].number;
+                    // 支付金额(美元)
+                    $scope.paymentInfo.paymentMoney = data.result[0].payment_money == null ? '未知' : data.result[0].payment_money;
+                    // 支付描述
+                    $scope.paymentInfo.remark = data.result[0].remark == null ? '' : data.result[0].remark;
+                    // 操作员
+                    $scope.paymentInfo.paymentUserName = data.result[0].payment_user_name == null ? '未知' : data.result[0].payment_user_name;
+                    // 支付时间
+                    $scope.paymentInfo.paymentEndDate = data.result[0].payment_end_date;
+                    // 查看关联的仓储订单
+                    getOrderPaymentRel(data.result[0].id);
+                }
             } else {
                 swal(data.msg, "", "error");
             }
@@ -282,16 +286,16 @@ app.controller("order_detail_controller", ["$scope", "$state", "$stateParams", "
      */
     function getOrderPaymentRel(paymentId) {
         // 检索用url
-        var url = _host.api_url + "/orderPaymentRel?orderPaymentId=" + paymentId;
+        var url = _host.api_url + "/paymentStorageOrderRel?paymentId=" + paymentId;
 
         _basic.get(url).then(function (data) {
-            if (data.success == true) {
+            if (data.success) {
                 var totalPlanFee = 0;
                 var totalActualFee = 0;
                 $scope.relOrderList = [];
                 data.result.forEach(function (value, index, array) {
                     // 去掉自己
-                    if (value.storage_order_id != $scope.storageOrderId) {
+                    if (value.storage_order_id !== $scope.storageOrderId) {
                         $scope.relOrderList.push(value);
                         totalPlanFee = totalPlanFee + value.plan_fee;
                         totalActualFee = totalActualFee + value.actual_fee;
