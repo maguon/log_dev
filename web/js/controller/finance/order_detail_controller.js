@@ -252,9 +252,6 @@ app.controller("order_detail_controller", ["$scope", "$state", "$stateParams", "
     function getPaymentDetails() {
         // 检索用url
         var url = _host.api_url + "/payment?storageOrderId=" + $scope.storageOrderId;
-
-        console.log(url);
-
         _basic.get(url).then(function (data) {
             if (data.success) {
                 if (data.result[0].length > 0) {

@@ -629,8 +629,6 @@ app.controller("finance_loan_detail_controller", ["$scope", "$stateParams", "_ba
             $scope.newPayment.interest = 0;
             // 手续费(美元)
             $scope.newPayment.poundage = 0;
-            $("#rateLabel").addClass("active");
-            $("#interestLabel").addClass("active");
             // 本次应还总金额(美元)
             $scope.newPayment.totalPaymentMoney = 0;
             // 剩余未还金额(美元)
@@ -676,8 +674,6 @@ app.controller("finance_loan_detail_controller", ["$scope", "$stateParams", "_ba
                     $scope.newPayment.interest = data.result[0].interest_money;
                     // 手续费(美元)
                     $scope.newPayment.poundage = data.result[0].fee;
-                    $("#rateLabel").addClass("active");
-                    $("#interestLabel").addClass("active");
                     // 本次应还总金额(美元)
                     $scope.newPayment.totalPaymentMoney = parseFloat($scope.newPayment.paymentMoney) + parseFloat($scope.newPayment.interest) + parseFloat($scope.newPayment.poundage);
                     $scope.newPayment.totalPaymentMoney = $scope.newPayment.totalPaymentMoney.toFixed(2);

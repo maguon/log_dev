@@ -537,7 +537,7 @@
                         <!-- 第二部分 -->
                         <!-- 基本信息 (录入) -->
                         <!-- 新增还款 或者 该条还款信息未完结时 (可修改) -->
-                        <div ng-show="modalFlag=='newPaymentInfo' || newPayment.repaymentStatus == 1">
+                        <div ng-show="modalFlag=='newPaymentInfo' || (loanInfo.loanStatus != 4 && newPayment.repaymentStatus == 1)">
                             <div class="col s12" style="margin-bottom: 5px;">
                                 <!-- 本次还贷金额(美元) -->
                                 <div class="input-field col s4">
@@ -549,13 +549,13 @@
                                 <div class="input-field col s4">
                                     <input type="text" id="rateText" maxlength="10" valid-money ng-model="newPayment.rate" class="red-text right-align" ng-change="calculateInterest()">
                                     <i class="dataIcon" style="right: -1px"> %</i>
-                                    <label for="rateText" id="rateLabel">利率/天</label>
+                                    <label for="rateText" ng-class="{'label-active':newPayment.rate !== ''}">利率/天</label>
                                 </div>
 
                                 <!-- 产生利息金额(美元) -->
                                 <div class="input-field col s4">
                                     <input type="text" id="principalText" maxlength="10" valid-money ng-model="newPayment.principal" class="red-text right-align" disabled>
-                                    <label for="principalText">产生利息金额(美元)</label>
+                                    <label for="principalText" ng-class="{'label-active':newPayment.principal !== ''}">产生利息金额(美元)</label>
                                 </div>
                             </div>
 
@@ -563,19 +563,21 @@
                                 <!-- 产生利息时长(天) -->
                                 <div class="input-field col s4">
                                     <input type="text" id="interestDayText" maxlength="10" valid-num ng-model="newPayment.interestDay" class="right-align" ng-change="calculateInterest()">
-                                    <label for="interestDayText"><span class="red-text">*</span>产生利息时长(天)</label>
+                                    <label for="interestDayText" ng-class="{'label-active':newPayment.interestDay !== ''}">
+                                        <span class="red-text">*</span>产生利息时长(天)
+                                    </label>
                                 </div>
 
                                 <!-- 利息(美元) -->
                                 <div class="input-field col s4">
                                     <input type="text" id="interestText" maxlength="10" valid-money ng-model="newPayment.interest" class="red-text right-align" disabled>
-                                    <label for="interestText" id="interestLabel">利息(美元)</label>
+                                    <label for="interestText" ng-class="{'label-active':newPayment.interest !== ''}">利息(美元)</label>
                                 </div>
 
                                 <!-- 手续费(美元) -->
                                 <div class="input-field col s4">
                                     <input type="text" id="poundageText" maxlength="10" valid-money ng-model="newPayment.poundage" class="red-text right-align" ng-change="calculatePaymentMoney()">
-                                    <label for="poundageText">手续费(美元)</label>
+                                    <label for="poundageText" ng-class="{'label-active':newPayment.poundage !== ''}">手续费(美元)</label>
                                 </div>
                             </div>
 
@@ -692,7 +694,7 @@
                     <div style="min-height: 480px;">
 
                         <!-- 新增还款 或者 该条还款信息未完结时 (可修改) -->
-                        <div ng-show="modalFlag=='newPaymentInfo' || newPayment.repaymentStatus == 1">
+                        <div ng-show="modalFlag=='newPaymentInfo' || (loanInfo.loanStatus != 4 && newPayment.repaymentStatus == 1)">
                             <!-- 本次应还总金额 本还金额 (只读) -->
                             <div class="col s12 vc-center cyan-text fz14" style="margin-top: 20px;margin-bottom: 20px;">
                                 <div class="col s6 left-align blue-grey lighten-5" style="height:50px; padding-top: 15px; border: 1px solid lightgrey;border-right: 0">
@@ -776,7 +778,7 @@
 
                                         <div class="col right-align cyan-text" style="width:12%;">
                                             关联车辆
-                                            <span ng-show="modalFlag=='newPaymentInfo' || newPayment.repaymentStatus == 1" class="mdi mdi-close red-text" ng-click="deleteCreditPayment($event, el.credit_id)" style="margin-left: 3px;"></span>
+                                            <span ng-show="modalFlag=='newPaymentInfo' || (loanInfo.loanStatus != 4 && newPayment.repaymentStatus == 1)" class="mdi mdi-close red-text" ng-click="deleteCreditPayment($event, el.credit_id)" style="margin-left: 3px;"></span>
                                         </div>
                                     </div>
 
@@ -810,7 +812,7 @@
                     <div style="min-height: 480px;">
 
                         <!-- 新增还款 或者 该条还款信息未完结时 (可修改) -->
-                        <div ng-show="modalFlag=='newPaymentInfo' || newPayment.repaymentStatus == 1">
+                        <div ng-show="modalFlag=='newPaymentInfo' || (loanInfo.loanStatus != 4 && newPayment.repaymentStatus == 1)">
                             <!-- 本次应还总金额 本还金额 (只读) -->
                             <div class="col s12 vc-center cyan-text fz14" style="margin-top: 20px;margin-bottom: 20px;">
                                 <div class="col s6 left-align blue-grey lighten-5" style="height:50px; padding-top: 15px; border: 1px solid lightgrey;border-right: 0">
@@ -877,7 +879,7 @@
                                     </div>
                                     <div class="col s6 right-align grey-text">
                                         {{el.created_payment_date |date:'yyyy-MM-dd hh:mm'}}
-                                        <span ng-show="modalFlag=='newPaymentInfo' || newPayment.repaymentStatus == 1" ng-click="deleteOtherPayment($event, el.payment_id)"><i class="mdi mdi-close red-text right-align" style="padding-left:5px; cursor:pointer; right: 22px;"></i></span>
+                                        <span ng-show="modalFlag=='newPaymentInfo' || (loanInfo.loanStatus != 4 && newPayment.repaymentStatus == 1)" ng-click="deleteOtherPayment($event, el.payment_id)"><i class="mdi mdi-close red-text right-align" style="padding-left:5px; cursor:pointer; right: 22px;"></i></span>
                                     </div>
                                 </div>
 
