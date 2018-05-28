@@ -591,7 +591,7 @@
                                 </div>
                             </div>
                             <!-- 分割线 -->
-                            <div class="col divider" ng-show="modalFlag=='newPaymentInfo'" style="width:96%; margin-left: 20px;margin-bottom: 5px;"></div>
+                            <div ng-show="modalFlag=='newPaymentInfo'" class="col divider" style="width:96%; margin-left: 20px;margin-bottom: 5px;"></div>
 
                             <!-- 备注 -->
                             <div class="col s12">
@@ -898,7 +898,7 @@
                                     </div>
 
                                     <!-- 新增还款 或者 该条还款信息未完结时 (可修改) -->
-                                    <div ng-show="modalFlag=='newPaymentInfo' || newPayment.repaymentStatus == 1" class="col s4 left-align">
+                                    <div ng-show="modalFlag=='newPaymentInfo' || (loanInfo.loanStatus != 4 && newPayment.repaymentStatus == 1)" class="col s4 left-align">
                                         <div class="col s10 input-field">
                                             <input type="text" id="thisPaymentMoneyText" maxlength="10" valid-money ng-blur="calcTotalFees()" class="red-text" ng-model="el.this_payment_money">
                                             <label for="thisPaymentMoneyText" class="active">本次支付金额(美元)</label>
@@ -922,7 +922,7 @@
 
             <!-- 新增还款 或者 该条还款信息未完结时 (可修改) -->
             <!-- 取消/确认 按钮 -->
-            <div ng-show="modalFlag=='newPaymentInfo' || newPayment.repaymentStatus == 1" class="row col right-align" style="width: 96%;margin-top: 20px;">
+            <div ng-show="modalFlag=='newPaymentInfo' || (loanInfo.loanStatus != 4 && newPayment.repaymentStatus == 1)" class="row col right-align" style="width: 96%;margin-top: 20px;">
                 <a ng-show="modalFlag=='editPaymentInfo' || (modalFlag=='newPaymentInfo' && tabId == 'paymentInfo')" class="btn-floating waves-effect waves-light grey btn modal-close">
                     <i class="mdi mdi-close"></i>
                 </a>
