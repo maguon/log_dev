@@ -46,7 +46,7 @@ app.controller("finance_loan_controller", ["$scope", "$rootScope", "_host", "_ba
         url = conditions.length > 0 ? url + "&" + conditions : url;
 
         _basic.get(url).then(function (data) {
-            if (data.success === true) {
+            if (data.success) {
 
                 // 保存选中委托方名称
                 conditionsObj.entrustNm = getEntrustNm();
@@ -195,7 +195,7 @@ app.controller("finance_loan_controller", ["$scope", "$rootScope", "_host", "_ba
         // 初始数据
         angular.copy($scope.newLoanInfo, $scope.loanInfo);
         // 获取委托方信息
-        $scope.getEntrustInfo();
+        $scope.getEntrustInfo(null,"委托方");
     };
 
     /**
