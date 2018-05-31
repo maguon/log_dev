@@ -165,7 +165,25 @@ baseService.factory('_baseService',function(){
                      }
              }
         return(new_arr);
-    }
+    };
+
+    /**
+     * 计算2个日期相差的天数
+     * @param startDateString 'YYYY-MM-DD
+     * @param endDateString 'YYYY-MM-DD
+     * @returns 相差的天数 包含今天，如：2016-12-13到2016-12-15，相差3天
+     */
+    _this.dateDiffIncludeToday = function (startDateString, endDateString){
+        //日期分隔符
+        var separator = "-";
+        var startDates = startDateString.split(separator);
+        var endDates = endDateString.split(separator);
+        var startDate = new Date(startDates[0], startDates[1]-1, startDates[2]);
+        var endDate = new Date(endDates[0], endDates[1]-1, endDates[2]);
+        //把相差的毫秒数转换为天数
+        return parseInt(Math.abs(endDate - startDate ) / 1000 / 60 / 60 /24) + 1;
+    };
+
     // 页面之间数据传递
     _this.pass_parameter=function () {
 //定义参数对象

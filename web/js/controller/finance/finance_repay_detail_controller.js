@@ -1,7 +1,7 @@
 /**
  * 主菜单：财务管理 -> 金融贷出(详细) 控制器
  */
-app.controller("finance_repay_detail_controller", ["$scope", "$stateParams", "_basic", "_host", "_config", "$state", function ($scope, $stateParams, _basic, _host, _config, $state) {
+app.controller("finance_repay_detail_controller", ["$scope", "$stateParams", "_basic", "_host", "_config", "$state","_baseService", function ($scope, $stateParams, _basic, _host, _config, $state,_baseService) {
     var userId = _basic.getSession(_basic.USER_ID);
     // 贷款编号
     var loanId = $stateParams.id;
@@ -140,7 +140,7 @@ app.controller("finance_repay_detail_controller", ["$scope", "$stateParams", "_b
                 var loanStartDate = moment($scope.paymentInfo.loanStartDate).format("YYYY-MM-DD");
 
                 // 基本信息 产生利息时长
-                $scope.paymentInfo.interestDay = dateDiffIncludeToday(loanStartDate, now);
+                $scope.paymentInfo.interestDay = _baseService.dateDiffIncludeToday(loanStartDate, now);
             } else {
                 swal(data.msg, "", "error");
             }
@@ -1283,24 +1283,6 @@ app.controller("finance_repay_detail_controller", ["$scope", "$stateParams", "_b
             }
         }
     };
-
-    /**
-     * 计算2个日期相差的天数
-     * @param startDateString 'YYYY-MM-DD
-     * @param endDateString 'YYYY-MM-DD
-     * @returns 相差的天数 包含今天，如：2016-12-13到2016-12-15，相差3天
-     */
-    function dateDiffIncludeToday(startDateString, endDateString){
-        //日期分隔符
-        var separator = "-";
-        var startDates = startDateString.split(separator);
-        var endDates = endDateString.split(separator);
-        var startDate = new Date(startDates[0], startDates[1]-1, startDates[2]);
-        var endDate = new Date(endDates[0], endDates[1]-1, endDates[2]);
-        //把相差的毫秒数转换为天数
-        return parseInt(Math.abs(endDate - startDate ) / 1000 / 60 / 60 /24) + 1;
-    }
-
 
 
 

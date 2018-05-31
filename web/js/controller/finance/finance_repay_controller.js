@@ -1,7 +1,7 @@
 /**
  * 主菜单：财务管理 -> 金融还贷 控制器
  */
-app.controller("finance_repay_controller", ["$scope", "$rootScope", "_host", "_basic", "_config", "$state", "$stateParams", function ($scope, $rootScope, _host, _basic, _config, $state, $stateParams) {
+app.controller("finance_repay_controller", ["$scope", "$rootScope", "_host", "_basic", "_config", "$state", "$stateParams","_baseService", function ($scope, $rootScope, _host, _basic, _config, $state, $stateParams,_baseService) {
 
     // 取得当前画面 登录用户
     var userId = _basic.getSession(_basic.USER_ID);
@@ -247,7 +247,6 @@ app.controller("finance_repay_controller", ["$scope", "$rootScope", "_host", "_b
         angular.copy($scope.newRepay, $scope.repay);
 
         // 取得下拉列表数据
-        // TODO 清空委托方选中项
         $("#addEntrustSelect").val(null).trigger("change");
         // 隐藏 贷出信息 显示区域
         $scope.hasLoanInfo = false;
@@ -290,7 +289,7 @@ app.controller("finance_repay_controller", ["$scope", "$rootScope", "_host", "_b
                     // 利息起算 日期
                     var loanStartDate = moment($scope.loanInfo.loanStartDate).format("YYYY-MM-DD");
                     // 产生利息时长(天)
-                    $scope.repay.interestDay = dateDiffIncludeToday(loanStartDate, now);
+                    $scope.repay.interestDay = _baseService.dateDiffIncludeToday(loanStartDate, now);
 
                     // 利息(美元)
                     $scope.repay.interest = 0;
@@ -316,10 +315,6 @@ app.controller("finance_repay_controller", ["$scope", "$rootScope", "_host", "_b
      */
     $scope.gotoNextPage = function () {
         if ($scope.tabId === "paymentInfo") {
-            // 已还金额(美元) TODO
-            $scope.creditPayment.paymentMoney = 0;
-            // 已还金额(美元) TODO
-            $scope.otherPayment.paymentMoney = 0;
             // 新增还款基本信息。
             addLoanRepayment();
         } else if ($scope.tabId === "creditPayment") {
@@ -467,7 +462,6 @@ app.controller("finance_repay_controller", ["$scope", "$rootScope", "_host", "_b
 
         // 检索用url
         var url = _host.api_url + "/credit?creditNumber=" + creditNumber + "&entrustId=" + $scope.repay.entrustId  + "&creditStatus" + unfinished;
-        console.log('addCreditPayment url :' + url);
         _basic.get(url).then(function (data) {
             if (data.success) {
 
@@ -720,28 +714,9 @@ app.controller("finance_repay_controller", ["$scope", "$rootScope", "_host", "_b
     };
 
     /**
-     * 计算2个日期相差的天数
-     * @param startDateString 'YYYY-MM-DD
-     * @param endDateString 'YYYY-MM-DD
-     * @returns 相差的天数 包含今天，如：2016-12-13到2016-12-15，相差3天
+     * 清空委托方选中
      */
-    function dateDiffIncludeToday(startDateString, endDateString){
-        //日期分隔符
-        var separator = "-";
-        var startDates = startDateString.split(separator);
-        var endDates = endDateString.split(separator);
-        var startDate = new Date(startDates[0], startDates[1]-1, startDates[2]);
-        var endDate = new Date(endDates[0], endDates[1]-1, endDates[2]);
-        //把相差的毫秒数转换为天数
-        return parseInt(Math.abs(endDate - startDate ) / 1000 / 60 / 60 /24) + 1;
-    }
-
-    /**
-     * 获取委托方信息
-     * @param selectText 默认选中项文字
-     */
-    $scope.clearSelectEntrust = function (selectText) {
-        // TODO id and name all clear?
+    $scope.clearSelectEntrust = function () {
         $("#condEntrustSelect").val(null).trigger("change");
         $("#addEntrustSelect").val(null).trigger("change");
     };
@@ -753,8 +728,6 @@ app.controller("finance_repay_controller", ["$scope", "$rootScope", "_host", "_b
     function getCreditList(entrustId) {
         // 基本检索URL
         var url = _host.api_url + "/credit?entrustId=" + entrustId;
-        console.log(url);
-
         _basic.get(url).then(function (data) {
             if (data.success) {
                 $scope.creditList = data.result;
@@ -785,11 +758,8 @@ app.controller("finance_repay_controller", ["$scope", "$rootScope", "_host", "_b
      * @param entrustId 委托方ID
      */
     function getLoanList(entrustId) {
-        // 基本检索URL TODO 追加条件 贷出状态是：还款中和已贷
-        var url = _host.api_url + "/loan?entrustId=" + entrustId;
-
-        console.log(url);
-
+        // 基本检索URL
+        var url = _host.api_url + "/loan?entrustId=" + entrustId + "&loanStatusArr=2,3";
         _basic.get(url).then(function (data) {
             if (data.success) {
                 $scope.loanList = data.result;
@@ -915,8 +885,9 @@ app.controller("finance_repay_controller", ["$scope", "$rootScope", "_host", "_b
             if ($("#addEntrustSelect").val() != null && $("#addEntrustSelect").val() !== "") {
                 entrustId = $("#addEntrustSelect").select2("data")[0].id;
             }
-            getLoanList(entrustId);
-            console.log(entrustId);
+            if (entrustId !== "") {
+                getLoanList(entrustId);
+            }
         });
         // $("#condEntrustSelect").val(null).trigger("change");
     };
