@@ -605,9 +605,9 @@ app.controller("finance_repay_detail_controller", ["$scope", "$stateParams", "_b
      */
     $scope.lookPaymentInfo = function (repaymentId) {
         // 显示画面
-        $('.tabWrap .modal_tab').removeClass("active");
-        $(".modal_tab_box ").removeClass("active");
-        $(".modal_tab_box ").hide();
+        $('.tabWrap .tab').removeClass("active");
+        $(".tab_box ").removeClass("active");
+        $(".tab_box ").hide();
         $('.tabWrap .paymentInfoDiv').addClass("active");
         $("#paymentInfoDiv").addClass("active");
         $("#paymentInfoDiv").show();
@@ -750,9 +750,9 @@ app.controller("finance_repay_detail_controller", ["$scope", "$stateParams", "_b
             addLoanRepayment();
         } else if ($scope.tabId === "creditPayment") {
             // 去除元画面状态
-            $('.tabWrap .modal_tab').removeClass("active");
-            $(".modal_tab_box ").removeClass("active");
-            $(".modal_tab_box ").hide();
+            $('.tabWrap .tab').removeClass("active");
+            $(".tab_box ").removeClass("active");
+            $(".tab_box ").hide();
             // 成功后，跳转到TAB【其他方式还款】
             $('.tabWrap .otherPaymentDiv').addClass("active");
             $("#otherPaymentDiv").addClass("active");
@@ -799,9 +799,9 @@ app.controller("finance_repay_detail_controller", ["$scope", "$stateParams", "_b
                     // TAB 画面ID：信用证还款
                     $scope.tabId = "creditPayment";
                     // 去除元画面状态
-                    $('.tabWrap .modal_tab').removeClass("active");
-                    $(".modal_tab_box ").removeClass("active");
-                    $(".modal_tab_box ").hide();
+                    $('.tabWrap .tab').removeClass("active");
+                    $(".tab_box ").removeClass("active");
+                    $(".tab_box ").hide();
                     // 成功后，跳转到TAB【信用证还款】
                     $('.tabWrap .creditPaymentDiv').addClass("active");
                     $("#creditPaymentDiv").addClass("active");
@@ -918,9 +918,9 @@ app.controller("finance_repay_detail_controller", ["$scope", "$stateParams", "_b
      */
     $scope.lookCreditPayment = function () {
         // 显示画面
-        $('.tabWrap .modal_tab').removeClass("active");
-        $(".modal_tab_box ").removeClass("active");
-        $(".modal_tab_box ").hide();
+        $('.tabWrap .tab').removeClass("active");
+        $(".tab_box ").removeClass("active");
+        $(".tab_box ").hide();
         $('.tabWrap .creditPaymentDiv').addClass("active");
         $("#creditPaymentDiv").addClass("active");
         $("#creditPaymentDiv").show();
@@ -979,9 +979,9 @@ app.controller("finance_repay_detail_controller", ["$scope", "$stateParams", "_b
      */
     $scope.lookOtherPayment = function () {
         // 显示画面
-        $('.tabWrap .modal_tab').removeClass("active");
-        $(".modal_tab_box ").removeClass("active");
-        $(".modal_tab_box ").hide();
+        $('.tabWrap .tab').removeClass("active");
+        $(".tab_box ").removeClass("active");
+        $(".tab_box ").hide();
         $('.tabWrap .otherPaymentDiv').addClass("active");
         $("#otherPaymentDiv").addClass("active");
         $("#otherPaymentDiv").show();
@@ -1400,9 +1400,9 @@ app.controller("finance_repay_detail_controller", ["$scope", "$stateParams", "_b
      */
     $scope.lookCreditPayment = function () {
         // 显示画面
-        $('.tabWrap .modal_tab').removeClass("active");
-        $(".modal_tab_box ").removeClass("active");
-        $(".modal_tab_box ").hide();
+        $('.tabWrap .tab').removeClass("active");
+        $(".tab_box ").removeClass("active");
+        $(".tab_box ").hide();
         $('.tabWrap .creditPaymentDiv').addClass("active");
         $("#creditPaymentDiv").addClass("active");
         $("#creditPaymentDiv").show();
@@ -1449,9 +1449,9 @@ app.controller("finance_repay_detail_controller", ["$scope", "$stateParams", "_b
      */
     $scope.lookOtherPayment = function () {
         // 显示画面
-        $('.tabWrap .modal_tab').removeClass("active");
-        $(".modal_tab_box ").removeClass("active");
-        $(".modal_tab_box ").hide();
+        $('.tabWrap .tab').removeClass("active");
+        $(".tab_box ").removeClass("active");
+        $(".tab_box ").hide();
         $('.tabWrap .otherPaymentDiv').addClass("active");
         $("#otherPaymentDiv").addClass("active");
         $("#otherPaymentDiv").show();
