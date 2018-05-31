@@ -113,7 +113,7 @@
                 <!-- 手续费(美元) -->
                 <td ng-bind="el.fee | number"></td>
                 <!-- 还款时间 -->
-                <td ng-bind="el.repayment_end_date|date:'yyyy-MM-dd hh:mm'"></td>
+                <td ng-bind="el.created_on|date:'yyyy-MM-dd hh:mm'"></td>
                 <!-- 状态 -->
                 <td ng-if="el.repayment_status==1" class="red-text">{{paymentStatus[el.repayment_status-1].name}}</td>
                 <td ng-if="el.repayment_status==2" class="grey-text">{{paymentStatus[el.repayment_status-1].name}}</td>
