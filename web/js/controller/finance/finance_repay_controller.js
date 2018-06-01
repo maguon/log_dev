@@ -297,8 +297,8 @@ app.controller("finance_repay_controller", ["$scope", "$rootScope", "_host", "_b
                     $scope.repay.poundage = 0;
                     // 本次应还总金额(美元)
                     $scope.repay.totalPaymentMoney = 0;
-                    // 剩余未还金额(美元)
-                    $scope.repay.leftPaymentMoney = $scope.loanInfo.notRepaymentMoney;
+                    // // 剩余未还金额(美元)
+                    // $scope.repay.leftPaymentMoney = $scope.loanInfo.notRepaymentMoney;
                 } else {
                     // 隐藏 基本信息显示区域
                     $scope.hasLoanInfo = false;
@@ -367,8 +367,6 @@ app.controller("finance_repay_controller", ["$scope", "$rootScope", "_host", "_b
                 interestMoney: $scope.repay.interest,
                 // 手续费
                 fee: $scope.repay.poundage === "" ? 0 : $scope.repay.poundage,
-                // 未还金额(美元)
-                notRepaymentMoney: $scope.repay.leftPaymentMoney,
                 // 备注
                 remark: $scope.repay.remark
             };
@@ -444,10 +442,10 @@ app.controller("finance_repay_controller", ["$scope", "$rootScope", "_host", "_b
         $scope.repay.totalPaymentMoney = paymentMoney + parseFloat($scope.repay.interest) + poundage;
         $scope.repay.totalPaymentMoney = $scope.repay.totalPaymentMoney.toFixed(2);
 
-        // 剩余未还金额 = 前次未还本金 - 本次还贷金额
-        $scope.repay.leftPaymentMoney = parseFloat($scope.loanInfo.notRepaymentMoney) - paymentMoney;
-        $scope.repay.leftPaymentMoney = $scope.repay.leftPaymentMoney < 0 ? 0 : $scope.repay.leftPaymentMoney;
-        $scope.repay.leftPaymentMoney = $scope.repay.leftPaymentMoney.toFixed(2);
+        // // 剩余未还金额 = 前次未还本金 - 本次还贷金额
+        // $scope.repay.leftPaymentMoney = parseFloat($scope.loanInfo.notRepaymentMoney) - paymentMoney;
+        // $scope.repay.leftPaymentMoney = $scope.repay.leftPaymentMoney < 0 ? 0 : $scope.repay.leftPaymentMoney;
+        // $scope.repay.leftPaymentMoney = $scope.repay.leftPaymentMoney.toFixed(2);
     };
 
     /**
@@ -461,7 +459,7 @@ app.controller("finance_repay_controller", ["$scope", "$rootScope", "_host", "_b
         var creditNumber = $scope.newCreditId;
 
         // 检索用url
-        var url = _host.api_url + "/credit?creditNumber=" + creditNumber + "&entrustId=" + $scope.repay.entrustId  + "&creditStatus" + unfinished;
+        var url = _host.api_url + "/credit?creditNumber=" + creditNumber + "&entrustId=" + $scope.repay.entrustId  + "&creditStatus=" + unfinished;
         _basic.get(url).then(function (data) {
             if (data.success) {
 
