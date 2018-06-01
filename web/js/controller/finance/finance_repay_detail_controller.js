@@ -729,59 +729,6 @@ app.controller("finance_repay_detail_controller", ["$scope", "$stateParams", "_b
         $scope.repay.leftPaymentMoney = $scope.repay.leftPaymentMoney.toFixed(2);
     };
 
-
-
-    /**
-     * 本次还款确定完结。
-     * @param repaymentId 还款编号
-     */
-    $scope.updatePaymentStatus = function (repaymentId) {
-        swal({
-                title: "本次还款确定完结吗？",
-                type: "warning",
-                showCancelButton: true,
-                confirmButtonColor: "#DD6B55",
-                confirmButtonText: "确认",
-                cancelButtonText: "取消",
-                closeOnConfirm: true
-            },
-            function () {
-                // 修改状态为已完结【2：已完结】
-                var url = _host.api_url + "/user/" + userId + "/repayment/" + repaymentId + "/repaymentStatus/" + $scope.paymentStatus[1].id;
-
-                _basic.put(url, {}).then(function (data) {
-                    if (data.success) {
-                        queryLoanRepayment();
-                    } else {
-                        swal(data.msg, "", "error");
-                    }
-                })
-            });
-    };
-
-    /**
-     * Tab跳转 其他方式还款
-     */
-    $scope.lookOtherPayment = function () {
-        // 显示画面
-        $('.tabWrap .tab').removeClass("active");
-        $(".tab_box ").removeClass("active");
-        $(".tab_box ").hide();
-        $('.tabWrap .otherPaymentDiv').addClass("active");
-        $("#otherPaymentDiv").addClass("active");
-        $("#otherPaymentDiv").show();
-
-        // TAB 画面ID：其他方式还款
-        $scope.tabId = "otherPayment";
-        // 清空 支付编号
-        $scope.newOtherPaymentId = "";
-
-        // 取得其他还款 还款信息
-        getOtherPaymentInfo();
-    };
-
-
-
     /**
      * 画面初期显示时，用来获取画面必要信息的初期方法。
      */
