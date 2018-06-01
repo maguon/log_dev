@@ -52,8 +52,8 @@
                     <th data-field="">性质</th>
                     <th data-field="">在库车辆</th>
                     <th data-field="">库值(美元)</th>
-                    <th data-field="">非MSO车辆</th>
-                    <th data-field="">非MSO资产(美元)</th>
+                    <!--<th data-field="">非MSO车辆</th>-->
+                    <!--<th data-field="">非MSO资产(美元)</th>-->
                     <th data-field="">联系人</th>
                     <th data-field="">联系电话</th>
                     <th data-field="">登记时间</th>
@@ -66,19 +66,20 @@
                     <td ng-if="el.entrust_type==1">个人</td>
                     <td ng-if="el.entrust_type==2">企业</td>
                     <td ng-bind="el.car_count"></td>
-                    <td>${{el.valuation}}.00</td>
-                    <td ng-bind="el.not_mso_count"></td>
-                    <td>${{el.not_mso_valuation}}.00</td>
+                    <!-- 库值(美元) -->
+                    <td>{{el.valuation | number:2}}</td>
+                    <!--<td ng-bind="el.not_mso_count"></td>-->
+                    <!--<td>${{el.not_mso_valuation}}.00</td>-->
                     <td ng-bind="el.contacts_name"></td>
                     <td ng-bind="el.tel"></td>
-                    <td ng-bind="el.created_on |date:'yyyy-MM-dd '"></td>
+                    <td ng-bind="el.created_on |date:'yyyy-MM-dd HH:mm'"></td>
                     <!-- 显示【仓储车辆信息】画面按钮 -->
                     <td class="operation">
                         <a  ui-sref="client_info_detail({id:el.id,from:'client_info'})" class=""><i class="mdi mdi-file-outline look_icon cyan-text lighten-1  " ></i></a>
                     </td>
                 </tr>
                 <tr class="grey-text text-darken-1" ng-if="clientArray.length == 0">
-                    <td colspan="10" style="letter-spacing: 2px;text-align: center;">暂无数据</td>
+                    <td colspan="8" style="letter-spacing: 2px;text-align: center;">暂无数据</td>
                 </tr>
                 </tbody>
             </table>
