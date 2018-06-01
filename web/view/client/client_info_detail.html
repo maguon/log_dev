@@ -161,10 +161,10 @@
             <!-- body -->
             <div class="col s12 lighten-1 white grey-text vc-center fz13" style="height:50px;">
                 <div class="input-field col s4">
-                    入库时间：{{orderInfo.enter_time |date:'yyyy-MM-dd hh:mm:ss'}}
+                    入库时间：{{orderInfo.enter_time |date:'yyyy-MM-dd HH:mm:ss'}}
                 </div>
                 <div class="input-field col s4">
-                    出库时间：{{orderInfo.real_out_time |date:'yyyy-MM-dd hh:mm:ss'}}
+                    出库时间：{{orderInfo.real_out_time |date:'yyyy-MM-dd HH:mm:ss'}}
                 </div>
                 <div class="input-field col s4">
                     合计天数：{{orderInfo.day_count}}
@@ -382,6 +382,167 @@
     </div>
 </div>
 
+<!-- 贷出信息详情 -->
+<div id="loanInfoModal" class="modal"  style="max-height: 718px;">
+    <!--标题：贷出详情-->
+    <div class="cyan lighten-1 white-text center-align modal_title">贷出详情</div>
+    <!--详情-->
+    <div class="modal-content">
+        <!-- 支付信息 -->
+        <div class="row blue-grey lighten-5" style="border:1px solid #bdbdbd;margin-top: 10px;">
+            <!-- header -->
+            <div class="col s12 lighten-1 cyan-text vc-center" style="height:50px;border-bottom:1px solid #bdbdbd;">
+                <div class="col s6 left-align">
+                    贷出编号：{{loanInfo.id}}
+                </div>
+                <div class="col s6 right-align">
+                    {{loanStatus[loanInfo.loan_status-1].name}}
+                </div>
+            </div>
+            <!-- body -->
+            <div class="col s12 lighten-1 white grey-text vc-center fz14" style="height:50px;">
+                <div class="col s4">
+                    委托方：{{loanInfo.short_name}}
+                </div>
+                <div class="col s4">
+                    贷出金额(美元)：{{loanInfo.loan_money | number}}
+                </div>
+                <div class="col s4">
+                    购买车辆：{{loanInfo.buy_car_count | number}}
+                </div>
+            </div>
+            <div class="col s12 white">
+                <div class="divider s12 center" style="width:98%; margin-left: 10px;margin-right: 10px;"></div>
+            </div>
+            <div class="col s12 lighten-1 white grey-text vc-center fz14" style="height:50px;">
+                <div class="col s4">
+                    抵押车辆：{{loanInfo.mortgage_car_count | number}}
+                </div>
+                <div class="col s4">
+                    抵押车值(美元)：{{loanInfo.mortgage_valuation | number}}
+                </div>
+                <div class="col s4">
+                    定金(美元)：<span style="color: red">{{loanInfo.deposit |number}}</span>
+                </div>
+            </div>
+            <div class="col s12 white">
+                <div class="divider s12 center" style="width:98%; margin-left: 10px;margin-right: 10px;"></div>
+            </div>
+            <div class="col s12 lighten-1 white grey-text vc-center fz14" style="height:50px;">
+                <div class="col s12">
+                    备注：{{loanInfo.remark}}
+                </div>
+            </div>
+            <div class="col s12 white">
+                <div class="divider s12 center" style="width:98%; margin-left: 10px;margin-right: 10px;"></div>
+            </div>
+            <div class="col s12 lighten-1 white grey-text vc-center fz14" style="height:50px;">
+                <div class="col s6">
+                    未还金额(美元)：{{loanInfo.remark|number}}
+                </div>
+                <div class="col s6 right-align">
+                    贷出时间：{{loanInfo.remark|date:'yyyy-mm-dd'}}
+                </div>
+            </div>
+        </div>
+
+        <!-- 还款记录 -->
+        <div ng-show="loanRepaymentList.length > 0" class="row blue-grey lighten-5" style="border:1px solid #bdbdbd;margin-top: 30px;">
+            <!-- header -->
+            <div class="col s12 grey-text vc-center" style="height:50px;border-bottom: 1px solid #bdbdbd;">
+                <div class="col" style="width:15%">
+                    还款编号
+                </div>
+                <div class="col" style="width:15%">
+                    还贷金额(美元)
+                </div>
+                <div class="col" style="width:15%">
+                    利息(美元)
+                </div>
+                <div class="col" style="width:15%">
+                    手续费(美元)
+                </div>
+                <div class="col center" style="width:15%">
+                    还款时间
+                </div>
+                <div class="col center" style="width:25%">
+                    还款总金额(美元)
+                </div>
+            </div>
+
+            <!-- body -->
+            <div ng-repeat="el in loanRepaymentList">
+                <div class="col s12 lighten-1 white grey-text vc-center fz13" style="height:50px;">
+                    <!-- 还款编号 -->
+                    <div class="col" style="width:15%">
+                        {{el.id}}
+                    </div>
+                    <!-- 还贷金额(美元) -->
+                    <div class="col red-text" style="width:15%">
+                        {{el.repayment_money | number}}
+                    </div>
+                    <!-- 利息(美元) -->
+                    <div class="col" style="width:15%">
+                        {{el.interest_money | number}}
+                    </div>
+                    <!-- 手续费(美元) -->
+                    <div class="col" style="width:15%">
+                        {{el.fee | number}}
+                    </div>
+                    <!-- 还款时间 -->
+                    <div class="col center" style="width:15%">
+                        {{el.created_on |date:'yyyy-MM-dd HH:mm:ss'}}
+                    </div>
+                    <!-- 还款总金额(美元) -->
+                    <div class="col red-text right-align" style="width:25%">
+                        {{el.repayment_money + el.interest_money + el.fee | number}}
+                    </div>
+                </div>
+                <div ng-show="loanRepaymentList.length != $index+1" class="col s12 white">
+                    <div class="divider s12 center" style="width:98%; margin-left: 10px;margin-right: 10px;"></div>
+                </div>
+            </div>
+
+            <!-- footer -->
+            <div class="col s12 grey-text vc-center" style="height:50px;border-top: 1px solid #bdbdbd;">
+                <!-- 合计 -->
+                <div class="col" style="width:15%">
+                    合计
+                </div>
+                <!-- 还贷金额(美元) -->
+                <div class="col red-text" style="width:15%">
+                    {{totalPaymentMoney | number}}
+                </div>
+                <!-- 利息(美元) -->
+                <div class="col" style="width:15%">
+                    {{totalInterest | number}}
+                </div>
+                <!-- 手续费(美元) -->
+                <div class="col" style="width:15%">
+                    {{totalFee | number}}
+                </div>
+                <!-- 还款时间 -->
+                <div class="col center" style="width:15%">
+                </div>
+                <!-- 还款总金额(美元) -->
+                <div class="col red-text right-align" style="width:25%">
+                    {{totalPaymentMoney + totalInterest + totalFee | number}}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 分割线 -->
+    <div class="divider col s12"></div>
+
+    <!--关闭模态框按钮-->
+    <div class="row col s4 offset-s8 right-align" style="margin-top: 20px;margin-right: 20px">
+        <a class="btn-floating waves-effect waves-light cyan lighten-1 btn modal-close" style="margin-left: 20px;">
+            <i class="mdi mdi-check"></i>
+        </a>
+    </div>
+</div>
+
 <!--付款记录模态框-->
 <div id="openPaymentHistory" class="modal">
     <!--标题：海运详情-->
@@ -435,7 +596,7 @@
                     支付金额(美元):&nbsp;<span class="red-text" >{{storagePaymentArray.payment_money | currency }}</span>
                 </div>
                 <div class="col s6 right-align">
-                    支付时间:{{storagePaymentArray.updated_on | date:'yyyy-MM-dd hh:mm'}}
+                    支付时间:{{storagePaymentArray.updated_on | date:'yyyy-MM-dd HH:mm'}}
                 </div>
             </div>
         </div>
@@ -445,8 +606,9 @@
                 <div class="row no-marBottom" ul-tabs>
                     <div class="col s12 p0">
                         <ul class="tabWrapDetail grey lighten-4">
-                            <li class="tab col s6 storageOrderDetails vc-center" ng-click="storageOrderDetails()">仓储订单</li>
-                            <li class="tab col s6 seaTransportOrderDetails vc-center" ng-click="seaTransportOrderDetails()">海运订单</li>
+                            <li class="tab col s4 storageOrderDetails vc-center" ng-click="storageOrderDetails()">仓储订单</li>
+                            <li class="tab col s4 seaTransportOrderDetails vc-center" ng-click="seaTransportOrderDetails()">海运订单</li>
+                            <li class="tab col s4 paymentLoanList vc-center" ng-click="openPaymentLoanList()">贷出订单</li>
                         </ul>
                     </div>
                     <div id="storageOrderDetails" class="col s12 tab_box_detail" >
@@ -501,6 +663,8 @@
                             </div>
                         </div>
                     </div>
+
+
                     <div id="seaTransportOrderDetails" class="col s12 tab_box_detail" >
                         <!-- 下部分：检索结果显示区域 -->
                         <div class="col s12">
@@ -553,6 +717,56 @@
                                     上一页
                                 </a>
                                 <a class="waves-light waves-effect cyan lighten-1 btn " id="next8" ng-click="nextBtn8()">
+                                    下一页
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+                    <div id="paymentLoanList" class="col s12 tab_box_detail" >
+                        <!-- 下部分：检索结果显示区域 -->
+                        <div class="col s12">
+                            <table class=" bordered striped centered">
+                                <thead class="blue-grey lighten-5">
+                                <tr class="grey-text text-darken-2">
+                                    <th data-field="">贷出编号</th>
+                                    <th data-field="">贷出时间</th>
+                                    <th data-field="">还款编号</th>
+                                    <th data-field="">还款时间</th>
+                                    <th data-field="">支付金额(美元)</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr  class="grey-text text-darken-1" ng-repeat="el in loanRepaymentList">
+                                    <!--贷出编号-->
+                                    <td ng-bind="el.loan_id"></td>
+                                    <!--贷出时间-->
+                                    <td>{{el.loan_start_date | date:'yyyy-MM-dd HH:mm'}}</td>
+                                    <!--还款编号-->
+                                    <td>{{el.id}}</td>
+                                    <!--还款时间-->
+                                    <td ng-bind="el.created_on|date:'yyyy-MM-dd HH:mm'"></td>
+                                    <!--支付金额(美元)-->
+                                    <td class="red-text">{{el.this_payment_money| number}}</td>
+                                </tr>
+                                <tr class="grey-text text-darken-1 right-align"  ng-if="loanRepaymentList.length !== 0">
+                                    <td colspan="5" style="letter-spacing: 2px;text-align: right;">合计金额(美元):<span class="red-text">{{totalPayMoney | number}}</span></td>
+                                </tr>
+                                <tr class="grey-text text-darken-1" ng-if="loanRepaymentList.length == 0">
+                                    <td colspan="5" style="letter-spacing: 2px;text-align: center;">暂无数据</td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <!-- 上下页按钮 -->
+                        <div class="paging_box col s12">
+                            <div class="right">
+                                <a class="waves-light waves-effect cyan lighten-1 btn" id="loanListPre" ng-click="getLoanListPre()">
+                                    上一页
+                                </a>
+                                <a class="waves-light waves-effect cyan lighten-1 btn" id="loanListNext" ng-click="getLoanListNext()">
                                     下一页
                                 </a>
                             </div>
@@ -627,12 +841,13 @@
         <div class="row no-marBottom" ul-tabs>
             <div class="col s12 p0">
                 <ul class="tabWrap grey lighten-4">
-                    <li class="tab col s2 inventoryRecord vc-center active"  ng-click="inventoryRecord()">库存记录</li>
-                    <li class="tab col s2 relStatus vc-center" ng-click="relStatus()">在库车辆</li>
-                    <li class="tab col s2 msoStatus vc-center" ng-click="msoStatus()">非MSO车辆</li>
-                    <li class="tab col s2 storageOrder vc-center" ng-click="storageOrder()">仓储订单</li>
-                    <li class="tab col s2 seaTransportOrder vc-center" ng-click="seaTransportOrder()">海运订单</li>
-                    <li class="tab col s2 paymentDetail vc-center" ng-click="paymentDetail()">付款记录</li>
+                    <li class="tab col vc-center inventoryRecord active" style="width:15%" ng-click="inventoryRecord()">库存记录</li>
+                    <li class="tab col vc-center relStatus" style="width:14%" ng-click="relStatus()">在库车辆</li>
+                    <li class="tab col vc-center carValuation" style="width:14%" ng-click="carValuation()">车辆估值</li>
+                    <li class="tab col vc-center storageOrder" style="width:14%" ng-click="storageOrder()">仓储订单</li>
+                    <li class="tab col vc-center seaTransportOrder" style="width:14%" ng-click="seaTransportOrder()">海运订单</li>
+                    <li class="tab col vc-center loanList" style="width:14%" ng-click="getLoanList()">贷出记录</li>
+                    <li class="tab col vc-center paymentDetail" style="width:15%" ng-click="paymentDetail()">付款记录</li>
                 </ul>
             </div>
             <div id="inventoryRecord" class="col s12 tab_box">
@@ -707,7 +922,7 @@
                             <th data-field="">制造商</th>
                             <th data-field="">型号</th>
                             <th data-field="">估值(美元)</th>
-                            <th data-field="">MSO车辆</th>
+                            <!--<th data-field="">MSO车辆</th>-->
                             <th data-field="">存放位置</th>
                             <th data-field="">入库时间</th>
                             <th data-field="">出库时间</th>
@@ -721,14 +936,14 @@
                             <td ng-bind="el.make_name"></td>
                             <td ng-bind="el.model_name"></td>
                             <td ng-if="el.valuation==null"></td>
-                            <td ng-if="el.valuation!==null">${{el.valuation}}.00</td>
-                            <td ng-if="el.mso_status==2">是</td>
-                            <td ng-if="el.mso_status==1">否</td>
-                            <td ng-if="el.mso_status==null">无状态</td>
+                            <td ng-if="el.valuation!==null">${{el.valuation | number:2}}</td>
+                            <!--<td ng-if="el.mso_status==2">是</td>-->
+                            <!--<td ng-if="el.mso_status==1">否</td>-->
+                            <!--<td ng-if="el.mso_status==null">无状态</td>-->
                             <td ng-if="el.rel_status==1">{{el.storage_name}}{{el.area_name}}{{el.row}}排{{characters[el.lot-1].name}}</td>
                             <td ng-if="el.rel_status==2"></td>
-                            <td ng-bind="el.enter_time|date:'yyyy-MM-dd '"></td>
-                            <td ng-bind="el.real_out_time|date:'yyyy-MM-dd '"></td>
+                            <td ng-bind="el.enter_time|date:'yyyy-MM-dd HH:mm'"></td>
+                            <td ng-bind="el.real_out_time|date:'yyyy-MM-dd HH:mm'"></td>
                             <td ng-if="el.rel_status==1">在库</td>
                             <td ng-if="el.rel_status==2">出库</td>
                             <!-- 显示【仓储车辆信息】画面按钮 -->
@@ -736,8 +951,8 @@
                                 <a  ng-click="getModalRecord(el.id)" class=""><i class="mdi mdi-file-outline look_icon cyan-text lighten-1  " ></i></a>
                             </td>
                         </tr>
-                        <tr class="grey-text text-darken-1" ng-if="storageCarList.length == 0">
-                            <td colspan="10" style="letter-spacing: 2px;text-align: center;">暂无数据</td>
+                        <tr class="grey-text text-darken-1" ng-if="storageCar.length == 0">
+                            <td colspan="9" style="letter-spacing: 2px;text-align: center;">暂无数据</td>
                         </tr>
                         </tbody>
                     </table>
@@ -768,10 +983,10 @@
                             <th data-field="">制造商</th>
                             <th data-field="">型号</th>
                             <th data-field="">估值(美元)</th>
-                            <th data-field="">MSO车辆</th>
                             <th data-field="">存放位置</th>
                             <th data-field="">入库时间</th>
                             <th data-field="">计划出库时间</th>
+                            <th data-field="">车辆属性</th>
                             <th>操作</th>
                         </tr>
                         </thead>
@@ -782,13 +997,17 @@
                             <td ng-bind="el.model_name"></td>
                             <td ng-if="el.valuation==null"></td>
                             <td ng-if="el.valuation!==null">${{el.valuation}}.00</td>
-                            <td ng-if="el.mso_status==2">是</td>
-                            <td ng-if="el.mso_status==1">否</td>
-                            <td ng-if="el.mso_status==null">无状态</td>
                             <td ng-if="el.rel_status==1">{{el.storage_name}}{{el.area_name}}{{el.row}}排{{characters[el.lot-1].name}}</td>
                             <td ng-if="el.rel_status==2"></td>
                             <td ng-bind="el.enter_time|date:'yyyy-MM-dd '"></td>
                             <td ng-bind="el.plan_out_time|date:'yyyy-MM-dd '"></td>
+                            <!-- 车辆属性 -->
+                            <td>
+                                <!-- 金融车(0：不是金融车， 1 金融车) -->
+                                <span ng-show="el.purchase_type==1" class="mdi mdi-cash-usd fz18" style="margin-right:10px;color: #f0ad4e"></span>
+                                <!-- 抵押车(1：未抵押，2：抵押) -->
+                                <span ng-show="el.mortgage_status==2" class="mdi mdi-lock fz18 cyan-text"></span>
+                            </td>
                             <!-- 显示【仓储车辆信息】画面按钮 -->
                             <td class="operation">
                                 <a  ng-click="getModalRecord(el.id)" class=""><i class="mdi mdi-file-outline look_icon cyan-text lighten-1  " ></i></a>
@@ -812,57 +1031,110 @@
                     </div>
                 </div>
             </div>
-            <div id="msoStatus" class="col s12 tab_box" >
-                <div class="col s12" >
-                    <div class="col s12 cyan white-text vc-center fz18" style="height: 60px;border-bottom: 1px solid  #4e84cb;border-top:1px solid  #fff" >
-                        <div class="col s6 left-align "></div>
-                        <div class="col s6 right-align">非MSO车辆库值(美元):{{entrustList.not_mso_valuation}}</div>
+            <div id="carValuation" class="col s12 tab_box" >
+
+                <!-- 在库车辆 -->
+                <div class="col s12" style="font-weight: bold;color: white">
+                    <div class="center-align cyan-text z-depth-1" style="height: 100px;margin-top: 50px;border:1px solid cornflowerblue">
+
+                        <div class="col s12" style="height: 100px;">
+                            <!-- 图标 -->
+                            <div class="col vc-center" style="width:15%;height: 100px;">
+                                <a class="btn-floating btn-large waves-light waves-effect cyan lighten-2" style="cursor: default">
+                                    <i class="mdi mdi-account-group"></i>
+                                </a>
+                            </div>
+                            <div class="col vc-center grey-text" style="width:15%;height: 100px;">
+                                在库车辆总数
+                            </div>
+                            <div class="col vc-center" style="width:25%;height: 70px;margin-top:15px;margin-bottom:15px; border-right: 1px solid #c2c0c2">
+                                {{carStorageCount| number}}
+                            </div>
+                            <div class="col vc-center grey-text" style="width:15%;height: 100px;">
+                                在库车辆总值
+                            </div>
+                            <div class="col vc-center red-text" style="width:30%;height: 100px;">
+                                {{carStorageValuation | number}}
+                            </div>
+                        </div>
                     </div>
-                    <div class="divider" style="background: #407BC7;height: 2px;"></div>
-                    <table class=" bordered striped centered">
-                        <thead class="blue-grey lighten-5">
-                        <tr class="grey-text text-darken-2">
-                            <th data-field="">vin码</th>
-                            <th data-field="">制造商</th>
-                            <th data-field="">型号</th>
-                            <th data-field="">估值(美元)</th>
-                            <th data-field="">存放位置</th>
-                            <th data-field="">入库时间</th>
-                            <th data-field="">计划出库时间</th>
-                            <th>操作</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <tr ng-repeat="el in storageCar3" class="grey-text text-darken-1">
-                            <td ng-bind="el.vin"></td>
-                            <td ng-bind="el.make_name"></td>
-                            <td ng-bind="el.model_name"></td>
-                            <td ng-if="el.valuation==null"></td>
-                            <td ng-if="el.valuation!==null">${{el.valuation}}.00</td>
-                            <td ng-if="el.rel_status==1">{{el.storage_name}}{{el.area_name}}{{el.row}}排{{characters[el.lot-1].name}}</td>
-                            <td ng-if="el.rel_status==2"></td>
-                            <td ng-bind="el.enter_time|date:'yyyy-MM-dd '"></td>
-                            <td ng-bind="el.plan_out_time|date:'yyyy-MM-dd '"></td>
-                            <!-- 显示【仓储车辆信息】画面按钮 -->
-                            <td class="operation">
-                                <a  ng-click="getModalRecord(el.id)" class=""><i class="mdi mdi-file-outline look_icon cyan-text lighten-1  " ></i></a>
-                            </td>
-                        </tr>
-                        <tr class="grey-text text-darken-1" ng-if="storageCar3.length == 0">
-                            <td colspan="8" style="letter-spacing: 2px;text-align: center;">暂无数据</td>
-                        </tr>
-                        </tbody>
-                    </table>
                 </div>
-                <!-- 上下页按钮 -->
-                <div class="paging_box col s12">
-                    <div class="right">
-                        <a class="waves-light waves-effect cyan lighten-1 btn  "  id="pre3"   ng-click="preBtn3()">
-                            上一页
-                        </a>
-                        <a class="waves-light waves-effect cyan lighten-1 btn " id="next3"  ng-click="nextBtn3()">
-                            下一页
-                        </a>
+                <!-- 抵押车辆 -->
+                <div class="col s12" style="font-weight: bold;color: white">
+                    <div class="center-align cyan-text z-depth-1" style="height: 100px;margin-top: 20px;border:1px solid cornflowerblue">
+
+                        <div class="col s12" style="height: 100px;">
+                            <!-- 图标 -->
+                            <div class="col vc-center" style="width:15%;height: 100px;">
+                                <a class="btn-floating btn-large waves-light waves-effect cyan lighten-2" style="cursor: default">
+                                    <i class="mdi mdi-account-group"></i>
+                                </a>
+                            </div>
+                            <div class="col vc-center grey-text" style="width:15%;height: 100px;">
+                                抵押车总数
+                            </div>
+                            <div class="col vc-center" style="width:25%;height: 70px;margin-top:15px;margin-bottom:15px; border-right: 1px solid #c2c0c2">
+                                {{mortgageCarCount| number}}
+                            </div>
+                            <div class="col vc-center grey-text" style="width:15%;height: 100px;">
+                                抵押车总值
+                            </div>
+                            <div class="col vc-center red-text" style="width:30%;height: 100px;">
+                                {{mortgageCarValuation | number}}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- 可抵押车辆 -->
+                <div class="col s12" style="font-weight: bold;color: white">
+                    <div class="center-align cyan-text z-depth-1" style="height: 100px;margin-top: 20px;border:1px solid cornflowerblue">
+
+                        <div class="col s12" style="height: 100px;">
+                            <!-- 图标 -->
+                            <div class="col vc-center" style="width:15%;height: 100px;">
+                                <a class="btn-floating btn-large waves-light waves-effect cyan lighten-2" style="cursor: default">
+                                    <i class="mdi mdi-account-group"></i>
+                                </a>
+                            </div>
+                            <div class="col vc-center grey-text" style="width:15%;height: 100px;">
+                                可抵押车总数
+                            </div>
+                            <div class="col vc-center" style="width:25%;height: 70px;margin-top:15px;margin-bottom:15px; border-right: 1px solid #c2c0c2">
+                                {{unMortgageCarCount| number}}
+                            </div>
+                            <div class="col vc-center grey-text" style="width:15%;height: 100px;">
+                                可抵押车总值
+                            </div>
+                            <div class="col vc-center red-text" style="width:30%;height: 100px;">
+                                {{unMortgageCarValuation | number}}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- 金融车 -->
+                <div class="col s12" style="font-weight: bold;color: white">
+                    <div class="center-align cyan-text z-depth-1" style="height: 100px;margin-top: 20px;border:1px solid cornflowerblue">
+
+                        <div class="col s12" style="height: 100px;">
+                            <!-- 图标 -->
+                            <div class="col vc-center" style="width:15%;height: 100px;">
+                                <a class="btn-floating btn-large waves-light waves-effect cyan lighten-2" style="cursor: default">
+                                    <i class="mdi mdi-account-group"></i>
+                                </a>
+                            </div>
+                            <div class="col vc-center grey-text" style="width:15%;height: 100px;">
+                                金融车总数
+                            </div>
+                            <div class="col vc-center" style="width:25%;height: 70px;margin-top:15px;margin-bottom:15px; border-right: 1px solid #c2c0c2">
+                                {{purchaseCarCount| number}}
+                            </div>
+                            <div class="col vc-center grey-text" style="width:15%;height: 100px;">
+                                金融车总值
+                            </div>
+                            <div class="col vc-center red-text" style="width:30%;height: 100px;">
+                                {{purchaseCarValuation | number}}
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -970,7 +1242,7 @@
                             <th data-field="">入库时间</th>
                             <th data-field="">出库时间</th>
                             <th data-field="">合计天数</th>
-                            <th data-field="">支付金额<br><span style="margin-left: 12px;font-size: 12px;">(美元)</span></th>
+                            <th data-field="">支付金额(美元)</th>
                             <th data-field="">支付状态</th>
                             <th class="center">操作</th>
                         </tr>
@@ -990,9 +1262,9 @@
                             <!-- 合计天数 -->
                             <td>{{el.day_count}}</td>
                             <!-- 支付金额(美元) -->
-                            <td>{{el.actual_fee | currency}}</td>
+                            <td class="red-text">{{el.actual_fee | number}}</td>
                             <!-- 支付状态 -->
-                            <td>{{payStatusList[el.order_status - 1].name}}</td>
+                            <td ng-class="{'red-text':el.order_status==1}">{{payStatusList[el.order_status - 1].name}}</td>
                             <!-- 显示【车辆信息】画面按钮 -->
                             <td class="operation">
                                 <div class="col s12">
@@ -1154,13 +1426,14 @@
                     <table class=" bordered striped centered">
                         <thead class="blue-grey lighten-5">
                         <tr class="grey-text text-darken-2">
+                            <th data-field="">订单编号</th>
                             <th data-field="">VIN</th>
                             <th data-field="">海运编号</th>
                             <th data-field="">车型</th>
                             <th data-field="">始发港口</th>
                             <th data-field="">目的港口</th>
-                            <th data-field="">船公司</th>
-                            <th data-field="">货柜</th>
+                            <!--<th data-field="">船公司</th>-->
+                            <!--<th data-field="">货柜</th>-->
                             <th data-field="">运费(美元)</th>
                             <th data-field="">开船日期</th>
                             <th data-field="">到港日期</th>
@@ -1171,20 +1444,22 @@
                         </thead>
                         <tbody>
                         <tr  class="grey-text text-darken-1" ng-repeat="el in seaTransportOrderList">
+                            <!--订单编号-->
+                            <td ng-bind="el.id"></td>
                             <!--VIN-->
                             <td ng-bind="el.vin"></td>
+                            <!--海运编号-->
                             <td ng-bind="el.ship_trans_id"></td>
-                            <!--制造商-->
+                            <!--车型-->
                             <td>{{el.make_name}}/{{el.model_name}}</td>
-
                             <!--始发港口-->
                             <td ng-bind="el.start_port_name"></td>
                             <!--目的港口-->
                             <td ng-bind="el.end_port_name"></td>
-                            <!--船公司-->
-                            <td ng-bind="el.ship_company_name"></td>
-                            <!--货柜-->
-                            <td  ng-bind="el.container"></td>
+                            <!--&lt;!&ndash;船公司&ndash;&gt;-->
+                            <!--<td ng-bind="el.ship_company_name"></td>-->
+                            <!--&lt;!&ndash;货柜&ndash;&gt;-->
+                            <!--<td  ng-bind="el.container"></td>-->
                             <!--运费(美元)-->
                             <td class="red-text" ng-bind="el.ship_trans_fee"></td>
                             <!--开船日期-->
@@ -1209,7 +1484,7 @@
                             </td>
                         </tr>
                         <tr class="grey-text text-darken-1" ng-if="seaTransportOrderList.length == 0">
-                            <td colspan="13" style="letter-spacing: 2px;text-align: center;">暂无数据</td>
+                            <td colspan="12" style="letter-spacing: 2px;text-align: center;">暂无数据</td>
                         </tr>
                         </tbody>
                     </table>
@@ -1225,9 +1500,138 @@
                         </a>
                     </div>
                 </div>
-
-
             </div>
+
+            <!-- TAB 付款记录 -->
+            <div id="loanList" class="col s12 tab_box" >
+                <!-- 上部分：检索条件输入区域 -->
+                <div class="row grey-text text-darken-1">
+                    <div class="col s11">
+
+                        <!-- 查询条件 -->
+                        <div class="col s12">
+
+                            <!-- 查询条件：贷出编号 -->
+                            <div class="input-field col s2">
+                                <input type="text" id="condLoanIdText" ng-model="condLoanId">
+                                <label for="condLoanIdText">贷出编号</label>
+                            </div>
+
+                            <!-- 查询条件：贷出时间 -->
+                            <div class="input-field col s2">
+                                <input id="condCreatedOnStartText" type="text" ng-model="condCreatedOnStart"
+                                       class="datepicker" autocomplete="off" date>
+                                <label for="condCreatedOnStartText">贷出时间(起)</label>
+                                <i class="mdi dataIcon mdi-table-large"></i>
+                            </div>
+                            <div class="input-field col s2">
+                                <input type="text" id="condCreatedOnEndText" ng-model="condCreatedOnEnd"
+                                       class="datepicker" autocomplete="off" date>
+                                <label for="condCreatedOnEndText">贷出时间(止)</label>
+                                <i class="mdi dataIcon mdi-table-large"></i>
+                            </div>
+
+                            <!-- 查询条件：完结时间 -->
+                            <div class="input-field col s2">
+                                <input type="text" id="condLoanEndDateStartText" ng-model="condLoanEndDateStart"
+                                       class="datepicker"
+                                       autocomplete="off" date>
+                                <label for="condLoanEndDateStartText">完结时间(起)</label>
+                                <i class="mdi dataIcon mdi-table-large"></i>
+                            </div>
+                            <div class="input-field col s2">
+                                <input type="text" id="condLoanEndDateEndText" ng-model="condLoanEndDateEnd" class="datepicker"
+                                       autocomplete="off" date>
+                                <label for="condLoanEndDateEndText">完结时间(止)</label>
+                                <i class="mdi dataIcon mdi-table-large"></i>
+                            </div>
+
+                            <!-- 查询条件：订单编号 -->
+                            <div class="input-field col s2">
+                                <select material-select watch ng-model="condLoanStatus">
+                                    <option value="" disabled>订单状态</option>
+                                    <option ng-repeat="el in loanStatus" ng-value="el.id">{{el.name}}</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 查询按钮 -->
+                    <div class="col s1 flex flex-round">
+                        <a class="btn-floating btn-large waves-light waves-effect red lighten-2 btn vc-center"
+                           style="margin-top: 10px" ng-click="queryLoanList()">
+                            <i class="mdi mdi-magnify"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- 下部分：检索结果显示区域 -->
+                <div class="col s12">
+                    <div class="divider" style="background: #407BC7;height: 2px;"></div>
+                    <table class=" bordered striped centered">
+                        <thead class="blue-grey lighten-5">
+                        <tr class="grey-text text-darken-2">
+                            <th>贷出编号</th>
+                            <th>贷出金额</th>
+                            <th>抵押车辆</th>
+                            <th>抵押车值(美元)</th>
+                            <th>定金(美元)</th>
+                            <th>购买车辆</th>
+                            <th>贷出时间</th>
+                            <th>未还金额</th>
+                            <th>完结时间</th>
+                            <th>状态</th>
+                            <th class="center">查看还款</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr ng-repeat="el in loanList" class="grey-text text-darken-1">
+                            <!-- 贷出编号 -->
+                            <td ng-bind="el.id"></td>
+                            <!-- 贷出金额 -->
+                            <td ng-bind="el.loan_money | number" class="red-text"></td>
+                            <!-- 抵押车辆 -->
+                            <td ng-bind="el.mortgage_car_count | number"></td>
+                            <!-- 抵押车值(美元) -->
+                            <td>{{el.mortgage_valuation==null ? 0 : el.mortgage_valuation | number}}</td>
+                            <!-- 定金(美元) -->
+                            <td ng-bind="el.deposit | number"></td>
+                            <!-- 购买车辆 -->
+                            <td ng-bind="el.buy_car_count| number"></td>
+                            <!-- 贷出时间 -->
+                            <td ng-bind="el.created_on|date:'yyyy-MM-dd HH:mm'"></td>
+                            <!-- 未还金额 -->
+                            <td ng-bind="el.not_repayment_money | number" class="red-text"></td>
+                            <!-- 完结时间 -->
+                            <td ng-bind="el.loan_end_date|date:'yyyy-MM-dd HH:mm'"></td>
+                            <!-- 状态 -->
+                            <td>{{loanStatus[el.loan_status - 1].name}}</td>
+                            <!--查看还款-->
+                            <td class="operation center">
+                                <a ng-click= 'openLoanInfoModal(el.id)'>
+                                    <i class="mdi mdi-file-outline look_icon cyan-text lighten-1"></i>
+                                </a>
+                            </td>
+                        </tr>
+                        <tr class="grey-text text-darken-1" ng-if="loanList.length == 0">
+                            <td colspan="11" style="letter-spacing: 2px;text-align: center;">暂无数据</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <!-- 上下页按钮 -->
+                <div class="paging_box col s12">
+                    <div class="right">
+                        <a class="waves-light waves-effect cyan lighten-1 btn" id="loanPre" ng-click="loanPreBtn()">
+                            上一页
+                        </a>
+                        <a class="waves-light waves-effect cyan lighten-1 btn" id="loanNext" ng-click="loanNextBtn()">
+                            下一页
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <!-- TAB 付款记录 -->
             <div id="paymentDetail" class="col s12 tab_box" >
                 <!-- 上部分：检索条件输入区域 -->
                 <div class="row col s12">
@@ -1311,10 +1715,11 @@
                             <td ng-bind="el.id"></td>
                             <td>{{paymentMethodList[el.payment_type-1].name}}</td>
                             <td ng-bind="el.number"></td>
-                            <td ng-bind="el.created_on|date:'yyyy-MM-dd'"></td>
-                            <td ng-bind="el.payment_money"></td>
+                            <td ng-bind="el.created_on|date:'yyyy-MM-dd HH:mm'"></td>
+                            <!-- 支付金额(美元) -->
+                            <td class="red-text">{{el.payment_money | number}}</td>
                             <td>{{paymentStatusList[el.payment_status-1].name}}</td>
-                            <td ng-bind="el.payment_end_date|date:'yyyy-MM-dd'"></td>
+                            <td ng-bind="el.payment_end_date|date:'yyyy-MM-dd HH:mm'"></td>
                             <!--操作-->
                             <td class="operation">
                                 <span class="s12 center">
