@@ -30,8 +30,14 @@
                     <div class="row blue-grey lighten-5" style="width: 80%;border:1px solid #bdbdbd;margin-top: 10px;">
                         <!-- header -->
                         <div class="col s12 lighten-1 cyan-text vc-center" style="height:50px;">
-                            <div class="col s12">
+                            <div class="col s6">
                                 当前车辆
+                            </div>
+                            <div class="col s6 right-align">
+                                <!-- 金融车(0：不是金融车， 1 金融车) -->
+                                <span ng-show="self_car.purchase_type==1" class="mdi mdi-cash-usd fz18" style="margin-right:10px;color: #f0ad4e"></span>
+                                <!-- 抵押车(1：未抵押，2：抵押) -->
+                                <span ng-show="self_car.mortgage_status==2" class="mdi mdi-lock fz18 cyan-text"></span>
                             </div>
                         </div>
                         <!-- body -->

@@ -178,6 +178,7 @@
                     <th data-field="">到港日期</th>
                     <th data-field="">仓储状态</th>
                     <th data-field="">船运状态</th>
+                    <th data-field="">车辆属性</th>
                     <th>操作</th>
                 </tr>
                 </thead>
@@ -203,6 +204,13 @@
                     <td>{{carStatusList[el.rel_status-1].status_text}}</td>
                     <!--船运状态-->
                     <td>{{shipTransStatus[el.ship_trans_status-1].name}}</td>
+                    <!--车辆属性-->
+                    <td>
+                        <!-- 金融车(0：不是金融车， 1 金融车) -->
+                        <span ng-show="el.purchase_type==1" class="mdi mdi-cash-usd fz18" style="color: #f0ad4e"></span>
+                        <!-- 抵押车(1：未抵押，2：抵押) -->
+                        <span ng-show="el.mortgage_status==2" class="mdi mdi-lock fz18 cyan-text"></span>
+                    </td>
                     <!-- 显示【车辆信息】画面按钮 -->
                     <td class="operation">
                         <a href="#" ui-sref="car_demand_details({id:el.id,vin:el.vin,from:'car_demand'})" class=""><i
@@ -210,7 +218,7 @@
                     </td>
                 </tr>
                 <tr class="grey-text text-darken-1" ng-if="storageCar.length == 0">
-                    <td colspan="12" style="letter-spacing: 2px;text-align: center;">暂无数据</td>
+                    <td colspan="13" style="letter-spacing: 2px;text-align: center;">暂无数据</td>
                 </tr>
                 </tbody>
             </table>
