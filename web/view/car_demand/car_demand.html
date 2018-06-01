@@ -197,9 +197,9 @@
                     <!-- 入库时间 -->
                     <td ng-bind="el.enter_time|date:'yyyy-MM-dd HH:mm:ss'"></td>
                     <!--发船日期-->
-                    <td ng-bind="el.start_ship_date|date:'yyyy-MM-dd '"></td>
+                    <td ng-bind="el.actual_start_date|date:'yyyy-MM-dd '"></td>
                     <!--到港日期-->
-                    <td ng-bind="el.end_ship_date|date:'yyyy-MM-dd '"></td>
+                    <td ng-bind="el.actual_end_date|date:'yyyy-MM-dd '"></td>
                     <!--仓储状态-->
                     <td>{{carStatusList[el.rel_status-1].status_text}}</td>
                     <!--船运状态-->
