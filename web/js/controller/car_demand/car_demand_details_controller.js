@@ -15,6 +15,8 @@ app.controller("car_demand_details_controller", ["$state", "$stateParams", "_con
     $scope.carStatusList = _config.carRelStatus;
     // 状态船运 列表
     $scope.shipTransStatus = _config.shipTransStatus;
+    // 是否MSO车辆 列表
+    $scope.msoFlags = _config.msoFlags;
 
     /**
      * 返回到前画面（车辆查询）。
@@ -113,6 +115,7 @@ app.controller("car_demand_details_controller", ["$state", "$stateParams", "_con
                 else {
                     $scope.modelId = data.result[0].model_id;
                     $scope.self_car = data.result[0];
+                    $scope.carColor = '未知';
                     for (var i in _config.config_color) {
                         if (_config.config_color[i].colorId == $scope.self_car.colour) {
                             $scope.carColor = _config.config_color[i].colorName;
