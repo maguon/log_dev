@@ -789,7 +789,6 @@ app.controller("finance_loan_detail_controller", ["$scope", "$stateParams", "_ba
                 dayCount: $scope.newPayment.interestDay,
                 interestMoney: $scope.newPayment.interest,
                 fee: $scope.newPayment.poundage === "" ? 0 : $scope.newPayment.poundage,
-                notRepaymentMoney: $scope.newPayment.leftPaymentMoney,
                 remark: $scope.newPayment.remark
             };
             _basic.post(_host.api_url + "/user/" + userId + "/loanRepayment", obj).then(function (data) {
@@ -851,7 +850,6 @@ app.controller("finance_loan_detail_controller", ["$scope", "$stateParams", "_ba
                         dayCount: $scope.newPayment.interestDay,
                         interestMoney: $scope.newPayment.interest,
                         fee: $scope.newPayment.poundage === "" ? 0 : $scope.newPayment.poundage,
-                        notRepaymentMoney: $scope.newPayment.leftPaymentMoney,
                         remark: $scope.newPayment.remark
                     };
                     // 修改本次支付金额
@@ -1038,7 +1036,7 @@ app.controller("finance_loan_detail_controller", ["$scope", "$stateParams", "_ba
         var creditNumber = $scope.newCreditId;
 
         // 检索用url
-        var url = _host.api_url + "/credit?creditNumber=" + creditNumber + "&entrustId=" + $scope.loanInfo.entrustId  + "&creditStatus" + unfinished;
+        var url = _host.api_url + "/credit?creditNumber=" + creditNumber + "&entrustId=" + $scope.loanInfo.entrustId  + "&creditStatus=" + unfinished;
         _basic.get(url).then(function (data) {
             if (data.success) {
 
