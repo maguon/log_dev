@@ -60,7 +60,7 @@ app.controller("payment_controller", ["$scope", "_basic", "_host", "_config", fu
     };
 
     /**
-     * 确认新增支付信息
+     * 确认新增支付信息 http://localhost:9000/payment_detail/69?from=payment
      * */
     $scope.addPaymentInfo = function () {
 
@@ -80,9 +80,9 @@ app.controller("payment_controller", ["$scope", "_basic", "_host", "_config", fu
 
             _basic.post(_host.api_url + "/user/" + userId + "/paymentOrder", obj).then(function (data) {
                 if (data.success) {
-                    $('#addPaymentModal').modal('close');
+                   $('#addPaymentModal').modal('close');
                     seachPayment();
-                    swal("新增成功", "", "success");
+                    window.location.href = '/index.html#!/payment_detail/'+data.id+'?from=payment';
                     // 成功后，刷新页面数据
 
                 } else {
