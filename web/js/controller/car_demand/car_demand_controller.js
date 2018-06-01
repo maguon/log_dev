@@ -175,10 +175,10 @@ app.controller("car_demand_controller", ["$scope", "$rootScope", "_host", "_basi
             shipTransStatus:$scope.conditionShipTransStatus,
             shipCompanyId:$scope.conditionShipCompanyId,
             container:$scope.conditionContainer,
-            startShipDateStart:$scope.conditionStartShipDateStart,
-            startShipDateEnd:$scope.conditionStartShipDateEnd,
-            endShipDateStart:$scope.conditionEndShipDateStart,
-            endShipDateEnd:$scope.conditionEndShipDateEnd
+            actualStartDateStart:$scope.conditionStartShipDateStart,
+            actualStartDateEnd:$scope.conditionStartShipDateEnd,
+            actualEndDateStart:$scope.conditionEndShipDateStart,
+            actualEndDateEnd:$scope.conditionEndShipDateEnd
         };
         return obj;
     }
