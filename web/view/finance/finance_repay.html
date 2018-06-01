@@ -113,7 +113,7 @@
                 <!-- 手续费(美元) -->
                 <td ng-bind="el.fee | number"></td>
                 <!-- 还款时间 -->
-                <td ng-bind="el.created_on|date:'yyyy-MM-dd hh:mm'"></td>
+                <td ng-bind="el.created_on|date:'yyyy-MM-dd HH:mm'"></td>
                 <!-- 状态 -->
                 <td ng-if="el.repayment_status==1" class="red-text">{{paymentStatus[el.repayment_status-1].name}}</td>
                 <td ng-if="el.repayment_status==2" class="grey-text">{{paymentStatus[el.repayment_status-1].name}}</td>
@@ -338,7 +338,7 @@
                                         </div>
 
                                         <div class="col left-align" style="width:16%;">
-                                            {{el.credit_created_date |date:'yyyy-MM-dd hh:mm'}}
+                                            {{el.credit_created_date |date:'yyyy-MM-dd HH:mm'}}
                                         </div>
 
                                         <div class="col right-align cyan-text" style="width:12%;">
@@ -421,7 +421,7 @@
                                     </div>
                                     <!-- 支付时间 -->
                                     <div class="col s6 right-align grey-text">
-                                        {{el.created_payment_date |date:'yyyy-MM-dd hh:mm'}}
+                                        {{el.created_payment_date |date:'yyyy-MM-dd HH:mm'}}
                                         <span ng-click="deleteOtherPayment($event, el.payment_id)"><i class="mdi mdi-close red-text right-align" style="padding-left:5px; cursor:pointer; right: 22px;"></i></span>
                                     </div>
                                 </div>

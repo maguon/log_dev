@@ -163,9 +163,9 @@
                 <td class="red-text">${{el.payment_money |number:2}}</td>
                 <td>{{paymentTypeList[el.payment_type-1].name}}</td>
                 <td ng-bind="el.number"></td>
-                <td ng-bind="el.created_on |date:'yyyy-MM-dd hh:mm'"></td>
+                <td ng-bind="el.created_on |date:'yyyy-MM-dd HH:mm'"></td>
                 <td>{{paymentStatusList[el.payment_status-1].name}}</td>
-                <td ng-bind="el.payment_end_date |date:'yyyy-MM-dd hh:mm'"></td>
+                <td ng-bind="el.payment_end_date |date:'yyyy-MM-dd HH:mm'"></td>
 
                 <!-- 显示画面按钮 -->
                 <td class="operation">

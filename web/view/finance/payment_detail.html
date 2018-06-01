@@ -72,7 +72,7 @@
                 </div>
                 <div class="row col s12" style="margin-bottom: 35px;color:grey;">
                     <div class="col s6 ">操作人:{{storagePaymentArray.payment_user_name}}</div>
-                    <div class="col s6 right-align">支付时间:{{storagePaymentArray.created_on |date:'yyyy-MM-dd hh:mm'}}</div>
+                    <div class="col s6 right-align">支付时间:{{storagePaymentArray.created_on |date:'yyyy-MM-dd HH:mm'}}</div>
                 </div>
             </div>
             <div class="row col s12" style="margin-top: 30px">
@@ -155,7 +155,7 @@
                 <div class="row col s12">
                     <div class="col s12 right-align">
                         <div class="col s12">
-                            支付时间:{{storagePaymentArray.updated_on | date:'yyyy-MM-dd hh:mm'}}
+                            支付时间:{{storagePaymentArray.updated_on | date:'yyyy-MM-dd HH:mm'}}
                         </div>
                     </div>
                 </div>
@@ -210,8 +210,8 @@
                                     <td ng-bind="el.id"></td>
                                     <td ng-bind="el.vin"></td>
                                     <td>{{el.make_name}}/{{el.model_name}}</td>
-                                    <td>{{el.created_on |date:'yyyy-MM-dd hh:mm'}}</td>
-                                    <td>{{el.enter_time |date:'yyyy-MM-dd hh:mm'}}</td>
+                                    <td>{{el.created_on |date:'yyyy-MM-dd HH:mm'}}</td>
+                                    <td>{{el.enter_time |date:'yyyy-MM-dd HH:mm'}}</td>
                                     <td>{{el.day_count}}</td>
                                     <td class="red-text">{{el.actual_fee|currency}}</td>
 
@@ -271,8 +271,8 @@
                                     <td ng-bind="el.storage_order_id"></td>
                                     <td ng-bind="el.vin"></td>
                                     <td>{{el.make_name}}/{{el.model_name}}</td>
-                                    <td>{{el.created_on |date:'yyyy-MM-dd hh:mm'}}</td>
-                                    <td>{{el.enter_time |date:'yyyy-MM-dd hh:mm'}}</td>
+                                    <td>{{el.created_on |date:'yyyy-MM-dd HH:mm'}}</td>
+                                    <td>{{el.enter_time |date:'yyyy-MM-dd HH:mm'}}</td>
                                     <td>{{el.day_count}}</td>
                                     <td class="red-text">{{el.actual_fee|currency}}</td>
 
@@ -324,8 +324,8 @@
                                 <td ng-bind="el.storage_order_id"></td>
                                 <td ng-bind="el.vin"></td>
                                 <td>{{el.make_name}}/{{el.model_name}}</td>
-                                <td>{{el.created_on |date:'yyyy-MM-dd hh:mm'}}</td>
-                                <td>{{el.enter_time |date:'yyyy-MM-dd hh:mm'}}</td>
+                                <td>{{el.created_on |date:'yyyy-MM-dd HH:mm'}}</td>
+                                <td>{{el.enter_time |date:'yyyy-MM-dd HH:mm'}}</td>
                                 <td>{{el.day_count}}</td>
                                 <td class="red-text">{{el.actual_fee|currency}}</td>
                             </tr>

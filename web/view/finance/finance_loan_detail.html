@@ -46,7 +46,7 @@
 
         <div class="row col s12 cyan-text">
             <div class="col s6" >委托方: {{loanInfo.entrustName}}</div>
-            <div class="col s6 grey-text right-align">贷出时间: {{loanInfo.loanStartDate |date:'yyyy-MM-dd hh:mm'}}</div>
+            <div class="col s6 grey-text right-align">贷出时间: {{loanInfo.loanStartDate |date:'yyyy-MM-dd HH:mm'}}</div>
         </div>
 
         <!-- 定金，贷出金额 -->
@@ -152,7 +152,7 @@
                             <td ng-bind="el.vin"></td>
                             <td>{{el.make_name}}/{{el.model_name}}</td>
                             <td>{{el.pro_date |date:'yyyy-MM-dd'}}</td>
-                            <td>{{el.enter_time |date:'yyyy-MM-dd hh:mm'}}</td>
+                            <td>{{el.enter_time |date:'yyyy-MM-dd HH:mm'}}</td>
                             <td class="red-text">{{el.valuation|number}}</td>
 
                             <!-- 显示画面按钮 -->
@@ -208,7 +208,7 @@
                             <td ng-bind="el.vin"></td>
                             <td>{{el.make_name}}/{{el.model_name}}</td>
                             <td>{{el.pro_date |date:'yyyy-MM-dd'}}</td>
-                            <td>{{el.enter_time |date:'yyyy-MM-dd hh:mm'}}</td>
+                            <td>{{el.enter_time |date:'yyyy-MM-dd HH:mm'}}</td>
                             <td class="red-text">{{el.valuation|number}}</td>
 
                             <!-- 显示画面按钮 -->
@@ -407,7 +407,7 @@
                             未还金额(美元)：<span class="red-text">{{paymentInfo.leftPaymentMoney | number}}</span>
                         </div>
                         <div class="col s4 left-align fz14">
-                            起始时间：{{paymentInfo.loanStartDate |date:'yyyy-MM-dd hh:mm'}}
+                            起始时间：{{paymentInfo.loanStartDate |date:'yyyy-MM-dd HH:mm'}}
                         </div>
                         <div class="col s4 left-align fz14">
                             产生利息时长：{{paymentInfo.interestDay}}天
@@ -449,7 +449,7 @@
                                 本金/总金额(美元)：<span class="red-text">{{el.repayment_money | number}} / {{el.repayment_money + el.interest_money + el.fee | number}}</span>
                             </div>
                             <div class="col s2 left-align fz14">
-                                {{el.created_on |date:'yyyy-MM-dd hh:mm'}}
+                                {{el.created_on |date:'yyyy-MM-dd HH:mm'}}
                             </div>
                             <div class="col s2 vc-center">
                                 <a ng-show="loanInfo.loanStatus != 4 && el.repayment_status == 1" class="btn-floating waves-effect waves-light cyan lighten-1" style="margin-left: 20px;width:30px;height: 30px;"
@@ -518,7 +518,7 @@
                                 未还金额(美元): <span class="red-text">{{paymentInfo.leftPaymentMoney | number}}</span>
                             </div>
                             <div class="col s6 right-align blue-grey lighten-5 grey-text" style="height:50px; padding-top: 15px; border: 1px solid lightgrey;border-left: 0">
-                                起始时间: {{paymentInfo.loanStartDate |date:'yyyy-MM-dd hh:mm'}}
+                                起始时间: {{paymentInfo.loanStartDate |date:'yyyy-MM-dd HH:mm'}}
                             </div>
                         </div>
 
@@ -528,7 +528,7 @@
                                 还款编号: {{newPayment.repaymentId}}
                             </div>
                             <div class="col s6 right-align grey-text" style="height:44px; padding-top: 10px;">
-                                还款时间: {{newPayment.repaymentDate |date:'yyyy-MM-dd hh:mm'}}
+                                还款时间: {{newPayment.repaymentDate |date:'yyyy-MM-dd HH:mm'}}
                             </div>
                         </div>
                         <!-- 分割线 -->
@@ -773,7 +773,7 @@
                                         </div>
 
                                         <div class="col left-align" style="width:16%;">
-                                            {{el.credit_created_date |date:'yyyy-MM-dd hh:mm'}}
+                                            {{el.credit_created_date |date:'yyyy-MM-dd HH:mm'}}
                                         </div>
 
                                         <div class="col right-align cyan-text" style="width:12%;">
@@ -878,7 +878,7 @@
                                         支付编号：{{el.payment_id}}
                                     </div>
                                     <div class="col s6 right-align grey-text">
-                                        {{el.created_payment_date |date:'yyyy-MM-dd hh:mm'}}
+                                        {{el.created_payment_date |date:'yyyy-MM-dd HH:mm'}}
                                         <span ng-show="modalFlag=='newPaymentInfo' || (loanInfo.loanStatus != 4 && newPayment.repaymentStatus == 1)" ng-click="deleteOtherPayment($event, el.payment_id)"><i class="mdi mdi-close red-text right-align" style="padding-left:5px; cursor:pointer; right: 22px;"></i></span>
                                     </div>
                                 </div>
