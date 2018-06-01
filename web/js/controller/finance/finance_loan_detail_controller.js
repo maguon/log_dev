@@ -544,7 +544,7 @@ app.controller("finance_loan_detail_controller", ["$scope", "$stateParams", "_ba
 
         _basic.get(url).then(function (data) {
             if (data.success) {
-                $scope.loanRepaymentList = data.result
+                $scope.loanRepaymentList = data.result;
 
                 // 计算 合计归还本金，合计利息，合计手续费
                 for (var i = 0; i < $scope.loanRepaymentList.length; i++) {

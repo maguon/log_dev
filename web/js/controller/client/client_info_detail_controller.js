@@ -20,6 +20,8 @@ app.controller("client_info_detail_controller", ["$scope", "$rootScope","$state"
     $scope.configColor = _config.config_color;
     // 运送状态 列表
     $scope.orderStatus = _config.shipTransStatus;
+    // 金融贷出 状态
+    $scope.loanStatus = _config.loanStatus;
     $scope.portList = [];
 
     // 支付方式 列表
@@ -48,15 +50,14 @@ app.controller("client_info_detail_controller", ["$scope", "$rootScope","$state"
         $scope.start = 0;
         getRelStatus();
     };
-    $scope.msoStatus = function () {
+    $scope.carValuation = function () {
         $('ul.tabWrap li').removeClass("active");
         $(".tab_box ").removeClass("active");
         $(".tab_box ").hide();
-        $('.tabWrap .msoStatus').addClass("active");
-        $("#msoStatus").addClass("active");
-        $("#msoStatus").show();
-        $scope.start = 0;
-        getMsoStatus();
+        $('.tabWrap .carValuation').addClass("active");
+        $("#carValuation").addClass("active");
+        $("#carValuation").show();
+        getCarValuation();
     };
     $scope.storageOrder = function () {
         $('ul.tabWrap li').removeClass("active");
@@ -76,6 +77,20 @@ app.controller("client_info_detail_controller", ["$scope", "$rootScope","$state"
         $("#seaTransportOrder").show();
         querySeaTransportOrder();
     };
+    /**
+     * 点击TAB[贷出记录]菜单
+     */
+    $scope.getLoanList = function () {
+        $('ul.tabWrap li').removeClass("active");
+        $(".tab_box ").removeClass("active");
+        $(".tab_box ").hide();
+        $('.tabWrap .loanList').addClass("active");
+        $("#loanList").addClass("active");
+        $("#loanList").show();
+        // 默认第一页
+        $scope.start = 0;
+        queryLoanData();
+    };
     $scope.paymentDetail = function () {
         $('ul.tabWrap li').removeClass("active");
         $(".tab_box ").removeClass("active");
@@ -94,6 +109,19 @@ app.controller("client_info_detail_controller", ["$scope", "$rootScope","$state"
         $("#seaTransportOrderDetails").show();
         getSeaTransportOrderDetails();
     };
+    /**
+     * 支付详情 贷出订单 TAB
+     */
+    $scope.openPaymentLoanList = function () {
+        $('ul.tabWrapDetail li').removeClass("active");
+        $(".tab_box_detail ").removeClass("active");
+        $(".tab_box_detail ").hide();
+        $('.tabWrapDetail .paymentLoanList').addClass("active");
+        $("#paymentLoanList").addClass("active");
+        $("#paymentLoanList").show();
+        getLoanDetails();
+    };
+
     $scope.storageOrderDetails = function () {
         $('ul.tabWrapDetail li').removeClass("active");
         $(".tab_box_detail ").removeClass("active");
@@ -262,31 +290,73 @@ app.controller("client_info_detail_controller", ["$scope", "$rootScope","$state"
                  swal(data.msg, "", "error");
              }
          });
-     };
+     }
 
-    //非mso 查询列表 条件查询
-    function getMsoStatus() {
-        _basic.get( _host.api_url + "/user/" + userId + "/car?active=1&relStatus=1"+ "&start=" + $scope.start + "&size=" + $scope.size+"&entrustId="+val+"&msoStatus=1").then(function (data) {
-            if (data.success == true) {
-                $scope.storageCarBox3 =  data.result;
-                $scope.storageCar3 = $scope.storageCarBox3.slice(0,10);
-                if ($scope.start > 0) {
-                    $("#pre3").show();
-                }
-                else {
-                    $("#pre3").hide();
-                }
-                if (data.result.length < $scope.size) {
-                    $("#next3").hide();
-                }
-                else {
-                    $("#next3").show();
+    // 车辆估值 TAB 画面 数据查询
+    function getCarValuation() {
+        // 在库车辆总数
+        $scope.carStorageCount = 0;
+        // 在库车辆总值
+        $scope.carStorageValuation = 0;
+        _basic.get(_host.api_url + "/carStorageCount?relStatus=1&active=1").then(function (data) {
+            if (data.success) {
+                if (data.result.length > 0) {
+                    // 在库车辆总数
+                    $scope.carStorageCount = data.result[0].car_storage_count;
+                    // 在库车辆总值
+                    $scope.carStorageValuation = data.result[0].valuation;
                 }
             } else {
                 swal(data.msg, "", "error");
             }
         });
-    };
+
+        // 抵押车辆总数
+        $scope.mortgageCarCount = 0;
+        // 抵押车辆总值
+        $scope.mortgageCarValuation = 0;
+        // 未抵押车辆总数
+        $scope.unMortgageCarCount = 0;
+        // 未抵押车辆总值
+        $scope.unMortgageCarValuation = 0;
+        _basic.get(_host.api_url + "/carMortgageStatusCount?relStatus=1&active=1").then(function (data) {
+            if (data.success) {
+                for (var i = 0; i < data.result.length; i++) {
+                    if (data.result[i].mortgage_status === 1) {
+                        // 未抵押车辆总数
+                        $scope.unMortgageCarCount = data.result[i].car_count;
+                        // 未抵押车辆总值
+                        $scope.unMortgageCarValuation = data.result[i].valuation;
+                    } else if (data.result[i].mortgage_status === 2){
+                        // 抵押车辆总数
+                        $scope.mortgageCarCount = data.result[i].car_count;
+                        // 抵押车辆总值
+                        $scope.mortgageCarValuation = data.result[i].valuation;
+                    }
+                }
+            } else {
+                swal(data.msg, "", "error");
+            }
+        });
+
+        // 金融车总数
+        $scope.purchaseCarCount = 0;
+        // 金融车总值
+        $scope.purchaseCarValuation = 0;
+        _basic.get(_host.api_url + "/carPurchaseCount?purchaseType=1").then(function (data) {
+            if (data.success) {
+                if (data.result.length > 0) {
+                    // 金融车总数
+                    $scope.purchaseCarCount = data.result[0].purchase_car_count;
+                    // 金融车总值
+                    $scope.purchaseCarValuation = data.result[0].valuation;
+                }
+            } else {
+                swal(data.msg, "", "error");
+            }
+        });
+    }
+
     //点击打开模态框
     $scope.getModalRecord = function(id){
         $(".modal").modal();
@@ -353,6 +423,116 @@ app.controller("client_info_detail_controller", ["$scope", "$rootScope","$state"
         });
     }
 
+    /**
+     * 根据画面输入的查询条件，进行贷出记录数据查询。
+     */
+    function queryLoanData() {
+        // 基本检索URL
+        var url = _host.api_url + "/loan?start=" + $scope.start + "&size=" + $scope.size + "&entrustId=" + val;
+        // 检索条件
+        var conditionsObj = {
+            // 贷出编号
+            loanId: $scope.condLoanId,
+            // 贷出时间 开始
+            createdOnStart: $scope.condCreatedOnStart,
+            // 贷出时间 终了
+            createdOnEnd: $scope.condCreatedOnEnd,
+            // 完结时间 开始
+            loanEndDateStart: $scope.condLoanEndDateStart,
+            // 完结时间 终了
+            loanEndDateEnd: $scope.condLoanEndDateEnd,
+            // 订单状态
+            loanStatus: $scope.condLoanStatus
+        };
+
+        var conditions = _basic.objToUrl(conditionsObj);
+        // 检索URL
+        url = conditions.length > 0 ? url + "&" + conditions : url;
+        _basic.get(url).then(function (data) {
+            if (data.success) {
+                $scope.loanResult = data.result;
+                $scope.loanList = $scope.loanResult.slice(0, 10);
+                if ($scope.start > 0) {
+                    $("#loanPre").show();
+                }
+                else {
+                    $("#loanPre").hide();
+                }
+                if (data.result.length < $scope.size) {
+                    $("#loanNext").hide();
+                }
+                else {
+                    $("#loanNext").show();
+                }
+            } else {
+                swal(data.msg, "", "error");
+            }
+        });
+    }
+
+    //点击打开海运订单模态框
+    $scope.openLoanInfoModal = function(loanId){
+        $(".modal").modal();
+        $("#loanInfoModal").modal("open");
+        // TODO
+        _basic.get(_host.api_url + "/loan?loanId=" + loanId).then(function (data) {
+            if (data.success) {
+                if (data.result.length > 0) {
+                    $scope.loanInfo = data.result[0];
+                    queryLoanRepayment($scope.loanInfo.id);
+                }
+            } else {
+                swal(data.msg, "", "error");
+            }
+        })
+    };
+
+    /**
+     * 查询还款记录列表。
+     */
+    function queryLoanRepayment(loanId) {
+
+        // 检索用url
+        var url = _host.api_url + "/loanRepayment?loanId=" + loanId;
+
+        _basic.get(url).then(function (data) {
+            if (data.success) {
+                $scope.loanRepaymentList = data.result;
+
+                // 基本信息 合计归还本金(美元) 默认值
+                $scope.totalPaymentMoney = 0;
+                // 基本信息 合计利息(美元) 默认值
+                $scope.totalInterest = 0;
+                // 基本信息 合计手续费(美元) 默认值
+                $scope.totalFee = 0;
+
+                // 计算 合计归还本金，合计利息，合计手续费
+                for (var i = 0; i < $scope.loanRepaymentList.length; i++) {
+                    // 归还本金
+                    if ($scope.loanRepaymentList[i].repayment_money == null) {
+                        $scope.loanRepaymentList[i].repayment_money = 0;
+                    }
+                    // 利息
+                    if ($scope.loanRepaymentList[i].interest_money == null) {
+                        $scope.loanRepaymentList[i].interest_money = 0;
+                    }
+                    // 手续费
+                    if ($scope.loanRepaymentList[i].fee == null) {
+                        $scope.loanRepaymentList[i].fee = 0;
+                    }
+                    // 基本信息 合计归还本金(美元)
+                    $scope.totalPaymentMoney = $scope.loanRepaymentList[i].repayment_money + $scope.totalPaymentMoney;
+                    // 基本信息 合计利息(美元)
+                    $scope.totalInterest = $scope.loanRepaymentList[i].interest_money + $scope.totalInterest;
+                    // 基本信息 合计手续费(美元)
+                    $scope.totalFee = $scope.loanRepaymentList[i].fee + $scope.totalFee;
+                }
+            } else {
+                swal(data.msg, "", "error");
+            }
+        });
+    }
+
     /*
     点击：查询按钮，进行数据查询
     */
@@ -361,6 +541,16 @@ app.controller("client_info_detail_controller", ["$scope", "$rootScope","$state"
         $scope.start = 0;
         // 查询
         queryOrderData();
+    };
+
+    /*
+    点击：查询按钮，进行数据查询
+    */
+    $scope.queryLoanList = function () {
+        // 默认第一页
+        $scope.start = 0;
+        // 查询
+        queryLoanData();
     };
 
     //点击打开仓储订单模态框
@@ -470,7 +660,6 @@ app.controller("client_info_detail_controller", ["$scope", "$rootScope","$state"
             }
         })
     };
-
 
     /*
    * 获取支付信息
@@ -616,7 +805,33 @@ app.controller("client_info_detail_controller", ["$scope", "$rootScope","$state"
         })
     }
 
-
+    // 贷出订单列表
+    function getLoanDetails(){
+        $scope.totalPayMoney=0;
+        _basic.get(_host.api_url + "/loanRepayment?paymentId=" + $scope.storagePaymentArray.id).then(function (data) {
+            if (data.success) {
+                $scope.loanRepaymentList = data.result;
+                $scope.loanRepaymentList = $scope.loanRepaymentList.slice(0,5);
+                for(var i=0;i<$scope.loanRepaymentList.length;i++){
+                    $scope.totalPayMoney= $scope.totalPayMoney+$scope.loanRepaymentList[i].this_payment_money;
+                }
+                if ($scope.start > 0) {
+                    $("#loanListPre").show();
+                }
+                else {
+                    $("#loanListPre").hide();
+                }
+                if (data.result.length < $scope.sizeDetail) {
+                    $("#loanListNext").hide();
+                }
+                else {
+                    $("#loanListNext").show();
+                }
+            } else {
+                swal(data.msg, "", "error");
+            }
+        })
+    }
 
     //点击关闭付款记录模态框
     $scope.closePaymentHistory= function(){
@@ -648,16 +863,6 @@ app.controller("client_info_detail_controller", ["$scope", "$rootScope","$state"
 
     };
     // 上一页
-    $scope.preBtn3 = function () {
-        $scope.start = $scope.start - ($scope.size - 1) ;
-        getMsoStatus();
-    };
-    // 下一页
-    $scope.nextBtn3 = function () {
-        $scope.start = $scope.start + ($scope.size - 1) ;
-        getMsoStatus();
-    };
-    // 上一页
     $scope.preBtn4 = function () {
         $scope.start = $scope.start - ($scope.size - 1) ;
         queryOrderData();
@@ -676,6 +881,16 @@ app.controller("client_info_detail_controller", ["$scope", "$rootScope","$state"
     $scope.nextBtn5 = function () {
         $scope.start = $scope.start + ($scope.size - 1);
         querySeaTransportOrder();
+    };
+    // 上一页
+    $scope.loanPreBtn = function () {
+        $scope.start = $scope.start - ($scope.size - 1) ;
+        queryLoanData();
+    };
+    // 下一页
+    $scope.loanNextBtn = function () {
+        $scope.start = $scope.start + ($scope.size - 1) ;
+        queryLoanData();
     };
     // 上一页
     $scope.preBtn6 = function () {
@@ -707,6 +922,18 @@ app.controller("client_info_detail_controller", ["$scope", "$rootScope","$state"
         $scope.start = $scope.start + ($scope.sizeDetail - 1);
         getSeaTransportOrderDetails();
     };
+
+    // 上一页
+    $scope.getLoanListPre = function () {
+        $scope.start = $scope.start - ($scope.sizeDetail - 1);
+        getLoanDetails();
+    };
+    // 下一页
+    $scope.getLoanListNext = function () {
+        $scope.start = $scope.start + ($scope.sizeDetail - 1);
+        getLoanDetails();
+    };
+
     //获取数据
     $scope.queryData = function () {
         $scope.inventoryRecord();
