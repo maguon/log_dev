@@ -300,8 +300,8 @@
                                 <tbody>
                                 <tr ng-repeat="el in creditCarRelList" class="grey-text text-darken-1" style="height:30px">
                                     <td style="width:25%;">VIN码：{{el.vin}}</td>
-                                    <td style="width:25%;">{{el.make_name}}/{{el.model_name}}</td>
-                                    <td style="width:25%;">{{el.pro_date}}</td>
+                                    <td style="width:40%;">{{el.make_name}}/{{el.model_name}}</td>
+                                    <td style="width:10%;">{{el.pro_date}}</td>
                                     <td class="red-text right-align" style="width:25%;">{{el.valuation|currency}}</td>
                                 </tr>
                                 <tr class="grey-text text-darken-1" ng-if="creditCarRelList.length == 0">

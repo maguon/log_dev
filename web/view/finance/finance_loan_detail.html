@@ -16,17 +16,23 @@
     <div class="col s12 p0" style="width: 96%; margin:0 2%">
 
         <!--按键切换  支付信息   关联仓储订单-->
-        <ul ng-show="loanInfo.loanStatus != 4" class="tabWrap grey lighten-4 ">
-            <li class="tab col s3 lookLoanFinfoDiv vc-center"  ng-click="lookLoanInfo()">贷出信息</li>
-            <li class="tab col s3 lookMortgageCar vc-center"  ng-click="lookMortgageCar()">抵押车辆</li>
-            <li class="tab col s3 lookBuyingCars vc-center"  ng-click="lookBuyingCars()">购买车辆</li>
-            <li class="tab col s3 lookPaymentHistory vc-center"  ng-click="lookPaymentHistory()">还款记录</li>
+        <ul ng-show="loanInfo.loanStatus == 1" class="tabWrap grey lighten-4 ">
+            <li class="tab col s4 vc-center lookLoanFinfoDiv" ng-click="lookLoanInfo()">贷出信息</li>
+            <li class="tab col s4 vc-center lookMortgageCar"  ng-click="lookMortgageCar()">抵押车辆</li>
+            <li class="tab col s4 vc-center lookBuyingCars"   ng-click="lookBuyingCars()">购买车辆</li>
+        </ul>
+
+        <ul ng-show="loanInfo.loanStatus == 2 || loanInfo.loanStatus == 3" class="tabWrap grey lighten-4 ">
+            <li class="tab col s3 vc-center lookLoanFinfoDiv" ng-click="lookLoanInfo()">贷出信息</li>
+            <li class="tab col s3 vc-center lookMortgageCar"  ng-click="lookMortgageCar()">抵押车辆</li>
+            <li class="tab col s3 vc-center lookBuyingCars"   ng-click="lookBuyingCars()">购买车辆</li>
+            <li class="tab col s3 vc-center lookPaymentHistory"  ng-click="lookPaymentHistory()">还款记录</li>
         </ul>
 
         <ul ng-show="loanInfo.loanStatus == 4" class="tabWrap grey lighten-4 ">
-            <li class="tab col s4 lookLoanFinfoDiv vc-center"  ng-click="lookLoanInfo()">贷出信息</li>
-            <li class="tab col s4 lookBuyingCars vc-center"  ng-click="lookBuyingCars()">购买车辆</li>
-            <li class="tab col s4 lookPaymentHistory vc-center"  ng-click="lookPaymentHistory()">还款记录</li>
+            <li class="tab col s4 vc-center lookLoanFinfoDiv" ng-click="lookLoanInfo()">贷出信息</li>
+            <li class="tab col s4 vc-center lookBuyingCars"   ng-click="lookBuyingCars()">购买车辆</li>
+            <li class="tab col s4 vc-center lookPaymentHistory"  ng-click="lookPaymentHistory()">还款记录</li>
         </ul>
     </div>
 
@@ -678,7 +684,7 @@
                             <!-- 本次还款总金额(美元) (只读) -->
                             <div ng-show="loanInfo.loanStatus == 4 || newPayment.repaymentStatus == 2" class="col s12 vc-center cyan-text fz14" style="margin-top: 20px;">
                                 <div class="col s4 right-align" style="height:44px; padding-top: 10px;">
-                                    本次还款总金额(美元): <span class="red-text">{{newPayment.totalPaymentMoney | number}}</span>
+                                    本次还款总金额(美元): <span class="red-text">{{newPayment.creditRepMoney + newPayment.otherRepMoney | number}}</span>
                                 </div>
                             </div>
                         </div>
@@ -787,8 +793,8 @@
                                                 <tbody>
                                                 <tr ng-repeat="el in creditCarRelList" class="grey-text text-darken-1" style="height:30px">
                                                     <td style="width:25%;">VIN码：{{el.vin}}</td>
-                                                    <td style="width:25%;">{{el.make_name}}/{{el.model_name}}</td>
-                                                    <td style="width:25%;">{{el.pro_date}}</td>
+                                                    <td style="width:40%;">{{el.make_name}}/{{el.model_name}}</td>
+                                                    <td style="width:10%;">{{el.pro_date}}</td>
                                                     <td class="red-text right-align" style="width:25%;">{{el.valuation|currency}}</td>
                                                 </tr>
                                                 <tr class="grey-text text-darken-1" ng-if="creditCarRelList.length == 0">
