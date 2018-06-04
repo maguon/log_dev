@@ -17,7 +17,7 @@
             </div>
             <!--实分割线-->
             <div  class="row col s12" style="height:2px;border-bottom: 1px solid #ccc;width:96%;margin-left: 2%"></div>
-            <!-- 制造商 型号 生产日期-->
+            <!-- 制造商 型号 年份-->
             <div class="row col s12">
                 <div class="col s4 valign-wrapper">
                     <div class="col s12 input-field left-align" style="padding-left: 10%">
@@ -31,7 +31,7 @@
                 </div>
                 <div class="col s4 valign-wrapper">
                     <div class="col s12 input-field left-align">
-                        生产日期:{{clientList.pro_date|date:'yyyy-MM-dd'}}
+                        年份:{{clientList.pro_date}}
                     </div>
                 </div>
             </div>
@@ -250,7 +250,7 @@
             </div>
             <div class="col s12 lighten-1 white grey-text vc-center" style="height:50px;">
                 <div class="col s4">
-                    车辆年份：{{paymentInfo.pro_date | date:'yyyy'}}
+                    年份：{{paymentInfo.pro_date}}
                 </div>
                 <div class="col s4">
                     颜色：{{SeaTranOrderColor}}

@@ -39,7 +39,7 @@ app.controller("key_info_detail_controller", ["$scope", "$state", "$stateParams"
         carMaker: "",
         // 型号
         carModel: "",
-        // 车辆年份
+        // 年份
         carProDate: "",
         // 颜色
         carColor: "",
@@ -101,7 +101,7 @@ app.controller("key_info_detail_controller", ["$scope", "$state", "$stateParams"
                     $scope.keyInfo.carMaker = data.result[0].make_name == null ? '未知' : data.result[0].make_name;
                     // 型号
                     $scope.keyInfo.carModel = data.result[0].model_name == null ? '未知' : data.result[0].model_name;
-                    // 车辆年份
+                    // 年份
                     $scope.keyInfo.carProDate = data.result[0].pro_date == null ? '未知' : data.result[0].pro_date;
                     // 颜色
                     $scope.keyInfo.carColor = '未知';

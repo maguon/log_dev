@@ -124,7 +124,7 @@ app.controller("car_demand_details_controller", ["$state", "$stateParams", "_con
                     // modelID赋值
                     $scope.look_make_id = $scope.self_car.make_id;
                     $scope.look_model_id = $scope.self_car.model_id;
-                    $scope.look_create_time = moment($scope.self_car.pro_date).format('YYYY-MM-DD');
+                    $scope.look_create_time = $scope.self_car.pro_date;
                     if($scope.self_car.lot== null){
                         $scope.selfLot='';
                     }else{
