@@ -73,8 +73,9 @@
 
                             <div class="col s12 white" style="height:70px;">
                                 <div class="col s4 input-field">
-                                    <input type="text" id="look_create_time"  name="look_create_time"  ng-model="self_car.pro_date">
-                                    <label for="look_create_time" >生产年限</label>
+
+                                    <input type="text" id="look_create_time" maxlength="4" valid-num ng-model="self_car.pro_date">
+                                    <label for="look_create_time" >年份</label>
                                 </div>
                                 <div class="col s4 input-field">
                                     <select material-select watch id="look_car_color" name="look_car_color" class="" ng-model="self_car.colour" >
