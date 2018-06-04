@@ -3,7 +3,6 @@
  * 主菜单：修改VIN
  */
 app.controller("setting_amend_vin_controller", ["$scope", "_basic", "_config", "_host", function ($scope, _basic, _config, _host) {
-   /* var admin = _basic.getSession(_basic.USER_ID);*/
     var userId  = _basic.getSession(_basic.USER_ID);
     $scope.colorList = _config.config_color;// 颜色
     $scope.purchaseTypes = _config.purchaseTypes; //是否是金融車輛
@@ -77,10 +76,12 @@ app.controller("setting_amend_vin_controller", ["$scope", "_basic", "_config", "
                     } else {
                         $(".no_car_detail").hide();
                         $(".car_detail").show();
-                        $scope.car_details = data.result[0];
-                        $scope.flag = false;
+                        $scope.self_car = data.result[0];
+                        $scope.self_car.model_id = data.result[0].model_id;
+                        $scope.vin= $scope.self_car.vin;
+                        $scope.changeMakeId( $scope.self_car.make_id);
                         for (var i in _config.config_color) {
-                            if (_config.config_color[i].colorId == $scope.car_details.colour) {
+                            if (_config.config_color[i].colorId == $scope.self_car.colour) {
                                 $scope.color = _config.config_color[i].colorName;
                             }
                         }
@@ -122,58 +123,66 @@ app.controller("setting_amend_vin_controller", ["$scope", "_basic", "_config", "
         }
     };
     // 打开修改vin码
-    $scope.openVinAmend = function () {
-        $scope.flag = true;
-        _basic.get(_host.api_url + "/user/" + userId + "/car?vin="+ $scope.demandVin + '&active=1').then(function (data) {
-            if (data.success == true && data.result.length > 0) {
-                $scope.self_car = data.result[0];
-                // modelID赋值
-                $scope.look_make_id = $scope.self_car.make_id;
-                $scope.changeMakeId($scope.look_make_id);
-                if($scope.self_car.pro_date!==null){
-                    $scope.look_create_time = moment($scope.self_car.pro_date).format('YYYY-MM-DD');
+    $scope.open_vin_amend=function () {
+        $scope.flag=false;
+    };
+    // 关闭修改vin码
+    $scope.close_vin_amend=function () {
+        $scope.flag=true;
+        $scope.vin=$scope.self_car.vin;
+    };
+
+    // 修改vin码
+    $scope.amend_vin=function (id) {
+        $scope.flag=true;
+        var obj={
+            "vin":$scope.vin
+        };
+        if($scope.vin.length==17){
+            _basic.put(_host.api_url+"/admin/"+userId+"/car/"+id+"/vin",obj).then(function (data) {
+                if(data.success==true){
+                    swal("修改成功","","success");
+                    $scope.demandVin="";
                 }else {
-                    $scope.look_create_time='';
+                    swal(data.msg,"","error");
                 }
+            })
+        }else {
+            swal("请输入17位数字","","error");
+            $scope.vin=$scope.self_car.vin;
+        }
+    }
+
+    // 修改
+    $scope.putDataItem = function (id) {
+        var obj = {
+            "vin": $scope.self_car.vin,
+            "makeId": $scope.self_car.make_id,
+            "makeName": $("#look_makecarName").find("option:selected").text(),
+            "modelId": $scope.self_car.model_id,
+            "modelName": $("#look_model_name").find("option:selected").text(),
+            "proDate": $scope.self_car.pro_date,
+            "colour": $scope.self_car.colour,
+            "engineNum": $scope.self_car.engine_num,
+            "entrustId":  $scope.self_car.entrust_id,
+            "valuation":  $scope.self_car.valuation,
+            "purchaseType":$scope.self_car.purchase_type,
+            "msoStatus":  $scope.self_car.mso_status,
+            "remark": $scope.self_car.remark
+        };
+        // 修改仓库信息
+        _basic.put(_host.api_url + "/user/" + userId + "/car/" + id, _basic.removeNullProps(obj)).then(function (data) {
+            if (data.success == true) {
+                $scope.demandVin="";
+                $(".car_detail").hide();
+                swal("修改成功", "", "success");
+
+            }
+            else {
+                swal(data.msg, "", "error")
             }
         });
     };
-    // 修改vin码
-    $scope.updateAmendVin = function (id) {
-
-        if($scope.self_car.vin==''||$scope.self_car.make_id==null||$scope.self_car.model_id==null||$scope.self_car.purchase_type==null||$scope.self_car.mso_status==null){
-            $scope.flag==true;
-            swal('请输入完整信息！','','error');
-            return;
-        }
-        else{
-            var obj = {
-                "vin": $scope.self_car.vin,
-                "makeId": $scope.self_car.make_id,
-                "makeName": $("#look_makecarName").find("option:selected").text(),
-                "modelId": $scope.self_car.model_id,
-                "modelName": $("#look_model_name").find("option:selected").text(),
-                "proDate": $scope.look_create_time,
-                "colour": $scope.self_car.colour,
-                "engineNum": $scope.self_car.engine_num,
-                "entrustId":  $scope.self_car.entrust_id,
-                "valuation":  $scope.self_car.valuation,
-                "purchaseType":$scope.self_car.purchase_type,
-                "msoStatus":  $scope.self_car.mso_status,
-                "remark": $scope.self_car.remark
-            };
-            _basic.put(_host.api_url + "/user/" + userId + "/car/" + id, obj).then(function (data) {
-                if (data.success == true) {
-                    $scope.flag = false;
-                    $scope.demandCar();
-                    swal("修改成功", "", "success");
-                } else {
-                    swal(data.msg, "", "error");
-                }
-            })
-        }
-
-    }
 
 
     getMakeCarName();
