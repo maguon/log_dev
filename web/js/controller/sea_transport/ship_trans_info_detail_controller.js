@@ -76,7 +76,7 @@ app.controller("ship_trans_info_detail_controller", ["$scope", "$state", "$state
         maker: "",
         // 型号
         model: "",
-        // 生产日期
+        // 年份
         proDate: "",
         // 颜色
         colour: "",
@@ -103,7 +103,7 @@ app.controller("ship_trans_info_detail_controller", ["$scope", "$state", "$state
         make_name: "",
         // 型号
         model_name: "",
-        // 生产日期
+        // 年份
         pro_date: "",
         // 车价(美元)
         valuation: "",
@@ -272,7 +272,7 @@ app.controller("ship_trans_info_detail_controller", ["$scope", "$state", "$state
         for (var i = 0; i < $scope.shipTransCarList.length; i++) {
             var vin = $scope.shipTransCarList[i].vin;
             // 已经追加过
-            if (vin == newVin) {
+            if (vin === newVin) {
                 hasError = true;
                 break;
             }
@@ -286,7 +286,7 @@ app.controller("ship_trans_info_detail_controller", ["$scope", "$state", "$state
                 if (data.success) {
 
                     // 新的vin码，(不存在的车辆)，打开新建画面
-                    if (data.result.length == 0) {
+                    if (data.result.length === 0) {
                         // 自定义车辆 画面 VIN码 不可变项目
                         $scope.customCarInfo.vin = newVin;
                         // 数据初始化
@@ -310,7 +310,7 @@ app.controller("ship_trans_info_detail_controller", ["$scope", "$state", "$state
                         $scope.newCarInfo.make_name = data.result[0].make_name;
                         // 型号
                         $scope.newCarInfo.model_name = data.result[0].model_name;
-                        // 生产日期
+                        // 年份
                         $scope.newCarInfo.pro_date = data.result[0].pro_date;
                         // 车价(美元)
                         $scope.newCarInfo.valuation = data.result[0].valuation;
@@ -341,7 +341,7 @@ app.controller("ship_trans_info_detail_controller", ["$scope", "$state", "$state
         for (var i = 0; i < $scope.shipTransCarList.length; i++) {
             var vin = $scope.shipTransCarList[i].vin;
             // 已经追加过
-            if (vin == carInfo.vin) {
+            if (vin === carInfo.vin) {
                 hasError = true;
             }
         }
@@ -371,7 +371,7 @@ app.controller("ship_trans_info_detail_controller", ["$scope", "$state", "$state
                 // 型号
                 modelId: $scope.customCarInfo.model.id,
                 modelName: $scope.customCarInfo.model.model_name,
-                // 生产日期
+                // 年代
                 proDate: $scope.customCarInfo.proDate,
                 // 颜色
                 colour: $scope.customCarInfo.colour,
@@ -405,7 +405,7 @@ app.controller("ship_trans_info_detail_controller", ["$scope", "$state", "$state
                     $scope.newCarInfo.make_name= $scope.customCarInfo.maker.make_name;
                     // 型号
                     $scope.newCarInfo.model_name= $scope.customCarInfo.model.model_name;
-                    // 生产日期
+                    // 年代
                     $scope.newCarInfo.pro_date= $scope.customCarInfo.proDate;
                     // 车价(美元)
                     $scope.newCarInfo.valuation= $scope.customCarInfo.valuation;

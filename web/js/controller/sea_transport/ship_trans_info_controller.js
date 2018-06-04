@@ -72,7 +72,7 @@ app.controller("ship_trans_info_controller", ["$scope", "$rootScope", "_host", "
         maker: "",
         // 型号
         model: "",
-        // 生产日期
+        // 年份
         proDate: "",
         // 颜色
         colour: "",
@@ -95,7 +95,7 @@ app.controller("ship_trans_info_controller", ["$scope", "$rootScope", "_host", "
         maker: "",
         // 型号
         model: "",
-        // 生产日期
+        // 年份
         proDate: "",
         // 颜色
         colour: "",
@@ -497,7 +497,7 @@ app.controller("ship_trans_info_controller", ["$scope", "$rootScope", "_host", "
                 // 型号
                 modelId: $scope.customCarInfo.model.id,
                 modelName: $scope.customCarInfo.model.model_name,
-                // 生产日期
+                // 年份
                 proDate: $scope.customCarInfo.proDate,
                 // 颜色
                 colour: $scope.customCarInfo.colour,

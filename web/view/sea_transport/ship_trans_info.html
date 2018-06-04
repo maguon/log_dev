@@ -372,9 +372,8 @@
                             </select>
                         </div>
                         <div class="input-field col s3 left-align">
-                            <input id="proDateText" type="text" ng-model="customCarInfo.proDate" class="datepicker" date><i
-                                class="mdi dataIcon mdi-table-large"></i>
-                            <label for="proDateText">生产日期</label>
+                            <input id="proDateText" type="text" maxlength="4" valid-num ng-model="customCarInfo.proDate">
+                            <label for="proDateText">年份</label>
                         </div>
                     </div>
 
@@ -439,7 +438,7 @@
                         </div>
 
                         <div class="col s12 lighten-1 white grey-text vc-center fz12"  style="height:64px;border:1px solid #bdbdbd;border-top:0px solid #bdbdbd;">
-                            <div class="col s4 left-align">车辆年份:{{newCar.proDate | date: 'yyyy'}}
+                            <div class="col s4 left-align">车辆年份:{{newCar.proDate}}
                             </div>
                             <div class="col s4 left-align">车价(美元):{{newCar.valuation}}
                             </div>
