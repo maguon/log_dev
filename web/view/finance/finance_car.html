@@ -81,7 +81,7 @@
                 <th>VIN码</th>
                 <th>车型</th>
                 <th>颜色</th>
-                <th>生产日期</th>
+                <th>年份</th>
                 <th>委托方</th>
                 <th>车辆估值(美元)</th>
                 <th>录入时间</th>
@@ -100,8 +100,8 @@
                     <div ng-if="el.colour==''"></div>
                     <div ng-if="el.colour!=''" class="z-depth-1" style="width:20px;height:20px; background-color: {{'#' + el.colour}}"></div>
                 </td>
-                <!-- 生产日期 -->
-                <td ng-bind="el.pro_date|date:'yyyy-MM-dd'"></td>
+                <!-- 年份 -->
+                <td ng-bind="el.pro_date"></td>
                 <!-- 委托方 -->
                 <td ng-bind="el.short_name"></td>
                 <!-- 车辆估值 -->
@@ -165,11 +165,10 @@
                         <label for="newVinText"><span class="red-text">*</span> VIN码</label>
                     </div>
 
-                    <!-- 生产日期 -->
+                    <!-- 年份 -->
                     <div class="input-field col s4">
-                        <input id="proDateText" type="text" ng-model="carInfo.proDate" class="datepicker" date>
-                        <i class="mdi dataIcon mdi-table-large"></i>
-                        <label for="proDateText"> 生产日期</label>
+                        <input id="proDateText" type="text" maxlength="4" valid-num ng-model="carInfo.proDate">
+                        <label for="proDateText">年份</label>
                     </div>
 
                     <!-- 制造商 -->

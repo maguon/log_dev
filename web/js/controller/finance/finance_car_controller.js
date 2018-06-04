@@ -1,7 +1,7 @@
 /**
  * 主菜单：财务管理 -> 金融车辆 控制器
  */
-app.controller("finance_car_controller", ["$scope", "$rootScope", "_host", "_basic", "_config", "$state", "$stateParams","$filter", function ($scope, $rootScope, _host, _basic, _config, $state, $stateParams,$filter) {
+app.controller("finance_car_controller", ["$scope", "$rootScope", "_host", "_basic", "_config", "$state", "$stateParams", function ($scope, $rootScope, _host, _basic, _config, $state, $stateParams) {
 
     // 取得当前画面 登录用户
     var userId = _basic.getSession(_basic.USER_ID);
@@ -29,7 +29,7 @@ app.controller("finance_car_controller", ["$scope", "$rootScope", "_host", "_bas
     $scope.newCarInfo = {
         // vin
         vin: "",
-        // 生产日期
+        // 年份
         proDate: "",
         // 制造商
         makerId: "",
@@ -224,8 +224,8 @@ app.controller("finance_car_controller", ["$scope", "$rootScope", "_host", "_bas
         $scope.carInfo.modelId = carInfo.model_id;
         // 颜色
         $scope.carInfo.colour = carInfo.colour;
-        // 生产日期
-        $scope.carInfo.proDate = $filter('date')(carInfo.pro_date, 'yyyy-MM-dd');
+        // 年份
+        $scope.carInfo.proDate = carInfo.pro_date;
         // 委托性质
         $scope.carInfo.entrustType = carInfo.entrust_type;
         // 委托方
@@ -282,7 +282,7 @@ app.controller("finance_car_controller", ["$scope", "$rootScope", "_host", "_bas
                 // 型号
                 modelId: $scope.carInfo.modelId,
                 modelName: $('#modelSelect').find("option:selected").text(),
-                // 生产日期
+                // 年份
                 proDate: $scope.carInfo.proDate,
                 // 颜色
                 colour: $scope.carInfo.colour,
@@ -300,7 +300,7 @@ app.controller("finance_car_controller", ["$scope", "$rootScope", "_host", "_bas
                 remark: $scope.carInfo.remark
             };
 
-            // 如果生产日期没有输入，就去掉此属性
+            // 如果年份没有输入，就去掉此属性
             if ($scope.carInfo.proDate == null || $scope.carInfo.proDate === "") {
                 delete obj.proDate;
             }
