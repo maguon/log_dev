@@ -90,7 +90,7 @@ app.controller("storage_car_details_controller", [ "$scope","$state", "$statePar
     };
     // 车辆品牌查询
     _basic.get(_host.api_url + "/carMake").then(function (data) {
-        if (data.success == true&&data.result.length>0) {
+        if (data.success&&data.result.length>0) {
             $scope.makecarName = data.result;
         } else {
             swal(data.msg, "", "error");
@@ -98,7 +98,7 @@ app.controller("storage_car_details_controller", [ "$scope","$state", "$statePar
     });
     // 车库查询
     _basic.get(_host.api_url + "/storage").then(function (data) {
-        if (data.success == true&&data.result.length>0) {
+        if (data.success&&data.result.length>0) {
             $scope.storageName = data.result;
 
             setTimeout($('select').material_select(), 2000)
@@ -108,7 +108,7 @@ app.controller("storage_car_details_controller", [ "$scope","$state", "$statePar
     });
     //获取委托方信息
     _basic.get(_host.api_url + "/entrust").then(function (data) {
-        if (data.success == true) {
+        if (data.success) {
             $scope.getEntrust = data.result;
             $('#getEntrustId').select2({
                 placeholder: '委托方',
@@ -119,7 +119,7 @@ app.controller("storage_car_details_controller", [ "$scope","$state", "$statePar
     // 存放位置联动查询--行
     $scope.changeStorageId = function (val) {
         _basic.get(_host.api_url + "/storageParking?storageId=" + val).then(function (data) {
-            if (data.success == true&&data.result.length>0) {
+            if (data.success&&data.result.length>0) {
                 $scope.storageParking = data.result;
                 $scope.parkingArray =  _baseService.storageParking($scope.storageParking);
             } else {
@@ -137,7 +137,7 @@ app.controller("storage_car_details_controller", [ "$scope","$state", "$statePar
         } else {
             $scope.curruntId = val;
             _basic.get(_host.api_url + "/carMake/" + val + "/carModel").then(function (data) {
-                if (data.success == true&&data.result.length>0) {
+                if (data.success&&data.result.length>0) {
                     $scope.carModelName = data.result;
                 } else {
                     swal(data.msg, "", "error")
@@ -179,7 +179,7 @@ app.controller("storage_car_details_controller", [ "$scope","$state", "$statePar
         $scope.moveCarId = id;
         $scope.area =area;
         _basic.get(_host.api_url +"/user/"+userId+ "/car?carId=" + id).then(function (data) {
-            if (data.success == true) {
+            if (data.success) {
                 if (data.result.length > 0) {
                     $scope.storageInfo = data.result[0];
                     $scope.getStorageInfo();
@@ -271,7 +271,7 @@ app.controller("storage_car_details_controller", [ "$scope","$state", "$statePar
         var url = _host.api_url + "/storageParking?storageId=" + $scope.storageId + '&areaId=' + selectedZone;
 
         _basic.get(url).then(function (data) {
-            if (data.success == true) {
+            if (data.success) {
                 if (data.result.length > 0) {
                     $scope.storageParking = data.result;
                     $scope.storageParkingArray = _baseService.storageParking($scope.storageParking);
@@ -311,7 +311,7 @@ app.controller("storage_car_details_controller", [ "$scope","$state", "$statePar
         $scope.Picture_carId = val;
         $scope.vin = vin;
         _basic.get(_host.record_url + "/user/" + userId + "/car/" + val + "/record").then(function (data) {
-            if (data.success == true&&data.result.length>0) {
+            if (data.success&&data.result.length>0) {
                 $scope.operating_record = data.result[0];
                 $scope.comment = $scope.operating_record.comment;
                 $scope.storage_image = $scope.operating_record.storage_image;
@@ -325,7 +325,7 @@ app.controller("storage_car_details_controller", [ "$scope","$state", "$statePar
             }
         });
         _basic.get(_host.api_url + "/user/" + userId + "/car?carId=" + val + '&active=1').then(function (data) {
-            if (data.success == true && data.result.length>0) {
+            if (data.success && data.result.length>0) {
                 $scope.modelId = data.result[0].model_id;
                 $scope.self_car = data.result[0];
                 // modelID赋值
@@ -333,7 +333,7 @@ app.controller("storage_car_details_controller", [ "$scope","$state", "$statePar
                 $scope.changeMakeId($scope.look_make_id);
                 $scope.look_model_id = $scope.self_car.model_id;
                     if($scope.self_car.pro_date!==null){
-                         $scope.look_create_time = moment($scope.self_car.pro_date).format('YYYY-MM-DD');
+                         $scope.look_create_time = $scope.self_car.pro_date;
                     }else {
                         $scope.look_create_time='';
                     }
@@ -369,7 +369,7 @@ app.controller("storage_car_details_controller", [ "$scope","$state", "$statePar
     // 钥匙存放位置联动查询--柜
     function getCarKeyCabinet() {
         _basic.get(_host.api_url + "/carKeyCabinet?keyCabinetStatus=1").then(function (data) {
-            if (data.success == true&&data.result.length>0) {
+            if (data.success && data.result.length>0) {
                 $scope.keyCabinetNameList = data.result;
             } else {
                 swal(data.msg, "", "error");
@@ -379,7 +379,7 @@ app.controller("storage_car_details_controller", [ "$scope","$state", "$statePar
     //扇区的获取
     function getCarKeyCabinetArea (){
         _basic.get(_host.api_url + "/carKeyCabinetArea?areaStatus=1&carKeyCabinetId="+$scope.getCarKeyCabinetId).then(function (data) {
-            if (data.success == true) {
+            if (data.success) {
                 $scope.carKeyCabinetAreaList = data.result;
             } else {
                 swal(data.msg, "", "error");
@@ -390,7 +390,7 @@ app.controller("storage_car_details_controller", [ "$scope","$state", "$statePar
         $scope.show = false;
         $scope.getCarKeyCabinetId = id;
         _basic.get(_host.api_url + "/carKeyCabinetArea?areaStatus=1&carKeyCabinetId="+$scope.getCarKeyCabinetId).then(function (data) {
-            if (data.success == true) {
+            if (data.success) {
                 $scope.carKeyCabinetAreaList = data.result;
             } else {
                 swal(data.msg, "", "error");
@@ -401,14 +401,14 @@ app.controller("storage_car_details_controller", [ "$scope","$state", "$statePar
     //获取二维扇区图
     function getCarKeyCabinetList (){
         _basic.get(_host.api_url + "/carKeyPosition?carKeyCabinetId="+$scope.getCarKeyCabinetId+'&areaId='+ $scope.getCarKeyCabinetArea).then(function (data) {
-            if (data.success == true) {
+            if (data.success) {
                 if(data.result==null){
                     return;
                 }
                 else{
                     $scope.carKeyCabinetParking = data.result;
                     $scope.carKeyCabinetParkingArray =_baseService.carKeyParking($scope.carKeyCabinetParking);
-                    if( $scope.carKeyCabinetParkingArray.length==0){
+                    if( $scope.carKeyCabinetParkingArray.length===0){
                         return
                     }
                     $scope.carKeyCabinetParkingCol = $scope.carKeyCabinetParkingArray[0].col;
@@ -423,14 +423,14 @@ app.controller("storage_car_details_controller", [ "$scope","$state", "$statePar
     $scope.changeCarKeyCabinetArea =function (id){
         $scope.show = true;
         _basic.get(_host.api_url + "/carKeyPosition?carKeyCabinetId="+$scope.getCarKeyCabinetId+'&areaId='+id).then(function (data) {
-            if (data.success == true) {
+            if (data.success) {
                 if(data.result==null){
                     return;
                 }
                 else{
                     $scope.carKeyCabinetParking = data.result;
                     $scope.carKeyCabinetParkingArray =_baseService.carKeyParking($scope.carKeyCabinetParking);
-                    if( $scope.carKeyCabinetParkingArray.length==0){
+                    if( $scope.carKeyCabinetParkingArray.length===0){
                         return
                     }
                     $scope.carKeyCabinetParkingCol = $scope.carKeyCabinetParkingArray[0].col;
@@ -459,12 +459,12 @@ app.controller("storage_car_details_controller", [ "$scope","$state", "$statePar
                     _basic.put(_host.api_url + "/user/" + userId + "/carKeyPosition/" + parkingId, {
                         carId: val
                     }).then(function (data) {
-                        if (data.success == true) {
+                        if (data.success) {
                             swal("移位成功", "", "success");
                             $scope.keyCabinetRow = row;
                             $scope.keyCabinetCol = col;
                             _basic.get(_host.api_url + "/carKeyPosition?carId="+val).then(function (data) {
-                                if(data.success == true){
+                                if(data.success){
                                     $scope.getCarKeyCabinetId=data.result[0].car_key_cabinet_id;
                                     $scope.getCarKeyCabinetArea=data.result[0].car_key_cabinet_area_id;
                                     getCarKeyCabinetList();
@@ -511,7 +511,7 @@ app.controller("storage_car_details_controller", [ "$scope","$state", "$statePar
             });
             // 修改仓库信息
             _basic.put(_host.api_url + "/user/" + userId + "/car/" + id, obj).then(function (data) {
-                if (data.success == true) {
+                if (data.success) {
                     swal("修改成功", "", "success");
                 } else {
                     swal(data.msg, "", "error")
@@ -537,7 +537,7 @@ app.controller("storage_car_details_controller", [ "$scope","$state", "$statePar
                     _basic.put(_host.api_url + "/user/" + userId + "/storageParking/" + parkingId, {
                         carId: $scope.moveCarId
                     }).then(function (data) {
-                        if (data.success == true) {
+                        if (data.success) {
                             swal("移位成功", "", "success");
                             $scope.return();
                             $("#change_storageCar").modal("close");
@@ -612,7 +612,7 @@ app.controller("storage_car_details_controller", [ "$scope","$state", "$statePar
                     "userType": _basic.getSession(_basic.USER_TYPE),
                     "url": imageId
                 }).then(function (data) {
-                    if (data.success == true) {
+                    if (data.success) {
                         $scope._id=data.result._id;
                         var nowDate=moment(new Date()).format("YYYY-DD-MM hh:ss");
                         $scope.storage_image_i.push(_host.file_url + '/image/' + imageId);

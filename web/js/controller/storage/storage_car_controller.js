@@ -379,10 +379,10 @@ app.controller("storage_car_controller", ["$scope", "$rootScope", "$stateParams"
         minLength: 6,
     });
     $scope.shortSearch=function () {
-        if($scope.demandVin!==""){
+        if($scope.demandVin!== undefined && $scope.demandVin!==""){
             if($scope.demandVin.length>=6){
                 _basic.get(_host.api_url+"/carList?vinCode="+$scope.demandVin,{}).then(function (data) {
-                    if(data.success==true&&data.result.length>0){
+                    if(data.success&&data.result.length>0){
                         $scope.vinMsg=data.result;
                         vinObjs ={};
                         for(var i in $scope.vinMsg){
@@ -405,9 +405,6 @@ app.controller("storage_car_controller", ["$scope", "$rootScope", "$stateParams"
                 $scope.vinMsg={}
             }
             queryRelStatus();
-        }
-        else{
-            swal('请输入VIN码','','error')
         }
     };
     function queryRelStatus(){
@@ -442,7 +439,7 @@ app.controller("storage_car_controller", ["$scope", "$rootScope", "$stateParams"
                             $scope.baseList.make_id = '';
                         }
                         if ($scope.baseList.pro_date !== null) {
-                            $scope.baseListDate = moment($scope.baseList.pro_date).format("YYYY-MM-DD");
+                            $scope.baseListDate = $scope.baseList.pro_date;
                         }
                         else {
                             $scope.baseListDate = '';
@@ -510,12 +507,12 @@ app.controller("storage_car_controller", ["$scope", "$rootScope", "$stateParams"
                 msoStatus:$scope.MSO,
                 remark: $scope.remark
             };
-            // 如果生产日期没有输入，就去掉此属性
+            // 如果年份没有输入，就去掉此属性
             if ($scope.create_time == null || $scope.create_time === "") {
                 delete objCar.proDate;
             }
             _basic.post(_host.api_url + "/user/" + userId + '/car', objCar).then(function (data) {
-                if (data.success == true) {
+                if (data.success) {
                     $scope.pictureCarId = data.id;
                     step4();
                     $scope.getStorageCar();

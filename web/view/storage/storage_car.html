@@ -66,8 +66,8 @@
                     <!--第二行-->
                     <div class="row" >
                         <div class="input-field col s4">
-                            <input type="text" id="create_time" name="create_time" class="datepicker" autocomplete="off" ng-model="create_time"    date><i class="mdi grey-text text-lighten-1 dataIcon mdi-table-large"></i>
-                            <label for="create_time">生产日期</label>
+                            <input type="text" id="create_time" maxlength="4" valid-num ng-model="create_time">
+                            <label for="create_time">年份</label>
                         </div>
                         <div class="input-field col s4">
                             <select material-select watch id="car_color" name="car_color"  ng-model="car_color" >
@@ -171,8 +171,8 @@
                     <!--第二行-->
                     <div class="row" >
                         <div class="input-field col s4">
-                            <input type="text" id="create_time1" name="create_time1" class="datepicker" autocomplete="off" ng-model="baseListDate"    date><i class="mdi grey-text text-lighten-1 dataIcon mdi-table-large"></i>
-                            <label for="create_time1">生产日期</label>
+                            <input type="text" id="create_time1" maxlength="4" valid-num ng-model="baseListDate">
+                            <label for="create_time1">年份</label>
                         </div>
                         <div class="input-field col s4">
                             <select material-select watch id="car_color1" name="car_color1" ng-model="baseList.colour">
