@@ -28,8 +28,8 @@
 
 
             <div class="row  mp-50" >
+                <p style="display: none;" class="no_car_detail cyan-text text-lighten-1 center-align mp-50 col s12 ">无该VIN码车辆信息</p>
                 <div style="width: 80%;height: 30ex;margin: 0 auto">
-                    <p style="display: none" class="no_car_detail center-align cyan-text text-lighten-1 mp-50">无该VIN码车辆信息</p>
                     <div style="display: none" class="car_detail mp-50 col s12">
                         <div class="row  blue-grey lighten-5" style="width:90%;border:1px solid #bdbdbd;margin-right: 77px">
                             <!-- header -->
@@ -109,8 +109,10 @@
                                 </div>
                                 <div class="input-field col s4">
                                     <select material-select watch ng-model="self_car.purchase_type" id="purchase_type">
-                                        <option value="" disabled selected>请选择</option>
-                                        <option ng-repeat="el in purchaseTypes" ng-value="el.id">{{el.name}}</option>
+                                        <option ng-value="" disabled selected>请选择</option>
+                                        <option ng-value="1">是</option>
+                                        <option ng-value="0">否</option>
+                                       <!-- <option ng-repeat="el in purchaseTypes" ng-value="el.id">{{el.name}}</option>-->
                                     </select>
                                     <label for="purchase_type"><span style="color: red;margin-right: 5px">*</span>是否金融车</label>
                                 </div>
