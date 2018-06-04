@@ -35,7 +35,7 @@ app.controller("setting_amend_vin_controller", ["$scope", "_basic", "_config", "
         minLength: 6,
     });
     $scope.shortSearch=function () {
-        if($scope.demandVin!==""){
+        if($scope.demandVin&&$scope.demandVin!==""){
             if($scope.demandVin.length>=6){
                 _basic.get(_host.api_url+"/user/"+userId+"/car?vinCode="+$scope.demandVin+'&active=1',{}).then(function (data) {
                     if(data.success==true&&data.result.length>0){
@@ -77,9 +77,10 @@ app.controller("setting_amend_vin_controller", ["$scope", "_basic", "_config", "
                         $(".no_car_detail").hide();
                         $(".car_detail").show();
                         $scope.self_car = data.result[0];
-                        $scope.self_car.model_id = data.result[0].model_id;
-                        $scope.vin= $scope.self_car.vin;
                         $scope.changeMakeId( $scope.self_car.make_id);
+                        $scope.self_car.make_id = data.result[0].make_id;
+                        $scope.vin= $scope.self_car.vin;
+
                         for (var i in _config.config_color) {
                             if (_config.config_color[i].colorId == $scope.self_car.colour) {
                                 $scope.color = _config.config_color[i].colorName;
@@ -145,6 +146,7 @@ app.controller("setting_amend_vin_controller", ["$scope", "_basic", "_config", "
                     $scope.demandVin="";
                 }else {
                     swal(data.msg,"","error");
+                    $scope.vin=$scope.self_car.vin;
                 }
             })
         }else {
