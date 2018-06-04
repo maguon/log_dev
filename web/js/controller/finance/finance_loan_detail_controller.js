@@ -39,7 +39,7 @@ app.controller("finance_loan_detail_controller", ["$scope", "$stateParams", "_ba
         maker: "",
         // 型号
         model: "",
-        // 生产日期
+        // 年份
         proDate: "",
         // 颜色
         colour: "",
@@ -412,7 +412,7 @@ app.controller("finance_loan_detail_controller", ["$scope", "$stateParams", "_ba
                 // 型号
                 modelId: $scope.customCarInfo.model.id,
                 modelName: $scope.customCarInfo.model.model_name,
-                // 生产日期
+                // 年份
                 proDate: $scope.customCarInfo.proDate,
                 // 颜色
                 colour: $scope.customCarInfo.colour,
@@ -430,7 +430,7 @@ app.controller("finance_loan_detail_controller", ["$scope", "$stateParams", "_ba
                 remark: $scope.customCarInfo.remark
             };
 
-            // 如果生产日期没有输入，就去掉此属性
+            // 如果年份没有输入，就去掉此属性
             if ($scope.customCarInfo.proDate == null || $scope.customCarInfo.proDate === "") {
                 delete obj.proDate;
             }

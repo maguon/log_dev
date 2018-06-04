@@ -141,7 +141,7 @@
                         <tr class="grey-text text-darken-2">
                             <th data-field="">VIN码</th>
                             <th data-field="">车型</th>
-                            <th data-field="">生产日期</th>
+                            <th data-field="">年份</th>
                             <th data-field="">入库时间</th>
                             <th data-field="">车辆估值(美元)</th>
                             <th></th>
@@ -151,7 +151,7 @@
                         <tr ng-repeat="el in entrustCarList" class="grey-text text-darken-1" style="height:30px">
                             <td ng-bind="el.vin"></td>
                             <td>{{el.make_name}}/{{el.model_name}}</td>
-                            <td>{{el.pro_date |date:'yyyy-MM-dd'}}</td>
+                            <td>{{el.pro_date}}</td>
                             <td>{{el.enter_time |date:'yyyy-MM-dd HH:mm'}}</td>
                             <td class="red-text">{{el.valuation|number}}</td>
 
@@ -197,7 +197,7 @@
                         <tr class="grey-text text-darken-2">
                             <th data-field="">VIN码</th>
                             <th data-field="">车型</th>
-                            <th data-field="">生产日期</th>
+                            <th data-field="">年份</th>
                             <th data-field="">入库时间</th>
                             <th data-field="">车辆估值(美元)</th>
                             <th></th>
@@ -207,7 +207,7 @@
                         <tr ng-repeat="el in mortgageCarRelList" class="grey-text text-darken-1" style="height:30px">
                             <td ng-bind="el.vin"></td>
                             <td>{{el.make_name}}/{{el.model_name}}</td>
-                            <td>{{el.pro_date |date:'yyyy-MM-dd'}}</td>
+                            <td>{{el.pro_date}}</td>
                             <td>{{el.enter_time |date:'yyyy-MM-dd HH:mm'}}</td>
                             <td class="red-text">{{el.valuation|number}}</td>
 
@@ -296,11 +296,10 @@
                 </div>
 
                 <div class="col s12 lighten-1 white grey-text vc-center">
-                    <!-- 生产日期 -->
+                    <!-- 年份 -->
                     <div class="input-field col s3 left-align">
-                        <input id="proDateText" type="text" ng-model="customCarInfo.proDate" class="datepicker" date><i
-                            class="mdi dataIcon mdi-table-large"></i>
-                        <label for="proDateText">生产日期</label>
+                        <input id="proDateText" type="text" maxlength="4" valid-num ng-model="customCarInfo.proDate">
+                        <label for="proDateText">年份</label>
                     </div>
                     <!-- 发动机号 -->
                     <div class="input-field col s3 left-align">
@@ -352,8 +351,6 @@
                         <td width="25%">VIN码：{{el.vin}}</td>
                         <!-- 车型 -->
                         <td width="30%">{{el.make_name}}/{{el.model_name}}</td>
-                        <!--&lt;!&ndash; 生产日期 &ndash;&gt;-->
-                        <!--<td width="20%" ng-bind="el.pro_date|date:'yyyy'"></td>-->
                         <!-- 车辆估值 -->
                         <td width="35%" class="red-text right-align">{{el.valuation | currency}}</td>
                         <!-- 操作 删除 -->
@@ -791,7 +788,7 @@
                                                 <tr ng-repeat="el in creditCarRelList" class="grey-text text-darken-1" style="height:30px">
                                                     <td style="width:25%;">VIN码：{{el.vin}}</td>
                                                     <td style="width:25%;">{{el.make_name}}/{{el.model_name}}</td>
-                                                    <td style="width:25%;">{{el.pro_date |date:'yyyy-MM-dd'}}</td>
+                                                    <td style="width:25%;">{{el.pro_date}}</td>
                                                     <td class="red-text right-align" style="width:25%;">{{el.valuation|currency}}</td>
                                                 </tr>
                                                 <tr class="grey-text text-darken-1" ng-if="creditCarRelList.length == 0">
