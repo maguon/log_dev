@@ -67,7 +67,7 @@ app.controller("setting_amend_vin_controller", ["$scope", "_basic", "_config", "
     };
     // 查询vin码
     $scope.demandCar=function () {
-        if($scope.demandVin!==undefined&&$scope.demandVin!=="") {
+        if($scope.demandVin!=="") {
             _basic.get(_host.api_url +"/user/"+userId+"/car?vin="+ $scope.demandVin+'&active=1').then(function (data) {
                 if (data.success = true) {
                     if (data.result.length == 0) {
@@ -158,22 +158,22 @@ app.controller("setting_amend_vin_controller", ["$scope", "_basic", "_config", "
     // 修改
     $scope.putDataItem = function (id) {
         var obj = {
-            "vin": $scope.self_car.vin,
-            "makeId": $scope.self_car.make_id,
-            "makeName": $("#look_makecarName").find("option:selected").text(),
-            "modelId": $scope.self_car.model_id,
-            "modelName": $("#look_model_name").find("option:selected").text(),
-            "proDate": $scope.self_car.pro_date,
-            "colour": $scope.self_car.colour,
-            "engineNum": $scope.self_car.engine_num,
-            "entrustId":  $scope.self_car.entrust_id,
-            "valuation":  $scope.self_car.valuation,
-            "purchaseType":$scope.self_car.purchase_type,
-            "msoStatus":  $scope.self_car.mso_status,
-            "remark": $scope.self_car.remark
+            vin: $scope.self_car.vin,
+            makeId: $scope.self_car.make_id,
+            makeName: $("#look_makecarName").find("option:selected").text(),
+            modelId: $scope.self_car.model_id,
+            modelName: $("#look_model_name").find("option:selected").text(),
+            proDate: $scope.self_car.pro_date,
+            colour: $scope.self_car.colour,
+            engineNum: $scope.self_car.engine_num,
+            entrustId:  $scope.self_car.entrust_id,
+            valuation:  $scope.self_car.valuation,
+            purchaseType:$scope.self_car.purchase_type,
+            msoStatus:  $scope.self_car.mso_status,
+            remark: $scope.self_car.remark
         };
         // 修改仓库信息
-        _basic.put(_host.api_url + "/user/" + userId + "/car/" + id, _basic.removeNullProps(obj)).then(function (data) {
+        _basic.put(_host.api_url + "/user/" + userId + "/car/" + id, obj).then(function (data) {
             if (data.success == true) {
                 $scope.demandVin="";
                 $(".car_detail").hide();
