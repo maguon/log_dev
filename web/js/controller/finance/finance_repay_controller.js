@@ -611,7 +611,7 @@ app.controller("finance_repay_controller", ["$scope", "$rootScope", "_host", "_b
             repaymentId: $scope.repay.repaymentId,
             paymentId: paymentId
         };
-        _basic.post(_host.api_url + "/user/" + userId + "/loanRepPaymentRel", obj).then(function (data) {
+        _basic.post(_host.api_url + "/user/" + userId + "/paymentLoanRepRel", obj).then(function (data) {
             if (data.success) {
                 // 成功后，刷新页面数据
                 $scope.newOtherPaymentId = "";
@@ -631,7 +631,7 @@ app.controller("finance_repay_controller", ["$scope", "$rootScope", "_host", "_b
         $scope.otherPayment.paymentMoney = 0;
 
         // 取得信用证还款列表
-        _basic.get(_host.api_url + "/loanRepPaymentRel?repaymentId=" + $scope.repay.repaymentId).then(function (data) {
+        _basic.get(_host.api_url + "/paymentLoanRepRel?repaymentId=" + $scope.repay.repaymentId).then(function (data) {
             if (data.success) {
                 $scope.loanRepPaymentRelList = data.result;
                 // 计算已还金额
@@ -698,7 +698,7 @@ app.controller("finance_repay_controller", ["$scope", "$rootScope", "_host", "_b
             function () {
                 var obj = {thisPaymentMoney : paymentInfo.this_payment_money};
                 // 修改本次支付金额
-                var url = _host.api_url + "/user/" + userId + "/repayment/" + paymentInfo.repayment_id + "/payment/" + paymentInfo.payment_id + "/repPaymentMoney" ;
+                var url = _host.api_url + "/user/" + userId + "/repayment/" + paymentInfo.repayment_id + "/payment/" + paymentInfo.payment_id + "/paymentRepMoney" ;
 
                 _basic.put(url, obj).then(function (data) {
                     if (data.success) {

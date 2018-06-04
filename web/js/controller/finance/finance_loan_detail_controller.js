@@ -721,7 +721,7 @@ app.controller("finance_loan_detail_controller", ["$scope", "$stateParams", "_ba
         $scope.newPayment.otherRepMoney = 0;
         $scope.otherPayment.paymentMoney = 0;
         // 检索用url
-        var url = _host.api_url + "/repayment/" + repaymentId + "/repPaymentMoney";
+        var url = _host.api_url + "/repayment/" + repaymentId + "/paymentRepMoney";
 
         _basic.get(url).then(function (data) {
             if (data.success) {
@@ -1000,7 +1000,7 @@ app.controller("finance_loan_detail_controller", ["$scope", "$stateParams", "_ba
         $scope.otherPayment.paymentMoney = 0;
 
         // 取得信用证还款列表
-        _basic.get(_host.api_url + "/loanRepPaymentRel?repaymentId=" + $scope.newPayment.repaymentId).then(function (data) {
+        _basic.get(_host.api_url + "/paymentLoanRepRel?repaymentId=" + $scope.newPayment.repaymentId).then(function (data) {
             if (data.success) {
                 $scope.loanRepPaymentRelList = data.result;
                 // 计算已还金额
@@ -1153,7 +1153,7 @@ app.controller("finance_loan_detail_controller", ["$scope", "$stateParams", "_ba
             repaymentId: $scope.newPayment.repaymentId,
             paymentId: paymentId
         };
-        _basic.post(_host.api_url + "/user/" + userId + "/loanRepPaymentRel", obj).then(function (data) {
+        _basic.post(_host.api_url + "/user/" + userId + "/paymentLoanRepRel", obj).then(function (data) {
             if (data.success) {
                 // 成功后，刷新页面数据
                 $scope.lookOtherPayment();
@@ -1208,7 +1208,7 @@ app.controller("finance_loan_detail_controller", ["$scope", "$stateParams", "_ba
             function () {
                 var obj = {thisPaymentMoney : paymentInfo.this_payment_money};
                 // 修改本次支付金额
-                var url = _host.api_url + "/user/" + userId + "/repayment/" + paymentInfo.repayment_id + "/payment/" + paymentInfo.payment_id + "/repPaymentMoney" ;
+                var url = _host.api_url + "/user/" + userId + "/repayment/" + paymentInfo.repayment_id + "/payment/" + paymentInfo.payment_id + "/paymentRepMoney" ;
 
                 _basic.put(url, obj).then(function (data) {
                     if (data.success) {
