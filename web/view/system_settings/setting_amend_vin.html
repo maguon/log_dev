@@ -12,104 +12,42 @@
 
         <!--输入vin码并查询-->
         <div class="row " style="width: 70%;margin: 0 auto">
-            <div id="tab1" class="col s12 tab_box">
-                <div class="row " style="width: 900px;height:150px;margin: 0 auto">
-                    <div class="col s1 vc-center cyan-text mp-50 text-lighten-1" style="font-size: 25px;min-width: 90px"><span>vin码:</span></div>
-                    <div class="col s9 vc-center mp-30 valign-wrapper">
-                        <div class="input-field col s12">
-                            <input type="text" id="autocomplete-input" name="vin" placeholder="模糊查询至少需要6位vin码" ng-change="shortSearch()" ng-model="demandVin" style="margin: 0 0 20px 0" autocomplete="off" class="autocomplete" required minlength="6">
-                        </div>
+            <div class="row " style="width: 900px;height:50px;margin: 0 auto">
+                <div class="col s1 vc-center cyan-text mp-50 text-lighten-1" style="font-size: 25px;min-width: 90px"><span>vin码:</span></div>
+                <div class="col s9 vc-center mp-30 valign-wrapper">
+                    <div class="input-field col s12">
+                        <input type="text" id="autocomplete-input" name="vin" placeholder="模糊查询至少需要6位vin码" ng-change="shortSearch()" ng-model="demandVin" style="margin: 0 0 20px 0" autocomplete="off" class="autocomplete" required minlength="6">
                     </div>
-                    <div  class="col s1 mp-30 valign-wrapper">
-                        <button class=" btn btn-floating btn-large waves-effect cyan lighten-1" ng-click="demandCar()" >
-                            <i style="font-size: 40px" class="mdi white-text mdi-magnify"></i>
-                        </button>
-                    </div>
+                </div>
+                <div  class="col s1 mp-30 valign-wrapper">
+                    <button class=" btn btn-floating btn-large waves-effect cyan lighten-1" ng-click="demandCar()" >
+                        <i style="font-size: 40px" class="mdi white-text mdi-magnify"></i>
+                    </button>
                 </div>
             </div>
 
 
             <div class="row  mp-50" >
-                <div class="divider"></div>
                 <div style="width: 80%;height: 30ex;margin: 0 auto">
                     <p style="display: none" class="no_car_detail center-align cyan-text text-lighten-1 mp-50">无该VIN码车辆信息</p>
-
-
-                    <div style="display: none" class="car_detail mp-50" >
-                        <div ng-show="flag==false">
-                            <div class="row" style="margin-bottom: 10px">
-                                <div class="input-field col s12 mp-30" >
-                                    <h5 class="col s2 cyan-text text-lighten-1">Vin码:</h5>
-                                    <span class="col s8 grey-text" style="font-size: 30px">{{car_details.vin}}</span>
-                                    <div class="col s2">
-                                        <a class="btn  btn-large btn-floating waves-effect cyan" id="openVinAmend" ng-click="openVinAmend()"> <i class="mdi mdi-pencil "></i></a>
-                                    </div>
+                    <div style="display: none" class="car_detail mp-50 col s12">
+                        <div class="row  blue-grey lighten-5" style="width:90%;border:1px solid #bdbdbd;margin-right: 77px">
+                            <!-- header -->
+                            <div class="col s12  cyan-text vc-center left-align" style="height:85px;border-bottom :1px solid #bdbdbd">
+                                <div class="col s9">
+                                    <h5 class="col s3 cyan-text text-lighten-1">Vin码:</h5>
+                                    <span class="col s9 grey-text" ng-show="flag==true" style="font-size: 30px">{{vin}}</span>
+                                    <input class="col s9 grey-text" ng-show="flag==false"  style="font-size: 30px" type="text" id="amend_vin" ng-model="vin" name="search_vin">
+                                </div>
+                                <div class="col s3 right-align offset-s4">
+                                    <a class="btn  btn-large btn-floating waves-effect cyan" ng-show="flag==true"  ng-click="open_vin_amend()"> <i class="mdi mdi-pencil "></i></a>
+                                    <a class="btn  btn-large btn-floating waves-effect cyan" ng-show="flag==false" ng-click="close_vin_amend()" style="margin-right: 10px"> <i class="mdi mdi-close " ></i></a>
+                                    <a class="btn  btn-large btn-floating waves-effect cyan" ng-show="flag==false" ng-click="amend_vin(self_car.id,flag)"> <i class="mdi mdi-check "></i></a>
                                 </div>
                             </div>
-                            <div class="divider" style="margin: 0 0 30px 0"></div>
-                            <div class="row">
-                                <div class="col s4 input-field">
-                                    <h6 class="col s6 cyan-text text-lighten-1 ">发动机号:</h6>
-                                    <span class="col s6 grey-text" >{{car_details.engine_num}}</span>
-                                </div>
-                                <div class="col s4 input-field">
-                                    <h6 class="col s6 cyan-text text-lighten-1 ">品牌:</h6>
-                                    <span  class="col s6 grey-text">{{car_details.make_name}}</span>
-                                </div>
-                                <div class="col s4 input-field">
-                                    <h6 class="col s6 cyan-text text-lighten-1 ">型号:</h6>
-                                    <span  class="col s6 grey-text">{{car_details.model_name}}</span>
-                                </div>
-                            </div>
-                            <div class="row" style="margin-top: 50px">
-                                <div class="col s4 input-field">
-                                    <h6 class="col s6 cyan-text text-lighten-1 ">生产日期:</h6>
-                                    <span  class="col s6 grey-text">{{car_details.pro_date|date:"yyyy-MM-dd"}}</span>
-                                </div>
-                                <div class="col s4 input-field">
-                                    <h6 class="col s6 cyan-text text-lighten-1 ">颜色:</h6>
-                                    <span  class="col s6 grey-text">{{color}}</span>
-                                </div>
-                                <div class="col s4 input-field">
-                                    <h6 class="col s6 cyan-text text-lighten-1 ">委托方:</h6>
-                                    <span  class="col s6 grey-text">{{car_details.short_name}}</span>
-                                </div>
-                            </div>
-                            <div class="row" style="margin-top: 50px">
-                                <div class="col s4 input-field">
-                                    <h6 class="col s6 cyan-text text-lighten-1 ">车辆估值(美元):</h6>
-                                    <span  class="col s6 grey-text">{{car_details.valuation | number:2}}</span>
-                                </div>
-                                <div class="col s4 input-field">
-                                    <h6 class="col s6 cyan-text text-lighten-1 ">是否MSO车辆:</h6>
-                                    <span  class="col s6 grey-text" ng-if="car_details.mso_status==1">否</span>
-                                    <span  class="col s6 grey-text" ng-if="car_details.mso_status==2">是</span>
-                                </div>
-                                <div class="col s4 input-field">
-                                    <h6 class="col s6 cyan-text text-lighten-1 ">是否金融车:</h6>
-                                    <span  class="col s6 grey-text">{{purchaseTypes[car_details.purchase_type].name}}</span>
-                                </div>
-                            </div>
-                            <div class="row" style="margin-top: 50px">
-                                <div class="col s12 input-field">
-                                    <h6 class="col s1 cyan-text text-lighten-1 ">备注:</h6>
-                                    <span  class="col s11 grey-text">{{car_details.remark}}</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div ng-show="flag==true">
-                            <div class="row" style="margin-bottom: 10px">
-                                <div class="input-field col s12 mp-30" >
-                                    <div class="col s10">
-                                        <input  id="look_win" name="look_win" autocomplete="off" ng-model="self_car.vin" type="text">
-                                        <label for="look_win" style="font-size: 30px;" class="cyan-text">VIN码</label>
-                                    </div>
-                                    <div class="col s2">
-                                        <a class="btn  btn-large btn-floating waves-effect cyan" ng-click="updateAmendVin(self_car.id)"> <i class="mdi mdi-check "></i></a>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
+                            <div class="col s12 white" style="height:20px;"></div>
+                            <!-- body -->
+                            <div class="col s12 white" style="height:70px;">
                                 <div class="col s4 input-field">
                                     <input  id="look_engineNum" name="look_engineNum" autocomplete="off" ng-model="self_car.engine_num" type="text"    >
                                     <label for="look_engineNum" >发动机号</label>
@@ -132,11 +70,11 @@
 
                                 </div>
                             </div>
-                            <div class="row" style="margin-top: 50px">
+
+                            <div class="col s12 white" style="height:70px;">
                                 <div class="col s4 input-field">
-                                    <input type="text" id="look_create_time"  name="look_create_time" class="datepicker" autocomplete="off" ng-model="look_create_time" date>
-                                    <i class="mdi dataIcon mdi-table-large"></i>
-                                    <label for="look_create_time" >生产日期</label>
+                                    <input type="text" id="look_create_time"  name="look_create_time"  ng-model="self_car.pro_date">
+                                    <label for="look_create_time" >生产年限</label>
                                 </div>
                                 <div class="col s4 input-field">
                                     <select material-select watch id="look_car_color" name="look_car_color" class="" ng-model="self_car.colour" >
@@ -153,7 +91,7 @@
                                     <label for="entrustId">委托方</label>
                                 </div>
                             </div>
-                            <div class="row" style="margin-top: 50px">
+                            <div class="col s12 white" style="height:70px;">
                                 <!--车辆估值-->
                                 <div class="input-field col s4">
                                     <input  id="carValuation" name="carValuation"  ng-model="self_car.valuation" type="number">
@@ -176,13 +114,19 @@
                                     <label for="purchase_type"><span style="color: red;margin-right: 5px">*</span>是否金融车</label>
                                 </div>
                             </div>
-                            <div class="row">
+                            <div class="col s12 white" style="height:170px;">
                                 <p class="col s12 min-width-2 left-align" style="color: #4e84cb" >备注:</p>
                                 <div class="col s12 valign-wrapper " style="position: relative">
                                     <p class=" col s12 p0" >
-                                        <textarea id="look_remark" style="height: 100px" name="remark" class="col s12" ng-model="self_car.remark"></textarea>
+                                        <textarea id="look_remark" style="height: 80px" name="remark" class="col s12" ng-model="self_car.remark"></textarea>
                                     </p>
                                 </div>
+                            </div>
+
+                        </div>
+                        <div class="col s12">
+                            <div class="col s12 input-field center-align" style="margin-top: 30px ; margin-bottom: 30px" >
+                                <a href="" class="btn waves-effect circle_button cyan" ng-click="putDataItem(self_car.id)">确定</a>
                             </div>
                         </div>
                     </div>
