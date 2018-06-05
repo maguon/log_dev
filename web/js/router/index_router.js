@@ -281,6 +281,12 @@ app.config(['$stateProvider',"$urlRouterProvider",function($stateProvider,$urlRo
             templateUrl: "/view/system_settings/setting_port.html",
             controller:'setting_port_controller'
         })
+        // 管理员设置 -> 贷入公司设置
+        .state("setting_loan_in", {
+            url:"/setting_loan_in",
+            templateUrl: "/view/system_settings/setting_loan_in.html",
+            controller:'setting_loan_in_controller'
+        })
 
         // 下载app
         .state("admin_download_app",{

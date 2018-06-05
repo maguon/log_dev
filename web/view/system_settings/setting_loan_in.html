@@ -1,0 +1,202 @@
+<!-- 主菜单：管理员设置 -> 贷入公司设置 画面 -->
+
+<!-- 主画面：button区域 + 详细信息列表部 -->
+<div style="width: 90%;margin: 0 auto">
+
+    <!-- 追加 按钮 -->
+    <div class="right-align" style="height: 80px;margin: 20px 30px 10px 0;">
+        <a class="btn-floating btn-large waves-light waves-effect cyan lighten-1 btn vc-center" ng-click="openAddLoanIn()">
+            <i class="mdi mdi-plus"></i>
+        </a>
+    </div>
+
+    <!-- 贷入公司 详情 -->
+    <div class="row">
+        <!-- 贷入公司(可用) 遍历 -->
+        <div class="col s12" ng-repeat="el in loanInList | filter:{company_status:1}">
+
+            <!-- 贷入公司 明细 详情 -->
+            <div class="white z-depth-1" style="margin-bottom: 25px;border:1px solid #bdbdbd">
+
+                <!-- 贷入公司 明细 Header -->
+                <div class="valign-wrapper blue-grey lighten-4 cyan-text fz18" style="width: 100%;height: 50px;">
+
+                    <!-- 贷入公司 名称 -->
+                    <div class="col s9 left-align" >
+                        <div class="context-ellipsis" style="margin-left:10px; width: 800px;">{{el.company_name}}</div>
+                    </div>
+
+                    <!-- 操作 区域 -->
+                    <div class="col s3" style="text-align:right;">
+                        <!-- 可用/停用 开关 -->
+                        <span class="col s9 switch">
+                            <label>
+                              <input type="checkbox" ng-checked="el.company_status==1" ng-click="changeLoanCoStatus(el.id,el.company_status)">
+                              <span class="lever" style="margin-bottom: 5px;"></span>
+                            </label>
+                        </span>
+                        <!-- 编辑 按钮 -->
+                        <span class="col s3">
+                            <a class="btn-floating waves-effect waves-light cyan lighten-1" style="left: 1px;width:30px;height: 30px;margin-top: 0;" ng-click="openEditLoanIn(el)">
+                                <i class="mdi mdi-pencil" style="position: absolute;right:0;bottom:3px;font-size:20px;line-height: 20px;"></i>
+                            </a>
+                        </span>
+                    </div>
+                </div>
+
+                <!-- 贷入公司 明细 Body -->
+                <div class="valign-wrapper grey-text text-darken-5 fz15" style="width: 100%;height: 50px;">
+                    <!-- 基础额度 -->
+                    <div class="col s3 left-align" style="margin-left: 5px;">
+                        <i class="mdi mdi-currency-usd"></i><span class="red-text" style="margin-left: 8px;">{{el.base_money | number}}</span>
+                    </div>
+                    <!-- 联系人 -->
+                    <div class="col s3 left-align">
+                        <i class="mdi mdi-account"></i><span style="margin-left: 8px;">{{el.contacts}}</span>
+                    </div>
+                    <!-- 联系电话 -->
+                    <div class="col s3 left-align">
+                        <i class="mdi mdi-phone"></i><span style="margin-left: 8px;">{{el.tel}}</span>
+                    </div>
+                    <!-- E-mail -->
+                    <div class="col s3 left-align">
+                        <i class="mdi mdi-email-outline"></i><span style="margin-left: 8px;">{{el.email}}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 可用状态/禁用状态 数据都存在的话，显示分割线 -->
+        <div class="col s12" ng-show="(loanInList | filter:{company_status:1}).length > 0 && (loanInList | filter:{company_status:0}).length > 0" style="margin-bottom: 25px;">
+            <div class="divider s12 center" style="height: 2px;"></div>
+        </div>
+
+        <!-- 贷入公司(可用) 遍历 -->
+        <div class="col s12" ng-repeat="el in loanInList | filter:{company_status:0}">
+
+            <!-- 贷入公司 明细 详情 -->
+            <div class="white z-depth-1 blue-grey lighten-5" style="margin-bottom: 25px;border:1px solid #bdbdbd">
+
+                <!-- 贷入公司 明细 Header -->
+                <div class="valign-wrapper blue-grey lighten-3 cyan-text fz18" style="width: 100%;height: 50px;">
+
+                    <!-- 贷入公司 名称 -->
+                    <div class="col s9 left-align" >
+                        <div class="white-text context-ellipsis" style="margin-left:10px; width: 800px;">{{el.company_name}}</div>
+                    </div>
+
+                    <!-- 操作 区域 -->
+                    <div class="col s3" style="text-align:right;">
+                        <!-- 可用/停用 开关 -->
+                        <span class="col s9 switch">
+                            <label>
+                              <input type="checkbox" ng-checked="el.company_status==1" ng-click="changeLoanCoStatus(el.id,el.company_status)">
+                              <span class="lever" style="margin-bottom: 5px;"></span>
+                            </label>
+                        </span>
+                        <!-- 编辑 按钮 -->
+                        <span class="col s3">
+                            <a class="btn-floating waves-effect waves-light blue-grey lighten-1" style="left: 1px;width:30px;height: 30px;margin-top: 0;" ng-click="openEditLoanIn(el)">
+                                <i class="mdi mdi-pencil" style="position: absolute;right:0;bottom:3px;font-size:20px;line-height: 20px;"></i>
+                            </a>
+                        </span>
+                    </div>
+                </div>
+
+                <!-- 贷入公司 明细 Body -->
+                <div class="valign-wrapper grey-text text-darken-5 fz15" style="width: 100%;height: 50px;">
+                    <!-- 基础额度 -->
+                    <div class="col s3 left-align" style="margin-left: 5px;">
+                        <i class="mdi mdi-currency-usd"></i><span style="margin-left: 8px;">{{el.base_money | number}}</span>
+                    </div>
+                    <!-- 联系人 -->
+                    <div class="col s3 left-align">
+                        <i class="mdi mdi-account"></i><span style="margin-left: 8px;">{{el.contacts}}</span>
+                    </div>
+                    <!-- 联系电话 -->
+                    <div class="col s3 left-align">
+                        <i class="mdi mdi-phone"></i><span style="margin-left: 8px;">{{el.tel}}</span>
+                    </div>
+                    <!-- E-mail -->
+                    <div class="col s3 left-align">
+                        <i class="mdi mdi-email-outline"></i><span style="margin-left: 8px;">{{el.email}}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 追加画面【增加贷入公司】 模态框 -->
+<div class="row" style="margin: 0">
+    <div id="addLoanIn" class="modal" style="max-height: 750px;">
+        <div class="modal-content center fz20" style="font-weight: 500;padding: 0">
+
+            <!-- 显示画面【增加贷入公司】 Header -->
+            <div class="col s12 vc-center cyan white-text" style="letter-spacing:1px;font-weight: bold;height: 50px;">
+                <p>{{pageId=='add' ? '增加贷入公司':'贷入公司详情'}}</p>
+            </div>
+
+            <!-- 显示画面【增加贷入公司】 Body -->
+            <div class="col" style="width:95%; margin-left: 20px;">
+                <!-- 第一行 -->
+                <div class="col s12" style="margin-top: 40px;">
+                    <!-- 贷入公司名称 -->
+                    <div class="input-field col s6">
+                        <input type="text" id="companyNameText" maxlength="50" ng-model="loanInCoInfo.companyName">
+                        <label for="companyNameText" ng-class="{'label-active':loanInCoInfo.companyName !== ''}"><span class="red-text">*</span>贷入公司名称</label>
+                    </div>
+
+                    <!-- 基础额度(美元) -->
+                    <div class="input-field col s6">
+                        <input type="text" id="baseMoneyText" maxlength="10" valid-money ng-model="loanInCoInfo.baseMoney">
+                        <label for="baseMoneyText" ng-class="{'label-active':loanInCoInfo.baseMoney !== ''}"><span class="red-text">*</span>基础额度(美元)</label>
+                    </div>
+                </div>
+
+                <!-- 第二行 -->
+                <div class="col s12">
+                    <!-- 联系人 -->
+                    <div class="input-field col s4">
+                        <input type="text" id="contactsText" maxlength="50" ng-model="loanInCoInfo.contacts">
+                        <label for="contactsText" ng-class="{'label-active':loanInCoInfo.contacts !== ''}">联系人</label>
+                    </div>
+
+                    <!-- 联系电话 -->
+                    <div class="input-field col s4">
+                        <input type="text" id="telText" maxlength="50" ng-model="loanInCoInfo.tel">
+                        <label for="telText" ng-class="{'label-active':loanInCoInfo.tel !== ''}">联系电话</label>
+                    </div>
+
+                    <!-- E-mail -->
+                    <div class="input-field col s4">
+                        <input type="text" id="emailText" maxlength="50" ng-model="loanInCoInfo.email">
+                        <label for="emailText" ng-class="{'label-active':loanInCoInfo.email !== ''}">E-mail</label>
+                    </div>
+                </div>
+
+                <!-- 备注 -->
+                <div class="col s12">
+                    <div class="input-field col s12">
+                        <textarea id="remarkText" class="materialize-textarea" style="padding: 10px 0 0 0px;" maxlength="200" ng-model="loanInCoInfo.remark"></textarea>
+                        <label for="remarkText">备注</label>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 分割线 -->
+            <div class="divider col s12" style="margin-top: 80px;"></div>
+
+            <!-- 取消/确认 按钮 -->
+            <div class="row col right-align" style="width: 96%;margin-top: 20px;">
+                <a class="btn-floating waves-effect waves-light grey btn modal-close">
+                    <i class="mdi mdi-close"></i>
+                </a>
+                <a class="btn-floating waves-effect waves-light cyan lighten-1 btn" style="margin-left: 20px;"
+                   ng-click="saveLoanIn()">
+                    <i class="mdi mdi-check"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
