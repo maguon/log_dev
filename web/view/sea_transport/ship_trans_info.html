@@ -16,7 +16,7 @@
 
             <!-- VIN码 -->
             <div class="input-field col" style="width: 20%;">
-                <input type="text" id="vinText" ng-model="condVin">
+                <input type="text" id="vinText" ng-model="condVin" minlength="6">
                 <label for="vinText">VIN码</label>
             </div>
 
@@ -173,7 +173,7 @@
                 <th data-field="">船名</th>
                 <th data-field="">货柜</th>
                 <th data-field="">装载数</th>
-                <th data-field="">运送费(美元)</th>
+                <th data-field="">VIN码</th>
                 <th data-field="">预计开船日期</th>
                 <th data-field="">实际开船日期</th>
                 <th data-field="">分单</th>
@@ -197,8 +197,8 @@
                 <td ng-bind="el.container"></td>
                 <!--装载数-->
                 <td ng-bind="el.ship_trans_count"></td>
-                <!--运送费(美元)-->
-                <td ng-bind="el.ship_trans_fee"></td>
+                <!--vin码-->
+                <td ng-bind="el.vin"></td>
                 <!--预计开船日期-->
                 <td ng-bind="el.start_ship_date|date:'yyyy-MM-dd'"></td>
                 <!--实际开船日期-->
@@ -317,12 +317,6 @@
 
                 <!-- 封签 -->
                 <div class="input-field col s4">
-                    <!--<span class="col red-text" style="width: 8%;padding-top: 8px;"></span>-->
-                    <!--<div class="col" style="width: 92%;">-->
-                        <!--<input type="text" id="newSealText" ng-model="conditionSeal">-->
-                        <!--<label for="newSealText" style="position: absolute;padding-left: 40px;">封签</label>-->
-                    <!--</div>-->
-
                     <div class="col s12">
                         <input type="text" id="newSealText" ng-model="newShippingOrder.tab">
                         <label for="newSealText" style="position: absolute;padding-left: 12px;">封签</label>
@@ -447,12 +441,6 @@
                                     <input type="text" id="shipTransFeesText" maxlength="8" valid-money ng-blur="calcTotalFees()" ng-model="newCar.shipTransFees">
                                     <label for="shipTransFeesText" class="active"><span class="red-text">*</span>运费(美元):</label>
                                 </div>
-                                <!--<div class="col s2 left-align">-->
-                                    <!--<a class="btn-floating waves-effect waves-light cyan lighten-1" style="left: 1px;width:30px;height: 30px;"-->
-                                       <!--ng-click="createCar()">-->
-                                        <!--<i class="mdi mdi-check add_brand"  style="position: absolute;right:0;bottom:3px;font-size:20px;line-height: 20px;"></i>-->
-                                    <!--</a>-->
-                                <!--</div>-->
                             </div>
                         </div>
                     </div>
