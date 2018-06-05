@@ -17,9 +17,6 @@ app.controller("setting_shipping_co_controller", ["$scope", "_basic", "_host", "
     // 船务公司名称
     $scope.newShippingCoName = "";
 
-    // 是否可用，停用都有
-    $scope.hasDoubleType = false;
-
     /**
      * 获取船舶公司列表
      */
@@ -39,26 +36,6 @@ app.controller("setting_shipping_co_controller", ["$scope", "_basic", "_host", "
             if (data.success) {
                 // 检索取得数据集
                 $scope.shippingCoList = data.result;
-                // 停用的数量
-                var disableSize = 0;
-                // 可用的数量
-                var enableSize = 0;
-                // 是否2个都有
-                $scope.hasDoubleType = false;
-                for (var i = 0; i < data.result.length; i++) {
-                    // 停用的数量
-                    if (disableSize === 0 && data.result[i].ship_company_status === $scope.useFlags[0].id) {
-                        disableSize++;
-                    }
-                    // 可用的数量
-                    if (enableSize === 0 && data.result[i].ship_company_status === $scope.useFlags[1].id) {
-                        enableSize++;
-                    }
-                    if (enableSize > 0 && disableSize > 0) {
-                        $scope.hasDoubleType = true;
-                        break;
-                    }
-                }
             } else {
                 swal(data.msg, "", "error");
             }

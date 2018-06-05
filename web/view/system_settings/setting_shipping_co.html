@@ -85,9 +85,9 @@
 
                 <!-- 可用/停用 开关 -->
                 <div class="col" style="width:24%;height: 50px;padding-top: 12px;">
-                    <span class="switch" ng-click="changeShipCompanyStatus(shippingCo.id,shippingCo.ship_company_status)">
+                    <span class="switch">
                         <label>
-                          <input type="checkbox" ng-checked="shippingCo.ship_company_status==1">
+                          <input type="checkbox" ng-checked="shippingCo.ship_company_status==1" ng-click="changeShipCompanyStatus(shippingCo.id,shippingCo.ship_company_status)">
                           <span class="lever"></span>
                         </label>
                     </span>
@@ -95,7 +95,8 @@
             </div>
         </div>
 
-        <div class="col s12" ng-show="hasDoubleType" style="margin-bottom: 25px;">
+        <!-- 可用状态/禁用状态 数据都存在的话，显示分割线 -->
+        <div class="col s12" ng-show="(shippingCoList | filter:{ship_company_status:1}).length > 0 && (shippingCoList | filter:{ship_company_status:0}).length > 0" style="margin-bottom: 25px;">
             <div class="divider s12 center" style="height: 2px;"></div>
         </div>
 
@@ -127,9 +128,9 @@
 
                 <!-- 可用/停用 开关 -->
                 <div class="col" style="width:24%;height: 50px;padding-top: 12px;">
-                    <span class="switch" ng-click="changeShipCompanyStatus(shippingCo.id,shippingCo.ship_company_status)">
+                    <span class="switch">
                         <label>
-                          <input type="checkbox" ng-checked="shippingCo.ship_company_status==1">
+                          <input type="checkbox" ng-checked="shippingCo.ship_company_status==1" ng-click="changeShipCompanyStatus(shippingCo.id,shippingCo.ship_company_status)">
                           <span class="lever"></span>
                         </label>
                     </span>
