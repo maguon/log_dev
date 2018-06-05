@@ -61,12 +61,11 @@ app.controller("setting_amend_vin_controller", ["$scope", "_basic", "_config", "
                 $scope.vinMsg={}
             }
         }
-        else{
-            swal('请输入VIN码','','error')
-        }
     };
     // 查询vin码
     $scope.demandCar=function () {
+        $scope.carModelName = [];
+        $scope.self_car.model_id='';
         if($scope.demandVin!=="") {
             _basic.get(_host.api_url +"/user/"+userId+"/car?vin="+ $scope.demandVin+'&active=1').then(function (data) {
                 if (data.success = true) {
@@ -77,8 +76,9 @@ app.controller("setting_amend_vin_controller", ["$scope", "_basic", "_config", "
                         $(".no_car_detail").hide();
                         $(".car_detail").show();
                         $scope.self_car = data.result[0];
-                        $scope.changeMakeId( $scope.self_car.make_id);
-                        $scope.self_car.make_id = data.result[0].make_id;
+                        $scope.self_car.make_id= data.result[0].make_id
+                        $scope.self_car.model_id = data.result[0].model_id;
+                        $scope.changeMakeId($scope.self_car.make_id)
                         $scope.vin= $scope.self_car.vin;
 
                         for (var i in _config.config_color) {
@@ -98,7 +98,6 @@ app.controller("setting_amend_vin_controller", ["$scope", "_basic", "_config", "
         }
     };
 
-
     // 车辆品牌查询
     function getMakeCarName(){
         _basic.get(_host.api_url + "/carMake").then(function (data) {
@@ -117,6 +116,7 @@ app.controller("setting_amend_vin_controller", ["$scope", "_basic", "_config", "
             _basic.get(_host.api_url + "/carMake/" + val + "/carModel").then(function (data) {
                 if (data.success == true&&data.result.length>0) {
                     $scope.carModelName = data.result;
+
                 } else {
                     swal(data.msg, "", "error")
                 }

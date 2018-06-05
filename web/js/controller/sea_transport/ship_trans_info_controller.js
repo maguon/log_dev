@@ -229,7 +229,7 @@ app.controller("ship_trans_info_controller", ["$scope", "$rootScope", "_host", "
             // 海运编号
             shipTransId: $scope.condShipTransId,
             // vin码
-            vin: $scope.condVin,
+            vinCode: $scope.condVin,
             // 委托方
             entrustId: $scope.condEntrustId,
             // 始发港
