@@ -54,15 +54,14 @@
 
                                 </div>
                                 <div class="col s4 input-field">
-                                    <select material-select watch  id="look_makecarName"   ng-change="changeMakeId(self_car.make_id)" ng-model="self_car.make_id" >
+                                    <select id="look_makecarName"  material-select watch ng-change="changeMakeId(self_car.make_id)" ng-model="self_car.make_id" >
                                         <option value="" disabled selected>请选择</option>
                                         <option ng-repeat="el in makecarName" ng-value="el.id" >{{el.make_name}}</option>
                                     </select>
                                     <label for="look_makecarName" ><span style="color: red;margin-right: 5px">*</span>品牌</label>
-
                                 </div>
                                 <div class="col s4 input-field">
-                                    <select material-select watch name="look_model_name" id="look_model_name"   ng-model="self_car.model_id"  >
+                                    <select material-select watch id="look_model_name"   ng-model="self_car.model_id"  >
                                         <option value="" disabled selected>请选择</option>
                                         <option  ng-repeat="el in carModelName" ng-value="el.id">{{el.model_name}}</option>
                                     </select>
