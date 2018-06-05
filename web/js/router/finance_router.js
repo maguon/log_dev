@@ -75,6 +75,45 @@ app.config(['$stateProvider',"$urlRouterProvider",function($stateProvider,$urlRo
             templateUrl: "/view/finance/finance_car.html",
             controller:"finance_car_controller"
         })
+        // 财务管理->金融贷出
+        .state("finance_loan", {
+            url:"/finance_loan",
+            params: {"from": null},
+            templateUrl: "/view/finance/finance_loan.html",
+            controller:"finance_loan_controller"
+        })
+        // 财务管理->金融贷出->详细
+        .state("finance_loan_detail", {
+            url:"/finance_loan_detail/{id}?from",
+            templateUrl: "/view/finance/finance_loan_detail.html",
+            controller:"finance_loan_detail_controller"
+        })
+        // 财务管理->金融还贷
+        .state("finance_repay", {
+            url:"/finance_repay",
+            params: {"from": null},
+            templateUrl: "/view/finance/finance_repay.html",
+            controller:"finance_repay_controller"
+        })
+        // 财务管理->金融还贷->详细
+        .state("finance_repay_detail", {
+            url:"/finance_repay_detail/{id}?from",
+            templateUrl: "/view/finance/finance_repay_detail.html",
+            controller:"finance_repay_detail_controller"
+        })
+        // 财务管理->信用证
+        .state("credit_card", {
+            url:"/credit_card",
+            params: {"from": null},
+            templateUrl: "/view/finance/credit_card.html",
+            controller:"credit_card_controller"
+        })
+        .state("credit_card_detail", {
+            url:"/credit_card_detail/{id}?from",
+            params: {"from": null},
+            templateUrl: "/view/finance/credit_card_detail.html",
+            controller:"credit_card_detail_controller"
+        })
 
         // 海运管理->订单管理
         .state("sea_transport_order", {

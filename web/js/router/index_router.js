@@ -100,14 +100,14 @@ app.config(['$stateProvider',"$urlRouterProvider",function($stateProvider,$urlRo
             templateUrl: "/view/finance/finance_loan_detail.html",
             controller:"finance_loan_detail_controller"
         })
-        // 财务管理->金融贷出
+        // 财务管理->金融还贷
         .state("finance_repay", {
             url:"/finance_repay",
             params: {"from": null},
             templateUrl: "/view/finance/finance_repay.html",
             controller:"finance_repay_controller"
         })
-        // 财务管理->金融贷出->详细
+        // 财务管理->金融还贷->详细
         .state("finance_repay_detail", {
             url:"/finance_repay_detail/{id}?from",
             templateUrl: "/view/finance/finance_repay_detail.html",
@@ -120,7 +120,6 @@ app.config(['$stateProvider',"$urlRouterProvider",function($stateProvider,$urlRo
             templateUrl: "/view/finance/credit_card.html",
             controller:"credit_card_controller"
         })
-
         .state("credit_card_detail", {
             url:"/credit_card_detail/{id}?from",
             params: {"from": null},
