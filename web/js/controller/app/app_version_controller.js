@@ -1,5 +1,5 @@
 /**
- * 主菜单：app系统 控制器
+ * 主菜单：APP系统 控制器
  */
 app.controller("app_version_controller", ["$scope", "$state", "$stateParams", "_basic", "_config", "_host", function ($scope, $state, $stateParams, _basic, _config, _host) {
 
@@ -22,24 +22,32 @@ app.controller("app_version_controller", ["$scope", "$state", "$stateParams", "_
 
     // 追加画面初期数据
     var initAppInfo = {
+        // 系统
         app:"",
+        // 模块
         type:"",
+        // 版本号
         version:"",
+        // 是否强制更新
         forceUpdate:"",
+        // 版本序号
         versionNum:"",
-        minVersionNum:"",
+        // 最低支持版本序号
+        floorVersionNumber:"",
+        // 下载地址
         url:"",
+        // 描述
         remark:""
     };
 
     // 追加画面数据
     $scope.appInfo = {};
 
-    // 条件：系统
+    // 检索条件：系统
     $scope.conditionApp = "";
-    // 条件：模块
+    // 检索条件：模块
     $scope.conditionType = "";
-    // 条件：是否强制更新
+    // 检索条件：是否强制更新
     $scope.conditionForceUpdate = "";
 
     /**
@@ -99,99 +107,104 @@ app.controller("app_version_controller", ["$scope", "$state", "$stateParams", "_
      * 打开画面【新增操作】模态框。
      */
     $scope.openAddAppSystem = function () {
+        // 画面ID
+        $scope.pageId = "add";
         // 初期化数据
         angular.copy(initAppInfo, $scope.appInfo);
 
+        // 打开 模态窗口
         $('.modal').modal();
-        $('#addAppSystem').modal('open');
+        $('#modifyAppDiv').modal('open');
 
+        // textarea 高度调整
         $('#remark').val('');
+        $('#remark').trigger('autoresize');
+    };
+
+    /**
+     * 打开画面【操作记录】模态框。
+     *
+     * @param selectedApp 选中编辑数据
+     */
+    $scope.openModifyAppSystem = function (selectedApp) {
+        // 画面ID
+        $scope.pageId = "edit";
+        // 初期化数据
+        // 系统ID
+        $scope.appInfo.id = selectedApp.id;
+        // 系统
+        $scope.appInfo.app = selectedApp.app;
+        // 模块
+        $scope.appInfo.type = selectedApp.type;
+        // 版本号
+        $scope.appInfo.version = selectedApp.version;
+        // 是否强制更新
+        $scope.appInfo.forceUpdate = selectedApp.force_update;
+        // 版本序号
+        $scope.appInfo.versionNum = selectedApp.version_number;
+        // 最低支持版本序号
+        $scope.appInfo.floorVersionNumber = selectedApp.floor_version_number;
+        // 下载地址
+        $scope.appInfo.url = selectedApp.url;
+        // 描述
+        $scope.appInfo.remark = selectedApp.remark;
+
+        // 打开 模态窗口
+        $('.modal').modal();
+        $('#modifyAppDiv').modal('open');
+
+        // textarea 高度调整
+        $('#remark').val($scope.appInfo.remark);
         $('#remark').trigger('autoresize');
     };
 
     /**
      * 追加app系统信息。
      */
-    $scope.addAppInfo = function () {
+    $scope.saveAppInfo = function () {
+        // 必须项目 check
         if ($scope.appInfo.app !== "" && $scope.appInfo.type !== "" && $scope.appInfo.version !== ""
             && $scope.appInfo.forceUpdate !== "" && $scope.appInfo.versionNum !== ""
-            && $scope.appInfo.minVersionNum !== "" && $scope.appInfo.url !== "") {
+            && $scope.appInfo.floorVersionNumber !== "" && $scope.appInfo.url !== "") {
 
-            // 追加画面数据
+            // 画面数据
             var obj = {
                 app: $scope.appInfo.app,
                 appType: $scope.appInfo.type,
                 version: $scope.appInfo.version,
                 versionNumber: $scope.appInfo.versionNum,
-                floorVersionNumber: $scope.appInfo.minVersionNum,
+                floorVersionNumber: $scope.appInfo.floorVersionNumber,
                 forceUpdate: $scope.appInfo.forceUpdate,
                 url: $scope.appInfo.url,
                 remark: $scope.appInfo.remark
             };
 
-            // 调用 API [user create app]
-            _basic.post(_host.api_url + "/user/" + userId + "/app", obj).then(function (data) {
-                if (data.success) {
-                    $('#addAppSystem').modal('close');
-                    swal("新增成功", "", "success");
-                    $scope.searchAppSystem();
-                } else {
-                    swal(data.msg, "", "error");
-                }
-            })
-        } else {
-            swal("请填写完整信息！", "", "warning");
-        }
-    };
-
-    /**
-     * 打开画面【操作记录】模态框。
-     *
-     * @param appId App id
-     */
-    $scope.openModifyAppSystem = function (appId) {
-        $('.modal').modal();
-        $('#showAppSystem').modal('open');
-        // 根据选中数据ID，取得详细信息
-        _basic.get(_host.api_url + "/app?appId=" + appId).then(function (data) {
-            if (data.success) {
-                $scope.showAppInfo = data.result[0];
+            if ($scope.pageId === "add") {
+                // 调用 API [user create app]
+                _basic.post(_host.api_url + "/user/" + userId + "/app", obj).then(function (data) {
+                    if (data.success) {
+                        swal("新增成功", "", "success");
+                        $('#modifyAppDiv').modal('close');
+                        // 刷新画面数据
+                        $scope.searchAppSystem();
+                    } else {
+                        swal(data.msg, "", "error");
+                    }
+                })
             } else {
-                swal(data.msg, "", "error");
+                // 调用更新API
+                _basic.put(_host.api_url + "/user/" + userId + "/app/" + $scope.appInfo.id, obj).then(function (data) {
+                    if (data.success) {
+                        swal("修改成功", "", "success");
+                        $('#modifyAppDiv').modal('close');
+                        // 根据画面条件，重新检索画面数据
+                        getAppSystemList();
+                    } else {
+                        swal(data.msg, "", "error");
+                    }
+                })
             }
-        })
-    };
 
-    /**
-     * 修改app系统信息。
-     * @param appId App id
-     */
-    $scope.updateAppInfo = function (appId) {
-        if ($scope.showAppInfo.app !== "" && $scope.showAppInfo.type !== "" && $scope.showAppInfo.version !== ""
-            && $scope.showAppInfo.force_update !== "" && $scope.showAppInfo.version_number !== ""
-            && $scope.showAppInfo.floor_version_number !== "" && $scope.showAppInfo.url !== "") {
-            // 更新画面数据
-            var obj = {
-                app: $scope.showAppInfo.app,
-                appType: $scope.showAppInfo.type,
-                version: $scope.showAppInfo.version,
-                versionNumber: $scope.showAppInfo.version_number,
-                floorVersionNumber: $scope.showAppInfo.floor_version_number,
-                forceUpdate: $scope.showAppInfo.force_update,
-                url: $scope.showAppInfo.url,
-                remark: $scope.showAppInfo.remark
-            };
-            // 调用更新API
-            _basic.put(_host.api_url + "/user/" + userId + "/app/" + appId, obj).then(function (data) {
-                if (data.success) {
-                    swal("修改成功", "", "success");
-                    $('#showAppSystem').modal('close');
-                    // 根据画面条件，重新检索画面数据
-                    getAppSystemList();
-                } else {
-                    swal(data.msg, "", "error");
-                }
-            })
         } else {
             swal("请填写完整信息！", "", "warning");
         }
@@ -214,7 +227,15 @@ app.controller("app_version_controller", ["$scope", "$state", "$stateParams", "_
     };
 
     /**
-     * 画面初期检索。
+     * 初期检索画面数据
      */
-    $scope.searchAppSystem();
+    function initData() {
+        // 检索画面数据
+        $scope.searchAppSystem();
+    }
+
+    /**
+     * 画面初期数据取得。
+     */
+    initData();
 }]);
