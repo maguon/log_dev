@@ -127,35 +127,46 @@ app.controller("app_version_controller", ["$scope", "$state", "$stateParams", "_
      * @param selectedApp 选中编辑数据
      */
     $scope.openModifyAppSystem = function (selectedApp) {
-        // 画面ID
-        $scope.pageId = "edit";
         // 初期化数据
-        // 系统ID
-        $scope.appInfo.id = selectedApp.id;
-        // 系统
-        $scope.appInfo.app = selectedApp.app;
-        // 模块
-        $scope.appInfo.type = selectedApp.type;
-        // 版本号
-        $scope.appInfo.version = selectedApp.version;
-        // 是否强制更新
-        $scope.appInfo.forceUpdate = selectedApp.force_update;
-        // 版本序号
-        $scope.appInfo.versionNum = selectedApp.version_number;
-        // 最低支持版本序号
-        $scope.appInfo.floorVersionNumber = selectedApp.floor_version_number;
-        // 下载地址
-        $scope.appInfo.url = selectedApp.url;
-        // 描述
-        $scope.appInfo.remark = selectedApp.remark;
 
-        // 打开 模态窗口
-        $('.modal').modal();
-        $('#modifyAppDiv').modal('open');
+        // 根据选中数据ID，取得详细信息
+        _basic.get(_host.api_url + "/app?appId=" + selectedApp.id).then(function (data) {
+            if (data.success) {
+                if (data.result.length > 0) {
+                    // 画面ID
+                    $scope.pageId = "edit";
 
-        // textarea 高度调整
-        $('#remark').val($scope.appInfo.remark);
-        $('#remark').trigger('autoresize');
+                    // 打开 模态窗口
+                    $('.modal').modal();
+                    $('#modifyAppDiv').modal('open');
+
+                    // 系统ID
+                    $scope.appInfo.id = data.result[0].id;
+                    // 系统
+                    $scope.appInfo.app = data.result[0].app;
+                    // 模块
+                    $scope.appInfo.type = data.result[0].type;
+                    // 版本号
+                    $scope.appInfo.version = data.result[0].version;
+                    // 是否强制更新
+                    $scope.appInfo.forceUpdate = data.result[0].force_update;
+                    // 版本序号
+                    $scope.appInfo.versionNum = data.result[0].version_number;
+                    // 最低支持版本序号
+                    $scope.appInfo.floorVersionNumber = data.result[0].floor_version_number;
+                    // 下载地址
+                    $scope.appInfo.url = data.result[0].url;
+                    // 描述
+                    $scope.appInfo.remark = data.result[0].remark;
+
+                    // textarea 高度调整
+                    $('#remark').val($scope.appInfo.remark);
+                    $('#remark').trigger('autoresize');
+                }
+            } else {
+                swal(data.msg, "", "error");
+            }
+        });
     };
 
     /**
