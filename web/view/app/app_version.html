@@ -1,108 +1,113 @@
 <!-- 主菜单：app系统 -->
 
 <!-- 追加画面【新增操作/操作记录】 模态框 -->
-<div class="row" style="margin: 0">
-    <div id="modifyAppDiv" class="modal" style="max-height: 750px;">
-        <div class="modal-content center fz20" style="font-weight: 500;padding: 0">
+<div id="modifyAppDiv" class="modal modal-fixed-footer row" style="max-height: 556px;">
 
-            <!-- 显示画面【新增操作/操作记录】 Header -->
-            <div class="col s12 vc-center cyan white-text" style="letter-spacing:1px;font-weight: bold;height: 50px;">
-                <p>{{pageId=='add' ? '新增操作':'操作记录'}}</p>
+    <!-- Header -->
+    <div class="modal_title center-align cyan white-text">{{pageId=='add' ? '新增操作':'操作记录'}}</div>
+
+    <!-- Body -->
+    <div class="modal-content" style="max-height: 450px;">
+
+        <!-- 显示画面【新增操作/操作记录】 Body -->
+        <div class="col" style="width:95%; margin-left: 20px;">
+            <!-- 第一行 -->
+            <div class="col s12" style="margin-top: 20px;">
+                <!-- 系统 -->
+                <div class="col s6 input-field">
+                    <select material-select id="app" ng-model="appInfo.app" style="border-bottom: 1px solid #000">
+                        <option value="" disabled>请选择</option>
+                        <option ng-repeat="app in appSystems" ng-value="{{app.id}}">{{app.name}}</option>
+                    </select>
+                    <label for="app"><span style="color: red">* </span>系统</label>
+                </div>
+
+                <!-- 模块 -->
+                <div class=" col s6 input-field">
+                    <select material-select id="type" ng-model="appInfo.type" style="border-bottom: 1px solid #000">
+                        <option value="" disabled>请选择</option>
+                        <option  ng-repeat="op in modules" ng-value="{{op.id}}">{{op.name}}</option>
+                    </select>
+                    <label for="type"><span style="color: red">* </span>模块</label>
+                </div>
             </div>
 
-            <!-- 显示画面【新增操作/操作记录】 Body -->
-            <div class="col" style="width:95%; margin-left: 20px;">
-                <!-- 第一行 -->
-                <div class="col s12" style="margin-top: 40px;">
-                    <!-- 系统 -->
-                    <div class="col s6 input-field">
-                        <select material-select id="app" ng-model="appInfo.app" style="border-bottom: 1px solid #000">
-                            <option value="" disabled>请选择</option>
-                            <option ng-repeat="app in appSystems" ng-value="{{app.id}}">{{app.name}}</option>
-                        </select>
-                        <label for="app"><span style="color: red">* </span>系统</label>
-                    </div>
-
-                    <!-- 模块 -->
-                    <div class=" col s6 input-field">
-                        <select material-select id="type" ng-model="appInfo.type" style="border-bottom: 1px solid #000">
-                            <option value="" disabled>请选择</option>
-                            <option  ng-repeat="op in modules" ng-value="{{op.id}}">{{op.name}}</option>
-                        </select>
-                        <label for="type"><span style="color: red">* </span>模块</label>
-                    </div>
-                </div>
-
-                <!-- 第二行 -->
-                <div class="col s12">
-                    <!-- 版本号 -->
-                    <div class=" col s6 p0">
-                        <div class="col s12 input-field">
-                            <input type="text" id="updateAppVersion" maxlength="20" ng-model="appInfo.version">
-                            <label for="updateAppVersion"><span style="color: red">* </span>版本号</label>
-                        </div>
-                    </div>
-
-                    <!-- 是否强制更新 -->
-                    <div class=" col s6 p0">
-                        <div class="input-field col s12">
-                            <select material-select ng-model="appInfo.forceUpdate">
-                                <option value="" disabled>请选择</option>
-                                <option ng-repeat="op in forceUpdates" ng-value="{{op.id}}">{{op.name}}</option>
-                            </select>
-                            <label><span style="color: red">* </span>是否强制更新</label>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- 第三行 -->
-                <div class="col s12">
-                    <!-- 版本序号 -->
-                    <div class=" col s6 p0">
-                        <div class="col s12 input-field">
-                            <input type="text" id="updateAppVersionNum" maxlength="9" valid-num ng-model="appInfo.versionNum">
-                            <label for="updateAppVersionNum"><span style="color: red">* </span>版本序号</label>
-                        </div>
-                    </div>
-
-                    <!-- 最低支持版本序号 -->
-                    <div class=" col s6 input-field">
-                        <input type="text" id="updateAppMinVersionNum" maxlength="9" valid-num ng-model="appInfo.floorVersionNumber">
-                        <label for="updateAppMinVersionNum"><span style="color: red">* </span>最低支持版本序号</label>
-                    </div>
-                </div>
-
-                <!-- 下载地址 -->
-                <div class="col s12 " style="margin-bottom:  20px;">
+            <!-- 第二行 -->
+            <div class="col s12">
+                <!-- 版本号 -->
+                <div class=" col s6 p0">
                     <div class="col s12 input-field">
-                        <input type="text" name="url" id="updateUploadUrl" maxlength="200" ng-model="appInfo.url">
-                        <label for="updateUploadUrl"><span style="color: red">* </span>下载地址</label>
+                        <input type="text" id="updateAppVersion" maxlength="20" ng-model="appInfo.version">
+                        <label for="updateAppVersion"><span style="color: red">* </span>版本号</label>
                     </div>
                 </div>
 
-                <!-- 描述 -->
-                <div class="col s12">
-                    <div class="col s12 input-field">
-                        <textarea id="remark" class="materialize-textarea" style="padding: 10px 0 0 0;" maxlength="400" ng-model="appInfo.remark"></textarea>
-                        <label for="remark">描述</label>
+                <!-- 是否强制更新 -->
+                <div class=" col s6 p0">
+                    <div class="input-field col s12">
+                        <select material-select ng-model="appInfo.forceUpdate">
+                            <option value="" disabled>请选择</option>
+                            <option ng-repeat="op in forceUpdates" ng-value="{{op.id}}">{{op.name}}</option>
+                        </select>
+                        <label><span style="color: red">* </span>是否强制更新</label>
                     </div>
                 </div>
             </div>
 
-            <!-- 分割线 -->
-            <div class="divider col s12" style="margin-top: 10px;"></div>
+            <!-- 第三行 -->
+            <div class="col s12">
+                <!-- 版本序号 -->
+                <div class=" col s6 p0">
+                    <div class="col s12 input-field">
+                        <input type="text" id="updateAppVersionNum" maxlength="9" valid-num ng-model="appInfo.versionNum">
+                        <label for="updateAppVersionNum"><span style="color: red">* </span>版本序号</label>
+                    </div>
+                </div>
 
-            <!-- 取消/确认 按钮 -->
-            <div class="row col right-align" style="width: 96%;margin-top: 20px;">
-                <a class="btn-floating waves-effect waves-light grey btn modal-close">
-                    <i class="mdi mdi-close"></i>
-                </a>
-                <a class="btn-floating waves-effect waves-light cyan lighten-1 btn" style="margin-left: 20px;"
-                   ng-click="saveAppInfo()">
-                    <i class="mdi mdi-check"></i>
-                </a>
+                <!-- 最低支持版本序号 -->
+                <div class=" col s6 input-field">
+                    <input type="text" id="updateAppMinVersionNum" maxlength="9" valid-num ng-model="appInfo.floorVersionNumber">
+                    <label for="updateAppMinVersionNum"><span style="color: red">* </span>最低支持版本序号</label>
+                </div>
+            </div>
+
+            <!-- 下载地址 -->
+            <div class="col s12 " style="margin-bottom:  20px;">
+                <div class="col s12 input-field">
+                    <input type="text" name="url" id="updateUploadUrl" maxlength="200" ng-model="appInfo.url">
+                    <label for="updateUploadUrl"><span style="color: red">* </span>下载地址</label>
+                </div>
+            </div>
+
+            <!-- 描述 -->
+            <div class="col s12">
+                <div class="col s12 input-field">
+                    <textarea id="remark" class="materialize-textarea" style="padding: 10px 0 0 0;" maxlength="200" ng-model="appInfo.remark"></textarea>
+                    <label for="remark">描述</label>
+                </div>
             </div>
         </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="modal-footer right-align">
+        <a class="btn-floating waves-effect waves-light btn cyan lighten-1" style="width:38px;height:38px; margin-right: 50px;"
+           ng-click="saveAppInfo()">
+            <i class="mdi mdi-check"></i>
+        </a>
+        <a class="btn-floating waves-effect waves-light btn modal-close grey" style="width:38px;height:38px; margin-right: 20px;">
+            <i class="mdi mdi-close"></i>
+        </a>
+        <!--<div class="col s12">-->
+            <!--&lt;!&ndash; 取消 按钮 &ndash;&gt;-->
+            <!--<div class="col s2 offset-s4">-->
+                <!--<a style="width: 100%" class="modal-action modal-close waves-light waves-effect grey lighten-1 btn">取消</a>-->
+            <!--</div>-->
+            <!--&lt;!&ndash; 确定 按钮 &ndash;&gt;-->
+            <!--<div class="col s2">-->
+                <!--<a ng-click="updateStorageInfo()" style="width: 100%" class="waves-light waves-effect cyan lighten-1 btn">确定</a>-->
+            <!--</div>-->
+        <!--</div>-->
     </div>
 </div>
 
