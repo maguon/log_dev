@@ -384,6 +384,7 @@ app.controller("ship_trans_info_controller", ["$scope", "$rootScope", "_host", "
     $scope.openSeaTransportOrderDiv = function () {
         $('.modal').modal();
         $('#newSeaTransportOrderDiv').modal('open');
+
         // 取得制造商列表
         getCarMakerList();
 
@@ -804,10 +805,10 @@ app.controller("ship_trans_info_controller", ["$scope", "$rootScope", "_host", "
                 }
 
                 // 跳转到 详情画面
-                $state.go('ship_trans_order_detail', {
+                $state.go('ship_trans_info_detail', {
                     reload: true,
                     id: transId,
-                    from: 'ship_trans_order'
+                    from: 'ship_trans_info'
                 });
             })
         } else {

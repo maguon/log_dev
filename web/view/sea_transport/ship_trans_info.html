@@ -209,7 +209,7 @@
                 <td ng-class="{'red-text':el.ship_trans_status == 1,'cyan-text':el.ship_trans_status == 2}">{{shipTransStatus[el.ship_trans_status-1].name}}</td>
                 <!--操作-->
                 <td class="operation center">
-                    <i class="mdi mdi-car look_icon cyan-text lighten-1" ng-click="openEditPort(el)"></i>
+                    <i ng-show="el.vin!=null && el.vin!=''" class="mdi mdi-car look_icon cyan-text lighten-1" ng-click="openEditPort(el)"></i>
                     <a href="#" ui-sref="ship_trans_info_detail({id:el.id,from:'ship_trans_info'})">
                         <i class="mdi mdi-file-outline look_icon cyan-text lighten-1"></i>
                     </a>
@@ -234,254 +234,247 @@
     </div>
 </div>
 
+
 <!-- 画面【新增海运】 模态框 -->
-<div class="row" style="margin: 0">
-    <div id="newSeaTransportOrderDiv" class="modal" style="width: 45%;height: 600px"
-         ng-class="{ 'payment-height':otherOrderList}">
-        <div class="modal-content center fz20" style="font-weight: 500;padding: 0">
+<div id="newSeaTransportOrderDiv" class="modal modal-fixed-footer row" style="max-height: 606px;">
 
-            <!-- 显示画面【新增海运】 Header -->
-            <div class="col s12 vc-center cyan"
-                 style="color: white;letter-spacing:1px;font-weight: bold;height: 50px;">
-                <p>新增海运海运</p>
-            </div>
+    <!-- Header -->
+    <div class="modal_title center-align cyan white-text">新增海运</div>
 
-            <!-- 订单信息 -->
-            <div class="col s12">
+    <!-- Body -->
+    <div class="modal-content" style="max-height: 500px;">
 
-                <!-- 始发港口 -->
-                <div class="input-field col s4">
-                    <div class="col s12">
-                        <select material-select watch ng-model="newShippingOrder.startPort" style="width:95%;">
-                            <option value="">始发港口</option>
-                            <option ng-repeat="el in portList" ng-value="el" >{{el.port_name}}</option>
-                        </select>
-                    </div>
-                </div>
-                <!-- 目的港口 -->
-                <div class="input-field col s4">
-                    <div class="col s12">
-                    <select material-select watch ng-model="newShippingOrder.endPort" style="width:95%;">
-                        <option value="">目的港口</option>
+        <!-- 订单信息 -->
+        <div class="col s12">
+
+            <!-- 始发港口 -->
+            <div class="input-field col s4">
+                <div class="col s12">
+                    <select material-select watch ng-model="newShippingOrder.startPort" style="width:95%;">
+                        <option value="">始发港口</option>
                         <option ng-repeat="el in portList" ng-value="el" >{{el.port_name}}</option>
                     </select>
-                    </div>
                 </div>
-                <!-- 预计开船日期 -->
-                <div class="input-field col s4">
-                    <div class="col s12">
-                        <input id="sailingDayText" type="text" ng-model="newShippingOrder.sailingDay" class="datepicker" date>
-                        <i class="mdi dataIcon mdi-table-large" style="right: 22px;"></i>
-                        <label for="sailingDayText"><span class="red-text">*</span> 预计开船日期</label>
-                    </div>
+            </div>
+            <!-- 目的港口 -->
+            <div class="input-field col s4">
+                <div class="col s12">
+                <select material-select watch ng-model="newShippingOrder.endPort" style="width:95%;">
+                    <option value="">目的港口</option>
+                    <option ng-repeat="el in portList" ng-value="el" >{{el.port_name}}</option>
+                </select>
                 </div>
-
-                <!-- 船公司 -->
-                <div class="input-field col s4">
-                    <div class="col s12">
-                    <select material-select watch ng-model="newShippingOrder.shippingCoId">
-                        <option value="">船公司</option>
-                        <option ng-repeat="el in shippingCoList" ng-value="el.id">{{el.ship_company_name}}</option>
-                    </select>
-                    </div>
-                </div>
-                <!-- 船名 -->
-                <div class="input-field col s4">
-                    <div class="col s12">
-                        <input type="text" id="newShipNameText" ng-model="newShippingOrder.shipName">
-                        <label for="newShipNameText"><span class="red-text">*</span> 船名</label>
-                    </div>
-                </div>
-                <!-- 预计到港日期 -->
-                <div class="input-field col s4">
-                    <div class="col s12">
-                        <input id="arrivalDayText" type="text" ng-model="newShippingOrder.arrivalDay" class="datepicker" date>
-                        <i class="mdi dataIcon mdi-table-large" style="right: 22px;"></i>
-                        <label for="arrivalDayText" style="position: absolute;padding-left: 12px;">预计到港日期</label>
-                    </div>
-                </div>
-
-                <!-- 货柜 -->
-                <div class="input-field col s4">
-                    <div class="col s12">
-                        <input type="text" id="newCounterText" ng-model="newShippingOrder.container">
-                        <label for="newCounterText"><span class="red-text">*</span> 货柜</label>
-                    </div>
-                </div>
-
-                <!-- booking -->
-                <div class="input-field col s4">
-                    <div class="col s12">
-                        <input type="text" id="newBookingText" ng-model="newShippingOrder.booking">
-                        <label for="newBookingText"><span class="red-text">*</span> booking</label>
-                    </div>
-                </div>
-
-                <!-- 封签 -->
-                <div class="input-field col s4">
-                    <div class="col s12">
-                        <input type="text" id="newSealText" ng-model="newShippingOrder.tab">
-                        <label for="newSealText" style="position: absolute;padding-left: 12px;">封签</label>
-                    </div>
+            </div>
+            <!-- 预计开船日期 -->
+            <div class="input-field col s4">
+                <div class="col s12">
+                    <input id="sailingDayText" type="text" ng-model="newShippingOrder.sailingDay" class="datepicker" date>
+                    <i class="mdi dataIcon mdi-table-large" style="right: 22px;"></i>
+                    <label for="sailingDayText"><span class="red-text">*</span> 预计开船日期</label>
                 </div>
             </div>
 
-            <!-- VIN -->
-            <div class="col s12">
-                <div class="input-field col" style="width: 99%;padding-left: 23px;">
-                    <input type="text" placeholder="模糊查询至少6位，新增车辆完整17位" id="autocomplete-input" ng-change="changeVin()" class="autocomplete" ng-model="newShippingOrder.vin" >
-                    <a ng-if="addCarInfoFlg" ng-click="addCarInfo()" class="dataIcon btn-floating cyan" style="width:20px;height: 20px;">
-                        <i class="mdi mdi-plus" style="position: absolute;right:0px;bottom:0px;font-size:15px;line-height: 20px;"></i>
-                    </a>
-                    <a ng-if="!addCarInfoFlg" class="dataIcon btn-floating grey" style="width:20px;height: 20px;cursor: default">
-                        <i class="mdi mdi-plus" style="position: absolute;right:0px;bottom:0px;font-size:15px;line-height: 20px;"></i>
-                    </a>
-
-                    <label for="autocomplete-input" class="active" style="padding-left: 2px;"><span class="red-text">*</span> VIN</label>
+            <!-- 船公司 -->
+            <div class="input-field col s4">
+                <div class="col s12">
+                <select material-select watch ng-model="newShippingOrder.shippingCoId">
+                    <option value="">船公司</option>
+                    <option ng-repeat="el in shippingCoList" ng-value="el.id">{{el.ship_company_name}}</option>
+                </select>
+                </div>
+            </div>
+            <!-- 船名 -->
+            <div class="input-field col s4">
+                <div class="col s12">
+                    <input type="text" id="newShipNameText" ng-model="newShippingOrder.shipName">
+                    <label for="newShipNameText"><span class="red-text">*</span> 船名</label>
+                </div>
+            </div>
+            <!-- 预计到港日期 -->
+            <div class="input-field col s4">
+                <div class="col s12">
+                    <input id="arrivalDayText" type="text" ng-model="newShippingOrder.arrivalDay" class="datepicker" date>
+                    <i class="mdi dataIcon mdi-table-large" style="right: 22px;"></i>
+                    <label for="arrivalDayText" style="position: absolute;padding-left: 12px;">预计到港日期</label>
                 </div>
             </div>
 
-            <!-- 新增车辆信息(自定义) -->
-            <div ng-show="showCustomCarDiv" class="col s12 vc-center">
-                <div class="row blue-grey lighten-5" style="width: 95%;border:1px solid #bdbdbd;margin-top: 20px;">
-                    <!-- header -->
-                    <div class="col s12 lighten-1 cyan-text fz14 left-align vc-center" style="height:30px;">
-                        <div class="col s12 left-align">
-                            新增车辆信息
-                        </div>
-                    </div>
-
-                    <!-- body -->
-                    <div class="col s12 lighten-1 white grey-text vc-center">
-                        <div class="input-field col s3 left-align fz15">VIN码:{{customCarInfo.vin}}
-                        </div>
-                        <div class="input-field col s3 left-align">
-                            <select material-select watch ng-model="customCarInfo.maker" ng-change="changeMakerId(customCarInfo.maker.id)">
-                                <option value="" selected>制造商</option>
-                                <option ng-repeat="el in carMakerList" ng-value="el">{{el.make_name}}</option>
-                            </select>
-                        </div>
-                        <div class="input-field col s3 left-align">
-                            <select material-select watch ng-model="customCarInfo.model">
-                                <option value="" selected>型号</option>
-                                <option ng-repeat="el in carModelList" ng-value="el">{{el.model_name}}</option>
-                            </select>
-                        </div>
-                        <div class="input-field col s3 left-align">
-                            <input id="proDateText" type="text" maxlength="4" valid-num ng-model="customCarInfo.proDate">
-                            <label for="proDateText">年份</label>
-                        </div>
-                    </div>
-
-                    <div class="col s12 lighten-1 white grey-text vc-center">
-                        <div class="input-field col s3 left-align">
-                            <select material-select watch ng-model="customCarInfo.colour">
-                                <option value="" selected>颜色</option>
-                                <option ng-repeat="el in configColor" ng-value="el.colorId">{{el.colorName}}</option>
-                            </select>
-                        </div>
-                        <div class="input-field col s3 left-align">
-                            <input type="text" id="newCarColoText" ng-model="customCarInfo.engineNum">
-                            <label for="newCarColoText">发动机号</label>
-                        </div>
-                        <!-- 委托方 -->
-                        <div class="input-field col s3 left-align">
-                            <select id="addEntrustSelect" style="width: 100%"></select>
-                        </div>
-                        <div class="input-field col s3 left-align">
-                            <input type="text" id="newCarloText" maxlength="8" valid-money ng-model="customCarInfo.valuation">
-                            <label for="newCarloText">车价(美元)</label>
-                        </div>
-                    </div>
-
-                    <!-- 取消/确认 按钮 -->
-                    <div class="col s12 right-align white" style="padding-top: 5px;padding-right: 25px;padding-bottom: 5px;">
-                        <a class="btn-floating waves-effect waves-light grey" style="width:30px;height: 30px;" ng-click="closeCustomCarDiv()">
-                            <i class="mdi mdi-close add_brand"  style="position: absolute;right:0;bottom:3px;font-size:20px;line-height: 20px;"></i>
-                        </a>
-
-                        <a class="btn-floating waves-effect waves-light cyan lighten-1" style="margin-left: 20px;width:30px;height: 30px;"
-                           ng-click="createCustomCar()">
-                            <i class="mdi mdi-check add_brand"  style="position: absolute;right:0;bottom:3px;font-size:20px;line-height: 20px;"></i>
-                        </a>
-                    </div>
+            <!-- 货柜 -->
+            <div class="input-field col s4">
+                <div class="col s12">
+                    <input type="text" id="newCounterText" ng-model="newShippingOrder.container">
+                    <label for="newCounterText"><span class="red-text">*</span> 货柜</label>
                 </div>
             </div>
 
-            <!-- 新增运送车辆信息列表 -->
-            <!--<div ng-show="true" class="col s12 vc-center">-->
-            <div ng-show="showCarListDiv" class="col s12 vc-center">
-                <div class="row" style="width: 95%;margin-top: 20px;">
-                    <div class="col s12" ng-repeat="newCar in newCarList" style="margin-bottom: 20px;">
-                        <!-- header -->
-                        <div class="col s12 lighten-1 cyan-text fz14 vc-center" style="height:40px;border:1px solid #bdbdbd;">
-                            <div class="col s6 left-align">
-                                委托方：{{newCar.entrustNm}}
-                            </div>
-                            <div class="col s6 right-align" ng-click="removeCar($index)">
-                                <i class="mdi mdi-close red-text right-align" style="cursor:pointer; right: 22px;"></i>
-                            </div>
-
-                        </div>
-
-                        <div class="col s12 lighten-1 white grey-text vc-center fz12"  style="height:64px;border:1px solid #bdbdbd;border-top:0px solid #bdbdbd;">
-                            <div class="col s4 left-align">VIN码:{{newCar.vin}}
-                            </div>
-                            <div class="col s4 left-align">制造商:{{newCar.maker.make_name}}
-                            </div>
-                            <div class="col s4 left-align">品牌:{{newCar.model.model_name}}
-                            </div>
-                        </div>
-
-                        <div class="col s12 lighten-1 white grey-text vc-center fz12"  style="height:64px;border:1px solid #bdbdbd;border-top:0px solid #bdbdbd;">
-                            <div class="col s4 left-align">年份:{{newCar.proDate}}
-                            </div>
-                            <div class="col s4 left-align">车价(美元):{{newCar.valuation}}
-                            </div>
-                            <div class="col s4 input-field left-align">
-                                <div class="col s12">
-                                    <input type="text" id="shipTransFeesText" maxlength="8" valid-money ng-blur="calcTotalFees()" ng-model="newCar.shipTransFees">
-                                    <label for="shipTransFeesText" class="active"><span class="red-text">*</span>运费(美元):</label>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+            <!-- booking -->
+            <div class="input-field col s4">
+                <div class="col s12">
+                    <input type="text" id="newBookingText" ng-model="newShippingOrder.booking">
+                    <label for="newBookingText"><span class="red-text">*</span> booking</label>
                 </div>
             </div>
 
-            <!-- 分单 / 运费(美元) -->
-            <div class="col s12" style="padding-top: 20px;padding-left: 23px;">
-                <div class="col s6 left-align">
-                    <label class="fz15">分单：{{partTypes[newShippingOrder.partStatus - 1].name}}</label>
+            <!-- 封签 -->
+            <div class="input-field col s4">
+                <div class="col s12">
+                    <input type="text" id="newSealText" ng-model="newShippingOrder.tab">
+                    <label for="newSealText" style="position: absolute;padding-left: 12px;">封签</label>
                 </div>
-                <div class="col s6 right-align" style="padding-right: 23px;">
-                    <label class="fz15">运费(美元)：<span class="red-text">{{newShippingOrder.totalShipTransFees | currency}}</span></label>
-                </div>
-            </div>
-
-            <!-- 海运备注 -->
-            <div class="col s12">
-                <div class="input-field col" style="width: 99%;padding-left: 23px;">
-                    <input type="text" id="remarkText" ng-model="newShippingOrder.remark">
-                    <label for="remarkText" style="padding-left: 10px;">海运备注</label>
-                </div>
-            </div>
-
-            <!-- 分割线 -->
-            <div class="divider col s12" style="margin-top: 50px;"></div>
-
-            <!-- 取消/确认 按钮 -->
-            <div class="row col right-align" style="width: 96%;margin-top: 20px;">
-                <a class="btn-floating waves-effect waves-light grey btn modal-close">
-                    <i class="mdi mdi-close"></i>
-                </a>
-
-                <a class="btn-floating waves-effect waves-light cyan lighten-1 btn" style="margin-left: 20px;"
-                   ng-click="createShipTransOrder()">
-                    <i class="mdi mdi-check"></i>
-                </a>
             </div>
         </div>
+
+        <!-- VIN -->
+        <div class="col s12">
+            <div class="input-field col" style="width: 99%;padding-left: 23px;">
+                <input type="text" placeholder="模糊查询至少6位，新增车辆完整17位" id="autocomplete-input" ng-change="changeVin()" class="autocomplete" ng-model="newShippingOrder.vin" >
+                <a ng-if="addCarInfoFlg" ng-click="addCarInfo()" class="dataIcon btn-floating cyan" style="width:20px;height: 20px;">
+                    <i class="mdi mdi-plus" style="position: absolute;right:0px;bottom:0px;font-size:15px;line-height: 20px;"></i>
+                </a>
+                <a ng-if="!addCarInfoFlg" class="dataIcon btn-floating grey" style="width:20px;height: 20px;cursor: default">
+                    <i class="mdi mdi-plus" style="position: absolute;right:0px;bottom:0px;font-size:15px;line-height: 20px;"></i>
+                </a>
+
+                <label for="autocomplete-input" class="active" style="padding-left: 2px;"><span class="red-text">*</span> VIN</label>
+            </div>
+        </div>
+
+        <!-- 新增车辆信息(自定义) -->
+        <div ng-show="showCustomCarDiv" class="col s12 vc-center">
+            <div class="row blue-grey lighten-5" style="width: 95%;border:1px solid #bdbdbd;margin-top: 20px;">
+                <!-- header -->
+                <div class="col s12 lighten-1 cyan-text fz14 left-align vc-center" style="height:30px;">
+                    <div class="col s12 left-align">
+                        新增车辆信息
+                    </div>
+                </div>
+
+                <!-- body -->
+                <div class="col s12 lighten-1 white grey-text vc-center">
+                    <div class="input-field col s3 left-align fz15">VIN码:{{customCarInfo.vin}}
+                    </div>
+                    <div class="input-field col s3 left-align">
+                        <select material-select watch ng-model="customCarInfo.maker" ng-change="changeMakerId(customCarInfo.maker.id)">
+                            <option value="" selected>制造商</option>
+                            <option ng-repeat="el in carMakerList" ng-value="el">{{el.make_name}}</option>
+                        </select>
+                    </div>
+                    <div class="input-field col s3 left-align">
+                        <select material-select watch ng-model="customCarInfo.model">
+                            <option value="" selected>型号</option>
+                            <option ng-repeat="el in carModelList" ng-value="el">{{el.model_name}}</option>
+                        </select>
+                    </div>
+                    <div class="input-field col s3 left-align">
+                        <input id="proDateText" type="text" maxlength="4" valid-num ng-model="customCarInfo.proDate">
+                        <label for="proDateText">年份</label>
+                    </div>
+                </div>
+
+                <div class="col s12 lighten-1 white grey-text vc-center">
+                    <div class="input-field col s3 left-align">
+                        <select material-select watch ng-model="customCarInfo.colour">
+                            <option value="" selected>颜色</option>
+                            <option ng-repeat="el in configColor" ng-value="el.colorId">{{el.colorName}}</option>
+                        </select>
+                    </div>
+                    <div class="input-field col s3 left-align">
+                        <input type="text" id="newCarColoText" ng-model="customCarInfo.engineNum">
+                        <label for="newCarColoText">发动机号</label>
+                    </div>
+                    <!-- 委托方 -->
+                    <div class="input-field col s3 left-align">
+                        <select id="addEntrustSelect" style="width: 100%"></select>
+                    </div>
+                    <div class="input-field col s3 left-align">
+                        <input type="text" id="newCarloText" maxlength="8" valid-money ng-model="customCarInfo.valuation">
+                        <label for="newCarloText">车价(美元)</label>
+                    </div>
+                </div>
+
+                <!-- 取消/确认 按钮 -->
+                <div class="col s12 right-align white" style="padding-top: 5px;padding-right: 25px;padding-bottom: 5px;">
+                    <a class="btn-floating waves-effect waves-light grey" style="width:30px;height: 30px;" ng-click="closeCustomCarDiv()">
+                        <i class="mdi mdi-close add_brand"  style="position: absolute;right:0;bottom:3px;font-size:20px;line-height: 20px;"></i>
+                    </a>
+
+                    <a class="btn-floating waves-effect waves-light cyan lighten-1" style="margin-left: 20px;width:30px;height: 30px;"
+                       ng-click="createCustomCar()">
+                        <i class="mdi mdi-check add_brand"  style="position: absolute;right:0;bottom:3px;font-size:20px;line-height: 20px;"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- 新增运送车辆信息列表 -->
+        <!--<div ng-show="true" class="col s12 vc-center">-->
+        <div ng-show="showCarListDiv" class="col s12 vc-center">
+            <div class="row" style="width: 95%;margin-top: 20px;">
+                <div class="col s12" ng-repeat="newCar in newCarList" style="margin-bottom: 20px;">
+                    <!-- header -->
+                    <div class="col s12 lighten-1 cyan-text fz14 vc-center" style="height:40px;border:1px solid #bdbdbd;">
+                        <div class="col s6 left-align">
+                            委托方：{{newCar.entrustNm}}
+                        </div>
+                        <div class="col s6 right-align" ng-click="removeCar($index)">
+                            <i class="mdi mdi-close red-text right-align" style="cursor:pointer; right: 22px;"></i>
+                        </div>
+
+                    </div>
+
+                    <div class="col s12 lighten-1 white grey-text vc-center fz12"  style="height:64px;border:1px solid #bdbdbd;border-top:0px solid #bdbdbd;">
+                        <div class="col s4 left-align">VIN码:{{newCar.vin}}
+                        </div>
+                        <div class="col s4 left-align">制造商:{{newCar.maker.make_name}}
+                        </div>
+                        <div class="col s4 left-align">品牌:{{newCar.model.model_name}}
+                        </div>
+                    </div>
+
+                    <div class="col s12 lighten-1 white grey-text vc-center fz12"  style="height:64px;border:1px solid #bdbdbd;border-top:0px solid #bdbdbd;">
+                        <div class="col s4 left-align">年份:{{newCar.proDate}}
+                        </div>
+                        <div class="col s4 left-align">车价(美元):{{newCar.valuation}}
+                        </div>
+                        <div class="col s4 input-field left-align">
+                            <div class="col s12">
+                                <input type="text" id="shipTransFeesText" maxlength="8" valid-money ng-blur="calcTotalFees()" ng-model="newCar.shipTransFees">
+                                <label for="shipTransFeesText" class="active"><span class="red-text">*</span>运费(美元):</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 分单 / 运费(美元) -->
+        <div class="col s12" style="padding-top: 20px;padding-left: 23px;">
+            <div class="col s6 left-align">
+                <label class="fz15">分单：{{partTypes[newShippingOrder.partStatus - 1].name}}</label>
+            </div>
+            <div class="col s6 right-align" style="padding-right: 23px;">
+                <label class="fz15">运费(美元)：<span class="red-text">{{newShippingOrder.totalShipTransFees | currency}}</span></label>
+            </div>
+        </div>
+
+        <!-- 海运备注 -->
+        <div class="col s12">
+            <div class="input-field col" style="width: 99%;padding-left: 23px;">
+                <input type="text" id="remarkText" maxlength="200" ng-model="newShippingOrder.remark">
+                <label for="remarkText" style="padding-left: 10px;">海运备注</label>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="modal-footer right-align">
+        <a class="btn-floating waves-effect waves-light btn cyan lighten-1" style="width:38px;height:38px; margin-right: 50px;"
+           ng-click="createShipTransOrder()">
+            <i class="mdi mdi-check"></i>
+        </a>
+        <a class="btn-floating waves-effect waves-light btn modal-close grey" style="width:38px;height:38px; margin-right: 20px;">
+            <i class="mdi mdi-close"></i>
+        </a>
     </div>
 </div>
 
