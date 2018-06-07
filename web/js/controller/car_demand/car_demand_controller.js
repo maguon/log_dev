@@ -16,7 +16,8 @@ app.controller("car_demand_controller", ["$scope", "$rootScope", "_host", "_basi
     $scope.shipTransStatus = _config.shipTransStatus;
     // 是否MSO车辆 列表
     $scope.msoFlags = _config.msoFlags;
-
+    // 是否金融车
+    $scope.purchaseTypes = _config.purchaseTypes;
 
     /**
      * 当车辆品牌变更时，车辆型号要进行联动刷新。
@@ -165,7 +166,8 @@ app.controller("car_demand_controller", ["$scope", "$rootScope", "_host", "_basi
             makeId:$scope.conditionMakeId,
             modelId:$scope.conditionModelId,
             entrustId:$scope.entrust.id,
-            msoStatus:$scope.conditionMsoId,
+            // 是否金融车
+            purchaseType:$scope.conditionPurchaseType,
             enterStart:$scope.conditionEnterTimeStart,
             enterEnd:$scope.conditionEnterTimeEnd,
             realStart:$scope.conditionOutTimeStart,

@@ -61,11 +61,11 @@
                         </select>
                     </div>
 
-                    <!-- 查询条件：是否MSO -->
+                    <!-- 查询条件：是否金融车 -->
                     <div class="input-field col" style="width: 20%;">
-                        <select material-select watch ng-model="conditionMsoId">
-                            <option value="" selected>是否MSO</option>
-                            <option ng-repeat="mso in msoFlags" ng-value="mso.id">{{mso.name}}</option>
+                        <select material-select watch ng-model="conditionPurchaseType">
+                            <option value="" selected>是否金融车</option>
+                            <option ng-repeat="el in purchaseTypes" ng-value="el.id">{{el.name}}</option>
                         </select>
                     </div>
 
