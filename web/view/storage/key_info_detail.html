@@ -78,115 +78,111 @@
 
 
 <!-- 显示画面【钥匙信息】 模态框 -->
-<div class="row" style="margin: 0">
-    <div id="carKeyInfo" class="modal" style="width: 45%;height: 520px">
-        <div class="modal-content center fz20" style="font-weight: 500;padding: 0">
+<div id="carKeyInfo" class="modal modal-fixed-footer row" style="max-height: 516px;">
 
-            <!-- 显示画面【钥匙信息】 Header -->
-            <div class="row col s12 vc-center cyan"
-                 style="color: white;letter-spacing:1px;font-weight: bold;height: 50px;">
-                <p>钥匙信息</p>
-            </div>
+    <!-- Header -->
+    <div class="modal_title center-align cyan white-text">钥匙信息</div>
 
+    <!-- Body -->
+    <div class="modal-content center fz20" style="font-weight: 500;padding: 0">
 
-            <div class="row col" style="width: 95%; margin: 30px 0px 0px 10px;">
+        <div class="row col" style="width: 95%; margin: 30px 0px 0px 10px;">
 
-                <div class="col s12">
-                    <!-- 钥匙 钥匙柜名称 -->
-                    <div class="col s6 left-align cyan-text fz30 context-ellipsis" style="width: 460px;">
-                        <i class="mdi mdi-key-variant lighten-1"></i>
-                        <span style="position: relative; left: 20px;" ng-bind="keyCabinetNm"></span>
-                    </div>
-
-                    <!-- 钥匙 扇区位置 -->
-                    <div class="col s6 right-align">
-                        <div class="col cyan-text right-align context-ellipsis" style="width: 52%;">{{keyInfo.zoneNm}}</div>
-                        <div class="col black-text" style="width: 14.6666666666%;">扇区</div>
-                        <div class="col s2 cyan-text right-align">{{keyInfo.row}} <span class="black-text">排</span></div>
-                        <div class="col s2 cyan-text right-align">{{keyInfo.col}} <span class="black-text">列</span></div>
-                    </div>
+            <div class="col s12">
+                <!-- 钥匙 钥匙柜名称 -->
+                <div class="col s6 left-align cyan-text fz30 context-ellipsis" style="width: 460px;">
+                    <i class="mdi mdi-key-variant lighten-1"></i>
+                    <span style="position: relative; left: 20px;" ng-bind="keyCabinetNm"></span>
                 </div>
-            </div>
 
-            <!-- 显示画面【钥匙信息】 Body -->
-            <div class="row col s11" style="padding:0 ;margin: 10px 0px 10px 40px ; border: 1px solid #cccccc">
-                <div style="margin: 0 auto">
-
-                    <!-- 钥匙 车辆信息 -->
-                    <div class="vc-center col s12 left-align cyan-text fz20 blue-grey lighten-4"
-                         style="height:50px ; border-bottom:2px solid #cccccc">
-                        <span style="position: absolute; left: 55px;">车辆信息</span>
-                    </div>
-
-                    <!-- 钥匙 vin 制造商 型号 -->
-                    <div class="vc-center col s12 left-align black-text fz14" style="height:50px ;">
-                        <div class="col s4 left-align context-ellipsis">
-                            <span>VIN码：{{keyInfo.carVin}}</span>
-                        </div>
-                        <div class="col s4 left-align context-ellipsis">
-                            <span>制造商：{{keyInfo.carMaker}}</span>
-                        </div>
-                        <div class="col s4 left-align context-ellipsis">
-                            <span>型号：{{keyInfo.carModel}}</span>
-                        </div>
-                    </div>
-
-                    <div class="col s12"
-                         style="border-top: #cccccc 1px dashed; overflow: hidden;width:95%; margin-left: 20px;height: 1px"></div>
-
-                    <!-- 钥匙 年份 -->
-                    <div class="vc-center col s12 left-align black-text fz14" style="height:50px ;">
-                        <div class="col s4 left-align context-ellipsis">
-                            <span>年份：{{keyInfo.carProDate}}</span>
-                        </div>
-                        <div class="col s4 left-align context-ellipsis">
-                            <span>颜色：{{keyInfo.carColor}}</span>
-                        </div>
-                        <div class="col s4 left-align context-ellipsis">
-                            <span>发动机号：{{keyInfo.carEngineNum}}</span>
-                        </div>
-                    </div>
-
-                    <div class="col s12"
-                         style="border-top: #cccccc 1px dashed; overflow: hidden;width:95%; margin-left: 20px;height: 1px;"></div>
-
-                    <!-- 钥匙 存放位置 -->
-                    <div class="vc-center col s12 left-align black-text fz14" style="height:50px;">
-                        <div class="col s4 left-align context-ellipsis">
-                            <span>存放位置：{{keyInfo.carPosition}}</span>
-                        </div>
-                        <div class="col s4 left-align context-ellipsis">
-                            <span >入库时间：{{keyInfo.carEnterTime |date:'yyyy-MM-dd HH:mm:ss'}}</span>
-                        </div>
-                        <div class="col s4 left-align context-ellipsis">
-                            <span >计划出库时间：{{keyInfo.carPlanOutTime |date:'yyyy-MM-dd HH:mm:ss'}}</span>
-                        </div>
-                    </div>
-
-                    <div class="col s12"
-                         style="border-top: #cccccc 1px dashed; overflow: hidden;width:95%; margin-left: 20px;height: 1px"></div>
-
-                    <!-- 钥匙 委托方 -->
-                    <div class="vc-center col s12 left-align black-text fz14" style="height:50px ;">
-                        <div class="col s4 left-align context-ellipsis">
-                            <span>委托方：{{(keyInfo.carEntrust == undefined || keyInfo.carEntrust == null) ? '未知' :keyInfo.carEntrust}}</span>
-                        </div>
-                        <div class="col s4 left-align context-ellipsis">
-                            <span>车辆估值(美元)：<span class="red-text">{{keyInfo.carValuation | currency }}</span></span>
-                        </div>
-                        <div class="col s4 left-align context-ellipsis">
-                            <span>是否MSO车辆：{{keyInfo.carMsoStatus}}</span>
-                        </div>
-                    </div>
+                <!-- 钥匙 扇区位置 -->
+                <div class="col s6 right-align">
+                    <div class="col cyan-text right-align context-ellipsis" style="width: 52%;">{{keyInfo.zoneNm}}</div>
+                    <div class="col black-text" style="width: 14.6666666666%;">扇区</div>
+                    <div class="col s2 cyan-text right-align">{{keyInfo.row}} <span class="black-text">排</span></div>
+                    <div class="col s2 cyan-text right-align">{{keyInfo.col}} <span class="black-text">列</span></div>
                 </div>
-            </div>
-
-            <div class="row col right-align" style="width: 96%;margin-top: 20px;">
-                <button class="btn-floating modal-action modal-close waves-effect waves-light cyan lighten-1 btn">
-                    <i class="mdi mdi-check add_brand"></i>
-                </button>
             </div>
         </div>
 
+        <!-- 显示画面【钥匙信息】 Body -->
+        <div class="row col s11" style="padding:0 ;margin: 10px 0px 10px 40px ; border: 1px solid #cccccc">
+            <div style="margin: 0 auto">
+
+                <!-- 钥匙 车辆信息 -->
+                <div class="vc-center col s12 left-align cyan-text fz20 blue-grey lighten-4"
+                     style="height:50px ; border-bottom:2px solid #cccccc">
+                    <span style="position: absolute; left: 55px;">车辆信息</span>
+                </div>
+
+                <!-- 钥匙 vin 制造商 型号 -->
+                <div class="vc-center col s12 left-align black-text fz14" style="height:50px ;">
+                    <div class="col s4 left-align context-ellipsis">
+                        <span>VIN码：{{keyInfo.carVin}}</span>
+                    </div>
+                    <div class="col s4 left-align context-ellipsis">
+                        <span>制造商：{{keyInfo.carMaker}}</span>
+                    </div>
+                    <div class="col s4 left-align context-ellipsis">
+                        <span>型号：{{keyInfo.carModel}}</span>
+                    </div>
+                </div>
+
+                <div class="col s12"
+                     style="border-top: #cccccc 1px dashed; overflow: hidden;width:95%; margin-left: 20px;height: 1px"></div>
+
+                <!-- 钥匙 年份 -->
+                <div class="vc-center col s12 left-align black-text fz14" style="height:50px ;">
+                    <div class="col s4 left-align context-ellipsis">
+                        <span>年份：{{keyInfo.carProDate}}</span>
+                    </div>
+                    <div class="col s4 left-align context-ellipsis">
+                        <span>颜色：{{keyInfo.carColor}}</span>
+                    </div>
+                    <div class="col s4 left-align context-ellipsis">
+                        <span>发动机号：{{keyInfo.carEngineNum}}</span>
+                    </div>
+                </div>
+
+                <div class="col s12"
+                     style="border-top: #cccccc 1px dashed; overflow: hidden;width:95%; margin-left: 20px;height: 1px;"></div>
+
+                <!-- 钥匙 存放位置 -->
+                <div class="vc-center col s12 left-align black-text fz14" style="height:50px;">
+                    <div class="col s4 left-align context-ellipsis">
+                        <span>存放位置：{{keyInfo.carPosition}}</span>
+                    </div>
+                    <div class="col s4 left-align context-ellipsis">
+                        <span >入库时间：{{keyInfo.carEnterTime |date:'yyyy-MM-dd HH:mm:ss'}}</span>
+                    </div>
+                    <div class="col s4 left-align context-ellipsis">
+                        <span >计划出库时间：{{keyInfo.carPlanOutTime |date:'yyyy-MM-dd HH:mm:ss'}}</span>
+                    </div>
+                </div>
+
+                <div class="col s12"
+                     style="border-top: #cccccc 1px dashed; overflow: hidden;width:95%; margin-left: 20px;height: 1px"></div>
+
+                <!-- 钥匙 委托方 -->
+                <div class="vc-center col s12 left-align black-text fz14" style="height:50px ;">
+                    <div class="col s4 left-align context-ellipsis">
+                        <span>委托方：{{(keyInfo.carEntrust == undefined || keyInfo.carEntrust == null) ? '未知' :keyInfo.carEntrust}}</span>
+                    </div>
+                    <div class="col s4 left-align context-ellipsis">
+                        <span>车辆估值(美元)：<span class="red-text">{{keyInfo.carValuation | currency }}</span></span>
+                    </div>
+                    <div class="col s4 left-align context-ellipsis">
+                        <span>是否MSO车辆：{{keyInfo.carMsoStatus}}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="modal-footer right-align">
+        <a class="btn-floating waves-effect waves-light btn modal-close cyan lighten-1" style="width:38px;height:38px; margin-right: 40px;">
+            <i class="mdi mdi-check"></i>
+        </a>
     </div>
 </div>
