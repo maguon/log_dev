@@ -35,7 +35,7 @@ app.controller("setting_storage_controller", ["$scope", "_basic", "_config", "_h
         angular.copy(initStorageInfo, $scope.storageInfo);
 
         $('.modal').modal();
-        $('#addStorage').modal('open');
+        $('#saveStorageDiv').modal('open');
 
         $('#remark').val('');
         $('#remark').trigger('autoresize');
@@ -55,7 +55,7 @@ app.controller("setting_storage_controller", ["$scope", "_basic", "_config", "_h
 
             _basic.post(_host.api_url + "/admin/" + userId + "/storage", obj).then(function (data) {
                 if (data.success) {
-                    $('#addStorage').modal('close');
+                    $('#saveStorageDiv').modal('close');
                     swal("新增成功", "", "success");
                     // 成功后，刷新页面数据
                     $scope.getStorageList();

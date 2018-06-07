@@ -101,6 +101,9 @@ app.controller("setting_storage_detail_controller", ["$scope", "$state", "$state
 
         $('.modal').modal();
         $('#editStorage').modal('open');
+
+        $('#remark').val($scope.editStorageInfo.remark);
+        $('#remark').trigger('autoresize');
     };
 
     /**
