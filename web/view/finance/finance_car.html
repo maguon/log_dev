@@ -57,13 +57,19 @@
         <!-- 右侧：按钮区 -->
         <div class="col s2" style="margin-top:45px;">
             <!-- 查询按钮-->
-            <div class="col s6 center">
+            <div class="col s4 center">
                 <a class="btn-floating btn-large waves-light waves-effect red lighten-2 btn" ng-click="queryFinanceCarInfo()">
                     <i class="mdi mdi-magnify"></i>
                 </a>
             </div>
+            <!--下载按钮-->
+            <div class="col s4 center">
+                <a class="btn-floating btn-large waves-light waves-effect btn " style="background-color: #fea353;" ng-click="export()">
+                    <i class="mdi mdi-cloud-download"></i>
+                </a>
+            </div>
             <!-- 新增按钮 -->
-            <div class="col s6 center">
+            <div class="col s4 center">
                 <a class=" btn-floating btn-large waves-light waves-effect cyan lighten-1 btn"
                    ng-click="openNewFinanceCarDiv()">
                     <i class="mdi mdi-plus"></i>
