@@ -171,7 +171,7 @@
                     <th data-field="">品牌</th>
                     <th data-field="">型号</th>
                     <th data-field="">委托方</th>
-                    <th data-field="">是否MSO</th>
+                    <!--<th data-field="">是否MSO</th>-->
                     <th data-field="">仓库</th>
                     <th data-field="">入库时间</th>
                     <th data-field="">发船日期</th>
@@ -189,8 +189,8 @@
                     <td ng-bind="el.model_name"></td>
                     <!-- 委托方 -->
                     <td ng-bind="el.short_name"></td>
-                    <!-- 是否MSO -->
-                    <td>{{msoFlags[el.mso_status-1].name}}</td>
+                    <!--&lt;!&ndash; 是否MSO &ndash;&gt;-->
+                    <!--<td>{{msoFlags[el.mso_status-1].name}}</td>-->
                     <!-- 仓库 -->
                     <td>{{el.storage_id==null ? '无' : el.storage_name}}</td>
 
@@ -218,7 +218,7 @@
                     </td>
                 </tr>
                 <tr class="grey-text text-darken-1" ng-if="storageCar.length == 0">
-                    <td colspan="13" style="letter-spacing: 2px;text-align: center;">暂无数据</td>
+                    <td colspan="12" style="letter-spacing: 2px;text-align: center;">暂无数据</td>
                 </tr>
                 </tbody>
             </table>
