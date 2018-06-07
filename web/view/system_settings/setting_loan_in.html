@@ -127,76 +127,71 @@
     </div>
 </div>
 
-<!-- 追加画面【增加贷入公司】 模态框 -->
-<div class="row" style="margin: 0">
-    <div id="addLoanIn" class="modal" style="max-height: 750px;">
-        <div class="modal-content center fz20" style="font-weight: 500;padding: 0">
+<!-- 模态画面【增加贷入公司/贷入公司详情】 模态框 -->
+<div id="saveLoanInDiv" class="modal modal-fixed-footer row" style="max-height: 456px;">
 
-            <!-- 显示画面【增加贷入公司】 Header -->
-            <div class="col s12 vc-center cyan white-text" style="letter-spacing:1px;font-weight: bold;height: 50px;">
-                <p>{{pageId=='add' ? '增加贷入公司':'贷入公司详情'}}</p>
-            </div>
+    <!-- Header -->
+    <div class="modal_title center-align cyan white-text">{{pageId=='add' ? '增加贷入公司':'贷入公司详情'}}</div>
 
-            <!-- 显示画面【增加贷入公司】 Body -->
-            <div class="col" style="width:95%; margin-left: 20px;">
-                <!-- 第一行 -->
-                <div class="col s12" style="margin-top: 40px;">
-                    <!-- 贷入公司名称 -->
-                    <div class="input-field col s6">
-                        <input type="text" id="companyNameText" maxlength="50" ng-model="loanInCoInfo.companyName">
-                        <label for="companyNameText" ng-class="{'label-active':loanInCoInfo.companyName !== ''}"><span class="red-text">*</span>贷入公司名称</label>
-                    </div>
+    <!-- Body -->
+    <div class="modal-content" style="max-height: 350px;">
 
-                    <!-- 基础额度(美元) -->
-                    <div class="input-field col s6">
-                        <input type="text" id="baseMoneyText" maxlength="10" valid-money ng-model="loanInCoInfo.baseMoney">
-                        <label for="baseMoneyText" ng-class="{'label-active':loanInCoInfo.baseMoney !== ''}"><span class="red-text">*</span>基础额度(美元)</label>
-                    </div>
+        <!-- 显示画面【增加贷入公司/贷入公司详情】 Body -->
+        <div class="col" style="width:95%; margin-left: 20px;">
+            <!-- 第一行 -->
+            <div class="col s12" style="margin-top: 30px;">
+                <!-- 贷入公司名称 -->
+                <div class="input-field col s6">
+                    <input type="text" id="companyNameText" maxlength="50" ng-model="loanInCoInfo.companyName">
+                    <label for="companyNameText" ng-class="{'label-active':loanInCoInfo.companyName !== ''}"><span class="red-text">*</span>贷入公司名称</label>
                 </div>
 
-                <!-- 第二行 -->
-                <div class="col s12">
-                    <!-- 联系人 -->
-                    <div class="input-field col s4">
-                        <input type="text" id="contactsText" maxlength="50" ng-model="loanInCoInfo.contacts">
-                        <label for="contactsText" ng-class="{'label-active':loanInCoInfo.contacts !== ''}">联系人</label>
-                    </div>
-
-                    <!-- 联系电话 -->
-                    <div class="input-field col s4">
-                        <input type="text" id="telText" maxlength="50" ng-model="loanInCoInfo.tel">
-                        <label for="telText" ng-class="{'label-active':loanInCoInfo.tel !== ''}">联系电话</label>
-                    </div>
-
-                    <!-- E-mail -->
-                    <div class="input-field col s4">
-                        <input type="text" id="emailText" maxlength="50" ng-model="loanInCoInfo.email">
-                        <label for="emailText" ng-class="{'label-active':loanInCoInfo.email !== ''}">E-mail</label>
-                    </div>
-                </div>
-
-                <!-- 备注 -->
-                <div class="col s12">
-                    <div class="input-field col s12">
-                        <textarea id="remarkText" class="materialize-textarea" style="padding: 10px 0 0 0px;" maxlength="200" ng-model="loanInCoInfo.remark"></textarea>
-                        <label for="remarkText">备注</label>
-                    </div>
+                <!-- 基础额度(美元) -->
+                <div class="input-field col s6">
+                    <input type="text" id="baseMoneyText" maxlength="10" valid-money ng-model="loanInCoInfo.baseMoney">
+                    <label for="baseMoneyText" ng-class="{'label-active':loanInCoInfo.baseMoney !== ''}"><span class="red-text">*</span>基础额度(美元)</label>
                 </div>
             </div>
 
-            <!-- 分割线 -->
-            <div class="divider col s12" style="margin-top: 80px;"></div>
+            <!-- 第二行 -->
+            <div class="col s12">
+                <!-- 联系人 -->
+                <div class="input-field col s4">
+                    <input type="text" id="contactsText" maxlength="50" ng-model="loanInCoInfo.contacts">
+                    <label for="contactsText" ng-class="{'label-active':loanInCoInfo.contacts !== ''}">联系人</label>
+                </div>
 
-            <!-- 取消/确认 按钮 -->
-            <div class="row col right-align" style="width: 96%;margin-top: 20px;">
-                <a class="btn-floating waves-effect waves-light grey btn modal-close">
-                    <i class="mdi mdi-close"></i>
-                </a>
-                <a class="btn-floating waves-effect waves-light cyan lighten-1 btn" style="margin-left: 20px;"
-                   ng-click="saveLoanIn()">
-                    <i class="mdi mdi-check"></i>
-                </a>
+                <!-- 联系电话 -->
+                <div class="input-field col s4">
+                    <input type="text" id="telText" maxlength="50" ng-model="loanInCoInfo.tel">
+                    <label for="telText" ng-class="{'label-active':loanInCoInfo.tel !== ''}">联系电话</label>
+                </div>
+
+                <!-- E-mail -->
+                <div class="input-field col s4">
+                    <input type="text" id="emailText" maxlength="50" ng-model="loanInCoInfo.email">
+                    <label for="emailText" ng-class="{'label-active':loanInCoInfo.email !== ''}">E-mail</label>
+                </div>
+            </div>
+
+            <!-- 备注 -->
+            <div class="col s12">
+                <div class="input-field col s12">
+                    <textarea id="remarkText" class="materialize-textarea" style="padding: 10px 0 0 0px;" maxlength="200" ng-model="loanInCoInfo.remark"></textarea>
+                    <label for="remarkText">备注</label>
+                </div>
             </div>
         </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="modal-footer right-align">
+        <a class="btn-floating waves-effect waves-light btn cyan lighten-1" style="width:38px;height:38px; margin-right: 50px;"
+           ng-click="saveLoanIn()">
+            <i class="mdi mdi-check"></i>
+        </a>
+        <a class="btn-floating waves-effect waves-light btn modal-close grey" style="width:38px;height:38px; margin-right: 20px;">
+            <i class="mdi mdi-close"></i>
+        </a>
     </div>
 </div>
