@@ -100,6 +100,10 @@ app.controller("setting_key_cabinet_detail_controller", ["$scope", "$state", "$s
 
         $('.modal').modal();
         $('#editKeyCabinet').modal('open');
+
+        // textarea 高度调整
+        $('#remark').val($scope.keyCabinetInfo.remark);
+        $('#remark').trigger('autoresize');
     };
 
     /**

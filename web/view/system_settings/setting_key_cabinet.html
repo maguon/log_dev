@@ -1,48 +1,46 @@
 <!-- 主菜单：管理员设置 -> 钥匙柜设置 画面 -->
 
 <!-- 追加画面【增加钥匙柜】 模态框 -->
-<div class="row" style="margin: 0">
-    <div id="addKeyCabinet" class="modal modal-fixed-footer" style="width: 45%;height: 420px">
-        <div class="modal-content center fz20" style="font-weight: 500;padding: 0">
+<div id="addKeyCabinet" class="modal modal-fixed-footer row" style="height: 416px">
 
-            <!-- 追加画面【增加钥匙柜】 Header -->
-            <div class="row col s12 vc-center" style="color: white;letter-spacing:1px;font-weight: bold;height: 50px;background-color:#4e84cb">
-                <p>增加钥匙柜</p>
-            </div>
+    <!-- Header -->
+    <div class="modal_title center-align cyan white-text">增加钥匙柜</div>
 
-            <!-- 追加画面【增加钥匙柜】 Body -->
-            <div class="row col s12">
-                <div style="width: 90%;margin: 0 auto">
-                    <!-- 钥匙柜名称 -->
-                    <div class="col s12 " style="margin-bottom:  40px;">
-                        <div class="col s12 input-field">
-                            <input type="text" maxlength="50" id="keyCabinetName" ng-model="keyCbinetInfo.keyCabinetName">
-                            <label for="keyCabinetName"><span style="color: red">* </span>钥匙柜名称</label>
-                        </div>
+    <!-- Body -->
+    <div class="modal-content" style="max-height: 310px;">
+
+        <!-- 追加画面【增加钥匙柜】 Body -->
+        <div class="row col s12">
+            <div style="width: 90%;margin: 0 auto">
+                <!-- 钥匙柜名称 -->
+                <div class="col s12 " style="margin-bottom:20px;margin-top: 30px;">
+                    <div class="col s12 input-field">
+                        <input type="text" maxlength="50" id="keyCabinetName" ng-model="keyCbinetInfo.keyCabinetName">
+                        <label for="keyCabinetName"><span style="color: red">* </span>钥匙柜名称</label>
                     </div>
+                </div>
 
-                    <!-- 备注 -->
-                    <div class="col s12">
-                        <div class="input-field col s12">
-                            <textarea id="remark"  class="materialize-textarea" ng-model="keyCbinetInfo.remark" style="padding: 10px 0 0 0px;" maxlength="200"></textarea>
-                            <label for="remark">备注</label>
-                        </div>
+                <!-- 备注 -->
+                <div class="col s12">
+                    <div class="input-field col s12">
+                        <textarea id="remark"  class="materialize-textarea" ng-model="keyCbinetInfo.remark" style="padding: 10px 0 0 0px;" maxlength="200"></textarea>
+                        <label for="remark">备注</label>
                     </div>
                 </div>
             </div>
         </div>
+    </div>
 
-        <!-- 追加画面【新增操作】 Footer -->
-        <div class="modal-footer valign-wrapper">
-            <div class="col s12">
-                <!-- 取消 按钮 -->
-                <div class="col s2 offset-s4">
-                    <a style="width: 100%" class="modal-action modal-close waves-light waves-effect grey lighten-1 btn">取消</a>
-                </div>
-                <!-- 确定 按钮 -->
-                <div class="col s2">
-                    <a ng-click="addKeyCabinet()" style="width: 100%" class="waves-light waves-effect cyan lighten-1 btn">确定</a>
-                </div>
+    <!-- Footer -->
+    <div class="modal-footer">
+        <div class="col s12">
+            <!-- 取消 按钮 -->
+            <div class="col s2 offset-s4">
+                <a style="width: 100%" class="modal-action modal-close waves-light waves-effect grey lighten-1 btn">取消</a>
+            </div>
+            <!-- 确定 按钮 -->
+            <div class="col s2">
+                <a ng-click="addKeyCabinet()" style="width: 100%" class="waves-light waves-effect cyan lighten-1 btn">确定</a>
             </div>
         </div>
     </div>
