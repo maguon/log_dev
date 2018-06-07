@@ -1153,3 +1153,8 @@ input[type=text]{
     transform: translateY(-140%);
 }
 
+.client-modal-height {
+    max-height: 516px !important;
+}
+
+

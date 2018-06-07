@@ -1,11 +1,10 @@
 <!-- 模态画面【增加委托方/委托方设置】 模态框 -->
-<div id="saveClientDiv" class="modal modal-fixed-footer row" style="max-height: 556px;">
+<div id="saveClientDiv" class="modal modal-fixed-footer row" style="max-height: 556px;" ng-class="{'client-modal-height':pageId=='add'}">
 
     <!-- Header -->
     <div class="modal_title center-align cyan white-text">{{pageId=='add' ? '增加委托方':'委托方设置'}}</div>
 
     <!-- 编号 -->
-    <div ng-show="pageId=='add'"  class="vc-center fz22" style="height: 50px;"></div>
     <div ng-show="pageId=='edit'" class="vc-center fz22" style="color: #4e84cb;letter-spacing:1px;font-weight: bold;height: 50px;background-color:lightgray">
         <p class="col s2 pull-l10" style="padding-left: 80px;">{{clientInfo.id}}</p>
     </div>
