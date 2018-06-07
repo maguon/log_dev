@@ -23,7 +23,7 @@
                 <!-- 备注 -->
                 <div class="col s12">
                     <div class="col s12 input-field">
-                        <textarea id="remark" class="materialize-textarea" ng-model="keyCabinetInfo.remark" maxlength="200"></textarea>
+                        <textarea id="remark" class="materialize-textarea" ng-model="keyCabinetInfo.remark" style="padding: 10px 0 0 0;" maxlength="200"></textarea>
                         <label for="remark">备注</label>
                     </div>
                 </div>
@@ -32,17 +32,14 @@
     </div>
 
     <!-- Footer -->
-    <div class="modal-footer">
-        <div class="col s12">
-            <!-- 取消 按钮 -->
-            <div class="col s2 offset-s4">
-                <a style="width: 100%" class="modal-action modal-close waves-light waves-effect grey lighten-1 btn">取消</a>
-            </div>
-            <!-- 确定 按钮 -->
-            <div class="col s2">
-                <a ng-click="updateKeyCabinetInfo()" style="width: 100%" class="waves-light waves-effect cyan lighten-1 btn">确定</a>
-            </div>
-        </div>
+    <div class="modal-footer right-align">
+        <a class="btn-floating waves-effect waves-light btn cyan lighten-1" style="width:38px;height:38px; margin-right: 50px;"
+           ng-click="updateKeyCabinetInfo()">
+            <i class="mdi mdi-check"></i>
+        </a>
+        <a class="btn-floating waves-effect waves-light btn modal-close grey" style="width:38px;height:38px; margin-right: 20px;">
+            <i class="mdi mdi-close"></i>
+        </a>
     </div>
 </div>
 
