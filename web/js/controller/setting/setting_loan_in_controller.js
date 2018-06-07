@@ -42,7 +42,7 @@ app.controller("setting_loan_in_controller", ["$scope", "_basic", "_host", funct
 
         // 打开画面
         $('.modal').modal();
-        $('#addLoanIn').modal('open');
+        $('#saveLoanInDiv').modal('open');
 
         // textarea 高度调整
         $('#remarkText').val('');
@@ -53,24 +53,31 @@ app.controller("setting_loan_in_controller", ["$scope", "_basic", "_host", funct
      * 打开画面【增加贷入公司】模态框。
      */
     $scope.openEditLoanIn = function (loanCompany) {
-        // 画面ID
-        $scope.pageId = "edit";
-        // 修改数据赋值
-        $scope.loanInCoInfo.id = loanCompany.id;
-        $scope.loanInCoInfo.companyName = loanCompany.company_name;
-        $scope.loanInCoInfo.baseMoney = loanCompany.base_money;
-        $scope.loanInCoInfo.contacts = loanCompany.contacts;
-        $scope.loanInCoInfo.tel = loanCompany.tel;
-        $scope.loanInCoInfo.email = loanCompany.email;
-        $scope.loanInCoInfo.remark = loanCompany.remark;
+        // 根据画面选中数据的ID 检索数据
+        _basic.get(_host.api_url + "/loanCompany?loanCompanyId=" + loanCompany.id).then(function (data) {
+            if (data.success) {
+                if (data.result.length > 0) {
+                    // 画面ID
+                    $scope.pageId = "edit";
+                    // 修改数据赋值
+                    $scope.loanInCoInfo.id = data.result[0].id;
+                    $scope.loanInCoInfo.companyName = data.result[0].company_name;
+                    $scope.loanInCoInfo.baseMoney = data.result[0].base_money;
+                    $scope.loanInCoInfo.contacts = data.result[0].contacts;
+                    $scope.loanInCoInfo.tel = data.result[0].tel;
+                    $scope.loanInCoInfo.email = data.result[0].email;
+                    $scope.loanInCoInfo.remark = data.result[0].remark;
 
-        // 打开画面
-        $('.modal').modal();
-        $('#addLoanIn').modal('open');
+                    // 打开画面
+                    $('.modal').modal();
+                    $('#saveLoanInDiv').modal('open');
 
-        // textarea 高度调整
-        $('#remarkText').val(loanCompany.remark);
-        $('#remarkText').trigger('autoresize');
+                    // textarea 高度调整
+                    $('#remarkText').val($scope.loanInCoInfo.remark);
+                    $('#remarkText').trigger('autoresize');
+                }
+            }
+        })
     };
 
     /**
@@ -93,7 +100,7 @@ app.controller("setting_loan_in_controller", ["$scope", "_basic", "_host", funct
             if ($scope.pageId === "add") {
                 _basic.post(_host.api_url + "/user/" + userId + "/loanCompany", obj).then(function (data) {
                     if (data.success) {
-                        $('#addLoanIn').modal('close');
+                        $('#saveLoanInDiv').modal('close');
                         swal("新增成功", "", "success");
                         // 成功后，刷新页面数据
                         initData();
@@ -105,7 +112,7 @@ app.controller("setting_loan_in_controller", ["$scope", "_basic", "_host", funct
                 // 调用更新API
                 _basic.put(_host.api_url + "/user/" + userId + "/loanCompany/" + $scope.loanInCoInfo.id, obj).then(function (data) {
                     if (data.success) {
-                        $('#addLoanIn').modal('close');
+                        $('#saveLoanInDiv').modal('close');
                         swal("修改成功", "", "success");
                         // 成功后，刷新页面数据
                         initData();
