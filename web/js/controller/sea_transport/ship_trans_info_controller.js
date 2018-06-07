@@ -25,7 +25,6 @@ app.controller("ship_trans_info_controller", ["$scope", "$rootScope", "_host", "
     // 是否MSO车辆
     $scope.msoFlags = _config.msoFlags;
 
-
     // 订单信息
     $scope.newShippingOrder = {
         // 始发港口
@@ -115,6 +114,9 @@ app.controller("ship_trans_info_controller", ["$scope", "$rootScope", "_host", "
 
     // 检索条件 委托方
     $scope.condEntrustId = "";
+
+    // 修改 车辆估值 画面数据
+    $scope.carInfo = {};
 
     /**
      * 根据画面输入的查询条件，进行数据查询。
@@ -279,6 +281,71 @@ app.controller("ship_trans_info_controller", ["$scope", "$rootScope", "_host", "
         }
         return entrustId;
     }
+
+    /**
+     * 打开画面【港口信息】模态框。
+     * @param selectedItem 选中数据
+     */
+    $scope.openEditPort = function (selectedItem){
+        // 根据画面选中数据的ID 检索数据
+        _basic.get(_host.api_url + "/user/" + userId + "/car?vin=" + selectedItem.vin).then(function (data) {
+            if (data.success) {
+                if (data.result.length > 0) {
+
+                    $(".modal").modal();
+                    $("#editCarInfoDiv").modal("open");
+
+                    // car id
+                    $scope.carInfo.id = data.result[0].id;
+                    // vin
+                    $scope.carInfo.vin = data.result[0].vin;
+                    // 车辆估值
+                    $scope.carInfo.valuation = data.result[0].valuation;
+                    // 是否MSO
+                    $scope.carInfo.msoStatus = data.result[0].mso_status;
+                }
+            }
+        })
+    };
+
+    /**
+     * 修改车辆估值
+     */
+    $scope.saveCarInfo = function (){
+        if ($scope.carInfo.valuation !== "") {
+
+            // 追加画面数据
+            var obj = {
+                vin :$scope.carInfo.vin,
+                // makeId :$scope.carInfo.makeId,
+                // makeName :$scope.carInfo.makeId,
+                // modelId :$scope.carInfo.makeId,
+                // modelName :$scope.carInfo.makeId,
+                // proDate :$scope.carInfo.proDate,
+                // colour :$scope.carInfo.colour,
+                // engineNum :$scope.carInfo.colour,
+                // entrustId :$scope.carInfo.colour,
+                valuation :$scope.carInfo.valuation,
+                msoStatus :$scope.carInfo.msoStatus
+                // purchaseType :$scope.carInfo.colour,
+                // remark :$scope.carInfo.colour
+            };
+
+            _basic.put(_host.api_url + "/user/" + userId + "/car/" + $scope.carInfo.id, obj).then(function (data) {
+                if (data.success) {
+                    $('#editCarInfoDiv').modal('close');
+                    swal("修改成功", "", "success");
+                    // 成功后，刷新页面数据
+                    $scope.condEntrustId =getEntrustId();
+                    queryShipTransOrderList();
+                } else {
+                    swal(data.msg, "", "error");
+                }
+            })
+        } else {
+            swal("请填写完整信息！", "", "warning");
+        }
+    };
 
     /**
      * 点击：查询按钮，进行数据查询

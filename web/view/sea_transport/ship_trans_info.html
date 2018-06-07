@@ -178,7 +178,7 @@
                 <th data-field="">实际开船日期</th>
                 <th data-field="">分单</th>
                 <th data-field="">运送状态</th>
-                <th>操作</th>
+                <th class="center">操作</th>
             </tr>
             </thead>
             <tbody>
@@ -208,9 +208,11 @@
                 <!--运送状态-->
                 <td ng-class="{'red-text':el.ship_trans_status == 1,'cyan-text':el.ship_trans_status == 2}">{{shipTransStatus[el.ship_trans_status-1].name}}</td>
                 <!--操作-->
-                <td class="operation">
-                    <a href="#" ui-sref="ship_trans_info_detail({id:el.id,from:'ship_trans_info'})" class=""><i
-                            class="mdi mdi-file-outline look_icon cyan-text lighten-1  "></i></a>
+                <td class="operation center">
+                    <i class="mdi mdi-car look_icon cyan-text lighten-1" ng-click="openEditPort(el)"></i>
+                    <a href="#" ui-sref="ship_trans_info_detail({id:el.id,from:'ship_trans_info'})">
+                        <i class="mdi mdi-file-outline look_icon cyan-text lighten-1"></i>
+                    </a>
                 </td>
             </tr>
             <tr class="grey-text text-darken-1" ng-if="shipTransOrderList.length == 0">
@@ -480,5 +482,54 @@
                 </a>
             </div>
         </div>
+    </div>
+</div>
+
+<!-- 模态画面【修改车辆估值】 模态框 -->
+<div id="editCarInfoDiv" class="modal modal-fixed-footer row" style="max-height: 456px;">
+
+    <!-- Header -->
+    <div class="modal_title center-align cyan white-text">修改车辆估值</div>
+
+    <!-- Body -->
+    <div class="modal-content" style="max-height: 350px;">
+
+        <!-- 显示画面【修改车辆估值】 Body -->
+        <div class="col" style="width:95%; margin-left: 20px;">
+            <!-- vin -->
+            <div class="col s12 cyan-text" style="margin-top: 20px;margin-bottom: 10px;">
+                VIN码：{{carInfo.vin}}
+            </div>
+
+            <!-- 分割线 -->
+            <div class="col s12">
+                <div class="divider col s12" style="background-color: #c2c0c2;margin-bottom: 10px;"></div>
+            </div>
+
+            <!--车辆估值-->
+            <div class="col s12 input-field" style="margin-top: 20px;">
+                <input id="valuationText" type="text" valid-money maxlength="10" ng-model="carInfo.valuation">
+                <label for="valuationText"><span style="color: red">* </span>车辆估值</label>
+            </div>
+
+            <!-- 是否MSO -->
+            <div class="col s12 input-field" style="margin-top: 20px;">
+                <select material-select watch id="msoStatusSelect" ng-model="carInfo.msoStatus" >
+                    <option value="" disabled>是否MSO</option>
+                    <option  ng-repeat="el in msoFlags" ng-value="el.id">{{el.name}}</option>
+                </select>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="modal-footer right-align">
+        <a class="btn-floating waves-effect waves-light btn cyan lighten-1" style="width:38px;height:38px; margin-right: 50px;"
+           ng-click="saveCarInfo()">
+            <i class="mdi mdi-check"></i>
+        </a>
+        <a class="btn-floating waves-effect waves-light btn modal-close grey" style="width:38px;height:38px; margin-right: 20px;">
+            <i class="mdi mdi-close"></i>
+        </a>
     </div>
 </div>
