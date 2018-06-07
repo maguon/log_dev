@@ -1,223 +1,99 @@
-<!-- 增加委托方的模态框 -->
-<div class="row" style="margin: 0">
-    <div id="addClient" class="modal modal-fixed-footer" style="width: 65%;height: 550px">
-        <div class="modal-content center fz20" style="font-weight: 500;padding: 0">
+<!-- 模态画面【增加委托方/委托方设置】 模态框 -->
+<div id="saveClientDiv" class="modal modal-fixed-footer row" style="max-height: 556px;">
 
-            <!--标题：增加委托方-->
-            <div class="row col s12 vc-center fz22" style="color: white;letter-spacing:1px;font-weight: bold;height: 70px;background-color:#4e84cb">
-                <p>增加委托方</p>
-            </div>
+    <!-- Header -->
+    <div class="modal_title center-align cyan white-text">{{pageId=='add' ? '增加委托方':'委托方设置'}}</div>
 
-            <!--正文：详情-->
-            <div class="row col s12">
-                <div style="width: 90%;margin: 0 auto">
-                    <div class="col s12">
-                        <div class=" col s6 p0">
-                            <!--性质-->
-                            <div class=" col s6 input-field">
-                                <select material-select watch  class="insure_name" ng-model="addEntrustType">
-                                    <option value="" selected>请选择</option>
-                                    <option value="1">个人</option>
-                                    <option value="2">企业</option>
-                                </select>
-                                <label ><span style="color: red">* </span>性质</label>
-                            </div>
+    <!-- 编号 -->
+    <div ng-show="pageId=='add'"  class="vc-center fz22" style="height: 50px;"></div>
+    <div ng-show="pageId=='edit'" class="vc-center fz22" style="color: #4e84cb;letter-spacing:1px;font-weight: bold;height: 50px;background-color:lightgray">
+        <p class="col s2 pull-l10" style="padding-left: 80px;">{{clientInfo.id}}</p>
+    </div>
 
-                            <!--委托方简称-->
-                            <div class=" col s6 input-field">
-                                <input type="text" id="addShortName" name="addShortName" ng-model="addShortName">
-                                <label for="addShortName"><span style="color: red">* </span>委托方简称</label>
-                            </div>
-                        </div>
-                        <div class=" col s6 p0">
+    <!-- Body -->
+    <div class="modal-content" style="max-height: 400px;">
 
-                            <!--委托方全称-->
-                            <div class=" col s12 input-field">
-                                <input type="text" id="addEntrustName" name="addEntrustName" ng-model="addEntrustName">
-                                <label for="addEntrustName"><span style="color: red">* </span>委托方全称</label>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col s12">
+        <!-- 显示画面【增加委托方/委托方设置】 Body -->
+        <div class="col" style="width:95%; margin-left: 20px;">
 
-                        <!--联系人-->
-                        <div class=" col s3 p0">
-                            <div class="col s12 input-field">
-                                <input type="text" id="addContactsName" name="addContactsName" ng-model="addContactsName">
-                                <label for="addContactsName"><span style="color: red">* </span>联系人</label>
-                            </div>
-                        </div>
-
-                        <!--邮件-->
-                        <div class=" col s3 p0">
-                            <div class="col s12 input-field">
-                                <input id="addMail" type="email"  ng-model="addMail">
-                                <label for="addMail">邮件</label>
-                            </div>
-                        </div>
-
-                        <!--联系电话-->
-                        <div class=" col s6 p0">
-                            <div class="col s12 input-field">
-                                <input style="font-size: 2rem;text-align: right;color: rgb(230,123,123)" id="addTel" type="tel"  ng-model="addTel">
-                                <label for="addTel"><span style="color: red">* </span>联系电话</label>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!--详细地址-->
-                    <div class="col s12 " style="margin-bottom:  40px;">
-                        <div class="col s12 input-field">
-                            <input type="text" name="addAddress" id="addAddress" ng-model="addAddress">
-                            <label for="addAddress">详细地址</label>
-                        </div>
-                    </div>
-
-                    <!--备注-->
-                    <div class="col s12 " style="margin-bottom:  40px;">
-                        <div class="col s12 input-field">
-                            <input type="text" name="addRemark" id="addRemark" ng-model="addRemark">
-                            <label for="addRemark">备注</label>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="modal-footer right-align">
-            <div class="col s6 push-l6">
-
-                <!--取消按钮-->
-                <div class="col s3 offset-s6">
-                    <a style="width: 100%" class="modal-action modal-close waves-light waves-effect grey lighten-1 btn">
-                        取消
-                    </a>
+            <!-- 第一行 -->
+            <div class="col s12">
+                <!--性质-->
+                <div class="col s3 input-field">
+                    <select material-select watch ng-model="clientInfo.entrustType">
+                        <option value="" disabled>请选择</option>
+                        <option ng-repeat="el in entrustType" ng-value="el.entrust_type">{{el.name}}</option>
+                    </select>
+                    <label><span class="red-text">* </span>性质</label>
                 </div>
 
-                <!--确定按钮-->
-                <div class="col s3">
-                    <a ng-click="addClientItem()" style="width: 100%" class="waves-light waves-effect cyan lighten-1 btn">
-                        确定
-                    </a>
+                <!--委托方简称-->
+                <div class=" col s3 input-field">
+                    <input type="text" id="shortNameText" ng-model="clientInfo.shortName">
+                    <label for="shortNameText"><span class="red-text">* </span>委托方简称</label>
+                </div>
+
+                <!--委托方全称-->
+                <div class=" col s6 input-field">
+                    <input type="text" id="entrustNameText" ng-model="clientInfo.entrustName">
+                    <label for="entrustNameText"><span class="red-text">* </span>委托方全称</label>
                 </div>
             </div>
+
+            <!-- 第二行 -->
+            <div class="col s12">
+
+                <!--联系人-->
+                <div class="col s3 input-field">
+                    <input type="text" id="contactsNameText" ng-model="clientInfo.contactsName">
+                    <label for="contactsNameText"><span class="red-text">* </span>联系人</label>
+                </div>
+
+                <!--邮件-->
+                <div class="col s3 input-field">
+                    <input type="email" id="email" ng-model="clientInfo.email">
+                    <label for="email">邮件</label>
+                </div>
+
+                <!--联系电话-->
+                <div class="col s6 input-field">
+                    <input type="tel" id="tel" style="font-size: 2rem;text-align: right;color: rgb(230,123,123)" ng-model="clientInfo.tel">
+                    <label for="tel"><span class="red-text">* </span>联系电话</label>
+                </div>
+            </div>
+
+            <!--详细地址-->
+            <div class="col s12">
+                <div class="col s12 input-field">
+                    <input type="text" id="addressText" ng-model="clientInfo.address">
+                    <label for="addressText">详细地址</label>
+                </div>
+            </div>
+
+            <!-- 备注 -->
+            <div class="col s12" style="margin-top:20px;">
+                <div class="col s12 input-field">
+                    <textarea id="remark" class="materialize-textarea" style="padding: 10px 0 0 0;" maxlength="200" ng-model="clientInfo.remark"></textarea>
+                    <label for="remark">描述</label>
+                </div>
+            </div>
+
+            <!-- 创建时间 -->
+            <div ng-show="pageId=='edit'" class="col s12 right-align fz18 bold">{{clientInfo.createdOn |date:'yyyy-MM-dd HH:mm:ss'}}</div>
         </div>
     </div>
-</div>
 
-
-<!-- 设置委托方的模态框 -->
-<div class="row" style="margin: 0">
-    <div id="updateClient" class="modal modal-fixed-footer" style="width: 65%;height: 610px">
-        <div class="modal-content center fz20" style="font-weight: 500;padding: 0">
-
-            <!--标题：委托方设置-->
-            <div class=" col s12 vc-center fz22" style="color: white;letter-spacing:1px;font-weight: bold;height: 70px;background-color:#4e84cb">
-                <p>委托方设置</p>
-            </div>
-
-            <!--编号-->
-            <div class="row col s12 vc-center fz22 " style="color: #4e84cb;letter-spacing:1px;font-weight: bold;height: 70px;background-color:lightgray">
-                <p class="col s2 pull-l10">{{clientList.id}}</p>
-            </div>
-
-            <!--正文：详情-->
-            <div class="row col s12">
-                <div style="width: 90%;margin: 0 auto">
-                    <div class="col s12">
-                        <div class=" col s6 p0">
-
-                            <!--性质-->
-                            <div class=" col s6 input-field">
-                                <select material-select watch  class="insure_name" ng-model="clientList.entrust_type">
-                                    <option ng-value="" selected>请选择</option>
-                                    <option ng-value="1">个人</option>
-                                    <option ng-value="2">企业</option>
-                                </select>
-                                <label ><span style="color: red">* </span>性质</label>
-                            </div>
-
-                            <!--委托方简称-->
-                            <div class=" col s6 input-field">
-                                <input type="text" id="updateShortName" name="updateShortName" ng-model="clientList.short_name">
-                                <label for="updateShortName"><span style="color: red">* </span>委托方简称</label>
-                            </div>
-                        </div>
-                        <div class=" col s6 p0">
-
-                            <!--委托方全称-->
-                            <div class=" col s12 input-field">
-                                <input type="text" id="updateEntrustName" name="updateEntrustName" ng-model="clientList.entrust_name">
-                                <label for="updateEntrustName"><span style="color: red">* </span>委托方全称</label>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col s12">
-
-                        <!--联系人-->
-                        <div class=" col s3 p0">
-                            <div class="col s12 input-field">
-                                <input type="text" id="updateContactsName" name="updateContactsName" ng-model="clientList.contacts_name">
-                                <label for="updateContactsName"><span style="color: red">* </span>联系人</label>
-                            </div>
-                        </div>
-
-                        <!--邮件-->
-                        <div class=" col s3 p0">
-                            <div class="col s12 input-field">
-                                <input id="updateEmail" type="email"  ng-model="clientList.email">
-                                <label for="updateEmail">邮件</label>
-                            </div>
-                        </div>
-
-                        <!--联系电话-->
-                        <div class=" col s6 p0">
-                            <div class="col s12 input-field">
-                                <input style="font-size: 2rem;text-align: right;color: rgb(230,123,123)" id="updateTel" type="tel"  ng-model="clientList.tel">
-                                <label for="updateTel"><span style="color: red">* </span>联系电话</label>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!--详细地址-->
-                    <div class="col s12 " style="margin-bottom:  40px;">
-                        <div class="col s12 input-field">
-                            <input type="text" name="updateAddress" id="updateAddress" ng-model="clientList.address">
-                            <label for="updateAddress">详细地址</label>
-                        </div>
-                    </div>
-
-                    <!--备注-->
-                    <div class="col s12 " style="margin-bottom:  40px;">
-                        <div class="col s12 input-field">
-                            <input type="text" name="updateRemark" id="updateRemark" ng-model="clientList.remark">
-                            <label for="updateRemark">备注</label>
-                        </div>
-                    </div>
-                    <div class="right-align col s3 push-l9" >{{clientList.created_on |date:'yyyy-MM-dd HH:mm:ss'}}</div>
-                </div>
-            </div>
-        </div>
-        <div class="modal-footer right-align">
-            <div class="col s6 push-l6">
-
-                <!--取消按钮-->
-                <div class="col s3 offset-s6">
-                    <a style="width: 100%" class="modal-action modal-close waves-light waves-effect grey lighten-1 btn">
-                        取消
-                    </a>
-                </div>
-
-                <!--确定按钮-->
-                <div class="col s3">
-                    <a ng-click="updateClientItem(clientList.id)" style="width: 100%" class="waves-light waves-effect cyan lighten-1 btn">
-                        确定
-                    </a>
-                </div>
-            </div>
-        </div>
+    <!-- Footer -->
+    <div class="modal-footer right-align">
+        <a class="btn-floating waves-effect waves-light btn cyan lighten-1" style="width:38px;height:38px; margin-right: 50px;"
+           ng-click="saveClientInfo()">
+            <i class="mdi mdi-check"></i>
+        </a>
+        <a class="btn-floating waves-effect waves-light btn modal-close grey" style="width:38px;height:38px; margin-right: 20px;">
+            <i class="mdi mdi-close"></i>
+        </a>
     </div>
 </div>
-
 
 <!-- 主菜单：委托方管理 -->
 <div class="usersWrap"  style="width: 70%;margin: 0 auto">
@@ -263,7 +139,7 @@
 
                 <!--添加按钮-->
                 <div class="col s4 center push-l2">
-                    <a class="btn-floating btn-large waves-light waves-effect cyan lighten-1 btn vc-center"   ng-click="addClient()">
+                    <a class="btn-floating btn-large waves-light waves-effect cyan lighten-1 btn vc-center"   ng-click="openAddClient()">
                         <i class="mdi mdi-plus"></i>
                     </a>
                 </div>
@@ -290,7 +166,7 @@
             </div>
             <!--操作-->
             <div class="col s1  right">
-                <span><i class="mdi mdi-file-document cyan-text text-lighten-1 fz30" ng-click="updateClient(el.id)"></i></span>
+                <span><i class="mdi mdi-file-document cyan-text text-lighten-1 fz30" ng-click="openEditClient(el)"></i></span>
             </div>
         </li>
         <!--当搜索结果为空时-->
