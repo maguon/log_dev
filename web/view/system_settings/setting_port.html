@@ -1,101 +1,48 @@
-<!--添加港口模态框-->
-<div id="addPort" class="modal">
-    <!--标题：增加港口-->
-    <div class="cyan lighten-1 white-text center-align modal_title" >增加港口</div>
-    <!--详情-->
-    <div class="modal-content" style="width: 70%;margin:0 auto">
-        <div class="row col s12">
+<!-- 追加画面【增加港口/操作记录】 模态框 -->
+<div id="savePortDiv" class="modal modal-fixed-footer row" style="max-height: 456px;">
 
-                <!--添加国家名称-->
-                <div class="col s12 input-field">
-                    <select material-select watch id="addCountry" name="addCountry"  ng-model="addCountry">
-                        <option value="" selected>国家</option>
-                        <option ng-repeat="el in countryList" ng-value="el.val">{{el.name}}</option>
-                    </select>
-                </div>
+    <!-- Header -->
+    <div class="modal_title center-align cyan white-text">{{pageId=='add' ? '增加港口':'港口信息'}}</div>
 
+    <!-- Body -->
+    <div class="modal-content" style="max-height: 350px;">
 
-                <!--添加港口名称-->
-                <div class="col s12 input-field">
-                    <input id="addPortName" type="text"  ng-model="addPortName">
-                    <label for="addPortName"><span style="color: red">* </span>港口名称</label>
-                </div>
-
-                <!--备注-->
-
-                <div class="col s12 input-field" style="margin-bottom:  40px;">
-                    <input type="text" name="addRemark" id="addRemark" ng-model="addRemark">
-                    <label for="addRemark">备注</label>
-                </div>
-
-        </div>
-    </div>
-    <div class="divider" style="width: 85%;margin:20px auto"></div>
-    <div class="modal-footer right-align col s12">
-
-            <!--取消按钮-->
-
-                <button class="btn  btn-large btn-floating waves-effect modal-close grey"  name="action" style="margin-right: 100px">
-                    <i class="mdi mdi-close"></i>
-                </button>
-
-            <!--确定按钮-->
-
-                <button class="btn  btn-large btn-floating waves-effect cyan" ng-click="addPortItem()" name="action" style="margin-right: 30px">
-                    <i class="mdi mdi-check"></i>
-                </button>
-
-    </div>
-</div>
-<!--修改港口模态框-->
-<div id="updatePort" class="modal">
-    <!--标题：增加港口-->
-    <div class="cyan lighten-1 white-text center-align modal_title" >港口信息</div>
-    <!--详情-->
-    <div class="modal-content" style="width: 70%;margin:0 auto">
-        <div class="row col s12">
-
+        <!-- 显示画面【增加港口/操作记录】 Body -->
+        <div class="col" style="width:95%; margin-left: 20px;">
             <!--添加国家名称-->
-            <div class="col s12 input-field">
-                <select material-select watch id="updateCountry" name="updateCountry"  ng-model="updateCountry">
-                    <option value="" selected>国家</option>
+            <div class="col s12 input-field" style="margin-top: 20px;">
+                <select material-select watch id="addCountry" ng-model="portInfo.country">
+                    <option value="" disabled>国家</option>
                     <option ng-repeat="el in countryList" ng-value="el.val">{{el.name}}</option>
                 </select>
             </div>
 
-
             <!--添加港口名称-->
             <div class="col s12 input-field">
-                <input id="updatePortName" type="text"  ng-model="updatePortName">
-                <label for="updatePortName"><span style="color: red">* </span>港口名称</label>
+                <input id="addPortName" type="text" ng-model="portInfo.portName">
+                <label for="addPortName"><span style="color: red">* </span>港口名称</label>
             </div>
 
-            <!--备注-->
-
-            <div class="col s12 input-field" style="margin-bottom:  40px;">
-                <input type="text" name="updateRemark" id="updateRemark" ng-model="updateRemark">
-                <label for="updateRemark">备注</label>
+            <!-- 备注 -->
+            <div class="col s12 input-field">
+                <textarea id="remark" class="materialize-textarea" style="padding: 10px 0 0 0;" maxlength="200" ng-model="portInfo.remark"></textarea>
+                <label for="remark">描述</label>
             </div>
-
         </div>
     </div>
-    <div class="divider" style="width: 85%;margin:20px auto"></div>
-    <div class="modal-footer right-align col s12">
 
-            <!--取消按钮-->
-
-            <button class="btn  btn-large btn-floating waves-effect modal-close grey"  name="action" style="margin-right: 100px">
-                <i class="mdi mdi-close"></i>
-            </button>
-
-            <!--确定按钮-->
-
-            <button class="btn  btn-large btn-floating waves-effect cyan" ng-click="updatePortItem()" name="action" style="margin-right: 30px">
-                <i class="mdi mdi-check"></i>
-            </button>
-
+    <!-- Footer -->
+    <div class="modal-footer right-align">
+        <a class="btn-floating waves-effect waves-light btn cyan lighten-1" style="width:38px;height:38px; margin-right: 50px;"
+           ng-click="savePortInfo()">
+            <i class="mdi mdi-check"></i>
+        </a>
+        <a class="btn-floating waves-effect waves-light btn modal-close grey" style="width:38px;height:38px; margin-right: 20px;">
+            <i class="mdi mdi-close"></i>
+        </a>
     </div>
 </div>
+
 <!--主菜单：管理员设置  ---  港口设置  -->
 <div class="setting_port">
     <!--搜索条件：国家  港口-->
@@ -103,14 +50,14 @@
         <div class="col s12" style="margin-top: 20px">
             <!--国家-->
             <div class="input-field col s4">
-                <select material-select watch id="country" name="country"  ng-model="countryName">
+                <select material-select watch id="country" name="country"  ng-model="condCountryName">
                     <option value="" selected>国家</option>
                     <option ng-repeat="el in countryList" ng-value="el.val">{{el.name}}</option>
                 </select>
             </div>
             <!--港口-->
             <div class="input-field col s4">
-                <select material-select watch id="port"   ng-model="portName">
+                <select material-select watch id="port"   ng-model="condPortName">
                     <option value=""  selected>港口</option>
                     <option ng-repeat="el in portList" ng-value="el.id" >{{el.port_name}}</option>
                 </select>
@@ -123,7 +70,7 @@
                     </a>
                 </div>
                 <div class="col s6 center-align">
-                    <a  class="btn-floating btn-large  btn waves-effect cyan lighten-1 waves-light vc-center" ng-click="addPort()">
+                    <a  class="btn-floating btn-large  btn waves-effect cyan lighten-1 waves-light vc-center" ng-click="openAddPort()">
                         <i class="mdi mdi-plus"></i>
                     </a>
                 </div>
@@ -138,7 +85,7 @@
                     <div class="fz18" ng-bind="el.port_name"></div>
                 </div>
                 <a  class="right btn-floating  setting_shipments_btn  btn waves-effect materialize-red  lighten-2 waves-light vc-center"
-                    ng-click="updatePort(el.id)" style="right:25px;top:-45px"><i class="mdi mdi-pencil"></i>
+                    ng-click="openEditPort(el)" style="right:25px;top:-45px"><i class="mdi mdi-pencil"></i>
                 </a>
                 <div class="row cyan-text lighten-2 white " style="margin-left: 50px">
                     <div class="fz18">{{countryList[el.country_id-1].name}}</div>
