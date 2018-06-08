@@ -208,56 +208,74 @@ app.controller("finance_car_controller", ["$scope", "$rootScope", "_host", "_bas
      */
     $scope.openNewFinanceCarDiv = function () {
         $('.modal').modal();
-        $('#newFinanceCarDiv').modal('open');
+        $('#saveFinanceCarDiv').modal('open');
+
         // 新增金融车辆 flag
         $scope.newFinanceCar = true;
+
         // 初始数据
         angular.copy($scope.newCarInfo, $scope.carInfo);
+
+        // textarea 高度调整
+        $('#remarkText').val('');
+        $('#remarkText').trigger('autoresize');
         // 获取委托方信息
         $scope.getEntrustInfo();
     };
 
     /**
      * 打开【修改金融车】模态画面。
+     * @param selectedItem 选中数据
      */
-    $scope.openEditFinanceCarDiv = function (carInfo) {
+    $scope.openEditFinanceCarDiv = function (selectedItem) {
         $('.modal').modal();
-        $('#newFinanceCarDiv').modal('open');
+        $('#saveFinanceCarDiv').modal('open');
         // 修改金融车辆 flag
         $scope.newFinanceCar = false;
 
-        // 画面数据
-        // id
-        $scope.carInfo.carId = carInfo.id;
-        // vin
-        $scope.carInfo.vin = carInfo.vin;
-        // 制造商
-        $scope.carInfo.makerId = carInfo.make_id;
-        $scope.changeMakerId(carInfo.make_id);
-        // 型号
-        $scope.carInfo.modelId = carInfo.model_id;
-        // 颜色
-        $scope.carInfo.colour = carInfo.colour;
-        // 年份
-        $scope.carInfo.proDate = carInfo.pro_date;
-        // 委托性质
-        $scope.carInfo.entrustType = carInfo.entrust_type;
-        // 委托方
-        $scope.carInfo.entrustId = carInfo.entrust_id;
-        $scope.carInfo.entrustNm = carInfo.short_name;
-        $scope.getEntrustInfo(carInfo.entrust_type, $scope.carInfo.entrustNm);
-        // 发动机号
-        $scope.carInfo.engineNum = carInfo.engine_num;
-        // 车价(美元)
-        $scope.carInfo.valuation = carInfo.valuation;
-        // 是否金融车：默认 是
-        $scope.carInfo.purchaseType = carInfo.purchase_type;
-        // 是否MSO：默认 否
-        $scope.carInfo.msoStatus = carInfo.mso_status;
-        // 备注
-        $scope.carInfo.remark = carInfo.remark;
-        // 备注
-        $scope.carInfo.createdOn = carInfo.created_on;
+        // 根据画面选中数据的ID 检索数据
+        _basic.get(_host.api_url + "/carList?carId=" + selectedItem.id).then(function (data) {
+            if (data.success) {
+                if (data.result.length > 0) {
+                    // 画面数据
+                    // id
+                    $scope.carInfo.carId = data.result[0].id;
+                    // vin
+                    $scope.carInfo.vin = data.result[0].vin;
+                    // 制造商
+                    $scope.carInfo.makerId = data.result[0].make_id;
+                    $scope.changeMakerId(data.result[0].make_id);
+                    // 型号
+                    $scope.carInfo.modelId = data.result[0].model_id;
+                    // 颜色
+                    $scope.carInfo.colour = data.result[0].colour;
+                    // 年份
+                    $scope.carInfo.proDate = data.result[0].pro_date;
+                    // 委托性质
+                    $scope.carInfo.entrustType = data.result[0].entrust_type;
+                    // 委托方
+                    $scope.carInfo.entrustId = data.result[0].entrust_id;
+                    $scope.carInfo.entrustNm = data.result[0].short_name;
+                    $scope.getEntrustInfo(data.result[0].entrust_type, $scope.carInfo.entrustNm);
+                    // 发动机号
+                    $scope.carInfo.engineNum = data.result[0].engine_num;
+                    // 车价(美元)
+                    $scope.carInfo.valuation = data.result[0].valuation;
+                    // 是否金融车：默认 是
+                    $scope.carInfo.purchaseType = data.result[0].purchase_type;
+                    // 是否MSO：默认 否
+                    $scope.carInfo.msoStatus = data.result[0].mso_status;
+                    // 备注
+                    $scope.carInfo.remark = data.result[0].remark;
+                    // 备注
+                    $scope.carInfo.createdOn = data.result[0].created_on;
+
+                    // textarea 高度调整
+                    $('#remarkText').val($scope.carInfo.remark);
+                    $('#remarkText').trigger('autoresize');
+                }
+            }
+        })
     };
 
     /**
@@ -323,7 +341,7 @@ app.controller("finance_car_controller", ["$scope", "$rootScope", "_host", "_bas
             if ($scope.newFinanceCar) {
                 _basic.post(_host.api_url + "/user/" + userId + "/car", obj).then(function (data) {
                     if (data.success) {
-                        $('#newFinanceCarDiv').modal('close');
+                        $('#saveFinanceCarDiv').modal('close');
                         swal("新增成功", "", "success");
                         // 成功后，刷新页面数据
                         queryFinanceCarList();
@@ -334,7 +352,7 @@ app.controller("finance_car_controller", ["$scope", "$rootScope", "_host", "_bas
             } else {
                 _basic.put(_host.api_url + "/user/" + userId + "/car/" + $scope.carInfo.carId, obj).then(function (data) {
                     if (data.success) {
-                        $('#newFinanceCarDiv').modal('close');
+                        $('#saveFinanceCarDiv').modal('close');
                         swal("修改成功", "", "success");
                         // 成功后，刷新页面数据
                         queryFinanceCarList();

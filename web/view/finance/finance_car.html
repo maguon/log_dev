@@ -145,147 +145,134 @@
     </div>
 </div>
 
-<!-- 画面【新增金融车辆】 模态框 -->
-<div class="row" style="margin: 0">
-    <div id="newFinanceCarDiv" class="modal" style="width: 45%;height: 580px">
-        <div class="modal-content center fz20" style="font-weight: 500;padding: 0">
+<!-- 模态画面【新增金融车辆/修改金融车】 模态框 -->
+<div id="saveFinanceCarDiv" class="modal modal-fixed-footer row" style="max-height: 536px;">
 
-            <!-- 显示画面【新增金融车辆】 Header -->
-            <div ng-show="newFinanceCar" class="col s12 vc-center cyan"
-                 style="color: white;letter-spacing:1px;font-weight: bold;height: 50px;">
-                <p>新增金融车</p>
-            </div>
-            <div ng-show="!newFinanceCar" class="col s12 vc-center cyan"
-                 style="color: white;letter-spacing:1px;font-weight: bold;height: 50px;">
-                <p>修改金融车</p>
-            </div>
+    <!-- Header -->
+    <div class="modal_title center-align cyan white-text">{{newFinanceCar ? '新增金融车':'修改金融车'}}</div>
 
-            <!-- 显示画面【新增金融车辆】 Body -->
-            <div class="col" style="width:95%; margin-left: 20px;">
-                <!-- 金融车辆信息 -->
-                <div class="col s12" style="margin-top: 40px;">
+    <!-- Body -->
+    <div class="modal-content" style="max-height: 430px;">
 
-                    <!-- VIN码 -->
-                    <div class="input-field col s8">
-                        <input type="text" id="newVinText" ng-model="carInfo.vin">
-                        <label for="newVinText"><span class="red-text">*</span> VIN码</label>
-                    </div>
+        <!-- 金融车辆信息 -->
+        <div class="col s12" style="margin-top: 10px;">
 
-                    <!-- 年份 -->
-                    <div class="input-field col s4">
-                        <input id="proDateText" type="text" maxlength="4" valid-num ng-model="carInfo.proDate">
-                        <label for="proDateText">年份</label>
-                    </div>
-
-                    <!-- 制造商 -->
-                    <div class="input-field col s4">
-                        <select id="makerSelect" material-select watch ng-model="carInfo.makerId" ng-change="changeMakerId(carInfo.makerId)">
-                            <option value="" disabled>制造商</option>
-                            <option ng-repeat="el in carMakerList" ng-value="el.id">{{el.make_name}}</option>
-                        </select>
-                    </div>
-
-                    <!-- 品牌 -->
-                    <div class="input-field col s4">
-                        <select id="modelSelect" material-select watch ng-model="carInfo.modelId">
-                            <option value="" disabled>品牌</option>
-                            <option ng-repeat="el in carModelList" ng-value="el.id">{{el.model_name}}</option>
-                        </select>
-                    </div>
-
-                    <!-- 颜色 -->
-                    <div class="input-field col s4">
-                        <select material-select watch ng-model="carInfo.colour">
-                            <option value="" disabled>颜色</option>
-                            <option ng-repeat="el in configColor" ng-value="el.colorId">{{el.colorName}}</option>
-                        </select>
-                    </div>
-
-                    <!-- 委托方性质 -->
-                    <div class="input-field col s4">
-                        <select material-select watch ng-model="carInfo.entrustType" ng-change="getEntrustInfo(carInfo.entrustType,'委托方')">
-                            <option value="" disabled>委托方性质</option>
-                            <option ng-repeat="el in entrustTypeList" ng-value="el.entrust_type">{{el.name}}</option>
-                        </select>
-                    </div>
-
-                    <!-- 委托方 -->
-                    <div ng-show="newFinanceCar" class="input-field col s4">
-                        <select id="addEntrustSelect" style="width: 100%">
-                            <option value=""></option>
-                            <option ng-repeat="el in entrustList" ng-value="el.id">{{el.short_name}}</option>
-                        </select>
-                    </div>
-                    <div ng-show="!newFinanceCar" class="input-field col s4">
-                        <select id="editEntrustSelect" style="width: 100%">
-                            <option value=""></option>
-                            <option ng-repeat="el in entrustList" ng-value="el.id">{{el.short_name}}</option>
-                        </select>
-                    </div>
-
-                    <!-- 发动机号 -->
-                    <div class="input-field col s4">
-                            <input type="text" id="engineNumText" ng-model="carInfo.engineNum">
-                            <label for="engineNumText"> 发动机号</label>
-                    </div>
-
-                    <!-- 车辆估值(美元) -->
-                    <div class="input-field col s4">
-                        <input type="text" id="valuationText" maxlength="8" valid-money ng-model="carInfo.valuation">
-                        <label for="valuationText"><span class="red-text">*</span> 车辆估值(美元)</label>
-                    </div>
-
-                    <!--是否金融车-->
-                    <div class="input-field col s4">
-                        <select material-select watch id="purchaseTypeSelect" ng-model="carInfo.purchaseType" >
-                            <option value="" disabled>是否金融车</option>
-                            <option ng-repeat="el in purchaseTypes" ng-value="el.id">{{el.name}}</option>
-                        </select>
-                    </div>
-
-                    <!--是否MSO-->
-                    <div class="input-field col s4">
-                        <select material-select watch id="msoStatusSelect" ng-model="carInfo.msoStatus" >
-                            <option value="" disabled>是否MSO</option>
-                            <option  ng-repeat="el in msoFlags" ng-value="el.id">{{el.name}}</option>
-                        </select>
-                    </div>
-                </div>
-
-                <!-- 备注 -->
-                <div class="col s12">
-                    <div class="input-field col s12">
-                        <input type="text" id="remarkText" ng-model="carInfo.remark">
-                        <label for="remarkText">备注</label>
-                    </div>
-                </div>
-
-                <!--  录入人 / 录入时间 -->
-                <div class="col s12" style="padding-top: 20px;">
-                    <div ng-show="!newFinanceCar">
-                        <div class="col s6 left-align">
-                            <!--<label class="fz15">录入人：{{partTypes[carInfo.partStatus - 1].name}}</label>-->
-                        </div>
-                        <div class="col s6 right-align">
-                            <label class="fz15">录入时间：{{carInfo.createdOn | date:'yyyy-MM-dd HH:mm:ss'}}</label>
-                        </div>
-                    </div>
-                </div>
+            <!-- VIN码 -->
+            <div class="input-field col s8">
+                <input type="text" id="newVinText" ng-model="carInfo.vin">
+                <label for="newVinText"><span class="red-text">*</span> VIN码</label>
             </div>
 
-            <!-- 分割线 -->
-            <div class="divider col s12" style="margin-top: 50px;"></div>
+            <!-- 年份 -->
+            <div class="input-field col s4">
+                <input id="proDateText" type="text" maxlength="4" valid-num ng-model="carInfo.proDate">
+                <label for="proDateText">年份</label>
+            </div>
 
-            <!-- 取消/确认 按钮 -->
-            <div class="row col right-align" style="width: 96%;margin-top: 20px;">
-                <a class="btn-floating waves-effect waves-light grey btn modal-close">
-                    <i class="mdi mdi-close"></i>
-                </a>
-                <a class="btn-floating waves-effect waves-light cyan lighten-1 btn" style="margin-left: 20px;"
-                   ng-click="updateFinanceCar()">
-                    <i class="mdi mdi-check"></i>
-                </a>
+            <!-- 制造商 -->
+            <div class="input-field col s4">
+                <select id="makerSelect" material-select watch ng-model="carInfo.makerId" ng-change="changeMakerId(carInfo.makerId)">
+                    <option value="" disabled>制造商</option>
+                    <option ng-repeat="el in carMakerList" ng-value="el.id">{{el.make_name}}</option>
+                </select>
+            </div>
+
+            <!-- 品牌 -->
+            <div class="input-field col s4">
+                <select id="modelSelect" material-select watch ng-model="carInfo.modelId">
+                    <option value="" disabled>品牌</option>
+                    <option ng-repeat="el in carModelList" ng-value="el.id">{{el.model_name}}</option>
+                </select>
+            </div>
+
+            <!-- 颜色 -->
+            <div class="input-field col s4">
+                <select material-select watch ng-model="carInfo.colour">
+                    <option value="" disabled>颜色</option>
+                    <option ng-repeat="el in configColor" ng-value="el.colorId">{{el.colorName}}</option>
+                </select>
+            </div>
+
+            <!-- 委托方性质 -->
+            <div class="input-field col s4">
+                <select material-select watch ng-model="carInfo.entrustType" ng-change="getEntrustInfo(carInfo.entrustType,'委托方')">
+                    <option value="" disabled>委托方性质</option>
+                    <option ng-repeat="el in entrustTypeList" ng-value="el.entrust_type">{{el.name}}</option>
+                </select>
+            </div>
+
+            <!-- 委托方 -->
+            <div ng-show="newFinanceCar" class="input-field col s4">
+                <select id="addEntrustSelect" style="width: 100%">
+                    <option value=""></option>
+                    <option ng-repeat="el in entrustList" ng-value="el.id">{{el.short_name}}</option>
+                </select>
+            </div>
+            <div ng-show="!newFinanceCar" class="input-field col s4">
+                <select id="editEntrustSelect" style="width: 100%">
+                    <option value=""></option>
+                    <option ng-repeat="el in entrustList" ng-value="el.id">{{el.short_name}}</option>
+                </select>
+            </div>
+
+            <!-- 发动机号 -->
+            <div class="input-field col s4">
+                    <input type="text" id="engineNumText" ng-model="carInfo.engineNum">
+                    <label for="engineNumText"> 发动机号</label>
+            </div>
+
+            <!-- 车辆估值(美元) -->
+            <div class="input-field col s4">
+                <input type="text" id="valuationText" maxlength="8" valid-money ng-model="carInfo.valuation">
+                <label for="valuationText"><span class="red-text">*</span> 车辆估值(美元)</label>
+            </div>
+
+            <!--是否金融车-->
+            <div class="input-field col s4">
+                <select material-select watch id="purchaseTypeSelect" ng-model="carInfo.purchaseType" >
+                    <option value="" disabled>是否金融车</option>
+                    <option ng-repeat="el in purchaseTypes" ng-value="el.id">{{el.name}}</option>
+                </select>
+            </div>
+
+            <!--是否MSO-->
+            <div class="input-field col s4">
+                <select material-select watch id="msoStatusSelect" ng-model="carInfo.msoStatus" >
+                    <option value="" disabled>是否MSO</option>
+                    <option  ng-repeat="el in msoFlags" ng-value="el.id">{{el.name}}</option>
+                </select>
             </div>
         </div>
+
+        <!-- 备注 -->
+        <div class="col s12">
+            <div class="input-field col s12">
+                <textarea id="remarkText" class="materialize-textarea" style="padding: 10px 0 0 0;" maxlength="200" ng-model="carInfo.remark"></textarea>
+                <label for="remarkText">备注</label>
+            </div>
+        </div>
+
+        <!--  录入人 / 录入时间 -->
+        <div class="col s12" style="padding-top: 5px;">
+            <div ng-show="!newFinanceCar">
+                <div class="col s6 left-align">
+                    <!--<label class="fz15">录入人：{{partTypes[carInfo.partStatus - 1].name}}</label>-->
+                </div>
+                <div class="col s6 right-align">
+                    <label class="fz15">录入时间：{{carInfo.createdOn | date:'yyyy-MM-dd HH:mm:ss'}}</label>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="modal-footer right-align">
+        <a class="btn-floating waves-effect waves-light btn cyan lighten-1" style="width:38px;height:38px; margin-right: 50px;"
+           ng-click="updateFinanceCar()">
+            <i class="mdi mdi-check"></i>
+        </a>
+        <a class="btn-floating waves-effect waves-light btn modal-close grey" style="width:38px;height:38px; margin-right: 20px;">
+            <i class="mdi mdi-close"></i>
+        </a>
     </div>
 </div>
