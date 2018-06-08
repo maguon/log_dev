@@ -193,7 +193,7 @@
 
         <!-- 显示画面【钥匙信息】 Body -->
         <div class="row col s12" style="height: 322px;">
-            <!-- 下部分：检索结果显示区域 -->
+            <!-- 上部分：检索结果显示区域 -->
             <div class="col s12">
                 <table class="bordered fz14">
                     <thead>
@@ -233,14 +233,15 @@
                     </tbody>
                 </table>
             </div>
-        </div>
 
-        <div class="col s12 lighten-1 blue-grey-text vc-center fz13" style="height:40px;">
-            <div class="col s6 left-align">
-                预计支付(美元)：<span style="color: red">{{totalPlanFee | currency}}</span>
-            </div>
-            <div class="col s6 right-align">
-                实际应付(美元)：<span style="color: red">{{totalActualFee | currency}}</span>
+            <!-- 下部分：合计金额区域 -->
+            <div class="col s12 lighten-1 blue-grey-text vc-center fz13" style="height:80px;">
+                <div class="col s6 left-align">
+                    预计支付(美元)：<span style="color: red">{{totalPlanFee | currency}}</span>
+                </div>
+                <div class="col s6 right-align">
+                    实际应付(美元)：<span style="color: red">{{totalActualFee | currency}}</span>
+                </div>
             </div>
         </div>
     </div>
