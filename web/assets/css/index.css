@@ -1134,6 +1134,16 @@ input[type=text]{
     height: 850px !important;
 }
 
+/* 金融还贷 新增还款 画面动态高度 */
+.repay-modal-height{
+    height: 656px !important;
+}
+
+/* 金融还贷 新增还款 画面动态高度 */
+.repay-modal-inner-height{
+    height: 550px !important;
+}
+
 /* Autocomplete */
 .autocomplete-content {
     margin-top: -20px !important;
