@@ -183,77 +183,73 @@
 </div>
 
 <!-- 画面【关联仓储订单】 模态框 -->
-<div class="row" style="margin: 0">
-    <div id="associatedOrderInfoDiv" class="modal" style="width: 45%;height: 520px">
-        <div class="modal-content center fz20" style="font-weight: 500;padding: 0">
+<div id="associatedOrderInfoDiv" class="modal modal-fixed-footer row" style="max-height: 536px;">
 
-            <!-- 显示画面【关联仓储订单】 Header -->
-            <div class="col s12 vc-center cyan"
-                 style="color: white;letter-spacing:1px;font-weight: bold;height: 50px;">
-                <p>关联仓储订单</p>
-            </div>
+    <!-- Header -->
+    <div class="modal_title center-align cyan white-text">关联仓储订单</div>
 
-            <!-- 显示画面【钥匙信息】 Body -->
-            <div class="row col s12" style="height: 322px;">
-                <!-- 下部分：检索结果显示区域 -->
-                <div class="col s12">
-                    <table class="bordered fz14">
-                        <thead>
-                        <tr class="grey-text text-darken-2">
-                            <th>订单编号</th>
-                            <th>VIN码</th>
-                            <th>车型</th>
-                            <th>入库时间</th>
-                            <th>出库时间</th>
-                            <th>合计天数</th>
-                            <th>预计支付<br><span style="margin-left: 12px;font-size: 12px;">(美元)</span></th>
-                            <th>实际支付<br><span style="margin-left: 12px;font-size: 12px;">(美元)</span></th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <tr ng-repeat="el in relOrderList" class="grey-text text-darken-1">
-                            <!-- 订单编号 -->
-                            <td>{{el.id}}</td>
-                            <!-- VIN码 -->
-                            <td ng-bind="el.vin"></td>
-                            <!-- 车型 -->
-                            <td>{{el.make_name==null ? '未知' : el.make_name}}/{{el.model_name==null ? '未知' : el.model_name}}</td>
-                            <!-- 入库时间 -->
-                            <td ng-bind="el.enter_time|date:'yyyy-MM-dd HH:mm:ss'"></td>
-                            <!-- 出库时间-->
-                            <td ng-bind="el.real_out_time|date:'yyyy-MM-dd HH:mm:ss'"></td>
-                            <!-- 合计天数 -->
-                            <td>{{el.day_count}}</td>
-                            <!-- 预计支付(美元) -->
-                            <td>{{el.plan_fee | currency}}</td>
-                            <!-- 实际支付(美元) -->
-                            <td><span style="color: red">{{el.actual_fee | currency}}</span></td>
-                        </tr>
-                        <tr class="grey-text text-darken-1" ng-if="orderList.length == 0">
-                            <td colspan="11" style="letter-spacing: 2px;text-align: center;">暂无数据</td>
-                        </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
+    <!-- Body -->
+    <div class="modal-content" style="max-height: 430px;">
 
-            <div class="col s12 lighten-1 blue-grey-text vc-center fz13" style="height:40px;">
-                <div class="col s6 left-align">
-                    预计支付(美元)：<span style="color: red">{{totalPlanFee | currency}}</span>
-                </div>
-                <div class="col s6 right-align">
-                    实际应付(美元)：<span style="color: red">{{totalActualFee | currency}}</span>
-                </div>
-            </div>
-
-            <div class="divider col s12" style="margin-top: 5px;"></div>
-
-            <div class="row col right-align" style="width: 96%;margin-top: 20px;">
-                <button class="btn-floating modal-action modal-close waves-effect waves-light cyan lighten-1 btn">
-                    <i class="mdi mdi-check add_brand"></i>
-                </button>
+        <!-- 显示画面【钥匙信息】 Body -->
+        <div class="row col s12" style="height: 322px;">
+            <!-- 下部分：检索结果显示区域 -->
+            <div class="col s12">
+                <table class="bordered fz14">
+                    <thead>
+                    <tr class="grey-text text-darken-2">
+                        <th>订单编号</th>
+                        <th>VIN码</th>
+                        <th>车型</th>
+                        <th>入库时间</th>
+                        <th>出库时间</th>
+                        <th>合计天数</th>
+                        <th>预计支付<br><span style="margin-left: 12px;font-size: 12px;">(美元)</span></th>
+                        <th>实际支付<br><span style="margin-left: 12px;font-size: 12px;">(美元)</span></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr ng-repeat="el in relOrderList" class="grey-text text-darken-1">
+                        <!-- 订单编号 -->
+                        <td>{{el.id}}</td>
+                        <!-- VIN码 -->
+                        <td ng-bind="el.vin"></td>
+                        <!-- 车型 -->
+                        <td>{{el.make_name==null ? '未知' : el.make_name}}/{{el.model_name==null ? '未知' : el.model_name}}</td>
+                        <!-- 入库时间 -->
+                        <td ng-bind="el.enter_time|date:'yyyy-MM-dd HH:mm:ss'"></td>
+                        <!-- 出库时间-->
+                        <td ng-bind="el.real_out_time|date:'yyyy-MM-dd HH:mm:ss'"></td>
+                        <!-- 合计天数 -->
+                        <td>{{el.day_count}}</td>
+                        <!-- 预计支付(美元) -->
+                        <td>{{el.plan_fee | currency}}</td>
+                        <!-- 实际支付(美元) -->
+                        <td><span style="color: red">{{el.actual_fee | currency}}</span></td>
+                    </tr>
+                    <tr class="grey-text text-darken-1" ng-if="orderList.length == 0">
+                        <td colspan="11" style="letter-spacing: 2px;text-align: center;">暂无数据</td>
+                    </tr>
+                    </tbody>
+                </table>
             </div>
         </div>
+
+        <div class="col s12 lighten-1 blue-grey-text vc-center fz13" style="height:40px;">
+            <div class="col s6 left-align">
+                预计支付(美元)：<span style="color: red">{{totalPlanFee | currency}}</span>
+            </div>
+            <div class="col s6 right-align">
+                实际应付(美元)：<span style="color: red">{{totalActualFee | currency}}</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="modal-footer right-align">
+        <a class="btn-floating waves-effect waves-light btn modal-close cyan lighten-1" style="width:38px;height:38px; margin-right: 40px;">
+            <i class="mdi mdi-check"></i>
+        </a>
     </div>
 </div>
 

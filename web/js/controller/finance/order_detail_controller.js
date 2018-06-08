@@ -254,7 +254,7 @@ app.controller("order_detail_controller", ["$scope", "$state", "$stateParams", "
         var url = _host.api_url + "/payment?storageOrderId=" + $scope.storageOrderId;
         _basic.get(url).then(function (data) {
             if (data.success) {
-                if (data.result[0].length > 0) {
+                if (data.result.length > 0) {
                     // 支付编号
                     $scope.paymentInfo.id = data.result[0].id == null ? '' : data.result[0].id;
                     // 支付方式
