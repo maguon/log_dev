@@ -73,7 +73,7 @@
         <!-- 备注 -->
         <div class="row col s12">
             <div class="col s12 input-field">
-                <input type="text" id="loadRemarkText" ng-model="loanInfo.remark" ng-disabled="loanInfo.loanStatus!=1">
+                <textarea ng-disabled="loanInfo.loanStatus!=1" id="loadRemarkText" class="materialize-textarea" style="padding: 10px 0 0 0;" maxlength="200" ng-model="loanInfo.remark" ></textarea>
                 <label for="loadRemarkText">备注</label>
             </div>
         </div>

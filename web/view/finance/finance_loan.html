@@ -150,75 +150,69 @@
     </div>
 </div>
 
-<!-- 画面【新增贷出订单】 模态框 -->
-<div class="row" style="margin: 0">
-    <div id="newFinanceLoanDiv" class="modal" style="width: 35%;height: 460px">
-        <div class="modal-content center fz20" style="font-weight: 500;padding: 0">
+<!-- 模态画面【新增贷出订单】 模态框 -->
+<div id="newFinanceLoanDiv" class="modal modal-fixed-footer row" style="max-height: 456px;">
 
-            <!-- 显示画面【新增贷出订单】 Header -->
-            <div class="col s12 vc-center cyan"
-                 style="color: white;letter-spacing:1px;font-weight: bold;height: 50px;">
-                <p>新增贷出订单</p>
-            </div>
+    <!-- Header -->
+    <div class="modal_title center-align cyan white-text">新增贷出订单</div>
 
-            <!-- 显示画面【新增贷出订单】 Body -->
-            <div class="col" style="width:95%; margin-left: 20px;">
-                <!-- 贷出订单信息 -->
-                <div class="col s12" style="margin-top: 40px;">
-                    <!-- 委托方性质 -->
-                    <div class="input-field col s6">
-                        <select material-select watch ng-model="loanInfo.entrustType" ng-change="getEntrustInfo(loanInfo.entrustType,'委托方')">
-                            <option value="" disabled>委托方性质</option>
-                            <option ng-repeat="el in entrustTypeList" ng-value="el.entrust_type">{{el.name}}</option>
-                        </select>
-                    </div>
+    <!-- Body -->
+    <div class="modal-content" style="max-height: 350px;">
 
-                    <!-- 委托方 -->
-                    <div class="input-field col s6">
-                        <select id="addEntrustSelect" style="width: 100%">
-                            <option value=""></option>
-                            <option ng-repeat="el in entrustList" ng-value="el.id">{{el.short_name}}</option>
-                        </select>
-                    </div>
+        <!-- 显示画面【新增贷出订单】 Body -->
+        <div class="col" style="width:95%; margin-left: 20px;">
+            <!-- 贷出订单信息 -->
+            <div class="col s12" style="margin-top: 30px;">
+                <!-- 委托方性质 -->
+                <div class="input-field col s6">
+                    <select material-select watch ng-model="loanInfo.entrustType" ng-change="getEntrustInfo(loanInfo.entrustType,'委托方')">
+                        <option value="" disabled>委托方性质</option>
+                        <option ng-repeat="el in entrustTypeList" ng-value="el.entrust_type">{{el.name}}</option>
+                    </select>
                 </div>
 
-                <!-- 贷出订单信息 -->
-                <div class="col s12">
-                    <!-- 定金 -->
-                    <div class="input-field col s6">
-                        <input type="text" id="depositText" maxlength="10" valid-money ng-model="loanInfo.deposit" class="red-text">
-                        <label id="earnestMoneyLabel" for="depositText"> 定金</label>
-                    </div>
-
-                    <!-- 贷出金额(美元) -->
-                    <div class="input-field col s6">
-                        <input type="text" id="loanMoneyText" maxlength="10" valid-money ng-model="loanInfo.loanMoney">
-                        <label for="loanMoneyText"><span class="red-text">*</span> 贷出金额(美元)</label>
-                    </div>
-                </div>
-
-                <!-- 贷出备注 -->
-                <div class="col s12">
-                    <div class="input-field col s12">
-                        <input type="text" id="remarkText" ng-model="loanInfo.remark">
-                        <label for="remarkText">贷出备注</label>
-                    </div>
+                <!-- 委托方 -->
+                <div class="input-field col s6">
+                    <select id="addEntrustSelect" style="width: 100%">
+                        <option value=""></option>
+                        <option ng-repeat="el in entrustList" ng-value="el.id">{{el.short_name}}</option>
+                    </select>
                 </div>
             </div>
 
-            <!-- 分割线 -->
-            <div class="divider col s12" style="margin-top: 80px;"></div>
+            <!-- 贷出订单信息 -->
+            <div class="col s12">
+                <!-- 定金 -->
+                <div class="input-field col s6">
+                    <input type="text" id="depositText" maxlength="10" valid-money ng-model="loanInfo.deposit" class="red-text">
+                    <label id="earnestMoneyLabel" for="depositText"> 定金</label>
+                </div>
 
-            <!-- 取消/确认 按钮 -->
-            <div class="row col right-align" style="width: 96%;margin-top: 20px;">
-                <a class="btn-floating waves-effect waves-light grey btn modal-close">
-                    <i class="mdi mdi-close"></i>
-                </a>
-                <a class="btn-floating waves-effect waves-light cyan lighten-1 btn" style="margin-left: 20px;"
-                   ng-click="addFinanceLoan()">
-                    <i class="mdi mdi-check"></i>
-                </a>
+                <!-- 贷出金额(美元) -->
+                <div class="input-field col s6">
+                    <input type="text" id="loanMoneyText" maxlength="10" valid-money ng-model="loanInfo.loanMoney">
+                    <label for="loanMoneyText"><span class="red-text">*</span> 贷出金额(美元)</label>
+                </div>
+            </div>
+
+            <!-- 贷出备注 -->
+            <div class="col s12">
+                <div class="input-field col s12">
+                    <textarea id="remarkText" class="materialize-textarea" style="padding: 10px 0 0 0;" maxlength="200" ng-model="loanInfo.remark"></textarea>
+                    <label for="remarkText">贷出备注</label>
+                </div>
             </div>
         </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="modal-footer right-align">
+        <a class="btn-floating waves-effect waves-light btn cyan lighten-1" style="width:38px;height:38px; margin-right: 50px;"
+           ng-click="addFinanceLoan()">
+            <i class="mdi mdi-check"></i>
+        </a>
+        <a class="btn-floating waves-effect waves-light btn modal-close grey" style="width:38px;height:38px; margin-right: 20px;">
+            <i class="mdi mdi-close"></i>
+        </a>
     </div>
 </div>

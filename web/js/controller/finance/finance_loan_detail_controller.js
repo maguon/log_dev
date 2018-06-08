@@ -97,7 +97,7 @@ app.controller("finance_loan_detail_controller", ["$scope", "$stateParams", "_ba
         _basic.get(url).then(function (data) {
             if (data.success) {
 
-                if (data.result.length == 0) {
+                if (data.result.length === 0) {
                     return;
                 }
 
@@ -123,6 +123,10 @@ app.controller("finance_loan_detail_controller", ["$scope", "$stateParams", "_ba
 
                 // 备注
                 $scope.loanInfo.remark = data.result[0].remark;
+
+                // textarea 高度调整
+                $('#loadRemarkText').val($scope.loanInfo.remark);
+                $('#loadRemarkText').trigger('autoresize');
 
                 // 未还金额(美元)
                 $scope.loanInfo.notRepaymentMoney = data.result[0].not_repayment_money;

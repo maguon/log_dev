@@ -192,8 +192,14 @@ app.controller("finance_loan_controller", ["$scope", "$rootScope", "_host", "_ba
         $('#newFinanceLoanDiv').modal('open');
         // 激活定金label状态
         $('#earnestMoneyLabel').addClass('active');
+
         // 初始数据
         angular.copy($scope.newLoanInfo, $scope.loanInfo);
+
+        // textarea 高度调整
+        $('#remarkText').val('');
+        $('#remarkText').trigger('autoresize');
+
         // 获取委托方信息
         $scope.getEntrustInfo(null,"委托方");
     };
