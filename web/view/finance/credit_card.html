@@ -174,276 +174,263 @@
 </div>
 
 
-
 <!-- 画面【新增信用证】 模态框 -->
-<div class="row" style="margin: 0">
-    <div id="newCreditCardDiv" class="modal" style="width: 45%;">
-        <div class="modal-content center" style="font-weight: 500;padding: 0">
+<div id="newCreditCardDiv" class="modal row" style="width: 45%;">
+    <!-- Header -->
+    <div class="modal_title center-align cyan white-text">新增信用证</div>
 
-            <!-- 显示画面【新增信用证】 Header -->
-            <div class="col s12 vc-center cyan fz20"
-                 style="color: white;letter-spacing:1px;font-weight: bold;height: 50px;">
-                <p>新增信用证</p>
+    <div class="modal-content center" style="font-weight: 500;padding: 0">
+
+        <div class="row no-marBottom" ul-tabs>
+            <div class="col s12 p0" style="width: 88%;margin-left:6%;margin-top: 20px">
+                <ul class="tabWrap grey lighten-4">
+                    <li class="tab col s6 baseMsg vc-center active">基本信息</li>
+                    <li class="tab col s6 linkFinanceCar vc-center">关联车辆</li>
+                </ul>
             </div>
 
-
-            <div class="row no-marBottom" ul-tabs>
-                <div class="col s12 p0" style="width: 88%;margin-left:6%;margin-top: 20px">
-                    <ul class="tabWrap grey lighten-4">
-                        <li class="tab col s6 baseMsg vc-center active">基本信息</li>
-                        <li class="tab col s6 linkFinanceCar vc-center">关联车辆</li>
-                    </ul>
-                </div>
-
-                <!--基本信息-->
-                <div id="baseMsg" class="col s12 tab_box">
-                    <!-- 显示画面【新增信用证】 Body -->
-                    <div class="row col" style="width:94%; margin-left: 3%;">
-                        <!-- 金融车辆信息 -->
-                        <div class="col s12" style="margin-top: 20px;">
-                            <div class="row col s12">
-                                <!-- 新增條件：信用证编码 -->
-                                <div class="input-field col s4">
-                                    <input type="text" id="addCreditId" ng-model="addCreditId">
-                                    <label for="addCreditId"><span class="red-text">*</span>信用证编码</label>
-                                </div>
-
-                                <!-- 委托方性质 -->
-                                <div class="input-field col s4">
-                                    <select material-select watch ng-model="addEntrustType" ng-change="getEntrustInfo(addEntrustType)">
-                                        <option value="" disabled>委托方性质</option>
-                                        <option ng-repeat="el in entrustTypeList" ng-value="el.entrust_type">{{el.name}}</option>
-                                    </select>
-                                </div>
-
-                                <!--委托方-->
-                                <div class="input-field col s4">
-                                    <select  id="addEntrustSelect" style="width: 100%">
-                                        <option value="" ></option>
-                                        <option ng-repeat="el in addEntrustList" ng-value="el.id">{{el.short_name}}</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="row col s12">
-                                <!-- 新增條件：信用证金额(美元) -->
-                                <div class="input-field col" style="width: 33.3%">
-                                    <input type="number" id="addCreditMoney" ng-model="addCreditMoney">
-                                    <label for="addCreditMoney"><span class="red-text">*</span>信用证金额(美元)</label>
-                                </div>
-
-                                <!-- 新增條件：实际到款金额(美元) -->
-                                <div class="input-field col" style="width: 33.3%">
-                                    <input type="number" id="addActualMoney" ng-model="addActualMoney">
-                                    <label for="addActualMoney"><span class="red-text">*</span>实际到款金额(美元)</label>
-                                </div>
-
-                                <!-- 预计回款日期 -->
-                                <div class="input-field col s4">
-                                    <input type="text" id="addPlanReturnDate" ng-model="addPlanReturnDate" class="datepicker" date>
-                                    <i class="mdi dataIcon mdi-table-large"></i>
-                                    <label for="addPlanReturnDate">预计回款日期</label>
-                                </div>
-                            </div>
-                            <div class="row col s12">
-                            <!--接证日期-->
-                                <div class="input-field col s4">
-                                    <input id="addReceiveCardDate" type="text" ng-model="addReceiveCardDate" class="datepicker" date>
-                                    <i class="mdi dataIcon mdi-table-large"></i>
-                                    <label for="addReceiveCardDate">接证日期</label>
-                                </div>
-
-                                <!-- 交单日期 -->
-                                <div class="input-field col s4">
-                                    <input type="text" id="addDocumentsDate" ng-model="addDocumentsDate" class="datepicker" date>
-                                    <i class="mdi dataIcon mdi-table-large"></i>
-                                    <label for="addDocumentsDate">交单日期</label>
-                                </div>
-
-                                <!--实际回款日期-->
-                                <div class="input-field col s4">
-                                    <input id="addActualReturnDate" type="text" ng-model="addActualReturnDate" class="datepicker" date>
-                                    <i class="mdi dataIcon mdi-table-large"></i>
-                                    <label for="addActualReturnDate">实际回款日期</label>
-                                </div>
-                            </div>
-                            <div class="row col s12">
-                                <!--文件发出日期-->
-                                <div class="input-field col s4">
-                                    <input id="addDocumentsSendDate" type="text" ng-model="addDocumentsSendDate" class="datepicker" date>
-                                    <i class="mdi dataIcon mdi-table-large"></i>
-                                    <label for="addDocumentsSendDate">文件发出日期</label>
-                                </div>
-
-                                <!--开户行文件接收日期-->
-                                <div class="input-field col s4">
-                                    <input id="addDocumentsReceiveDate" type="text" ng-model="addDocumentsReceiveDate" class="datepicker" date>
-                                    <i class="mdi dataIcon mdi-table-large"></i>
-                                    <label for="addDocumentsReceiveDate">开户行文件接收日期</label>
-                                </div>
-
-                                <!--实际汇款日期-->
-                                <div class="input-field col s4">
-                                    <input id="addActualRemitDate" type="text" ng-model="addActualRemitDate" class="datepicker" date>
-                                    <i class="mdi dataIcon mdi-table-large"></i>
-                                    <label for="addActualRemitDate">实际汇款日期</label>
-                                </div>
-                            </div>
-                            <!-- 发票号码 -->
-                            <div class="row col s12">
-                                <div class="input-field col s12">
-                                    <input type="text" id="addInvoiceNumber" ng-model="addInvoiceNumber">
-                                    <label for="addInvoiceNumber">发票号码</label>
-                                </div>
+            <!--基本信息-->
+            <div id="baseMsg" class="col s12 tab_box">
+                <!-- 显示画面【新增信用证】 Body -->
+                <div class="row col" style="width:94%; margin-left: 3%;">
+                    <!-- 金融车辆信息 -->
+                    <div class="col s12" style="margin-top: 20px;">
+                        <div class="row col s12">
+                            <!-- 新增條件：信用证编码 -->
+                            <div class="input-field col s4">
+                                <input type="text" id="addCreditId" ng-model="addCreditId">
+                                <label for="addCreditId"><span class="red-text">*</span>信用证编码</label>
                             </div>
 
-                            <!-- 备注 -->
-                            <div class="row col s12">
-                                <div class="input-field col s12">
-                                    <input type="text" id="addRemarkText" ng-model="addRemarkText">
-                                    <label for="addRemarkText">备注</label>
-                                </div>
+                            <!-- 委托方性质 -->
+                            <div class="input-field col s4">
+                                <select material-select watch ng-model="addEntrustType" ng-change="getEntrustInfo(addEntrustType)">
+                                    <option value="" disabled>委托方性质</option>
+                                    <option ng-repeat="el in entrustTypeList" ng-value="el.entrust_type">{{el.name}}</option>
+                                </select>
+                            </div>
+
+                            <!--委托方-->
+                            <div class="input-field col s4">
+                                <select  id="addEntrustSelect" style="width: 100%">
+                                    <option value="" ></option>
+                                    <option ng-repeat="el in addEntrustList" ng-value="el.id">{{el.short_name}}</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row col s12">
+                            <!-- 新增條件：信用证金额(美元) -->
+                            <div class="input-field col" style="width: 33.3%">
+                                <input type="number" id="addCreditMoney" ng-model="addCreditMoney">
+                                <label for="addCreditMoney"><span class="red-text">*</span>信用证金额(美元)</label>
+                            </div>
+
+                            <!-- 新增條件：实际到款金额(美元) -->
+                            <div class="input-field col" style="width: 33.3%">
+                                <input type="number" id="addActualMoney" ng-model="addActualMoney">
+                                <label for="addActualMoney"><span class="red-text">*</span>实际到款金额(美元)</label>
+                            </div>
+
+                            <!-- 预计回款日期 -->
+                            <div class="input-field col s4">
+                                <input type="text" id="addPlanReturnDate" ng-model="addPlanReturnDate" class="datepicker" date>
+                                <i class="mdi dataIcon mdi-table-large"></i>
+                                <label for="addPlanReturnDate">预计回款日期</label>
+                            </div>
+                        </div>
+                        <div class="row col s12">
+                        <!--接证日期-->
+                            <div class="input-field col s4">
+                                <input id="addReceiveCardDate" type="text" ng-model="addReceiveCardDate" class="datepicker" date>
+                                <i class="mdi dataIcon mdi-table-large"></i>
+                                <label for="addReceiveCardDate">接证日期</label>
+                            </div>
+
+                            <!-- 交单日期 -->
+                            <div class="input-field col s4">
+                                <input type="text" id="addDocumentsDate" ng-model="addDocumentsDate" class="datepicker" date>
+                                <i class="mdi dataIcon mdi-table-large"></i>
+                                <label for="addDocumentsDate">交单日期</label>
+                            </div>
+
+                            <!--实际回款日期-->
+                            <div class="input-field col s4">
+                                <input id="addActualReturnDate" type="text" ng-model="addActualReturnDate" class="datepicker" date>
+                                <i class="mdi dataIcon mdi-table-large"></i>
+                                <label for="addActualReturnDate">实际回款日期</label>
+                            </div>
+                        </div>
+                        <div class="row col s12">
+                            <!--文件发出日期-->
+                            <div class="input-field col s4">
+                                <input id="addDocumentsSendDate" type="text" ng-model="addDocumentsSendDate" class="datepicker" date>
+                                <i class="mdi dataIcon mdi-table-large"></i>
+                                <label for="addDocumentsSendDate">文件发出日期</label>
+                            </div>
+
+                            <!--开户行文件接收日期-->
+                            <div class="input-field col s4">
+                                <input id="addDocumentsReceiveDate" type="text" ng-model="addDocumentsReceiveDate" class="datepicker" date>
+                                <i class="mdi dataIcon mdi-table-large"></i>
+                                <label for="addDocumentsReceiveDate">开户行文件接收日期</label>
+                            </div>
+
+                            <!--实际汇款日期-->
+                            <div class="input-field col s4">
+                                <input id="addActualRemitDate" type="text" ng-model="addActualRemitDate" class="datepicker" date>
+                                <i class="mdi dataIcon mdi-table-large"></i>
+                                <label for="addActualRemitDate">实际汇款日期</label>
+                            </div>
+                        </div>
+                        <!-- 发票号码 -->
+                        <div class="row col s12">
+                            <div class="input-field col s12">
+                                <input type="text" id="addInvoiceNumber" ng-model="addInvoiceNumber">
+                                <label for="addInvoiceNumber">发票号码</label>
                             </div>
                         </div>
 
+                        <!-- 备注 -->
+                        <div class="row col s12">
+                            <div class="input-field col s12">
+                                <input type="text" id="addRemarkText" ng-model="addRemarkText">
+                                <label for="addRemarkText">备注</label>
+                            </div>
+                        </div>
                     </div>
 
-                    <!-- 分割线 -->
-                    <div class="divider col s12" style="margin-top: 50px;"></div>
+                </div>
+
+                <!-- 分割线 -->
+                <div class="divider col s12" style="margin-top: 50px;"></div>
+
+                <!-- 取消/确认 按钮 -->
+                <div class="row col right-align" style="width: 96%;margin-top: 20px;">
+                    <a class="btn-floating waves-effect waves-light grey btn modal-close">
+                        <i class="mdi mdi-close"></i>
+                    </a>
+                    <a class="btn-floating waves-effect waves-light cyan lighten-1 btn" style="margin-left: 20px;"
+                       ng-click="addCreditCardInfo()">
+                        <i class="mdi mdi-check"></i>
+                    </a>
+                </div>
+
+            </div>
+
+            <!--关联金融车-->
+            <div id="linkFinanceCar" class="col s12 tab_box">
+                <div class="row col" style="width:94%; margin-left: 3%; height: 685px">
+
+                   <!--上部分：查询功能-->
+                    <div class="row col" style="width: 100%;position: relative">
+                        <div class="input-field col s12">
+                            <input type="text" id="autocomplete-input"  placeholder="           模糊查询至少需要6位vin码"  ng-model="creditVin" ng-change="shortSearch()"  style="margin: 0 0 20px 0"  class="autocomplete">
+                            <label for="autocomplete-input">VIN码</label>
+                        </div>
+                        <button class=" btn btn-floating btn-small waves-effect cyan lighten-1" ng-if="carId!==undefined" ng-click="addLinkCar()"  style="position: absolute;top: 15px;right: 10px;">
+                            <i class="mdi white-text mdi-plus fz30"></i>
+                        </button>
+                        <button class=" btn btn-floating btn-small waves-effect cyan lighten-1" ng-if="carId==undefined" disabled style="position: absolute;top: 15px;right: 10px;">
+                            <i class="mdi white-text mdi-plus fz30"></i>
+                        </button>
+                    </div>
+
+                     <!--下部分：查询结果-->
+                     <div class="col s12" ng-repeat="linkCar in getLinkCarList" style="height:270px">
+                         <div class="row blue-grey lighten-5" style="width:98%;border:1px solid #bdbdbd">
+                             <!-- header -->
+                             <div class="col s12 lighten-1 cyan-text vc-center left-align" style="height:50px;">
+                                 <div class="col s4 ">
+                                     VIN码：{{linkCar.vin}}
+                                 </div>
+                                 <div class="col s4">
+                                     <div class="col s4">
+                                         <div class="col s6" ng-if="linkCar.purchase_type!==0"> <i class="mdi mdi-slackware" style="color: #f0ad4e"></i></div>
+                                         <div class="col s6" ng-if="linkCar.purchase_type==0"> <i class="mdi mdi-slackware grey-text"></i></div>
+                                         <div class="col s6 right-align" ng-if="linkCar.mortgage_status!==2"><i class="mdi mdi-briefcase grey-text"></i></div>
+                                         <div class="col s6 right-align" ng-if="linkCar.mortgage_status==2"><i class="mdi mdi-briefcase cyan-text"></i></div>
+                                     </div>
+                                     <div class="col s8">
+                                         <div class="col s10 grey-text right-align"> {{linkCar.make_name}} /{{linkCar.model_name}}</div>
+                                         <div class="col s2" ng-if="linkCar.colour==''"></div>
+                                         <div class="col s2 z-depth-1" ng-if="linkCar.colour!=''"  style="width:20px;height:20px; background-color: {{'#' + linkCar.colour}}"></div>
+                                     </div>
+                                 </div>
+
+                                 <div class="col s3 right-align red-text">
+                                    {{linkCar.valuation| currency }}
+                                 </div>
+                                 <div class="col s1 right-align red-text" style="cursor: pointer" ng-click="deleteLinkCar(linkCar.car_id)">x</div>
+                             </div>
+
+                             <!-- body -->
+                             <div class="col s12 lighten-1 white grey-text vc-center fz13 left-align" style="height:40px;">
+                                 <div class="input-field col s4">
+                                     始发港口：{{linkCar.start_port_name}}
+                                 </div>
+                                 <div class="input-field col s4">
+                                     目的港口：{{linkCar.end_port_name}}
+                                 </div>
+                                 <div class="input-field col s4">
+                                     开船日期：{{linkCar.start_ship_date | date:'yyyy-MM-dd' }}
+                                 </div>
+                             </div>
+                             <div class="col s12 white">
+                                 <div class="s12 center" style="width:98%; margin-left: 10px;margin-right: 10px;margin-top: 10px;border: 1px dotted #ccc"></div>
+                             </div>
+                             <!-- body -->
+                             <div class="col s12 lighten-1 white grey-text vc-center fz13 left-align" style="height:40px;">
+                                 <div class="input-field col s4">
+                                     船公司：{{linkCar.ship_company_name}}
+                                 </div>
+                                 <div class="input-field col s4">
+                                     船名：{{linkCar.ship_name}}
+                                 </div>
+                                 <div class="input-field col s4">
+                                     到港日期：{{linkCar.end_ship_date | date:'yyyy-MM-dd'}}
+                                 </div>
+                             </div>
+                             <div class="col s12 white">
+                                 <div class="s12 center" style="width:98%; margin-left: 10px;margin-right: 10px;margin-top: 10px;border: 1px dotted #ccc"></div>
+                             </div>
+                             <!-- body -->
+                             <div class="col s12 lighten-1 white grey-text vc-center fz13 left-align" style="height:40px;">
+                                 <div class="input-field col s4">
+                                     货柜：{{linkCar.container}}
+                                 </div>
+                                 <div class="input-field col s4">
+                                     booking：{{linkCar.booking}}
+                                 </div>
+                                 <div class="input-field col s4">
+                                     封签：{{linkCar.tab}}
+                                 </div>
+                             </div>
+
+                             <div class="col s12 white">
+                                 <div class="divider s12 center" style="width:98%; margin-left: 10px;margin-right: 10px;margin-top: 10px;"></div>
+                             </div>
+
+
+                             <div class="col s12 lighten-1 white grey-text vc-center fz13 left-align" style="height:40px;">
+                                 <div class="col s12">
+                                     备注：{{linkCar.remark}}
+                                 </div>
+                             </div>
+                         </div>
+                     </div>
 
                     <!-- 取消/确认 按钮 -->
-                    <div class="row col right-align" style="width: 96%;margin-top: 20px;">
+                    <div class="row col right-align" style="width: 96%;" ng-if="getLinkCarList.length!==0">
                         <a class="btn-floating waves-effect waves-light grey btn modal-close">
                             <i class="mdi mdi-close"></i>
                         </a>
                         <a class="btn-floating waves-effect waves-light cyan lighten-1 btn" style="margin-left: 20px;"
-                           ng-click="addCreditCardInfo()">
+                           ng-click="addCarLinkInfo()">
                             <i class="mdi mdi-check"></i>
                         </a>
                     </div>
-
-                </div>
-
-                <!--关联金融车-->
-                <div id="linkFinanceCar" class="col s12 tab_box">
-                    <div class="row col" style="width:94%; margin-left: 3%; height: 685px">
-
-                       <!--上部分：查询功能-->
-                        <div class="row col" style="width: 100%;position: relative">
-                            <div class="input-field col s12">
-                                <input type="text" id="autocomplete-input"  placeholder="           模糊查询至少需要6位vin码"  ng-model="creditVin" ng-change="shortSearch()"  style="margin: 0 0 20px 0"  class="autocomplete">
-                                <label for="autocomplete-input">VIN码</label>
-                            </div>
-                            <button class=" btn btn-floating btn-small waves-effect cyan lighten-1" ng-if="carId!==undefined" ng-click="addLinkCar()"  style="position: absolute;top: 15px;right: 10px;">
-                                <i class="mdi white-text mdi-plus fz30"></i>
-                            </button>
-                            <button class=" btn btn-floating btn-small waves-effect cyan lighten-1" ng-if="carId==undefined" disabled style="position: absolute;top: 15px;right: 10px;">
-                                <i class="mdi white-text mdi-plus fz30"></i>
-                            </button>
-                        </div>
-
-                         <!--下部分：查询结果-->
-                         <div class="col s12" ng-repeat="linkCar in getLinkCarList" style="height:270px">
-                             <div class="row blue-grey lighten-5" style="width:98%;border:1px solid #bdbdbd">
-                                 <!-- header -->
-                                 <div class="col s12 lighten-1 cyan-text vc-center left-align" style="height:50px;">
-                                     <div class="col s4 ">
-                                         VIN码：{{linkCar.vin}}
-                                     </div>
-                                     <div class="col s4">
-                                         <div class="col s4">
-                                             <div class="col s6" ng-if="linkCar.purchase_type!==0"> <i class="mdi mdi-slackware" style="color: #f0ad4e"></i></div>
-                                             <div class="col s6" ng-if="linkCar.purchase_type==0"> <i class="mdi mdi-slackware grey-text"></i></div>
-                                             <div class="col s6 right-align" ng-if="linkCar.mortgage_status!==2"><i class="mdi mdi-briefcase grey-text"></i></div>
-                                             <div class="col s6 right-align" ng-if="linkCar.mortgage_status==2"><i class="mdi mdi-briefcase cyan-text"></i></div>
-                                         </div>
-                                         <div class="col s8">
-                                             <div class="col s10 grey-text right-align"> {{linkCar.make_name}} /{{linkCar.model_name}}</div>
-                                             <div class="col s2" ng-if="linkCar.colour==''"></div>
-                                             <div class="col s2 z-depth-1" ng-if="linkCar.colour!=''"  style="width:20px;height:20px; background-color: {{'#' + linkCar.colour}}"></div>
-                                         </div>
-                                     </div>
-
-                                     <div class="col s3 right-align red-text">
-                                        {{linkCar.valuation| currency }}
-                                     </div>
-                                     <div class="col s1 right-align red-text" style="cursor: pointer" ng-click="deleteLinkCar(linkCar.car_id)">x</div>
-                                 </div>
-
-                                 <!-- body -->
-                                 <div class="col s12 lighten-1 white grey-text vc-center fz13 left-align" style="height:40px;">
-                                     <div class="input-field col s4">
-                                         始发港口：{{linkCar.start_port_name}}
-                                     </div>
-                                     <div class="input-field col s4">
-                                         目的港口：{{linkCar.end_port_name}}
-                                     </div>
-                                     <div class="input-field col s4">
-                                         开船日期：{{linkCar.start_ship_date | date:'yyyy-MM-dd' }}
-                                     </div>
-                                 </div>
-                                 <div class="col s12 white">
-                                     <div class="s12 center" style="width:98%; margin-left: 10px;margin-right: 10px;margin-top: 10px;border: 1px dotted #ccc"></div>
-                                 </div>
-                                 <!-- body -->
-                                 <div class="col s12 lighten-1 white grey-text vc-center fz13 left-align" style="height:40px;">
-                                     <div class="input-field col s4">
-                                         船公司：{{linkCar.ship_company_name}}
-                                     </div>
-                                     <div class="input-field col s4">
-                                         船名：{{linkCar.ship_name}}
-                                     </div>
-                                     <div class="input-field col s4">
-                                         到港日期：{{linkCar.end_ship_date | date:'yyyy-MM-dd'}}
-                                     </div>
-                                 </div>
-                                 <div class="col s12 white">
-                                     <div class="s12 center" style="width:98%; margin-left: 10px;margin-right: 10px;margin-top: 10px;border: 1px dotted #ccc"></div>
-                                 </div>
-                                 <!-- body -->
-                                 <div class="col s12 lighten-1 white grey-text vc-center fz13 left-align" style="height:40px;">
-                                     <div class="input-field col s4">
-                                         货柜：{{linkCar.container}}
-                                     </div>
-                                     <div class="input-field col s4">
-                                         booking：{{linkCar.booking}}
-                                     </div>
-                                     <div class="input-field col s4">
-                                         封签：{{linkCar.tab}}
-                                     </div>
-                                 </div>
-
-                                 <div class="col s12 white">
-                                     <div class="divider s12 center" style="width:98%; margin-left: 10px;margin-right: 10px;margin-top: 10px;"></div>
-                                 </div>
-
-
-                                 <div class="col s12 lighten-1 white grey-text vc-center fz13 left-align" style="height:40px;">
-                                     <div class="col s12">
-                                         备注：{{linkCar.remark}}
-                                     </div>
-                                 </div>
-                             </div>
-                         </div>
-
-                        <!-- 取消/确认 按钮 -->
-                        <div class="row col right-align" style="width: 96%;" ng-if="getLinkCarList.length!==0">
-                            <a class="btn-floating waves-effect waves-light grey btn modal-close">
-                                <i class="mdi mdi-close"></i>
-                            </a>
-                            <a class="btn-floating waves-effect waves-light cyan lighten-1 btn" style="margin-left: 20px;"
-                               ng-click="addCarLinkInfo()">
-                                <i class="mdi mdi-check"></i>
-                            </a>
-                        </div>
-
-                        </div>
-                    </div>
-
-
                 </div>
             </div>
-
-
         </div>
     </div>
 </div>
