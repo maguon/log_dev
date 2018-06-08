@@ -582,7 +582,7 @@ app.controller("finance_loan_detail_controller", ["$scope", "$stateParams", "_ba
      */
     $scope.openNewLoanPaymentDiv = function () {
         $('.modal').modal();
-        $('#newLoanPaymentDiv').modal('open');
+        $('#saveLoanPaymentDiv').modal('open');
         // 画面ID：新增还款
         $scope.modalFlag = "newPaymentInfo";
         $scope.newPayment.repaymentStatus = "-1";
@@ -596,7 +596,7 @@ app.controller("finance_loan_detail_controller", ["$scope", "$stateParams", "_ba
      */
     $scope.openLoanPaymentDiv = function (repaymentId) {
         $('.modal').modal();
-        $('#newLoanPaymentDiv').modal('open');
+        $('#saveLoanPaymentDiv').modal('open');
         // 画面ID：还款信息
         $scope.modalFlag = "editPaymentInfo";
 
@@ -775,7 +775,7 @@ app.controller("finance_loan_detail_controller", ["$scope", "$stateParams", "_ba
 
         } else {
             // 关闭模态
-            $('#newLoanPaymentDiv').modal('close');
+            $('#saveLoanPaymentDiv').modal('close');
         }
     };
 
@@ -861,7 +861,7 @@ app.controller("finance_loan_detail_controller", ["$scope", "$stateParams", "_ba
                     _basic.put(url, obj).then(function (data) {
                         if (data.success) {
                             // 关闭模态
-                            $('#newLoanPaymentDiv').modal('close');
+                            $('#saveLoanPaymentDiv').modal('close');
                             // 查询还款记录列表
                             $scope.lookPaymentHistory();
                         } else {
@@ -871,7 +871,7 @@ app.controller("finance_loan_detail_controller", ["$scope", "$stateParams", "_ba
                 });
         } else {
             // 关闭模态
-            $('#newLoanPaymentDiv').modal('close');
+            $('#saveLoanPaymentDiv').modal('close');
         }
     };
 
