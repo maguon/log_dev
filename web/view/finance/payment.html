@@ -1,8 +1,11 @@
-<!--新增模块-->
-<div id="addPaymentModal" class="modal">
-    <!--标题：新增入库车辆-->
-    <div class="cyan lighten-1 white-text center-align modal_title" >新增支付信息</div>
-    <div class="modal-content" style="width:80%;margin: 0 auto;">
+<!-- 模态画面【新增支付信息】 模态框 -->
+<div id="addPaymentModal" class="modal modal-fixed-footer row" style="max-height: 516px;">
+
+    <!-- Header -->
+    <div class="modal_title center-align cyan white-text">新增支付信息</div>
+
+    <!-- Body -->
+    <div class="modal-content" style="max-height: 410px;">
         <div class="row col s12">
             <div class="col s6 input-field">
                 <select material-select watch ng-model="addEntrustType" ng-change="getEntrustInfo(addEntrustType)">
@@ -35,26 +38,24 @@
                 <label for="addPaymentMoney"><span style="color: red">*</span>支付金额(美元)</label>
             </div>
         </div>
-        <div class="row col s12" style="margin-bottom: 135px;">
+        <div class="row col s12">
             <div class="col s12 input-field">
                 <input type="text" name="addRemark" id="addRemark" ng-model="addRemark">
+                <!--<textarea id="remark" class="materialize-textarea" style="padding: 10px 0 0 0;" maxlength="200" ng-model="portInfo.remark"></textarea>-->
                 <label for="addRemark">备注</label>
             </div>
         </div>
     </div>
-    <div class="divider grey lighten-1" style="height: 2px;width:90%;margin: 0 auto;"></div>
-    <div class="modal-footer right-align col s12" style="margin: 15px auto">
 
-        <!--确定按钮-->
-
-        <button class="btn  btn-large btn-floating waves-effect cyan" ng-click="addPaymentInfo()" name="action" style="margin-right:40px">
+    <!-- Footer -->
+    <div class="modal-footer right-align">
+        <a class="btn-floating waves-effect waves-light btn cyan lighten-1" style="width:38px;height:38px; margin-right: 50px;"
+           ng-click="addPaymentInfo()">
             <i class="mdi mdi-check"></i>
-        </button>
-        <!--取消按钮-->
-
-        <button class="btn  btn-large btn-floating waves-effect modal-close grey"  name="action" style="margin-right: 35px">
+        </a>
+        <a class="btn-floating waves-effect waves-light btn modal-close grey" style="width:38px;height:38px; margin-right: 20px;">
             <i class="mdi mdi-close"></i>
-        </button>
+        </a>
     </div>
 </div>
 <!--仓库管理 --支付管理-->
