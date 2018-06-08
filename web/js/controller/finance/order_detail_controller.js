@@ -202,14 +202,14 @@ app.controller("order_detail_controller", ["$scope", "$state", "$stateParams", "
         var url = _host.api_url + "/storageOrder?storageOrderId=" + $scope.storageOrderId;
 
         _basic.get(url).then(function (data) {
-            if (data.success == true) {
+            if (data.success) {
 
-                if (data.result.length == 0) {
+                if (data.result.length === 0) {
                     return;
                 }
 
                 // 订单是已支付时，取得支付详情
-                if (data.result[0].order_status == 2) {
+                if (data.result[0].order_status === 2) {
                     getPaymentDetails();
                 }
                 // 支付状态
@@ -226,7 +226,7 @@ app.controller("order_detail_controller", ["$scope", "$state", "$stateParams", "
                 // 颜色
                 $scope.orderInfo.color = '未知';
                 for (var i = 0; i < $scope.configColor.length; i++) {
-                    if ($scope.configColor[i].colorId == data.result[0].colour) {
+                    if ($scope.configColor[i].colorId === data.result[0].colour) {
                         $scope.orderInfo.color = $scope.configColor[i].colorName;
                     }
                 }

@@ -177,95 +177,91 @@
 </div>
 
 <!-- 画面【修改价格】 模态框 -->
-<div class="row" style="margin: 0">
-    <div id="changePriceDiv" class="modal" style="width: 45%;height: 520px">
-        <div class="modal-content center fz20" style="font-weight: 500;padding: 0;">
+<div id="changePriceDiv" class="modal modal-fixed-footer row" style="max-height: 506px;">
 
-            <!-- 显示画面【修改价格】 Header -->
-            <div class="row col s12 vc-center cyan"
-                 style="color: white;letter-spacing:1px;font-weight: bold;height: 50px;">
-                <p>修改价格</p>
-            </div>
+    <!-- Header -->
+    <div class="modal_title center-align cyan white-text">修改价格</div>
 
-            <!-- 显示画面【修改价格】 Body -->
-            <div class="row col s11"
-                 style="padding:0 ;margin: 10px 0px 10px 40px ; border: 1px solid #cccccc;  background-color: #F5F5F5">
-                <div style="margin: 0 auto;">
+    <!-- Body -->
+    <div class="modal-content" style="max-height: 400px;">
 
-                    <!-- 修改价格 委托方 -->
-                    <div class="vc-center col s12 left-align cyan-text fz20 lighten-4"
-                         style="height:60px;">
-                        <div class="col s12 left-align context-ellipsis">
-                            <span>委托方：{{orderInfo.entrustName}}</span>
-                        </div>
-                    </div>
+        <!-- 显示画面【修改价格】 Body -->
+        <div class="row col s11"
+             style="padding:0 ;margin: 10px 0px 10px 40px ; border: 1px solid #cccccc;  background-color: #F5F5F5">
+            <div style="margin: 0 auto;">
 
-                    <div class="vc-center col s12">
-                        <div class="divider s12 center" style="width:100%; margin-left: 10px;margin-right: 10px;"></div>
-                    </div>
-
-                    <!-- 钥匙 vin 制造商 型号 -->
-                    <div class="vc-center col s12 left-align black-text fz14" style="height:50px ;">
-                        <div class="col s6 left-align context-ellipsis">
-                            <span>VIN：{{orderInfo.vin}}</span>
-                        </div>
-                        <div class="col s6 left-align context-ellipsis">
-                            <span>车型：{{orderInfo.makeName==null ? '未知' : orderInfo.makeName}}/{{orderInfo.modelName==null ? '未知' : orderInfo.modelName}}</span>
-                        </div>
-                    </div>
-
-                    <!--<div class="vc-center col s12">-->
-                    <!--<div class="divider s12 center" style="width:100%; margin-left: 10px;margin-right: 10px;"></div>-->
-                    <!--</div>-->
-                    <div class="vc-center col s12">
-                        <div style="border-top: #cccccc 1px dashed; overflow: hidden;width:100%; margin-left: 10px;margin-right: 10px;height: 1px"></div>
-                    </div>
-
-                    <!-- 入库时间 / 出库时间 -->
-                    <div class="vc-center col s12 left-align black-text fz14" style="height:50px;">
-                        <div class="col s6 left-align context-ellipsis">
-                            <span>入库时间：{{orderInfo.enterTime |date:'yyyy-MM-dd HH:mm:ss'}}</span>
-                        </div>
-                        <div class="col s6 left-align context-ellipsis">
-                            <span>出库时间：{{orderInfo.realOutTime |date:'yyyy-MM-dd HH:mm:ss'}}</span>
-                        </div>
-                    </div>
-
-                    <div class="vc-center col s12">
-                        <div class="divider s12 center" style="width:100%; margin-left: 10px;margin-right: 10px;"></div>
-                    </div>
-
-                    <!-- 预计支付 / 合计天数 -->
-                    <div class="vc-center col s12 left-align black-text fz14" style="height:60px ;">
-                        <div class="col s6 left-align context-ellipsis">
-                            预计支付：<span class="red-text fz18">{{orderInfo.planFee | currency}}</span>
-                        </div>
-                        <div class="col s6 left-align context-ellipsis">
-                            合计天数：{{orderInfo.dayCount}}
-                        </div>
+                <!-- 修改价格 委托方 -->
+                <div class="vc-center col s12 left-align cyan-text fz20 lighten-4"
+                     style="height:60px;">
+                    <div class="col s12 left-align context-ellipsis">
+                        <span>委托方：{{orderInfo.entrustName}}</span>
                     </div>
                 </div>
-            </div>
 
-            <div class="col s12">
-                <!-- 实际应付 -->
-                <div class="col s11 input-field" style="margin-left: 30px;">
-                    <input type="text" id="actualFeeText" maxlength="8" valid-money ng-model="orderInfo.actualFee">
-                    <label for="actualFeeText"><span style="color: red">* </span>实际应付：</label>
+                <div class="vc-center col s12">
+                    <div class="divider s12 center" style="width:100%; margin-left: 10px;margin-right: 10px;"></div>
                 </div>
-            </div>
 
-            <div class="divider col s12" style="margin-top: 50px;"></div>
+                <!-- 钥匙 vin 制造商 型号 -->
+                <div class="vc-center col s12 left-align black-text fz14" style="height:50px ;">
+                    <div class="col s6 left-align context-ellipsis">
+                        <span>VIN：{{orderInfo.vin}}</span>
+                    </div>
+                    <div class="col s6 left-align context-ellipsis">
+                        <span>车型：{{orderInfo.makeName==null ? '未知' : orderInfo.makeName}}/{{orderInfo.modelName==null ? '未知' : orderInfo.modelName}}</span>
+                    </div>
+                </div>
 
-            <div class="row col right-align" style="width: 96%;margin-top: 20px;">
-                <a class="btn-floating waves-effect waves-light grey btn modal-close">
-                    <i class="mdi mdi-close add_brand"></i>
-                </a>
+                <!--<div class="vc-center col s12">-->
+                <!--<div class="divider s12 center" style="width:100%; margin-left: 10px;margin-right: 10px;"></div>-->
+                <!--</div>-->
+                <div class="vc-center col s12">
+                    <div style="border-top: #cccccc 1px dashed; overflow: hidden;width:100%; margin-left: 10px;margin-right: 10px;height: 1px"></div>
+                </div>
 
-                <a class="btn-floating waves-effect waves-light cyan lighten-1 btn" style="margin-left: 20px;" ng-click="updateOrder()">
-                    <i class="mdi mdi-check add_brand"></i>
-                </a>
+                <!-- 入库时间 / 出库时间 -->
+                <div class="vc-center col s12 left-align black-text fz14" style="height:50px;">
+                    <div class="col s6 left-align context-ellipsis">
+                        <span>入库时间：{{orderInfo.enterTime |date:'yyyy-MM-dd HH:mm:ss'}}</span>
+                    </div>
+                    <div class="col s6 left-align context-ellipsis">
+                        <span>出库时间：{{orderInfo.realOutTime |date:'yyyy-MM-dd HH:mm:ss'}}</span>
+                    </div>
+                </div>
+
+                <div class="vc-center col s12">
+                    <div class="divider s12 center" style="width:100%; margin-left: 10px;margin-right: 10px;"></div>
+                </div>
+
+                <!-- 预计支付 / 合计天数 -->
+                <div class="vc-center col s12 left-align black-text fz14" style="height:60px ;">
+                    <div class="col s6 left-align context-ellipsis">
+                        预计支付：<span class="red-text fz18">{{orderInfo.planFee | currency}}</span>
+                    </div>
+                    <div class="col s6 left-align context-ellipsis">
+                        合计天数：{{orderInfo.dayCount}}
+                    </div>
+                </div>
             </div>
         </div>
+
+        <div class="col s12">
+            <!-- 实际应付 -->
+            <div class="col s11 input-field" style="margin-left: 30px;">
+                <input type="text" id="actualFeeText" maxlength="8" valid-money ng-model="orderInfo.actualFee">
+                <label for="actualFeeText"><span style="color: red">* </span>实际应付：</label>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="modal-footer right-align">
+        <a class="btn-floating waves-effect waves-light btn cyan lighten-1" style="width:38px;height:38px; margin-right: 50px;"
+           ng-click="updateOrder()">
+            <i class="mdi mdi-check"></i>
+        </a>
+        <a class="btn-floating waves-effect waves-light btn modal-close grey" style="width:38px;height:38px; margin-right: 20px;">
+            <i class="mdi mdi-close"></i>
+        </a>
     </div>
 </div>

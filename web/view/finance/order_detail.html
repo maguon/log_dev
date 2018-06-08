@@ -258,280 +258,270 @@
 </div>
 
 <!-- 画面【支付信息】 模态框 -->
-<div class="row" style="margin: 0">
-    <div id="paymentInfoDiv" class="modal" style="width: 45%;height: 600px" ng-class="{ 'payment-height':otherOrderList}" >
-        <div class="modal-content center fz20" style="font-weight: 500;padding: 0">
+<div id="paymentInfoDiv" class="modal modal-fixed-footer row" style="height: 606px;" ng-class="{ 'payment-height':otherOrderList}">
 
-            <!-- 显示画面【支付信息】 Header -->
-            <div class="col s12 vc-center cyan"
-                 style="color: white;letter-spacing:1px;font-weight: bold;height: 50px;">
-                <p>支付信息</p>
-            </div>
+    <!-- Header -->
+    <div class="modal_title center-align cyan white-text">支付信息</div>
 
-            <!-- 仓储信息 -->
-            <div class="col s12 vc-center">
+    <!-- Body -->
+    <div class="modal-content">
 
-                <div class="blue-grey lighten-5" style="width: 95%;border:1px solid #bdbdbd;margin-top: 20px;">
-                    <!-- header -->
-                    <div class="col s12 lighten-1 cyan-text vc-center fz16" style="height:40px;">
-                        <div class="col s12 left-align">
-                            仓储信息
-                        </div>
-                    </div>
+        <!-- 仓储信息 -->
+        <div class="col s12 vc-center">
 
-                    <!-- body -->
-                    <div class="col s12 lighten-1 white grey-text vc-center fz13" style="height:40px;">
-                        <div class="col s4 left-align">
-                            入库时间：{{orderInfo.enterTime |date:'yyyy-MM-dd HH:mm:ss'}}
-                        </div>
-                        <div class="col s4 left-align">
-                            出库时间：{{orderInfo.realOutTime |date:'yyyy-MM-dd HH:mm:ss'}}
-                        </div>
-                        <div class="col s4 left-align">
-                            合计天数：{{orderInfo.dayCount}}
-                        </div>
-                    </div>
-
-                    <div class="col s12 white">
-                        <div class="divider s12 center" style="width:98%; margin-left: 10px;margin-right: 10px;margin-top: 5px;"></div>
-                    </div>
-
-                    <div class="col s12 lighten-1 white grey-text vc-center fz13" style="height:50px;">
-                        <div class="col s4 left-align">
-                            预计支付(美元)：<span class="red-text">{{orderInfo.planFee | currency}}</span>
-                        </div>
-                        <div class="col s4">
-                        </div>
-                        <div class="col s4 left-align">
-                            实际应付(美元)：<span class="red-text">{{orderInfo.actualFee | currency}}</span>
-                        </div>
+            <div class="blue-grey lighten-5" style="width: 95%;border:1px solid #bdbdbd;margin-top: 20px;">
+                <!-- header -->
+                <div class="col s12 lighten-1 cyan-text vc-center fz16" style="height:40px;">
+                    <div class="col s12 left-align">
+                        仓储信息
                     </div>
                 </div>
-            </div>
 
-            <!-- 关联其他订单 区域 -->
-            <div ng-show="!otherOrderList" class="row col right-align fz15" style="width: 96%;margin-top: 20px;">
-                <div class="col s12 right-align">
-                    <a ng-click="openOtherOrderList()" style="width: 220px;" class="waves-light waves-effect cyan lighten-1 btn">关联其他订单</a>
-                </div>
-            </div>
-
-            <div ng-show="otherOrderList" class="row">
-                <div class="col s12 left-align cyan-text fz16" style="margin-top:20px; padding-left: 50px;">
-                        关联订单
-                </div>
-                <div class="col" style="width:98%;">
-                    <div class="divider s11 center" style="width:98%; margin-left: 20px;margin-right: 10px;margin-top: 10px;"></div>
-                </div>
-            </div>
-
-            <div ng-show="otherOrderList" class="col s12 vc-center" >
-
-                <!-- 显示画面【】 Body -->
-                <div class="col s12">
-                    <!-- 下部分：检索结果显示区域 -->
-                    <div class="row col s12" style="height:200px;overflow-y: auto;">
-                        <table class="bordered fz13">
-                            <thead>
-                            <tr class="grey-text text-darken-2">
-                                <th>
-                                    <input type="checkbox" id="orderChk" class="filled-in" ng-checked="isSelectedAllRelOrder()" ng-click="selectAllRelOrder($event)"/>
-                                    <label for="orderChk"></label>
-                                </th>
-                                <th>订单编号</th>
-                                <th>VIN码</th>
-                                <th>车型</th>
-                                <th>入库时间</th>
-                                <th>出库时间</th>
-                                <th>合计天数</th>
-                                <th>预计支付(美元)</span></th>
-                                <th>实际支付(美元)</span></th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <tr ng-repeat="el in relOrderList" class="grey-text text-darken-1">
-                                <!-- 订单编号 -->
-                                <td>
-                                    <input type="checkbox" id="{{el.id}}" class="filled-in" ng-checked="isRelOrderSelected(el.id)" ng-click="clickRelOrder($event,el.id,el.plan_fee,el.actual_fee)" />
-                                    <label for="{{el.id}}"></label>
-                                </td>
-                                <!-- 订单编号 -->
-                                <td>{{el.id}}</td>
-                                <!-- VIN码 -->
-                                <td ng-bind="el.vin"></td>
-                                <!-- 车型 -->
-                                <td>{{el.make_name==null ? '未知' : el.make_name}}/{{el.model_name==null ? '未知' : el.model_name}}</td>
-                                <!-- 入库时间 -->
-                                <td ng-bind="el.enter_time|date:'yyyy-MM-dd HH:mm:ss'"></td>
-                                <!-- 出库时间-->
-                                <td ng-bind="el.real_out_time|date:'yyyy-MM-dd HH:mm:ss'"></td>
-                                <!-- 合计天数 -->
-                                <td>{{el.day_count}}</td>
-                                <!-- 预计支付(美元) -->
-                                <td>{{el.plan_fee | currency}}</td>
-                                <!-- 实际支付(美元) -->
-                                <td><span style="color: red">{{el.actual_fee | currency}}</span></td>
-                            </tr>
-                            <tr class="grey-text text-darken-1" ng-if="relOrderList.length == 0">
-                                <td colspan="9" style="letter-spacing: 2px;text-align: center;">暂无数据</td>
-                            </tr>
-                            </tbody>
-                        </table>
+                <!-- body -->
+                <div class="col s12 lighten-1 white grey-text vc-center fz13" style="height:40px;">
+                    <div class="col s4 left-align">
+                        入库时间：{{orderInfo.enterTime |date:'yyyy-MM-dd HH:mm:ss'}}
+                    </div>
+                    <div class="col s4 left-align">
+                        出库时间：{{orderInfo.realOutTime |date:'yyyy-MM-dd HH:mm:ss'}}
+                    </div>
+                    <div class="col s4 left-align">
+                        合计天数：{{orderInfo.dayCount}}
                     </div>
                 </div>
-            </div>
 
-            <div ng-show="otherOrderList" class="col s11 lighten-1 blue-grey-text vc-center fz13" style="margin-left:30px;height:30px;">
-                <div class="col s6 left-align">
-                    预计支付(美元)：<span style="color: red">{{totalPlanFee | currency}}</span>
+                <div class="col s12 white">
+                    <div class="divider s12 center" style="width:98%; margin-left: 10px;margin-right: 10px;margin-top: 5px;"></div>
                 </div>
-                <div class="col s6 right-align">
-                    实际应付(美元)：<span style="color: red">{{totalActualFee | currency}}</span>
-                </div>
-            </div>
 
-            <!-- 支付信息 -->
-            <div class="col s12 vc-center">
-                <div class="row blue-grey lighten-5" style="width: 95%;border:1px solid #bdbdbd;margin-top: 20px;">
-                    <!-- header -->
-                    <div class="col s12 lighten-1 cyan-text vc-center fz16" style="height:50px;">
-                        <div class="col s9 left-align">
-                            支付信息
-                        </div>
-                        <div class="col s3 left-align">
-                            委托方：{{orderInfo.entrustName}}
-                        </div>
+                <div class="col s12 lighten-1 white grey-text vc-center fz13" style="height:50px;">
+                    <div class="col s4 left-align">
+                        预计支付(美元)：<span class="red-text">{{orderInfo.planFee | currency}}</span>
                     </div>
-
-                    <!-- body -->
-                    <div class="col s12 lighten-1 white grey-text vc-center">
-                        <div class="input-field col s4 left-align">
-                            <select material-select watch ng-model="paymentInfo.paymentType">
-                                <option value="" selected>支付方式</option>
-                                <option ng-repeat="el in paymentMethodList" ng-value="el.id">{{el.name}}</option>
-                            </select>
-                        </div>
-                        <div class="input-field col s4 left-align">
-                            <input type="text" id="invoiceNoText" ng-model="paymentInfo.number">
-                            <label for="invoiceNoText">票号</label>
-                        </div>
-                        <div class="input-field col s4 left-align">
-                            <input type="text" id="paymentText" ng-model="paymentInfo.paymentMoney">
-                            <label for="paymentText">付款金额(美元)</label>
-                        </div>
+                    <div class="col s4">
                     </div>
-
-                    <div class="col s12 lighten-1 white grey-text vc-center fz13" style="padding-bottom: 20px;">
-                        <div class="input-field col s12 left-align">
-                            <input type="text" id="paymentMemoText" ng-model="paymentInfo.remark">
-                            <label for="paymentMemoText">支付描述</label>
-                        </div>
+                    <div class="col s4 left-align">
+                        实际应付(美元)：<span class="red-text">{{orderInfo.actualFee | currency}}</span>
                     </div>
-                </div>
-            </div>
-
-            <div class="row col right-align fz15" style="width: 96%;margin-top: 10px;">
-                <!-- 取消 按钮 -->
-                <div class="col s6 right-align">
-                    <a style="width: 150px;" class="modal-action modal-close waves-light waves-effect grey lighten-1 btn">取消</a>
-                </div>
-                <!-- 支付 按钮 -->
-                <div class="col s6 left-align">
-                    <a ng-click="orderPayment()" style="width: 150px;" class="waves-light waves-effect cyan lighten-1 btn">支付</a>
                 </div>
             </div>
         </div>
+
+        <!-- 关联其他订单 区域 -->
+        <div ng-show="!otherOrderList" class="row col right-align fz15" style="width: 96%;margin-top: 20px;">
+            <div class="col s12 right-align">
+                <a ng-click="openOtherOrderList()" style="width: 220px;" class="waves-light waves-effect cyan lighten-1 btn">关联其他订单</a>
+            </div>
+        </div>
+
+        <div ng-show="otherOrderList" class="row">
+            <div class="col s12 left-align cyan-text fz16" style="margin-top:20px; padding-left: 50px;">
+                    关联订单
+            </div>
+            <div class="col" style="width:98%;">
+                <div class="divider s11 center" style="width:98%; margin-left: 20px;margin-right: 10px;margin-top: 10px;"></div>
+            </div>
+        </div>
+
+        <div ng-show="otherOrderList" class="col s12 vc-center" >
+
+            <!-- 显示画面【】 Body -->
+            <div class="col s12">
+                <!-- 下部分：检索结果显示区域 -->
+                <div class="row col s12" style="height:200px;overflow-y: auto;">
+                    <table class="bordered fz13">
+                        <thead>
+                        <tr class="grey-text text-darken-2">
+                            <th>
+                                <input type="checkbox" id="orderChk" class="filled-in" ng-checked="isSelectedAllRelOrder()" ng-click="selectAllRelOrder($event)"/>
+                                <label for="orderChk"></label>
+                            </th>
+                            <th>订单编号</th>
+                            <th>VIN码</th>
+                            <th>车型</th>
+                            <th>入库时间</th>
+                            <th>出库时间</th>
+                            <th>合计天数</th>
+                            <th>预计支付(美元)</span></th>
+                            <th>实际支付(美元)</span></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr ng-repeat="el in relOrderList" class="grey-text text-darken-1">
+                            <!-- 订单编号 -->
+                            <td>
+                                <input type="checkbox" id="{{el.id}}" class="filled-in" ng-checked="isRelOrderSelected(el.id)" ng-click="clickRelOrder($event,el.id,el.plan_fee,el.actual_fee)" />
+                                <label for="{{el.id}}"></label>
+                            </td>
+                            <!-- 订单编号 -->
+                            <td>{{el.id}}</td>
+                            <!-- VIN码 -->
+                            <td ng-bind="el.vin"></td>
+                            <!-- 车型 -->
+                            <td>{{el.make_name==null ? '未知' : el.make_name}}/{{el.model_name==null ? '未知' : el.model_name}}</td>
+                            <!-- 入库时间 -->
+                            <td ng-bind="el.enter_time|date:'yyyy-MM-dd HH:mm:ss'"></td>
+                            <!-- 出库时间-->
+                            <td ng-bind="el.real_out_time|date:'yyyy-MM-dd HH:mm:ss'"></td>
+                            <!-- 合计天数 -->
+                            <td>{{el.day_count}}</td>
+                            <!-- 预计支付(美元) -->
+                            <td>{{el.plan_fee | currency}}</td>
+                            <!-- 实际支付(美元) -->
+                            <td><span style="color: red">{{el.actual_fee | currency}}</span></td>
+                        </tr>
+                        <tr class="grey-text text-darken-1" ng-if="relOrderList.length == 0">
+                            <td colspan="9" style="letter-spacing: 2px;text-align: center;">暂无数据</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div ng-show="otherOrderList" class="col s11 lighten-1 blue-grey-text vc-center fz13" style="margin-left:30px;height:30px;">
+            <div class="col s6 left-align">
+                预计支付(美元)：<span style="color: red">{{totalPlanFee | currency}}</span>
+            </div>
+            <div class="col s6 right-align">
+                实际应付(美元)：<span style="color: red">{{totalActualFee | currency}}</span>
+            </div>
+        </div>
+
+        <!-- 支付信息 -->
+        <div class="col s12 vc-center">
+            <div class="row blue-grey lighten-5" style="width: 95%;border:1px solid #bdbdbd;margin-top: 20px;">
+                <!-- header -->
+                <div class="col s12 lighten-1 cyan-text vc-center fz16" style="height:50px;">
+                    <div class="col s9 left-align">
+                        支付信息
+                    </div>
+                    <div class="col s3 left-align">
+                        委托方：{{orderInfo.entrustName}}
+                    </div>
+                </div>
+
+                <!-- body -->
+                <div class="col s12 lighten-1 white grey-text vc-center">
+                    <div class="input-field col s4 left-align">
+                        <select material-select watch ng-model="paymentInfo.paymentType">
+                            <option value="" selected>支付方式</option>
+                            <option ng-repeat="el in paymentMethodList" ng-value="el.id">{{el.name}}</option>
+                        </select>
+                    </div>
+                    <div class="input-field col s4 left-align">
+                        <input type="text" id="invoiceNoText" ng-model="paymentInfo.number">
+                        <label for="invoiceNoText">票号</label>
+                    </div>
+                    <div class="input-field col s4 left-align">
+                        <input type="text" id="paymentText" ng-model="paymentInfo.paymentMoney">
+                        <label for="paymentText">付款金额(美元)</label>
+                    </div>
+                </div>
+
+                <div class="col s12 lighten-1 white grey-text vc-center fz13" style="padding-bottom: 20px;">
+                    <div class="input-field col s12 left-align">
+                        <input type="text" id="paymentMemoText" ng-model="paymentInfo.remark">
+                        <label for="paymentMemoText">支付描述</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="modal-footer vc-center">
+        <!-- 取消 按钮 -->
+        <a class="waves-light waves-effect btn grey lighten-1 modal-action modal-close" style="width: 150px;">取消</a>
+        <!-- 支付 按钮 -->
+        <a class="waves-light waves-effect btn cyan lighten-1" style="width: 150px; margin-left: 30px;" ng-click="orderPayment()">支付</a>
     </div>
 </div>
 
 
 <!-- 画面【修改价格】 模态框 -->
-<div class="row" style="margin: 0">
-    <div id="changePriceDiv" class="modal" style="width: 45%;height: 520px">
-        <div class="modal-content center fz20" style="font-weight: 500;padding: 0;">
+<div id="changePriceDiv" class="modal modal-fixed-footer row" style="max-height: 506px;">
 
-            <!-- 显示画面【修改价格】 Header -->
-            <div class="row col s12 vc-center cyan"
-                 style="color: white;letter-spacing:1px;font-weight: bold;height: 50px;">
-                <p>修改价格</p>
-            </div>
+    <!-- Header -->
+    <div class="modal_title center-align cyan white-text">修改价格</div>
 
-            <!-- 显示画面【钥匙信息】 Body -->
-            <div class="row col s11"
-                 style="padding:0 ;margin: 10px 0px 10px 40px ; border: 1px solid #cccccc;  background-color: #F5F5F5">
-                <div style="margin: 0 auto;">
+    <!-- Body -->
+    <div class="modal-content" style="max-height: 400px;">
 
-                    <!-- 钥匙 车辆信息 -->
-                    <div class="vc-center col s12 left-align cyan-text fz20 lighten-4"
-                         style="height:60px;">
-                        <div class="col s12 left-align context-ellipsis">
-                            <span>委托方：{{orderInfo.entrustName}}</span>
-                        </div>
-                    </div>
+        <!-- 显示画面【钥匙信息】 Body -->
+        <div class="row col s11"
+             style="padding:0 ;margin: 10px 0px 10px 40px ; border: 1px solid #cccccc;  background-color: #F5F5F5">
+            <div style="margin: 0 auto;">
 
-                    <div class="vc-center col s12">
-                        <div class="divider s12 center" style="width:100%; margin-left: 10px;margin-right: 10px;"></div>
-                    </div>
-
-                    <!-- 钥匙 vin 制造商 型号 -->
-                    <div class="vc-center col s12 left-align black-text fz14" style="height:50px ;">
-                        <div class="col s6 left-align context-ellipsis">
-                            <span>VIN：{{orderInfo.vin}}</span>
-                        </div>
-                        <div class="col s6 left-align context-ellipsis">
-                            <span>车型：{{orderInfo.makeName==null ? '未知' : orderInfo.makeName}}/{{orderInfo.modelName==null ? '未知' : orderInfo.modelName}}</span>
-                        </div>
-                    </div>
-
-                    <!--<div class="vc-center col s12">-->
-                    <!--<div class="divider s12 center" style="width:100%; margin-left: 10px;margin-right: 10px;"></div>-->
-                    <!--</div>-->
-                    <div class="vc-center col s12">
-                        <div style="border-top: #cccccc 1px dashed; overflow: hidden;width:100%; margin-left: 10px;margin-right: 10px;height: 1px"></div>
-                    </div>
-
-                    <!-- 钥匙 存放位置 -->
-                    <div class="vc-center col s12 left-align black-text fz14" style="height:50px;">
-                        <div class="col s6 left-align context-ellipsis">
-                            <span>入库时间：{{orderInfo.enterTime |date:'yyyy-MM-dd HH:mm:ss'}}</span>
-                        </div>
-                        <div class="col s6 left-align context-ellipsis">
-                            <span>出库时间：{{orderInfo.realOutTime |date:'yyyy-MM-dd HH:mm:ss'}}</span>
-                        </div>
-                    </div>
-
-                    <div class="vc-center col s12">
-                        <div class="divider s12 center" style="width:100%; margin-left: 10px;margin-right: 10px;"></div>
-                    </div>
-
-                    <!-- 钥匙 委托方 -->
-                    <div class="vc-center col s12 left-align black-text fz14" style="height:60px ;">
-                        <div class="col s12 left-align context-ellipsis">
-                            预计支付：<span class="red-text fz18">{{orderInfo.planFee | currency}}</span>
-                        </div>
+                <!-- 钥匙 车辆信息 -->
+                <div class="vc-center col s12 left-align cyan-text fz20 lighten-4"
+                     style="height:60px;">
+                    <div class="col s12 left-align context-ellipsis">
+                        <span>委托方：{{orderInfo.entrustName}}</span>
                     </div>
                 </div>
-            </div>
 
-            <div class="col s12">
-                <!-- 实际应付 -->
-                <div class="col s11 input-field" style="margin-left: 30px;">
-                    <input type="text" id="actualFeeText" maxlength="8" valid-money ng-model="modifyActualFee">
-                    <label for="actualFeeText"><span style="color: red">* </span>实际应付：</label>
+                <div class="vc-center col s12">
+                    <div class="divider s12 center" style="width:100%; margin-left: 10px;margin-right: 10px;"></div>
                 </div>
-            </div>
 
-            <div class="divider col s12" style="margin-top: 50px;"></div>
+                <!-- 钥匙 vin 制造商 型号 -->
+                <div class="vc-center col s12 left-align black-text fz14" style="height:50px ;">
+                    <div class="col s6 left-align context-ellipsis">
+                        <span>VIN：{{orderInfo.vin}}</span>
+                    </div>
+                    <div class="col s6 left-align context-ellipsis">
+                        <span>车型：{{orderInfo.makeName==null ? '未知' : orderInfo.makeName}}/{{orderInfo.modelName==null ? '未知' : orderInfo.modelName}}</span>
+                    </div>
+                </div>
 
-            <div class="row col right-align" style="width: 96%;margin-top: 20px;">
-                <a class="btn-floating waves-effect waves-light grey btn modal-close">
-                    <i class="mdi mdi-close add_brand"></i>
-                </a>
+                <!--<div class="vc-center col s12">-->
+                <!--<div class="divider s12 center" style="width:100%; margin-left: 10px;margin-right: 10px;"></div>-->
+                <!--</div>-->
+                <div class="vc-center col s12">
+                    <div style="border-top: #cccccc 1px dashed; overflow: hidden;width:100%; margin-left: 10px;margin-right: 10px;height: 1px"></div>
+                </div>
 
-                <a class="btn-floating waves-effect waves-light cyan lighten-1 btn" style="margin-left: 20px;" ng-click="updateOrder()">
-                    <i class="mdi mdi-check add_brand"></i>
-                </a>
+                <!-- 钥匙 存放位置 -->
+                <div class="vc-center col s12 left-align black-text fz14" style="height:50px;">
+                    <div class="col s6 left-align context-ellipsis">
+                        <span>入库时间：{{orderInfo.enterTime |date:'yyyy-MM-dd HH:mm:ss'}}</span>
+                    </div>
+                    <div class="col s6 left-align context-ellipsis">
+                        <span>出库时间：{{orderInfo.realOutTime |date:'yyyy-MM-dd HH:mm:ss'}}</span>
+                    </div>
+                </div>
+
+                <div class="vc-center col s12">
+                    <div class="divider s12 center" style="width:100%; margin-left: 10px;margin-right: 10px;"></div>
+                </div>
+
+                <!-- 钥匙 委托方 -->
+                <div class="vc-center col s12 left-align black-text fz14" style="height:60px ;">
+                    <div class="col s12 left-align context-ellipsis">
+                        预计支付：<span class="red-text fz18">{{orderInfo.planFee | currency}}</span>
+                    </div>
+                </div>
             </div>
         </div>
+
+        <div class="col s12">
+            <!-- 实际应付 -->
+            <div class="col s11 input-field" style="margin-left: 30px;">
+                <input type="text" id="actualFeeText" maxlength="8" valid-money ng-model="modifyActualFee">
+                <label for="actualFeeText"><span style="color: red">* </span>实际应付：</label>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="modal-footer right-align">
+        <a class="btn-floating waves-effect waves-light btn cyan lighten-1" style="width:38px;height:38px; margin-right: 50px;"
+           ng-click="updateOrder()">
+            <i class="mdi mdi-check"></i>
+        </a>
+        <a class="btn-floating waves-effect waves-light btn modal-close grey" style="width:38px;height:38px; margin-right: 20px;">
+            <i class="mdi mdi-close"></i>
+        </a>
     </div>
 </div>
