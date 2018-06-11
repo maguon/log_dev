@@ -298,6 +298,48 @@ adminDirective.directive('validMoney', ['$parse', function ($parse) {
     };
 }]);
 
+// 验证利率(小数点后4位)的指令
+adminDirective.directive('validRate', ['$parse', function ($parse) {
+    return {
+        restrict:"A",
+        require: 'ngModel',
+        link:function(scope,element,attrs,ngModelCtrl){
+            // make sure we're connected to a model
+            if (!ngModelCtrl) {
+                return;
+            }
+
+            // 和画面的ngModel进行数据绑定
+            ngModelCtrl.$parsers.push(function (val) {
+                if (val === undefined || val === null) {
+                    val = '';
+                }
+
+                var n = (val.split('.')).length-1;
+                var reg = /^\d+(\.\d{1,4})?$/;
+
+                var clean = "";
+
+                if (reg.test(val)) {
+                    clean = val;
+                } else {
+                    if (n==1 && val.substr(val.length-1) == '.') {
+                        clean = val;
+                    } else {
+                        clean = val.toString().substr(0,val.length-1);
+                    }
+                }
+
+                if (val !== clean) {
+                    ngModelCtrl.$setViewValue(clean);
+                    ngModelCtrl.$render();
+                }
+                return clean;
+            });
+        }
+    };
+}]);
+
 // 验证数字(正数)的指令，只能输入[0-9]
 adminDirective.directive('validNum', ['$parse', function ($parse) {
     return {

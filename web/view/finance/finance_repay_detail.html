@@ -100,7 +100,7 @@
 
                     <!-- 利率/天 -->
                     <div class="input-field col s4">
-                        <input type="text" id="rateText" maxlength="10" valid-money ng-model="repay.rate" class="red-text right-align" ng-change="calculateInterest()">
+                        <input type="text" id="rateText" maxlength="10" valid-rate ng-model="repay.rate" class="red-text right-align" ng-change="calculateInterest()">
                         <i class="dataIcon" style="right: -1px"> %</i>
                         <label for="rateText" ng-class="{'label-active':repay.rate !== ''}">利率/天</label>
                     </div>
