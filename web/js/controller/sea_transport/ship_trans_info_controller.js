@@ -793,6 +793,11 @@ app.controller("ship_trans_info_controller", ["$scope", "$rootScope", "_host", "
                 shipTransFees: shipTransFees
             };
 
+            // 如果预计到港日期没有输入，就去掉此属性
+            if ($scope.newShippingOrder.arrivalDay == null || $scope.newShippingOrder.arrivalDay === "") {
+                delete obj.endShipDate;
+            }
+
             _basic.post(_host.api_url + "/user/" + userId + "/shipTrans", obj).then(function (data) {
                 var transId;
                 if (data.success) {

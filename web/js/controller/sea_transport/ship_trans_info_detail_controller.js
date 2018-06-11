@@ -391,7 +391,7 @@ app.controller("ship_trans_info_detail_controller", ["$scope", "$state", "$state
                     // 新增海运订单画面 VIN码 后 追加按钮 追加结果Info
                     // car id
                     $scope.newCarInfo.car_id = data.id;
-                        // 委托方
+                    // 委托方
                     $scope.newCarInfo.entrust_id= entrust.id;
                     $scope.newCarInfo.short_name= entrust.text;
                     // 支付状态
