@@ -251,7 +251,7 @@
             <div class="input-field col s4">
                 <div class="col s12">
                     <select material-select watch ng-model="newShippingOrder.startPort" style="width:95%;">
-                        <option value="">始发港口</option>
+                        <option value="" disabled>始发港口</option>
                         <option ng-repeat="el in portList" ng-value="el" >{{el.port_name}}</option>
                     </select>
                 </div>
@@ -260,7 +260,7 @@
             <div class="input-field col s4">
                 <div class="col s12">
                 <select material-select watch ng-model="newShippingOrder.endPort" style="width:95%;">
-                    <option value="">目的港口</option>
+                    <option value="" disabled>目的港口</option>
                     <option ng-repeat="el in portList" ng-value="el" >{{el.port_name}}</option>
                 </select>
                 </div>
@@ -278,7 +278,7 @@
             <div class="input-field col s4">
                 <div class="col s12">
                 <select material-select watch ng-model="newShippingOrder.shippingCoId">
-                    <option value="">船公司</option>
+                    <option value="" disabled>船公司</option>
                     <option ng-repeat="el in shippingCoList" ng-value="el.id">{{el.ship_company_name}}</option>
                 </select>
                 </div>
@@ -355,13 +355,13 @@
                     </div>
                     <div class="input-field col s3 left-align">
                         <select material-select watch ng-model="customCarInfo.maker" ng-change="changeMakerId(customCarInfo.maker.id)">
-                            <option value="" selected>制造商</option>
+                            <option value="" disabled>制造商</option>
                             <option ng-repeat="el in carMakerList" ng-value="el">{{el.make_name}}</option>
                         </select>
                     </div>
                     <div class="input-field col s3 left-align">
                         <select material-select watch ng-model="customCarInfo.model">
-                            <option value="" selected>型号</option>
+                            <option value="" disabled>型号</option>
                             <option ng-repeat="el in carModelList" ng-value="el">{{el.model_name}}</option>
                         </select>
                     </div>
@@ -374,7 +374,7 @@
                 <div class="col s12 lighten-1 white grey-text vc-center">
                     <div class="input-field col s3 left-align">
                         <select material-select watch ng-model="customCarInfo.colour">
-                            <option value="" selected>颜色</option>
+                            <option value="" disabled>颜色</option>
                             <option ng-repeat="el in configColor" ng-value="el.colorId">{{el.colorName}}</option>
                         </select>
                     </div>
@@ -449,10 +449,13 @@
 
         <!-- 分单 / 运费(美元) -->
         <div class="col s12" style="padding-top: 20px;padding-left: 23px;">
-            <div class="col s6 left-align">
-                <label class="fz15">分单：{{partTypes[newShippingOrder.partStatus - 1].name}}</label>
+            <div class="col s4 left-align fz15">
+                <select material-select watch ng-model="newShippingOrder.partStatus">
+                    <option value="" disabled>分单</option>
+                    <option ng-repeat="el in partTypes" ng-value="el.id">{{el.name}}</option>
+                </select>
             </div>
-            <div class="col s6 right-align" style="padding-right: 23px;">
+            <div class="col s8 right-align" style="padding-right: 23px;">
                 <label class="fz15">运费(美元)：<span class="red-text">{{newShippingOrder.totalShipTransFees | currency}}</span></label>
             </div>
         </div>

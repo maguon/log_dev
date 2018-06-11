@@ -126,50 +126,47 @@ app.controller("ship_trans_info_detail_controller", ["$scope", "$state", "$state
         var url = _host.api_url + "/shipTrans?shipTransId=" + $scope.shipTransId;
 
         _basic.get(url).then(function (data) {
-            if (data.success == true) {
+            if (data.success) {
+                if (data.result.length > 0) {
+                    // 海运编号
+                    $scope.shippingOrder.shipTransId = data.result[0].id;
+                    // 状态
+                    $scope.shippingOrder.status = data.result[0].ship_trans_status;
+                    // 始发港口
+                    $scope.shippingOrder.startPortId = data.result[0].start_port_id;
+                    $scope.shippingOrder.startPortNm = data.result[0].start_port_name;
+                    // 目的港口
+                    $scope.shippingOrder.endPortId = data.result[0].end_port_id;
+                    $scope.shippingOrder.endPortNm = data.result[0].end_port_name;
+                    // 预计开船日期
+                    $scope.shippingOrder.sailingDay = $filter("date")(data.result[0].start_ship_date, 'yyyy-MM-dd');
+                    // 预计到港日期
+                    $scope.shippingOrder.arrivalDay = $filter("date")(data.result[0].end_ship_date, 'yyyy-MM-dd');
+                    // 实际开船日期
+                    $scope.shippingOrder.actualStartDay = $filter("date")(data.result[0].actual_start_date, 'yyyy-MM-dd');
+                    // 实际到港日期
+                    $scope.shippingOrder.actualEndDay = $filter("date")(data.result[0].actual_end_date, 'yyyy-MM-dd');
+                    // 船公司
+                    $scope.shippingOrder.shippingCoId = data.result[0].ship_company_id;
+                    $scope.shippingOrder.shippingCoNm = data.result[0].ship_company_name;
+                    // 船名
+                    $scope.shippingOrder.shipName = data.result[0].ship_name;
+                    // 货柜
+                    $scope.shippingOrder.container = data.result[0].container;
+                    // booking
+                    $scope.shippingOrder.booking = data.result[0].booking;
+                    // 封签
+                    $scope.shippingOrder.tab = data.result[0].tab;
+                    // 订舱备注
+                    $scope.shippingOrder.remark = data.result[0].remark;
+                    // 生成时间
+                    $scope.shippingOrder.createdOn = data.result[0].created_on;
+                    // 分单
+                    $scope.shippingOrder.partStatus = data.result[0].part_status != null ? parseInt(data.result[0].part_status) : data.result[0].part_status;
 
-                if (data.result.length == 0) {
-                    return;
+                    // 取得运载车辆详情 （画面下部分）
+                    getShipTransCarRel();
                 }
-
-                // 海运编号
-                $scope.shippingOrder.shipTransId = data.result[0].id;
-                // 状态
-                $scope.shippingOrder.status = data.result[0].ship_trans_status;
-                // 始发港口
-                $scope.shippingOrder.startPortId = data.result[0].start_port_id;
-                $scope.shippingOrder.startPortNm = data.result[0].start_port_name;
-                // 目的港口
-                $scope.shippingOrder.endPortId = data.result[0].end_port_id;
-                $scope.shippingOrder.endPortNm = data.result[0].end_port_name;
-                // 预计开船日期
-                $scope.shippingOrder.sailingDay = $filter("date")(data.result[0].start_ship_date, 'yyyy-MM-dd');
-                // 预计到港日期
-                $scope.shippingOrder.arrivalDay = $filter("date")(data.result[0].end_ship_date, 'yyyy-MM-dd');
-                // 实际开船日期
-                $scope.shippingOrder.actualStartDay = $filter("date")(data.result[0].actual_start_date, 'yyyy-MM-dd');
-                // 实际到港日期
-                $scope.shippingOrder.actualEndDay = $filter("date")(data.result[0].actual_end_date, 'yyyy-MM-dd');
-                // 船公司
-                $scope.shippingOrder.shippingCoId = data.result[0].ship_company_id;
-                $scope.shippingOrder.shippingCoNm = data.result[0].ship_company_name;
-                // 船名
-                $scope.shippingOrder.shipName = data.result[0].ship_name;
-                // 货柜
-                $scope.shippingOrder.container = data.result[0].container;
-                // booking
-                $scope.shippingOrder.booking = data.result[0].booking;
-                // 封签
-                $scope.shippingOrder.tab = data.result[0].tab;
-                // 订舱备注
-                $scope.shippingOrder.remark = data.result[0].remark;
-                // 生成时间
-                $scope.shippingOrder.createdOn = data.result[0].created_on;
-                // 分单
-                $scope.shippingOrder.partStatus = data.result[0].part_status;
-
-                // 取得运载车辆详情 （画面下部分）
-                getShipTransCarRel();
             } else {
                 swal(data.msg, "", "error");
             }
@@ -189,21 +186,21 @@ app.controller("ship_trans_info_detail_controller", ["$scope", "$state", "$state
                 angular.copy(data.result, $scope.relShipTransCarList);
                 // 计算 运载车辆 部分 合计运费
                 $scope.calcTotalFees();
-                // 委托人分单：默认 否
-                $scope.shippingOrder.partStatus = "1";
-                var preEntrustId = -1;
-                for (var i = 0; i < $scope.shipTransCarList.length; i++) {
-                    if (i === 0) {
-                        preEntrustId = $scope.shipTransCarList[i].entrust_id;
-                        continue;
-                    }
-
-                    if (preEntrustId !== $scope.shipTransCarList[i].entrust_id) {
-                        // 委托人不同，分单：是
-                        $scope.shippingOrder.partStatus = "2";
-                        break;
-                    }
-                }
+                // // 委托人分单：默认 否
+                // $scope.shippingOrder.partStatus = "1";
+                // var preEntrustId = -1;
+                // for (var i = 0; i < $scope.shipTransCarList.length; i++) {
+                //     if (i === 0) {
+                //         preEntrustId = $scope.shipTransCarList[i].entrust_id;
+                //         continue;
+                //     }
+                //
+                //     if (preEntrustId !== $scope.shipTransCarList[i].entrust_id) {
+                //         // 委托人不同，分单：是
+                //         $scope.shippingOrder.partStatus = "2";
+                //         break;
+                //     }
+                // }
             } else {
                 swal(data.msg, "", "error");
             }
