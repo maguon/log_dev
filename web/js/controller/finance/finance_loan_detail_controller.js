@@ -1060,13 +1060,14 @@ app.controller("finance_loan_detail_controller", ["$scope", "$stateParams", "_ba
      */
     $scope.addCreditPayment = function () {
 
-        // 未完结ID = 1
-        var unfinished = $scope.paymentStatus[0].id;
+        // // 未完结ID = 1
+        // var unfinished = $scope.paymentStatus[0].id;
         // 信用证号
         var creditNumber = $scope.newCreditId;
 
         // 检索用url
-        var url = _host.api_url + "/credit?creditNumber=" + creditNumber + "&entrustId=" + $scope.loanInfo.entrustId  + "&creditStatus=" + unfinished;
+        // var url = _host.api_url + "/credit?creditNumber=" + creditNumber + "&entrustId=" + $scope.loanInfo.entrustId  + "&creditStatus=" + unfinished;
+        var url = _host.api_url + "/credit?creditNumber=" + creditNumber + "&entrustId=" + $scope.loanInfo.entrustId;
         _basic.get(url).then(function (data) {
             if (data.success) {
 
@@ -1151,13 +1152,14 @@ app.controller("finance_loan_detail_controller", ["$scope", "$stateParams", "_ba
      */
     $scope.addOtherPayment = function () {
 
-        // 未完结
-        var unfinished = $scope.paymentStatus[0].id;
+        // // 未完结
+        // var unfinished = $scope.paymentStatus[0].id;
         // 支付单号
         var paymentId = $scope.newOtherPaymentId;
 
         // 检索用url
-        var url = _host.api_url + "/payment?paymentId=" + paymentId + "&entrustId=" + $scope.loanInfo.entrustId  + "&paymentStatus=" + unfinished;
+        // var url = _host.api_url + "/payment?paymentId=" + paymentId + "&entrustId=" + $scope.loanInfo.entrustId  + "&paymentStatus=" + unfinished;
+        var url = _host.api_url + "/payment?paymentId=" + paymentId + "&entrustId=" + $scope.loanInfo.entrustId;
         _basic.get(url).then(function (data) {
             if (data.success) {
 
