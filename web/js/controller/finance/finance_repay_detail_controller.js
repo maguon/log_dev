@@ -518,7 +518,7 @@ app.controller("finance_repay_detail_controller", ["$scope", "$stateParams", "_b
             function () {
                 _basic.delete(_host.api_url + "/user/" + userId + "/repayment/" + repayId + '/payment/' + paymentId, {}).then(
                     function (data) {
-                        if (data.success === true) {
+                        if (data.success) {
                             $scope.lookOtherPayment();
                         } else {
                             swal(data.msg, "", "error");
@@ -547,6 +547,7 @@ app.controller("finance_repay_detail_controller", ["$scope", "$stateParams", "_b
                 var url = _host.api_url + "/user/" + userId + "/repayment/" + repayId + "/payment/" + paymentInfo.payment_id + "/paymentRepMoney" ;
                 _basic.put(url, obj).then(function (data) {
                     if (data.success) {
+                        swal("修改成功", "", "success");
                         $scope.lookOtherPayment();
                     } else {
                         swal(data.msg, "", "error");

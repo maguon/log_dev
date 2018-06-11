@@ -155,23 +155,34 @@ app.controller("finance_loan_detail_controller", ["$scope", "$stateParams", "_ba
      * 修改贷出信息。
      * */
     $scope.updateFinanceLoan = function () {
-        var obj = {
-            // 定金
-            deposit: $scope.loanInfo.deposit === "" ? 0 : $scope.loanInfo.deposit,
-            // 贷出金额
-            loanMoney: $scope.loanInfo.loanMoney === "" ? 0 : $scope.loanInfo.loanMoney,
-            // 备注
-            remark: $scope.loanInfo.remark
-        };
-        _basic.put(_host.api_url + "/user/" + userId + "/loan/" + loanId, obj).then(function (data) {
-            if (data.success) {
-                swal("修改成功", "", "success");
-                // 默认显示 贷出信息 TAB
-                $scope.lookLoanInfo();
-            } else {
-                swal(data.msg, "", "error");
-            }
-        })
+        swal({
+                title: "确定要修改贷出信息吗？",
+                type: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#DD6B55",
+                confirmButtonText: "确认",
+                cancelButtonText: "取消",
+                closeOnConfirm: true
+            },
+            function () {
+                var obj = {
+                    // 定金
+                    deposit: $scope.loanInfo.deposit === "" ? 0 : $scope.loanInfo.deposit,
+                    // 贷出金额
+                    loanMoney: $scope.loanInfo.loanMoney === "" ? 0 : $scope.loanInfo.loanMoney,
+                    // 备注
+                    remark: $scope.loanInfo.remark
+                };
+                _basic.put(_host.api_url + "/user/" + userId + "/loan/" + loanId, obj).then(function (data) {
+                    if (data.success) {
+                        swal("修改成功", "", "success");
+                        // 默认显示 贷出信息 TAB
+                        $scope.lookLoanInfo();
+                    } else {
+                        swal(data.msg, "", "error");
+                    }
+                })
+            });
     };
 
     /**
@@ -179,15 +190,30 @@ app.controller("finance_loan_detail_controller", ["$scope", "$stateParams", "_ba
      * @param status 状态
      */
     $scope.changeLoanStatus = function (status) {
-        _basic.put(_host.api_url + "/user/" + userId + "/loan/" + loanId + "/loanStatus/" + status, {}).then(function (data) {
-            if (data.success) {
-                swal("修改成功", "", "success");
-                // 默认显示 贷出信息 TAB
-                $scope.lookLoanInfo();
-            } else {
-                swal(data.msg, "", "error");
-            }
-        })
+        var title = status === 2 ? "本次贷出确定放款吗？" : "本次贷出确定完结吗？";
+        var text = status === 2 ? "放款后，将不能再进行基本信息修改！" : "完结后，将不能再进行贷出信息修改！";
+
+        swal({
+                title: title,
+                text: text,
+                type: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#DD6B55",
+                confirmButtonText: "确认",
+                cancelButtonText: "取消",
+                closeOnConfirm: true
+            },
+            function () {
+                _basic.put(_host.api_url + "/user/" + userId + "/loan/" + loanId + "/loanStatus/" + status, {}).then(function (data) {
+                    if (data.success) {
+                        swal("修改成功", "", "success");
+                        // 默认显示 贷出信息 TAB
+                        $scope.lookLoanInfo();
+                    } else {
+                        swal(data.msg, "", "error");
+                    }
+                })
+            });
     };
 
     /**
@@ -1231,6 +1257,7 @@ app.controller("finance_loan_detail_controller", ["$scope", "$stateParams", "_ba
     $scope.updatePaymentStatus = function (repaymentId) {
         swal({
                 title: "本次还款确定完结吗？",
+                text: "完结后，将不能再进行修改！",
                 type: "warning",
                 showCancelButton: true,
                 confirmButtonColor: "#DD6B55",
