@@ -744,7 +744,7 @@ app.controller("ship_trans_info_controller", ["$scope", "$rootScope", "_host", "
         var shipTransFees = [];
         var entrustIds = [];
         // 车辆信息运费 标记
-        var hasAllCarTransFeeFlg = false;
+        var hasAllCarTransFeeFlg = true;
 
         if ($scope.newCarList.length === 0) {
             swal("请填写完整海运订单信息！", "", "warning");
@@ -761,67 +761,65 @@ app.controller("ship_trans_info_controller", ["$scope", "$rootScope", "_host", "
                     vins.push(vin);
                     shipTransFees.push(parseFloat(shipTransFee));
                     entrustIds.push(entrustId);
-                    hasAllCarTransFeeFlg = true;
-                }
-            }
-        }
-
-        if ($scope.newShippingOrder.startPort !== "" && $scope.newShippingOrder.endPort !== ""
-            && $scope.newShippingOrder.sailingDay !== ""
-            && $scope.newShippingOrder.shippingCoId !== undefined && $scope.newShippingOrder.shippingCoId !== ""
-            && $scope.newShippingOrder.shipName !== ""
-            && $scope.newShippingOrder.container !== "" && $scope.newShippingOrder.booking !== "" && hasAllCarTransFeeFlg
-        ) {
-            // 新增海运订单画面 VIN码 后 追加按钮 追加结果Info
-            var obj = {
-                startPortId: $scope.newShippingOrder.startPort.id,
-                startPortName: $scope.newShippingOrder.startPort.port_name,
-                endPortId: $scope.newShippingOrder.endPort.id,
-                endPortName: $scope.newShippingOrder.endPort.port_name,
-                startShipDate: $scope.newShippingOrder.sailingDay,
-                endShipDate: $scope.newShippingOrder.arrivalDay,
-                shipCompanyId: $scope.newShippingOrder.shippingCoId,
-                shipName: $scope.newShippingOrder.shipName,
-                container: $scope.newShippingOrder.container,
-                booking: $scope.newShippingOrder.booking,
-                tab: $scope.newShippingOrder.tab,
-                partStatus: $scope.newShippingOrder.partStatus,
-                remark: $scope.newShippingOrder.remark,
-                carIds: carIds,
-                vins: vins,
-                entrustIds: entrustIds,
-                shipTransFees: shipTransFees
-            };
-
-            // 如果预计到港日期没有输入，就去掉此属性
-            if ($scope.newShippingOrder.arrivalDay == null || $scope.newShippingOrder.arrivalDay === "") {
-                delete obj.endShipDate;
-            }
-
-            _basic.post(_host.api_url + "/user/" + userId + "/shipTrans", obj).then(function (data) {
-                var transId;
-                if (data.success) {
-                    // 取得生产订舱ID
-                    transId = data.id;
-                    // 关闭新增海运订单画面
-                    $('#newSeaTransportOrderDiv').modal('close');
-
                 } else {
-                    // 取得生产订舱ID
-                    transId = data.result.shipTransId;
-                    // 关闭新增海运订单画面
-                    $('#newSeaTransportOrderDiv').modal('close');
+                    hasAllCarTransFeeFlg = false;
+                    break;
+                }
+            }
+
+            if ($scope.newShippingOrder.startPort !== "" && $scope.newShippingOrder.endPort !== ""
+                && $scope.newShippingOrder.sailingDay !== ""
+                && $scope.newShippingOrder.shippingCoId !== undefined && $scope.newShippingOrder.shippingCoId !== ""
+                && $scope.newShippingOrder.shipName !== ""
+                && $scope.newShippingOrder.container !== "" && $scope.newShippingOrder.booking !== "" && hasAllCarTransFeeFlg
+            ) {
+                // 新增海运订单画面 VIN码 后 追加按钮 追加结果Info
+                var obj = {
+                    startPortId: $scope.newShippingOrder.startPort.id,
+                    startPortName: $scope.newShippingOrder.startPort.port_name,
+                    endPortId: $scope.newShippingOrder.endPort.id,
+                    endPortName: $scope.newShippingOrder.endPort.port_name,
+                    startShipDate: $scope.newShippingOrder.sailingDay,
+                    endShipDate: $scope.newShippingOrder.arrivalDay,
+                    shipCompanyId: $scope.newShippingOrder.shippingCoId,
+                    shipName: $scope.newShippingOrder.shipName,
+                    container: $scope.newShippingOrder.container,
+                    booking: $scope.newShippingOrder.booking,
+                    tab: $scope.newShippingOrder.tab,
+                    partStatus: $scope.newShippingOrder.partStatus,
+                    remark: $scope.newShippingOrder.remark,
+                    carIds: carIds,
+                    vins: vins,
+                    entrustIds: entrustIds,
+                    shipTransFees: shipTransFees
+                };
+
+                // 如果预计到港日期没有输入，就去掉此属性
+                if ($scope.newShippingOrder.arrivalDay == null || $scope.newShippingOrder.arrivalDay === "") {
+                    delete obj.endShipDate;
                 }
 
-                // 跳转到 详情画面
-                $state.go('ship_trans_info_detail', {
-                    reload: true,
-                    id: transId,
-                    from: 'ship_trans_info'
-                });
-            })
-        } else {
-            swal("请填写完整海运订单信息！", "", "warning");
+                _basic.post(_host.api_url + "/user/" + userId + "/shipTrans", obj).then(function (data) {
+                    var transId;
+                    if (data.success) {
+                        // 取得生产订舱ID
+                        transId = data.id;
+                        // 关闭新增海运订单画面
+                        $('#newSeaTransportOrderDiv').modal('close');
+
+                        // 跳转到 详情画面
+                        $state.go('ship_trans_info_detail', {
+                            reload: true,
+                            id: transId,
+                            from: 'ship_trans_info'
+                        });
+                    } else {
+                        swal(data.msg, "", "error");
+                    }
+                })
+            } else {
+                swal("请填写完整海运订单信息！", "", "warning");
+            }
         }
     };
 
