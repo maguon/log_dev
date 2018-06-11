@@ -233,9 +233,16 @@ app.controller("finance_loan_controller", ["$scope", "$rootScope", "_host", "_ba
             _basic.post(_host.api_url + "/user/" + userId + "/loan", obj).then(function (data) {
                 if (data.success) {
                     $('#newFinanceLoanDiv').modal('close');
-                    swal("新增成功", "", "success");
-                    // 成功后，刷新页面数据
-                    queryFinanceLoanList();
+                    // swal("新增成功", "", "success");
+                    // // 成功后，刷新页面数据
+                    // queryFinanceLoanList();
+
+                    // 跳转到 详情画面
+                    $state.go('finance_loan_detail', {
+                        reload: true,
+                        id: data.id,
+                        from: 'finance_loan'
+                    });
                 } else {
                     swal(data.msg, "", "error");
                 }
