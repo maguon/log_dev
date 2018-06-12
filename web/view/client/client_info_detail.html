@@ -1,12 +1,14 @@
-<!--库存记录模态框-->
-<div id="getInventoryRecord" class="modal ">
-    <!--标题：新增入库车辆-->
-    <div class="cyan lighten-1 white-text center-align modal_title" >车辆信息</div>
-    <!--详情-->
-    <div class="modal-content">
+<!-- 模态画面【库存记录-车辆信息】 模态框 -->
+<div id="getInventoryRecord" class="modal modal-fixed-footer" style="max-height: 576px;">
+
+    <!-- Header -->
+    <div class="modal_title center-align cyan white-text">车辆信息</div>
+
+    <!-- Body -->
+    <div class="modal-content" style="max-height: 470px;">
         <div  class="handleInfoInput" style="width:100%;">
             <!--VIN码 和 是否在库-->
-            <div class="row col s12" style="margin-top: 20px;margin-right: 20px;color:#4e84cb;padding-bottom: 7px;">
+            <div class="row col s12" style="margin-top: 5px;margin-right: 20px;color:#4e84cb;padding-bottom: 7px;">
                 <div class="col s6 valign-wrapper">
                     <div class="fz20 col s12 input-field left-align">VIN码:{{clientList.vin}}</div>
                 </div>
@@ -111,22 +113,25 @@
             </div>
             <!--实分割线-->
             <div  class="row col s12" style="height:2px;border-bottom: 1px solid #ccc;width:96%;margin-left: 2%"></div>
-            <!--关闭模态框按钮-->
-            <div class="row col s4 offset-s8 right-align" style="margin-top: 90px;margin-right: 20px">
-                <button class="btn  btn-large btn-floating waves-effect cyan" ng-click="closeModalRecord()" name="action" >
-                    <i class="mdi mdi-check"></i>
-                </button>
-            </div>
         </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="modal-footer right-align">
+        <a class="btn-floating waves-effect waves-light btn cyan lighten-1 modal-close" style="width:38px;height:38px; margin-right: 50px;">
+            <i class="mdi mdi-check"></i>
+        </a>
     </div>
 </div>
 
-<!--仓储订单模态框-->
-<div id="openStorageOrder" class="modal ">
-    <!--标题：仓储订单详情-->
-    <div class="cyan lighten-1 white-text center-align modal_title" >仓储订单详情</div>
-    <!--详情-->
-    <div class="modal-content">
+<!-- 模态画面【仓储订单-仓储订单详情】 模态框 -->
+<div id="openStorageOrder" class="modal modal-fixed-footer" style="max-height: 586px;">
+
+    <!-- Header -->
+    <div class="modal_title center-align cyan white-text">仓储订单详情</div>
+
+    <!-- Body -->
+    <div class="modal-content" style="max-height: 480px;">
         <!-- 车辆信息 -->
         <div class="row blue-grey lighten-5" style="width: 95%;border:1px solid #bdbdbd;margin-top: 10px;">
             <!-- header -->
@@ -210,31 +215,34 @@
                 </div>
             </div>
         </div>
-        <!--关闭模态框按钮-->
-        <div class="row col s4 offset-s8 right-align" style="margin-top: 90px;margin-right: 20px">
-            <button class="btn  btn-large btn-floating waves-effect cyan" ng-click="closeModalStorageOrder()" name="action" >
-                <i class="mdi mdi-check"></i>
-            </button>
-        </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="modal-footer right-align">
+        <a class="btn-floating waves-effect waves-light btn cyan lighten-1 modal-close" style="width:38px;height:38px; margin-right: 50px;">
+            <i class="mdi mdi-check"></i>
+        </a>
     </div>
 </div>
 
-<!--海运订单模态框-->
-<div id="openSeaTranModal" class="modal ">
-    <!--标题：海运详情-->
-    <div class="cyan lighten-1 white-text center-align modal_title" >海运详情</div>
-    <!--详情-->
-    <div class="modal-content">
+<!-- 模态画面【海运订单-海运详情】 模态框 -->
+<div id="openSeaTranModal" class="modal modal-fixed-footer" style="max-height: 676px;">
+
+    <!-- Header -->
+    <div class="modal_title center-align cyan white-text">海运详情</div>
+
+    <!-- Body -->
+    <div class="modal-content" style="max-height: 570px;">
         <!-- 车辆信息 -->
         <div class="row blue-grey lighten-5" style="width: 80%;border:1px solid #bdbdbd;margin-top: 10px;">
             <!-- header -->
-            <div class="col s12 lighten-1 cyan-text vc-center" style="height:50px;">
+            <div class="col s12 lighten-1 cyan-text vc-center" style="height:40px;">
                 <div class="col s12">
                     车辆信息
                 </div>
             </div>
             <!-- body -->
-            <div class="col s12 lighten-1 white grey-text vc-center" style="height:50px;">
+            <div class="col s12 lighten-1 white grey-text vc-center fz14" style="height:40px;">
                 <div class="col s4">
                     VIN码：{{paymentInfo.vin}}
                 </div>
@@ -246,9 +254,9 @@
                 </div>
             </div>
             <div class="col s12 white">
-                <div class="divider s12 center" style="width:98%; margin-left: 10px;margin-right: 10px;margin-top: 10px;"></div>
+                <div class="divider s12 center" style="width:98%; margin-left: 10px;margin-right: 10px;"></div>
             </div>
-            <div class="col s12 lighten-1 white grey-text vc-center" style="height:50px;">
+            <div class="col s12 lighten-1 white grey-text vc-center fz14" style="height:40px;">
                 <div class="col s4">
                     年份：{{paymentInfo.pro_date}}
                 </div>
@@ -262,9 +270,9 @@
         </div>
 
         <!-- 订单编号 -->
-        <div class="row blue-grey lighten-5" style="width: 80%;border:1px solid #bdbdbd;margin-top: 40px;">
+        <div class="row blue-grey lighten-5" style="width: 80%;border:1px solid #bdbdbd;margin-top: 30px;">
             <!-- header -->
-            <div class="col s12 lighten-1 cyan-text vc-center" style="height:50px;">
+            <div class="col s12 lighten-1 cyan-text vc-center" style="height:40px;">
                 <div class="col s6">
                     订单编号：{{paymentInfo.id}}
                 </div>
@@ -272,7 +280,7 @@
                 </div>
             </div>
 
-            <div class="col s12 lighten-1 white grey-text vc-center fz13" style="height:50px;">
+            <div class="col s12 lighten-1 white grey-text vc-center fz13" style="height:40px;">
                 <div class="input-field col s6 cyan-text">
                     海运编号：{{paymentInfo.ship_trans_id}}
                 </div>
@@ -281,10 +289,10 @@
                 </div>
             </div>
             <div class="col s12 white">
-                <div class="s12 center" style="width:98%; margin-left: 10px;margin-right: 10px;margin-top: 10px;border: 1px dotted #ccc"></div>
+                <div class="s12 center" style="width:98%; margin-left: 10px;margin-right: 10px;margin-top: 0;border: 1px dotted #ccc"></div>
             </div>
             <!-- body -->
-            <div class="col s12 lighten-1 white grey-text vc-center fz13" style="height:50px;">
+            <div class="col s12 lighten-1 white grey-text vc-center fz13" style="height:40px;">
                 <div class="input-field col s4">
                     始发港口：{{paymentInfo.start_port_name}}
                 </div>
@@ -296,10 +304,10 @@
                 </div>
             </div>
             <div class="col s12 white">
-                <div class="s12 center" style="width:98%; margin-left: 10px;margin-right: 10px;margin-top: 10px;border: 1px dotted #ccc"></div>
+                <div class="s12 center" style="width:98%; margin-left: 10px;margin-right: 10px;margin-top: 0;border: 1px dotted #ccc"></div>
             </div>
             <!-- body -->
-            <div class="col s12 lighten-1 white grey-text vc-center fz13" style="height:50px;">
+            <div class="col s12 lighten-1 white grey-text vc-center fz13" style="height:40px;">
                 <div class="input-field col s4">
                     船公司：{{paymentInfo.ship_company_name}}
                 </div>
@@ -311,10 +319,10 @@
                 </div>
             </div>
             <div class="col s12 white">
-                <div class="s12 center" style="width:98%; margin-left: 10px;margin-right: 10px;margin-top: 10px;border: 1px dotted #ccc"></div>
+                <div class="s12 center" style="width:98%; margin-left: 10px;margin-right: 10px;margin-top: 0;border: 1px dotted #ccc"></div>
             </div>
             <!-- body -->
-            <div class="col s12 lighten-1 white grey-text vc-center fz13" style="height:50px;">
+            <div class="col s12 lighten-1 white grey-text vc-center fz13" style="height:40px;">
                 <div class="input-field col s4">
                     货柜：{{paymentInfo.container}}
                 </div>
@@ -327,10 +335,10 @@
             </div>
 
             <div class="col s12 white">
-                <div class="divider s12 center" style="width:98%; margin-left: 10px;margin-right: 10px;margin-top: 10px;"></div>
+                <div class="divider s12 center" style="width:98%; margin-left: 10px;margin-right: 10px;margin-top: 0;"></div>
             </div>
 
-            <div class="col s12 lighten-1 white grey-text vc-center fz13" ng-if="paymentInfo.order_status== 1" style="height:55px;">
+            <div ng-if="paymentInfo.order_status== 1" class="col s12 lighten-1 white grey-text vc-center fz13" style="height:45px;">
                 <div class="col s4">
                     运费(美元):<span class="red-text fz20">{{paymentInfo.ship_trans_fee}}</span>
                 </div>
@@ -348,9 +356,9 @@
                     </div>
                 </div>
                 <div class="col s12 white">
-                    <div class="s12 center" style="width:98%; margin-left: 10px;margin-right: 10px;margin-top: 10px;border: 1px dotted #ccc"></div>
+                    <div class="s12 center" style="width:98%; margin-left: 10px;margin-right: 10px;margin-top: 0;border: 1px dotted #ccc"></div>
                 </div>
-                <div class="col s12 lighten-1 white grey-text vc-center fz13"  ng-if="paymentInfo.order_status !== 1" style="height:45px;">
+                <div ng-if="paymentInfo.order_status !== 1" class="col s12 lighten-1 white grey-text vc-center fz13" style="height:40px;">
                     <div class="col s6 cyan-text">
                         支付编号：{{orderPaymentList.id}}
                     </div>
@@ -361,7 +369,7 @@
             </div>
 
             <div class="col s12 white">
-                <div class="divider s12 center" style="width:98%; margin-left: 10px;margin-right: 10px;margin-top: 10px;"></div>
+                <div class="divider s12 center" style="width:98%; margin-left: 10px;margin-right: 10px;margin-top: 0;"></div>
             </div>
             <div class="col s12 lighten-1 white grey-text vc-center fz13" style="height:40px;">
                 <div class="col s6">
@@ -371,23 +379,31 @@
                     生成时间：{{paymentInfo.ship_trans_created_date | date:'yyyy-MM-dd HH:mm:ss'}}
                 </div>
             </div>
+        </div>
+        <!--&lt;!&ndash;关闭模态框按钮&ndash;&gt;-->
+        <!--<div class="row col s4 offset-s8 right-align" style="margin-top: 50px;margin-right: 20px">-->
+            <!--<button class="btn  btn-large btn-floating waves-effect cyan" ng-click="closeSeaTranModal()" name="action" >-->
+                <!--<i class="mdi mdi-check"></i>-->
+            <!--</button>-->
+        <!--</div>-->
+    </div>
 
-        </div>
-        <!--关闭模态框按钮-->
-        <div class="row col s4 offset-s8 right-align" style="margin-top: 50px;margin-right: 20px">
-            <button class="btn  btn-large btn-floating waves-effect cyan" ng-click="closeSeaTranModal()" name="action" >
-                <i class="mdi mdi-check"></i>
-            </button>
-        </div>
+    <!-- Footer -->
+    <div class="modal-footer right-align">
+        <a class="btn-floating waves-effect waves-light btn cyan lighten-1 modal-close" style="width:38px;height:38px; margin-right: 50px;">
+            <i class="mdi mdi-check"></i>
+        </a>
     </div>
 </div>
 
-<!-- 贷出信息详情 -->
-<div id="loanInfoModal" class="modal"  style="max-height: 718px;">
-    <!--标题：贷出详情-->
-    <div class="cyan lighten-1 white-text center-align modal_title">贷出详情</div>
-    <!--详情-->
-    <div class="modal-content">
+<!-- 模态画面【贷出记录-贷出详情】 模态框 -->
+<div id="loanInfoModal" class="modal modal-fixed-footer row" style="max-height: 456px;" ng-class="{'client-info-modal-height':loanRepaymentList.length > 0}">
+
+    <!-- Header -->
+    <div class="modal_title center-align cyan white-text">贷出详情</div>
+
+    <!-- Body -->
+    <div class="modal-content" style="max-height: 350px;" ng-class="{'client-info-modal-inner-height':loanRepaymentList.length > 0}">
         <!-- 支付信息 -->
         <div class="row blue-grey lighten-5" style="border:1px solid #bdbdbd;margin-top: 10px;">
             <!-- header -->
@@ -532,12 +548,9 @@
         </div>
     </div>
 
-    <!-- 分割线 -->
-    <div class="divider col s12"></div>
-
-    <!--关闭模态框按钮-->
-    <div class="row col s4 offset-s8 right-align" style="margin-top: 20px;margin-right: 20px">
-        <a class="btn-floating waves-effect waves-light cyan lighten-1 btn modal-close" style="margin-left: 20px;">
+    <!-- Footer -->
+    <div class="modal-footer right-align">
+        <a class="btn-floating waves-effect waves-light btn cyan lighten-1 modal-close" style="width:38px;height:38px; margin-right: 50px;">
             <i class="mdi mdi-check"></i>
         </a>
     </div>
@@ -545,11 +558,11 @@
 
 <!--付款记录模态框-->
 <div id="openPaymentHistory" class="modal">
-    <!--标题：海运详情-->
-    <div class="cyan lighten-1 white-text center-align modal_title" >支付详情</div>
+    <!-- Header -->
+    <div class="modal_title center-align cyan white-text">支付详情</div>
+    <!-- Body -->
     <div class="modal-content">
         <div class="row blue-grey lighten-5" style="border:1px solid #bdbdbd;margin-top: 10px;">
-            <!-- header -->
             <div class="col s12 lighten-1 cyan-text vc-center" style="height:50px;">
                 <div class="col s6" >支付编码:{{storagePaymentArray.id}}</div>
                 <div class="col s6 right-align" ng-class="{'red-text':storagePaymentArray.payment_status == 1,'cyan-text':storagePaymentArray.payment_status == 2}">{{paymentStatusList[storagePaymentArray.payment_status-1].name}}</div>
@@ -664,7 +677,6 @@
                         </div>
                     </div>
 
-
                     <div id="seaTransportOrderDetails" class="col s12 tab_box_detail" >
                         <!-- 下部分：检索结果显示区域 -->
                         <div class="col s12">
@@ -723,8 +735,6 @@
                         </div>
                     </div>
 
-
-
                     <div id="paymentLoanList" class="col s12 tab_box_detail" >
                         <!-- 下部分：检索结果显示区域 -->
                         <div class="col s12">
@@ -775,14 +785,15 @@
                 </div>
             </div>
         </div>
-        <!--关闭模态框按钮-->
-        <div class="row col s4 offset-s8 right-align" style="margin-top: 50px;margin-right: 20px">
-            <button class="btn  btn-large btn-floating waves-effect cyan" ng-click="closePaymentHistory()" name="action" >
-                <i class="mdi mdi-check"></i>
-            </button>
-        </div>
     </div>
 
+    <!-- Footer -->
+    <div class="modal-footer right-align">
+        <a class="btn-floating waves-effect waves-light btn cyan lighten-1" style="width:38px;height:38px; margin-right: 50px;"
+           ng-click="closePaymentHistory()">
+            <i class="mdi mdi-check"></i>
+        </a>
+    </div>
 </div>
 
 <!--委托方信息-->

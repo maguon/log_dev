@@ -1168,3 +1168,12 @@ input[type=text]{
 }
 
 
+.client-info-modal-height {
+    max-height: 656px !important;
+}
+
+.client-info-modal-inner-height {
+    max-height: 550px !important;
+}
+
+

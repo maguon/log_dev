@@ -578,11 +578,11 @@ app.controller("client_info_detail_controller", ["$scope", "$rootScope","$state"
             }
         })
     };
-    //点击关闭仓储订单模态框
-    $scope.closeModalStorageOrder= function(){
-        $(".modal").modal();
-        $("#openStorageOrder").modal("close");
-    };
+    // //点击关闭仓储订单模态框
+    // $scope.closeModalStorageOrder= function(){
+    //     $(".modal").modal();
+    //     $("#openStorageOrder").modal("close");
+    // };
 
     /**
      * 根据画面输入的查询条件，进行数据查询。
@@ -677,12 +677,12 @@ app.controller("client_info_detail_controller", ["$scope", "$rootScope","$state"
         });
     }
 
-
-    //点击关闭海运订单模态框
-    $scope.closeSeaTranModal= function(){
-        $(".modal").modal();
-        $("#openSeaTranModal").modal("close");
-    };
+    //
+    // //点击关闭海运订单模态框
+    // $scope.closeSeaTranModal= function(){
+    //     $(".modal").modal();
+    //     $("#openSeaTranModal").modal("close");
+    // };
 
 
     /**
