@@ -298,7 +298,7 @@ app.controller("client_info_detail_controller", ["$scope", "$rootScope","$state"
         $scope.carStorageCount = 0;
         // 在库车辆总值
         $scope.carStorageValuation = 0;
-        _basic.get(_host.api_url + "/carStorageCount?relStatus=1&active=1").then(function (data) {
+        _basic.get(_host.api_url + "/carStorageCount?relStatus=1&active=1&entrustId="+val).then(function (data) {
             if (data.success) {
                 if (data.result.length > 0) {
                     // 在库车辆总数
@@ -319,7 +319,7 @@ app.controller("client_info_detail_controller", ["$scope", "$rootScope","$state"
         $scope.unMortgageCarCount = 0;
         // 未抵押车辆总值
         $scope.unMortgageCarValuation = 0;
-        _basic.get(_host.api_url + "/carMortgageStatusCount?relStatus=1&active=1").then(function (data) {
+        _basic.get(_host.api_url + "/carMortgageStatusCount?relStatus=1&active=1&entrustId="+val).then(function (data) {
             if (data.success) {
                 for (var i = 0; i < data.result.length; i++) {
                     if (data.result[i].mortgage_status === 1) {
@@ -343,7 +343,7 @@ app.controller("client_info_detail_controller", ["$scope", "$rootScope","$state"
         $scope.purchaseCarCount = 0;
         // 金融车总值
         $scope.purchaseCarValuation = 0;
-        _basic.get(_host.api_url + "/carPurchaseCount?purchaseType=1").then(function (data) {
+        _basic.get(_host.api_url + "/carPurchaseCount?purchaseType=1&entrustId="+val).then(function (data) {
             if (data.success) {
                 if (data.result.length > 0) {
                     // 金融车总数
