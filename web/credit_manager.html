@@ -36,9 +36,29 @@
         </div>
     </li>
     <li class="bold side_navigator">
+        <a class="waves-effect waves-light first-N" ui-sref="finance_index">
+            <i class="white-text mdi mdi-crop-free "></i>主控面板
+        </a>
+    </li>
+    <li class="bold side_navigator">
         <a href="#!" ui-sref="car_demand" class=" waves-effect waves-light first-N">
             <i class="white-text mdi mdi-magnify"></i>车辆查询
         </a>
+    </li>
+    <!-- 财务管理 -->
+    <li class="bold side_navigator">
+        <ul class="collapsible collapsible-accordion">
+            <li class="bold">
+                <a class="collapsible-header waves-effect waves-light first-N">
+                    <i class="white-text mdi mdi-cash-usd"></i>财务管理
+                </a>
+                <div class="collapsible-body slider_nav_box blue-grey darken-3" style="padding: 0;">
+                    <ul>
+                        <li><a href="#!" ui-sref="credit_card"><i class="white-text mdi mdi-chevron-right"></i>信用证</a></li>
+                    </ul>
+                </div>
+            </li>
+        </ul>
     </li>
 </ul>
 
@@ -111,8 +131,15 @@
 <!-- 后台API路径配置文件 -->
 <script src="./host/host_config.js"></script>
 
+<!-- 主控面板 控制器 -->
+<script src="./js/controller/finance/finance_index_controller.js"></script>
+
 <!-- 车辆查询 控制器 -->
 <script src="./js/controller/car_demand/car_demand_controller.js"></script>
 <script src="./js/controller/car_demand/car_demand_details_controller.js"></script>
+
+<!-- 财务管理 -> 信用证 控制器-->
+<script src="./js/controller/finance/credit_card_controller.js"></script>
+<script src="./js/controller/finance/credit_card_detail_controller.js"></script>
 
 </html>
