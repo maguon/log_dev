@@ -302,6 +302,12 @@ app.controller("ship_trans_info_controller", ["$scope", "$rootScope", "_host", "
                     $scope.carInfo.id = data.result[0].id;
                     // vin
                     $scope.carInfo.vin = data.result[0].vin;
+                    // 车辆品牌/型号
+                    $scope.carInfo.vin = data.result[0].vin;
+                    // 制造商
+                    $scope.carInfo.makeName = data.result[0].make_name == null ? '未知' : data.result[0].make_name;
+                    // 型号
+                    $scope.carInfo.modelName = data.result[0].model_name == null ? '未知' : data.result[0].model_name;
                     // 车辆估值
                     $scope.carInfo.valuation = data.result[0].valuation;
                     // 是否MSO
