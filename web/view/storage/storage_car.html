@@ -791,12 +791,13 @@
                     <th data-field="">品牌</th>
                     <th data-field="">型号</th>
                     <th data-field="">委托方</th>
-                    <th data-field="">入库时间</th>
-                    <th  data-field="">存放车库</th>
+                    <th data-field="">存放车库</th>
                     <th data-field="">存放区域</th>
                     <th data-field="">存放位置</th>
+                    <th data-field="">入库时间</th>
                     <th data-field="">计划出库时间</th>
                     <th data-field="">实际出库时间</th>
+                    <th data-field="">车辆属性</th>
                     <th>操作</th>
                 </tr>
             </thead>
@@ -804,20 +805,35 @@
             <!--其余行（循环）-->
             <tbody>
                 <tr ng-repeat="el in storageCar" class="grey-text text-darken-1">
+                    <!-- VIN码 -->
                     <td ng-bind="el.vin"></td>
+                    <!-- 品牌 -->
                     <td ng-bind="el.make_name"></td>
+                    <!-- 型号 -->
                     <td ng-bind="el.model_name"></td>
-                    <td ng-if="el.entrust_id==null">无</td>
-                    <td ng-if="el.entrust_id!==null" ng-bind="el.short_name"></td>
-                    <td ng-bind="el.enter_time|date:'yyyy-MM-dd HH:mm:ss'"></td>
-                    <td ng-if="el.storage_id!=null" ng-bind="el.storage_name"></td>
-                    <td ng-if="el.storage_id==null" >无</td>
-                    <td ng-if="el.area_name==null">无</td>
-                    <td ng-if="el.area_name!==null" >{{el.area_name}}</td>
+                    <!-- 委托方 -->
+                    <td>{{el.entrust_id==null ? '无' : el.short_name}}</td>
+                    <!-- 存放车库 -->
+                    <td>{{el.storage_id==null ? '无' : el.storage_name}}</td>
+                    <!-- 存放区域 -->
+                    <td>{{el.area_name==null ? '无' : el.area_name}}</td>
+                    <!-- 存放位置 -->
                     <td ng-if="el.lot==null&&el.col==null&&el.row==null">无</td>
                     <td ng-if="el.lot!==null||el.col!==null||el.row!==null" >{{el.row}}排{{el.col}}列{{characters[el.lot-1].name}}</td>
+                    <!-- 入库时间 -->
+                    <td ng-bind="el.enter_time|date:'yyyy-MM-dd'"></td>
+                    <!-- 计划出库时间 -->
                     <td ng-bind="el.plan_out_time|date:'yyyy-MM-dd '"></td>
+                    <!-- 实际出库时间 -->
                     <td ng-bind="el.real_out_time|date:'yyyy-MM-dd '"></td>
+                    <!--车辆属性-->
+                    <td>
+                        <!-- 金融车(0：不是金融车， 1 金融车) -->
+                        <span ng-show="el.purchase_type==1" class="mdi mdi-cash-usd fz18" style="color: #f0ad4e"></span>
+                        <!-- 抵押车(1：未抵押，2：抵押) -->
+                        <span ng-show="el.mortgage_status==2" class="mdi mdi-lock fz18 cyan-text"></span>
+                    </td>
+                    <!-- 操作 -->
                     <td class="operation">
 
                         <!--钥匙存放位置-->
@@ -843,7 +859,7 @@
 
                 <!--当搜索结果为空时-->
                 <tr class="grey-text text-darken-1" ng-if="storageCar.length == 0" style="border-bottom: 1px solid #ccc;">
-                    <td colspan="11"><span style="letter-spacing: 2px">暂无数据</span></td>
+                    <td colspan="12"><span style="letter-spacing: 2px">暂无数据</span></td>
                 </tr>
             </tbody>
         </table>
