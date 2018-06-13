@@ -879,8 +879,8 @@
                         </div>
                         <!-- 查询条件：vin -->
                         <div class="input-field col s3">
-                            <input name="search_vin" id="search_vin" type="text" ng-model="VIN">
-                            <label for="search_vin">VIN码</label>
+                            <input name="search_vin" id="search_vin" type="text" ng-model="VIN" minlength="6">
+                            <label for="search_vin">VIN码(至少6位)</label>
                         </div>
                         <!--所在仓库-->
                         <div class="input-field col s3">
@@ -1163,8 +1163,8 @@
 
                             <!-- 查询条件：VIN码 -->
                             <div class="input-field col" style="width: 40%;">
-                                <input type="text" id="conditionVinText" ng-model="conditionVin">
-                                <label for="conditionVinText">VIN码</label>
+                                <input type="text" id="conditionVinText" ng-model="conditionVin" minlength="6">
+                                <label for="conditionVinText">VIN码(至少6位)</label>
                             </div>
 
                             <!-- 查询条件：车辆品牌 -->
@@ -1315,8 +1315,8 @@
                         <div class="col s7">
                             <!-- VIN -->
                             <div class="input-field col s8">
-                                <input type="text" id="orderVIN" ng-model="conditionOrderVIN">
-                                <label for="orderVIN"> VIN</label>
+                                <input type="text" id="orderVIN" ng-model="conditionOrderVIN" minlength="6">
+                                <label for="orderVIN">VIN码(至少6位)</label>
                             </div>
 
                             <!-- 制造商 -->

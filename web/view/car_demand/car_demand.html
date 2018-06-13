@@ -10,8 +10,8 @@
                 <div class="row col s12">
                     <!-- 查询条件：车辆VIN码 -->
                     <div class="input-field col" style="width: 40%;">
-                        <input type="text" id="conditionVin" ng-model="conditionVin">
-                        <label for="conditionVin">VIN码</label>
+                        <input type="text" id="conditionVin" ng-model="conditionVin" minlength="6">
+                        <label for="conditionVin">VIN码(至少6位)</label>
                     </div>
 
                     <!-- 查询条件：车辆品牌 -->

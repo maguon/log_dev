@@ -230,7 +230,7 @@ app.controller("client_info_detail_controller", ["$scope", "$rootScope","$state"
     function getStorageCar () {
         var obj={
             relStatus:$scope.carRelStatus,
-            vin:$scope.VIN,
+            vinCode:$scope.VIN,
             storageId:$scope.storageId,
             msoStatus:$scope.MSO,
             enterStart:$scope.enterStart,
@@ -389,7 +389,7 @@ app.controller("client_info_detail_controller", ["$scope", "$rootScope","$state"
         var reqUrl = _host.api_url + "/storageOrder?entrustId="+val+'&';
         var obj = {
             storageOrderId:$scope.conditionOrderNo,
-            vin:$scope.conditionVin,
+            vinCode:$scope.conditionVin,
             makeId:$scope.conditionMakeId,
             modelId:$scope.conditionModelId,
             enterStart:$scope.conditionEnterTimeStart,
@@ -591,7 +591,7 @@ app.controller("client_info_detail_controller", ["$scope", "$rootScope","$state"
         // 检索用url
         var reqUrl = _host.api_url + "/shipTransOrder?entrustId="+val+'&';
         var obj = {
-            vin:$scope.conditionOrderVIN,
+            vinCode:$scope.conditionOrderVIN,
             shipTransId:$scope.conditionOrderId,
             makeId:$scope.conditionMakeId,
             modelId:$scope.conditionModelId,

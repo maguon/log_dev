@@ -162,7 +162,7 @@ app.controller("car_demand_controller", ["$scope", "$rootScope", "_host", "_basi
         }
 
         var obj = {
-            vin: $scope.conditionVin,
+            vinCode: $scope.conditionVin,
             makeId:$scope.conditionMakeId,
             modelId:$scope.conditionModelId,
             entrustId:$scope.entrust.id,

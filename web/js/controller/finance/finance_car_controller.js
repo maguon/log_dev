@@ -107,7 +107,7 @@ app.controller("finance_car_controller", ["$scope", "$rootScope", "_host", "_bas
      */
     function setConditions(conditions) {
         // vin码
-        $scope.condVin = conditions.vin;
+        $scope.condVin = conditions.vinCode;
         // 制造商
         $scope.conditionMakeId = conditions.makeId;
         // 根据制造商，取得品牌列表
@@ -130,7 +130,7 @@ app.controller("finance_car_controller", ["$scope", "$rootScope", "_host", "_bas
     function makeConditions() {
         return {
             // vin码
-            vin: $scope.condVin,
+            vinCode: $scope.condVin,
             // 制造商
             makeId: $scope.conditionMakeId,
             // 品牌
