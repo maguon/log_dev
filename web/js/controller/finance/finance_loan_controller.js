@@ -25,6 +25,10 @@ app.controller("finance_loan_controller", ["$scope", "$rootScope", "_host", "_ba
         // 委托方
         entrustId: "",
         entrustNm: "",
+        // 可抵押车辆总数
+        unMortgageCarCount: 0,
+        // 可抵押车辆总值
+        unMortgageCarValuation: 0,
         // 定金
         deposit: 0,
         // 贷出金额(美元)
@@ -252,6 +256,38 @@ app.controller("finance_loan_controller", ["$scope", "$rootScope", "_host", "_ba
         }
     };
 
+    // 车辆估值 TAB 画面 数据查询
+
+    /**
+     * 根据委托方取得可抵押车辆总数，可抵押车辆总值
+     * @param entrustId
+     */
+    function getCarValuation(entrustId) {
+        _basic.get(_host.api_url + "/carMortgageStatusCount?relStatus=1&active=1&entrustId=" + entrustId).then(function (data) {
+            console.log(data);
+            if (data.success) {
+                if (data.result.length === 0) {
+                    // 可抵押车辆总数
+                    $scope.loanInfo.unMortgageCarCount = 0;
+                    // 可抵押车辆总值
+                    $scope.loanInfo.unMortgageCarValuation = 0;
+                } else {
+                    for (var i = 0; i < data.result.length; i++) {
+                        if (data.result[i].mortgage_status === 1) {
+                            // 可抵押车辆总数
+                            $scope.loanInfo.unMortgageCarCount = data.result[i].car_count;
+                            // 可抵押车辆总值
+                            $scope.loanInfo.unMortgageCarValuation = data.result[i].valuation;
+                        }
+                    }
+                }
+            } else {
+                swal(data.msg, "", "error");
+            }
+        });
+    }
+
+
     /**
      * 获取委托方信息
      * @param type 委托方类型
@@ -270,6 +306,18 @@ app.controller("finance_loan_controller", ["$scope", "$rootScope", "_host", "_ba
                     placeholder: '委托方',
                     containerCssClass: 'select2_dropdown',
                     allowClear: true
+                })
+                // 选中某个委托方后，触发事件
+                .on('change', function () {
+                    var entrustId = "";
+
+                    // 委托方 下拉选中 内容
+                    if ($("#addEntrustSelect").val() != null && $("#addEntrustSelect").val() !== "") {
+                        entrustId = $("#addEntrustSelect").select2("data")[0].id;
+                    }
+                    if (entrustId !== "") {
+                        getCarValuation(entrustId);
+                    }
                 });
                 $("#addEntrustSelect").val(null).trigger("change");
 

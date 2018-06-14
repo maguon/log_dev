@@ -151,13 +151,13 @@
 </div>
 
 <!-- 模态画面【新增贷出订单】 模态框 -->
-<div id="newFinanceLoanDiv" class="modal modal-fixed-footer row" style="max-height: 456px;">
+<div id="newFinanceLoanDiv" class="modal modal-fixed-footer row" style="max-height: 506px;">
 
     <!-- Header -->
     <div class="modal_title center-align cyan white-text">新增贷出订单</div>
 
     <!-- Body -->
-    <div class="modal-content" style="max-height: 350px;">
+    <div class="modal-content" style="max-height: 400px;">
 
         <!-- 显示画面【新增贷出订单】 Body -->
         <div class="col" style="width:95%; margin-left: 20px;">
@@ -177,6 +177,19 @@
                         <option value=""></option>
                         <option ng-repeat="el in entrustList" ng-value="el.id">{{el.short_name}}</option>
                     </select>
+                </div>
+            </div>
+
+            <!-- 贷出订单信息 -->
+            <div class="col s12" style="margin-bottom: 10px;">
+                <!-- 可抵押车辆总数 -->
+                <div class="input-field col s6" style="height:40px;">
+                    <label class="cyan-text fz14">可抵押车辆总数：{{loanInfo.unMortgageCarCount | number}}</label>
+                </div>
+
+                <!-- 可抵押车辆总值(美元) -->
+                <div class="input-field col s6" style="height:40px;">
+                    <label class="cyan-text fz14">可抵押车辆总值：{{loanInfo.unMortgageCarValuation | number}}</label>
                 </div>
             </div>
 
