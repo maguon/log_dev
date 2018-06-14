@@ -1176,4 +1176,12 @@ input[type=text]{
     max-height: 550px !important;
 }
 
-
+/** video.js 样式重置 */
+/** 暂停时，显示播放按钮 */
+.vjs-paused .vjs-big-play-button,
+.vjs-paused.vjs-has-started .vjs-big-play-button {
+    display: block;
+}
+/** 进度显示当前播放时间 */
+.video-js .vjs-time-control{display:block;}
+.video-js .vjs-remaining-time{display: none;}
