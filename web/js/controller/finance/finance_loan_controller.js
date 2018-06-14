@@ -305,7 +305,7 @@ app.controller("finance_loan_controller", ["$scope", "$rootScope", "_host", "_ba
                 $('#addEntrustSelect').select2({
                     placeholder: '委托方',
                     containerCssClass: 'select2_dropdown',
-                    allowClear: true
+                    allowClear: false
                 })
                 // 选中某个委托方后，触发事件
                 .on('change', function () {
