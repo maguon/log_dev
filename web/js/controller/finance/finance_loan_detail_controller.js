@@ -229,7 +229,7 @@ app.controller("finance_loan_detail_controller", ["$scope", "$stateParams", "_ba
         $("#lookMortgageCar").show();
 
         // 取得 左侧 委托方拥有车辆 列表
-        _basic.get(_host.api_url + "/user/" + userId + "/car?relStatus=1&entrustId=" + $scope.loanInfo.entrustId).then(function (data) {
+        _basic.get(_host.api_url + "/user/" + userId + "/car?relStatus=1&purchaseType=0&entrustId=" + $scope.loanInfo.entrustId).then(function (data) {
             if (data.success) {
                 $scope.entrustCarList = data.result;
             } else {
