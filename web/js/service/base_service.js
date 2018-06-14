@@ -171,7 +171,7 @@ baseService.factory('_baseService',function(){
      * 计算2个日期相差的天数
      * @param startDateString 'YYYY-MM-DD
      * @param endDateString 'YYYY-MM-DD
-     * @returns 相差的天数 包含今天，如：2016-12-13到2016-12-15，相差3天
+     * @returns 相差的天数 不包含今天，如：2016-12-13到2016-12-15，相差3天
      */
     _this.dateDiffIncludeToday = function (startDateString, endDateString){
         //日期分隔符
@@ -181,7 +181,11 @@ baseService.factory('_baseService',function(){
         var startDate = new Date(startDates[0], startDates[1]-1, startDates[2]);
         var endDate = new Date(endDates[0], endDates[1]-1, endDates[2]);
         //把相差的毫秒数转换为天数
-        return parseInt(Math.abs(endDate - startDate ) / 1000 / 60 / 60 /24) + 1;
+        var days = parseInt(Math.abs(endDate - startDate ) / 1000 / 60 / 60 /24);
+        if (days === 0) {
+            days = 1;
+        }
+        return days;
     };
 
     // 页面之间数据传递
