@@ -319,7 +319,7 @@ app.controller("client_info_detail_controller", ["$scope", "$rootScope","$state"
         $scope.unMortgageCarCount = 0;
         // 未抵押车辆总值
         $scope.unMortgageCarValuation = 0;
-        _basic.get(_host.api_url + "/carMortgageStatusCount?relStatus=1&active=1&entrustId="+val).then(function (data) {
+        _basic.get(_host.api_url + "/carMortgageStatusCount?purchaseType=0&relStatus=1&active=1&entrustId="+val).then(function (data) {
             if (data.success) {
                 for (var i = 0; i < data.result.length; i++) {
                     if (data.result[i].mortgage_status === 1) {
