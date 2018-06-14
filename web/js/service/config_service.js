@@ -443,11 +443,13 @@ baseService.factory("_config", function () {
     _this.mortgageStatus = [
         {
             id: 1,
-            name: "未抵押"
+            name: "未抵押",
+            short:"否"
         },
         {
             id: 2,
-            name: "抵押"
+            name: "抵押",
+            short:"是"
         }
     ];
 

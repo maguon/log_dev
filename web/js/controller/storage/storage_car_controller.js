@@ -25,6 +25,9 @@ app.controller("storage_car_controller", ["$scope", "$rootScope", "$stateParams"
     //是否是金融车辆
     $scope.purchaseTypes = _config.purchaseTypes;
 
+    // 抵押状态
+    $scope.mortgageStatus = _config.mortgageStatus;
+
     /*
     * 以下为添加功能中定义的变量
     * */
@@ -185,7 +188,12 @@ app.controller("storage_car_controller", ["$scope", "$rootScope", "$stateParams"
             storageId: $scope.storageIdItem,
             makeId:$scope.makeIdItem,
             modelId: $scope.modelIdItem,
+            // vin
             vinCode:$scope.vinItem,
+            // 金融车
+            purchaseType:$scope.condPurchaseType,
+            // 抵押车
+            mortgageStatus:$scope.condMortgageStatus,
             enterStart:$scope.search_enterTime_start,
             enterEnd:$scope.search_enterTime_end,
             planStart:$scope.search_planTime_start,
