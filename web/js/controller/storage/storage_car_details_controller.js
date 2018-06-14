@@ -489,27 +489,33 @@ app.controller("storage_car_details_controller", [ "$scope","$state", "$statePar
     $scope.submitForm = function (isValid, id, r_id) {
         $scope.submitted = true;
         var obj = {
-            "vin": $scope.self_car.vin,
-            "makeId": $scope.self_car.make_id,
-            "makeName": $("#look_makecarName").find("option:selected").text(),
-            "modelId": $scope.self_car.model_id,
-            "modelName": $("#look_model_name").find("option:selected").text(),
-            "proDate": $scope.look_create_time,
-            "colour": $scope.self_car.colour,
-            "engineNum": $scope.self_car.engine_num,
-            "entrustId":  $scope.self_car.entrust_id,
-            "valuation":  $scope.self_car.valuation,
-            "purchaseType":$scope.self_car.purchase_type,
-            "msoStatus":  $scope.self_car.mso_status,
-            "remark": $scope.self_car.remark
+            vin: $scope.self_car.vin,
+            makeId: $scope.self_car.make_id,
+            makeName: $("#look_makecarName").find("option:selected").text(),
+            modelId: $scope.self_car.model_id,
+            modelName: $("#look_model_name").find("option:selected").text(),
+            proDate: $scope.look_create_time,
+            colour: $scope.self_car.colour,
+            engineNum: $scope.self_car.engine_num,
+            entrustId:  $scope.self_car.entrust_id,
+            valuation:  $scope.self_car.valuation,
+            purchaseType:$scope.self_car.purchase_type,
+            msoStatus:  $scope.self_car.mso_status,
+            remark: $scope.self_car.remark
         };
-        if (isValid) {
+
+        // 如果年份没有输入，就去掉此属性
+        if ($scope.look_create_time == null || $scope.look_create_time === "") {
+            delete obj.proDate;
+        }
+
+        if ($scope.self_car.plan_out_time !== "" && $scope.self_car.plan_out_time !== undefined && $scope.self_car.valuation !== "") {
             // 修改计划出库时间
             _basic.put(_host.api_url + "/user/" + userId + "/carStorageRel/" + r_id + "/planOutTime", {
                 "planOutTime": $scope.self_car.plan_out_time
             }).then(function (data) {
             });
-            // 修改仓库信息
+            // 修改车辆信息
             _basic.put(_host.api_url + "/user/" + userId + "/car/" + id, obj).then(function (data) {
                 if (data.success) {
                     swal("修改成功", "", "success");
@@ -517,6 +523,8 @@ app.controller("storage_car_details_controller", [ "$scope","$state", "$statePar
                     swal(data.msg, "", "error")
                 }
             });
+        } else {
+            swal('请填写完整信息', "", "error");
         }
     };
     // 移动位置
