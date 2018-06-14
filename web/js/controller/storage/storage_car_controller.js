@@ -277,7 +277,8 @@ app.controller("storage_car_controller", ["$scope", "$rootScope", "$stateParams"
         $("#tab2").show();
         $scope.makeNameId='';
         $scope.modelNameId='';
-        $scope.create_time='';
+        // 当前 日期
+        $scope.create_time = moment(new Date()).format('YYYY');
         $scope.car_color='';
         $scope.engineNum='';
         $scope.entrustId='';
@@ -420,17 +421,15 @@ app.controller("storage_car_controller", ["$scope", "$rootScope", "$stateParams"
         })
     }
 
-
     // 查询vin码
     $scope.demandCar=function () {
         if($scope.demandVin!==undefined&&$scope.demandVin!=="") {
             _basic.get(_host.api_url + "/carList?vin=" + $scope.demandVin).then(function (data) {
                 if (data.success = true) {
-                    if (data.result.length == 0) {
+                    if (data.result.length === 0) {
                         $scope.showStorageData = 1;
                         step1();
-                    }
-                    else {
+                    } else {
                         $scope.baseList = data.result[0];
                         $scope.baseList.model_id = data.result[0].model_id;
                         $scope.baseList.make_id = data.result[0].make_id;
@@ -458,13 +457,11 @@ app.controller("storage_car_controller", ["$scope", "$rootScope", "$stateParams"
                             addCarMakeId();
                         }
                     }
-                }
-                else {
+                } else {
                     swal(data.msg, "", "error");
                 }
             })
-        }
-        else{
+        } else{
             swal('请输入VIN码','','error')
         }
     };
@@ -485,7 +482,7 @@ app.controller("storage_car_controller", ["$scope", "$rootScope", "$stateParams"
                 }
             })
         }
-    };
+    }
 
 
     // 新增基本信息
