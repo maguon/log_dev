@@ -16,6 +16,7 @@
     <link rel="stylesheet" href="./assets/css/flex.css">
     <link rel="stylesheet" href="./assets/css/col.css">
     <link rel="stylesheet" href="./assets/css/font.css">
+    <!--<link rel="stylesheet" href="./lib/video/dist/video-js.css">-->
     <link rel="icon" href="./assets/images/ico/honya_logo_32.ico">
 </head>
 <body>
@@ -66,6 +67,23 @@
             <i class="white-text mdi mdi-account-plus"></i>委托方
         </a>
     </li>
+
+    <!-- 数据统计 -->
+    <li class="bold side_navigator">
+        <ul class="collapsible collapsible-accordion">
+            <li class="bold">
+                <a class="collapsible-header waves-effect waves-light first-N">
+                    <i class="white-text mdi mdi-chart-line"></i>数据统计
+                </a>
+                <div class="collapsible-body slider_nav_box blue-grey darken-3" style="padding: 0;">
+                    <ul>
+                        <li><a href="#!" ui-sref="car_valuation_statistics"><i class="white-text mdi mdi-chevron-right"></i>车值统计</a></li>
+                    </ul>
+                </div>
+            </li>
+        </ul>
+    </li>
+
     <!-- 财务管理 -->
     <li class="bold side_navigator">
         <ul class="collapsible collapsible-accordion">
@@ -124,6 +142,7 @@
             </li>
         </ul>
     </li>
+
     <li class="bold side_navigator">
         <ul class="collapsible collapsible-accordion">
             <li class="bold">
@@ -194,6 +213,7 @@
     }
 </script>
 <!-- 第三方 -->
+<!--<script src="./lib/video/dist/video.js"></script>-->
 <script src="./lib/jquery.min.js"></script>
 <script src="./lib/jquery.form.min.js"></script>
 <script src="./lib/fullcalendar-3.3.0/lib/moment.min.js"></script>
@@ -244,6 +264,11 @@
 <!-- 委托方 控制器 -->
 <script src="./js/controller/client/client_info_controller.js"></script>
 <script src="./js/controller/client/client_info_detail_controller.js"></script>
+
+<!-- 数据统计 控制器 -->
+
+<!-- 数据统计 -> 车值统计 控制器 -->
+<script src="./js/controller/statistics/car_valuation_statistics_controller.js"></script>
 
 <!-- 财务管理 控制器 -->
 

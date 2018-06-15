@@ -56,6 +56,13 @@ app.config(['$stateProvider',"$urlRouterProvider",function($stateProvider,$urlRo
             controller:'client_info_detail_controller'
         })
 
+        // 数据统计->车值统计
+        .state("car_valuation_statistics",{
+            url:"/car_valuation_statistics",
+            templateUrl: "/view/statistics/car_valuation_statistics.html",
+            controller:'car_valuation_statistics_controller'
+        })
+
         // 财务管理->订单管理
         .state("order", {
             url:"/order",
