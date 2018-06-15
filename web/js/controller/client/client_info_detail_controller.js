@@ -343,6 +343,10 @@ app.controller("client_info_detail_controller", ["$scope", "$rootScope","$state"
         $scope.purchaseCarCount = 0;
         // 金融车总值
         $scope.purchaseCarValuation = 0;
+        // 金融车总数(在库)
+        $scope.parkingCarCount = 0;
+        // 金融车总值(在库)
+        $scope.parkingCarValuation = 0;
         _basic.get(_host.api_url + "/carPurchaseCount?purchaseType=1&entrustId="+val).then(function (data) {
             if (data.success) {
                 if (data.result.length > 0) {
@@ -350,6 +354,11 @@ app.controller("client_info_detail_controller", ["$scope", "$rootScope","$state"
                     $scope.purchaseCarCount = data.result[0].purchase_car_count;
                     // 金融车总值
                     $scope.purchaseCarValuation = data.result[0].valuation;
+
+                    // 金融车总数(在库)
+                    $scope.parkingCarCount = data.result[0].parking_car_count;
+                    // 金融车总值(在库)
+                    $scope.parkingCarValuation = data.result[0].parking_car_valuation;
                 }
             } else {
                 swal(data.msg, "", "error");

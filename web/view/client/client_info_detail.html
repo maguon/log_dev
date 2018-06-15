@@ -1138,16 +1138,16 @@
                                 </a>
                             </div>
                             <div class="col vc-center grey-text" style="width:15%;height: 100px;">
-                                金融车总数
+                                金融车总数(在库/非在库)
                             </div>
                             <div class="col vc-center" style="width:25%;height: 70px;margin-top:15px;margin-bottom:15px; border-right: 1px solid #c2c0c2">
-                                {{purchaseCarCount| number}}
+                                {{parkingCarCount| number}} / {{purchaseCarCount - parkingCarCount| number}}
                             </div>
                             <div class="col vc-center grey-text" style="width:15%;height: 100px;">
-                                金融车总值
+                                金融车总值(在库/非在库)
                             </div>
                             <div class="col vc-center red-text" style="width:30%;height: 100px;">
-                                {{purchaseCarValuation | number}}
+                                {{parkingCarValuation | number}} / {{purchaseCarValuation - parkingCarValuation | number}}
                             </div>
                         </div>
                     </div>
