@@ -315,7 +315,7 @@ publicDirective.directive("formDate", function () {
     }
 });
 
-// 验证利率(小数点后4位)的指令
+// 验证利率(小数点后6位)的指令
 publicDirective.directive('validRate', ['$parse', function ($parse) {
     return {
         restrict:"A",
@@ -333,7 +333,7 @@ publicDirective.directive('validRate', ['$parse', function ($parse) {
                 }
 
                 var n = (val.split('.')).length-1;
-                var reg = /^\d+(\.\d{1,4})?$/;
+                var reg = /^\d+(\.\d{1,6})?$/;
 
                 var clean = "";
 
