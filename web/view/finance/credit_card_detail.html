@@ -258,8 +258,8 @@
                     <div class="row col" style="width: 100%;position: relative">
 
                         <div class="input-field col s12">
-                            <input type="text" id="autocomplete-input" placeholder="模糊查询至少需要6位vin码" ng-change="shortSearch(creditVin)" ng-model="creditVin" style="margin: 0 0 20px 0" class="autocomplete">
-                            <label for="autocomplete-input">VIN码</label>
+                            <input type="text" id="autocomplete-input" placeholder="模糊查询至少需要6位vin" ng-change="shortSearch(creditVin)" ng-model="creditVin" style="margin: 0 0 20px 0" class="autocomplete">
+                            <label for="autocomplete-input">VIN</label>
                         </div>
                         <button class=" btn btn-floating btn-small waves-effect cyan lighten-1" ng-if="carId!==undefined" ng-click="addLinkCar()"  style="position: absolute;top: 15px;right: 10px;">
                             <i class="mdi white-text mdi-plus fz30"></i>
@@ -390,7 +390,7 @@
                         <div class="row blue-grey lighten-5" style="width:60%;border:1px solid #bdbdbd">
                             <!-- header -->
                             <div class="col s12 lighten-1 cyan-text vc-center" style="height:55px;">
-                                <div class="input-field col s4"> VIN码：{{linkCar.vin}}</div>
+                                <div class="input-field col s4"> VIN：{{linkCar.vin}}</div>
                                 <div class="input-field col s6">
                                     <div class="col s1" ng-if="linkCar.purchase_type!==0"> <i class="mdi mdi-slackware" style="color: #f0ad4e"></i></div>
                                     <div class="col s1" ng-if="linkCar.purchase_type==0"> <i class="mdi mdi-slackware grey-text"></i></div>

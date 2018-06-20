@@ -413,7 +413,7 @@ app.controller("finance_loan_detail_controller", ["$scope", "$stateParams", "_ba
                         // 添加购买车辆信息。
                         $scope.addBuyingCarRel(data.result[0].id);
                     } else {
-                        swal("该VIN码车辆已存在，请输入正确的新车VIN码。", "", "error");
+                        swal("该VIN车辆已存在，请输入正确的新车VIN。", "", "error");
                     }
                 }
             } else {

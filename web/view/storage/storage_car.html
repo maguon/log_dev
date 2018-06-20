@@ -19,13 +19,13 @@
 
             <!--详情-->
 
-            <!--第一步：根据vin码查询车辆的基本信息是否存在-->
+            <!--第一步：根据vin查询车辆的基本信息是否存在-->
             <div id="tab1" class="col s12 tab_box">
                 <div class="row " style="width: 900px;height:500px;margin: 0 auto">
-                    <div class="col s1 vc-center cyan-text mp-50 text-lighten-1" style="font-size: 25px;min-width: 90px"><span>vin码:</span></div>
+                    <div class="col s1 vc-center cyan-text mp-50 text-lighten-1" style="font-size: 25px;min-width: 90px"><span>vin:</span></div>
                     <div class="col s9 vc-center mp-30 valign-wrapper">
                         <div class="input-field col s12">
-                            <input type="text" id="autocomplete-input" name="vin" placeholder="模糊查询至少需要6位vin码" ng-change="shortSearch()" ng-model="demandVin" style="margin: 0 0 20px 0" autocomplete="off" class="autocomplete" required minlength="6">
+                            <input type="text" id="autocomplete-input" name="vin" placeholder="模糊查询至少需要6位vin" ng-change="shortSearch()" ng-model="demandVin" style="margin: 0 0 20px 0" autocomplete="off" class="autocomplete" required minlength="6">
                         </div>
                     </div>
                     <div  class="col s1 mp-30 valign-wrapper">
@@ -46,7 +46,7 @@
                     <div class="row"  >
                         <div class="input-field col s4">
                             <input  id="vin" name="vin" autocomplete="off" ng-model="demandVin" type="text"  disabled required >
-                            <label for="vin"><span style="color: red;margin-right: 5px">*</span>VIN码</label>
+                            <label for="vin"><span style="color: red;margin-right: 5px">*</span>VIN</label>
                         </div>
                         <div class="input-field col s4">
                             <select material-select watch id="makeNameId" name="makeNameId" ng-change="getMakeId(makeNameId)" ng-model="makeNameId" >
@@ -150,7 +150,7 @@
                     <div class="row">
                         <div class="input-field col s4">
                             <input  id="vin1" name="vin" autocomplete="off" ng-model="baseList.vin" type="text"  disabled required >
-                            <label for="vin1"><span style="color: red;margin-right: 5px">*</span>VIN码</label>
+                            <label for="vin1"><span style="color: red;margin-right: 5px">*</span>VIN</label>
                         </div>
                         <div class="input-field col s4">
                             <select material-select watch id="makecarName1"   ng-model="baseList.make_id" ng-change="getMakeId(baseList.make_id)">
@@ -672,10 +672,10 @@
                     </select>
                 </div>
 
-                <!--vin码-->
+                <!--vin-->
                 <div class="input-field col" style="width: 20%">
                     <input name="search_vin" id="search_vin" type="text" ng-model="vinItem" minlength="6">
-                    <label for="search_vin">vin码(至少6位)</label>
+                    <label for="search_vin">vin(至少6位)</label>
                 </div>
 
                 <!-- 是否金融车 -->
@@ -802,7 +802,7 @@
             <!--第一行-->
             <thead class="blue-grey lighten-5">
                 <tr class="grey-text text-darken-2">
-                    <th data-field="">VIN码</th>
+                    <th data-field="">VIN</th>
                     <th data-field="">品牌</th>
                     <th data-field="">型号</th>
                     <th data-field="">委托方</th>
@@ -820,7 +820,7 @@
             <!--其余行（循环）-->
             <tbody>
                 <tr ng-repeat="el in storageCar" class="grey-text text-darken-1">
-                    <!-- VIN码 -->
+                    <!-- VIN -->
                     <td ng-bind="el.vin"></td>
                     <!-- 品牌 -->
                     <td ng-bind="el.make_name"></td>

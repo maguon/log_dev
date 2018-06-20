@@ -14,10 +14,10 @@
                 <label for="orderIdText">海运编号</label>
             </div>
 
-            <!-- VIN码 -->
+            <!-- VIN -->
             <div class="input-field col" style="width: 20%;">
                 <input type="text" id="vinText" ng-model="condVin" minlength="6">
-                <label for="vinText">VIN码(至少6位)</label>
+                <label for="vinText">VIN(至少6位)</label>
             </div>
 
             <!-- 委托方 -->
@@ -173,7 +173,7 @@
                 <th data-field="">船名</th>
                 <th data-field="">货柜</th>
                 <th data-field="">装载数</th>
-                <th data-field="">VIN码</th>
+                <th data-field="">VIN</th>
                 <th data-field="">预计开船日期</th>
                 <th data-field="">实际开船日期</th>
                 <th data-field="">分单</th>
@@ -197,7 +197,7 @@
                 <td ng-bind="el.container"></td>
                 <!--装载数-->
                 <td ng-bind="el.ship_trans_count"></td>
-                <!--vin码-->
+                <!--vin-->
                 <td ng-bind="el.vin"></td>
                 <!--预计开船日期-->
                 <td ng-bind="el.start_ship_date|date:'yyyy-MM-dd'"></td>
@@ -351,7 +351,7 @@
 
                 <!-- body -->
                 <div class="col s12 lighten-1 white grey-text vc-center">
-                    <div class="input-field col s3 left-align fz15">VIN码:{{customCarInfo.vin}}
+                    <div class="input-field col s3 left-align fz15">VIN:{{customCarInfo.vin}}
                     </div>
                     <div class="input-field col s3 left-align">
                         <select material-select watch ng-model="customCarInfo.maker" ng-change="changeMakerId(customCarInfo.maker.id)">
@@ -423,7 +423,7 @@
                     </div>
 
                     <div class="col s12 lighten-1 white grey-text vc-center fz12"  style="height:64px;border:1px solid #bdbdbd;border-top:0px solid #bdbdbd;">
-                        <div class="col s4 left-align">VIN码:{{newCar.vin}}
+                        <div class="col s4 left-align">VIN:{{newCar.vin}}
                         </div>
                         <div class="col s4 left-align">制造商:{{newCar.maker.make_name}}
                         </div>

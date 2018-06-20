@@ -196,7 +196,7 @@
                                 <thead>
                                 <tr class="grey-text text-darken-2">
                                     <th data-field="">订单编号</th>
-                                    <th data-field="">VIN码</th>
+                                    <th data-field="">VIN</th>
                                     <th data-field="">车型</th>
                                     <th data-field="">入库时间</th>
                                     <th data-field="">出库时间</th>
@@ -257,7 +257,7 @@
                                 <thead>
                                 <tr class="grey-text text-darken-2">
                                     <th data-field="">订单编号</th>
-                                    <th data-field="">VIN码</th>
+                                    <th data-field="">VIN</th>
                                     <th data-field="">车型</th>
                                     <th data-field="">入库时间</th>
                                     <th data-field="">出库时间</th>
@@ -311,7 +311,7 @@
                             <thead>
                             <tr class="grey-text text-darken-2">
                                 <th data-field="">订单编号</th>
-                                <th data-field="">VIN码</th>
+                                <th data-field="">VIN</th>
                                 <th data-field="">车型</th>
                                 <th data-field="">入库时间</th>
                                 <th data-field="">出库时间</th>
@@ -371,7 +371,7 @@
                                 <thead>
                                 <tr class="grey-text text-darken-2">
                                     <th data-field="">订单编号</th>
-                                    <th data-field="">VIN码</th>
+                                    <th data-field="">VIN</th>
                                     <th data-field="">车型</th>
                                     <th data-field="">始发港口</th>
                                     <th data-field="">目的港口</th>
@@ -385,7 +385,7 @@
                                 <tr ng-repeat="el in shipTransOrderList" class="grey-text text-darken-1" style="height:30px">
                                     <!-- 订单编号 -->
                                     <td ng-bind="el.id"></td>
-                                    <!-- VIN码 -->
+                                    <!-- VIN -->
                                     <td ng-bind="el.vin"></td>
                                     <!-- 车型 -->
                                     <td>{{el.make_name==null ? '未知' : el.make_name}}/{{el.model_name==null ? '未知' : el.model_name}}</td>
@@ -441,7 +441,7 @@
                                 <thead>
                                 <tr class="grey-text text-darken-2">
                                     <th data-field="">订单编号</th>
-                                    <th data-field="">VIN码</th>
+                                    <th data-field="">VIN</th>
                                     <th data-field="">车型</th>
                                     <th data-field="">始发港口</th>
                                     <th data-field="">目的港口</th>
@@ -455,7 +455,7 @@
                                 <tr ng-repeat="el in shipTransOrderRelList" class="grey-text text-darken-1" style="height:30px">
                                     <!-- 订单编号 -->
                                     <td ng-bind="el.ship_trans_order_id"></td>
-                                    <!-- VIN码 -->
+                                    <!-- VIN -->
                                     <td ng-bind="el.vin"></td>
                                     <!-- 车型 -->
                                     <td>{{el.make_name==null ? '未知' : el.make_name}}/{{el.model_name==null ? '未知' : el.model_name}}</td>
@@ -503,7 +503,7 @@
                             <thead>
                             <tr class="grey-text text-darken-2">
                                 <th data-field="">订单编号</th>
-                                <th data-field="">VIN码</th>
+                                <th data-field="">VIN</th>
                                 <th data-field="">车型</th>
                                 <th data-field="">始发港口</th>
                                 <th data-field="">目的港口</th>
@@ -516,7 +516,7 @@
                             <tr ng-repeat="el in shipTransOrderRelList" class="grey-text text-darken-1" style="height:30px">
                                 <!-- 订单编号 -->
                                 <td ng-bind="el.ship_trans_order_id"></td>
-                                <!-- VIN码 -->
+                                <!-- VIN -->
                                 <td ng-bind="el.vin"></td>
                                 <!-- 车型 -->
                                 <td>{{el.make_name==null ? '未知' : el.make_name}}/{{el.model_name==null ? '未知' : el.model_name}}</td>

@@ -2,21 +2,21 @@
 <div id="setting_amend_vin" >
     <div class="grey-text text-darken-2" >
 
-        <!--标题：vin码查询-->
+        <!--标题：vin查询-->
         <div class=" vc-center ">
-            <h4 class="center-align cyan-text text-lighten-1">vin码查询</h4>
+            <h4 class="center-align cyan-text text-lighten-1">vin查询</h4>
         </div>
 
         <!--分割线！！！-->
         <div class="divider" style="background: #407BC7;height: 2px;"></div>
 
-        <!--输入vin码并查询-->
+        <!--输入vin并查询-->
         <div class="row " style="width: 70%;margin: 0 auto">
             <div class="row " style="width: 900px;height:50px;margin: 0 auto">
-                <div class="col s1 vc-center cyan-text mp-50 text-lighten-1" style="font-size: 25px;min-width: 90px"><span>vin码:</span></div>
+                <div class="col s1 vc-center cyan-text mp-50 text-lighten-1" style="font-size: 25px;min-width: 90px"><span>vin:</span></div>
                 <div class="col s9 vc-center mp-30 valign-wrapper">
                     <div class="input-field col s12">
-                        <input type="text" id="autocomplete-input" name="vin" placeholder="模糊查询至少需要6位vin码" ng-change="shortSearch()" ng-model="demandVin" style="margin: 0 0 20px 0" autocomplete="off" class="autocomplete" required minlength="6">
+                        <input type="text" id="autocomplete-input" name="vin" placeholder="模糊查询至少需要6位vin" ng-change="shortSearch()" ng-model="demandVin" style="margin: 0 0 20px 0" autocomplete="off" class="autocomplete" required minlength="6">
                     </div>
                 </div>
                 <div  class="col s1 mp-30 valign-wrapper">
@@ -28,14 +28,14 @@
 
 
             <div class="row  mp-50" >
-                <p style="display: none;" class="no_car_detail cyan-text text-lighten-1 center-align mp-50 col s12 ">无该VIN码车辆信息</p>
+                <p style="display: none;" class="no_car_detail cyan-text text-lighten-1 center-align mp-50 col s12 ">无该VIN车辆信息</p>
                 <div style="width: 80%;height: 30ex;margin: 0 auto">
                     <div style="display: none" class="car_detail mp-50 col s12">
                         <div class="row  blue-grey lighten-5" style="width:90%;border:1px solid #bdbdbd;margin-right: 77px">
                             <!-- header -->
                             <div class="col s12  cyan-text vc-center left-align" style="height:85px;border-bottom :1px solid #bdbdbd">
                                 <div class="col s9">
-                                    <h5 class="col s3 cyan-text text-lighten-1">Vin码:</h5>
+                                    <h5 class="col s3 cyan-text text-lighten-1">Vin:</h5>
                                     <span class="col s9 grey-text" ng-show="flag==true" style="font-size: 30px">{{vin}}</span>
                                     <input class="col s9 grey-text" ng-show="flag==false"  style="font-size: 30px" type="text" id="amend_vin" ng-model="vin" name="search_vin">
                                 </div>

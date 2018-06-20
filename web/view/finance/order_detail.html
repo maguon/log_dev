@@ -40,7 +40,7 @@
             委托方：{{orderInfo.entrustName}}
         </div>
         <div class="col s3">
-            VIN码：{{orderInfo.vin}}
+            VIN：{{orderInfo.vin}}
         </div>
         <div class="col s3">
             车型：{{orderInfo.makeName}}/{{orderInfo.modelName}}
@@ -199,7 +199,7 @@
                     <thead>
                     <tr class="grey-text text-darken-2">
                         <th>订单编号</th>
-                        <th>VIN码</th>
+                        <th>VIN</th>
                         <th>车型</th>
                         <th>入库时间</th>
                         <th>出库时间</th>
@@ -212,7 +212,7 @@
                     <tr ng-repeat="el in relOrderList" class="grey-text text-darken-1">
                         <!-- 订单编号 -->
                         <td>{{el.id}}</td>
-                        <!-- VIN码 -->
+                        <!-- VIN -->
                         <td ng-bind="el.vin"></td>
                         <!-- 车型 -->
                         <td>{{el.make_name==null ? '未知' : el.make_name}}/{{el.model_name==null ? '未知' : el.model_name}}</td>
@@ -334,7 +334,7 @@
                                 <label for="orderChk"></label>
                             </th>
                             <th>订单编号</th>
-                            <th>VIN码</th>
+                            <th>VIN</th>
                             <th>车型</th>
                             <th>入库时间</th>
                             <th>出库时间</th>
@@ -352,7 +352,7 @@
                             </td>
                             <!-- 订单编号 -->
                             <td>{{el.id}}</td>
-                            <!-- VIN码 -->
+                            <!-- VIN -->
                             <td ng-bind="el.vin"></td>
                             <!-- 车型 -->
                             <td>{{el.make_name==null ? '未知' : el.make_name}}/{{el.model_name==null ? '未知' : el.model_name}}</td>

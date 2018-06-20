@@ -13,10 +13,10 @@
                     <label for="conditionOrderNoText">订单编号</label>
                 </div>
 
-                <!-- 查询条件：VIN码 -->
+                <!-- 查询条件：VIN -->
                 <div class="input-field col" style="width: 20%;">
                     <input type="text" id="conditionVinText" ng-model="conditionVin">
-                    <label for="conditionVinText">VIN码</label>
+                    <label for="conditionVinText">VIN</label>
                 </div>
 
                 <!-- 查询条件：车辆品牌 -->
@@ -109,7 +109,7 @@
             <thead class="blue-grey lighten-5">
             <tr class="grey-text text-darken-2">
                 <th>订单编号</th>
-                <th>VIN码</th>
+                <th>VIN</th>
                 <th>车型</th>
                 <th>委托方</th>
                 <th>入库时间</th>
@@ -126,7 +126,7 @@
             <tr ng-repeat="el in orderList" class="grey-text text-darken-1">
                 <!-- 订单编号 -->
                 <td>{{el.id}}</td>
-                <!-- VIN码 -->
+                <!-- VIN -->
                 <td ng-bind="el.vin"></td>
                 <!-- 车型 -->
                 <td>{{el.make_name==null ? '未知' : el.make_name}}/{{el.model_name==null ? '未知' : el.model_name}}</td>
