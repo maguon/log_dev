@@ -561,7 +561,7 @@ app.controller("finance_repay_detail_controller", ["$scope", "$stateParams", "_b
      */
     $scope.calculateInterest = function () {
         // 利率/天
-        var rate = 0;
+        var rate = 0.0222;
         if ($scope.repay.rate !== "") {
             rate = parseFloat($scope.repay.rate);
         }
