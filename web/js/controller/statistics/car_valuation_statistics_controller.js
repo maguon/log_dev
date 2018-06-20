@@ -7,7 +7,7 @@ app.controller("car_valuation_statistics_controller", ["$scope", "_host", "_basi
     $scope.carRelStatus = _config.carRelStatus;
 
     /**
-     * 取得 上部：仓储车辆-委托方统计用数据，并显示饼图。
+     * 取得 上部：委托方在库统计用数据，并显示饼图。
      */
     function getEntrustInfoList() {
         // relStatus=1：在库
@@ -39,7 +39,7 @@ app.controller("car_valuation_statistics_controller", ["$scope", "_host", "_basi
     }
 
     /**
-     * 仓储车辆-委托方统计 饼图的 Highcharts 配置设定。
+     * 委托方在库统计 饼图的 Highcharts 配置设定。
      */
     function showEntrustInfoPie() {
         $('#entrustInfoPieDiv').highcharts({
@@ -83,17 +83,17 @@ app.controller("car_valuation_statistics_controller", ["$scope", "_host", "_basi
             //     // 图例在图表中的对齐方式，有 “left”, "center", "right" 可选
             //     align: 'right',
             //     // 图例是否浮动，设置浮动后，图例将不占位置
-            //     floating: true,
+            //     // floating: true,
             //     // 图例内容布局方式，有水平布局及垂直布局可选，对应的配置值是： “horizontal”， “vertical”
-            //     layout: 'horizontal',
+            //     layout: 'vertical',
             //     //
             //     x: 0,
             //     //
             //     y: 0,
             //     //
             //     backgroundColor: '#FFFFFF',
-            //     // verticalAlign: 'middle',
-            //     verticalAlign: 'bottom',
+            //     verticalAlign: 'middle',
+            //     // verticalAlign: 'bottom',
             //
             //     labelFormatter: function() {
             //         console.log(this)
@@ -150,31 +150,30 @@ app.controller("car_valuation_statistics_controller", ["$scope", "_host", "_basi
     }
 
     /**
-     * 取得 下部：仓储车辆-各属性车辆统计/车辆估值统计 用数据，并显示饼图。
+     * 取得 下部：车辆统计/估值统计 用数据，并显示饼图。
      *
      * @param eventId 区分：下左/下右/默认
      * @param entrustId 委托方ID
      */
     $scope.getCarCategoryStat = function (eventId ,entrustId) {
 
-        // 组装画面(下左：仓储车辆-各属性车辆统计)需要的数据
+        // 组装画面(下左：车辆统计)需要的数据
         $scope.carCategoryCountList = [];
 
-        // 组装画面(下右：仓储车辆-车辆估值统计)需要的数据
+        // 组装画面(下右：估值统计)需要的数据
         $scope.carCategoryValuationList = [];
 
         // 金融车 信息取得
-        console.log(_host.api_url + "/carPurchaseCount?purchaseType=1&entrustId=" + entrustId);
-
         _basic.get(_host.api_url + "/carPurchaseCount?purchaseType=1&entrustId=" + entrustId).then(function (data) {
             if (data.success) {
                 if (data.result.length > 0) {
+                    // 下左：车辆统计
+                    $scope.carCategoryCountList.push(["金融车(在库): " + data.result[0].parking_car_count + " 辆", data.result[0].parking_car_count]);
+                    $scope.carCategoryCountList.push(["金融车(非在库): " + (data.result[0].purchase_car_count - data.result[0].parking_car_count) + " 辆", data.result[0].purchase_car_count - data.result[0].parking_car_count]);
 
-                    // 下左：仓储车辆-各属性车辆统计
-                    $scope.carCategoryCountList.push(["金融车: " + data.result[0].purchase_car_count + " 辆", data.result[0].purchase_car_count]);
-
-                    // 下右：仓储车辆-车辆估值统计
-                    $scope.carCategoryValuationList.push(["金融车库值: " + data.result[0].valuation + " 元", data.result[0].valuation]);
+                    // 下右：估值统计
+                    $scope.carCategoryValuationList.push(["金融车(在库)库值: " + data.result[0].parking_car_valuation + " 元", data.result[0].parking_car_valuation]);
+                    $scope.carCategoryValuationList.push(["金融车(非在库)库值: " + (data.result[0].valuation - data.result[0].parking_car_valuation) + " 元", data.result[0].valuation - data.result[0].parking_car_valuation]);
 
                     // 抵押车/非抵押车 信息取得
                     _basic.get(_host.api_url + "/carMortgageStatusCount?purchaseType=0&relStatus=1&active=1&entrustId=" + entrustId).then(function (data) {
@@ -201,23 +200,23 @@ app.controller("car_valuation_statistics_controller", ["$scope", "_host", "_basi
                                 }
                             }
 
-                            // 下左：仓储车辆-各属性车辆统计
+                            // 下左：车辆统计
                             $scope.carCategoryCountList.push(["抵押车: " + mortgageCarCount + " 辆", mortgageCarCount]);
                             $scope.carCategoryCountList.push(["非抵押车: " + unMortgageCarCount + " 辆", unMortgageCarCount]);
 
-                            // 下右：仓储车辆-车辆估值统计
+                            // 下右：估值统计
                             $scope.carCategoryValuationList.push(["抵押车库值: " + mortgageCarValuation + " 元", mortgageCarValuation]);
                             $scope.carCategoryValuationList.push(["非抵押车库值: " + unMortgageCarValuation + " 元", unMortgageCarValuation]);
 
                             // 根据触发条件，选择刷新饼图
                             switch (eventId) {
-                                // 各属性车辆统计 画面
+                                // 车辆统计 画面
                                 case 'count':
-                                    // 各属性车辆统计 画面
+                                    // 车辆统计 画面
                                     showCarCategoryCountPie();
                                     break;
 
-                                // 车辆估值统计 画面
+                                // 估值统计 画面
                                 case 'valuation':
                                     showCarCategoryValuationPie();
                                     break;
@@ -239,7 +238,7 @@ app.controller("car_valuation_statistics_controller", ["$scope", "_host", "_basi
     };
 
     /**
-     * 下左：仓储车辆-各属性车辆统计 饼图的 Highcharts 配置设定。
+     * 下左：车辆统计 饼图的 Highcharts 配置设定。
      */
     function showCarCategoryCountPie() {
         $('#carCategoryCountPieDiv').highcharts({
@@ -300,7 +299,7 @@ app.controller("car_valuation_statistics_controller", ["$scope", "_host", "_basi
     }
 
     /**
-     * 下右：仓储车辆-车辆估值统计 饼图的 Highcharts 配置设定。
+     * 下右：估值统计 饼图的 Highcharts 配置设定。
      */
     function showCarCategoryValuationPie() {
         $('#carCategoryValuationPieDiv').highcharts({
@@ -375,13 +374,13 @@ app.controller("car_valuation_statistics_controller", ["$scope", "_host", "_basi
      * 画面初期显示时，用来获取画面必要信息的初期方法。
      */
     function initData() {
-        // 上部：仓储车辆-委托方统计 数据取得
+        // 上部：委托方在库统计 数据取得
         getEntrustInfoList();
 
         // 下部：获取委托方列表
         getAllEntrustInfo();
 
-        // 下部：仓储车辆-各属性车辆统计
+        // 下部：车辆统计
         $scope.getCarCategoryStat("","");
     }
 

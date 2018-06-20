@@ -1,26 +1,26 @@
 <!-- 主菜单：数据统计 -> 车值统计 画面 -->
 <div style="width: 95%;margin: 0 auto;">
 
-    <!-- 上部：仓储车辆-委托方统计 -->
+    <!-- 上部：委托方在库统计 -->
     <div class="row z-depth-2 white" style="height: 400px;">
         <div class="col s12 cyan lighten-1 lighten-4 bold white-text text-darken-1 no-mp" style="height: 50px;">
-            <p>仓储车辆-委托方统计</p>
+            <p>委托方在库统计</p>
         </div>
 
         <!-- 图表：饼图 -->
         <div id="entrustInfoPieDiv" style="min-width:100px;height:350px;"></div>
     </div>
 
-    <!-- 下部：仓储车辆-各属性车辆统计/车辆估值统计 -->
+    <!-- 下部：车辆统计/估值统计 -->
     <div class="row" style="margin-top: 30px">
 
-        <!-- 下左：仓储车辆-各属性车辆统计 -->
+        <!-- 下左：车辆统计 -->
         <div class="col s6" style="padding-left: 0">
             <div class="z-depth-2 white">
-                <!-- 仓储车辆-各属性车辆统计 title -->
+                <!-- 车辆统计 title -->
                 <div class="cyan lighten-1 lighten-4 bold white-text text-darken-1 no-mp" style="height: 50px;">
                     <div class="col s8 left">
-                        <p>仓储车辆-各属性车辆统计</p>
+                        <p>车辆统计</p>
                     </div>
                     <div class="col s4">
                         <select class="col s12 right" material-select watch ng-change="getCarCategoryStat('count',entrust4Count)" ng-model="entrust4Count">
@@ -34,14 +34,14 @@
             </div>
         </div>
 
-        <!-- 下右：仓储车辆-车辆估值统计 -->
+        <!-- 下右：估值统计 -->
         <div class="col s6" style="padding-right: 0">
             <div class="z-depth-2 white">
 
-                <!-- 仓储车辆-车辆估值统计 title -->
+                <!-- 估值统计 title -->
                 <div class="cyan lighten-1 lighten-4 bold white-text text-darken-1 no-mp" style="height: 50px;">
                     <div class="col s8 left">
-                        <p>仓储车辆-车辆估值统计</p>
+                        <p>估值统计</p>
                     </div>
                     <div class="col s4">
                         <select class="col s12 right" material-select watch ng-change="getCarCategoryStat('valuation',entrust4Valuation)" ng-model="entrust4Valuation">
