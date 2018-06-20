@@ -696,7 +696,7 @@ app.controller("finance_repay_controller", ["$scope", "$rootScope", "_host", "_b
                 closeOnConfirm: true
             },
             function () {
-                var obj = {thisPaymentMoney : paymentInfo.this_payment_money};
+                var obj = {thisPaymentMoney : paymentInfo.this_payment_money === "" ? 0 : paymentInfo.this_payment_money};
                 // 修改本次支付金额
                 var url = _host.api_url + "/user/" + userId + "/repayment/" + paymentInfo.repayment_id + "/payment/" + paymentInfo.payment_id + "/paymentRepMoney" ;
 

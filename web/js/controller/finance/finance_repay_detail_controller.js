@@ -542,7 +542,7 @@ app.controller("finance_repay_detail_controller", ["$scope", "$stateParams", "_b
                 closeOnConfirm: true
             },
             function () {
-                var obj = {thisPaymentMoney : paymentInfo.this_payment_money};
+                var obj = {thisPaymentMoney : paymentInfo.this_payment_money === "" ? 0 : paymentInfo.this_payment_money};
                 // 修改本次支付金额
                 var url = _host.api_url + "/user/" + userId + "/repayment/" + repayId + "/payment/" + paymentInfo.payment_id + "/paymentRepMoney" ;
                 _basic.put(url, obj).then(function (data) {
