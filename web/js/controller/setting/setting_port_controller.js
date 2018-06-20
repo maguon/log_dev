@@ -56,6 +56,25 @@ app.controller("setting_port_controller", ["$scope", "_basic", "_config", "_host
     };
 
     /**
+     * 打开画面【增加港口】模态框。
+     */
+    $scope.openVideo = function (){
+        // // 打开 模态窗口
+        // $('.modal').modal();
+        // $('#my-video').modal('open');
+        //
+        // // 取得播放组件
+        // var player = videojs(document.querySelector('.video-js'));
+        // // player.size(468,707);
+        // // player.fluid(true);
+        // var fileId = "5b206c1953846c47541e22ca";
+        // console.log();
+        // // var videoUrl = _host.file_url + "/user/" + userId + "/file/" + fileId + "/video.mp4";
+        // var videoUrl = "http://stg.myxxjs.com:9002/api/user/1/file/5b206c1953846c47541e22ca/video.mp4";
+        // player.src(videoUrl);
+    };
+
+    /**
      * 打开画面【港口信息】模态框。
      * @param selectedItem 选中数据
      */
@@ -145,6 +164,81 @@ app.controller("setting_port_controller", ["$scope", "_basic", "_config", "_host
         getPortList();
         // 检索港口
         $scope.searchPort();
+
+        // 取得播放组件
+        // var myPlayer = videojs('some-player-id');
+        // var player = videojs(document.querySelector('.video-js'));
+        // // 取得播放按钮
+        // var bpb = player.getChild('bigPlayButton');
+
+        // 取得视频源
+        // http://stg.myxxjs.com:9002/api/user/1/file/5b206c1953846c47541e22ca/video.mp4
+        // http://stg.myxxjs.com:9002/api/user/1/file/5b230d5c53846c47541e2492/video.mp4
+
+        var fileId = "5b206c1953846c47541e22ca";
+        //     // 是否自适应布局
+        //     player.fluid(true);
+        //
+        //     // /**
+        //     //  * 是否使用浏览器原生的控件
+        //     //  * 参数类型：Boolean
+        //     //  */
+        //     // nativeControlsForTouch: false,
+        //
+        //     // TODO case
+        //     // var SourceObject = {src: data, type: 'video/mp4'};
+        //     var SourceObject = {src: 'https://vjs.zencdn.net/v/oceans.mp4', type: 'video/mp4'};
+        //     player.src(_host.file_url + "/user/" + userId + "/file/" + fileId + "/video.mp4");
+        //
+        //
+        //
+        //     // success case
+        //     // player.src("https://vjs.zencdn.net/v/oceans.mp4");
+        //
+        //     // // get, should be false
+        //     // console.log(player.defaultMuted());
+        //     // // set to true
+        //     // // player.defaultMuted(true);
+        //     // // get should be true
+        //     // console.log(player.defaultMuted());
+        //
+        //
+        //
+        //
+        //     // if (bpb) {
+        //     //
+        //     //     // 隐藏播放按钮
+        //     //     bpb.hide();
+        //     //
+        //     //     player.ready(function() {
+        //     //         // 自动播放
+        //     //         var promise = player.play();
+        //     //
+        //     //         // If no promise is returned, show the BPB immediately.
+        //     //         if (promise === undefined) {
+        //     //             bpb.show();
+        //     //
+        //     //             // If a promise is returned, wait until it either succeeds or
+        //     //             // fails to show the BPB.
+        //     //         } else {
+        //     //             promise.then(function() {
+        //     //                 bpb.show();
+        //     //             }, function() {
+        //     //                 bpb.show();
+        //     //             });
+        //     //         }
+        //     //     });
+        //     // }
+        //
+        //
+        //
+        //
+
+
+
+
+
+
     }
 
     /**
