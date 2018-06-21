@@ -544,8 +544,8 @@
 
                             <!-- 利率/天 -->
                             <div class="input-field col s4">
-                                <input type="text" id="rateText" maxlength="10" valid-rate ng-model="newPayment.rate" class="red-text right-align" ng-change="calculateInterest()">
-                                <i class="dataIcon" style="right: -1px"> %</i>
+                                <input type="text" id="rateText" maxlength="10" valid-rate ng-model="newPayment.rate" class="red-text right-align" ng-change="calculatePaymentMoney()">
+                                <i class="dataIcon" style="right: -1px">%</i>
                                 <label for="rateText" ng-class="{'label-active':newPayment.rate !== ''}">利率/天</label>
                             </div>
 
@@ -559,7 +559,7 @@
                         <div class="col s12">
                             <!-- 产生利息时长(天) -->
                             <div class="input-field col s4">
-                                <input type="text" id="interestDayText" maxlength="10" valid-num ng-model="newPayment.interestDay" class="right-align" ng-change="calculateInterest()">
+                                <input type="text" id="interestDayText" maxlength="10" valid-num ng-model="newPayment.interestDay" class="right-align" ng-change="calculatePaymentMoney()">
                                 <label for="interestDayText" ng-class="{'label-active':newPayment.interestDay !== ''}">
                                     <span class="red-text">*</span>产生利息时长(天)
                                 </label>

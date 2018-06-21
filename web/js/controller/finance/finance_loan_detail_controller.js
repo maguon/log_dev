@@ -652,7 +652,7 @@ app.controller("finance_loan_detail_controller", ["$scope", "$stateParams", "_ba
             // 利率
             $scope.newPayment.rate = 0.0333;
             // 产生利息金额(美元)
-            $scope.newPayment.principal = $scope.paymentInfo.leftPaymentMoney;
+            $scope.newPayment.principal = 0;
             // 产生利息时长(天)
             $scope.newPayment.interestDay = $scope.paymentInfo.interestDay;
             // 利息(美元)
@@ -902,10 +902,14 @@ app.controller("finance_loan_detail_controller", ["$scope", "$stateParams", "_ba
     };
 
     /**
-     * 利息计算用方法。
+     * 本次应还总金额/剩余未还金额 计算用方法。
      */
-    $scope.calculateInterest = function () {
-        var rate = 0;
+    $scope.calculatePaymentMoney = function () {
+        // 产生利息金额(美元) = 本次还贷金额(美元)
+        $scope.newPayment.principal = $scope.newPayment.paymentMoney;
+
+        // 利息
+        var rate = 0.0333;
         if ($scope.newPayment.rate !== "") {
             rate = parseFloat($scope.newPayment.rate);
         }
@@ -913,14 +917,6 @@ app.controller("finance_loan_detail_controller", ["$scope", "$stateParams", "_ba
         $scope.newPayment.interest = rate * $scope.newPayment.principal * $scope.newPayment.interestDay / 100;
         $scope.newPayment.interest = $scope.newPayment.interest.toFixed(2);
 
-        // 计算 本次应还总金额/剩余未还金额
-        $scope.calculatePaymentMoney();
-    };
-
-    /**
-     * 本次应还总金额/剩余未还金额 计算用方法。
-     */
-    $scope.calculatePaymentMoney = function () {
         // 手续费
         var poundage = 0;
         if ($scope.newPayment.poundage !== "") {
