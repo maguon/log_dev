@@ -71,10 +71,10 @@
                     <!-- body -->
                     <div class="col s12 lighten-1 white grey-text vc-center fz14" style="height:60px;border-top:1px solid #bdbdbd;">
                         <div class="col s4 left-align">
-                            贷出总金额(美元)：<span class="red-text">{{loanInfo.loanMoney | number:2}}</span>
+                            贷出总金额(美元)：<span class="red-text">{{loanInfo.loanMoney | number}}</span>
                         </div>
                         <div class="col s4 left-align">
-                            未还本金(美元)：<span class="red-text">{{loanInfo.notRepaymentMoney | number:2}}</span>
+                            未还本金(美元)：<span class="red-text">{{loanInfo.notRepaymentMoney | number}}</span>
                         </div>
                         <div class="col s4 right-align">
                             上次还款时间：{{loanInfo.lastRepaymentDate |date:'yyyy-MM-dd'}}
@@ -276,10 +276,10 @@
                         </div>
 
                         <div class="col left-align" style="width:24%;">
-                            信用证金额(美元)：<span class="red-text">{{el.credit_money | number:2}}</span>
+                            信用证金额(美元)：<span class="red-text">{{el.credit_money | number}}</span>
                         </div>
                         <div class="col left-align" style="width:28%;">
-                            实际到款金额(美元)：<span class="red-text">{{el.actual_money | number:2}}</span>
+                            实际到款金额(美元)：<span class="red-text">{{el.actual_money | number}}</span>
                         </div>
 
                         <div class="col left-align" style="width:16%;">
@@ -389,7 +389,7 @@
                         <span style="margin-left: 5px;">{{el.number}}</span>
                     </div>
                     <div class="col s4 left-align">
-                        金额(美元):<span class="red-text" style="margin-left: 10px;">{{el.payment_money | number:2}}</span>
+                        金额(美元):<span class="red-text" style="margin-left: 10px;">{{el.payment_money | number}}</span>
                     </div>
 
                     <!-- 完结时，全部表示项 (只读) -->

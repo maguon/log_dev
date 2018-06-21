@@ -14,6 +14,8 @@ app.controller("finance_repay_controller", ["$scope", "$rootScope", "_host", "_b
     $scope.entrustTypeList = _config.entrustType;
     // 支付状态
     $scope.paymentStatus = _config.paymentStatus;
+    // 支付方式
+    $scope.paymentType = _config.paymentType;
 
     // 新增还款 基本画面数据
     $scope.repay = {};
