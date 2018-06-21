@@ -30,7 +30,7 @@ app.controller("finance_repay_controller", ["$scope", "$rootScope", "_host", "_b
         // 本次还贷金额
         paymentMoney: "",
         // 利率/天
-        rate: 0.0222,
+        rate: 0.0333,
         // 产生利息时长(天)
         interestDay: 1,
         // 利息(美元)
@@ -282,7 +282,7 @@ app.controller("finance_repay_controller", ["$scope", "$rootScope", "_host", "_b
                     // 本次还贷金额(美元)
                     $scope.repay.paymentMoney = "";
                     // 利率/天
-                    $scope.repay.rate = 0.0222;
+                    $scope.repay.rate = 0.0333;
 
                     // 当前 日期
                     var now = moment(new Date()).format('YYYY-MM-DD');

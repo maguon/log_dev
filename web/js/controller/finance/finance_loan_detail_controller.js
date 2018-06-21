@@ -650,7 +650,7 @@ app.controller("finance_loan_detail_controller", ["$scope", "$stateParams", "_ba
             // 本次还贷金额(美元)
             $scope.newPayment.paymentMoney = "";
             // 利率
-            $scope.newPayment.rate = 0.0222;
+            $scope.newPayment.rate = 0.0333;
             // 产生利息金额(美元)
             $scope.newPayment.principal = $scope.paymentInfo.leftPaymentMoney;
             // 产生利息时长(天)
