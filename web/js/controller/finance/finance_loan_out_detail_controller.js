@@ -1,7 +1,7 @@
 /**
  * 主菜单：财务管理 -> 金融贷出(详细) 控制器
  */
-app.controller("finance_loan_detail_controller", ["$scope", "$stateParams", "_basic", "_host", "_config", "$state","_baseService", function ($scope, $stateParams, _basic, _host, _config, $state,_baseService) {
+app.controller("finance_loan_out_detail_controller", ["$scope", "$stateParams", "_basic", "_host", "_config", "$state","_baseService", function ($scope, $stateParams, _basic, _host, _config, $state,_baseService) {
     var userId = _basic.getSession(_basic.USER_ID);
     // 贷款编号
     var loanId = $stateParams.id;
@@ -69,7 +69,7 @@ app.controller("finance_loan_detail_controller", ["$scope", "$stateParams", "_ba
      * 返回前画面。
      */
     $scope.return = function () {
-        $state.go($stateParams.from, {from:"finance_loan_detail"}, {reload: true})
+        $state.go($stateParams.from, {from:"finance_loan_out_detail"}, {reload: true})
     };
 
     /**
@@ -413,7 +413,7 @@ app.controller("finance_loan_detail_controller", ["$scope", "$stateParams", "_ba
                         // 添加购买车辆信息。
                         $scope.addBuyingCarRel(data.result[0].id);
                     } else {
-                        swal("该VIN码车辆已存在，请输入正确的新车VIN码。", "", "error");
+                        swal("该VIN车辆已存在，请输入正确的新车VIN。", "", "error");
                     }
                 }
             } else {
@@ -650,9 +650,9 @@ app.controller("finance_loan_detail_controller", ["$scope", "$stateParams", "_ba
             // 本次还贷金额(美元)
             $scope.newPayment.paymentMoney = "";
             // 利率
-            $scope.newPayment.rate = 0;
+            $scope.newPayment.rate = 0.0333;
             // 产生利息金额(美元)
-            $scope.newPayment.principal = $scope.paymentInfo.leftPaymentMoney;
+            $scope.newPayment.principal = 0;
             // 产生利息时长(天)
             $scope.newPayment.interestDay = $scope.paymentInfo.interestDay;
             // 利息(美元)
@@ -902,10 +902,14 @@ app.controller("finance_loan_detail_controller", ["$scope", "$stateParams", "_ba
     };
 
     /**
-     * 利息计算用方法。
+     * 本次应还总金额/剩余未还金额 计算用方法。
      */
-    $scope.calculateInterest = function () {
-        var rate = 0;
+    $scope.calculatePaymentMoney = function () {
+        // 产生利息金额(美元) = 本次还贷金额(美元)
+        $scope.newPayment.principal = $scope.newPayment.paymentMoney;
+
+        // 利息
+        var rate = 0.0333;
         if ($scope.newPayment.rate !== "") {
             rate = parseFloat($scope.newPayment.rate);
         }
@@ -913,14 +917,6 @@ app.controller("finance_loan_detail_controller", ["$scope", "$stateParams", "_ba
         $scope.newPayment.interest = rate * $scope.newPayment.principal * $scope.newPayment.interestDay / 100;
         $scope.newPayment.interest = $scope.newPayment.interest.toFixed(2);
 
-        // 计算 本次应还总金额/剩余未还金额
-        $scope.calculatePaymentMoney();
-    };
-
-    /**
-     * 本次应还总金额/剩余未还金额 计算用方法。
-     */
-    $scope.calculatePaymentMoney = function () {
         // 手续费
         var poundage = 0;
         if ($scope.newPayment.poundage !== "") {
@@ -1238,7 +1234,7 @@ app.controller("finance_loan_detail_controller", ["$scope", "$stateParams", "_ba
                 closeOnConfirm: true
             },
             function () {
-                var obj = {thisPaymentMoney : paymentInfo.this_payment_money};
+                var obj = {thisPaymentMoney : paymentInfo.this_payment_money === "" ? 0 : paymentInfo.this_payment_money};
                 // 修改本次支付金额
                 var url = _host.api_url + "/user/" + userId + "/repayment/" + paymentInfo.repayment_id + "/payment/" + paymentInfo.payment_id + "/paymentRepMoney" ;
 

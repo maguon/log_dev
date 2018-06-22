@@ -8,18 +8,17 @@
                 <i class="mdi mdi-arrow-left-bold"></i>
             </a>
             <h4 class="center-align cyan-text text-lighten-1">信用证详情</h4>
-
         </div>
+
         <!-- 车辆信息画面 主体内容 -->
         <div class="row no-marBottom" ul-tabs>
             <!-- 功能选项卡 -->
             <div class="col s12 p0">
                 <ul class="tabWrap grey lighten-4 ">
-                    <li class="tab col s6 lookMsg vc-center" ng-click="showMsgInfo()">基本信息</li>
-                    <li class="tab col s6 lookLinkCar vc-center" ng-click="showLinkCar()">关联车辆</li>
+                    <li class="tab col s6 vc-center lookMsg" ng-click="showMsgInfo()">基本信息</li>
+                    <li class="tab col s6 vc-center lookLinkCar" ng-click="showLinkCar()">关联车辆</li>
                 </ul>
             </div>
-
 
             <!-- 基本信息 显示区域 -->
             <div id="lookMsg" class="col s12 tab_box " style="width: 80%; margin:0 10% ;">
@@ -246,23 +245,21 @@
                             完结时间：{{baseInfoList.credit_end_date|date:'yyyy-MM-dd HH:mm'}}
                         </div>
                     </div>
-
                 </div>
-
             </div>
 
 
             <!-- 关联车辆 显示区域 -->
-            <div id="lookLinkCar" class="col s12 tab_box" style="width: 95%; margin:0 2% ">
+            <div id="lookLinkCar" class="col s12 tab_box" style="width: 95%; margin:0 2%;">
 
                 <!--未完結-->
-                <div class="row col s12" ng-if="baseInfoList.credit_status==1" style="width: 60%;margin-left:20% ">
+                <div class="row col s12" ng-if="baseInfoList.credit_status==1">
                     <!--上部分：查询功能-->
                     <div class="row col" style="width: 100%;position: relative">
 
                         <div class="input-field col s12">
-                            <input type="text" id="autocomplete-input" placeholder="       模糊查询至少需要6位vin码" ng-change="shortSearch(creditVin)" ng-model="creditVin" style="margin: 0 0 20px 0" class="autocomplete">
-                            <label for="autocomplete-input">VIN码</label>
+                            <input type="text" id="autocomplete-input" placeholder="模糊查询至少需要6位vin" ng-change="shortSearch(creditVin)" ng-model="creditVin" style="margin: 0 0 20px 0" class="autocomplete">
+                            <label for="autocomplete-input" class="label-active">VIN</label>
                         </div>
                         <button class=" btn btn-floating btn-small waves-effect cyan lighten-1" ng-if="carId!==undefined" ng-click="addLinkCar()"  style="position: absolute;top: 15px;right: 10px;">
                             <i class="mdi white-text mdi-plus fz30"></i>
@@ -279,14 +276,19 @@
                             <!-- header -->
                             <div class="col s12 lighten-1 cyan-text vc-center left-align" style="height:50px;">
                                 <div class="col s4">
-                                    VIN码：{{linkCar.vin}}
+                                    VIN：{{linkCar.vin}}
                                 </div>
                                 <div class="col s5 ">
                                     <div class="col s4">
-                                        <div class="col s6" ng-if="linkCar.purchase_type!==0"> <i class="mdi mdi-slackware" style="color: #f0ad4e"></i></div>
-                                        <div class="col s6" ng-if="linkCar.purchase_type==0"> <i class="mdi mdi-slackware grey-text"></i></div>
-                                        <div class="col s6 right-align" ng-if="linkCar.mortgage_status!==2"><i class="mdi mdi-briefcase grey-text"></i></div>
-                                        <div class="col s6 right-align" ng-if="linkCar.mortgage_status==2"><i class="mdi mdi-briefcase cyan-text"></i></div>
+                                        <!--<div class="col s6" ng-if="linkCar.purchase_type!==0"> <i class="mdi mdi-slackware" style="color: #f0ad4e"></i></div>-->
+                                        <!--<div class="col s6" ng-if="linkCar.purchase_type==0"> <i class="mdi mdi-slackware grey-text"></i></div>-->
+                                        <!--<div class="col s6 right-align" ng-if="linkCar.mortgage_status!==2"><i class="mdi mdi-briefcase grey-text"></i></div>-->
+                                        <!--<div class="col s6 right-align" ng-if="linkCar.mortgage_status==2"><i class="mdi mdi-briefcase cyan-text"></i></div>-->
+                                        <!-- 金融车(0：不是金融车， 1 金融车) -->
+                                        <span ng-show="linkCar.purchase_type==1" class="mdi mdi-cash-usd fz18" style="color: #f0ad4e"></span>
+                                        <!-- 抵押车(1：未抵押，2：抵押) -->
+                                        <span ng-show="linkCar.mortgage_status==2" class="mdi mdi-lock fz18 cyan-text"></span>
+
                                     </div>
                                     <div class="col s8">
                                         <div class="col s10 grey-text right-align"> {{linkCar.make_name}} /{{linkCar.model_name}}</div>
@@ -388,7 +390,7 @@
                         <div class="row blue-grey lighten-5" style="width:60%;border:1px solid #bdbdbd">
                             <!-- header -->
                             <div class="col s12 lighten-1 cyan-text vc-center" style="height:55px;">
-                                <div class="input-field col s4"> VIN码：{{linkCar.vin}}</div>
+                                <div class="input-field col s4"> VIN：{{linkCar.vin}}</div>
                                 <div class="input-field col s6">
                                     <div class="col s1" ng-if="linkCar.purchase_type!==0"> <i class="mdi mdi-slackware" style="color: #f0ad4e"></i></div>
                                     <div class="col s1" ng-if="linkCar.purchase_type==0"> <i class="mdi mdi-slackware grey-text"></i></div>

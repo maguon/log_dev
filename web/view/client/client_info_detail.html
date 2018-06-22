@@ -7,10 +7,10 @@
     <!-- Body -->
     <div class="modal-content" style="max-height: 470px;">
         <div  class="handleInfoInput" style="width:100%;">
-            <!--VIN码 和 是否在库-->
+            <!--VIN 和 是否在库-->
             <div class="row col s12" style="margin-top: 5px;margin-right: 20px;color:#4e84cb;padding-bottom: 7px;">
                 <div class="col s6 valign-wrapper">
-                    <div class="fz20 col s12 input-field left-align">VIN码:{{clientList.vin}}</div>
+                    <div class="fz20 col s12 input-field left-align">VIN:{{clientList.vin}}</div>
                 </div>
                 <div class="col s6 valign-wrapper">
                     <div class="col s12 input-field right-align"  ng-if="clientList.rel_status==1">在库</div>
@@ -143,7 +143,7 @@
             <!-- body -->
             <div class="col s12 lighten-1 white grey-text vc-center fz13" style="height:50px;">
                 <div class="col s4">
-                    VIN码：{{orderInfo.vin}}
+                    VIN：{{orderInfo.vin}}
                 </div>
                 <div class="col s4">
                     车型：{{orderInfo.make_name}}/{{orderInfo.model_name}}
@@ -244,7 +244,7 @@
             <!-- body -->
             <div class="col s12 lighten-1 white grey-text vc-center fz14" style="height:40px;">
                 <div class="col s4">
-                    VIN码：{{paymentInfo.vin}}
+                    VIN：{{paymentInfo.vin}}
                 </div>
                 <div class="col s4">
                     制造商：{{paymentInfo.make_name}}
@@ -630,7 +630,7 @@
                                 <thead class="blue-grey lighten-5">
                                 <tr class="grey-text text-darken-2">
                                     <th data-field="">订单编号</th>
-                                    <th data-field="">VIN码</th>
+                                    <th data-field="">VIN</th>
                                     <th data-field="">车型</th>
                                     <th data-field="">入库时间</th>
                                     <th data-field="">出库时间</th>
@@ -642,7 +642,7 @@
                                 <tr ng-repeat="el in storageOrderDetailsArray" class="grey-text text-darken-1">
                                     <!-- 订单编号 -->
                                     <td>{{el.id}}</td>
-                                    <!-- VIN码 -->
+                                    <!-- VIN -->
                                     <td ng-bind="el.vin"></td>
                                     <!-- 车型 -->
                                     <td>{{el.make_name==null ? '未知' : el.make_name}}/{{el.model_name==null ? '未知' : el.model_name}}</td>
@@ -880,7 +880,7 @@
                         <!-- 查询条件：vin -->
                         <div class="input-field col s3">
                             <input name="search_vin" id="search_vin" type="text" ng-model="VIN" minlength="6">
-                            <label for="search_vin">VIN码(至少6位)</label>
+                            <label for="search_vin">VIN(至少6位)</label>
                         </div>
                         <!--所在仓库-->
                         <div class="input-field col s3">
@@ -933,7 +933,7 @@
                     <table class=" bordered striped centered">
                         <thead class="blue-grey lighten-5">
                         <tr class="grey-text text-darken-2">
-                            <th data-field="">vin码</th>
+                            <th data-field="">vin</th>
                             <th data-field="">制造商</th>
                             <th data-field="">型号</th>
                             <th data-field="">估值(美元)</th>
@@ -994,7 +994,7 @@
                     <table class=" bordered striped centered">
                         <thead class="blue-grey lighten-5">
                         <tr class="grey-text text-darken-2">
-                            <th data-field="">vin码</th>
+                            <th data-field="">vin</th>
                             <th data-field="">制造商</th>
                             <th data-field="">型号</th>
                             <th data-field="">估值(美元)</th>
@@ -1161,10 +1161,10 @@
                         <!-- 查询条件：第一行 -->
                         <div class="col s12">
 
-                            <!-- 查询条件：VIN码 -->
+                            <!-- 查询条件：VIN -->
                             <div class="input-field col" style="width: 40%;">
                                 <input type="text" id="conditionVinText" ng-model="conditionVin" minlength="6">
-                                <label for="conditionVinText">VIN码(至少6位)</label>
+                                <label for="conditionVinText">VIN(至少6位)</label>
                             </div>
 
                             <!-- 查询条件：车辆品牌 -->
@@ -1252,7 +1252,7 @@
                         <thead class="blue-grey lighten-5">
                         <tr class="grey-text text-darken-2">
                             <th data-field="">订单编号</th>
-                            <th data-field="">VIN码</th>
+                            <th data-field="">VIN</th>
                             <th data-field="">车型</th>
                             <th data-field="">入库时间</th>
                             <th data-field="">出库时间</th>
@@ -1266,7 +1266,7 @@
                         <tr ng-repeat="el in orderList" class="grey-text text-darken-1">
                             <!-- 订单编号 -->
                             <td>{{el.id}}</td>
-                            <!-- VIN码 -->
+                            <!-- VIN -->
                             <td ng-bind="el.vin"></td>
                             <!-- 车型 -->
                             <td>{{el.make_name==null ? '未知' : el.make_name}}/{{el.model_name==null ? '未知' : el.model_name}}</td>
@@ -1316,7 +1316,7 @@
                             <!-- VIN -->
                             <div class="input-field col s8">
                                 <input type="text" id="orderVIN" ng-model="conditionOrderVIN" minlength="6">
-                                <label for="orderVIN">VIN码(至少6位)</label>
+                                <label for="orderVIN">VIN(至少6位)</label>
                             </div>
 
                             <!-- 制造商 -->

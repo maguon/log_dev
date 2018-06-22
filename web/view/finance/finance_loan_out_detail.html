@@ -145,7 +145,7 @@
                     <table class="bordered centered" style="width: 100%;">
                         <thead>
                         <tr class="grey-text text-darken-2">
-                            <th data-field="">VIN码</th>
+                            <th data-field="">VIN</th>
                             <th data-field="">车型</th>
                             <th data-field="">年份</th>
                             <th data-field="">入库时间</th>
@@ -201,7 +201,7 @@
                     <table class="bordered centered" style="width: 100%;">
                         <thead>
                         <tr class="grey-text text-darken-2">
-                            <th data-field="">VIN码</th>
+                            <th data-field="">VIN</th>
                             <th data-field="">车型</th>
                             <th data-field="">年份</th>
                             <th data-field="">入库时间</th>
@@ -258,7 +258,7 @@
                     <i class="mdi mdi-plus" style="position: absolute;right:0px;bottom:0px;font-size:15px;line-height: 20px;"></i>
                 </a>
 
-                <label for="autocomplete-input" class="active" style="padding-left: 2px;"> 购买车辆VIN码</label>
+                <label for="autocomplete-input" class="active" style="padding-left: 2px;"> 购买车辆VIN</label>
             </div>
         </div>
 
@@ -275,8 +275,8 @@
 
                 <!-- body -->
                 <div class="col s12 lighten-1 white grey-text vc-center">
-                    <!-- VIN码 -->
-                    <div class="input-field col s3 left-align fz15">VIN码:{{customCarInfo.vin}}
+                    <!-- VIN -->
+                    <div class="input-field col s3 left-align fz15">VIN:{{customCarInfo.vin}}
                     </div>
                     <!-- 制造商 -->
                     <div class="input-field col s3 left-align">
@@ -353,8 +353,8 @@
                 <table class="bordered">
                     <tbody>
                     <tr ng-show="loanInfo.loanStatus != 4" ng-repeat="el in buyingCarList" class="grey-text text-darken-1">
-                        <!-- VIN码 -->
-                        <td width="25%">VIN码：{{el.vin}}</td>
+                        <!-- VIN -->
+                        <td width="25%">VIN：{{el.vin}}</td>
                         <!-- 车型 -->
                         <td width="30%">{{el.make_name}}/{{el.model_name}}</td>
                         <!-- 车辆估值 -->
@@ -365,8 +365,8 @@
                         </td>
                     </tr>
                     <tr ng-show="loanInfo.loanStatus == 4" ng-repeat="el in buyingCarList" class="grey-text text-darken-1">
-                        <!-- VIN码 -->
-                        <td width="25%">VIN码：{{el.vin}}</td>
+                        <!-- VIN -->
+                        <td width="25%">VIN：{{el.vin}}</td>
                         <!-- 车型 -->
                         <td width="30%">{{el.make_name}}/{{el.model_name}}</td>
                         <!-- 信用证 -->
@@ -544,8 +544,8 @@
 
                             <!-- 利率/天 -->
                             <div class="input-field col s4">
-                                <input type="text" id="rateText" maxlength="10" valid-rate ng-model="newPayment.rate" class="red-text right-align" ng-change="calculateInterest()">
-                                <i class="dataIcon" style="right: -1px"> %</i>
+                                <input type="text" id="rateText" maxlength="10" valid-rate ng-model="newPayment.rate" class="red-text right-align" ng-change="calculatePaymentMoney()">
+                                <i class="dataIcon" style="right: -1px">%</i>
                                 <label for="rateText" ng-class="{'label-active':newPayment.rate !== ''}">利率/天</label>
                             </div>
 
@@ -559,7 +559,7 @@
                         <div class="col s12">
                             <!-- 产生利息时长(天) -->
                             <div class="input-field col s4">
-                                <input type="text" id="interestDayText" maxlength="10" valid-num ng-model="newPayment.interestDay" class="right-align" ng-change="calculateInterest()">
+                                <input type="text" id="interestDayText" maxlength="10" valid-num ng-model="newPayment.interestDay" class="right-align" ng-change="calculatePaymentMoney()">
                                 <label for="interestDayText" ng-class="{'label-active':newPayment.interestDay !== ''}">
                                     <span class="red-text">*</span>产生利息时长(天)
                                 </label>
@@ -786,7 +786,7 @@
                                         <table class="bordered">
                                             <tbody>
                                             <tr ng-repeat="el in creditCarRelList" class="grey-text text-darken-1" style="height:30px">
-                                                <td style="width:25%;">VIN码：{{el.vin}}</td>
+                                                <td style="width:25%;">VIN：{{el.vin}}</td>
                                                 <td style="width:40%;">{{el.make_name}}/{{el.model_name}}</td>
                                                 <td style="width:10%;">{{el.pro_date}}</td>
                                                 <td class="red-text right-align" style="width:25%;">{{el.valuation|currency}}</td>

@@ -1,7 +1,7 @@
 /**
  * 主菜单：财务管理 -> 金融贷出 控制器
  */
-app.controller("finance_loan_controller", ["$scope", "$rootScope", "_host", "_basic", "_config", "$state", "$stateParams", function ($scope, $rootScope, _host, _basic, _config, $state, $stateParams) {
+app.controller("finance_loan_out_controller", ["$scope", "$rootScope", "_host", "_basic", "_config", "$state", "$stateParams", function ($scope, $rootScope, _host, _basic, _config, $state, $stateParams) {
 
     // 取得当前画面 登录用户
     var userId = _basic.getSession(_basic.USER_ID);
@@ -56,7 +56,7 @@ app.controller("finance_loan_controller", ["$scope", "$rootScope", "_host", "_ba
                 conditionsObj.entrustNm = getEntrustNm();
                 // 当前画面的检索信息
                 var pageItems = {
-                    pageId: "finance_loan",
+                    pageId: "finance_loan_out",
                     start: $scope.start,
                     size: $scope.size,
                     conditions: conditionsObj
@@ -242,10 +242,10 @@ app.controller("finance_loan_controller", ["$scope", "$rootScope", "_host", "_ba
                     // queryFinanceLoanList();
 
                     // 跳转到 详情画面
-                    $state.go('finance_loan_detail', {
+                    $state.go('finance_loan_out_detail', {
                         reload: true,
                         id: data.id,
-                        from: 'finance_loan'
+                        from: 'finance_loan_out'
                     });
                 } else {
                     swal(data.msg, "", "error");
@@ -337,9 +337,9 @@ app.controller("finance_loan_controller", ["$scope", "$rootScope", "_host", "_ba
     $scope.initData = function () {
 
         // 如果是从后画面跳回来时，取得上次检索条件
-        if ($stateParams.from === "finance_loan_detail" && $rootScope.refObj !== undefined && $rootScope.refObj.pageArray.length > 0) {
+        if ($stateParams.from === "finance_loan_out_detail" && $rootScope.refObj !== undefined && $rootScope.refObj.pageArray.length > 0) {
             var pageItems = $rootScope.refObj.pageArray.pop();
-            if (pageItems.pageId === "finance_loan") {
+            if (pageItems.pageId === "finance_loan_out") {
                 // 设定画面翻页用数据
                 $scope.start = pageItems.start;
                 $scope.size = pageItems.size;

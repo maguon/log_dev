@@ -6,10 +6,10 @@
         <!-- 左侧：输入区 -->
         <div class="col s10">
 
-            <!-- 查询条件：VIN码 -->
+            <!-- 查询条件：VIN -->
             <div class="input-field col s6">
                 <input type="text" id="vinText" ng-model="condVin" minlength="6">
-                <label for="vinText">VIN码(至少6位)</label>
+                <label for="vinText">VIN(至少6位)</label>
             </div>
 
             <!-- 查询条件：制造商 -->
@@ -84,7 +84,7 @@
         <table class=" bordered striped">
             <thead class="blue-grey lighten-5">
             <tr class="grey-text text-darken-2">
-                <th>VIN码</th>
+                <th>VIN</th>
                 <th>车型</th>
                 <th>颜色</th>
                 <th>年份</th>
@@ -97,7 +97,7 @@
             </thead>
             <tbody>
             <tr ng-repeat="el in financeCarList" class="grey-text text-darken-1">
-                <!-- VIN码 -->
+                <!-- VIN -->
                 <td ng-bind="el.vin"></td>
                 <!-- 车型 -->
                 <td>{{el.make_name}}/{{el.model_name}}</td>
@@ -157,10 +157,10 @@
         <!-- 金融车辆信息 -->
         <div class="col s12" style="margin-top: 10px;">
 
-            <!-- VIN码 -->
+            <!-- VIN -->
             <div class="input-field col s8">
                 <input type="text" id="newVinText" ng-model="carInfo.vin">
-                <label for="newVinText"><span class="red-text">*</span> VIN码</label>
+                <label for="newVinText"><span class="red-text">*</span> VIN</label>
             </div>
 
             <!-- 年份 -->

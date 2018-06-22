@@ -470,7 +470,7 @@ app.controller("storage_car_controller", ["$scope", "$rootScope", "$stateParams"
                 }
             })
         } else{
-            swal('请输入VIN码','','error')
+            swal('请输入VIN','','error')
         }
     };
 

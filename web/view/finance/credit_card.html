@@ -14,10 +14,10 @@
                 <label for="condCreditId">信用证编码</label>
             </div>
 
-            <!-- 查询条件：vin码 -->
+            <!-- 查询条件：vin -->
             <div class="input-field col" style="width: 40%">
                 <input type="text" id="vinText" ng-model="condVin">
-                <label for="vinText">VIN码</label>
+                <label for="vinText">VIN</label>
             </div>
 
             <!-- 查询条件：关联还款编号 -->
@@ -324,8 +324,8 @@
                    <!--上部分：查询功能-->
                     <div class="row col" style="width: 100%;position: relative">
                         <div class="input-field col s12">
-                            <input type="text" id="autocomplete-input"  placeholder="           模糊查询至少需要6位vin码"  ng-model="creditVin" ng-change="shortSearch()"  style="margin: 0 0 20px 0"  class="autocomplete">
-                            <label for="autocomplete-input">VIN码</label>
+                            <input type="text" id="autocomplete-input"  placeholder="模糊查询至少需要6位vin"  ng-model="creditVin" ng-change="shortSearch()"  style="margin: 0 0 20px 0"  class="autocomplete">
+                            <label for="autocomplete-input">VIN</label>
                         </div>
                         <button class=" btn btn-floating btn-small waves-effect cyan lighten-1" ng-if="carId!==undefined" ng-click="addLinkCar()"  style="position: absolute;top: 15px;right: 10px;">
                             <i class="mdi white-text mdi-plus fz30"></i>
@@ -341,7 +341,7 @@
                              <!-- header -->
                              <div class="col s12 lighten-1 cyan-text vc-center left-align" style="height:50px;">
                                  <div class="col s4 ">
-                                     VIN码：{{linkCar.vin}}
+                                     VIN：{{linkCar.vin}}
                                  </div>
                                  <div class="col s4">
                                      <div class="col s4">

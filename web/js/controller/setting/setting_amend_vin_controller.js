@@ -94,7 +94,7 @@ app.controller("setting_amend_vin_controller", ["$scope", "_basic", "_config", "
             })
         }
         else{
-            swal('请输入VIN码','','error')
+            swal('请输入VIN','','error')
         }
     };
 

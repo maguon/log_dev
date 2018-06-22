@@ -542,7 +542,7 @@ app.controller("finance_repay_detail_controller", ["$scope", "$stateParams", "_b
                 closeOnConfirm: true
             },
             function () {
-                var obj = {thisPaymentMoney : paymentInfo.this_payment_money};
+                var obj = {thisPaymentMoney : paymentInfo.this_payment_money === "" ? 0 : paymentInfo.this_payment_money};
                 // 修改本次支付金额
                 var url = _host.api_url + "/user/" + userId + "/repayment/" + repayId + "/payment/" + paymentInfo.payment_id + "/paymentRepMoney" ;
                 _basic.put(url, obj).then(function (data) {
@@ -557,26 +557,18 @@ app.controller("finance_repay_detail_controller", ["$scope", "$stateParams", "_b
     };
 
     /**
-     * 利息计算用方法。
-     */
-    $scope.calculateInterest = function () {
-        // 利率/天
-        var rate = 0;
-        if ($scope.repay.rate !== "") {
-            rate = parseFloat($scope.repay.rate);
-        }
-        // 利息 = 利率/天 * 未还本金 * 产生利息时长
-        $scope.repay.interest = rate * $scope.loanInfo.notRepaymentMoney * $scope.repay.interestDay / 100;
-        $scope.repay.interest = $scope.repay.interest.toFixed(2);
-
-        // 计算 本次应还总金额/剩余未还金额
-        $scope.calculatePaymentMoney();
-    };
-
-    /**
      * 本次应还总金额/剩余未还金额 计算用方法。
      */
     $scope.calculatePaymentMoney = function () {
+        // 利率/天
+        var rate = 0.0333;
+        if ($scope.repay.rate !== "") {
+            rate = parseFloat($scope.repay.rate);
+        }
+        // 利息 = 利率/天 * 本次还贷金额 * 产生利息时长
+        $scope.repay.interest = rate * $scope.repay.paymentMoney * $scope.repay.interestDay / 100;
+        $scope.repay.interest = $scope.repay.interest.toFixed(2);
+
         // 本次还贷金额
         var paymentMoney = 0;
         if ($scope.repay.paymentMoney !== "") {

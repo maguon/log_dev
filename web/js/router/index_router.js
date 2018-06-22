@@ -95,17 +95,17 @@ app.config(['$stateProvider',"$urlRouterProvider",function($stateProvider,$urlRo
             controller:"finance_car_controller"
         })
         // 财务管理->金融贷出
-        .state("finance_loan", {
-            url:"/finance_loan",
+        .state("finance_loan_out", {
+            url:"/finance_loan_out",
             params: {"from": null},
-            templateUrl: "/view/finance/finance_loan.html",
-            controller:"finance_loan_controller"
+            templateUrl: "/view/finance/finance_loan_out.html",
+            controller:"finance_loan_out_controller"
         })
         // 财务管理->金融贷出->详细
-        .state("finance_loan_detail", {
-            url:"/finance_loan_detail/{id}?from",
-            templateUrl: "/view/finance/finance_loan_detail.html",
-            controller:"finance_loan_detail_controller"
+        .state("finance_loan_out_detail", {
+            url:"/finance_loan_out_detail/{id}?from",
+            templateUrl: "/view/finance/finance_loan_out_detail.html",
+            controller:"finance_loan_out_detail_controller"
         })
         // 财务管理->金融还贷
         .state("finance_repay", {
