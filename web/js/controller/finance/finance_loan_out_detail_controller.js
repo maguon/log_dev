@@ -1,7 +1,7 @@
 /**
  * 主菜单：财务管理 -> 金融贷出(详细) 控制器
  */
-app.controller("finance_loan_detail_controller", ["$scope", "$stateParams", "_basic", "_host", "_config", "$state","_baseService", function ($scope, $stateParams, _basic, _host, _config, $state,_baseService) {
+app.controller("finance_loan_out_detail_controller", ["$scope", "$stateParams", "_basic", "_host", "_config", "$state","_baseService", function ($scope, $stateParams, _basic, _host, _config, $state,_baseService) {
     var userId = _basic.getSession(_basic.USER_ID);
     // 贷款编号
     var loanId = $stateParams.id;
@@ -69,7 +69,7 @@ app.controller("finance_loan_detail_controller", ["$scope", "$stateParams", "_ba
      * 返回前画面。
      */
     $scope.return = function () {
-        $state.go($stateParams.from, {from:"finance_loan_detail"}, {reload: true})
+        $state.go($stateParams.from, {from:"finance_loan_out_detail"}, {reload: true})
     };
 
     /**
