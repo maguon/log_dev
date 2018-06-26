@@ -121,7 +121,7 @@
     <div class="col s12 lighten-1 white grey-text vc-center fz13" ng-if="paymentInfo.order_status== 1" style="height:100px;">
         <div class="col s4">
             <span>运费(美元):</span>
-            <input type="text" name="look_contacts" autocomplete="off" ng-model="paymentInfo.ship_trans_fee" class="red-text left-align" maxlength="10" valid-money>
+            <input type="text" name="look_contacts" autocomplete="off" ng-model="paymentInfo.ship_trans_fee" class="red-text left-align" maxlength="8" valid-money>
         </div>
         <div class="col s8 right-align">
             <a class="btn-floating btn-large waves-light waves-effect cyan lighten-2  btn "  ng-click="changeShipTransFee(paymentInfo.id)">

@@ -59,13 +59,13 @@
         <div class="row col s12" style="margin-top: 40px;">
             <!-- 定金 -->
             <div class="input-field col s6">
-                <input type="text" id="depositText" maxlength="10" valid-money ng-model="loanInfo.deposit" class="red-text" ng-disabled="loanInfo.loanStatus!=1">
+                <input type="text" id="depositText" maxlength="8" valid-money ng-model="loanInfo.deposit" class="red-text" ng-disabled="loanInfo.loanStatus!=1">
                 <label for="depositText" id="depositLabel"> 定金</label>
             </div>
 
             <!-- 贷出金额(美元) -->
             <div class="input-field col s6">
-                <input type="text" id="loanMoneyText" maxlength="10" valid-money ng-model="loanInfo.loanMoney" class="red-text" ng-disabled="loanInfo.loanStatus!=1">
+                <input type="text" id="loanMoneyText" maxlength="8" valid-money ng-model="loanInfo.loanMoney" class="red-text" ng-disabled="loanInfo.loanStatus!=1">
                 <label for="loanMoneyText" id="loanMoneyLabel"> 贷出金额(美元)</label>
             </div>
         </div>
@@ -538,7 +538,7 @@
                         <div class="col s12" style="margin-bottom: 5px;">
                             <!-- 本次还贷金额(美元) -->
                             <div class="input-field col s4">
-                                <input type="text" id="paymentMoneyText" maxlength="10" valid-money ng-model="newPayment.paymentMoney" class="red-text right-align" ng-change="calculatePaymentMoney()">
+                                <input type="text" id="paymentMoneyText" maxlength="8" valid-money ng-model="newPayment.paymentMoney" class="red-text right-align" ng-change="calculatePaymentMoney()">
                                 <label for="paymentMoneyText"><span class="red-text">*</span>本次还贷金额(美元)</label>
                             </div>
 
@@ -551,7 +551,7 @@
 
                             <!-- 产生利息金额(美元) -->
                             <div class="input-field col s4">
-                                <input type="text" id="principalText" maxlength="10" valid-money ng-model="newPayment.principal" class="red-text right-align" disabled>
+                                <input type="text" id="principalText" maxlength="8" valid-money ng-model="newPayment.principal" class="red-text right-align" disabled>
                                 <label for="principalText" ng-class="{'label-active':newPayment.principal !== ''}">产生利息金额(美元)</label>
                             </div>
                         </div>
@@ -567,13 +567,13 @@
 
                             <!-- 利息(美元) -->
                             <div class="input-field col s4">
-                                <input type="text" id="interestText" maxlength="10" valid-money ng-model="newPayment.interest" class="red-text right-align" disabled>
+                                <input type="text" id="interestText" maxlength="8" valid-money ng-model="newPayment.interest" class="red-text right-align" disabled>
                                 <label for="interestText" ng-class="{'label-active':newPayment.interest !== ''}">利息(美元)</label>
                             </div>
 
                             <!-- 手续费(美元) -->
                             <div class="input-field col s4">
-                                <input type="text" id="poundageText" maxlength="10" valid-money ng-model="newPayment.poundage" class="red-text right-align" ng-change="calculatePaymentMoney()">
+                                <input type="text" id="poundageText" maxlength="8" valid-money ng-model="newPayment.poundage" class="red-text right-align" ng-change="calculatePaymentMoney()">
                                 <label for="poundageText" ng-class="{'label-active':newPayment.poundage !== ''}">手续费(美元)</label>
                             </div>
                         </div>
@@ -897,7 +897,7 @@
                                 <!-- 新增还款 或者 该条还款信息未完结时 (可修改) -->
                                 <div ng-show="modalFlag=='newPaymentInfo' || (loanInfo.loanStatus != 4 && newPayment.repaymentStatus == 1)" class="col s4 left-align">
                                     <div class="col s10 input-field">
-                                        <input type="text" id="thisPaymentMoneyText" maxlength="10" valid-money ng-blur="calcTotalFees()" class="red-text" ng-model="el.this_payment_money">
+                                        <input type="text" id="thisPaymentMoneyText" maxlength="8" valid-money ng-blur="calcTotalFees()" class="red-text" ng-model="el.this_payment_money">
                                         <label for="thisPaymentMoneyText" class="active">本次支付金额(美元)</label>
                                     </div>
                                     <div class="col s2 left-align">

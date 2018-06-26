@@ -197,13 +197,13 @@
             <div class="col s12">
                 <!-- 定金 -->
                 <div class="input-field col s6">
-                    <input type="text" id="depositText" maxlength="10" valid-money ng-model="loanInfo.deposit" class="red-text">
+                    <input type="text" id="depositText" maxlength="8" valid-money ng-model="loanInfo.deposit" class="red-text">
                     <label id="earnestMoneyLabel" for="depositText"> 定金</label>
                 </div>
 
                 <!-- 贷出金额(美元) -->
                 <div class="input-field col s6">
-                    <input type="text" id="loanMoneyText" maxlength="10" valid-money ng-model="loanInfo.loanMoney">
+                    <input type="text" id="loanMoneyText" maxlength="8" valid-money ng-model="loanInfo.loanMoney">
                     <label for="loanMoneyText"><span class="red-text">*</span> 贷出金额(美元)</label>
                 </div>
             </div>

@@ -229,7 +229,7 @@
                         <div class="col s12" style="margin-bottom: 5px;">
                             <!-- 本次还贷金额(美元) -->
                             <div class="input-field col s4">
-                                <input type="text" id="paymentMoneyText" maxlength="10" valid-money ng-model="repay.paymentMoney" class="red-text right-align" ng-change="calculatePaymentMoney()">
+                                <input type="text" id="paymentMoneyText" maxlength="8" valid-money ng-model="repay.paymentMoney" class="red-text right-align" ng-change="calculatePaymentMoney()">
                                 <label for="paymentMoneyText"><span class="red-text">*</span>本次还贷金额(美元)</label>
                             </div>
 
@@ -256,7 +256,7 @@
 
                             <!-- 手续费(美元) -->
                             <div class="input-field col s4">
-                                <input type="text" id="poundageText" maxlength="10" valid-money ng-model="repay.poundage" class="red-text right-align" ng-change="calculatePaymentMoney()">
+                                <input type="text" id="poundageText" maxlength="8" valid-money ng-model="repay.poundage" class="red-text right-align" ng-change="calculatePaymentMoney()">
                                 <label for="poundageText" ng-class="{'label-active':repay.poundage !== ''}">手续费(美元)</label>
                             </div>
 
@@ -437,7 +437,7 @@
                                 <!-- 新增还款 或者 该条还款信息未完结时 (可修改) -->
                                 <div class="col s4 left-align">
                                     <div class="col s10 input-field">
-                                        <input type="text" id="thisPaymentMoneyText" maxlength="10" valid-money ng-blur="calcTotalFees()" class="red-text" ng-model="el.this_payment_money">
+                                        <input type="text" id="thisPaymentMoneyText" maxlength="8" valid-money ng-blur="calcTotalFees()" class="red-text" ng-model="el.this_payment_money">
                                         <label for="thisPaymentMoneyText" class="active">本次支付金额(美元)</label>
                                     </div>
                                     <!-- 修改支付金额按钮 -->
