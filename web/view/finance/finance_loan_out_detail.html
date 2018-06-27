@@ -438,7 +438,7 @@
                             还款记录
                         </div>
                         <div class="col s6 right-align">
-                            本金/总金额(美元)：<span class="red-text">{{paymentInfo.paymentMoney | number}} / {{paymentInfo.paymentMoney + paymentInfo.totalInterest + paymentInfo.paymentPoundage | number}}</span>
+                            本金/总金额(美元)：<span class="red-text">{{paymentInfo.paymentMoney | number:2}} / {{paymentInfo.paymentMoney + paymentInfo.totalInterest + paymentInfo.paymentPoundage | number:2}}</span>
                         </div>
                     </div>
 
@@ -449,7 +449,7 @@
                                 还款编号：{{el.id}}
                             </div>
                             <div class="col s4 left-align fz14">
-                                本金/总金额(美元)：<span class="red-text">{{el.repayment_money | number}} / {{el.repayment_money + el.interest_money + el.fee | number}}</span>
+                                本金/总金额(美元)：<span class="red-text">{{el.repayment_money | number:2}} / {{el.repayment_money + el.interest_money + el.fee | number:2}}</span>
                             </div>
                             <div class="col s2 left-align fz14">
                                 {{el.created_on |date:'yyyy-MM-dd HH:mm'}}
