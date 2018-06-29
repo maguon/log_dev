@@ -695,10 +695,10 @@
                         <!-- 本次应还总金额 本还金额 (只读) -->
                         <div class="col s12 vc-center cyan-text fz14" style="margin-top: 20px;margin-bottom: 20px;">
                             <div class="col s6 left-align blue-grey lighten-5" style="height:50px; padding-top: 15px; border: 1px solid lightgrey;border-right: 0">
-                                本次应还总金额(美元): <span class="red-text">{{creditPayment.totalPaymentMoney | number}}</span>
+                                本次应还总金额(美元): <span class="red-text">{{creditPayment.totalPaymentMoney | number:2}}</span>
                             </div>
                             <div class="col s6 right-align blue-grey lighten-5" style="height:50px; padding-top: 15px; border: 1px solid lightgrey;border-left: 0">
-                                未还金额(美元): <span class="red-text">{{creditPayment.leftPaymentMoney | number}}</span>
+                                未还金额(美元): <span class="red-text">{{creditPayment.leftPaymentMoney | number:2}}</span>
                             </div>
                         </div>
 
@@ -719,7 +719,7 @@
                         <div class="col s12 vc-center cyan-text fz14" style="margin-top: 20px;margin-bottom: 20px;">
                             <div class="col s6"></div>
                             <div class="col s6 right-align" style="height:50px; padding-top: 15px;">
-                                已还金额(美元): <span class="red-text">{{creditPayment.paymentMoney | number}}</span>
+                                已还金额(美元): <span class="red-text">{{creditPayment.paymentMoney | number:2}}</span>
                             </div>
                         </div>
                     </div>
@@ -813,10 +813,10 @@
                         <!-- 本次应还总金额 本还金额 (只读) -->
                         <div class="col s12 vc-center cyan-text fz14" style="margin-top: 20px;margin-bottom: 20px;">
                             <div class="col s6 left-align blue-grey lighten-5" style="height:50px; padding-top: 15px; border: 1px solid lightgrey;border-right: 0">
-                                本次应还总金额(美元): <span class="red-text">{{otherPayment.totalPaymentMoney | number}}</span>
+                                本次应还总金额(美元): <span class="red-text">{{otherPayment.totalPaymentMoney | number:2}}</span>
                             </div>
                             <div class="col s6 right-align blue-grey lighten-5" style="height:50px; padding-top: 15px; border: 1px solid lightgrey;border-left: 0">
-                                未还金额(美元): <span class="red-text">{{otherPayment.leftPaymentMoney | number}}</span>
+                                未还金额(美元): <span class="red-text">{{otherPayment.leftPaymentMoney | number:2}}</span>
                             </div>
                         </div>
 
@@ -837,7 +837,7 @@
                         <div class="col s12 vc-center cyan-text fz14" style="margin-top: 20px;margin-bottom: 10px;">
                             <div class="col s6"></div>
                             <div class="col s6 right-align" style="height:50px; padding-top: 15px;">
-                                已还金额(美元): <span class="red-text">{{otherPayment.paymentMoney | number}}</span>
+                                已还金额(美元): <span class="red-text">{{otherPayment.paymentMoney | number:2}}</span>
                             </div>
                         </div>
                     </div>
@@ -847,17 +847,17 @@
                         <!-- 本次应还总金额 本还金额 (只读) -->
                         <div ng-show="loanRepPaymentRelList.length == 0" class="col s12 vc-center cyan-text fz14" style="margin-top: 20px;margin-bottom: 20px;">
                             <div class="col s6 left-align blue-grey lighten-5" style="height:50px; padding-top: 15px; border: 1px solid lightgrey;border-right: 0">
-                                本次应还总金额(美元): <span class="red-text">{{otherPayment.totalPaymentMoney | number}}</span>
+                                本次应还总金额(美元): <span class="red-text">{{otherPayment.totalPaymentMoney | number:2}}</span>
                             </div>
                             <div class="col s6 right-align blue-grey lighten-5" style="height:50px; padding-top: 15px; border: 1px solid lightgrey;border-left: 0">
-                                已还金额(美元): <span class="red-text">{{otherPayment.paymentMoney | number}}</span>
+                                已还金额(美元): <span class="red-text">{{otherPayment.paymentMoney | number:2}}</span>
                             </div>
                         </div>
                         <div ng-show="loanRepPaymentRelList.length > 0" class="col s12 vc-center cyan-text fz14" style="margin-top: 20px;margin-bottom: 20px;">
                             <div class="col s6 left-align" style="height:50px; padding-top: 15px;">
                             </div>
                             <div class="col s6 right-align" style="height:50px; padding-top: 15px;">
-                                已还金额(美元): <span class="red-text">{{otherPayment.paymentMoney | number}}</span>
+                                已还金额(美元): <span class="red-text">{{otherPayment.paymentMoney | number:2}}</span>
                             </div>
                         </div>
                         <div ng-show="loanRepPaymentRelList.length == 0" class="vc-center grey-text fz15" style="width: 100%;height: 300px;">
@@ -891,7 +891,7 @@
 
                                 <!-- 贷出信息完结 或者 该条还款信息完结时，全部表示项 (只读) -->
                                 <div ng-show="loanInfo.loanStatus == 4 || newPayment.repaymentStatus == 2" class="col s4 left-align cyan-text">
-                                    本次支付金额(美元):<span class="red-text" style="margin-left: 10px;">{{el.this_payment_money | number}}</span>
+                                    本次支付金额(美元):<span class="red-text" style="margin-left: 10px;">{{el.this_payment_money | number:2}}</span>
                                 </div>
 
                                 <!-- 新增还款 或者 该条还款信息未完结时 (可修改) -->
