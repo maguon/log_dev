@@ -100,9 +100,9 @@ app.controller("finance_loan_out_controller", ["$scope", "$rootScope", "_host", 
         // 订单状态
         $scope.condLoanStatus = conditions.loanStatus;
         // 贷款时间 开始
-        $scope.condCreatedOnStart = conditions.createdOnStart;
+        $scope.condLoanStartDateStart = conditions.loanStartDateStart;
         // 贷款时间 终了
-        $scope.condCreatedOnEnd = conditions.createdOnEnd;
+        $scope.condLoanStartDateEnd = conditions.loanStartDateEnd;
         // 完结时间 开始
         $scope.condLoanEndDateStart = conditions.loanEndDateStart;
         // 完结时间 终了
@@ -122,10 +122,10 @@ app.controller("finance_loan_out_controller", ["$scope", "$rootScope", "_host", 
             entrustId: $scope.condEntrustId,
             // 订单状态
             loanStatus: $scope.condLoanStatus,
-            // 贷款时间 开始
-            createdOnStart: $scope.condCreatedOnStart,
-            // 贷款时间 终了
-            createdOnEnd: $scope.condCreatedOnEnd,
+            // 贷出时间 开始
+            loanStartDateStart: $scope.condLoanStartDateStart,
+            // 贷出时间 终了
+            loanStartDateEnd: $scope.condLoanStartDateEnd,
             // 完结时间 开始
             loanEndDateStart: $scope.condLoanEndDateStart,
             // 完结时间 终了
