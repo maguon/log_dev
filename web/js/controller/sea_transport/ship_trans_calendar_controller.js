@@ -1,5 +1,5 @@
 /**
- * Created by star on 2018/4/23   海运管理--海运日历.
+ * 主菜单: 海运管理 -> 海运日历 控制器
  */
 app.controller("ship_trans_calendar_controller", ["$scope", "_host", "_basic", function ($scope, _host, _basic) {
     // 取得当前日期
@@ -24,12 +24,10 @@ app.controller("ship_trans_calendar_controller", ["$scope", "_host", "_basic", f
     // 画面显示用(今天周几)
     $scope.todayWeek = weekday[date.getDay()];
 
-
     /**
      * 创建日历详细信息。
-     *
      */
-    function showCalendar (storage_id) {
+    function showCalendar() {
         $('#calendar').fullCalendar('destroy');
         $('#calendar').fullCalendar({
             viewRender: function (view, element) {
@@ -50,7 +48,7 @@ app.controller("ship_trans_calendar_controller", ["$scope", "_host", "_basic", f
                 end = moment(end).format('YYYYMMDD');
                 var eventArray = [];
                 _basic.get(_host.api_url + "/shipTransStatDate?" + "dateStart=" + start + "&dateEnd=" + end).then(function (data) {
-                    if (data.success == true && data.result.length > 0) {
+                    if (data.success && data.result.length > 0) {
                         $scope.data = data.result;
                         for (var i in $scope.data) {
                             var titleHtml = '<div class=" p0" style="padding-top: 10px">' +
@@ -81,7 +79,7 @@ app.controller("ship_trans_calendar_controller", ["$scope", "_host", "_basic", f
         // 当天订舱 到港
         var url = _host.api_url + "/shipTransStatDate?dateStart="  + nowDate+'&dateEnd='+nowDate;
         _basic.get(url).then(function (data) {
-            if (data.success == true && data.result.length > 0) {
+            if (data.success && data.result.length > 0) {
                 $scope.todayData = data.result[0];
             } else {
                 // 取得数据失败时，画面显示的默认数据
@@ -92,6 +90,10 @@ app.controller("ship_trans_calendar_controller", ["$scope", "_host", "_basic", f
                 }
             }
         })
-    };
-    showCalendar($scope.storageId);
-}])
+    }
+
+    /**
+     * 初期化画面数据
+     */
+    showCalendar();
+}]);
