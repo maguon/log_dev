@@ -22,7 +22,7 @@ app.controller("setting_loan_in_controller", ["$scope", "_basic", "_host", funct
      * 初期检索画面数据
      */
     function initData() {
-        _basic.get(_host.api_url + "/loanCompany").then(function (data) {
+        _basic.get(_host.api_url + "/loanIntoCompany").then(function (data) {
             if (data.success) {
                 $scope.loanInList = data.result;
             } else {
@@ -54,7 +54,7 @@ app.controller("setting_loan_in_controller", ["$scope", "_basic", "_host", funct
      */
     $scope.openEditLoanIn = function (loanCompany) {
         // 根据画面选中数据的ID 检索数据
-        _basic.get(_host.api_url + "/loanCompany?loanCompanyId=" + loanCompany.id).then(function (data) {
+        _basic.get(_host.api_url + "/loanIntoCompany?loanIntoCompanyId=" + loanCompany.id).then(function (data) {
             if (data.success) {
                 if (data.result.length > 0) {
                     // 画面ID
@@ -98,7 +98,7 @@ app.controller("setting_loan_in_controller", ["$scope", "_basic", "_host", funct
             };
 
             if ($scope.pageId === "add") {
-                _basic.post(_host.api_url + "/user/" + userId + "/loanCompany", obj).then(function (data) {
+                _basic.post(_host.api_url + "/user/" + userId + "/loanIntoCompany", obj).then(function (data) {
                     if (data.success) {
                         $('#saveLoanInDiv').modal('close');
                         swal("新增成功", "", "success");
@@ -110,7 +110,7 @@ app.controller("setting_loan_in_controller", ["$scope", "_basic", "_host", funct
                 })
             } else {
                 // 调用更新API
-                _basic.put(_host.api_url + "/user/" + userId + "/loanCompany/" + $scope.loanInCoInfo.id, obj).then(function (data) {
+                _basic.put(_host.api_url + "/user/" + userId + "/loanIntoCompany/" + $scope.loanInCoInfo.id, obj).then(function (data) {
                     if (data.success) {
                         $('#saveLoanInDiv').modal('close');
                         swal("修改成功", "", "success");
@@ -157,7 +157,7 @@ app.controller("setting_loan_in_controller", ["$scope", "_basic", "_host", funct
                     }
 
                     // API url
-                    var url = _host.api_url + "/user/" + userId + "/loanCompany/" + id + "/companyStatus/" + status;
+                    var url = _host.api_url + "/user/" + userId + "/loanIntoCompany/" + id + "/companyStatus/" + status;
 
                     // 调用更新API
                     _basic.put(url, {}).then(function (data) {
