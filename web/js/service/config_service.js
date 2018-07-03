@@ -439,6 +439,26 @@ baseService.factory("_config", function () {
         }
     ];
 
+    // 金融贷入 状态
+    _this.loanInStatus = [
+        {
+            id: 1,
+            name: "未贷"
+        },
+        {
+            id: 2,
+            name: "已贷"
+        },
+        {
+            id: 3,
+            name: "还款中"
+        },
+        {
+            id: 4,
+            name: "完结"
+        }
+    ];
+
     // 抵押状态
     _this.mortgageStatus = [
         {
