@@ -98,8 +98,8 @@
                 <td class="red-text" ng-bind="el.loan_into_money | number"></td>
                 <!-- 贷入时间 -->
                 <td ng-bind="el.loan_into_start_date|date:'yyyy-MM-dd HH:mm'"></td>
-                <!-- 已还总金额(美元) TODO -->
-                <td class="red-text">{{el.mortgage_valuation==null ? 0 : el.mortgage_valuation | number}}</td>
+                <!-- 已还总金额(美元) -->
+                <td class="red-text">{{el.repayment_total_money==null ? 0 : el.repayment_total_money | number}}</td>
                 <!-- 未还本金(美元) -->
                 <td class="red-text" ng-bind="el.not_repayment_money | number"></td>
                 <!-- 完结时间 -->
