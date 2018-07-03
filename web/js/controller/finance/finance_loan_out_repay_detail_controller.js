@@ -1,7 +1,7 @@
 /**
- * 主菜单：财务管理 -> 金融还贷(详细) 控制器
+ * 主菜单：财务管理 -> 贷出还款(详细) 控制器
  */
-app.controller("finance_repay_detail_controller", ["$scope", "$stateParams", "_basic", "_host", "_config", "$state","_baseService", function ($scope, $stateParams, _basic, _host, _config, $state,_baseService) {
+app.controller("finance_loan_out_repay_detail_controller", ["$scope", "$stateParams", "_basic", "_host", "_config", "$state","_baseService", function ($scope, $stateParams, _basic, _host, _config, $state,_baseService) {
     // 取得当前画面 登录用户
     var userId = _basic.getSession(_basic.USER_ID);
     // 还款编号
@@ -28,7 +28,7 @@ app.controller("finance_repay_detail_controller", ["$scope", "$stateParams", "_b
      * 返回前画面。
      */
     $scope.return = function () {
-        $state.go($stateParams.from, {from:"finance_repay_detail"}, {reload: true})
+        $state.go($stateParams.from, {from:"finance_loan_out_repay_detail"}, {reload: true})
     };
 
     /**

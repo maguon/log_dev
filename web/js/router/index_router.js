@@ -63,6 +63,12 @@ app.config(['$stateProvider',"$urlRouterProvider",function($stateProvider,$urlRo
             controller:'car_valuation_statistics_controller'
         })
 
+        // 财务管理->财务日历
+        .state("finance_calendar", {
+            url:"/finance_calendar",
+            templateUrl: "/view/finance/finance_calendar.html",
+            controller:"finance_calendar_controller"
+        })
         // 财务管理->订单管理
         .state("order", {
             url:"/order",
@@ -94,6 +100,32 @@ app.config(['$stateProvider',"$urlRouterProvider",function($stateProvider,$urlRo
             templateUrl: "/view/finance/finance_car.html",
             controller:"finance_car_controller"
         })
+        // 财务管理->金融贷入
+        .state("finance_loan_in", {
+            url:"/finance_loan_in",
+            params: {"from": null},
+            templateUrl: "/view/finance/finance_loan_in.html",
+            controller:"finance_loan_in_controller"
+        })
+        // 财务管理->金融贷入->详细
+        .state("finance_loan_in_detail", {
+            url:"/finance_loan_in_detail/{id}?from",
+            templateUrl: "/view/finance/finance_loan_in_detail.html",
+            controller:"finance_loan_in_detail_controller"
+        })
+        // 财务管理->贷入还款
+        .state("finance_loan_in_repay", {
+            url:"/finance_loan_in_repay",
+            params: {"from": null},
+            templateUrl: "/view/finance/finance_loan_in_repay.html",
+            controller:"finance_loan_in_repay_controller"
+        })
+        // 财务管理->贷入还款->详细
+        .state("finance_loan_in_repay_detail", {
+            url:"/finance_loan_in_repay_detail/{id}?from",
+            templateUrl: "/view/finance/finance_loan_in_repay_detail.html",
+            controller:"finance_loan_in_repay_detail_controller"
+        })
         // 财务管理->金融贷出
         .state("finance_loan_out", {
             url:"/finance_loan_out",
@@ -107,18 +139,18 @@ app.config(['$stateProvider',"$urlRouterProvider",function($stateProvider,$urlRo
             templateUrl: "/view/finance/finance_loan_out_detail.html",
             controller:"finance_loan_out_detail_controller"
         })
-        // 财务管理->金融还贷
-        .state("finance_repay", {
-            url:"/finance_repay",
+        // 财务管理->贷出还款
+        .state("finance_loan_out_repay", {
+            url:"/finance_loan_out_repay",
             params: {"from": null},
-            templateUrl: "/view/finance/finance_repay.html",
-            controller:"finance_repay_controller"
+            templateUrl: "/view/finance/finance_loan_out_repay.html",
+            controller:"finance_loan_out_repay_controller"
         })
-        // 财务管理->金融还贷->详细
-        .state("finance_repay_detail", {
-            url:"/finance_repay_detail/{id}?from",
-            templateUrl: "/view/finance/finance_repay_detail.html",
-            controller:"finance_repay_detail_controller"
+        // 财务管理->贷出还款->详细
+        .state("finance_loan_out_repay_detail", {
+            url:"/finance_loan_out_repay_detail/{id}?from",
+            templateUrl: "/view/finance/finance_loan_out_repay_detail.html",
+            controller:"finance_loan_out_repay_detail_controller"
         })
         // 财务管理->信用证
         .state("credit_card", {

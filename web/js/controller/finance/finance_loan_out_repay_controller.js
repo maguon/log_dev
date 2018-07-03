@@ -1,7 +1,7 @@
 /**
- * 主菜单：财务管理 -> 金融还贷 控制器
+ * 主菜单：财务管理 -> 贷出还款 控制器
  */
-app.controller("finance_repay_controller", ["$scope", "$rootScope", "_host", "_basic", "_config", "$state", "$stateParams","_baseService", function ($scope, $rootScope, _host, _basic, _config, $state, $stateParams,_baseService) {
+app.controller("finance_loan_out_repay_controller", ["$scope", "$rootScope", "_host", "_basic", "_config", "$state", "$stateParams","_baseService", function ($scope, $rootScope, _host, _basic, _config, $state, $stateParams,_baseService) {
 
     // 取得当前画面 登录用户
     var userId = _basic.getSession(_basic.USER_ID);
@@ -71,7 +71,7 @@ app.controller("finance_repay_controller", ["$scope", "$rootScope", "_host", "_b
                 conditionsObj.entrustNm = getEntrustNm();
                 // 当前画面的检索信息
                 var pageItems = {
-                    pageId: "finance_repay",
+                    pageId: "finance_loan_out_repay",
                     start: $scope.start,
                     size: $scope.size,
                     conditions: conditionsObj
@@ -891,9 +891,9 @@ app.controller("finance_repay_controller", ["$scope", "$rootScope", "_host", "_b
     $scope.initData = function () {
 
         // 如果是从后画面跳回来时，取得上次检索条件
-        if ($stateParams.from === "finance_repay_detail" && $rootScope.refObj !== undefined && $rootScope.refObj.pageArray.length > 0) {
+        if ($stateParams.from === "finance_loan_out_repay_detail" && $rootScope.refObj !== undefined && $rootScope.refObj.pageArray.length > 0) {
             var pageItems = $rootScope.refObj.pageArray.pop();
-            if (pageItems.pageId === "finance_repay") {
+            if (pageItems.pageId === "finance_loan_out_repay") {
                 // 设定画面翻页用数据
                 $scope.start = pageItems.start;
                 $scope.size = pageItems.size;
