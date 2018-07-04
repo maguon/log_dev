@@ -337,7 +337,7 @@ app.controller("finance_loan_in_detail_controller", ["$scope", "$stateParams", "
             var obj = {
                 loanIntoId: loanId,
                 repaymentMoney: $scope.newPayment.paymentMoney,
-                rate: $scope.newPayment.rate === "" ? 0 : $scope.newPayment.rate,
+                rate: $scope.newPayment.rate === "" ? 0.0222 : $scope.newPayment.rate,
                 dayCount: $scope.newPayment.interestDay,
                 interestMoney: $scope.newPayment.interest,
                 fee: $scope.newPayment.poundage === "" ? 0 : $scope.newPayment.poundage,

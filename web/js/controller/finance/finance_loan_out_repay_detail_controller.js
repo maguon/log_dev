@@ -206,7 +206,7 @@ app.controller("finance_loan_out_repay_detail_controller", ["$scope", "$statePar
                     var obj = {
                         loanId: $scope.repay.loanId,
                         repaymentMoney: $scope.repay.paymentMoney,
-                        rate: $scope.repay.rate === "" ? 0 : $scope.repay.rate,
+                        rate: $scope.repay.rate === "" ? 0.0333 : $scope.repay.rate,
                         createInterestMoney: $scope.loanInfo.notRepaymentMoney,
                         dayCount: $scope.repay.interestDay,
                         interestMoney: $scope.repay.interest,

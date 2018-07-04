@@ -360,7 +360,7 @@ app.controller("finance_loan_out_repay_controller", ["$scope", "$rootScope", "_h
                 // 本次还贷金额(美元)
                 repaymentMoney: $scope.repay.paymentMoney,
                 // 利率/天
-                rate: $scope.repay.rate === "" ? 0 : $scope.repay.rate,
+                rate: $scope.repay.rate === "" ? 0.0333 : $scope.repay.rate,
                 // 产生利息金额(美元)
                 createInterestMoney: $scope.loanInfo.notRepaymentMoney,
                 // 产生利息时长(天)
