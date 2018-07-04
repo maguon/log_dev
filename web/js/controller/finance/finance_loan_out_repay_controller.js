@@ -188,7 +188,7 @@ app.controller("finance_loan_out_repay_controller", ["$scope", "$rootScope", "_h
     /**
      * 点击：查询按钮，进行数据查询
      */
-    $scope.queryFinanceLoanInfo = function () {
+    $scope.queryLoanRepaymentInfo = function () {
         // 默认第一页
         $scope.start = 0;
         // 检索条件 委托方
