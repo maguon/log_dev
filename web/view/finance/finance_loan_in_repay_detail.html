@@ -1,0 +1,202 @@
+<!-- 主菜单：财务管理 -> 贷入还款（详情） 画面 -->
+
+<!-- 头部 -->
+<div class="row valign-wrapper">
+    <!-- 返回前画面 按钮 -->
+    <a class="btn-floating btn waves-effect cyan lighten-1 waves-light" ng-click="return()">
+        <i class="mdi mdi-arrow-left-bold"></i>
+    </a>
+    <!-- 标题文字 -->
+    <h5 class="col s12 cyan-text lighten-1  center-align">贷入还款详情</h5>
+</div>
+
+<!-- 分割线 -->
+<div class="row">
+    <div class="col s12" style="border-top: 2px solid #407BC7">
+    </div>
+</div>
+
+<!-- 主画面 -->
+<div class="row no-marBottom">
+
+    <!-- 第一部分(只读) -->
+
+    <!-- 贷入还款编号 还款状态 -->
+    <div class="col s12 vc-center cyan-text fz14">
+        <div class="col s6 left-align" style="height:44px; padding-top: 10px;">
+            贷入还款编号: {{repay.repaymentId}}
+        </div>
+        <!-- 还款状态 -->
+        <div class="col s6 right-align" style="height:44px; padding-top: 10px;" ng-class="{'red-text':repay.repaymentStatus == 1}">
+            {{paymentStatus[repay.repaymentStatus - 1].name}}
+        </div>
+    </div>
+    <!-- 分割线 -->
+    <div class="col s12">
+        <div class="col s12">
+            <div class="col s12 divider"></div>
+        </div>
+    </div>
+    <!-- 还款时间 -->
+    <div class="col s12 vc-center cyan-text fz14">
+        <div class="col s6 left-align fz16" style="height:44px; padding-top: 10px;">
+        </div>
+        <div class="col s6 right-align grey-text" style="height:44px; padding-top: 10px;padding-bottom: 50px;">
+            还款时间: {{repay.repaymentDate |date:'yyyy-MM-dd'}}
+        </div>
+    </div>
+
+    <div class="col s12">
+        <div class="col s12">
+            <div class="row z-depth-1" style="border:1px solid #bdbdbd;">
+                <!-- header -->
+                <div class="col s12 lighten-1 cyan-text vc-center fz15" style="height:60px;">
+                    <div class="col s4 left-align">
+                        贷入公司：{{loanInfo.companyName}}
+                    </div>
+                    <div class="col s4 center-align">
+                        贷入编号：{{loanInfo.id}}
+                    </div>
+                    <div class="col s4 right-align grey-text fz14">
+                        贷入时间：{{loanInfo.loanStartDate |date:'yyyy-MM-dd'}}
+                    </div>
+                </div>
+
+                <!-- body -->
+                <div class="col s12 lighten-1 white grey-text vc-center fz14" style="height:60px;border-top:1px solid #bdbdbd;">
+                    <div class="col s6 left-align">
+                        贷入总金额(美元)：<span class="red-text">{{loanInfo.loanMoney | number}}</span>
+                    </div>
+                    <div class="col s6 right-align">
+                        <div ng-show="repay.repaymentStatus == 1">未还本金(美元)：<span class="red-text">{{loanInfo.notRepaymentMoney | number}}</span></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 第二部分 -->
+
+    <!-- 未完结 可编辑 -->
+    <div ng-show="repay.repaymentStatus == 1">
+        <!-- 贷入编号 对应详细信息 -->
+        <div ng-show="hasLoanInfo" class="col s12">
+
+            <div class="col s12" style="margin-bottom: 5px;">
+                <!-- 本次还贷金额(美元) -->
+                <div class="input-field col s4">
+                    <input type="text" id="paymentMoneyText" maxlength="8" valid-money ng-model="repay.paymentMoney" class="red-text right-align" ng-change="calculatePaymentMoney()">
+                    <label for="paymentMoneyText"><span class="red-text">*</span>本次还贷金额(美元)</label>
+                </div>
+
+                <!-- 利率/天 -->
+                <div class="input-field col s4">
+                    <input type="text" id="rateText" maxlength="10" valid-rate ng-model="repay.rate" class="red-text right-align" ng-change="calculatePaymentMoney()">
+                    <i class="dataIcon" style="right: -1px"> %</i>
+                    <label for="rateText" ng-class="{'label-active':repay.rate !== ''}">利率/天</label>
+                </div>
+
+                <!-- 产生利息时长(天) -->
+                <div class="input-field col s4">
+                    <input type="text" id="interestDayText" maxlength="10" valid-num ng-model="repay.interestDay" class="right-align" ng-change="calculatePaymentMoney()">
+                    <label for="interestDayText" ng-class="{'label-active':repay.interestDay !== ''}"><span class="red-text">*</span>产生利息时长(天)</label>
+                </div>
+            </div>
+
+            <div class="col s12">
+                <!-- 利息(美元) -->
+                <div class="input-field col s4">
+                    <input type="text" id="interestText" ng-model="repay.interest" class="red-text right-align" disabled>
+                    <label for="interestText" ng-class="{'label-active':repay.interest !== ''}">利息(美元)</label>
+                </div>
+
+                <!-- 手续费(美元) -->
+                <div class="input-field col s4">
+                    <input type="text" id="poundageText" maxlength="8" valid-money ng-model="repay.poundage" class="red-text right-align" ng-change="calculatePaymentMoney()">
+                    <label for="poundageText" ng-class="{'label-active':repay.poundage !== ''}">手续费(美元)</label>
+                </div>
+
+                <!-- 实际还款金额(美元) -->
+                <div class="input-field col s4">
+                    <input type="text" id="realPaymentText" ng-model="repay.totalPaymentMoney" class="red-text right-align" disabled>
+                    <label for="realPaymentText" ng-class="{'label-active':repay.totalPaymentMoney !== ''}">实际还款金额(美元)</label>
+                </div>
+            </div>
+        </div>
+        <!-- 备注 -->
+        <div class="col s12">
+            <div class="col s12">
+                <div class="input-field col s12">
+                    <input type="text" id="paymentRemarkText" maxlength="200" ng-model="repay.remark">
+                    <label for="paymentRemarkText">备注</label>
+                </div>
+            </div>
+        </div>
+
+        <!-- 修改 button -->
+        <div class="row col s12 right-align" style="margin-top: 50px">
+            <div class="col s8"></div>
+            <div class="col s2 right-align">
+                <a ng-click="updatePayment()" style="width: 150px;" class="waves-light waves-effect cyan lighten-2 btn">保存</a>
+            </div>
+            <div class="col s2 right-align">
+                <a ng-click="updatePaymentStatus()" style="width: 150px;" class="waves-light waves-effect amber darken-2 btn">完结</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- 已完结 只读 -->
+    <div ng-show="repay.repaymentStatus == 2">
+        <!-- 贷入编号 对应详细信息 -->
+        <div ng-show="hasLoanInfo" class="col s12">
+
+            <div class="col s12" style="height:44px;">
+                <!-- 归还本金(美元) -->
+                <div class="input-field col s4">
+                    <label class="grey-text"><span class="fz14">归还本金(美元)：</span><span class="red-text">{{repay.paymentMoney| number:2}}</span></label>
+                </div>
+
+                <!-- 利率/天 -->
+                <div class="input-field col s4">
+                    <label class="grey-text"><span class="fz14">利率/天：<span class="red-text">{{repay.rate}}%</span></span></label>
+                </div>
+
+                <!-- 产生利息时长(天) -->
+                <div class="input-field col s4">
+                    <label class="grey-text"><span class="fz14">产生利息时长(天)：{{repay.interestDay| number}}</span></label>
+                </div>
+            </div>
+            <!-- 分割线 -->
+            <div class="col divider" style="width:96%; margin-left: 20px;margin-top: 20px;"></div>
+
+            <div class="col s12" style="height:44px;">
+                <!-- 利息(美元) -->
+                <div class="input-field col s4">
+                    <label class="grey-text"><span class="fz14">利息(美元)：</span><span class="red-text">{{repay.interest| number:2}}</span></label>
+                </div>
+
+                <!-- 手续费(美元) -->
+                <div class="input-field col s4">
+                    <label class="grey-text"><span class="fz14">手续费(美元)：</span><span class="red-text">{{repay.poundage| number:2}}</span></label>
+                </div>
+
+                <!-- 还款总额(美元) -->
+                <div class="input-field col s4 ">
+                    <label class="grey-text"><span class="fz14">还款总额(美元)：</span><span class="red-text">{{repay.totalPaymentMoney| number:2}}</span></label>
+                </div>
+            </div>
+            <!-- 分割线 -->
+            <div class="col divider" style="width:96%; margin-left: 20px;margin-top: 20px;"></div>
+
+            <!-- 备注 -->
+            <div class="col s12" style="height:44px;">
+                <div class="input-field col s12">
+                    <label class="grey-text"><span class="fz14">备注：</span>{{repay.remark}}</label>
+                </div>
+            </div>
+            <!-- 分割线 -->
+            <div class="col divider" style="width:96%; margin-left: 20px;margin-top: 20px;"></div>
+        </div>
+    </div>
+
+</div>
