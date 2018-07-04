@@ -191,39 +191,44 @@ app.controller("finance_loan_out_repay_detail_controller", ["$scope", "$statePar
      * 保存还款信息。(保存按钮)
      */
     $scope.updatePayment = function () {
-        swal({
-                title: "确定修改本次还款信息吗？",
-                type: "warning",
-                showCancelButton: true,
-                confirmButtonColor: "#DD6B55",
-                confirmButtonText: "确认",
-                cancelButtonText: "取消",
-                closeOnConfirm: true
-            },
-            function () {
-                var obj = {
-                    loanId: $scope.repay.loanId,
-                    repaymentMoney: $scope.repay.paymentMoney,
-                    rate: $scope.repay.rate === "" ? 0 : $scope.repay.rate,
-                    createInterestMoney: $scope.loanInfo.notRepaymentMoney,
-                    dayCount: $scope.repay.interestDay,
-                    interestMoney: $scope.repay.interest,
-                    fee: $scope.repay.poundage === "" ? 0 : $scope.repay.poundage,
-                    remark: $scope.repay.remark
-                };
-                // 修改本次支付金额
-                var url = _host.api_url + "/user/" + userId + "/repayment/" + repayId;
-                _basic.put(url, obj).then(function (data) {
-                    if (data.success) {
-                        // 关闭模态
-                        $('#newLoanPaymentDiv').modal('close');
-                        // 查询还款记录列表
-                        $scope.lookPaymentInfo();
-                    } else {
-                        swal(data.msg, "", "error");
-                    }
-                })
-            });
+        // 本次归还本金 , 产生利息时长 为必须输入项
+        if ($scope.repay.paymentMoney !== "" && $scope.repay.interestDay !== "") {
+            swal({
+                    title: "确定修改本次还款信息吗？",
+                    type: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: "#DD6B55",
+                    confirmButtonText: "确认",
+                    cancelButtonText: "取消",
+                    closeOnConfirm: true
+                },
+                function () {
+                    var obj = {
+                        loanId: $scope.repay.loanId,
+                        repaymentMoney: $scope.repay.paymentMoney,
+                        rate: $scope.repay.rate === "" ? 0 : $scope.repay.rate,
+                        createInterestMoney: $scope.loanInfo.notRepaymentMoney,
+                        dayCount: $scope.repay.interestDay,
+                        interestMoney: $scope.repay.interest,
+                        fee: $scope.repay.poundage === "" ? 0 : $scope.repay.poundage,
+                        remark: $scope.repay.remark
+                    };
+                    // 修改本次支付金额
+                    var url = _host.api_url + "/user/" + userId + "/repayment/" + repayId;
+                    _basic.put(url, obj).then(function (data) {
+                        if (data.success) {
+                            swal("保存成功", "", "success");
+                            // 查询还款记录列表
+                            $scope.lookPaymentInfo();
+                        } else {
+                            swal(data.msg, "", "error");
+                        }
+                    })
+                });
+
+        } else {
+            swal("请填写必需还款信息！", "", "warning");
+        }
     };
 
     /**
