@@ -1,0 +1,199 @@
+<!-- 主菜单：财务管理 -> 贷入还款 画面 -->
+<div class="row">
+
+    <!-- 上部分：检索条件输入区域 -->
+    <div class="row col s12">
+        <!-- 左侧：输入区 -->
+        <div class="col s10">
+
+            <!-- 查询条件：贷入还款编号 -->
+            <div class="input-field col s4">
+                <input type="text" id="repaymentIdText" ng-model="condRepaymentId">
+                <label for="repaymentIdText">贷入还款编号</label>
+            </div>
+
+            <!-- 查询条件：贷入公司 -->
+            <div class="input-field col s4">
+                <select material-select watch ng-model="condLoanCoId">
+                    <option value="">贷入公司</option>
+                    <option ng-repeat="el in loanInCoList" ng-value="el.id">{{el.company_name}}</option>
+                </select>
+            </div>
+
+            <!-- 查询条件：贷入编号 -->
+            <div class="input-field col s4">
+                <input type="text" id="loanInIdText" ng-model="condLoanInId">
+                <label for="loanInIdText">贷入编号</label>
+            </div>
+
+            <!-- 查询条件：还款时间 -->
+            <div class="input-field col s4">
+                <input type="text" id="loanEndDateStartText" ng-model="condCreatedOnStart" class="datepicker" date>
+                <i class="mdi dataIcon mdi-table-large"></i>
+                <label for="loanEndDateStartText">还款时间(始)</label>
+            </div>
+            <div class="input-field col s4">
+                <input id="loanEndDateEndText" type="text" ng-model="condCreatedOnEnd" class="datepicker" date>
+                <i class="mdi dataIcon mdi-table-large"></i>
+                <label for="loanEndDateEndText">还款时间(终)</label>
+            </div>
+
+            <!-- 查询条件：还款状态 -->
+            <div class="input-field col s4">
+                <select material-select watch ng-model="condRepaymentStatus">
+                    <option value="" selected>还款状态</option>
+                    <option ng-repeat="el in paymentStatus" ng-value="el.id">{{el.name}}</option>
+                </select>
+            </div>
+        </div>
+
+        <!-- 右侧：按钮区 -->
+        <div class="col s2" style="margin-top:45px;">
+            <!-- 查询按钮-->
+            <div class="col s6 center">
+                <a class="btn-floating btn-large waves-light waves-effect red lighten-2 btn" ng-click="queryLoanRepaymentInfo()">
+                    <i class="mdi mdi-magnify"></i>
+                </a>
+            </div>
+            <!-- 新增按钮 -->
+            <div class="col s6 center">
+                <a class=" btn-floating btn-large waves-light waves-effect cyan lighten-1 btn"
+                   ng-click="openNewFinanceRepayDiv()">
+                    <i class="mdi mdi-plus"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- 下部分：检索结果显示区域 -->
+    <div class="col s12">
+        <div class="divider" style="background: #4e84cb;height: 2px;"></div>
+        <table class=" bordered striped">
+            <thead class="blue-grey lighten-5">
+            <tr class="grey-text text-darken-2">
+                <th>贷入还款编号</th>
+                <th>贷入公司</th>
+                <th>贷入编号</th>
+                <th>归还本金(美元)</th>
+                <th>计息天数</th>
+                <th>利息(美元)</th>
+                <th>手续费(美元)</th>
+                <th>还款时间</th>
+                <th>状态</th>
+                <th style="padding-left: 15px;">操作</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="el in loanRepaymentList" class="grey-text text-darken-1">
+                <!-- 贷入还款编号 -->
+                <td ng-bind="el.id"></td>
+                <!-- 贷入公司 -->
+                <td ng-bind="el.company_name"></td>
+                <!-- 贷入编号 -->
+                <td ng-bind="el.loan_into_id"></td>
+                <!-- 归还本金(美元) -->
+                <td>{{el.repayment_money==null ? 0 : el.repayment_money | number}}</td>
+                <!-- 计息天数 -->
+                <td ng-bind="el.day_count | number"></td>
+                <!-- 利息(美元) -->
+                <td ng-bind="el.interest_money| number"></td>
+                <!-- 手续费(美元) -->
+                <td ng-bind="el.fee | number"></td>
+                <!-- 还款时间 -->
+                <td ng-bind="el.created_on|date:'yyyy-MM-dd HH:mm'"></td>
+                <!-- 状态 -->
+                <td ng-if="el.repayment_status==1" class="red-text">{{paymentStatus[el.repayment_status-1].name}}</td>
+                <td ng-if="el.repayment_status==2" class="grey-text">{{paymentStatus[el.repayment_status-1].name}}</td>
+                <!--操作-->
+                <td class="operation">
+                    <!-- 详情 -->
+                    <a href="#" ui-sref="finance_loan_in_repay_detail({id:el.id,from:'finance_loan_in_repay'})" style="margin-left: 15px;">
+                        <i class="mdi mdi-file-outline look_icon cyan-text lighten-1"></i>
+                    </a>
+                </td>
+            </tr>
+            <tr class="grey-text text-darken-1" ng-if="loanRepaymentList.length == 0">
+                <td colspan="10" style="letter-spacing: 2px;text-align: center;">暂无数据</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <!-- 上下页按钮 -->
+    <div class="paging_box col s12">
+        <div class="right">
+            <a class="waves-light waves-effect cyan lighten-1 btn" id="pre" ng-click="preBtn()">
+                上一页
+            </a>
+            <a class="waves-light waves-effect cyan lighten-1 btn " id="next" ng-click="nextBtn()">
+                下一页
+            </a>
+        </div>
+    </div>
+</div>
+
+
+<!-- 模态画面【新增还款】 模态框 -->
+<div id="newRepayDiv" class="modal modal-fixed-footer row" style="height: 456px;">
+
+    <!-- Header -->
+    <div class="modal_title center-align cyan white-text">新增还款</div>
+
+    <!-- Body -->
+    <div class="modal-content" style="height: 350px;">
+
+        <!-- 显示画面【新增还款】 Body -->
+        <div class="col s12">
+
+            <!-- TAB [基本信息] -->
+            <div>
+                <div style="min-height: 300px;">
+
+                    <!-- 第一部分 委托方性质 委托方 贷入编号 -->
+                    <div class="col s12 vc-center fz14" style="margin-top: 20px;margin-bottom: 20px;">
+                        <!-- 委托方性质 -->
+                        <div class="input-field col s4">
+                            <select material-select watch ng-model="repay.loanCoId" ng-change="getLoanList(repay.loanCoId)">
+                                <option value="">贷入公司</option>
+                                <option ng-repeat="el in loanInCoList" ng-value="el.id">{{el.company_name}}</option>
+                            </select>
+                        </div>
+
+                        <!-- 贷入编号 -->
+                        <div class="input-field col s4">
+                            <select material-select watch ng-model="repay.loanId">
+                                <option value="" disabled>贷入编号</option>
+                                <option ng-repeat="el in loanList" ng-value="el.id">{{el.id}}</option>
+                            </select>
+                        </div>
+
+                        <!-- 归还本金 -->
+                        <div class="input-field col s4">
+                            <input type="text" id="paymentMoneyText" maxlength="8" valid-money ng-model="repay.paymentMoney">
+                            <label for="paymentMoneyText"><span class="red-text">*</span>归还本金(美元)</label>
+                        </div>
+                    </div>
+
+                    <!-- 备注 -->
+                    <div class="col s12">
+                        <div class="input-field col s12">
+                            <input type="text" id="paymentRemarkText" maxlength="200" ng-model="repay.remark">
+                            <label for="paymentRemarkText">备注</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="modal-footer right-align">
+        <a class="btn-floating waves-effect waves-light btn cyan lighten-1" style="width:38px;height:38px; margin-right: 50px;"
+           ng-click="addLoanRepayment()">
+            <i class="mdi mdi-check"></i>
+        </a>
+        <a class="btn-floating waves-effect waves-light btn modal-close grey" style="width:38px;height:38px; margin-right: 20px;">
+            <i class="mdi mdi-close"></i>
+        </a>
+    </div>
+</div>
