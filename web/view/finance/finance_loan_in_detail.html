@@ -184,7 +184,7 @@
                     <div class="col s12 lighten-1 white grey-text vc-center" ng-repeat="el in loanRepaymentList" style="height:66px;">
                         <div class="col s12 vc-center" style="height: 50px;border-bottom: 1px solid #bdbdbd">
                             <div class="col s4 left-align cyan-text" style="">
-                                还款编号：{{el.id}}
+                                贷入还款编号：{{el.id}}
                             </div>
                             <div class="col s4 left-align fz14">
                                 本金/总金额(美元)：<span class="red-text">{{el.repayment_money | number:2}} / {{el.repayment_money + el.interest_money + el.fee | number:2}}</span>
@@ -192,13 +192,11 @@
                             <div class="col s2 left-align fz14">
                                 {{el.created_on |date:'yyyy-MM-dd HH:mm'}}
                             </div>
-                            <div class="col s2 vc-center">
-                                <a ng-show="loanInfo.loanStatus != 4 && el.repayment_status == 1" class="btn-floating waves-effect waves-light cyan lighten-1" style="margin-left: 20px;width:30px;height: 30px;"
+                            <div class="col s2 right-align">
+                                <a ng-show="loanInfo.loanStatus != 4 && el.repayment_status == 1" class="btn-floating waves-effect waves-light cyan lighten-1" style="margin-bottom: 8px;width:30px;height: 30px;"
                                    ng-click="updatePaymentStatus(el.id)">
                                     <i class="mdi mdi-check add_brand"  style="position: absolute;right:0;bottom:3px;font-size:20px;line-height: 20px;"></i>
                                 </a>
-
-                                <i ng-show="loanInfo.loanStatus != 4 && el.repayment_status != 1" class="mdi mdi-check add_brand cyan-text"  style="width:30px;margin-left: 20px;bottom:3px;font-size:20px;line-height: 20px;"></i>
 
                                 <a style="margin-left: 30px;width:30px;height: 30px;cursor: pointer" ng-click="openLoanPaymentDiv(el.id)">
                                     <i class="mdi mdi-file-outline cyan-text lighten-1 fz22"></i>
@@ -213,21 +211,21 @@
     </div>
 </div>
 
-<!-- 模态画面【新增还款/还款信息】 模态框 -->
-<div id="saveLoanPaymentDiv" class="modal modal-fixed-footer row" style="max-height: 656px;">
+<!-- 模态画面【新增还款/还款详情】 模态框 -->
+<div id="saveLoanPaymentDiv" class="modal modal-fixed-footer row" style="max-height: 506px;">
 
     <!-- Header -->
-    <div class="modal_title center-align cyan white-text">{{modalFlag=='newPaymentInfo' ? '新增还款':'还款信息'}}</div>
+    <div class="modal_title center-align cyan white-text">{{modalFlag=='newPaymentInfo' ? '新增还款':'还款详情'}}</div>
 
     <!-- Body -->
-    <div class="modal-content" style="max-height: 550px;">
+    <div class="modal-content" style="max-height: 400px;">
 
         <!-- 显示画面【新增还款】 Body -->
-        <div class="col s12 ul-tabs">
+        <div class="col s12">
 
             <!-- TAB [基本信息] -->
-            <div id="paymentInfoDiv" class="modal_tab_box">
-                <div style="min-height: 480px;">
+            <div>
+                <div>
                     <!-- 第一部分 -->
 
                     <!-- 未还金额 起始时间 (新规) -->
@@ -250,7 +248,7 @@
                         </div>
                     </div>
                     <!-- 分割线 -->
-                    <div class="col divider" ng-show="modalFlag!='newPaymentInfo'" style="width:96%; margin-left: 20px;margin-bottom: 5px;"></div>
+                    <div class="col divider" ng-show="modalFlag!='newPaymentInfo'" style="width:96%; margin-left: 20px;margin-bottom: 20px;"></div>
 
                     <!-- 第二部分 -->
                     <!-- 基本信息 (录入) -->
@@ -280,12 +278,6 @@
                         </div>
 
                         <div class="col s12">
-                            <!-- 产生利息金额(美元) -->
-                            <div class="input-field col s4">
-                                <input type="text" id="principalText" maxlength="8" valid-money ng-model="newPayment.principal" class="red-text right-align" disabled>
-                                <label for="principalText" ng-class="{'label-active':newPayment.principal !== ''}">产生利息金额(美元)</label>
-                            </div>
-
                             <!-- 利息(美元) -->
                             <div class="input-field col s4">
                                 <input type="text" id="interestText" maxlength="8" valid-money ng-model="newPayment.interest" class="red-text right-align" disabled>
@@ -297,19 +289,22 @@
                                 <input type="text" id="poundageText" maxlength="8" valid-money ng-model="newPayment.poundage" class="red-text right-align" ng-change="calculatePaymentMoney()">
                                 <label for="poundageText" ng-class="{'label-active':newPayment.poundage !== ''}">手续费(美元)</label>
                             </div>
+
+                            <!-- 本次还款总额(美元) -->
+                            <div class="input-field col s4">
+                                <input type="text" id="totalPaymentText" maxlength="8" valid-money ng-model="newPayment.totalPaymentMoney" class="red-text right-align" disabled>
+                                <label for="totalPaymentText" ng-class="{'label-active':newPayment.totalPaymentMoney !== ''}">本次还款总额(美元)</label>
+                            </div>
                         </div>
 
-                        <!-- 本次应还总额(美元) 剩余未还金额(美元) (只读) -->
-                        <div ng-show="modalFlag=='newPaymentInfo'" class="col s12 vc-center cyan-text fz14" style="margin-top: 20px;">
-                            <div class="col s6 left-align" style="height:44px; padding-top: 10px;">
-                                本次应还总额(美元): <span class="red-text">{{newPayment.totalPaymentMoney | number}}</span>
-                            </div>
-                            <div class="col s6 right-align" style="height:44px; padding-top: 10px;">
-                                剩余未还金额(美元): <span class="red-text">{{newPayment.leftPaymentMoney | number}}</span>
-                            </div>
-                        </div>
-                        <!-- 分割线 -->
-                        <div ng-show="modalFlag=='newPaymentInfo'" class="col divider" style="width:96%; margin-left: 20px;margin-bottom: 5px;"></div>
+                        <!--&lt;!&ndash; 本次应还总额(美元) 剩余未还金额(美元) (只读) &ndash;&gt;-->
+                        <!--<div ng-show="modalFlag=='newPaymentInfo'" class="col s12 vc-center cyan-text fz14" style="margin-top: 20px;">-->
+                            <!--<div class="col s6 right-align" style="height:44px; padding-top: 10px;">-->
+                                <!--剩余未还金额(美元): <span class="red-text">{{newPayment.leftPaymentMoney | number}}</span>-->
+                            <!--</div>-->
+                        <!--</div>-->
+                        <!--&lt;!&ndash; 分割线 &ndash;&gt;-->
+                        <!--<div ng-show="modalFlag=='newPaymentInfo'" class="col divider" style="width:96%; margin-left: 20px;margin-bottom: 5px;"></div>-->
 
                         <!-- 备注 -->
                         <div class="col s12">
@@ -323,9 +318,9 @@
                     <!-- 贷入信息完结 或者 该条还款信息完结时，全部表示项 (只读) -->
                     <div ng-show="loanInfo.loanStatus == 4 || newPayment.repaymentStatus == 2">
                         <div class="col s12" style="height:44px;">
-                            <!-- 本次还贷金额(美元) -->
+                            <!-- 本次归还本金(美元) -->
                             <div class="input-field col s4">
-                                <label class="grey-text"><span class="fz14">本次还贷金额(美元)：</span><span class="red-text">{{newPayment.paymentMoney| number}}</span></label>
+                                <label class="grey-text"><span class="fz14">本次归还本金(美元)：</span><span class="red-text">{{newPayment.paymentMoney| number}}</span></label>
                             </div>
 
                             <!-- 利率/天 -->
@@ -333,20 +328,15 @@
                                 <label class="grey-text"><span class="fz14">利率/天：{{newPayment.rate}}%</span></label>
                             </div>
 
-                            <!-- 产生利息金额(美元) -->
+                            <!-- 产生利息时长(天) -->
                             <div class="input-field col s4">
-                                <label class="grey-text"><span class="fz14">产生利息金额(美元)：</span><span class="red-text">{{newPayment.principal| number}}</span></label>
+                                <label class="grey-text"><span class="fz14">产生利息时长(天)：{{newPayment.interestDay| number}}</span></label>
                             </div>
                         </div>
                         <!-- 分割线 -->
                         <div class="col divider" style="width:96%; margin-left: 20px;margin-top: 20px;"></div>
 
                         <div class="col s12" style="height:44px;">
-                            <!-- 产生利息时长(天) -->
-                            <div class="input-field col s4">
-                                <label class="grey-text"><span class="fz14">产生利息时长(天)：{{newPayment.interestDay| number}}</span></label>
-                            </div>
-
                             <!-- 利息(美元) -->
                             <div class="input-field col s4">
                                 <label class="grey-text"><span class="fz14">利息(美元)：</span><span class="red-text">{{newPayment.interest| number}}</span></label>
@@ -355,6 +345,10 @@
                             <!-- 手续费(美元) -->
                             <div class="input-field col s4">
                                 <label class="grey-text"><span class="fz14">手续费(美元)：</span><span class="red-text">{{newPayment.poundage| number}}</span></label>
+                            </div>
+
+                            <div class="input-field col s4">
+                                <!--<label class="grey-text"><span class="fz14">产生利息金额(美元)：</span><span class="red-text">{{newPayment.principal| number}}</span></label>-->
                             </div>
                         </div>
                         <!-- 分割线 -->
@@ -368,38 +362,11 @@
                         </div>
                         <!-- 分割线 -->
                         <div class="col divider" style="width:96%; margin-left: 20px;margin-top: 20px;"></div>
-                    </div>
 
-                    <!-- 第三部分 -->
-                    <!-- 非新增还款(点击还款记录 查看详细按钮) -->
-                    <div ng-show="modalFlag!='newPaymentInfo'">
-                        <!-- 本次应还总额(美元) 信用证还款金额(美元) 其他方式还款金额 (只读) -->
-                        <div ng-show="loanInfo.loanStatus != 4 && newPayment.repaymentStatus == 1" class="col s12 vc-center cyan-text fz14" style="margin-top: 20px;">
-                            <div class="col s4 left-align" style="height:44px; padding-top: 10px;">
-                                本次应还总额(美元): <span class="red-text">{{newPayment.totalPaymentMoney | number}}</span>
-                            </div>
-                            <div class="col s4 left-align" style="height:44px; padding-top: 10px;">
-                                信用证还款金额(美元): <span class="red-text">{{newPayment.creditRepMoney | number}}</span>
-                            </div>
-                            <div class="col s4 left-align" style="height:44px; padding-top: 10px;">
-                                其他方式还款金额(美元): <span class="red-text">{{newPayment.otherRepMoney | number}}</span>
-                            </div>
-                        </div>
-                        <!-- 信用证还款金额(美元) 其他方式还款金额 (只读) -->
-                        <div ng-show="loanInfo.loanStatus == 4 || newPayment.repaymentStatus == 2" class="col s12 vc-center cyan-text fz14" style="margin-top: 20px;">
-                            <div class="col s6 left-align" style="height:44px; padding-top: 10px;">
-                                信用证还款金额(美元): <span class="red-text">{{newPayment.creditRepMoney | number}}</span>
-                            </div>
-                            <div class="col s6 right-align" style="height:44px; padding-top: 10px;">
-                                其他方式还款金额(美元): <span class="red-text">{{newPayment.otherRepMoney | number}}</span>
-                            </div>
-                        </div>
-                        <!-- 分割线 -->
-                        <div class="col divider" style="width:96%; margin-left: 20px;margin-bottom: 5px;"></div>
-                        <!-- 本次还款总金额(美元) (只读) -->
-                        <div ng-show="loanInfo.loanStatus == 4 || newPayment.repaymentStatus == 2" class="col s12 vc-center cyan-text fz14" style="margin-top: 20px;">
-                            <div class="col s4 right-align" style="height:44px; padding-top: 10px;">
-                                本次还款总金额(美元): <span class="red-text">{{newPayment.creditRepMoney + newPayment.otherRepMoney | number}}</span>
+                        <!-- 本次还款总额 -->
+                        <div class="col s12" style="height:44px;">
+                            <div class="input-field col s12 right-align">
+                                <span class="cyan-text fz14">本次还款总额(美元)：</span><span class="red-text">{{newPayment.totalPaymentMoney | number}}</span>
                             </div>
                         </div>
                     </div>
@@ -412,25 +379,17 @@
 
     <!-- Footer -->
     <div class="modal-footer right-align">
-        <!-- 新增还款 或者 该条还款信息未完结时 (可修改) -->
-        <!-- 取消/确认 按钮 -->
         <div ng-show="modalFlag=='newPaymentInfo' || (loanInfo.loanStatus != 4 && newPayment.repaymentStatus == 1)">
-            <a ng-show="modalFlag=='newPaymentInfo'" class="btn-floating waves-effect waves-light cyan lighten-1 btn" style="width:38px;height:38px;margin-right: 50px;"
-               ng-click="gotoNextPage()">
-                <i class="mdi mdi-trending-neutral"></i>
-            </a>
-            <a ng-show="modalFlag=='editPaymentInfo'" class="btn-floating waves-effect waves-light cyan lighten-1 btn" style="width:38px;height:38px;margin-right: 50px;"
+            <!-- 确认 按钮 -->
+            <a class="btn-floating waves-effect waves-light cyan lighten-1 btn" style="width:38px;height:38px;margin-right: 50px;"
                ng-click="updatePayment()">
                 <i class="mdi mdi-check"></i>
             </a>
             <!-- 取消 按钮 -->
-            <a ng-show="modalFlag=='editPaymentInfo' || (modalFlag=='newPaymentInfo' && tabId == 'paymentInfo')"
-               class="btn-floating waves-effect waves-light grey btn modal-close" style="width:38px;height:38px; margin-right: 20px;">
+            <a class="btn-floating waves-effect waves-light grey btn modal-close" style="width:38px;height:38px; margin-right: 20px;">
                 <i class="mdi mdi-close"></i>
             </a>
         </div>
-        <!-- 贷入信息完结 或者 该条还款信息完结时，全部表示项 (只读) -->
-        <!-- 确认 按钮 -->
         <div ng-show="loanInfo.loanStatus == 4 || newPayment.repaymentStatus == 2">
             <a ng-show="modalFlag=='editPaymentInfo'" class="btn-floating waves-effect waves-light cyan lighten-1 btn modal-close" style="width:38px;height:38px;margin-right: 50px;">
                 <i class="mdi mdi-check"></i>
