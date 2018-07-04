@@ -454,13 +454,11 @@
                             <div class="col s2 left-align fz14">
                                 {{el.created_on |date:'yyyy-MM-dd HH:mm'}}
                             </div>
-                            <div class="col s2 vc-center">
-                                <a ng-show="loanInfo.loanStatus != 4 && el.repayment_status == 1" class="btn-floating waves-effect waves-light cyan lighten-1" style="margin-left: 20px;width:30px;height: 30px;"
+                            <div class="col s2 right-align">
+                                <a ng-show="loanInfo.loanStatus != 4 && el.repayment_status == 1" class="btn-floating waves-effect waves-light cyan lighten-1" style="margin-bottom: 8px;width:30px;height: 30px;"
                                    ng-click="updatePaymentStatus(el.id)">
                                     <i class="mdi mdi-check add_brand"  style="position: absolute;right:0;bottom:3px;font-size:20px;line-height: 20px;"></i>
                                 </a>
-
-                                <i ng-show="loanInfo.loanStatus != 4 && el.repayment_status != 1" class="mdi mdi-check add_brand cyan-text"  style="width:30px;margin-left: 20px;bottom:3px;font-size:20px;line-height: 20px;"></i>
 
                                 <a style="margin-left: 30px;width:30px;height: 30px;cursor: pointer" ng-click="openLoanPaymentDiv(el.id)">
                                     <i class="mdi mdi-file-outline cyan-text lighten-1 fz22"></i>
