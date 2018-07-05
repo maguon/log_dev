@@ -186,6 +186,108 @@
                 </div>
             </div>
 
+
+            <!-- 贷出订单 -->
+            <div class="col s6 z-depth-" style="font-weight: bold;color: white;margin-top: 30px;">
+                <div class="center-align cyan-text z-depth-1" style="height: 140px;margin-top: 10px;border:1px solid cornflowerblue">
+
+                    <div class="col s12" style="height: 140px;">
+                        <div class="col s2 vc-center" style="height: 140px;">
+                            <a class="btn-floating btn-large waves-light waves-effect cyan lighten-2" style="cursor: default">
+                                <i class="mdi mdi-coin"></i>
+                            </a>
+                        </div>
+
+                        <div class="col s3" style="height: 100px;margin-top:20px;margin-bottom:20px; border-right: 1px solid #c2c0c2">
+                            <div class="col s12 vc-center" style="height: 100px;">
+                                贷出订单
+                            </div>
+                        </div>
+
+                        <div class="col s7" style="height: 100px;margin-top:20px;margin-bottom:20px;">
+                            <div class="col s12" style="border-bottom: 1px solid #c2c0c2">
+                                <div class="col s2" style="height: 50px;padding-top:3px;">
+                                    <span class="fz28"><i class="mdi mdi-content-copy"></i></span>
+                                </div>
+                                <div class="col s5 left-align" style="margin-top:15px;">
+                                    <span class="grey-text">未完结笔数</span>
+                                </div>
+                                <div class="col s5 right-align" style="margin-top:15px;">
+                                    {{loanOutCount| number}}
+                                </div>
+                            </div>
+                            <div class="col s12">
+                                <div class="col s2" style="height: 50px;padding-top:3px;">
+                                    <span class="fz28"><i class="mdi mdi-cash-usd"></i></span>
+                                </div>
+                                <div class="col s5 left-align" style="margin-top:15px;">
+                                    <span class="grey-text">未还总金额(美元)</span>
+                                </div>
+                                <div class="col s5 right-align red-text" style="margin-top:15px;">
+                                    {{loanOutNotRepayment| number}}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 贷入订单 -->
+            <div class="col s6" style="font-weight: bold;color: white;margin-top: 30px;">
+                <div class="center-align cyan-text z-depth-1" style="height: 140px;margin-top: 10px;border:1px solid cornflowerblue">
+
+                    <div class="col s12" style="height: 140px;">
+                        <div class="col s5" style="height: 140px;">
+                            <div style="height: 100px;">
+                                <div class="col s5 vc-center" style="height: 100px;padding-left: 0px;">
+                                    <a class="btn-floating btn-large waves-light waves-effect cyan lighten-2" style="cursor: default">
+                                        <i class="mdi mdi-coin"></i>
+                                    </a>
+                                </div>
+
+                                <div class="col s7" style="height: 60px;margin-top:20px;margin-bottom:20px; ">
+                                    <div class="col s12 " style="height: 100px;">
+                                        <div class="col s12">贷入订单</div>
+                                        <!-- 进度条 -->
+                                        <div class="col s12 progress">
+                                            <div class="determinate"></div>
+                                        </div>
+                                        <div class="col s12 fz14"  style="position:relative; margin-top:-12px;">{{loanPoint}}</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col s12 right-align fz14" style="height: 40px;">
+                                剩余额度(美元)：<span class="red-text">{{leftLoanMoney| number}}</span>
+                            </div>
+                        </div>
+
+                        <div class="col s7" style="height: 100px;margin-top:20px;margin-bottom:20px;border-left: 1px solid #c2c0c2">
+                            <div class="col s12" style="border-bottom: 1px solid #c2c0c2">
+                                <div class="col s2" style="height: 50px;padding-top:3px;">
+                                    <span class="fz28"><i class="mdi mdi-content-copy"></i></span>
+                                </div>
+                                <div class="col s5 left-align" style="margin-top:15px;">
+                                    <span class="grey-text">未完结笔数</span>
+                                </div>
+                                <div class="col s5 right-align" style="margin-top:15px;">
+                                    {{loanIntoCount| number}}
+                                </div>
+                            </div>
+                            <div class="col s12">
+                                <div class="col s2" style="height: 50px;padding-top:3px;">
+                                    <span class="fz28"><i class="mdi mdi-cash-usd"></i></span>
+                                </div>
+                                <div class="col s5 left-align" style="margin-top:15px;">
+                                    <span class="grey-text">未还总金额(美元)</span>
+                                </div>
+                                <div class="col s5 right-align red-text" style="margin-top:15px;">
+                                    {{loanIntoNotRepayment| number}}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>
