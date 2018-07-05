@@ -1,0 +1,60 @@
+<!--主菜单: 财务管理 -> 贷出日历 -->
+<div class="ship_trans_calendar">
+    <div style="width: 90%; margin: 0 auto">
+        <div class="row">
+
+            <!-- 左侧：日历 -->
+            <div class="col s8 white p0 z-depth-1">
+                <!--头部定义成蓝色-->
+                <div style="height: 50px;padding-left:20px" class="cyan lighten-2"></div>
+
+                <!--日历-->
+                <div id="calendar" style="padding: 0 12px" calendar></div>
+                <div style="height: 50px"></div>
+            </div>
+
+            <!--右侧：蓝色详细信息-->
+            <div class="col s3 offset-s1 cyan lighten-1 z-depth-3" style="padding-bottom: 27px">
+
+                <!-- 日期显示：年月日 星期几 -->
+                <div class="calendarToday white-text vc-center" style="padding: 10px 0">
+                    <div>
+                        <div class="row center-align today_month">{{todayMonth}}</div>
+                        <div class="row center-align today_month fz30">{{todayDay}}</div>
+                        <div class="row center-align today_week ">{{todayWeek}}</div>
+                    </div>
+                </div>
+
+                <!-- 贷入日历统计信息 -->
+                <div class="white-text fz16">
+                    <div class="col s12" style="border-top: 1px solid white;height: 50px;line-height: 50px;">
+                        <div class="col s12">总可贷额度(美元)</div>
+                    </div>
+                    <div class="col s12" style="height: 50px;line-height: 50px;">
+                        <div class="col s12 fz25 right-align">{{companyBaseMoney | number}}</div>
+                    </div>
+                      <div class="col s12" style="border-top: 1px solid white;height: 50px;line-height: 50px;">
+                        <div class="col s12">可贷入金额(美元)</div>
+                    </div>
+                    <div class="col s12" style="height: 50px;line-height: 50px;">
+                        <div class="col s12 fz25 right-align">{{leftLoanMoney | number}}</div>
+                    </div>
+                    <div class="col s12" style="border-top: 1px solid white;height: 50px;line-height: 50px;">
+                        <div class="col s12">贷入未完结笔数</div>
+                    </div>
+                    <div class="col s12" style="height: 50px;line-height: 50px;">
+                        <div class="col s12 fz25 right-align">{{loanIntoCount | number}}</div>
+                    </div>
+                    <div class="col s12" style="border-top: 1px solid white;height: 50px;line-height: 50px;">
+                        <div class="col s12">贷入未还总金额(美元)</div>
+                    </div>
+                    <div class="col s12" style="border-bottom: 1px solid white;height: 50px;line-height: 50px;">
+                        <div class="col s12 fz25 right-align">{{loanIntoNotRepayment | number}}</div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+

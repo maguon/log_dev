@@ -63,12 +63,6 @@ app.config(['$stateProvider',"$urlRouterProvider",function($stateProvider,$urlRo
             controller:'car_valuation_statistics_controller'
         })
 
-        // 财务管理->财务日历
-        .state("finance_calendar", {
-            url:"/finance_calendar",
-            templateUrl: "/view/finance/finance_calendar.html",
-            controller:"finance_calendar_controller"
-        })
         // 财务管理->订单管理
         .state("order", {
             url:"/order",
@@ -92,6 +86,19 @@ app.config(['$stateProvider',"$urlRouterProvider",function($stateProvider,$urlRo
             url:"/payment_detail/{id}?from",
             templateUrl: "/view/finance/payment_detail.html",
             controller:"payment_detail_controller"
+        })
+        // 财务管理->信用证
+        .state("credit_card", {
+            url:"/credit_card",
+            params: {"from": null},
+            templateUrl: "/view/finance/credit_card.html",
+            controller:"credit_card_controller"
+        })
+        .state("credit_card_detail", {
+            url:"/credit_card_detail/{id}?from",
+            params: {"from": null},
+            templateUrl: "/view/finance/credit_card_detail.html",
+            controller:"credit_card_detail_controller"
         })
         // 财务管理->金融车辆
         .state("finance_car", {
@@ -152,18 +159,17 @@ app.config(['$stateProvider',"$urlRouterProvider",function($stateProvider,$urlRo
             templateUrl: "/view/finance/finance_loan_out_repay_detail.html",
             controller:"finance_loan_out_repay_detail_controller"
         })
-        // 财务管理->信用证
-        .state("credit_card", {
-            url:"/credit_card",
-            params: {"from": null},
-            templateUrl: "/view/finance/credit_card.html",
-            controller:"credit_card_controller"
+        // 财务管理->贷入日历
+        .state("finance_loan_in_calendar", {
+            url:"/finance_loan_in_calendar",
+            templateUrl: "/view/finance/finance_loan_in_calendar.html",
+            controller:"finance_loan_in_calendar_controller"
         })
-        .state("credit_card_detail", {
-            url:"/credit_card_detail/{id}?from",
-            params: {"from": null},
-            templateUrl: "/view/finance/credit_card_detail.html",
-            controller:"credit_card_detail_controller"
+        // 财务管理->贷出日历
+        .state("finance_loan_out_calendar", {
+            url:"/finance_loan_out_calendar",
+            templateUrl: "/view/finance/finance_loan_out_calendar.html",
+            controller:"finance_loan_out_calendar_controller"
         })
 
         // 海运管理->海运信息
