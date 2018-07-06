@@ -73,6 +73,20 @@ app.controller("finance_loan_in_controller", ["$scope", "$rootScope", "_host", "
     }
 
     /**
+     * 数据导出
+     */
+    $scope.export = function () {
+        // 基本检索URL
+        var url = _host.api_url + "/loanInto.csv";
+        // 检索条件
+        var conditions = _basic.objToUrl(makeConditions());
+        // 检索URL
+        url = conditions.length > 0 ? url + "?" + conditions : url;
+        // 调用接口下载
+        window.open(url);
+    };
+
+    /**
      * 设置检索条件。
      * @param conditions 上次检索条件
      */
