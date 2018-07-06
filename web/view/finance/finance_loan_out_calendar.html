@@ -26,30 +26,18 @@
                 </div>
 
                 <!-- 贷入日历统计信息 -->
-                <div class="white-text fz16">
+                <div class="white-text fz16" style="min-height: 440px;">
                     <div class="col s12" style="border-top: 1px solid white;height: 50px;line-height: 50px;">
-                        <div class="col s12">总可贷额度(美元)</div>
+                        <div class="col s12">未完结笔数</div>
                     </div>
                     <div class="col s12" style="height: 50px;line-height: 50px;">
-                        <div class="col s12 fz25 right-align">{{companyBaseMoney | number}}</div>
-                    </div>
-                      <div class="col s12" style="border-top: 1px solid white;height: 50px;line-height: 50px;">
-                        <div class="col s12">可贷入金额(美元)</div>
-                    </div>
-                    <div class="col s12" style="height: 50px;line-height: 50px;">
-                        <div class="col s12 fz25 right-align">{{leftLoanMoney | number}}</div>
+                        <div class="col s12 fz25 right-align">{{loanOutCount | number}}</div>
                     </div>
                     <div class="col s12" style="border-top: 1px solid white;height: 50px;line-height: 50px;">
-                        <div class="col s12">贷入未完结笔数</div>
-                    </div>
-                    <div class="col s12" style="height: 50px;line-height: 50px;">
-                        <div class="col s12 fz25 right-align">{{loanIntoCount | number}}</div>
-                    </div>
-                    <div class="col s12" style="border-top: 1px solid white;height: 50px;line-height: 50px;">
-                        <div class="col s12">贷入未还总金额(美元)</div>
+                        <div class="col s12">未还总金额(美元)</div>
                     </div>
                     <div class="col s12" style="border-bottom: 1px solid white;height: 50px;line-height: 50px;">
-                        <div class="col s12 fz25 right-align">{{loanIntoNotRepayment | number}}</div>
+                        <div class="col s12 fz25 right-align">{{loanOutNotRepayment | number}}</div>
                     </div>
                 </div>
             </div>

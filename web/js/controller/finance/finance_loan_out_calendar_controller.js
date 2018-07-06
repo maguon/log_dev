@@ -47,17 +47,17 @@ app.controller("finance_loan_out_calendar_controller", ["$scope", "_host", "_bas
                 start = moment(start).format('YYYYMMDD');
                 end = moment(end).format('YYYYMMDD');
                 var eventArray = [];
-                _basic.get(_host.api_url + "/loanIntoStatDate?" + "dateStart=" + start + "&dateEnd=" + end).then(function (data) {
+                _basic.get(_host.api_url + "/loanStatDate?" + "dateStart=" + start + "&dateEnd=" + end).then(function (data) {
                     if (data.success && data.result.length > 0) {
                         $scope.data = data.result;
                         for (var i in $scope.data) {
                             var titleHtml =
                                 '<div class="fz16" style="height: 25px;padding-top:5px;">' +
                                 '  <div class="col s4 cyan-text text-lighten-1" style="padding-left:5px;">' +
-                                '    <i class="mdi mdi-login"></i><span class="fz14" style="margin-left: 5px;">' + $filter('number')($scope.data[i].loan_into_count) + '</span>' +
+                                '    <i class="mdi mdi-logout"></i><span class="fz14" style="margin-left: 5px;">' + $filter('number')($scope.data[i].loan_count) + '</span>' +
                                 '  </div>' +
                                 '  <div class="col s8 left-align" style="color: #fea353;">' +
-                                '    <i class="mdi mdi-cash-usd"></i><span class="fz14" style="margin-left: 5px;">' + $filter('number')($scope.data[i].loan_into_money) + '</span>' +
+                                '    <i class="mdi mdi-cash-usd"></i><span class="fz14" style="margin-left: 5px;">' + $filter('number')($scope.data[i].loan_money) + '</span>' +
                                 '  </div>' +
                                 '</div>' +
 
@@ -65,7 +65,7 @@ app.controller("finance_loan_out_calendar_controller", ["$scope", "_host", "_bas
 
                                 '<div class="fz16" style="height: 25px;padding-top:10px;">' +
                                 '  <div class="col s4 cyan-text text-lighten-1" style="padding-left:5px;">' +
-                                '    <i class="mdi mdi-logout"></i><span class="fz14" style="margin-left: 5px;">' + $filter('number')($scope.data[i].repayment_count) + '</span>' +
+                                '    <i class="mdi mdi-login"></i><span class="fz14" style="margin-left: 5px;">' + $filter('number')($scope.data[i].repayment_count) + '</span>' +
                                 '  </div>' +
                                 '  <div class="col s8 left-align" style="color: #fea353;">' +
                                 '    <i class="mdi mdi-cash-usd"></i><span class="fz14" style="margin-left: 5px;">' + $filter('number')($scope.data[i].repayment_money) + '</span>' +
@@ -91,41 +91,24 @@ app.controller("finance_loan_out_calendar_controller", ["$scope", "_host", "_bas
     }
 
     /**
-     * 贷入订单(信息) 查询
+     * 贷出订单(信息) 查询
      */
-    function getFinanceLoanInInfo() {
+    function getFinanceLoanOutInfo() {
         // 2：已贷，3：还款中
-        var url = _host.api_url + "/loanIntoNotCount?loanIntoStatusArr=2,3";
+        var url = _host.api_url + "/loanNotCount?loanStatusArr=2,3";
         _basic.get(url).then(function (data) {
             if (data.success) {
                 if (data.result.length > 0) {
-                    // 贷入未还总金额
-                    $scope.loanIntoNotRepayment = data.result[0].not_repayment_money;
-                    // 贷入未完结笔数
-                    $scope.loanIntoCount = data.result[0].loan_count;
+                    // 未还总金额
+                    $scope.loanOutNotRepayment = data.result[0].not_repayment_money;
+                    // 未完结笔数
+                    $scope.loanOutCount = data.result[0].loan_count;
                 } else {
-                    // 贷入未还总金额
-                    $scope.loanIntoNotRepayment = 0;
-                    // 贷入未完结笔数
-                    $scope.loanIntoCount = 0;
+                    // 未还总金额
+                    $scope.loanOutNotRepayment = 0;
+                    // 未完结笔数
+                    $scope.loanOutCount = 0;
                 }
-
-                _basic.get(_host.api_url + "/loanIntoCompanyTotalMoney?companyStatus=1").then(function (data) {
-                    if (data.success) {
-                        if (data.result.length > 0) {
-                            // 总可贷额度
-                            $scope.companyBaseMoney = data.result[0].company_total_money;
-                        } else {
-                            // 总可贷额度
-                            $scope.companyBaseMoney = 0;
-                        }
-
-                        // 可贷入金额 = 总可贷额度 - 贷入未还总金额
-                        $scope.leftLoanMoney = $scope.companyBaseMoney - $scope.loanIntoNotRepayment;
-                    } else {
-                        swal(data.msg, "", "error");
-                    }
-                });
             } else {
                 swal(data.msg, "", "error");
             }
@@ -138,8 +121,8 @@ app.controller("finance_loan_out_calendar_controller", ["$scope", "_host", "_bas
     function initData() {
         // 显示日历画面
         showCalendar();
-        // 贷入订单 信息 查询
-        getFinanceLoanInInfo();
+        // 贷出订单 信息 查询
+        getFinanceLoanOutInfo();
     }
     initData();
 }]);

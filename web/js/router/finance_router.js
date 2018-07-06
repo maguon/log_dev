@@ -51,13 +51,13 @@ app.config(['$stateProvider',"$urlRouterProvider",function($stateProvider,$urlRo
             controller:'car_valuation_statistics_controller'
         })
 
-        // 财务管理->订单管理
+        // 财务管理-> 仓储订单
         .state("order", {
             url:"/order",
             templateUrl: "/view/finance/order.html",
             controller:"order_controller"
         })
-        // 财务管理->订单管理（订单详情）
+        // 财务管理-> 仓储订单（订单详情）
         .state("order_detail", {
             url:"/order_detail/{id}?from",
             templateUrl: "/view/finance/order_detail.html",
@@ -160,13 +160,13 @@ app.config(['$stateProvider',"$urlRouterProvider",function($stateProvider,$urlRo
             controller:"finance_loan_out_calendar_controller"
         })
 
-        // 海运管理->订单管理
+        // 海运管理-> 海运订单
         .state("sea_transport_order", {
             url:"/sea_transport_order",
             templateUrl: "/view/sea_transport/sea_transport_order.html",
             controller:"sea_transport_order_controller"
         })
-        // 海运管理->订单管理详情
+        // 海运管理-> 海运订单详情
         .state("sea_transport_order_detail", {
             url:"/sea_transport_order_detail/{id}?from",
             templateUrl: "/view/sea_transport/sea_transport_order_detail.html",
