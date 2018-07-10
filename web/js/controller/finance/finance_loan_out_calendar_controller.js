@@ -53,22 +53,22 @@ app.controller("finance_loan_out_calendar_controller", ["$scope", "_host", "_bas
                         for (var i in $scope.data) {
                             var titleHtml =
                                 '<div class="fz16" style="height: 25px;padding-top:5px;">' +
-                                '  <div class="col s4 cyan-text text-lighten-1" style="padding-left:5px;">' +
-                                '    <i class="mdi mdi-logout"></i><span class="fz14" style="margin-left: 5px;">' + $filter('number')($scope.data[i].loan_count) + '</span>' +
+                                '  <div class="col s5 cyan-text text-lighten-1" style="padding-left: 0;padding-right: 0;">' +
+                                '    <i class="mdi mdi-logout"></i><span class="fz14" style="margin-left: 2px;">' + $filter('number')($scope.data[i].loan_count) + '</span>' +
                                 '  </div>' +
-                                '  <div class="col s8 left-align" style="color: #fea353;">' +
-                                '    <i class="mdi mdi-cash-usd"></i><span class="fz14" style="margin-left: 5px;">' + $filter('number')($scope.data[i].loan_money) + '</span>' +
+                                '  <div class="col s7 left-align" style="color: #fea353;padding-left: 0;padding-right: 0;">' +
+                                '    <i class="mdi mdi-cash-usd"></i><span class="fz14" style="margin-left: 2px;">' + $filter('number')($scope.data[i].loan_money) + '</span>' +
                                 '  </div>' +
                                 '</div>' +
 
                                 '<div class="col s12" style="height:2px;border-bottom: 1px solid #ccc;"></div>' +
 
                                 '<div class="fz16" style="height: 25px;padding-top:10px;">' +
-                                '  <div class="col s4 cyan-text text-lighten-1" style="padding-left:5px;">' +
-                                '    <i class="mdi mdi-login"></i><span class="fz14" style="margin-left: 5px;">' + $filter('number')($scope.data[i].repayment_count) + '</span>' +
+                                '  <div class="col s5 cyan-text text-lighten-1" style="padding-left: 0;padding-right: 0;">' +
+                                '    <i class="mdi mdi-login"></i><span class="fz14" style="margin-left: 2px;">' + $filter('number')($scope.data[i].repayment_count) + '</span>' +
                                 '  </div>' +
-                                '  <div class="col s8 left-align" style="color: #fea353;">' +
-                                '    <i class="mdi mdi-cash-usd"></i><span class="fz14" style="margin-left: 5px;">' + $filter('number')($scope.data[i].repayment_money) + '</span>' +
+                                '  <div class="col s7 left-align" style="color: #fea353;padding-left: 0;padding-right: 0;">' +
+                                '    <i class="mdi mdi-cash-usd"></i><span class="fz14" style="margin-left: 2px;">' + $filter('number')($scope.data[i].repayment_money) + '</span>' +
                                 '  </div>' +
                                 '</div>';
                             var date = {
