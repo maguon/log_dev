@@ -188,6 +188,33 @@ baseService.factory('_baseService',function(){
         return days;
     };
 
+    /**
+     * 右补位，左对齐
+     * @param oriStr 原字符串
+     * @param len 目标字符串长度
+     * @param alexin 补位字符
+     * @return 目标字符串
+     */
+    _this.padRight = function (oriStr, len, alexin) {
+        // 原字符串长度
+        var strlen = oriStr.toString().length;
+        var str = "";
+
+        // 补位
+        if (strlen < len) {
+            for (var i = 0; i < len - strlen; i++) {
+                str = str + alexin;
+            }
+            str = oriStr.toString() + str;
+        } else if (strlen === len) {
+            str = oriStr.toString();
+        } else {
+            str = oriStr.toString().substr(0,len -3) + "...";
+        }
+
+        return str;
+    };
+
     // 页面之间数据传递
     _this.pass_parameter=function () {
 //定义参数对象
