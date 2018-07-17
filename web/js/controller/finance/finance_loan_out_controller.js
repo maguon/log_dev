@@ -153,8 +153,12 @@ app.controller("finance_loan_out_controller", ["$scope", "$rootScope", "_host", 
     function getEntrustId() {
         // 委托方ID 默认值
         var entrustId = "";
-        if ($("#condEntrustSelect").val() != null && $("#condEntrustSelect").val() !== "") {
-            entrustId = $("#condEntrustSelect").select2("data")[0].id;
+        if ($scope.condEntrustId !== undefined && $scope.condEntrustId !== null && $scope.condEntrustId !== "") {
+            entrustId = $scope.condEntrustId;
+        } else {
+            if ($("#condEntrustSelect").val() != null && $("#condEntrustSelect").val() !== "") {
+                entrustId = $("#condEntrustSelect").select2("data")[0].id;
+            }
         }
         return entrustId;
     }
@@ -165,8 +169,12 @@ app.controller("finance_loan_out_controller", ["$scope", "$rootScope", "_host", 
     function getEntrustNm() {
         // 委托方名称 默认值
         var entrustNm = "委托方";
-        if ($("#condEntrustSelect").val() != null && $("#condEntrustSelect").val() !== "") {
-            entrustNm = $("#condEntrustSelect").select2("data")[0].text;
+        if ($scope.condEntrustNm !== undefined && $scope.condEntrustNm !== null && $scope.condEntrustNm !== "委托方") {
+            entrustNm = $scope.condEntrustNm;
+        } else {
+            if ($("#condEntrustSelect").val() != null && $("#condEntrustSelect").val() !== "") {
+                entrustNm = $("#condEntrustSelect").select2("data")[0].text;
+            }
         }
         return entrustNm;
     }
