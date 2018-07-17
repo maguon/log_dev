@@ -539,8 +539,6 @@
     <!-- TAB [关联还款] -->
     <div id="paymentDiv" class="tab_box">
 
-        <!-- 未完结时 (可修改) -->
-        <!--<div ng-show="repay.repaymentStatus == 1">-->
         <div class="col s12">
             <!-- 剩余金额 支付还款订单总额 -->
             <div ng-if='paymentStatus==1' class="col s12 vc-center cyan-text fz14" style="margin-top: 20px;margin-bottom: 20px;">
@@ -553,7 +551,7 @@
             </div>
 
             <!-- 还款编号 -->
-            <div ng-show='paymentStatus==1'  class="col s12">
+            <div ng-show='paymentStatus==1' class="col s12">
                 <div class="col s12 z-depth-1 white" style="border:1px solid lightgrey" style="margin-top: 20px;margin-bottom: 20px;height: 200px;">
                     <div class="input-field col s12" style="margin-top: 30px;margin-bottom: 20px;">
                         <select material-select watch ng-model="loanRepaymentId" ng-change="getLoanRepaymentInfo(loanRepaymentId)">
@@ -692,8 +690,8 @@
                             <span ng-click="deleteOtherPayment($event, el.repayment_id)"><i class="mdi mdi-close red-text right-align" style="padding-left:5px; cursor:pointer; right: 22px;"></i></span>
                         </td>
                     </tr>
-                    <tr class="grey-text text-darken-1" ng-show="paymentStatus==2">
-                        <td colspan="7" class="right-align"  style="letter-spacing: 2px;padding-right: 50px">合计支付(美元)：<span class="red-text">{{totalPaymentMoney | number}}</span></td>
+                    <tr ng-show="paymentStatus==2" class="grey-text text-darken-1">
+                        <td colspan="7" class="right-align" style="letter-spacing: 2px;padding-right: 50px">合计支付(美元)：<span class="red-text">{{totalPaymentMoney | number}}</span></td>
                     </tr>
                     </tbody>
                 </table>

@@ -453,11 +453,12 @@ app.controller("payment_detail_controller", ["$scope", "$stateParams", "_basic",
 
         var url = _host.api_url + "/paymentLoanRepRel?paymentId=" + $scope.storagePaymentArray.id;
         _basic.get(url).then(function (data) {
-            if (data.success === true) {
+            if (data.success) {
                 // 关联还款列表
                 $scope.paymentLoanRepRelList = data.result;
                 // 遍历结果集
                 $scope.paymentLoanRepRelList.forEach(function (value, index, array) {
+                    // TAB[关联还款] 支付还款订单总额(美元)
                     $scope.totalPaymentMoney = $scope.totalPaymentMoney + value.this_payment_money;
                 });
 
