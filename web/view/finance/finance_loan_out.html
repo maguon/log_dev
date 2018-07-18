@@ -15,7 +15,7 @@
             <!-- 查询条件：委托方性质 -->
             <div class="input-field col s3">
                 <select material-select watch ng-model="condEntrustType" ng-change="getEntrustInfo(condEntrustType,'委托方')">
-                    <option value="" disabled>委托方性质</option>
+                    <option value="">委托方性质</option>
                     <option ng-repeat="el in entrustTypeList" ng-value="el.entrust_type">{{el.name}}</option>
                 </select>
             </div>
@@ -31,7 +31,7 @@
             <!-- 查询条件：订单状态 -->
             <div class="input-field col s3">
                 <select material-select watch ng-model="condLoanStatus">
-                    <option value="" disabled>订单状态</option>
+                    <option value="">订单状态</option>
                     <option ng-repeat="el in loanStatus" ng-value="el.id">{{el.name}}</option>
                 </select>
             </div>
