@@ -4,27 +4,49 @@
 app.controller("invoice_detail_controller", ["$scope", "$stateParams", "_basic", "_host", "_config", "$state", function ($scope, $stateParams, _basic, _host, _config, $state) {
     var userId = _basic.getSession(_basic.USER_ID);
     // 支付编号
-    var paymentId = $stateParams.id;
+    var invoiceId = $stateParams.id;
+
+    // 发票 状态
+    $scope.invoiceStatus = _config.invoiceStatus;
     // 委托方性质
     $scope.entrustTypeList = _config.entrustType;
     // 支付状态
     $scope.paymentStatusList = _config.paymentStatus;
-    // 支付方式
-    $scope.paymentTypeList = _config.paymentType;
-    // 关联仓储订单 合计应付
-    $scope.totalMoney = 0;
-    // 关联海运订单 合计应付
-    $scope.totalShipTransMoney = 0;
 
-    // TAB[关联还款] 剩余金额(美元)
-    $scope.leftMoney = 0;
-    // TAB[关联还款] 支付还款订单总额(美元)
+    // 关联仓储订单 应开发票总额
+    $scope.totalStorageMoney = 0;
+    // 关联海运订单 应开发票总额
+    $scope.totalShipTransMoney = 0;
+    // 关联还款 应开发票总额(美元)
     $scope.totalPaymentMoney = 0;
+
+    // 发票信息
+    $scope.invoiceInfo = {
+        // id
+        invoiceId: "",
+        // 发票状态
+        invoiceStatus: "",
+        // 发票编号
+        invoiceNum: "",
+        // 发票金额
+        invoiceMoney: "",
+        // 委托方性质
+        entrustType: "",
+        // 委托方
+        entrustId: "",
+        entrustNm: "",
+        // 备注
+        remark: "",
+        // 开票人
+        invoiceUserName: "",
+        // 开票时间
+        createdOn: ""
+    };
 
     // 还款信息：追加关联画面用
     $scope.loanRepaymentInfo = {
         // 还款编号
-        repaymentId: "",
+        reinvoiceId: "",
         // 还款日期
         repaymentDate: "",
         // 关联贷出订单
@@ -49,15 +71,19 @@ app.controller("invoice_detail_controller", ["$scope", "$stateParams", "_basic",
     };
 
     /**
-     * Tab跳转 支付信息详情
+     * Tab跳转 发票信息详情
      */
-    $scope.lookPaymentMsg = function () {
+    $scope.lookInvoiceInfo = function () {
         $('.tabWrap .tab').removeClass("active");
         $(".tab_box ").removeClass("active");
         $(".tab_box ").hide();
-        $('.tabWrap .lookPaymentMsg').addClass("active");
-        $("#lookPaymentMsg").addClass("active");
-        $("#lookPaymentMsg").show();
+        $('.tabWrap .invoiceDiv').addClass("active");
+        $("#invoiceDiv").addClass("active");
+        $("#invoiceDiv").show();
+
+        // textarea 高度调整
+        $('#remarkText').val($scope.invoiceInfo.remark);
+        $('#remarkText').trigger('autoresize');
     };
 
     /**
@@ -71,24 +97,24 @@ app.controller("invoice_detail_controller", ["$scope", "$stateParams", "_basic",
         $("#lookRelatedOrder").addClass("active");
         $("#lookRelatedOrder").show();
         // 左侧 未完结 列表
-        _basic.get(_host.api_url + "/storageOrder?entrustId=" + $scope.storagePaymentArray.entrust_id + '&orderStatus=' + $scope.paymentStatusList[0].id).then(function (data) {
+        _basic.get(_host.api_url + "/storageOrder?entrustId=" + $scope.invoiceInfo.entrustId + '&orderStatus=' + $scope.paymentStatusList[1].id).then(function (data) {
             if (data.success) {
                 $scope.storageOrderList = data.result;
             } else {
                 swal(data.msg, "", "error");
             }
         });
-        var url = _host.api_url + "/paymentStorageOrderRel?paymentId=" + paymentId;
+        var url = _host.api_url + "/paymentStorageOrderRel?paymentId=" + invoiceId;
         //右侧关联列表
         _basic.get(url).then(function (data) {
             if (data.success) {
                 $scope.storageOrderPaymentRelList = data.result;
-                $scope.totalMoney = 0;
+                $scope.totalStorageMoney = 0;
                 for (var i = 0; i < $scope.storageOrderPaymentRelList.length; i++) {
                     if ($scope.storageOrderPaymentRelList[i].actual_fee == null) {
                         $scope.storageOrderPaymentRelList[i].actual_fee = 0;
                     }
-                    $scope.totalMoney = $scope.storageOrderPaymentRelList[i].actual_fee + $scope.totalMoney;
+                    $scope.totalStorageMoney = $scope.storageOrderPaymentRelList[i].actual_fee + $scope.totalStorageMoney;
                 }
             } else {
                 swal(data.msg, "", "error");
@@ -104,7 +130,7 @@ app.controller("invoice_detail_controller", ["$scope", "$stateParams", "_basic",
         // 追加画面数据
         var obj = {
             storageOrderId: id,
-            paymentId: paymentId
+            invoiceId: invoiceId
         };
         _basic.post(_host.api_url + "/user/" + userId + "/paymentStorageOrderRel", obj).then(function (data) {
             if (data.success) {
@@ -131,7 +157,7 @@ app.controller("invoice_detail_controller", ["$scope", "$stateParams", "_basic",
                 closeOnConfirm: true
             },
             function () {
-                _basic.delete(_host.api_url + "/user/" + userId + "/storageOrder/" + id + '/payment/' + paymentId, {}).then(
+                _basic.delete(_host.api_url + "/user/" + userId + "/storageOrder/" + id + '/payment/' + invoiceId, {}).then(
                     function (data) {
                         if (data.success === true) {
                             $scope.lookRelatedOrder();
@@ -163,7 +189,7 @@ app.controller("invoice_detail_controller", ["$scope", "$stateParams", "_basic",
         });
 
         // 右侧，已关联
-        var url = _host.api_url + "/paymentShipOrderRel?paymentId=" + paymentId;
+        var url = _host.api_url + "/paymentShipOrderRel?invoiceId=" + invoiceId;
         _basic.get(url).then(function (data) {
             if (data.success) {
                 $scope.shipTransOrderRelList = data.result;
@@ -188,7 +214,7 @@ app.controller("invoice_detail_controller", ["$scope", "$stateParams", "_basic",
         // 追加画面数据
         var obj = {
             shipTransOrderId: shipTransOrderId,
-            paymentId: paymentId
+            invoiceId: invoiceId
         };
         _basic.post(_host.api_url + "/user/" + userId + "/paymentShipOrderRel", obj).then(function (data) {
             if (data.success) {
@@ -215,7 +241,7 @@ app.controller("invoice_detail_controller", ["$scope", "$stateParams", "_basic",
                 closeOnConfirm: true
             },
             function () {
-                _basic.delete(_host.api_url + "/user/" + userId + "/shipTransOrder/" + shipTransOrderId + '/payment/' + paymentId, {}).then(
+                _basic.delete(_host.api_url + "/user/" + userId + "/shipTransOrder/" + shipTransOrderId + '/payment/' + invoiceId, {}).then(
                     function (data) {
                         if (data.success === true) {
                             $scope.lookShipTransOrder();
@@ -241,7 +267,7 @@ app.controller("invoice_detail_controller", ["$scope", "$stateParams", "_basic",
                 paymentMoney: $scope.storagePaymentArray.payment_money,
                 remark: $scope.storagePaymentArray.remark
             };
-            _basic.put(_host.api_url + "/user/" + userId + "/payment/" + paymentId, obj).then(function (data) {
+            _basic.put(_host.api_url + "/user/" + userId + "/payment/" + invoiceId, obj).then(function (data) {
                 if (data.success) {
                     swal("修改成功", "", "success");
                 } else {
@@ -268,7 +294,7 @@ app.controller("invoice_detail_controller", ["$scope", "$stateParams", "_basic",
             },
             function () {
                 // 修改状态为已完结【2：已完结】
-                var url = _host.api_url + "/user/" + userId + "/payment/" + paymentId + "/paymentStatus/" + $scope.paymentStatusList[1].id;
+                var url = _host.api_url + "/user/" + userId + "/payment/" + invoiceId + "/paymentStatus/" + $scope.paymentStatusList[1].id;
                 _basic.put(url, {}).then(function (data) {
                     if (data.success) {
                         initData();
@@ -320,7 +346,7 @@ app.controller("invoice_detail_controller", ["$scope", "$stateParams", "_basic",
      */
     $scope.getLoanRepaymentInfo = function (id) {
 
-        var url = _host.api_url + "/loanRepayment?repaymentId=" + id;
+        var url = _host.api_url + "/loanRepayment?reinvoiceId=" + id;
         _basic.get(url).then(function (data) {
             if (data.success === true) {
                 if (data.result.length > 0) {
@@ -328,7 +354,7 @@ app.controller("invoice_detail_controller", ["$scope", "$stateParams", "_basic",
                     $scope.newPaymentDiv = true;
 
                     // 还款编号
-                    $scope.loanRepaymentInfo.repaymentId= data.result[0].id;
+                    $scope.loanRepaymentInfo.reinvoiceId= data.result[0].id;
                     // 还款日期
                     $scope.loanRepaymentInfo.repaymentDate= data.result[0].created_on;
                     // 关联贷出订单
@@ -451,7 +477,7 @@ app.controller("invoice_detail_controller", ["$scope", "$stateParams", "_basic",
         // TAB[关联还款] 支付还款订单总额(美元)
         $scope.totalPaymentMoney = 0;
 
-        var url = _host.api_url + "/paymentLoanRepRel?paymentId=" + $scope.storagePaymentArray.id;
+        var url = _host.api_url + "/paymentLoanRepRel?invoiceId=" + $scope.storagePaymentArray.id;
         _basic.get(url).then(function (data) {
             if (data.success) {
                 // 关联还款列表
@@ -463,32 +489,71 @@ app.controller("invoice_detail_controller", ["$scope", "$stateParams", "_basic",
                 });
 
                 // TAB[关联还款] 剩余金额(美元)
-                $scope.leftMoney = $scope.storagePaymentArray.payment_money - $scope.totalMoney - $scope.totalShipTransMoney - $scope.totalPaymentMoney;
+                $scope.leftMoney = $scope.storagePaymentArray.payment_money - $scope.totalStorageMoney - $scope.totalShipTransMoney - $scope.totalPaymentMoney;
             } else {
                 swal(data.msg, "", "error");
             }
         });
     }
 
+
+    /**
+     * 清空委托方选中
+     */
+    $scope.clearSelectEntrust = function () {
+        // $("#entrustSelect").val(null).trigger("change");
+        $("#select2-entrustSelect-container").text("委托方").trigger("change");
+    };
+
     /**
      * 获取委托方信息
-     * @param type 委托方类型
+     * @param selectText 默认选中项文字
      */
-    $scope.getEntrustInfo = function (type) {
+    $scope.getEntrustInfo = function (selectText) {
+        // 取得委托方url
+        var url = _host.api_url + "/entrust";
 
-        if (type == null && type == undefined) {
-            return;
-        }
+        // 检索画面 委托方select2初期化
+        $('#entrustSelect').select2({
+            // 因为有返回时默认值，所以动态赋值
+            placeholder: selectText,
+            containerCssClass: 'select2_dropdown',
+            ajax : {
+                type:'GET',
+                url : url,
+                dataType : 'json',
+                delay : 400,
+                data : function(params) {
+                    return {
+                        // 检索条件 检索画面委托方性质
+                        entrustType : $scope.invoiceInfo.entrustType
+                    };
+                },
+                processResults : function(data, params) {
+                    var options = [];
+                    $(data.result).each(function(i, o) {
+                        // 获取 select2 必要的字段，id与text
+                        options.push({
+                            id : o.id,
+                            text : o.short_name
+                        });
+                    });
+                    // 返回组装后 select2 列表
+                    return {
+                        results : options
+                    };
+                },
+                // 开启缓存
+                cache : true
+            },
+            allowClear: false
 
-        var url = _host.api_url + "/entrust?entrustType=" + type;
-        _basic.get(url).then(function (data) {
-            if (data.success === true) {
-                $scope.entrustList = data.result;
-                $('#entrustSelect').select2({
-                    placeholder: '委托方',
-                    containerCssClass: 'select2_dropdown',
-                    allowClear: true
-                });
+        // 选中某个委托方后，触发事件
+        }).on('change', function () {
+            // 委托方 下拉选中 内容
+            if ($("#entrustSelect").val() != null && $("#entrustSelect").val() !== "") {
+                $scope.invoiceInfo.entrustId = $("#entrustSelect").select2("data")[0].id;
+                $scope.invoiceInfo.entrustNm = $("#entrustSelect").select2("data")[0].text;
             }
         });
     };
@@ -497,16 +562,33 @@ app.controller("invoice_detail_controller", ["$scope", "$stateParams", "_basic",
      * 获取基本信息
      * */
     function initData() {
-        _basic.get(_host.api_url + "/payment?paymentId=" + paymentId).then(function (data) {
+        _basic.get(_host.api_url + "/invoice?invoiceId=" + invoiceId).then(function (data) {
             if (data.success) {
-                // 当前支付编号 对应的数据
-                $scope.storagePaymentArray = data.result[0];
-                // 当前画面的支付状态
-                $scope.paymentStatus = data.result[0].payment_status;
-                $scope.getEntrustInfo(data.result[0].entrust_type);
-                $scope.storagePaymentArray.entrust_id = data.result[0].entrust_id;
-                $scope.lookRelatedOrder();
-                $scope.lookPaymentMsg();
+                // 当前发票信息
+                // id
+                $scope.invoiceInfo.invoiceId = data.result[0].id;
+                // 发票状态
+                $scope.invoiceInfo.invoiceStatus = data.result[0].invoice_status;
+                // 发票编号
+                $scope.invoiceInfo.invoiceNum = data.result[0].invoice_num;
+                // 发票金额
+                $scope.invoiceInfo.invoiceMoney = data.result[0].invoice_money;
+                // 委托方性质
+                $scope.invoiceInfo.entrustType = data.result[0].entrust_type;
+                // 委托方
+                $scope.invoiceInfo.entrustId = data.result[0].entrust_id;
+                $scope.invoiceInfo.entrustNm = data.result[0].short_name;
+                // 加载 委托方 信息
+                $scope.getEntrustInfo($scope.invoiceInfo.entrustNm);
+                // 备注
+                $scope.invoiceInfo.remark = data.result[0].remark;
+                // 开票人
+                $scope.invoiceInfo.invoiceUserName = data.result[0].invoice_user_name;
+                // 开票时间
+                $scope.invoiceInfo.createdOn = data.result[0].created_on;
+
+                // 显示 发票信息 TAB
+                $scope.lookInvoiceInfo();
             } else {
                 swal(data.msg, "", "error");
             }
