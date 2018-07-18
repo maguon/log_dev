@@ -87,6 +87,18 @@ app.config(['$stateProvider',"$urlRouterProvider",function($stateProvider,$urlRo
             templateUrl: "/view/finance/payment_detail.html",
             controller:"payment_detail_controller"
         })
+        // 财务管理->发票管理
+        .state("invoice", {
+            url:"/invoice",
+            templateUrl: "/view/finance/invoice.html",
+            controller:"invoice_controller"
+        })
+        // 财务管理->发票管理->详细
+        .state("invoice_detail", {
+            url:"/invoice_detail/{id}?from",
+            templateUrl: "/view/finance/invoice_detail.html",
+            controller:"invoice_detail_controller"
+        })
         // 财务管理->信用证
         .state("credit_card", {
             url:"/credit_card",

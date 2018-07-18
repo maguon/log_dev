@@ -1,0 +1,197 @@
+<!-- 主菜单：财务管理 -> 发票管理 画面 -->
+<div class="row">
+
+    <!-- 上部分：检索条件输入区域 -->
+    <div class="row col s12">
+        <!-- 左侧：输入区 -->
+        <div class="col s10">
+
+            <!-- 查询条件：发票编号 -->
+            <div class="input-field col s3">
+                <input type="text" id="invoiceNumText" ng-model="condInvoiceNum">
+                <label for="invoiceNumText">发票编号</label>
+            </div>
+
+            <!-- 查询条件：委托方性质 -->
+            <div class="input-field col s3">
+                <select material-select watch ng-model="condEntrustType" ng-change="clearSelectEntrust()">
+                    <option value="">委托方性质</option>
+                    <option ng-repeat="el in entrustTypeList" ng-value="el.entrust_type">{{el.name}}</option>
+                </select>
+            </div>
+
+            <!-- 查询条件：委托方 -->
+            <div class="input-field col s3">
+                <select id="condEntrustSelect" style="width: 100%"></select>
+            </div>
+
+            <!-- 查询条件：状态 -->
+            <div class="input-field col s3">
+                <select material-select watch ng-model="condInvoiceStatus">
+                    <option value="">状态</option>
+                    <option ng-repeat="el in invoiceStatus" ng-value="el.id">{{el.name}}</option>
+                </select>
+            </div>
+
+            <!-- 开票日期 -->
+            <div class="input-field col s3">
+                <input type="text" id="createdOnStartText" ng-model="condCreatedOnStart" class="datepicker" date>
+                <i class="mdi dataIcon mdi-table-large"></i>
+                <label for="createdOnStartText">开票日期(始)</label>
+            </div>
+            <div class="input-field col s3">
+                <input id="createdOnEndText" type="text" ng-model="condCreatedOnEnd" class="datepicker" date>
+                <i class="mdi dataIcon mdi-table-large"></i>
+                <label for="createdOnEndText">开票日期(终)</label>
+            </div>
+
+            <!-- 发放时间 -->
+            <div class="input-field col s3">
+                <input type="text" id="grantDateStartText" ng-model="condGrantDateStart" class="datepicker" date>
+                <i class="mdi dataIcon mdi-table-large"></i>
+                <label for="grantDateStartText">发放时间(始)</label>
+            </div>
+            <div class="input-field col s3">
+                <input id="grantDateEndText" type="text" ng-model="condGrantDateEnd" class="datepicker" date>
+                <i class="mdi dataIcon mdi-table-large"></i>
+                <label for="grantDateEndText">发放时间(终)</label>
+            </div>
+        </div>
+
+        <!-- 右侧：按钮区 -->
+        <div class="col s2" style="margin-top:45px;">
+            <!-- 查询按钮-->
+            <div class="col s6 center">
+                <a class="btn-floating btn-large waves-light waves-effect red lighten-2 btn" ng-click="queryFinanceInvoiceInfo()">
+                    <i class="mdi mdi-magnify"></i>
+                </a>
+            </div>
+            <!-- 新增按钮 -->
+            <div class="col s6 center">
+                <a class=" btn-floating btn-large waves-light waves-effect cyan lighten-1 btn"
+                   ng-click="openNewInvoiceDiv()">
+                    <i class="mdi mdi-plus"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- 下部分：检索结果显示区域 -->
+    <div class="col s12">
+        <div class="divider" style="background: #4e84cb;height: 2px;"></div>
+        <table class="bordered striped">
+            <thead class="blue-grey lighten-5">
+            <tr class="grey-text text-darken-2">
+                <th>发票编号</th>
+                <th>委托方</th>
+                <th>发票金额(美元)</th>
+                <th>开票日期</th>
+                <th>状态</th>
+                <th>发放时间</th>
+                <th style="padding-left: 15px;">操作</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="el in financeInvoiceList" class="grey-text text-darken-1">
+                <!-- 发票编号 -->
+                <td ng-bind="el.invoice_num"></td>
+                <!-- 委托方 -->
+                <td ng-bind="el.short_name"></td>
+                <!-- 发票金额(美元) -->
+                <td>{{el.invoice_money==null ? 0 : el.invoice_money | number}}</td>
+                <!-- 开票日期 -->
+                <td ng-bind="el.created_on|date:'yyyy-MM-dd'"></td>
+                <!-- 状态 -->
+                <td>{{invoiceStatus[el.invoice_status - 1].name}}</td>
+                <!-- 发放时间 -->
+                <td ng-bind="el.grant_date|date:'yyyy-MM-dd HH:mm'"></td>
+                <!--操作-->
+                <td class="operation">
+                    <!-- 详情 -->
+                    <a href="#" ui-sref="invoice_detail({id:el.id,from:'invoice'})" style="margin-left: 15px;">
+                        <i class="mdi mdi-file-outline look_icon cyan-text lighten-1"></i>
+                    </a>
+                </td>
+            </tr>
+            <tr class="grey-text text-darken-1" ng-if="financeInvoiceList.length == 0">
+                <td colspan="7" style="letter-spacing: 2px;text-align: center;">暂无数据</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <!-- 上下页按钮 -->
+    <div class="paging_box col s12">
+        <div class="right">
+            <a class="waves-light waves-effect cyan lighten-1 btn" id="pre" ng-click="preBtn()">
+                上一页
+            </a>
+            <a class="waves-light waves-effect cyan lighten-1 btn " id="next" ng-click="nextBtn()">
+                下一页
+            </a>
+        </div>
+    </div>
+</div>
+
+<!-- 模态画面【新增发票信息】 模态框 -->
+<div id="newInvoiceDiv" class="modal modal-fixed-footer row" style="max-height: 506px;">
+
+    <!-- Header -->
+    <div class="modal_title center-align cyan white-text">新增发票信息</div>
+
+    <!-- Body -->
+    <div class="modal-content" style="max-height: 400px;">
+
+        <!-- 显示画面【新增发票信息】 Body -->
+        <div class="col" style="width:95%; margin-left: 20px;">
+
+            <div class="col s12">
+                <!-- 发票编号 -->
+                <div class="input-field col s6">
+                    <input type="text" id="invoiceNoText" ng-model="invoiceInfo.invoiceNum">
+                    <label for="invoiceNoText"><span class="red-text">*</span>发票编号</label>
+                </div>
+
+                <!-- 发票金额 -->
+                <div class="input-field col s6">
+                    <input type="text" id="invoiceMoneyText" maxlength="8" valid-money ng-model="invoiceInfo.invoiceMoney">
+                    <label for="invoiceMoneyText"><span class="red-text">*</span>发票金额</label>
+                </div>
+            </div>
+
+            <!-- 贷出订单信息 -->
+            <div class="col s12" style="margin-top: 30px;">
+                <!-- 委托方性质 -->
+                <div class="input-field col s6">
+                    <select material-select watch ng-model="invoiceInfo.entrustType" ng-change="clearSelectEntrust()">
+                        <option value="" disabled>委托方性质</option>
+                        <option ng-repeat="el in entrustTypeList" ng-value="el.entrust_type">{{el.name}}</option>
+                    </select>
+                </div>
+
+                <!-- 委托方 -->
+                <div class="input-field col s6">
+                    <select id="addEntrustSelect" style="width: 100%"></select>
+                </div>
+            </div>
+
+            <!-- 贷出备注 -->
+            <div class="col s12" style="margin-top: 30px;">
+                <div class="input-field col s12">
+                    <textarea id="remarkText" class="materialize-textarea" style="padding: 10px 0 0 0;" maxlength="200" ng-model="invoiceInfo.remark"></textarea>
+                    <label for="remarkText">贷出备注</label>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="modal-footer right-align">
+        <a class="btn-floating waves-effect waves-light btn cyan lighten-1" style="width:38px;height:38px; margin-right: 50px;"
+           ng-click="addInvoice()">
+            <i class="mdi mdi-check"></i>
+        </a>
+        <a class="btn-floating waves-effect waves-light btn modal-close grey" style="width:38px;height:38px; margin-right: 20px;">
+            <i class="mdi mdi-close"></i>
+        </a>
+    </div>
+</div>

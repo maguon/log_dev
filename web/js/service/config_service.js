@@ -473,5 +473,16 @@ baseService.factory("_config", function () {
         }
     ];
 
+    // 发票状态
+    _this.invoiceStatus = [
+        {
+            id: 1,
+            name: "未发"
+        },
+        {
+            id: 2,
+            name: "已发"
+        }
+    ];
     return _this
 });
