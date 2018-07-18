@@ -14,7 +14,7 @@
 
             <!-- 查询条件：委托方性质 -->
             <div class="input-field col s3">
-                <select material-select watch ng-model="condEntrustType" ng-change="getEntrustInfo(condEntrustType,'委托方')">
+                <select material-select watch ng-model="condEntrustType" ng-change="clearSelectEntrust()">
                     <option value="">委托方性质</option>
                     <option ng-repeat="el in entrustTypeList" ng-value="el.entrust_type">{{el.name}}</option>
                 </select>
@@ -22,10 +22,7 @@
 
             <!-- 查询条件：委托方 -->
             <div class="input-field col s3">
-                <select id="condEntrustSelect" style="width: 100%">
-                    <option value=""></option>
-                    <option ng-repeat="el in entrustList" ng-value="el.id">{{el.short_name}}</option>
-                </select>
+                <select id="condEntrustSelect" style="width: 100%"></select>
             </div>
 
             <!-- 查询条件：订单状态 -->
@@ -171,7 +168,7 @@
             <div class="col s12" style="margin-top: 30px;">
                 <!-- 委托方性质 -->
                 <div class="input-field col s6">
-                    <select material-select watch ng-model="loanInfo.entrustType" ng-change="getEntrustInfo(loanInfo.entrustType,'委托方')">
+                    <select material-select watch ng-model="loanInfo.entrustType" ng-change="clearSelectEntrust()">
                         <option value="" disabled>委托方性质</option>
                         <option ng-repeat="el in entrustTypeList" ng-value="el.entrust_type">{{el.name}}</option>
                     </select>
@@ -179,10 +176,7 @@
 
                 <!-- 委托方 -->
                 <div class="input-field col s6">
-                    <select id="addEntrustSelect" style="width: 100%">
-                        <option value=""></option>
-                        <option ng-repeat="el in entrustList" ng-value="el.id">{{el.short_name}}</option>
-                    </select>
+                    <select id="addEntrustSelect" style="width: 100%"></select>
                 </div>
             </div>
 

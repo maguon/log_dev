@@ -41,6 +41,7 @@ app.controller("finance_loan_out_controller", ["$scope", "$rootScope", "_host", 
      * 根据画面输入的查询条件，进行数据查询。
      */
     function queryFinanceLoanList() {
+
         // 基本检索URL
         var url = _host.api_url + "/loan?start=" + $scope.start + "&size=" + $scope.size;
         // 检索条件
@@ -53,7 +54,8 @@ app.controller("finance_loan_out_controller", ["$scope", "$rootScope", "_host", 
             if (data.success) {
 
                 // 保存选中委托方名称
-                conditionsObj.entrustNm = getEntrustNm();
+                conditionsObj.entrustNm = $scope.condEntrustNm;
+
                 // 当前画面的检索信息
                 var pageItems = {
                     pageId: "finance_loan_out",
@@ -67,6 +69,7 @@ app.controller("finance_loan_out_controller", ["$scope", "$rootScope", "_host", 
 
                 $scope.financeLoanInfo = data.result;
                 $scope.financeLoanList = $scope.financeLoanInfo.slice(0, 10);
+
                 if ($scope.start > 0) {
                     $("#pre").show();
                 }
@@ -148,45 +151,11 @@ app.controller("finance_loan_out_controller", ["$scope", "$rootScope", "_host", 
     }
 
     /**
-     * 取得检索条件委托方ID。
-     */
-    function getEntrustId() {
-        // 委托方ID 默认值
-        var entrustId = "";
-        if ($scope.condEntrustId !== undefined && $scope.condEntrustId !== null && $scope.condEntrustId !== "") {
-            entrustId = $scope.condEntrustId;
-        } else {
-            if ($("#condEntrustSelect").val() != null && $("#condEntrustSelect").val() !== "") {
-                entrustId = $("#condEntrustSelect").select2("data")[0].id;
-            }
-        }
-        return entrustId;
-    }
-
-    /**
-     * 取得检索条件委托方名称。
-     */
-    function getEntrustNm() {
-        // 委托方名称 默认值
-        var entrustNm = "委托方";
-        if ($scope.condEntrustNm !== undefined && $scope.condEntrustNm !== null && $scope.condEntrustNm !== "委托方") {
-            entrustNm = $scope.condEntrustNm;
-        } else {
-            if ($("#condEntrustSelect").val() != null && $("#condEntrustSelect").val() !== "") {
-                entrustNm = $("#condEntrustSelect").select2("data")[0].text;
-            }
-        }
-        return entrustNm;
-    }
-
-    /**
      * 点击：查询按钮，进行数据查询
      */
     $scope.queryFinanceLoanInfo = function () {
         // 默认第一页
         $scope.start = 0;
-        // 检索条件 委托方
-        $scope.condEntrustId = getEntrustId();
         queryFinanceLoanList();
     };
 
@@ -195,8 +164,6 @@ app.controller("finance_loan_out_controller", ["$scope", "$rootScope", "_host", 
      */
     $scope.preBtn = function () {
         $scope.start = $scope.start - ($scope.size - 1);
-        // 检索条件 委托方
-        $scope.condEntrustId = getEntrustId();
         queryFinanceLoanList();
     };
 
@@ -205,8 +172,6 @@ app.controller("finance_loan_out_controller", ["$scope", "$rootScope", "_host", 
      */
     $scope.nextBtn = function () {
         $scope.start = $scope.start + ($scope.size - 1);
-        // 检索条件 委托方
-        $scope.condEntrustId = getEntrustId();
         queryFinanceLoanList();
     };
 
@@ -308,46 +273,111 @@ app.controller("finance_loan_out_controller", ["$scope", "$rootScope", "_host", 
         });
     }
 
+    /**
+     * 清空委托方选中
+     */
+    $scope.clearSelectEntrust = function () {
+        $("#condEntrustSelect").val(null).trigger("change");
+        $("#addEntrustSelect").val(null).trigger("change");
+    };
 
     /**
      * 获取委托方信息
-     * @param type 委托方类型
+     * @param selectText 默认选中项文字
      */
-    $scope.getEntrustInfo = function (type, selectText) {
+    $scope.getEntrustInfo = function (selectText) {
+
+        // 取得委托方url
         var url = _host.api_url + "/entrust";
-        if (type != null && type !== undefined) {
-            url = _host.api_url + "/entrust?entrustType=" + type;
-        }
-        _basic.get(url).then(function (data) {
-            if (data.success) {
-                $scope.entrustList = data.result;
 
-                // 委托方select2初期化
-                $('#addEntrustSelect').select2({
-                    placeholder: '委托方',
-                    containerCssClass: 'select2_dropdown',
-                    allowClear: false
-                })
-                // 选中某个委托方后，触发事件
-                .on('change', function () {
-                    var entrustId = "";
+        // 检索画面 委托方select2初期化
+        $('#condEntrustSelect').select2({
+            // 因为有返回时默认值，所以动态赋值
+            placeholder: selectText,
+            containerCssClass: 'select2_dropdown',
+            ajax : {
+                type:'GET',
+                url : url,
+                dataType : 'json',
+                delay : 400,
+                data : function(params) {
+                    return {
+                        // 检索条件 检索画面委托方性质
+                        entrustType : $scope.condEntrustType
+                    };
+                },
+                processResults : function(data, params) {
+                    var options = [];
+                    $(data.result).each(function(i, o) {
+                        // 获取 select2 必要的字段，id与text
+                        options.push({
+                            id : o.id,
+                            text : o.short_name
+                        });
+                    });
+                    // 返回组装后 select2 列表
+                    return {
+                        results : options
+                    };
+                },
+                // 开启缓存
+                cache : true
+            },
+            allowClear: true
+        }).on("select2:unselecting", function(e) {
+            $scope.condEntrustId = "";
+            $scope.condEntrustNm = "委托方";
+            // 选中某个委托方后，触发事件
+        }).on('change', function () {
+            // 委托方 下拉选中 内容
+            if ($("#condEntrustSelect").val() != null && $("#condEntrustSelect").val() !== "") {
+                $scope.condEntrustId = $("#condEntrustSelect").select2("data")[0].id;
+                $scope.condEntrustNm = $("#condEntrustSelect").select2("data")[0].text;
+            }
+        });
 
-                    // 委托方 下拉选中 内容
-                    if ($("#addEntrustSelect").val() != null && $("#addEntrustSelect").val() !== "") {
-                        entrustId = $("#addEntrustSelect").select2("data")[0].id;
-                    }
-                    if (entrustId !== "") {
-                        getCarValuation(entrustId);
-                    }
-                });
-                $("#addEntrustSelect").val(null).trigger("change");
+        // 新增画面 委托方select2初期化
+        $('#addEntrustSelect').select2({
+            placeholder: "委托方",
+            containerCssClass: 'select2_dropdown',
+            ajax : {
+                type:'GET',
+                url : url,
+                dataType : 'json',
+                delay : 400,
+                data : function(params) {
+                    return {
+                        // 检索条件 新增画面委托方性质
+                        entrustType : $scope.loanInfo.entrustType
+                    };
+                },
+                processResults : function(data, params) {
+                    var options = [];
+                    $(data.result).each(function(i, o) {
+                        // 获取 select2 必要的字段，id与text
+                        options.push({
+                            id : o.id,
+                            text : o.short_name
+                        });
+                    });
+                    // 返回组装后 select2 列表
+                    return {
+                        results : options
+                    };
+                },
+                // 开启缓存
+                cache : true
+            },
+            allowClear: true
+        }).on('change', function () {
+            var entrustId = "";
 
-                // 委托方select2初期化
-                $('#condEntrustSelect').select2({
-                    placeholder: selectText,
-                    containerCssClass: 'select2_dropdown',
-                    allowClear: true
-                });
+            // 委托方 下拉选中 内容
+            if ($("#addEntrustSelect").val() != null && $("#addEntrustSelect").val() !== "") {
+                entrustId = $("#addEntrustSelect").select2("data")[0].id;
+            }
+            if (entrustId !== "") {
+                getCarValuation(entrustId);
             }
         });
     };
@@ -356,7 +386,6 @@ app.controller("finance_loan_out_controller", ["$scope", "$rootScope", "_host", 
      * 画面初期显示时，用来获取画面必要信息的初期方法。
      */
     $scope.initData = function () {
-
         // 如果是从后画面跳回来时，取得上次检索条件
         if ($stateParams.from === "finance_loan_out_detail" && $rootScope.refObj !== undefined && $rootScope.refObj.pageArray.length > 0) {
             var pageItems = $rootScope.refObj.pageArray.pop();
@@ -366,6 +395,7 @@ app.controller("finance_loan_out_controller", ["$scope", "$rootScope", "_host", 
                 $scope.size = pageItems.size;
                 // 将上次的检索条件设定到画面
                 setConditions(pageItems.conditions);
+                $scope.condEntrustNm = pageItems.conditions.entrustNm;
             }
         } else {
             // 初始显示时，没有前画面，所以没有基本信息
@@ -377,7 +407,7 @@ app.controller("finance_loan_out_controller", ["$scope", "$rootScope", "_host", 
         }
 
         // 取得 检索条件：委托方信息
-        $scope.getEntrustInfo($scope.condEntrustType, $scope.condEntrustNm);
+        $scope.getEntrustInfo($scope.condEntrustNm);
 
         // 查询数据
         queryFinanceLoanList();
