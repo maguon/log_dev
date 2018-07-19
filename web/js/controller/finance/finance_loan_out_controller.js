@@ -303,7 +303,9 @@ app.controller("finance_loan_out_controller", ["$scope", "$rootScope", "_host", 
                 data : function(params) {
                     return {
                         // 检索条件 检索画面委托方性质
-                        entrustType : $scope.condEntrustType
+                        entrustType : $scope.condEntrustType,
+                        // 委托方简称
+                        shortNameCode : params.term
                     };
                 },
                 processResults : function(data, params) {
@@ -348,7 +350,9 @@ app.controller("finance_loan_out_controller", ["$scope", "$rootScope", "_host", 
                 data : function(params) {
                     return {
                         // 检索条件 新增画面委托方性质
-                        entrustType : $scope.loanInfo.entrustType
+                        entrustType : $scope.loanInfo.entrustType,
+                        // 委托方简称
+                        shortNameCode : params.term
                     };
                 },
                 processResults : function(data, params) {

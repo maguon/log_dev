@@ -252,7 +252,9 @@ app.controller("invoice_controller", ["$scope", "$rootScope", "_host", "_basic",
                 data : function(params) {
                     return {
                         // 检索条件 检索画面委托方性质
-                        entrustType : $scope.condEntrustType
+                        entrustType : $scope.condEntrustType,
+                        // 委托方简称
+                        shortNameCode : params.term
                     };
                 },
                 processResults : function(data, params) {
@@ -299,7 +301,9 @@ app.controller("invoice_controller", ["$scope", "$rootScope", "_host", "_basic",
                 data : function(params) {
                     return {
                         // 检索条件 新增画面委托方性质
-                        entrustType : $scope.invoiceInfo.entrustType
+                        entrustType : $scope.invoiceInfo.entrustType,
+                        // 委托方简称
+                        shortNameCode : params.term
                     };
                 },
                 processResults : function(data, params) {
