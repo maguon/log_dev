@@ -43,31 +43,11 @@ app.controller("invoice_detail_controller", ["$scope", "$stateParams", "_basic",
         createdOn: ""
     };
 
-    // 还款信息：追加关联画面用
-    $scope.loanRepaymentInfo = {
-        // 还款编号
-        reinvoiceId: "",
-        // 还款日期
-        repaymentDate: "",
-        // 关联贷出订单
-        loanId: "",
-        // 归还本金
-        repaymentMoney: "",
-        // 利息
-        interestMoney: "",
-        // 手续费
-        fee: "",
-        // 实际应还
-        realRepaymentMoney: "",
-        // 本次支付金额
-        thisPaymentMoney: ""
-    };
-
     /**
-     *返回上层
-     * */
+     * 返回前画面。
+     */
     $scope.return = function () {
-        $state.go($stateParams.from, {}, {reload: true})
+        $state.go($stateParams.from, {from:"invoice_detail"}, {reload: true})
     };
 
     /**
@@ -87,6 +67,58 @@ app.controller("invoice_detail_controller", ["$scope", "$stateParams", "_basic",
     };
 
     /**
+     * 保存修改信息
+     * */
+    $scope.updateInvoiceInfo = function () {
+        if ($scope.invoiceInfo.invoiceNum !== ""
+            && $scope.invoiceInfo.invoiceMoney !== ""
+            && $scope.invoiceInfo.entrustType !== ""
+            && $scope.invoiceInfo.entrustId !== "") {
+            var obj = {
+                invoiceNum: $scope.invoiceInfo.invoiceNum,
+                invoiceMoney: $scope.invoiceInfo.invoiceMoney,
+                entrustId: $scope.invoiceInfo.entrustId,
+                remark: $scope.invoiceInfo.remark
+            };
+            _basic.put(_host.api_url + "/user/" + userId + "/invoice/" + invoiceId, obj).then(function (data) {
+                if (data.success) {
+                    swal("修改成功", "", "success");
+                } else {
+                    swal(data.msg, "", "error");
+                }
+            })
+        } else {
+            swal("请填写完整信息！", "", "warning");
+        }
+    };
+
+    /**
+     * 点击完结
+     * */
+    $scope.updateInvoiceStatus = function () {
+        swal({
+                title: "确定发放该发票？",
+                type: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#DD6B55",
+                confirmButtonText: "确认",
+                cancelButtonText: "取消",
+                closeOnConfirm: true
+            },
+            function () {
+                // 修改状态为已完结【2：已发】
+                var url = _host.api_url + "/user/" + userId + "/invoice/" + invoiceId + "/invoiceStatus/" + $scope.invoiceStatus[1].id;
+                _basic.put(url, {}).then(function (data) {
+                    if (data.success) {
+                        initData();
+                    } else {
+                        swal(data.msg, "", "error");
+                    }
+                })
+            });
+    };
+
+    /**
      * Tab跳转 关联仓储订单
      */
     $scope.lookRelatedOrder = function () {
@@ -97,42 +129,50 @@ app.controller("invoice_detail_controller", ["$scope", "$stateParams", "_basic",
         $("#lookRelatedOrder").addClass("active");
         $("#lookRelatedOrder").show();
         // 左侧 未完结 列表
-        _basic.get(_host.api_url + "/storageOrder?entrustId=" + $scope.invoiceInfo.entrustId + '&orderStatus=' + $scope.paymentStatusList[1].id).then(function (data) {
+        var url = _host.api_url + "/storageOrder?entrustId=" + $scope.invoiceInfo.entrustId + '&orderStatus=' + $scope.paymentStatusList[1].id + '&invoiceStatus=' + $scope.invoiceStatus[0].id;
+        _basic.get(url).then(function (data) {
             if (data.success) {
                 $scope.storageOrderList = data.result;
             } else {
                 swal(data.msg, "", "error");
             }
         });
-        var url = _host.api_url + "/paymentStorageOrderRel?paymentId=" + invoiceId;
-        //右侧关联列表
+        // 右侧关联列表
+        queryInvoiceStorageOrderRel();
+    };
+
+    /**
+     * 查询已关联仓储订单（右侧）。
+     */
+    function queryInvoiceStorageOrderRel() {
+        var url = _host.api_url + "/invoiceStorageOrderRel?invoiceId=" + invoiceId;
         _basic.get(url).then(function (data) {
             if (data.success) {
-                $scope.storageOrderPaymentRelList = data.result;
+                $scope.invoiceStorageOrderRelList = data.result;
                 $scope.totalStorageMoney = 0;
-                for (var i = 0; i < $scope.storageOrderPaymentRelList.length; i++) {
-                    if ($scope.storageOrderPaymentRelList[i].actual_fee == null) {
-                        $scope.storageOrderPaymentRelList[i].actual_fee = 0;
+                for (var i = 0; i < $scope.invoiceStorageOrderRelList.length; i++) {
+                    if ($scope.invoiceStorageOrderRelList[i].actual_fee == null) {
+                        $scope.invoiceStorageOrderRelList[i].actual_fee = 0;
                     }
-                    $scope.totalStorageMoney = $scope.storageOrderPaymentRelList[i].actual_fee + $scope.totalStorageMoney;
+                    $scope.totalStorageMoney = $scope.invoiceStorageOrderRelList[i].actual_fee + $scope.totalStorageMoney;
                 }
             } else {
                 swal(data.msg, "", "error");
             }
         });
-    };
+    }
 
     /**
      * *
      * 添加仓储关联
      * */
-    $scope.addOderRel = function (id) {
+    $scope.addInvoiceStorageOrderRel = function (id) {
         // 追加画面数据
         var obj = {
             storageOrderId: id,
             invoiceId: invoiceId
         };
-        _basic.post(_host.api_url + "/user/" + userId + "/paymentStorageOrderRel", obj).then(function (data) {
+        _basic.post(_host.api_url + "/user/" + userId + "/invoiceStorageOrderRel", obj).then(function (data) {
             if (data.success) {
                 // 成功后，刷新页面数据
                 $scope.lookRelatedOrder();
@@ -146,9 +186,9 @@ app.controller("invoice_detail_controller", ["$scope", "$stateParams", "_basic",
      * *
      * 删除仓储关联
      * */
-    $scope.deleteOderRel = function (id) {
+    $scope.deleteInvoiceStorageOrderRel = function (id) {
         swal({
-                title: "确定要移除当前订单与该次支付的关联吗？",
+                title: "确定要移除当前订单与该发票的关联吗？",
                 type: "warning",
                 showCancelButton: true,
                 confirmButtonColor: "#DD6B55",
@@ -157,7 +197,7 @@ app.controller("invoice_detail_controller", ["$scope", "$stateParams", "_basic",
                 closeOnConfirm: true
             },
             function () {
-                _basic.delete(_host.api_url + "/user/" + userId + "/storageOrder/" + id + '/payment/' + invoiceId, {}).then(
+                _basic.delete(_host.api_url + "/user/" + userId + "/storageOrder/" + id + '/invoice/' + invoiceId, {}).then(
                     function (data) {
                         if (data.success === true) {
                             $scope.lookRelatedOrder();
@@ -176,12 +216,13 @@ app.controller("invoice_detail_controller", ["$scope", "$stateParams", "_basic",
         $('.tabWrap .tab').removeClass("active");
         $(".tab_box ").removeClass("active");
         $(".tab_box ").hide();
-        $('.tabWrap .lookShipTransOrder').addClass("active");
-        $("#lookShipTransOrder").addClass("active");
-        $("#lookShipTransOrder").show();
+        $('.tabWrap .invoiceShipOrderDiv').addClass("active");
+        $("#invoiceShipOrderDiv").addClass("active");
+        $("#invoiceShipOrderDiv").show();
         // 左侧一览 未完结
-        _basic.get(_host.api_url + "/shipTransOrder?entrustId=" + $scope.storagePaymentArray.entrust_id + '&orderStatus=' + $scope.paymentStatusList[0].id).then(function (data) {
-            if (data.success == true) {
+        var url = _host.api_url + "/shipTransOrder?entrustId=" + $scope.invoiceInfo.entrustId + '&orderStatus=' + $scope.paymentStatusList[1].id + '&invoiceStatus=' + $scope.invoiceStatus[0].id;
+        _basic.get(url).then(function (data) {
+            if (data.success) {
                 $scope.shipTransOrderList = data.result;
             } else {
                 swal(data.msg, "", "error");
@@ -189,22 +230,29 @@ app.controller("invoice_detail_controller", ["$scope", "$stateParams", "_basic",
         });
 
         // 右侧，已关联
-        var url = _host.api_url + "/paymentShipOrderRel?invoiceId=" + invoiceId;
+        queryInvoiceShipOrderRel();
+    };
+
+    /**
+     * 查询已关联海运订单（右侧）。
+     */
+    function queryInvoiceShipOrderRel() {
+        var url = _host.api_url + "/invoiceShipOrderRel?invoiceId=" + invoiceId;
         _basic.get(url).then(function (data) {
             if (data.success) {
-                $scope.shipTransOrderRelList = data.result;
+                $scope.invoiceShipOrderRelList = data.result;
                 $scope.totalShipTransMoney = 0;
-                for (var i = 0; i < $scope.shipTransOrderRelList.length; i++) {
-                    if ($scope.shipTransOrderRelList[i].ship_trans_fee == null) {
-                        $scope.shipTransOrderRelList[i].ship_trans_fee = 0;
+                for (var i = 0; i < $scope.invoiceShipOrderRelList.length; i++) {
+                    if ($scope.invoiceShipOrderRelList[i].ship_trans_fee == null) {
+                        $scope.invoiceShipOrderRelList[i].ship_trans_fee = 0;
                     }
-                    $scope.totalShipTransMoney = $scope.shipTransOrderRelList[i].ship_trans_fee + $scope.totalShipTransMoney;
+                    $scope.totalShipTransMoney = $scope.invoiceShipOrderRelList[i].ship_trans_fee + $scope.totalShipTransMoney;
                 }
             } else {
                 swal(data.msg, "", "error");
             }
         });
-    };
+    }
 
     /**
      * *
@@ -216,7 +264,7 @@ app.controller("invoice_detail_controller", ["$scope", "$stateParams", "_basic",
             shipTransOrderId: shipTransOrderId,
             invoiceId: invoiceId
         };
-        _basic.post(_host.api_url + "/user/" + userId + "/paymentShipOrderRel", obj).then(function (data) {
+        _basic.post(_host.api_url + "/user/" + userId + "/invoiceShipOrderRel", obj).then(function (data) {
             if (data.success) {
                 // 成功后，刷新页面数据
                 $scope.lookShipTransOrder();
@@ -232,7 +280,7 @@ app.controller("invoice_detail_controller", ["$scope", "$stateParams", "_basic",
      * */
     $scope.deleteShipTransOderRel = function (shipTransOrderId) {
         swal({
-                title: "确定要移除当前订单与该次支付的关联吗？",
+                title: "确定要移除当前订单与该发票的关联吗？",
                 type: "warning",
                 showCancelButton: true,
                 confirmButtonColor: "#DD6B55",
@@ -241,67 +289,14 @@ app.controller("invoice_detail_controller", ["$scope", "$stateParams", "_basic",
                 closeOnConfirm: true
             },
             function () {
-                _basic.delete(_host.api_url + "/user/" + userId + "/shipTransOrder/" + shipTransOrderId + '/payment/' + invoiceId, {}).then(
+                _basic.delete(_host.api_url + "/user/" + userId + "/shipTransOrder/" + shipTransOrderId + '/invoice/' + invoiceId, {}).then(
                     function (data) {
-                        if (data.success === true) {
+                        if (data.success) {
                             $scope.lookShipTransOrder();
                         } else {
                             swal(data.msg, "", "error");
                         }
                     });
-            });
-    };
-
-    /**
-     * 保存修改信息
-     * */
-    $scope.updatePaymentInfo = function () {
-        if ($scope.storagePaymentArray.entrust_id !== ""
-            && $scope.storagePaymentArray.payment_type !== ""
-            && $scope.storagePaymentArray.number !== ""
-            && $scope.storagePaymentArray.payment_money !== "") {
-            var obj = {
-                entrustId: $scope.storagePaymentArray.entrust_id,
-                paymentType: $scope.storagePaymentArray.payment_type,
-                number: $scope.storagePaymentArray.number,
-                paymentMoney: $scope.storagePaymentArray.payment_money,
-                remark: $scope.storagePaymentArray.remark
-            };
-            _basic.put(_host.api_url + "/user/" + userId + "/payment/" + invoiceId, obj).then(function (data) {
-                if (data.success) {
-                    swal("修改成功", "", "success");
-                } else {
-                    swal(data.msg, "", "error");
-                }
-            })
-        } else {
-            swal("请填写完整信息！", "", "warning");
-        }
-    };
-
-    /**
-     * 点击完结
-     * */
-    $scope.updatePaymentStatus = function () {
-        swal({
-                title: "确定支付完结吗？",
-                type: "warning",
-                showCancelButton: true,
-                confirmButtonColor: "#DD6B55",
-                confirmButtonText: "确认",
-                cancelButtonText: "取消",
-                closeOnConfirm: true
-            },
-            function () {
-                // 修改状态为已完结【2：已完结】
-                var url = _host.api_url + "/user/" + userId + "/payment/" + invoiceId + "/paymentStatus/" + $scope.paymentStatusList[1].id;
-                _basic.put(url, {}).then(function (data) {
-                    if (data.success) {
-                        initData();
-                    } else {
-                        swal(data.msg, "", "error");
-                    }
-                })
             });
     };
 
@@ -317,24 +312,38 @@ app.controller("invoice_detail_controller", ["$scope", "$stateParams", "_basic",
         $("#paymentDiv").addClass("active");
         $("#paymentDiv").show();
 
-        // 获取还款编号列表
-        getLoanRepaymentList();
+        // 左侧一览 未完结
+        var url = _host.api_url + "/loanRepayment?entrustId=" + $scope.invoiceInfo.entrustId + '&repaymentStatus=' + $scope.paymentStatusList[1].id + '&invoiceStatus=' + $scope.invoiceStatus[0].id;
+        _basic.get(url).then(function (data) {
+            if (data.success) {
+                $scope.loanRepaymentList = data.result;
+            } else {
+                swal(data.msg, "", "error");
+            }
+        });
 
-        // 隐藏追加画面
-        $scope.newPaymentDiv = false;
-
-        // 获取支付编号对应的 关联还款列表
-        getPaymentLoanRepRel();
+        // 右侧，已关联
+        queryInvoiceLoanRepRel();
     };
 
     /**
-     * 获取还款编号列表
+     * 查询已关联还款订单（右侧）。
      */
-    function getLoanRepaymentList() {
-        var url = _host.api_url + "/loanRepayment?entrustId=" + $scope.storagePaymentArray.entrust_id + '&repaymentStatus=' + $scope.paymentStatusList[0].id;
+    function queryInvoiceLoanRepRel() {
+        var url = _host.api_url + "/invoiceLoanRepRel?invoiceId=" + invoiceId;
         _basic.get(url).then(function (data) {
-            if (data.success === true) {
-                $scope.loanRepaymentList = data.result;
+            if (data.success) {
+                $scope.invoiceLoanRepRelList = data.result;
+                $scope.totalPaymentMoney = 0;
+                var thisRepayMoney = 0;
+                var thisInterestMoney = 0;
+                var thisFee = 0;
+                for (var i = 0; i < $scope.invoiceLoanRepRelList.length; i++) {
+                    thisRepayMoney = $scope.invoiceLoanRepRelList[i].repayment_money;
+                    thisInterestMoney = $scope.invoiceLoanRepRelList[i].interest_money;
+                    thisFee = $scope.invoiceLoanRepRelList[i].fee;
+                    $scope.totalPaymentMoney = $scope.totalPaymentMoney + (thisRepayMoney==null ? 0 : thisRepayMoney) + (thisInterestMoney==null ? 0 : thisInterestMoney) + (thisFee==null ? 0 : thisFee);
+                }
             } else {
                 swal(data.msg, "", "error");
             }
@@ -342,104 +351,32 @@ app.controller("invoice_detail_controller", ["$scope", "$stateParams", "_basic",
     }
 
     /**
-     * 获取还款编号信息
-     */
-    $scope.getLoanRepaymentInfo = function (id) {
-
-        var url = _host.api_url + "/loanRepayment?reinvoiceId=" + id;
-        _basic.get(url).then(function (data) {
-            if (data.success === true) {
-                if (data.result.length > 0) {
-                    // 显示追加画面
-                    $scope.newPaymentDiv = true;
-
-                    // 还款编号
-                    $scope.loanRepaymentInfo.reinvoiceId= data.result[0].id;
-                    // 还款日期
-                    $scope.loanRepaymentInfo.repaymentDate= data.result[0].created_on;
-                    // 关联贷出订单
-                    $scope.loanRepaymentInfo.loanId= data.result[0].loan_id;
-                    // 归还本金
-                    $scope.loanRepaymentInfo.repaymentMoney= data.result[0].repayment_money;
-                    // 利息
-                    $scope.loanRepaymentInfo.interestMoney= data.result[0].interest_money;
-                    // 手续费
-                    $scope.loanRepaymentInfo.fee= data.result[0].fee;
-                    // 实际应还
-                    $scope.loanRepaymentInfo.realRepaymentMoney= data.result[0].repayment_money + data.result[0].interest_money + data.result[0].fee;
-                    // 本次支付金额
-                    $scope.loanRepaymentInfo.thisPaymentMoney = "";
-
-                    // 清空 还款编号
-                    $scope.loanRepaymentId = "";
-                } else {
-                    // 隐藏追加画面
-                    $scope.newPaymentDiv = false;
-                    // 清空数据
-                    $scope.loanRepaymentInfo = {};
-                }
+     * *
+     * 添加还款关联
+     * */
+    $scope.addInvoiceLoanRepRel = function (repaymentId) {
+        // 追加画面数据
+        var obj = {
+            repaymentId: repaymentId,
+            invoiceId: invoiceId
+        };
+        _basic.post(_host.api_url + "/user/" + userId + "/invoiceLoanRepRel", obj).then(function (data) {
+            if (data.success) {
+                // 成功后，刷新页面数据
+                $scope.lookPayment();
             } else {
                 swal(data.msg, "", "error");
             }
-        });
+        })
     };
 
     /**
-     * 新增还款支付订单，修改本次支付金额。
-     */
-    $scope.addLoanRepPaymentRel = function () {
-        if ($scope.loanRepaymentInfo.thisPaymentMoney !== "") {
-            swal({
-                    title: "确定要追加当前支付订单与该次还款的关联吗？",
-                    type: "warning",
-                    showCancelButton: true,
-                    confirmButtonColor: "#DD6B55",
-                    confirmButtonText: "确认",
-                    cancelButtonText: "取消",
-                    closeOnConfirm: true
-                },
-                function () {
-                    // 追加画面数据
-                    var obj = {
-                        repaymentId: $scope.loanRepaymentInfo.repaymentId,
-                        paymentId: $scope.storagePaymentArray.id
-                    };
-
-                    _basic.post(_host.api_url + "/user/" + userId + "/paymentLoanRepRel", obj).then(function (data) {
-                        if (data.success) {
-                            // 成功后，修改本次支付金额
-                            obj = {thisPaymentMoney : $scope.loanRepaymentInfo.thisPaymentMoney === "" ? 0 : $scope.loanRepaymentInfo.thisPaymentMoney};
-                            var url = _host.api_url + "/user/" + userId + "/repayment/" + $scope.loanRepaymentInfo.repaymentId + "/payment/" + $scope.storagePaymentArray.id + "/paymentRepMoney" ;
-                            _basic.put(url, obj).then(function (data) {
-                                if (data.success) {
-                                    swal("追加成功", "", "success");
-                                    // 关闭追加关联还款画面
-                                    $scope.closePaymentDiv();
-                                    // 获取支付编号对应的 关联还款列表
-                                    getPaymentLoanRepRel();
-                                } else {
-                                    swal(data.msg, "", "error");
-                                }
-                            })
-                        } else {
-                            swal(data.msg, "", "error");
-                        }
-                    })
-                });
-        } else {
-            swal("请填写本次支付金额！", "", "warning");
-        }
-    };
-
-    /**
-     * 从关联还款信息中删除指定还款。
-     * @param $event
-     * @param repaymentId 还款编号
-     */
-    $scope.deleteOtherPayment = function ($event, repaymentId) {
-        $event.stopPropagation();
+     * *
+     * 删除还款关联
+     * */
+    $scope.deleteInvoiceLoanRepRel = function (repaymentId) {
         swal({
-                title: "确定要移除当前支付订单与该次还款的关联吗？",
+                title: "确定要移除当前订单与该发票的关联吗？",
                 type: "warning",
                 showCancelButton: true,
                 confirmButtonColor: "#DD6B55",
@@ -448,11 +385,10 @@ app.controller("invoice_detail_controller", ["$scope", "$stateParams", "_basic",
                 closeOnConfirm: true
             },
             function () {
-                _basic.delete(_host.api_url + "/user/" + userId + "/repayment/" + repaymentId + '/payment/' + $scope.storagePaymentArray.id, {}).then(
+                _basic.delete(_host.api_url + "/user/" + userId + "/repayment/" + repaymentId + '/invoice/' + invoiceId, {}).then(
                     function (data) {
                         if (data.success) {
-                            // 获取支付编号对应的 关联还款列表
-                            getPaymentLoanRepRel();
+                            $scope.lookPayment();
                         } else {
                             swal(data.msg, "", "error");
                         }
@@ -461,47 +397,11 @@ app.controller("invoice_detail_controller", ["$scope", "$stateParams", "_basic",
     };
 
     /**
-     * 关闭追加关联还款画面。
-     */
-    $scope.closePaymentDiv = function () {
-        // 隐藏追加画面
-        $scope.newPaymentDiv = false;
-        // 清空数据
-        $scope.loanRepaymentInfo = {};
-    };
-
-    /**
-     * 获取支付编号对应的 关联还款列表
-     */
-    function getPaymentLoanRepRel() {
-        // TAB[关联还款] 支付还款订单总额(美元)
-        $scope.totalPaymentMoney = 0;
-
-        var url = _host.api_url + "/paymentLoanRepRel?invoiceId=" + $scope.storagePaymentArray.id;
-        _basic.get(url).then(function (data) {
-            if (data.success) {
-                // 关联还款列表
-                $scope.paymentLoanRepRelList = data.result;
-                // 遍历结果集
-                $scope.paymentLoanRepRelList.forEach(function (value, index, array) {
-                    // TAB[关联还款] 支付还款订单总额(美元)
-                    $scope.totalPaymentMoney = $scope.totalPaymentMoney + value.this_payment_money;
-                });
-
-                // TAB[关联还款] 剩余金额(美元)
-                $scope.leftMoney = $scope.storagePaymentArray.payment_money - $scope.totalStorageMoney - $scope.totalShipTransMoney - $scope.totalPaymentMoney;
-            } else {
-                swal(data.msg, "", "error");
-            }
-        });
-    }
-
-
-    /**
      * 清空委托方选中
      */
     $scope.clearSelectEntrust = function () {
-        // $("#entrustSelect").val(null).trigger("change");
+        $scope.invoiceInfo.entrustId = "";
+        $scope.invoiceInfo.entrustNm = "委托方";
         $("#select2-entrustSelect-container").text("委托方").trigger("change");
     };
 
@@ -526,7 +426,9 @@ app.controller("invoice_detail_controller", ["$scope", "$stateParams", "_basic",
                 data : function(params) {
                     return {
                         // 检索条件 检索画面委托方性质
-                        entrustType : $scope.invoiceInfo.entrustType
+                        entrustType : $scope.invoiceInfo.entrustType,
+                        // 委托方简称
+                        shortNameCode : params.term
                     };
                 },
                 processResults : function(data, params) {
@@ -589,6 +491,13 @@ app.controller("invoice_detail_controller", ["$scope", "$stateParams", "_basic",
 
                 // 显示 发票信息 TAB
                 $scope.lookInvoiceInfo();
+
+                // 仓储
+                queryInvoiceStorageOrderRel();
+                // 海运
+                queryInvoiceShipOrderRel();
+                // 还款
+                queryInvoiceLoanRepRel();
             } else {
                 swal(data.msg, "", "error");
             }

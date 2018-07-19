@@ -78,6 +78,7 @@ app.config(['$stateProvider',"$urlRouterProvider",function($stateProvider,$urlRo
         // 财务管理->发票管理
         .state("invoice", {
             url:"/invoice",
+            params: {"from": null},
             templateUrl: "/view/finance/invoice.html",
             controller:"invoice_controller"
         })
