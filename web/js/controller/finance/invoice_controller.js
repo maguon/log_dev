@@ -93,7 +93,6 @@ app.controller("invoice_controller", ["$scope", "$rootScope", "_host", "_basic",
         $scope.condEntrustType = conditions.entrustType;
         // 委托方
         $scope.condEntrustId = conditions.entrustId;
-        $scope.condEntrustNm = conditions.entrustNm;
         // 状态
         $scope.condInvoiceStatus = conditions.invoiceStatus;
         // 开票日期 开始
@@ -177,23 +176,14 @@ app.controller("invoice_controller", ["$scope", "$rootScope", "_host", "_basic",
      * 新增 发票信息。
      */
     $scope.addInvoice = function () {
-
-        // 委托方ID
-        var entrustId = "";
-
-        // 委托方 下拉选中 内容
-        if ($("#addEntrustSelect").val() != null && $("#addEntrustSelect").val() !== "") {
-            entrustId = $("#addEntrustSelect").select2("data")[0].id;
-        }
-
-        if ($scope.invoiceInfo.invoiceNum !== "" && $scope.invoiceInfo.invoiceMoney !== "" && entrustId !== "") {
+        if ($scope.invoiceInfo.invoiceNum !== "" && $scope.invoiceInfo.invoiceMoney !== "" && $scope.invoiceInfo.entrustId !== "") {
             var obj = {
                 // 发票编号
                 invoiceNum: $scope.invoiceInfo.invoiceNum,
                 // 发票金额
                 invoiceMoney: $scope.invoiceInfo.invoiceMoney,
                 // 委托方
-                entrustId: entrustId,
+                entrustId: $scope.invoiceInfo.entrustId,
                 // 备注
                 remark: $scope.invoiceInfo.remark
             };
@@ -226,8 +216,15 @@ app.controller("invoice_controller", ["$scope", "$rootScope", "_host", "_basic",
      * 清空委托方选中
      */
     $scope.clearSelectEntrust = function () {
-        $("#condEntrustSelect").val(null).trigger("change");
-        $("#addEntrustSelect").val(null).trigger("change");
+        // $("#condEntrustSelect").val(null).trigger("change");
+        $scope.condEntrustId = "";
+        $scope.condEntrustNm = "委托方";
+        $("#select2-condEntrustSelect-container").text("委托方").trigger("change");
+
+        // $("#addEntrustSelect").val(null).trigger("change");
+        $scope.invoiceInfo.entrustId = "";
+        $scope.invoiceInfo.entrustNm = "委托方";
+        $("#select2-addEntrustSelect-container").text("委托方").trigger("change");
     };
 
     /**
@@ -324,14 +321,19 @@ app.controller("invoice_controller", ["$scope", "$rootScope", "_host", "_basic",
                 cache : true
             },
             allowClear: true
+        }).on('change', function () {
+            // 委托方 下拉选中 内容
+            if ($("#addEntrustSelect").val() != null && $("#addEntrustSelect").val() !== "") {
+                $scope.invoiceInfo.entrustId = $("#addEntrustSelect").select2("data")[0].id;
+                $scope.invoiceInfo.entrustNm = $("#addEntrustSelect").select2("data")[0].text;
+            }
         });
     };
 
     /**
      * 画面初期显示时，用来获取画面必要信息的初期方法。
      */
-    $scope.initData = function () {
-
+    function initData() {
         // 如果是从后画面跳回来时，取得上次检索条件
         if ($stateParams.from === "invoice_detail" && $rootScope.refObj !== undefined && $rootScope.refObj.pageArray.length > 0) {
             var pageItems = $rootScope.refObj.pageArray.pop();
@@ -357,7 +359,7 @@ app.controller("invoice_controller", ["$scope", "$rootScope", "_host", "_basic",
 
         // 查询数据
         queryInvoiceList();
-    };
-    $scope.initData();
+    }
+    initData();
 }]);
 

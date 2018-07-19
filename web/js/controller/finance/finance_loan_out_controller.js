@@ -199,19 +199,10 @@ app.controller("finance_loan_out_controller", ["$scope", "$rootScope", "_host", 
      * 新增 金融贷出。
      */
     $scope.addFinanceLoan = function () {
-
-        // 委托方ID
-        var entrustId = "";
-
-        // 委托方 下拉选中 内容
-        if ($("#addEntrustSelect").val() != null && $("#addEntrustSelect").val() !== "") {
-            entrustId = $("#addEntrustSelect").select2("data")[0].id;
-        }
-
-        if (entrustId !== "" && $scope.loanInfo.loanMoney !== "") {
+        if ($scope.loanInfo.entrustId !== "" && $scope.loanInfo.loanMoney !== "") {
             var obj = {
                 // 委托方
-                entrustId: entrustId,
+                entrustId: $scope.loanInfo.entrustId,
                 // 定金
                 deposit: $scope.loanInfo.deposit === "" ? 0 : $scope.loanInfo.deposit,
                 // 贷出金额(美元)
@@ -277,8 +268,13 @@ app.controller("finance_loan_out_controller", ["$scope", "$rootScope", "_host", 
      * 清空委托方选中
      */
     $scope.clearSelectEntrust = function () {
-        $("#condEntrustSelect").val(null).trigger("change");
-        $("#addEntrustSelect").val(null).trigger("change");
+        $scope.condEntrustId = "";
+        $scope.condEntrustNm = "委托方";
+        $("#select2-condEntrustSelect-container").text("委托方").trigger("change");
+
+        $scope.loanInfo.entrustId = "";
+        $scope.loanInfo.entrustNm = "委托方";
+        $("#select2-addEntrustSelect-container").text("委托方").trigger("change");
     };
 
     /**
@@ -374,14 +370,14 @@ app.controller("finance_loan_out_controller", ["$scope", "$rootScope", "_host", 
             },
             allowClear: true
         }).on('change', function () {
-            var entrustId = "";
-
             // 委托方 下拉选中 内容
             if ($("#addEntrustSelect").val() != null && $("#addEntrustSelect").val() !== "") {
-                entrustId = $("#addEntrustSelect").select2("data")[0].id;
+                $scope.loanInfo.entrustId = $("#addEntrustSelect").select2("data")[0].id;
+                $scope.loanInfo.entrustNm = $("#addEntrustSelect").select2("data")[0].text;
             }
-            if (entrustId !== "") {
-                getCarValuation(entrustId);
+
+            if ($scope.loanInfo.entrustId !== "") {
+                getCarValuation($scope.loanInfo.entrustId);
             }
         });
     };
@@ -389,7 +385,7 @@ app.controller("finance_loan_out_controller", ["$scope", "$rootScope", "_host", 
     /**
      * 画面初期显示时，用来获取画面必要信息的初期方法。
      */
-    $scope.initData = function () {
+    function initData() {
         // 如果是从后画面跳回来时，取得上次检索条件
         if ($stateParams.from === "finance_loan_out_detail" && $rootScope.refObj !== undefined && $rootScope.refObj.pageArray.length > 0) {
             var pageItems = $rootScope.refObj.pageArray.pop();
@@ -399,6 +395,7 @@ app.controller("finance_loan_out_controller", ["$scope", "$rootScope", "_host", 
                 $scope.size = pageItems.size;
                 // 将上次的检索条件设定到画面
                 setConditions(pageItems.conditions);
+                // 委托方（select2）选择项
                 $scope.condEntrustNm = pageItems.conditions.entrustNm;
             }
         } else {
@@ -415,7 +412,7 @@ app.controller("finance_loan_out_controller", ["$scope", "$rootScope", "_host", 
 
         // 查询数据
         queryFinanceLoanList();
-    };
-    $scope.initData();
+    }
+    initData();
 }]);
 

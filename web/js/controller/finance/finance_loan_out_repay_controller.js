@@ -68,7 +68,8 @@ app.controller("finance_loan_out_repay_controller", ["$scope", "$rootScope", "_h
             if (data.success) {
 
                 // 保存选中委托方名称
-                conditionsObj.entrustNm = getEntrustNm();
+                conditionsObj.entrustNm = $scope.condEntrustNm;
+
                 // 当前画面的检索信息
                 var pageItems = {
                     pageId: "finance_loan_out_repay",
@@ -123,8 +124,6 @@ app.controller("finance_loan_out_repay_controller", ["$scope", "$rootScope", "_h
         $scope.condRepaymentId = conditions.repaymentId;
         // 委托方
         $scope.condEntrustId = conditions.entrustId;
-        // 委托方（select2）默认选择项
-        $scope.condEntrustNm = conditions.entrustNm;
         // 关联贷出订单编号
         $scope.condLoanId = conditions.loanId;
         // 还款状态
@@ -164,49 +163,11 @@ app.controller("finance_loan_out_repay_controller", ["$scope", "$rootScope", "_h
     }
 
     /**
-     * 取得检索条件委托方ID。
-     */
-    function getEntrustId() {
-        // 委托方ID 默认值
-        var entrustId = "";
-        if ($("#condEntrustSelect").val() != null && $("#condEntrustSelect").val() !== "") {
-            entrustId = $("#condEntrustSelect").select2("data")[0].id;
-        }
-        return entrustId;
-    }
-
-    /**
-     * 取得新增还款委托方ID。
-     */
-    function getAddRepayEntrustId() {
-        // 委托方ID 默认值
-        var entrustId = "";
-        if ($("#addEntrustSelect").val() != null && $("#addEntrustSelect").val() !== "") {
-            entrustId = $("#addEntrustSelect").select2("data")[0].id;
-        }
-        return entrustId;
-    }
-
-    /**
-     * 取得检索条件委托方名称。
-     */
-    function getEntrustNm() {
-        // 委托方名称 默认值
-        var entrustNm = "委托方";
-        if ($("#condEntrustSelect").val() != null && $("#condEntrustSelect").val() !== "") {
-            entrustNm = $("#condEntrustSelect").select2("data")[0].text;
-        }
-        return entrustNm;
-    }
-
-    /**
      * 点击：查询按钮，进行数据查询
      */
     $scope.queryLoanRepaymentInfo = function () {
         // 默认第一页
         $scope.start = 0;
-        // 检索条件 委托方
-        $scope.condEntrustId = getEntrustId();
         queryLoanRepayment();
     };
 
@@ -215,8 +176,6 @@ app.controller("finance_loan_out_repay_controller", ["$scope", "$rootScope", "_h
      */
     $scope.preBtn = function () {
         $scope.start = $scope.start - ($scope.size - 1);
-        // 检索条件 委托方
-        $scope.condEntrustId = getEntrustId();
         queryLoanRepayment();
     };
 
@@ -225,8 +184,6 @@ app.controller("finance_loan_out_repay_controller", ["$scope", "$rootScope", "_h
      */
     $scope.nextBtn = function () {
         $scope.start = $scope.start + ($scope.size - 1);
-        // 检索条件 委托方
-        $scope.condEntrustId = getEntrustId();
         queryLoanRepayment();
     };
 
@@ -363,8 +320,6 @@ app.controller("finance_loan_out_repay_controller", ["$scope", "$rootScope", "_h
      * 新增还款基本信息。
      */
     function addLoanRepayment() {
-        // 委托方
-        $scope.repay.entrustId = getAddRepayEntrustId();
         // 必须项：委托方，贷出编号，本次还贷金额，产生利息时长
         if ($scope.repay.entrustId !== "" && $scope.repay.loanId !== "" && $scope.repay.paymentMoney !== "" && $scope.repay.interestDay !== "") {
             // 追加画面数据
@@ -724,8 +679,13 @@ app.controller("finance_loan_out_repay_controller", ["$scope", "$rootScope", "_h
      * 清空委托方选中
      */
     $scope.clearSelectEntrust = function () {
-        $("#condEntrustSelect").val(null).trigger("change");
-        $("#addEntrustSelect").val(null).trigger("change");
+        $scope.condEntrustId = "";
+        $scope.condEntrustNm = "委托方";
+        $("#select2-condEntrustSelect-container").text("委托方").trigger("change");
+
+        $scope.repay.entrustId = "";
+        $scope.repay.entrustNm = "委托方";
+        $("#select2-addEntrustSelect-container").text("委托方").trigger("change");
     };
 
     /**
@@ -822,20 +782,20 @@ app.controller("finance_loan_out_repay_controller", ["$scope", "$rootScope", "_h
                 cache : true　　　　　　　　　　
             },
             allowClear: true
-        })
-        // 选中某个委托方后，触发事件
-        .on('change', function () {
-            // 委托方ID
-            var entrustId = "";
-
+        }).on("select2:unselecting", function(e) {
+            $scope.condEntrustId = "";
+            $scope.condEntrustNm = "委托方";
+            // 选中某个委托方后，触发事件
+        }).on('change', function () {
             // 委托方 下拉选中 内容
             if ($("#condEntrustSelect").val() != null && $("#condEntrustSelect").val() !== "") {
-                entrustId = $("#condEntrustSelect").select2("data")[0].id;
+                $scope.condEntrustId = $("#condEntrustSelect").select2("data")[0].id;
+                $scope.condEntrustNm = $("#condEntrustSelect").select2("data")[0].text;
             }
             // 信用证号 列表
-            getCreditList(entrustId);
+            getCreditList($scope.condEntrustId);
             // 支付编号 列表
-            getPaymentList(entrustId);
+            getPaymentList($scope.condEntrustId);
         });
 
         // 新增画面 委托方select2初期化
@@ -889,15 +849,15 @@ app.controller("finance_loan_out_repay_controller", ["$scope", "$rootScope", "_h
             // }
             // 這裡呼叫回調並傳入現在選取的 value
             // self.params.onChange(this.value)
-            // 委托方ID
-            var entrustId = "";
 
             // 委托方 下拉选中 内容
             if ($("#addEntrustSelect").val() != null && $("#addEntrustSelect").val() !== "") {
-                entrustId = $("#addEntrustSelect").select2("data")[0].id;
+                $scope.repay.entrustId = $("#addEntrustSelect").select2("data")[0].id;
+                $scope.repay.entrustNm = $("#addEntrustSelect").select2("data")[0].text;
             }
-            if (entrustId !== "") {
-                getLoanList(entrustId);
+
+            if ($scope.repay.entrustId !== "") {
+                getLoanList($scope.repay.entrustId);
             }
         });
         // $("#condEntrustSelect").val(null).trigger("change");
@@ -906,7 +866,7 @@ app.controller("finance_loan_out_repay_controller", ["$scope", "$rootScope", "_h
     /**
      * 画面初期显示时，用来获取画面必要信息的初期方法。
      */
-    $scope.initData = function () {
+    function initData() {
 
         // 如果是从后画面跳回来时，取得上次检索条件
         if ($stateParams.from === "finance_loan_out_repay_detail" && $rootScope.refObj !== undefined && $rootScope.refObj.pageArray.length > 0) {
@@ -917,6 +877,8 @@ app.controller("finance_loan_out_repay_controller", ["$scope", "$rootScope", "_h
                 $scope.size = pageItems.size;
                 // 将上次的检索条件设定到画面
                 setConditions(pageItems.conditions);
+                // 委托方（select2）选择项
+                $scope.condEntrustNm = pageItems.conditions.entrustNm;
             }
         } else {
             // 初始显示时，没有前画面，所以没有基本信息
@@ -934,6 +896,6 @@ app.controller("finance_loan_out_repay_controller", ["$scope", "$rootScope", "_h
 
         // 查询数据
         queryLoanRepayment();
-    };
-    $scope.initData();
+    }
+    initData();
 }]);
