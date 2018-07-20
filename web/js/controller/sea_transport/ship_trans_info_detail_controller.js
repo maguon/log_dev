@@ -454,7 +454,6 @@ app.controller("ship_trans_info_detail_controller", ["$scope", "$state", "$state
         getShipTransOrderFeeRel(shipTransOrderId);
     };
 
-
     /**
      * 取得海运费用一览
      */
@@ -614,43 +613,6 @@ app.controller("ship_trans_info_detail_controller", ["$scope", "$state", "$state
             }
         })
     }
-
-    /**
-     * 点击每个运载车辆中，运费后 的按钮。(运载车辆 或 修改运费) TODO
-     */
-    $scope.modifyCarInfo = function (car) {
-        if (car.total_fee !== "") {
-            // // 新关联车辆
-            // var newCarFlag = true;
-            // // 判定是否是新追加的关联车辆
-            // for (var i = 0; i < $scope.relShipTransCarList.length; i++) {
-            //     var carId = $scope.relShipTransCarList[i].car_id;
-            //     if (carId == car.car_id) {
-            //         newCarFlag = false;
-            //         break;
-            //     }
-            // }
-
-            // 新追加的运载车辆，追加关联运载车辆
-            // if (newCarFlag) {
-
-            // } else {
-                // 已存在的运载车辆，修改价格
-                // 修改运费
-                var url = _host.api_url + "/user/" + userId + "/shipTransOrder/" + car.ship_trans_order_id + "/ShipTransOrderFee";
-
-                _basic.put(url, {shipTransFee: car.total_fee}).then(function (data) {
-                    if (data.success) {
-                        swal("修改运费成功", "", "success");
-                    } else {
-                        swal(data.msg, "", "error");
-                    }
-                })
-            // }
-        } else {
-            swal("请填写运费信息！", "", "warning");
-        }
-    };
 
     /**
      * 从列表中，删除运载车辆。
