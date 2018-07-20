@@ -484,5 +484,37 @@ baseService.factory("_config", function () {
             name: "已发"
         }
     ];
+
+    // 海运费用类别
+    _this.shipTransFeeTypes = [
+        {
+            id: 1,
+            name: "运费"
+        },
+        {
+            id: 2,
+            name: "Amendment fee"
+        },
+        {
+            id: 3,
+            name: "pier pass"
+        },
+        {
+            id: 4,
+            name: "hmm miscellaneous fee"
+        },
+        {
+            id: 5,
+            name: "O/B EXAM fee"
+        },
+        {
+            id: 6,
+            name: "退柜费用"
+        },
+        {
+            id: 7,
+            name: "COD"
+        }
+    ];
     return _this
 });
