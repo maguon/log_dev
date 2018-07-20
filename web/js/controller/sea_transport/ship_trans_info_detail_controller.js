@@ -499,7 +499,8 @@ app.controller("ship_trans_info_detail_controller", ["$scope", "$state", "$state
 
                     // 取得海运费用一览
                     getShipTransOrderFeeRel($scope.newShipTransFee.shipTransOrderId);
-
+                    // 取得运载车辆详情 （画面下部分）
+                    getShipTransCarRel();
                 } else {
                     swal(data.msg, "", "error");
                 }
@@ -539,6 +540,8 @@ app.controller("ship_trans_info_detail_controller", ["$scope", "$state", "$state
                                 swal("修改费用成功", "", "success");
                                 // 取得海运费用一览
                                 getShipTransOrderFeeRel($scope.newShipTransFee.shipTransOrderId);
+                                // 取得运载车辆详情 （画面下部分）
+                                getShipTransCarRel();
                             } else {
                                 swal(data.msg, "", "error");
                             }
@@ -577,6 +580,8 @@ app.controller("ship_trans_info_detail_controller", ["$scope", "$state", "$state
                                 swal("删除费用成功", "", "success");
                                 // 取得海运费用一览
                                 getShipTransOrderFeeRel($scope.newShipTransFee.shipTransOrderId);
+                                // 取得运载车辆详情 （画面下部分）
+                                getShipTransCarRel();
                             } else {
                                 swal(data.msg, "", "error");
                             }
