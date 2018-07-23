@@ -7,14 +7,9 @@
     </a>
     <h5 class="col s12 cyan-text lighten-1  center-align">贷出详情</h5>
 </div>
+
 <div class="row">
-    <div class="divider  cyan lighten-2" style="height:2px"></div>
-</div>
-
-<!--按键切换以及详情  支付信息   关联仓储订单-->
-<div class="row no-marBottom" ul-tabs>
-    <div class="col s12 p0" style="width: 96%; margin:0 2%">
-
+    <div class="col s12 p0" style="border-bottom: 1px solid #407BC7;border-top: 2px solid #407BC7">
         <!--按键切换  支付信息   关联仓储订单-->
         <ul ng-show="loanInfo.loanStatus == 1" class="tabWrap grey lighten-4 ">
             <li class="tab col s4 vc-center lookLoanFinfoDiv" ng-click="lookLoanInfo()">贷出信息</li>
@@ -35,7 +30,10 @@
             <li class="tab col s4 vc-center lookPaymentHistory"  ng-click="lookPaymentHistory()">还款记录</li>
         </ul>
     </div>
+</div>
 
+<!--按键切换以及详情  支付信息   关联仓储订单-->
+<div class="row no-marBottom" ul-tabs>
     <!-- TAB 1 贷出信息 -->
     <div id="lookLoanFinfoDiv" class="col s12 tab_box" style="width: 90%; margin:0 5% ">
         <!-- 贷出编号 -->
