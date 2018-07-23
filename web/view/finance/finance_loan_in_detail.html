@@ -7,27 +7,27 @@
     </a>
     <h5 class="col s12 cyan-text lighten-1  center-align">贷入详情</h5>
 </div>
+
 <div class="row">
-    <div class="divider  cyan lighten-2" style="height:2px"></div>
+    <div class="col s12 p0" style="border-bottom: 1px solid #407BC7;border-top: 2px solid #407BC7">
+        <!--按键切换  支付信息   关联仓储订单-->
+        <ul ng-show="loanInfo.loanStatus == 1" class="tabWrap grey lighten-4 ">
+            <li class="tab col s6 vc-center loanInfoDiv"   ng-click="lookLoanInfo()">贷入信息</li>
+            <li class="tab col s6 vc-center buyingCarsDiv" ng-click="lookBuyingCars()">关联车辆</li>
+        </ul>
+
+        <ul ng-show="loanInfo.loanStatus != 1" class="tabWrap grey lighten-4 ">
+            <li class="tab col s4 vc-center loanInfoDiv"   ng-click="lookLoanInfo()">贷入信息</li>
+            <li class="tab col s4 vc-center buyingCarsDiv" ng-click="lookBuyingCars()">关联车辆</li>
+            <li class="tab col s4 vc-center payHistoryDiv" ng-click="lookPaymentHistory()">贷入还款记录</li>
+        </ul>
+    </div>
 </div>
 
 <!--按键切换以及详情  支付信息   关联仓储订单-->
 <div class="row no-marBottom" ul-tabs>
-    <div class="col s12 p0" style="width: 96%; margin:0 2%">
-
-        <!--按键切换  支付信息   关联仓储订单-->
-        <ul ng-show="loanInfo.loanStatus == 1" class="tabWrap grey lighten-4 ">
-            <li class="tab col s12 vc-center lookLoanFinfoDiv" ng-click="lookLoanInfo()">贷入信息</li>
-        </ul>
-
-        <ul ng-show="loanInfo.loanStatus != 1" class="tabWrap grey lighten-4 ">
-            <li class="tab col s6 vc-center lookLoanFinfoDiv" ng-click="lookLoanInfo()">贷入信息</li>
-            <li class="tab col s6 vc-center lookPaymentHistory"  ng-click="lookPaymentHistory()">贷入还款记录</li>
-        </ul>
-    </div>
-
     <!-- TAB 1 贷入信息 -->
-    <div id="lookLoanFinfoDiv" class="col s12 tab_box" style="width: 90%; margin:0 5% ">
+    <div id="loanInfoDiv" class="col s12 tab_box" style="width: 90%; margin:0 5% ">
         <!-- 贷入编号 -->
         <div class="row col s12 bold" style="color:#4e84cb ;margin-top: 40px;">
             <div class="col s6 fz18" >贷入编号: {{loanInfo.id}}</div>
@@ -117,8 +117,162 @@
         </div>
     </div>
 
-    <!-- TAB 2 还款记录 -->
-    <div id="lookPaymentHistory" class="col s12 tab_box" style="width: 90%; margin:0 5% ">
+    <!-- TAB 2 关联车辆 -->
+    <div id="buyingCarsDiv" class="col s12 tab_box" style="width: 100%; margin:30px 0">
+
+        <div class="row col s12 bold" style="color:#4e84cb ;margin-top: 0px;">
+            <div class="col s6" >关联车辆: {{buyingCar.carLength | number}}</div>
+            <div class="col s6 right-align">车价总额(美元): <span class="red-text">{{buyingCar.totalMoney | number}}</span></div>
+        </div>
+
+        <!--虚分割线-->
+        <div ng-show="loanInfo.loanStatus != 4" class="row col s12" >
+            <div class="col s12" ><div class="col s12" style="height:1px;border-bottom: 1px dotted #ccc;"></div></div>
+        </div>
+        <div ng-show="loanInfo.loanStatus == 4" class="row col s12" >
+            <div class="col s12" ><div class="col s12" style="height:2px;border-bottom: 1px solid #ccc;"></div></div>
+        </div>
+
+        <!-- VIN -->
+        <div ng-show="loanInfo.loanStatus != 4" class="col s12">
+            <div class="input-field col s12">
+                <input type="text" placeholder="模糊查询至少6位，新增车辆完整17位" id="autocomplete-input" ng-change="changeVin()" class="autocomplete" ng-model="buyingCar.vin" >
+                <a ng-if="addCarInfoFlg" ng-click="addCarInfo()" class="dataIcon btn-floating cyan" style="width:20px;height: 20px;">
+                    <i class="mdi mdi-plus" style="position: absolute;right:0px;bottom:0px;font-size:15px;line-height: 20px;"></i>
+                </a>
+                <a ng-if="!addCarInfoFlg" class="dataIcon btn-floating grey" style="width:20px;height: 20px;cursor: default">
+                    <i class="mdi mdi-plus" style="position: absolute;right:0px;bottom:0px;font-size:15px;line-height: 20px;"></i>
+                </a>
+
+                <label for="autocomplete-input" class="active" style="padding-left: 2px;"> 关联车辆VIN</label>
+            </div>
+        </div>
+
+        <!-- 新增车辆信息(自定义) -->
+        <div ng-show="showCustomCarDiv" class="col s12 ">
+            <div class="col s12">
+                <div class="row z-depth-1" style="border:1px solid #bdbdbd;">
+                    <!-- header -->
+                    <div class="col s12 lighten-1 cyan-text fz14 left-align vc-center" style="height:46px;">
+                        <div class="col s12 left-align">
+                            新增车辆信息 (VIN:{{customCarInfo.vin}})
+                        </div>
+                    </div>
+
+                    <!-- body -->
+                    <div class="col s12 lighten-1 white grey-text vc-center">
+                        <!-- 委托方 -->
+                        <div class="input-field col s3 left-align fz15">
+                            <select id="addEntrustSelect" style="width: 100%"></select>
+                        </div>
+                        <!-- 制造商 -->
+                        <div class="input-field col s3 left-align">
+                            <select material-select watch ng-model="customCarInfo.maker" ng-change="changeMakerId(customCarInfo.maker.id)">
+                                <option value="" disabled>制造商</option>
+                                <option ng-repeat="el in carMakerList" ng-value="el">{{el.make_name}}</option>
+                            </select>
+                        </div>
+                        <!-- 型号 -->
+                        <div class="input-field col s3 left-align">
+                            <select material-select watch ng-model="customCarInfo.model">
+                                <option value="" disabled>型号</option>
+                                <option ng-repeat="el in carModelList" ng-value="el">{{el.model_name}}</option>
+                            </select>
+                        </div>
+                        <!-- 颜色 -->
+                        <div class="input-field col s3 left-align">
+                            <select material-select watch ng-model="customCarInfo.colour">
+                                <option value="" disabled>颜色</option>
+                                <option ng-repeat="el in configColor" ng-value="el.colorId">{{el.colorName}}</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="col s12 lighten-1 white grey-text vc-center">
+                        <!-- 年份 -->
+                        <div class="input-field col s3 left-align">
+                            <input id="proDateText" type="text" maxlength="4" valid-num ng-model="customCarInfo.proDate">
+                            <label for="proDateText">年份</label>
+                        </div>
+                        <!-- 发动机号 -->
+                        <div class="input-field col s3 left-align">
+                            <input type="text" id="engineNumText" ng-model="customCarInfo.engineNum">
+                            <label for="engineNumText">发动机号</label>
+                        </div>
+                        <!-- 是否MSO -->
+                        <div class="input-field col s3">
+                            <select material-select watch id="msoSelect" ng-model="customCarInfo.msoStatus" >
+                                <option value="" disabled>是否MSO</option>
+                                <option ng-repeat="el in msoFlags" ng-value="el.id">{{el.name}}</option>
+                            </select>
+                        </div>
+                        <!-- 车辆估值 -->
+                        <div class="input-field col s3 left-align">
+                            <input type="text" id="valuationText" maxlength="8" valid-money ng-model="customCarInfo.valuation">
+                            <label for="valuationText"><span class="red-text">*</span>车辆估值(美元)</label>
+                        </div>
+                    </div>
+                    <!-- 车辆备注 -->
+                    <div class="col s12 lighten-1 white grey-text vc-center">
+                        <div class="input-field col s12 left-align">
+                            <input type="text" id="remarkText" ng-model="customCarInfo.remark">
+                            <label for="remarkText">车辆备注</label>
+                        </div>
+                    </div>
+                    <!-- 取消/确认 按钮 -->
+                    <div class="col s12 right-align white" style="padding-top: 15px;padding-right: 25px;padding-bottom: 15px;">
+                        <a class="btn-floating waves-effect waves-light grey" style="width:30px;height: 30px;" ng-click="closeCustomCarDiv()">
+                            <i class="mdi mdi-close add_brand"  style="position: absolute;right:0;bottom:3px;font-size:20px;line-height: 20px;"></i>
+                        </a>
+
+                        <a class="btn-floating waves-effect waves-light cyan lighten-1" style="margin-left: 20px;width:30px;height: 30px;"
+                           ng-click="createCustomCar()">
+                            <i class="mdi mdi-check add_brand"  style="position: absolute;right:0;bottom:3px;font-size:20px;line-height: 20px;"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 新增运送车辆信息列表 -->
+        <div class="col s12">
+            <div class="col s12">
+                <table class="bordered">
+                    <tbody>
+                    <tr ng-show="loanInfo.loanStatus != 4" ng-repeat="el in buyingCarList" class="grey-text text-darken-1">
+                        <!-- VIN -->
+                        <td width="20%">VIN：{{el.vin}}</td>
+                        <!-- 车型 -->
+                        <td width="30%">{{el.make_name}}/{{el.model_name}}</td>
+                        <!-- 委托方 -->
+                        <td width="20%">{{el.short_name}}</td>
+                        <!-- 车辆估值 -->
+                        <td width="20%" class="red-text right-align">{{el.valuation | currency}}</td>
+                        <!-- 操作 删除 -->
+                        <td width="10%" class="operation right-align">
+                            <i class="mdi mdi-close red-text right-align" ng-click="deleteBuyingCarRel(el.car_id)" style="cursor:pointer; right: 22px;"></i>
+                        </td>
+                    </tr>
+                    <tr ng-show="loanInfo.loanStatus == 4" ng-repeat="el in buyingCarList" class="grey-text text-darken-1">
+                        <!-- VIN -->
+                        <td width="20%">VIN：{{el.vin}}</td>
+                        <!-- 车型 -->
+                        <td width="30%">{{el.make_name}}/{{el.model_name}}</td>
+                        <!-- 委托方 -->
+                        <td width="30%">{{el.short_name}}</td>
+                        <!--&lt;!&ndash; 信用证 &ndash;&gt;-->
+                        <!--<td width="15%">信用证：{{el.credit_number}}</td>-->
+                        <!-- 车辆估值 -->
+                        <td width="20%" class="red-text right-align">{{el.valuation | currency}}</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- TAB 3 还款记录 -->
+    <div id="payHistoryDiv" class="col s12 tab_box" style="width: 90%; margin:0 5% ">
         <!-- 贷入状态 -->
         <div class="row col s12 bold" style="color:#4e84cb ;margin-top: 40px;">
             <!--<div class="col s6" ></div>-->
