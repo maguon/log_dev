@@ -10,14 +10,45 @@ app.controller("finance_loan_in_detail_controller", ["$scope", "$stateParams", "
     $scope.loanStatus = _config.loanInStatus;
     // 支付状态
     $scope.paymentStatus = _config.paymentStatus;
+    // 颜色列表
+    $scope.configColor = _config.config_color;
+    // 是否MSO车辆
+    $scope.msoFlags = _config.msoFlags;
+    // 是否金融车 列表
+    $scope.purchaseTypes = _config.purchaseTypes;
 
     // 金融贷入(TAB1) 订单 基本信息
     $scope.loanInfo = {};
 
-    // 还款记录(TAB2) 基本信息
+    // 关联车辆(TAB2) 基本信息
+    $scope.buyingCar = {};
+
+    // 关联车辆(TAB2) 新增金融车画面
+    $scope.customCarInfo = {
+        // vin
+        vin: "",
+        // 制造商
+        maker: "",
+        // 型号
+        model: "",
+        // 年份
+        proDate: "",
+        // 颜色
+        colour: "",
+        // 发动机号
+        engineNum: "",
+        // 委托方
+        entrustId: "",
+        // 车价(美元)
+        valuation: "",
+        // MSO
+        mso: ""
+    };
+
+    // 还款记录(TAB3) 基本信息
     $scope.paymentInfo = {};
 
-    // 还款记录(TAB2) 新增还款 基本信息
+    // 还款记录(TAB3) 新增还款 基本信息
     $scope.newPayment = {};
 
     /**
@@ -35,9 +66,9 @@ app.controller("finance_loan_in_detail_controller", ["$scope", "$stateParams", "
         $('.tabWrap .tab').removeClass("active");
         $(".tab_box ").removeClass("active");
         $(".tab_box ").hide();
-        $('.tabWrap .lookLoanFinfoDiv').addClass("active");
-        $("#lookLoanFinfoDiv").addClass("active");
-        $("#lookLoanFinfoDiv").show();
+        $('.tabWrap .loanInfoDiv').addClass("active");
+        $("#loanInfoDiv").addClass("active");
+        $("#loanInfoDiv").show();
 
         // 取得订单详情
         getLoanInfo();
@@ -167,16 +198,250 @@ app.controller("finance_loan_in_detail_controller", ["$scope", "$stateParams", "
     };
 
     /**
-     * Tab跳转 2: 还款记录
+     * Tab跳转 2: 关联车辆
+     */
+    $scope.lookBuyingCars = function () {
+        // 显示画面
+        $('.tabWrap .tab').removeClass("active");
+        $(".tab_box ").removeClass("active");
+        $(".tab_box ").hide();
+        $('.tabWrap .buyingCarsDiv').addClass("active");
+        $("#buyingCarsDiv").addClass("active");
+        $("#buyingCarsDiv").show();
+
+        // 取得 该贷款 购买的金融车列表
+        _basic.get(_host.api_url + "/loanIntoBuyCarRel?loanIntoId=" + loanId).then(function (data) {
+            if (data.success) {
+                // 关联车辆 列表
+                $scope.buyingCarList = data.result;
+                // 关联车辆 数量
+                $scope.buyingCar.carLength = data.result.length;
+                // 车价总额
+                $scope.buyingCar.totalMoney = 0;
+
+                // 计算抵押总金额
+                for (var i = 0; i < $scope.buyingCarList.length; i++) {
+                    if ($scope.buyingCarList[i].valuation == null) {
+                        $scope.buyingCarList[i].valuation = 0;
+                    }
+                    $scope.buyingCar.totalMoney = $scope.buyingCarList[i].valuation + $scope.buyingCar.totalMoney;
+                }
+            } else {
+                swal(data.msg, "", "error");
+            }
+        });
+    };
+
+    /**
+     * 画面vin码 输入框 变更时，触发方法
+     */
+    $scope.changeVin = function () {
+
+        if ($scope.buyingCar.vin !== undefined) {
+            if ($scope.buyingCar.vin.length >= 6) {
+
+                // 条件【purchaseType=1】金融车
+                _basic.get(_host.api_url + "/carList?purchaseType=1&vinCode=" + $scope.buyingCar.vin).then(function (data) {
+                    if (data.success && data.result.length > 0) {
+                        $scope.carList = data.result;
+                        vinObjs = [];
+                        for (var i in $scope.carList) {
+                            vinObjs[$scope.carList[i].vin + "  " + $scope.carList[i].make_name + "/" + $scope.carList[i].model_name] = null;
+                        }
+                        return vinObjs;
+                    } else {
+                        return {};
+                    }
+                }).then(function (vinObjs) {
+                    $('#autocomplete-input').autocomplete({
+                        data: vinObjs,
+                        minLength: 6,
+                        onAutocomplete: function (val) {
+                            $scope.addCarInfoFlg = true;
+                        },
+                        limit: 6
+                    });
+                    $('#autocomplete-input').focus();
+                    if ($scope.buyingCar.vin.length > 17 && $scope.addCarInfoFlg) {
+                        $scope.addCarInfo();
+                    }
+                })
+            }
+
+            $scope.addCarInfoFlg = false;
+            // 根据填充完毕的完整vin码信息进行精确查询
+            if ($scope.buyingCar.vin.length === 17) {
+                $scope.addCarInfoFlg = true;
+            }
+        }
+    };
+
+    /**
+     * 点击 vin码 后的 追加按钮。(打开追加画面 或 执行追加关联列表数据)
+     */
+    $scope.addCarInfo = function () {
+
+        // 新追加的车辆VIN码
+        var newVin = $scope.buyingCar.vin;
+
+        // 如果是从自动填充中，选择出来的话，需要截取前面17位
+        if (newVin.length > 17) {
+            newVin = newVin.substr(0, 17);
+        }
+
+        var url = _host.api_url + "/user/" + userId + "/car?vin=" + newVin;
+
+        _basic.get(url).then(function (data) {
+            if (data.success) {
+                // 新的vin码，(不存在的车辆)，打开新建画面
+                if (data.result.length === 0) {
+                    // 自定义车辆 画面 VIN码 不可变项目
+                    $scope.customCarInfo.vin = newVin;
+
+                    // 显示追加画面
+                    $scope.showCustomCarDiv = true;
+                } else {
+                    if (data.result[0].purchase_type === 1) {
+                        // 添加购买车辆信息。
+                        $scope.addBuyingCarRel(data.result[0].id);
+                    } else {
+                        swal("该VIN车辆已存在，请输入正确的新车VIN。", "", "error");
+                    }
+                }
+            } else {
+                swal(data.msg, "", "error");
+            }
+        });
+        // 清空VIN输入框
+        $scope.buyingCar.vin = '';
+        // 使追加按钮灰掉
+        $scope.addCarInfoFlg = false;
+    };
+
+    /**
+     * 追加自定义car信息。
+     */
+    $scope.createCustomCar = function () {
+        if ($scope.customCarInfo.maker !== "" && $scope.customCarInfo.model !== ""
+            && $scope.customCarInfo.valuation !== ""  && $scope.customCarInfo.msoStatus) {
+            // 新增海运订单画面 VIN码 后 追加按钮 追加结果Info
+            var obj = {
+                // vin
+                vin: $scope.customCarInfo.vin,
+                // 制造商
+                makeId: $scope.customCarInfo.maker.id,
+                makeName: $scope.customCarInfo.maker.make_name,
+                // 型号
+                modelId: $scope.customCarInfo.model.id,
+                modelName: $scope.customCarInfo.model.model_name,
+                // 年份
+                proDate: $scope.customCarInfo.proDate,
+                // 颜色
+                colour: $scope.customCarInfo.colour,
+                // 发动机号
+                engineNum: $scope.customCarInfo.engineNum,
+                // 委托方 TODO
+                entrustId: $scope.customCarInfo.entrustId,
+                // 车价(美元)
+                valuation: $scope.customCarInfo.valuation,
+                // 是否MSO车辆
+                msoStatus: $scope.customCarInfo.msoStatus,
+                // 是否金融车
+                purchaseType: $scope.purchaseTypes[1].id,
+                // 备注
+                remark: $scope.customCarInfo.remark
+            };
+
+            // 如果年份没有输入，就去掉此属性
+            if ($scope.customCarInfo.proDate == null || $scope.customCarInfo.proDate === "") {
+                delete obj.proDate;
+            }
+
+            _basic.post(_host.api_url + "/user/" + userId + "/car", obj).then(function (data) {
+                if (data.success) {
+
+                    // 隐藏 新增车辆信息 画面
+                    $scope.showCustomCarDiv = false;
+                    // 清空 新增金融车画面 数据
+                    $scope.customCarInfo = {};
+
+                    // 成功后，追加关联信息
+                    $scope.addBuyingCarRel(data.id);
+                } else {
+                    swal(data.msg, "", "error");
+                }
+            })
+        } else {
+            swal("请填写完整车辆信息！", "", "warning");
+        }
+    };
+
+    /**
+     * 关闭追加运载车辆模态画面。
+     */
+    $scope.closeCustomCarDiv = function () {
+        $scope.showCustomCarDiv = false;
+        // 新增海运订单画面 VIN码 后 追加按钮 追加结果Info
+        $scope.customCarInfo = {};
+    };
+
+    /**
+     * 添加购买车辆信息。
+     * @param carId 汽车ID
+     */
+    $scope.addBuyingCarRel = function (carId) {
+        // 追加画面数据
+        var obj = {
+            loanIntoId: loanId,
+            carId: carId
+        };
+        _basic.post(_host.api_url + "/user/" + userId + "/loanIntoBuyCarRel", obj).then(function (data) {
+            if (data.success) {
+                // 成功后，刷新页面数据
+                $scope.lookBuyingCars();
+            } else {
+                swal(data.msg, "", "error");
+            }
+        })
+    };
+
+    /**
+     * 删除购买车辆信息。
+     * @param carId 汽车ID
+     */
+    $scope.deleteBuyingCarRel = function (carId) {
+        swal({
+                title: "确定要移除当前购买车辆与该次贷出订单的关联吗？",
+                type: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#DD6B55",
+                confirmButtonText: "确认",
+                cancelButtonText: "取消",
+                closeOnConfirm: true
+            },
+            function () {
+                _basic.delete(_host.api_url + "/user/" + userId + "/loanInto/" + loanId + '/car/' + carId, {}).then(
+                    function (data) {
+                        if (data.success) {
+                            $scope.lookBuyingCars();
+                        } else {
+                            swal(data.msg, "", "error");
+                        }
+                    });
+            });
+    };
+
+    /**
+     * Tab跳转 3: 还款记录
      */
     $scope.lookPaymentHistory = function () {
         // 显示画面
         $('.tabWrap .tab').removeClass("active");
         $(".tab_box ").removeClass("active");
         $(".tab_box ").hide();
-        $('.tabWrap .lookPaymentHistory').addClass("active");
-        $("#lookPaymentHistory").addClass("active");
-        $("#lookPaymentHistory").show();
+        $('.tabWrap .payHistoryDiv').addClass("active");
+        $("#payHistoryDiv").addClass("active");
+        $("#payHistoryDiv").show();
 
         // 基本信息 合计归还本金(美元) 默认值
         $scope.paymentInfo.paymentMoney = 0;
@@ -457,12 +722,100 @@ app.controller("finance_loan_in_detail_controller", ["$scope", "$stateParams", "
         });
     }
 
+
+    /**
+     * 车辆品牌列表查询，用来填充查询条件：车辆品牌
+     */
+    function getCarMakerList() {
+        _basic.get(_host.api_url + "/carMake").then(function (data) {
+            if (data.success && data.result.length > 0) {
+                $scope.carMakerList = data.result;
+            } else {
+                swal(data.msg, "", "error");
+            }
+        });
+    }
+
+    /**
+     * 当车辆品牌变更时，车辆型号要进行联动刷新。
+     * @param val 车辆品牌ID
+     */
+    $scope.changeMakerId = function (val) {
+        if (val) {
+            if ($scope.curruntId === val) {
+            } else {
+                $scope.curruntId = val;
+                _basic.get(_host.api_url + "/carMake/" + val + "/carModel").then(function (data) {
+                    if (data.success && data.result.length > 0) {
+                        $scope.carModelList = data.result;
+                    } else {
+                        swal(data.msg, "", "error")
+                    }
+                })
+            }
+        }
+    };
+
+    /**
+     * 获取委托方信息
+     */
+    $scope.getEntrustInfo = function () {
+
+        // 取得委托方url
+        var url = _host.api_url + "/entrust";
+
+        // 新增画面 委托方select2初期化
+        $('#addEntrustSelect').select2({
+            placeholder: "委托方",
+            containerCssClass: 'select2_dropdown',
+            ajax : {
+                type:'GET',
+                url : url,
+                dataType : 'json',
+                delay : 400,
+                data : function(params) {
+                    return {
+                        // 委托方简称
+                        shortNameCode : params.term
+                    };
+                },
+                processResults : function(data, params) {
+                    var options = [];
+                    $(data.result).each(function(i, o) {
+                        // 获取 select2 必要的字段，id与text
+                        options.push({
+                            id : o.id,
+                            text : o.short_name
+                        });
+                    });
+                    // 返回组装后 select2 列表
+                    return {
+                        results : options
+                    };
+                },
+                // 开启缓存
+                cache : true
+            },
+            allowClear: false
+        }).on('change', function () {
+            // 委托方 下拉选中 内容
+            if ($("#addEntrustSelect").val() != null && $("#addEntrustSelect").val() !== "") {
+                $scope.customCarInfo.entrustId = $("#addEntrustSelect").select2("data")[0].id;
+                // $scope.customCarInfo.entrustNm = $("#addEntrustSelect").select2("data")[0].text;
+            }
+        });
+    };
+
     /**
      * 画面初期显示时，用来获取画面必要信息的初期方法。
      */
     $scope.initData = function () {
+        // 取得 车辆品牌列表
+        getCarMakerList();
         // 取得贷入公司列表
         getLoanIntoCompany();
+        // 获取委托方信息
+        $scope.getEntrustInfo();
         // 默认显示 贷入信息 TAB
         $scope.lookLoanInfo();
     };
