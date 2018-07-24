@@ -322,7 +322,7 @@ app.controller("finance_loan_in_detail_controller", ["$scope", "$stateParams", "
      * 追加自定义car信息。
      */
     $scope.createCustomCar = function () {
-        if ($scope.customCarInfo.maker !== "" && $scope.customCarInfo.model !== ""
+        if ($scope.customCarInfo.entrustId !== "" && $scope.customCarInfo.maker !== "" && $scope.customCarInfo.model !== ""
             && $scope.customCarInfo.valuation !== ""  && $scope.customCarInfo.msoStatus) {
             // 新增海运订单画面 VIN码 后 追加按钮 追加结果Info
             var obj = {
@@ -340,7 +340,7 @@ app.controller("finance_loan_in_detail_controller", ["$scope", "$stateParams", "
                 colour: $scope.customCarInfo.colour,
                 // 发动机号
                 engineNum: $scope.customCarInfo.engineNum,
-                // 委托方 TODO
+                // 委托方
                 entrustId: $scope.customCarInfo.entrustId,
                 // 车价(美元)
                 valuation: $scope.customCarInfo.valuation,
