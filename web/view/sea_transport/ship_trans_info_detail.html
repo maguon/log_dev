@@ -35,7 +35,7 @@
         <div class="input-field col s3">
             <div class="col s12">
                 <select material-select watch ng-model="shippingOrder.startPortId" id="startPortSelect" style="width:95%;">
-                    <option value="">始发港口</option>
+                    <option value="" disabled>始发港口</option>
                     <option ng-repeat="el in portList" ng-value="el.id" >{{el.port_name}}</option>
                 </select>
             </div>
@@ -44,7 +44,7 @@
         <div class="input-field col s3">
             <div class="col s12">
                 <select material-select watch ng-model="shippingOrder.endPortId" id="endPortSelect" style="width:95%;">
-                    <option value="">目的港口</option>
+                    <option value="" disabled>目的港口</option>
                     <option ng-repeat="el in portList" ng-value="el.id" >{{el.port_name}}</option>
                 </select>
             </div>
@@ -70,7 +70,7 @@
         <div class="input-field col s3">
             <div class="col s12">
                 <select material-select watch ng-model="shippingOrder.shippingCoId">
-                    <option value="">船公司</option>
+                    <option value="" disabled>船公司</option>
                     <option ng-repeat="el in shippingCoList" ng-value="el.id">{{el.ship_company_name}}</option>
                 </select>
             </div>

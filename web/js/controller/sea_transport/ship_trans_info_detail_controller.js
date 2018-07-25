@@ -71,7 +71,10 @@ app.controller("ship_trans_info_detail_controller", ["$scope", "$state", "$state
     // $scope.relShipTransCarList = [];
 
     // 新建 车辆信息用
-    $scope.customCarInfo = {
+    $scope.customCarInfo = {};
+
+    // 新增 海运费用 画面默认数据
+    var defaultCustomCarInfo = {
         // vin
         vin: "",
         // 制造商
@@ -287,9 +290,11 @@ app.controller("ship_trans_info_detail_controller", ["$scope", "$state", "$state
 
                     // 新的vin码，(不存在的车辆)，打开新建画面
                     if (data.result.length === 0) {
+                        // 初期化数据
+                        angular.copy(defaultCustomCarInfo, $scope.customCarInfo);
                         // 自定义车辆 画面 VIN码 不可变项目
                         $scope.customCarInfo.vin = newVin;
-                        // 数据初始化
+
                         // 委托方select2初期化
                         $("#addEntrustSelect").val(null).trigger("change");
                         getEntrustInfo();
@@ -415,7 +420,7 @@ app.controller("ship_trans_info_detail_controller", ["$scope", "$state", "$state
 
                     // 将当前的数据追加的列表中。
                     addCar($scope.newCarInfo);
-                    //
+
                     // 新增海运订单画面 VIN码 后 追加按钮 追加结果Info
                     $scope.customCarInfo = {};
                 } else {
