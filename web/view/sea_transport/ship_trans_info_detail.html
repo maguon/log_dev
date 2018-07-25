@@ -349,11 +349,14 @@
 
         <!-- 分单 / 合计运费(美元) -->
         <div class="col s12" style="padding-top: 20px;padding-bottom: 20px;padding-left: 23px;">
-            <div class="col s3 left-align">
+            <div ng-show="shippingOrder.status==1 || shippingOrder.status==2" class="col s3 left-align">
                 <select material-select watch ng-model="shippingOrder.partStatus">
                     <option value="" disabled>分单</option>
                     <option ng-repeat="el in partTypes" ng-value="el.id">{{el.name}}</option>
                 </select>
+            </div>
+            <div ng-show="shippingOrder.status==3" class="col s3 left-align">
+                分单：{{partTypes[shippingOrder.partStatus-1].name}}
             </div>
             <div class="col s9 right-align" style="padding-right: 23px;">
                 <label class="fz15">合计运费(美元)：<span class="red-text">{{shippingOrder.totalShipTransFees | currency}}</span></label>

@@ -503,7 +503,7 @@
             <!--车辆估值-->
             <div class="col s12 input-field" style="margin-top: 20px;">
                 <input id="valuationText" type="text" valid-money maxlength="8" ng-model="carInfo.valuation">
-                <label for="valuationText"><span style="color: red">* </span>车辆估值</label>
+                <label for="valuationText" ng-class="{'label-active':carInfo.valuation !== ''}"><span style="color: red">* </span>车辆估值</label>
             </div>
 
             <!-- 是否MSO -->
