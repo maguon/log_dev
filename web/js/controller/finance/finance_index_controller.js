@@ -98,7 +98,7 @@ app.controller("finance_index_controller", ["$scope", "$rootScope", "_host", "_b
                     // 海运订单(未支付笔数)
                     $scope.shipTransOrderCount = data.result[0].order_count;
                     // 海运订单(未支付总额)
-                    $scope.shipTransFee = data.result[0].ship_trans_fee;
+                    $scope.shipTransFee = data.result[0].total_fee;
                 } else {
                     // 海运订单(未支付笔数)
                     $scope.shipTransOrderCount = 0;
