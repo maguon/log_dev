@@ -822,7 +822,7 @@ app.controller("client_info_detail_controller", ["$scope", "$rootScope","$state"
                 $scope.loanRepaymentList = data.result;
                 $scope.loanRepaymentList = $scope.loanRepaymentList.slice(0,5);
                 for(var i=0;i<$scope.loanRepaymentList.length;i++){
-                    $scope.totalPayMoney= $scope.totalPayMoney+$scope.loanRepaymentList[i].this_payment_money;
+                    $scope.totalPayMoney= $scope.totalPayMoney+$scope.loanRepaymentList[i].repayment_money;
                 }
                 if ($scope.start > 0) {
                     $("#loanListPre").show();
@@ -958,4 +958,4 @@ app.controller("client_info_detail_controller", ["$scope", "$rootScope","$state"
     };
     $scope.queryData();
 
-}])
+}]);
