@@ -243,10 +243,10 @@ app.controller("invoice_detail_controller", ["$scope", "$stateParams", "_basic",
                 $scope.invoiceShipOrderRelList = data.result;
                 $scope.totalShipTransMoney = 0;
                 for (var i = 0; i < $scope.invoiceShipOrderRelList.length; i++) {
-                    if ($scope.invoiceShipOrderRelList[i].ship_trans_fee == null) {
-                        $scope.invoiceShipOrderRelList[i].ship_trans_fee = 0;
+                    if ($scope.invoiceShipOrderRelList[i].total_fee == null) {
+                        $scope.invoiceShipOrderRelList[i].total_fee = 0;
                     }
-                    $scope.totalShipTransMoney = $scope.invoiceShipOrderRelList[i].ship_trans_fee + $scope.totalShipTransMoney;
+                    $scope.totalShipTransMoney = $scope.invoiceShipOrderRelList[i].total_fee + $scope.totalShipTransMoney;
                 }
             } else {
                 swal(data.msg, "", "error");

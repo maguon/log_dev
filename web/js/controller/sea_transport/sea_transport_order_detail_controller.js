@@ -1,5 +1,5 @@
 /**
- * 主菜单：海运管理 --订单管理详情   by star 2018/4/24
+ * 主菜单：海运管理 -- 海运订单详情   by star 2018/4/24
  */
 app.controller("sea_transport_order_detail_controller", ["$scope","$stateParams", "_basic", "_host","_config","$state",  function ($scope,$stateParams, _basic, _host,_config,$state) {
 
@@ -52,32 +52,28 @@ app.controller("sea_transport_order_detail_controller", ["$scope","$stateParams"
         });
     }
 
-
-
     /*
     * 修改运费
     * */
     $scope.changeShipTransFee = function (id){
         var obj = {
-            shipTransFee:$scope.paymentInfo.ship_trans_fee
+            shipTransFee:$scope.paymentInfo.total_fee
         };
         _basic.put(_host.api_url + "/user/" + userId + "/shipTransOrder/"+id+'/ShipTransOrderFee', obj).then(function (data) {
             if (data.success) {
                 swal('修改成功!', "", "success");
-
             } else {
                 swal(data.msg, "", "error");
             }
         });
     };
 
-
     /**
      * 画面初期显示时，用来获取画面必要信息的初期方法。
      */
-    $scope.initData = function () {
+    function initData () {
         // 取得订单详情
         queryOrderData();
-    };
-    $scope.initData();
+    }
+    initData();
 }]);

@@ -1,5 +1,5 @@
 /**
- * 主菜单：财务管理 -> 支付详情(详细画面) 控制器
+ * 主菜单：财务管理 -> 支付管理(支付详情) 控制器
  */
 app.controller("payment_detail_controller", ["$scope", "$stateParams", "_basic", "_host", "_config", "$state", function ($scope, $stateParams, _basic, _host, _config, $state) {
     var userId = _basic.getSession(_basic.USER_ID);
@@ -169,10 +169,10 @@ app.controller("payment_detail_controller", ["$scope", "$stateParams", "_basic",
                 $scope.shipTransOrderRelList = data.result;
                 $scope.totalShipTransMoney = 0;
                 for (var i = 0; i < $scope.shipTransOrderRelList.length; i++) {
-                    if ($scope.shipTransOrderRelList[i].ship_trans_fee == null) {
-                        $scope.shipTransOrderRelList[i].ship_trans_fee = 0;
+                    if ($scope.shipTransOrderRelList[i].total_fee == null) {
+                        $scope.shipTransOrderRelList[i].total_fee = 0;
                     }
-                    $scope.totalShipTransMoney = $scope.shipTransOrderRelList[i].ship_trans_fee + $scope.totalShipTransMoney;
+                    $scope.totalShipTransMoney = $scope.shipTransOrderRelList[i].total_fee + $scope.totalShipTransMoney;
                 }
             } else {
                 swal(data.msg, "", "error");

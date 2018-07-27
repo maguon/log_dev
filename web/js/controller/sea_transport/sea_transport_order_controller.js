@@ -1,5 +1,5 @@
 /**
- * 主菜单：海运管理 --订单管理   by star 2018/4/24
+ * 主菜单：海运管理 -> 海运订单 控制器
  */
 app.controller("sea_transport_order_controller", ["$scope", "$rootScope", "_host", "_basic", "_config", function ($scope, $rootScope, _host, _basic, _config) {
     // 翻页用
@@ -10,7 +10,6 @@ app.controller("sea_transport_order_controller", ["$scope", "$rootScope", "_host
     // 支付状态 列表
     $scope.payStatusList = _config.payStatus;
     $scope.portList = [];
-
 
     /*
     * 数据导出*
@@ -26,8 +25,6 @@ app.controller("sea_transport_order_controller", ["$scope", "$rootScope", "_host
         window.open(url);
     };
 
-
-
     /**
      * 【始发港口 目的港口】列表查询
      */
@@ -38,7 +35,6 @@ app.controller("sea_transport_order_controller", ["$scope", "$rootScope", "_host
             }
         });
     }
-
 
     /**
      * 车辆品牌列表查询，用来填充查询条件：车辆品牌
@@ -52,7 +48,6 @@ app.controller("sea_transport_order_controller", ["$scope", "$rootScope", "_host
             }
         });
     }
-
 
     /**
      * 当车辆品牌变更时，车辆型号要进行联动刷新。
@@ -73,7 +68,6 @@ app.controller("sea_transport_order_controller", ["$scope", "$rootScope", "_host
             }
         }
     };
-
 
     /**
      * 【船公司】列表查询，用来填充查询条件：船公司
@@ -107,7 +101,6 @@ app.controller("sea_transport_order_controller", ["$scope", "$rootScope", "_host
             }
         });
     }
-
 
     /**
      * 根据画面输入的查询条件，进行数据查询。
@@ -143,8 +136,6 @@ app.controller("sea_transport_order_controller", ["$scope", "$rootScope", "_host
         });
     }
 
-
-
     /**
      * 点击：查询按钮，进行数据查询
      */
@@ -154,7 +145,6 @@ app.controller("sea_transport_order_controller", ["$scope", "$rootScope", "_host
         // 查询
         queryOrderData();
     };
-
 
     /**
      * 组装检索条件。
@@ -195,7 +185,6 @@ app.controller("sea_transport_order_controller", ["$scope", "$rootScope", "_host
         return obj;
     }
 
-
     /*
     * 删除
     * */
@@ -220,7 +209,7 @@ app.controller("sea_transport_order_controller", ["$scope", "$rootScope", "_host
                     }
                 });
             });
-    }
+    };
 
     /**
      * 上一页
@@ -238,11 +227,10 @@ app.controller("sea_transport_order_controller", ["$scope", "$rootScope", "_host
         queryOrderData();
     };
 
-
     /**
      * 画面初期显示时，用来获取画面必要信息的初期方法。
      */
-    $scope.initData = function () {
+    function initData() {
         // 取得查询条件【始发港口 目的港口】列表
         getPortList();
         // 取得查询条件【车辆品牌】列表
@@ -253,6 +241,6 @@ app.controller("sea_transport_order_controller", ["$scope", "$rootScope", "_host
         getEntrustInfo();
 
         queryOrderData();
-    };
-    $scope.initData();
-}])
+    }
+    initData();
+}]);

@@ -794,7 +794,7 @@ app.controller("client_info_detail_controller", ["$scope", "$rootScope","$state"
                 $scope.seaTransportOrderDetailsBoxArray = data.result;
                 $scope.seaTransportOrderDetailsArray = $scope.seaTransportOrderDetailsBoxArray.slice(0,5);
                 for(var i=0;i<$scope.seaTransportOrderDetailsArray.length;i++){
-                    $scope.shipTransFee= $scope.shipTransFee+$scope.seaTransportOrderDetailsArray[i].ship_trans_fee;
+                    $scope.shipTransFee= $scope.shipTransFee+$scope.seaTransportOrderDetailsArray[i].total_fee;
                 }
                 if ($scope.start > 0) {
                     $("#pre8").show();

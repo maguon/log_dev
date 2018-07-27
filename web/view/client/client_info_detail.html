@@ -340,7 +340,7 @@
 
             <div ng-if="paymentInfo.order_status== 1" class="col s12 lighten-1 white grey-text vc-center fz13" style="height:45px;">
                 <div class="col s4">
-                    运费(美元):<span class="red-text fz20">{{paymentInfo.ship_trans_fee}}</span>
+                    费用(美元):<span class="red-text fz20">{{paymentInfo.total_fee}}</span>
                 </div>
                 <div class="col s8 right-align" ng-class="{'red-text':paymentInfo.order_status == 1,'cyan-text':paymentInfo.order_status == 2}">
                     {{payStatusList[paymentInfo.order_status-1].name}}
@@ -349,7 +349,7 @@
             <div ng-if="paymentInfo.order_status !== 1" >
                 <div class="col s12 lighten-1 white grey-text vc-center fz13"  style="height:45px;">
                     <div class="col s6">
-                        运费(美元)：<span style="color: red" class="fz25">{{paymentInfo.ship_trans_fee}}</span>
+                        费用(美元)：<span style="color: red" class="fz25">{{paymentInfo.total_fee}}</span>
                     </div>
                     <div class="col s8 right-align" ng-class="{'red-text':paymentInfo.order_status == 1,'cyan-text':paymentInfo.order_status == 2}">
                         {{payStatusList[paymentInfo.order_status-1].name}}
@@ -690,7 +690,7 @@
                                     <th data-field="">目的港口</th>
                                     <th data-field="">开船日期</th>
                                     <th data-field="">到港日期</th>
-                                    <th data-field="">运费(美元)</th>
+                                    <th data-field="">费用(美元)</th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -710,8 +710,8 @@
                                     <td ng-bind="el.start_ship_date|date:'yyyy-MM-dd'"></td>
                                     <!--到港日期-->
                                     <td ng-bind="el.end_ship_date|date:'yyyy-MM-dd'"></td>
-                                    <!--运费(美元)-->
-                                    <td class="red-text">{{el.ship_trans_fee| currency}}</td>
+                                    <!--费用(美元)-->
+                                    <td class="red-text">{{el.total_fee| currency}}</td>
                                 </tr>
                                 <tr class="grey-text text-darken-1 right-align"  ng-if="seaTransportOrderDetailsArray.length !== 0">
                                     <td colspan="8"  style="letter-spacing: 2px;text-align: right;" class="red-text">合计金额(美元):{{shipTransFee | currency}}</td>
@@ -1449,7 +1449,7 @@
                             <th data-field="">目的港口</th>
                             <!--<th data-field="">船公司</th>-->
                             <!--<th data-field="">货柜</th>-->
-                            <th data-field="">运费(美元)</th>
+                            <th data-field="">费用(美元)</th>
                             <th data-field="">开船日期</th>
                             <th data-field="">到港日期</th>
                             <th data-field="">运送状态</th>
@@ -1475,8 +1475,8 @@
                             <!--<td ng-bind="el.ship_company_name"></td>-->
                             <!--&lt;!&ndash;货柜&ndash;&gt;-->
                             <!--<td  ng-bind="el.container"></td>-->
-                            <!--运费(美元)-->
-                            <td class="red-text" ng-bind="el.ship_trans_fee"></td>
+                            <!--费用(美元)-->
+                            <td class="red-text" ng-bind="el.total_fee"></td>
                             <!--开船日期-->
                             <td ng-bind="el.start_ship_date|date:'yyyy-MM-dd'"></td>
                             <!--到港日期-->

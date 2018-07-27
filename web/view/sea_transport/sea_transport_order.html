@@ -169,7 +169,7 @@
                 <th data-field="">目的港口</th>
                 <th data-field="">船公司</th>
                 <th data-field="">货柜</th>
-                <th data-field="">运费(美元)</th>
+                <th data-field="">费用(美元)</th>
                 <th data-field="">预计开船日期</th>
                 <th data-field="">实际开船日期</th>
                 <th data-field="">委托方</th>
@@ -195,8 +195,8 @@
                 <td ng-bind="el.ship_company_name"></td>
                 <!--货柜-->
                 <td  ng-bind="el.container"></td>
-                <!--运费(美元)-->
-                <td class="red-text" ng-bind="el.ship_trans_fee"></td>
+                <!--费用(美元)-->
+                <td class="red-text" ng-bind="el.total_fee"></td>
                 <!--预计开船日期-->
                 <td ng-bind="el.start_ship_date|date:'yyyy-MM-dd'"></td>
                 <!--实际开船日期-->

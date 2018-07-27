@@ -358,7 +358,7 @@
                                     <th data-field="">海运线路</th>
                                     <th data-field="">开船日期</th>
                                     <th data-field="">到港日期</th>
-                                    <th data-field="">运费(美元)</th>
+                                    <th data-field="">费用(美元)</th>
                                     <th></th>
                                 </tr>
                                 </thead>
@@ -374,8 +374,8 @@
                                     <td>{{el.actual_start_date |date:'yyyy-MM-dd'}}</td>
                                     <!-- 到港日期 -->
                                     <td>{{el.actual_end_date |date:'yyyy-MM-dd'}}</td>
-                                    <!-- 运费(美元) -->
-                                    <td class="red-text">{{el.ship_trans_fee|currency}}</td>
+                                    <!-- 费用(美元) -->
+                                    <td class="red-text">{{el.total_fee|currency}}</td>
                                     <!-- 显示画面按钮 -->
                                     <td class="operation">
                                         <a  ng-click="addShipTransOderRel(el.id)" class="col s2 left" style="cursor: pointer">
@@ -422,7 +422,7 @@
                                     <th data-field="">海运线路</th>
                                     <th data-field="">开船日期</th>
                                     <th data-field="">到港日期</th>
-                                    <th data-field="">运费(美元)</th>
+                                    <th data-field="">费用(美元)</th>
                                     <th></th>
                                 </tr>
                                 </thead>
@@ -438,8 +438,8 @@
                                     <td>{{el.actual_start_date |date:'yyyy-MM-dd'}}</td>
                                     <!-- 到港日期 -->
                                     <td>{{el.actual_end_date |date:'yyyy-MM-dd'}}</td>
-                                    <!-- 运费(美元) -->
-                                    <td class="red-text">{{el.ship_trans_fee|currency}}</td>
+                                    <!-- 费用(美元) -->
+                                    <td class="red-text">{{el.total_fee|currency}}</td>
                                     <!-- 显示画面按钮 -->
                                     <td class="operation">
                                         <a  ng-click="deleteShipTransOderRel(el.ship_trans_order_id)" class="col s2 left" style="cursor: pointer">
@@ -481,7 +481,7 @@
                                 <th data-field="">海运线路</th>
                                 <th data-field="">开船日期</th>
                                 <th data-field="">到港日期</th>
-                                <th data-field="">运费(美元)</th>
+                                <th data-field="">费用(美元)</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -496,8 +496,8 @@
                                 <td>{{el.actual_start_date |date:'yyyy-MM-dd'}}</td>
                                 <!-- 到港日期 -->
                                 <td>{{el.actual_end_date |date:'yyyy-MM-dd'}}</td>
-                                <!-- 运费(美元) -->
-                                <td class="red-text">{{el.ship_trans_fee|currency}}</td>
+                                <!-- 费用(美元) -->
+                                <td class="red-text">{{el.total_fee|currency}}</td>
                             </tr>
                             </tbody>
                         </table>
