@@ -120,12 +120,12 @@ app.controller("order_detail_controller", ["$scope", "$state", "$stateParams", "
             };
 
             var url = _host.api_url + "/user/" + userId + "/storageOrder/" + $scope.storageOrderId;
-
             _basic.put(url, obj).then(function (data) {
                 if (data.success) {
                     $('#changePriceDiv').modal('close');
-                    $scope.orderInfo.actualFee = $scope.modifyActualFee;
                     swal("修改成功", "", "success");
+                    // 取得订单详情
+                    getOrderDetails();
                 } else {
                     swal(data.msg, "", "error");
                 }

@@ -78,7 +78,7 @@ app.controller("storage_car_details_controller", [ "$scope","$state", "$statePar
         // 获取url参数
 
         // 仓库详情画面 （storage_store_detail）
-        if ($stateParams.from == 'storage_store_detail') {
+        if ($stateParams.from === 'storage_store_detail') {
             $state.go($stateParams.from, {
                 reload: true,
                 id: $location.search()._id,
@@ -133,12 +133,14 @@ app.controller("storage_car_details_controller", [ "$scope","$state", "$statePar
     };
     // 车辆型号联动查询
     $scope.changeMakeId = function (val) {
-        if ($scope.curruntId == val) {
+        if ($scope.curruntId === val) {
         } else {
             $scope.curruntId = val;
             _basic.get(_host.api_url + "/carMake/" + val + "/carModel").then(function (data) {
-                if (data.success&&data.result.length>0) {
-                    $scope.carModelName = data.result;
+                if (data.success) {
+                    if (data.result.length>0) {
+                        $scope.carModelName = data.result;
+                    }
                 } else {
                     swal(data.msg, "", "error")
                 }
@@ -265,7 +267,6 @@ app.controller("storage_car_details_controller", [ "$scope","$state", "$statePar
     };
 
     //获取仓储分区停车信息列表
-
     $scope.getStorageParkingInfo = function (selectedZone) {
 
         var url = _host.api_url + "/storageParking?storageId=" + $scope.storageId + '&areaId=' + selectedZone;
@@ -311,38 +312,42 @@ app.controller("storage_car_details_controller", [ "$scope","$state", "$statePar
         $scope.Picture_carId = val;
         $scope.vin = vin;
         _basic.get(_host.record_url + "/user/" + userId + "/car/" + val + "/record").then(function (data) {
-            if (data.success&&data.result.length>0) {
-                $scope.operating_record = data.result[0];
-                $scope.comment = $scope.operating_record.comment;
-                $scope.storage_image = $scope.operating_record.storage_image;
-                $scope.record_id=$scope.operating_record._id;
-                for (var i in $scope.storage_image) {
-                    $scope.storage_image_i.push(_host.file_url + '/image/' + $scope.storage_image[i].url);
-                    $scope.storage_imageBox.push({src: _host.file_url + '/image/' + $scope.storage_image[i].url,record_id:$scope.record_id,time:$scope.storage_image[i].timez,user:$scope.storage_image[i].name});
+            if (data.success) {
+                if (data.result.length > 0) {
+                    $scope.operating_record = data.result[0];
+                    $scope.comment = $scope.operating_record.comment;
+                    $scope.storage_image = $scope.operating_record.storage_image;
+                    $scope.record_id=$scope.operating_record._id;
+                    for (var i in $scope.storage_image) {
+                        $scope.storage_image_i.push(_host.file_url + '/image/' + $scope.storage_image[i].url);
+                        $scope.storage_imageBox.push({src: _host.file_url + '/image/' + $scope.storage_image[i].url,record_id:$scope.record_id,time:$scope.storage_image[i].timez,user:$scope.storage_image[i].name});
+                    }
                 }
             } else {
                 swal(data.msg, "", "error")
             }
         });
         _basic.get(_host.api_url + "/user/" + userId + "/car?carId=" + val + '&active=1').then(function (data) {
-            if (data.success && data.result.length>0) {
-                $scope.modelId = data.result[0].model_id;
-                $scope.self_car = data.result[0];
-                // modelID赋值
-                $scope.look_make_id = $scope.self_car.make_id,
-                $scope.changeMakeId($scope.look_make_id);
-                $scope.look_model_id = $scope.self_car.model_id;
+            if (data.success) {
+                if (data.result.length > 0) {
+                    $scope.modelId = data.result[0].model_id;
+                    $scope.self_car = data.result[0];
+                    // modelID赋值
+                    $scope.look_make_id = $scope.self_car.make_id,
+                        $scope.changeMakeId($scope.look_make_id);
+                    $scope.look_model_id = $scope.self_car.model_id;
                     if($scope.self_car.pro_date!==null){
-                         $scope.look_create_time = $scope.self_car.pro_date;
+                        $scope.look_create_time = $scope.self_car.pro_date;
                     }else {
                         $scope.look_create_time='';
                     }
                     if($scope.self_car.lot&&$scope.self_car.lot!==null){
                         var selfLot = $scope.characters[$scope.self_car.lot-1].name;
                     }
-                $scope.look_storageName = $scope.self_car.storage_name + " " +$scope.self_car.area_name+"扇区"+ $scope.self_car.row + "排" + $scope.self_car.col + "列"+selfLot;
-                // 车辆id
-                $scope.look_car_id = $scope.self_car.id;
+                    $scope.look_storageName = $scope.self_car.storage_name + " " +$scope.self_car.area_name+"扇区"+ $scope.self_car.row + "排" + $scope.self_car.col + "列"+selfLot;
+                    // 车辆id
+                    $scope.look_car_id = $scope.self_car.id;
+                }
             } else {
                 swal(data.msg, "", "error")
             }
@@ -351,7 +356,7 @@ app.controller("storage_car_details_controller", [ "$scope","$state", "$statePar
     //获取钥匙柜和扇区和位置
     function getCarKeyPosition (){
         _basic.get(_host.api_url + "/carKeyPosition?carId=" + val).then(function (data) {
-            if(data.success==true&&data.result.length>0){
+            if (data.success && data.result.length > 0) {
                 $scope.keyCabinetId = val;
                 $scope.getCarKeyCabinet = data.result[0].car_key_cabinet_id;
                 $scope.getCarKeyCabinetArea = data.result[0].car_key_cabinet_area_id;
@@ -360,8 +365,7 @@ app.controller("storage_car_details_controller", [ "$scope","$state", "$statePar
                 getCarKeyCabinetArea ();
                 getCarKeyCabinetList();
                 $scope.flag = true;
-            }
-            else{
+            } else{
                 $scope.flag = false;
             }
         })
@@ -375,7 +379,8 @@ app.controller("storage_car_details_controller", [ "$scope","$state", "$statePar
                 swal(data.msg, "", "error");
             }
         });
-    };
+    }
+
     //扇区的获取
     function getCarKeyCabinetArea (){
         _basic.get(_host.api_url + "/carKeyCabinetArea?areaStatus=1&carKeyCabinetId="+$scope.getCarKeyCabinetId).then(function (data) {
@@ -396,7 +401,7 @@ app.controller("storage_car_details_controller", [ "$scope","$state", "$statePar
                 swal(data.msg, "", "error");
             }
         });
-    }
+    };
 
     //获取二维扇区图
     function getCarKeyCabinetList (){
@@ -484,7 +489,8 @@ app.controller("storage_car_details_controller", [ "$scope","$state", "$statePar
     //有钥匙占位
     $scope.noMoveCarKey =function(){
         swal('该位置已存放钥匙，请存放到其他没有被暂用的位置', '','error')
-    }
+    };
+
     // 修改仓库详情
     $scope.submitForm = function (isValid, id, r_id) {
         $scope.submitted = true;
@@ -556,8 +562,6 @@ app.controller("storage_car_details_controller", [ "$scope","$state", "$statePar
                 }
             }
         )
-
-
     };
     // 车辆出库
     $scope.outStorage = function (rel_id, p_id, s_id, car_id) {
@@ -584,7 +588,7 @@ app.controller("storage_car_details_controller", [ "$scope","$state", "$statePar
                 });
             }
         );
-    }
+    };
     // 看大图
     var viewer;
     $scope.renderFinish = function () {
@@ -650,7 +654,7 @@ app.controller("storage_car_details_controller", [ "$scope","$state", "$statePar
                 var url_array=src.split("/");
                 var url=url_array[url_array.length-1];
                 _basic.delete(_host.record_url+"/user/"+userId+"/record/"+record_id+"/image/"+url).then(function (data) {
-                    if(data.success==true){
+                    if(data.success){
                         var i=$scope.storage_image_i.indexOf(src);
                         $scope.storage_imageBox.splice(i,1);
                         $scope.storage_image_i.splice(i,1);
