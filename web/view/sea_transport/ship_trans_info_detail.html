@@ -324,30 +324,12 @@
                             <i ng-show="transCar.order_status!=2" class="cyan-text mdi mdi-pencil" style="position: absolute;right:20px;bottom:3px;font-size:20px;line-height: 20px;cursor: pointer" ng-click="showEditShipFeeDiv(transCar.ship_trans_order_id,'new')"></i>
                             <i ng-show="transCar.order_status==2" class="cyan-text mdi mdi-eye"    style="position: absolute;right:20px;bottom:3px;font-size:20px;line-height: 20px;cursor: pointer" ng-click="showEditShipFeeDiv(transCar.ship_trans_order_id,'edit')"></i>
                         </div>
-
-                        <!-- 2018-07-20 变更修改前 -->
-                        <!--<div class="col s4 input-field left-align" ng-switch="transCar.order_status">-->
-                            <!--<div ng-switch-when="2" class="col s12 right-align">-->
-                                <!--运费(美元):<span class="red-text">{{transCar.ship_trans_fee | currency}}</span>-->
-                            <!--</div>-->
-                            <!--<div ng-switch-default class="col s12">-->
-                                <!--<div class="col s10">-->
-                                    <!--<input type="text" id="shipTransFeesText" maxlength="8" valid-money ng-blur="calcTotalFees()" class="red-text" ng-model="transCar.ship_trans_fee">-->
-                                    <!--<label for="shipTransFeesText" class="active"><span class="red-text">*</span>运费(美元):</label>-->
-                                <!--</div>-->
-                                <!--<div class="col s2 left-align">-->
-                                    <!--<a class="btn-floating waves-effect waves-light cyan lighten-1" style="left: 1px;width:30px;height: 30px;" ng-click="modifyCarInfo(transCar)">-->
-                                        <!--<i class="mdi mdi-check add_brand" style="position: absolute;right:0;bottom:3px;font-size:20px;line-height: 20px;"></i>-->
-                                    <!--</a>-->
-                                <!--</div>-->
-                            <!--</div>-->
-                        <!--</div>-->
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- 分单 / 合计运费(美元) -->
+        <!-- 分单 / 合计费用(美元) -->
         <div class="col s12" style="padding-top: 20px;padding-bottom: 20px;padding-left: 23px;">
             <div ng-show="shippingOrder.status==1 || shippingOrder.status==2" class="col s3 left-align">
                 <select material-select watch ng-model="shippingOrder.partStatus">
@@ -359,7 +341,7 @@
                 分单：{{partTypes[shippingOrder.partStatus-1].name}}
             </div>
             <div class="col s9 right-align" style="padding-right: 23px;">
-                <label class="fz15">合计运费(美元)：<span class="red-text">{{shippingOrder.totalShipTransFees | currency}}</span></label>
+                <label class="fz15">合计费用(美元)：<span class="red-text">{{shippingOrder.totalShipTransFees | currency}}</span></label>
             </div>
         </div>
     </div>
