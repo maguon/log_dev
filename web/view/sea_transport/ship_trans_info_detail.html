@@ -446,7 +446,7 @@
             <!-- 已支付（read only） -->
             <div ng-show="newShipTransFee.pageType!='new'">
                 <!-- 分割线 -->
-                <div class="col s12">
+                <div ng-show="shipTransOrderFeeRelList.length > 0" class="col s12">
                     <div class="divider col s12" style="background-color: #c2c0c2;margin-top: 10px;margin-bottom: 10px;"></div>
                 </div>
 
