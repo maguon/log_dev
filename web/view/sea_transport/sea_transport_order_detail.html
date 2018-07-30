@@ -49,8 +49,6 @@
     </div>
 </div>
 
-
-
 <!-- 支付编号 -->
 <div class="row blue-grey lighten-5" style="width: 80%;border:1px solid #bdbdbd;margin-top: 40px;">
     <!-- header -->
@@ -111,32 +109,13 @@
             封签：{{paymentInfo.tab}}
         </div>
         <div class="input-field col s3">
+            费用(美元):<span class="red-text">{{paymentInfo.total_fee | currency}}</span>
+            <i ng-show="paymentInfo.order_status == 1" class="cyan-text mdi mdi-pencil" style="position: absolute;right:20px;bottom:3px;font-size:20px;line-height: 20px;cursor: pointer" ng-click="showEditShipFeeDiv('new')"></i>
+            <i ng-show="paymentInfo.order_status != 1" class="cyan-text mdi mdi-eye"    style="position: absolute;right:20px;bottom:3px;font-size:20px;line-height: 20px;cursor: pointer" ng-click="showEditShipFeeDiv('edit')"></i>
         </div>
     </div>
 
-    <div class="col s12 white">
-        <div class="divider s12 center" style="width:98%; margin-left: 10px;margin-right: 10px;margin-top: 10px;"></div>
-    </div>
-
-    <div class="col s12 lighten-1 white grey-text vc-center fz13" ng-if="paymentInfo.order_status== 1" style="height:100px;">
-        <div class="col s4">
-            <span>运费(美元):</span>
-            <input type="text" name="look_contacts" autocomplete="off" ng-model="paymentInfo.total_fee" class="red-text left-align" maxlength="8" valid-money>
-        </div>
-        <div class="col s8 right-align">
-            <a class="btn-floating btn-large waves-light waves-effect cyan lighten-2  btn "  ng-click="changeShipTransFee(paymentInfo.id)">
-                <i  class="mdi mdi-check"></i>
-            </a>
-        </div>
-    </div>
     <div ng-if="paymentInfo.order_status !== 1" >
-        <div class="col s12 lighten-1 white grey-text vc-center fz13"  style="height:45px;">
-            <div class="col s6">
-                运费(美元)：<span style="color: red" class="fz25">{{paymentInfo.total_fee}}</span>
-            </div>
-            <div class="col s6 right-align">
-            </div>
-        </div>
         <div class="col s12 white">
             <div class="s12 center" style="width:98%; margin-left: 10px;margin-right: 10px;margin-top: 10px;border: 1px dotted #ccc"></div>
         </div>
@@ -161,5 +140,113 @@
             生成时间：{{paymentInfo.ship_trans_created_date | date:'yyyy-MM-dd HH:mm:ss'}}
         </div>
     </div>
+</div>
 
+<!-- 模态画面【海运费用】 模态框 -->
+<div id="editShipFeeDiv" class="modal modal-fixed-footer row" style="max-height: 456px;">
+
+    <!-- Header -->
+    <div class="modal_title center-align cyan white-text">海运费用</div>
+
+    <!-- Body -->
+    <div class="modal-content" style="max-height: 350px;">
+
+        <!-- 显示画面【海运费用】 Body -->
+        <div class="col" style="width:95%; margin-left: 20px;">
+            <!-- 未支付 -->
+            <div ng-show="newShipTransFee.pageType=='new'">
+                <!-- 选择付费项目 -->
+                <div class="col input-field" style="width:45%;margin-top: 20px;margin-bottom: 10px;">
+                    <select material-select watch ng-model="newShipTransFee.type">
+                        <option value="" disabled>选择付费项目</option>
+                        <option ng-repeat="el in shipTransFeeTypes" ng-value="el.id">{{el.name}}</option>
+                    </select>
+                </div>
+
+                <!-- 金额(美元) -->
+                <div class="col input-field" style="width:45%;margin-top: 20px;">
+                    <input id="feeText" type="text" valid-money maxlength="8" ng-model="newShipTransFee.fee">
+                    <label for="feeText">金额(美元)</label>
+                </div>
+
+                <div class="col right-align" style="width:10%;margin-top: 20px;">
+                    <a class="btn-floating waves-effect waves-light btn cyan " style="width:38px;height:38px;" ng-click="addShipTransOrderFeeRel()">
+                        <i class="mdi mdi-plus"></i>
+                    </a>
+                </div>
+
+                <!-- 分割线 -->
+                <div class="col s12">
+                    <div class="divider col s12" style="background-color: #c2c0c2;margin-top: 10px;margin-bottom: 10px;"></div>
+                </div>
+
+                <div ng-repeat="el in shipTransOrderFeeRelList" class="row grey-text text-darken-1" style="height:30px">
+
+                    <!-- 类别 -->
+                    <div class="col left-align" style="width:60%;">
+                        {{shipTransFeeTypes[el.pay_type - 1].name}}
+                    </div>
+
+                    <!-- 费用(美元) -->
+                    <div class="col right-align" style="width:30%;">
+                        <input type="text" maxlength="8" valid-money class="right-align red-text" style="height: 30px" ng-model="el.pay_money">
+                    </div>
+
+                    <!-- 操作按钮 -->
+                    <div class="col right-align" style="width:10%;">
+                        <div class="col s6 right-align">
+                            <i class="mdi mdi-check look_icon cyan-text lighten-1" style="cursor: pointer" ng-click="updShipTransOrderFeeRel(el)"></i>
+                        </div>
+                        <div class="col s6 right-align">
+                            <i class="mdi mdi-close look_icon red-text lighten-1" style="cursor: pointer" ng-click="delShipTransOrderFeeRel(el.id)"></i>
+                        </div>
+                    </div>
+
+                    <!-- 分割线 -->
+                    <div class="col s12">
+                        <div class="divider col s12" style="background-color: #c2c0c2;margin-top: 2px;margin-bottom: 10px;"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 已支付（read only） -->
+            <div ng-show="newShipTransFee.pageType!='new'">
+                <!-- 分割线 -->
+                <div ng-show="shipTransOrderFeeRelList.length > 0" class="col s12">
+                    <div class="divider col s12" style="background-color: #c2c0c2;margin-top: 10px;margin-bottom: 10px;"></div>
+                </div>
+
+                <div ng-repeat="el in shipTransOrderFeeRelList" class="row grey-text text-darken-1" style="height:30px">
+
+                    <!-- 类别 -->
+                    <div class="col left-align" style="width:60%;">
+                        {{shipTransFeeTypes[el.pay_type - 1].name}}
+                    </div>
+
+                    <!-- 费用(美元) -->
+                    <div class="col right-align red-text" style="width:40%;padding-right: 45px">
+                        {{el.pay_money| currency}}
+                    </div>
+
+                    <!-- 分割线 -->
+                    <div class="col s12">
+                        <div class="divider col s12" style="background-color: #c2c0c2;margin-top: 10px;margin-bottom: 10px;"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 合计费用(美元) -->
+            <div class="col s12 right-align" style="margin-top: 5px;">
+                合计费用(美元)：<span class="red-text">{{newShipTransFee.totalFee | currency}}</span>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="modal-footer right-align">
+        <a class="btn-floating waves-effect waves-light btn cyan lighten-1 modal-close" style="width:38px;height:38px; margin-right: 50px;">
+            <i class="mdi mdi-check"></i>
+        </a>
+    </div>
 </div>
