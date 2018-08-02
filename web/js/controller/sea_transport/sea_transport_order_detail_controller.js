@@ -11,6 +11,8 @@ app.controller("sea_transport_order_detail_controller", ["$scope","$stateParams"
 
     // 支付状态
     $scope.payStatus = _config.payStatus;
+    // 发票 状态
+    $scope.invoiceStatus = _config.invoiceStatus;
 
     // 海运费用类别
     $scope.shipTransFeeTypes = _config.shipTransFeeTypes;

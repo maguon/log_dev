@@ -57,7 +57,7 @@
             订单编号：{{paymentInfo.id}}
         </div>
         <div class="col s6 right-align" ng-class="{'red-text':paymentInfo.order_status == 1}">
-            {{payStatus[paymentInfo.order_status-1].name}}
+            {{payStatus[paymentInfo.order_status-1].name}}/{{invoiceStatus[paymentInfo.invoice_status-1].name}}
         </div>
     </div>
 
