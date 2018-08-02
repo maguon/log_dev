@@ -477,11 +477,11 @@ baseService.factory("_config", function () {
     _this.invoiceStatus = [
         {
             id: 1,
-            name: "未发"
+            name: "未开票"
         },
         {
             id: 2,
-            name: "已发"
+            name: "已开票"
         }
     ];
 
