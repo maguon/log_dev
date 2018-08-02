@@ -12,6 +12,8 @@ app.controller("invoice_detail_controller", ["$scope", "$stateParams", "_basic",
     $scope.entrustTypeList = _config.entrustType;
     // 支付状态
     $scope.paymentStatusList = _config.paymentStatus;
+    // 海运费用类别
+    $scope.shipTransFeeTypes = _config.shipTransFeeTypes;
 
     // 关联仓储订单 应开发票总额
     $scope.totalStorageMoney = 0;
@@ -299,6 +301,49 @@ app.controller("invoice_detail_controller", ["$scope", "$stateParams", "_basic",
                     });
             });
     };
+
+    /**
+     * 打开追加【费用明细】模态画面。
+     * @param shipTransOrderId 海运订单编号
+     * @param vin vin
+     */
+    $scope.showShipFeeDetailDiv = function (shipTransOrderId, vin) {
+        $('.modal').modal();
+        $('#shipFeeDetailDiv').modal('open');
+
+        $scope.shipTransFee = {};
+        // 海运订单编号
+        $scope.shipTransFee.shipTransOrderId = shipTransOrderId;
+        $scope.shipTransFee.vin = vin;
+
+        // 取得海运费用一览
+        getShipTransOrderFeeRel(shipTransOrderId);
+    };
+
+    /**
+     * 取得海运费用一览
+     * @param shipTransOrderId 海运订单编号
+     */
+    function getShipTransOrderFeeRel(shipTransOrderId) {
+        // 检索用url
+        var url = _host.api_url + "/shipTransOrderFeeRel?shipTransOrderId=" + shipTransOrderId;
+
+        // 合计费用(美元)
+        $scope.shipTransFee.totalFee = 0;
+        var thisFee = 0;
+        _basic.get(url).then(function (data) {
+            if (data.success) {
+                $scope.shipTransOrderFeeRelList = data.result;
+                // 计算 合计费用(美元)
+                for (var i = 0; i < $scope.shipTransOrderFeeRelList.length; i++) {
+                    thisFee = $scope.shipTransOrderFeeRelList[i].pay_money;
+                    $scope.shipTransFee.totalFee = $scope.shipTransFee.totalFee + thisFee;
+                }
+            } else {
+                swal(data.msg, "", "error");
+            }
+        });
+    }
 
     /**
      * Tab跳转 3:其他方式还款

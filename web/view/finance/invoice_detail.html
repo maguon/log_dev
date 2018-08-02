@@ -342,7 +342,7 @@
                     </div>
                 </div>
             </div>
-            <!--委托方未结仓储订单 有订单-->
+            <!--委托方未结仓储订单 有订单(左侧)-->
             <div class="col s6" ng-show="shipTransOrderList.length!==0">
                 <div  class="col s12 left">
                     <div class="card" style="border: 2px solid #ccc;height:auto">
@@ -355,10 +355,9 @@
                                 <tr class="grey-text text-darken-2">
                                     <th data-field="">订单编号</th>
                                     <th data-field="">VIN</th>
-                                    <th data-field="">海运线路</th>
-                                    <th data-field="">开船日期</th>
-                                    <th data-field="">到港日期</th>
+                                    <th data-field="">booking</th>
                                     <th data-field="">费用(美元)</th>
+                                    <th data-field="">订单日期</th>
                                     <th></th>
                                 </tr>
                                 </thead>
@@ -368,14 +367,12 @@
                                     <td ng-bind="el.id"></td>
                                     <!-- VIN -->
                                     <td ng-bind="el.vin"></td>
-                                    <!-- 海运线路 -->
-                                    <td>{{el.start_port_name}} - {{el.end_port_name}}</td>
-                                    <!-- 开船日期 -->
-                                    <td>{{el.actual_start_date |date:'yyyy-MM-dd'}}</td>
-                                    <!-- 到港日期 -->
-                                    <td>{{el.actual_end_date |date:'yyyy-MM-dd'}}</td>
+                                    <!-- booking -->
+                                    <td>{{el.booking}}</td>
                                     <!-- 费用(美元) -->
                                     <td class="red-text">{{el.total_fee|currency}}</td>
+                                    <!-- 订单日期 -->
+                                    <td>{{el.created_on |date:'yyyy-MM-dd'}}</td>
                                     <!-- 显示画面按钮 -->
                                     <td class="operation">
                                         <a  ng-click="addShipTransOderRel(el.id)" class="col s2 left" style="cursor: pointer">
@@ -419,10 +416,9 @@
                                 <tr class="grey-text text-darken-2">
                                     <th data-field="">订单编号</th>
                                     <th data-field="">VIN</th>
-                                    <th data-field="">海运线路</th>
-                                    <th data-field="">开船日期</th>
-                                    <th data-field="">到港日期</th>
+                                    <th data-field="">booking</th>
                                     <th data-field="">费用(美元)</th>
+                                    <th data-field="">订单日期</th>
                                     <th></th>
                                 </tr>
                                 </thead>
@@ -432,14 +428,12 @@
                                     <td ng-bind="el.ship_trans_order_id"></td>
                                     <!-- VIN -->
                                     <td ng-bind="el.vin"></td>
-                                    <!-- 海运线路 -->
-                                    <td>{{el.start_port_name}} - {{el.end_port_name}}</td>
-                                    <!-- 开船日期 -->
-                                    <td>{{el.actual_start_date |date:'yyyy-MM-dd'}}</td>
-                                    <!-- 到港日期 -->
-                                    <td>{{el.actual_end_date |date:'yyyy-MM-dd'}}</td>
+                                    <!-- booking -->
+                                    <td>{{el.booking}}</td>
                                     <!-- 费用(美元) -->
                                     <td class="red-text">{{el.total_fee|currency}}</td>
+                                    <!-- 订单日期 -->
+                                    <td>{{el.ship_trans_order_date |date:'yyyy-MM-dd'}}</td>
                                     <!-- 显示画面按钮 -->
                                     <td class="operation">
                                         <a  ng-click="deleteShipTransOderRel(el.ship_trans_order_id)" class="col s2 left" style="cursor: pointer">
@@ -478,10 +472,10 @@
                             <tr class="grey-text text-darken-2">
                                 <th data-field="">订单编号</th>
                                 <th data-field="">VIN</th>
-                                <th data-field="">海运线路</th>
-                                <th data-field="">开船日期</th>
-                                <th data-field="">到港日期</th>
+                                <th data-field="">booking</th>
                                 <th data-field="">费用(美元)</th>
+                                <th data-field="">订单日期</th>
+                                <th data-field=""></th>
                             </tr>
                             </thead>
                             <tbody>
@@ -490,14 +484,16 @@
                                 <td ng-bind="el.ship_trans_order_id"></td>
                                 <!-- VIN -->
                                 <td ng-bind="el.vin"></td>
-                                <!-- 海运线路 -->
-                                <td>{{el.start_port_name}} - {{el.end_port_name}}</td>
-                                <!-- 开船日期 -->
-                                <td>{{el.actual_start_date |date:'yyyy-MM-dd'}}</td>
-                                <!-- 到港日期 -->
-                                <td>{{el.actual_end_date |date:'yyyy-MM-dd'}}</td>
+                                <!-- booking -->
+                                <td>{{el.booking}}</td>
                                 <!-- 费用(美元) -->
                                 <td class="red-text">{{el.total_fee|currency}}</td>
+                                <!-- 订单日期 -->
+                                <td>{{el.ship_trans_order_date |date:'yyyy-MM-dd'}}</td>
+                                <!-- 操作 -->
+                                <td class="operation">
+                                    <i class="mdi mdi-file-outline look_icon cyan-text lighten-1" ng-click="showShipFeeDetailDiv(el.ship_trans_order_id, el.vin)"></i>
+                                </td>
                             </tr>
                             </tbody>
                         </table>
@@ -724,11 +720,66 @@
             </div>
         </div>
     </div>
+</div>
 
 
+<!-- 模态画面【费用明细】 模态框 -->
+<div id="shipFeeDetailDiv" class="modal modal-fixed-footer row" style="max-height: 456px;">
 
+    <!-- Header -->
+    <div class="modal_title center-align cyan white-text">费用明细</div>
 
+    <!-- Body -->
+    <div class="modal-content" style="max-height: 350px;">
 
+        <!-- 显示画面【费用明细】 Body -->
+        <div class="col" style="width:95%; margin-left: 20px;">
 
+            <!-- 分割线 -->
+            <div class="col s12">
+                <div class="col s6 left-align cyan-text" style="padding-left: 0">
+                    订单编号：{{shipTransFee.shipTransOrderId}}
+                </div>
+                <div class="col s6 right-align cyan-text" style="padding-right: 0">
+                    VIN：{{shipTransFee.vin}}
+                </div>
+            </div>
 
+            <!-- 分割线 -->
+            <div class="col s12">
+                <div class="divider col s12" style="background-color: #c2c0c2;margin-top: 10px;margin-bottom: 10px;"></div>
+            </div>
+
+            <div ng-repeat="el in shipTransOrderFeeRelList" class="row grey-text text-darken-1" style="height:30px">
+
+                <!-- 类别 -->
+                <div class="col left-align" style="width:60%;">
+                    {{shipTransFeeTypes[el.pay_type - 1].name}}
+                </div>
+
+                <!-- 费用(美元) -->
+                <div class="col right-align red-text" style="width:40%;">
+                    {{el.pay_money| currency}}
+                </div>
+
+                <!-- 分割线 -->
+                <div class="col s12">
+                    <div class="divider col s12" style="background-color: #c2c0c2;margin-top: 10px;margin-bottom: 10px;"></div>
+                </div>
+            </div>
+
+            <!-- 合计费用(美元) -->
+            <div class="col s12 right-align" style="margin-top: 5px;">
+                合计费用(美元)：<span class="red-text">{{shipTransFee.totalFee | currency}}</span>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="modal-footer right-align">
+        <a class="btn-floating waves-effect waves-light btn cyan lighten-1 modal-close" style="width:38px;height:38px; margin-right: 50px;">
+            <i class="mdi mdi-check"></i>
+        </a>
+    </div>
 </div>
