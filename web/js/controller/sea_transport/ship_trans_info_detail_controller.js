@@ -124,8 +124,12 @@ app.controller("ship_trans_info_detail_controller", ["$scope", "$state", "$state
         pageType: "",
         // 选择付费项目
         type: "",
+        // 数量
+        qty: "",
         // 金额(美元)
         fee: "",
+        // 备注
+        remark: "",
         // 合计费用(美元)
         totalFee: 0
     };
@@ -490,7 +494,9 @@ app.controller("ship_trans_info_detail_controller", ["$scope", "$state", "$state
         if ($scope.newShipTransFee.type !== "" && $scope.newShipTransFee.fee !== "") {
             var obj = {
                 payType: $scope.newShipTransFee.type,
-                payMoney: $scope.newShipTransFee.fee
+                qty: $scope.newShipTransFee.qty,
+                payMoney: $scope.newShipTransFee.fee,
+                remark: $scope.newShipTransFee.remark
             };
 
             _basic.post(_host.api_url + "/user/" + userId + "/shipTransOrder/" + $scope.newShipTransFee.shipTransOrderId + "/shipTransOrderFeeRel", obj).then(function (data) {
@@ -499,7 +505,9 @@ app.controller("ship_trans_info_detail_controller", ["$scope", "$state", "$state
 
                     // 初期化数据
                     $scope.newShipTransFee.type = "";
+                    $scope.newShipTransFee.qty = "";
                     $scope.newShipTransFee.fee = "";
+                    $scope.newShipTransFee.remark = "";
 
                     // 取得海运费用一览
                     getShipTransOrderFeeRel($scope.newShipTransFee.shipTransOrderId);
@@ -535,7 +543,10 @@ app.controller("ship_trans_info_detail_controller", ["$scope", "$state", "$state
                 function (isConfirm) {
                     if (isConfirm) {
                         var obj = {
-                            payMoney: shipTransFeeInfo.pay_money
+                            payType: shipTransFeeInfo.pay_type,
+                            qty: shipTransFeeInfo.qty,
+                            payMoney: shipTransFeeInfo.pay_money,
+                            remark: shipTransFeeInfo.remark
                         };
                         // 修改费用
                         var url = _host.api_url + "/user/" + userId + "/shipTransOrderFeeRel/" + shipTransFeeInfo.id;

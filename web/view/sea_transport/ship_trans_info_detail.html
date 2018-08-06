@@ -375,55 +375,95 @@
     </div>
 </div>
 
-
 <!-- 模态画面【海运费用】 模态框 -->
-<div id="editShipFeeDiv" class="modal modal-fixed-footer row" style="max-height: 456px;">
+<div id="editShipFeeDiv" class="modal modal-fixed-footer row" style="max-height: 496px;">
 
     <!-- Header -->
     <div class="modal_title center-align cyan white-text">海运费用</div>
 
     <!-- Body -->
-    <div class="modal-content" style="max-height: 350px;">
+    <div class="modal-content" style="max-height: 390px;">
 
         <!-- 显示画面【海运费用】 Body -->
         <div class="col" style="width:95%; margin-left: 20px;">
             <!-- 未支付 -->
             <div ng-show="newShipTransFee.pageType=='new'">
                 <!-- 选择付费项目 -->
-                <div class="col input-field" style="width:45%;margin-top: 20px;margin-bottom: 10px;">
+                <div class="col input-field" style="width:30%;margin-top: 20px;margin-bottom: 10px;">
                     <select material-select watch ng-model="newShipTransFee.type">
-                        <option value="" disabled>选择付费项目</option>
+                        <option value="" disabled>Item</option>
                         <option ng-repeat="el in shipTransFeeTypes" ng-value="el.id">{{el.name}}</option>
                     </select>
                 </div>
 
-                <!-- 金额(美元) -->
-                <div class="col input-field" style="width:45%;margin-top: 20px;">
-                    <input id="feeText" type="text" valid-money maxlength="8" ng-model="newShipTransFee.fee">
-                    <label for="feeText">金额(美元)</label>
+                <!-- 数量 -->
+                <div class="col input-field" style="width:30%;margin-top: 20px;">
+                    <input id="qtyText" type="text" valid-num maxlength="8" ng-model="newShipTransFee.qty">
+                    <label for="qtyText">Qty</label>
                 </div>
 
-                <div class="col right-align" style="width:10%;margin-top: 20px;">
+                <!-- 金额(美元) -->
+                <div class="col input-field" style="width:30%;margin-top: 20px;">
+                    <input id="feeText" type="text" valid-money maxlength="8" ng-model="newShipTransFee.fee">
+                    <label for="feeText"><span class="red-text">*</span>Amount</label>
+                </div>
+
+                <!-- 备注 -->
+                <div class="col input-field" style="width:90%;margin-bottom: 20px">
+                    <input id="remarkTxt" type="text" maxlength="200" ng-model="newShipTransFee.remark">
+                    <label for="remarkTxt">备注</label>
+                </div>
+
+                <div class="col right-align" style="width:10%;">
                     <a class="btn-floating waves-effect waves-light btn cyan " style="width:38px;height:38px;" ng-click="addShipTransOrderFeeRel()">
                         <i class="mdi mdi-plus"></i>
                     </a>
                 </div>
 
                 <!-- 分割线 -->
-                <div class="col s12">
-                    <div class="divider col s12" style="background-color: #c2c0c2;margin-top: 10px;margin-bottom: 10px;"></div>
+                <div ng-show="shipTransOrderFeeRelList.length > 0" class="col s12">
+                    <div class="divider col s12" style="height: 2px; background-color: #c2c0c2;margin-top: 10px;margin-bottom: 10px;"></div>
+                </div>
+
+                <!-- 头部信息 -->
+                <div ng-show="shipTransOrderFeeRelList.length > 0" class="col s12">
+                    <!-- 类别 -->
+                    <div class="col left-align" style="width:25%;">Item</div>
+                    <!-- 数量 -->
+                    <div class="col right-align" style="width:10%;">Qty</div>
+                    <!-- 费用(美元) -->
+                    <div class="col right-align" style="width:15%;">Amount</div>
+                    <!-- 备注 -->
+                    <div class="col center-align" style="width:40%;">备注</div>
+                    <!-- 操作按钮 -->
+                    <div class="col right-align" style="width:10%;"></div>
+                </div>
+
+                <!-- 分割线 -->
+                <div ng-show="shipTransOrderFeeRelList.length > 0" class="col s12">
+                    <div class="divider col s12" style="height: 2px; background-color: #c2c0c2;margin-top: 10px;margin-bottom: 10px;"></div>
                 </div>
 
                 <div ng-repeat="el in shipTransOrderFeeRelList" class="row grey-text text-darken-1" style="height:30px">
 
                     <!-- 类别 -->
-                    <div class="col left-align" style="width:60%;">
+                    <div class="col left-align" style="width:25%;">
                         {{shipTransFeeTypes[el.pay_type - 1].name}}
                     </div>
 
+                    <!-- 数量 -->
+                    <div class="col right-align" style="width:10%;">
+                        <input type="text" class="right-align" style="height: 30px" ng-model="el.qty">
+                    </div>
+
                     <!-- 费用(美元) -->
-                    <div class="col right-align" style="width:30%;">
-                        <input type="text" maxlength="8" valid-money class="right-align red-text" style="height: 30px" ng-model="el.pay_money">
+                    <div class="col right-align" style="width:15%;">
+                        <input type="text" class="right-align red-text" valid-money maxlength="8" style="height: 30px" ng-model="el.pay_money">
+                    </div>
+
+                    <!-- 备注 -->
+                    <div class="col right-align context-ellipsis" style="width:40%;">
+                        <input type="text" style="height: 30px" ng-model="el.remark">
                     </div>
 
                     <!-- 操作按钮 -->
@@ -445,21 +485,49 @@
 
             <!-- 已支付（read only） -->
             <div ng-show="newShipTransFee.pageType!='new'">
+
                 <!-- 分割线 -->
                 <div ng-show="shipTransOrderFeeRelList.length > 0" class="col s12">
-                    <div class="divider col s12" style="background-color: #c2c0c2;margin-top: 10px;margin-bottom: 10px;"></div>
+                    <div class="divider col s12" style="height: 2px; background-color: #c2c0c2;margin-top: 10px;margin-bottom: 10px;"></div>
+                </div>
+
+                <!-- 头部信息 -->
+                <div ng-show="shipTransOrderFeeRelList.length > 0" class="col s12">
+                    <!-- 类别 -->
+                    <div class="col left-align" style="width:25%;">Item</div>
+                    <!-- 数量 -->
+                    <div class="col right-align" style="width:10%;">Qty</div>
+                    <!-- 费用(美元) -->
+                    <div class="col right-align" style="width:15%;">Amount</div>
+                    <!-- 备注 -->
+                    <div class="col center-align" style="width:50%;">备注</div>
+                </div>
+
+                <!-- 分割线 -->
+                <div ng-show="shipTransOrderFeeRelList.length > 0" class="col s12">
+                    <div class="divider col s12" style="height: 2px; background-color: #c2c0c2;margin-top: 10px;margin-bottom: 10px;"></div>
                 </div>
 
                 <div ng-repeat="el in shipTransOrderFeeRelList" class="row grey-text text-darken-1" style="height:30px">
 
                     <!-- 类别 -->
-                    <div class="col left-align" style="width:60%;">
+                    <div class="col left-align" style="width:25%;">
                         {{shipTransFeeTypes[el.pay_type - 1].name}}
                     </div>
 
+                    <!-- 数量 -->
+                    <div class="col right-align" style="width:10%;">
+                        {{el.qty| number}}
+                    </div>
+
                     <!-- 费用(美元) -->
-                    <div class="col right-align red-text" style="width:40%;padding-right: 45px">
+                    <div class="col right-align red-text" style="width:15%;">
                         {{el.pay_money| currency}}
+                    </div>
+
+                    <!-- 备注 -->
+                    <div class="col right-align context-ellipsis" style="width:50%;">
+                        {{el.remark}}
                     </div>
 
                     <!-- 分割线 -->
