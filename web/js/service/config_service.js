@@ -509,12 +509,40 @@ baseService.factory("_config", function () {
         },
         {
             id: 6,
-            name: "退柜费用"
+            name: "退柜 GATEOUT FEE"
         },
         {
             id: 7,
+            name: "退柜 STORAGE FEE"
+        },
+        {
+            id: 8,
+            name: "退柜 CHASSIS FEE"
+        },
+        {
+            id: 9,
+            name: "退柜 RUN FEE"
+        },
+        {
+            id: 10,
+            name: "退柜 UNLOADING FEE"
+        },
+        {
+            id: 11,
             name: "COD"
         }
     ];
+
+    // 发票开具-公司信息
+    _this.companyInfo = [
+        {
+            name: "US HONYA INTERNATIONAL INC.",
+            address1: "16293 GALE AVE",
+            address2: "CITY OF INDUSTRY. CA 91745",
+            tel: "714-332-0266",
+            website: "www.ushonya.com"
+        }
+    ];
+
     return _this
 });
