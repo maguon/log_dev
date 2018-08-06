@@ -530,6 +530,10 @@ baseService.factory("_config", function () {
         {
             id: 11,
             name: "COD"
+        },
+        {
+            id: 12,
+            name: "其他"
         }
     ];
 
