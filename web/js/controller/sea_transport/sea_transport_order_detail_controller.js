@@ -131,6 +131,11 @@ app.controller("sea_transport_order_detail_controller", ["$scope","$stateParams"
                 remark: $scope.newShipTransFee.remark
             };
 
+            // 如果数量没有输入，就去掉此属性
+            if ($scope.newShipTransFee.qty == null || $scope.newShipTransFee.qty === "") {
+                delete obj.qty;
+            }
+
             _basic.post(_host.api_url + "/user/" + userId + "/shipTransOrder/" + $scope.newShipTransFee.shipTransOrderId + "/shipTransOrderFeeRel", obj).then(function (data) {
                 if (data.success) {
                     swal("追加成功", "", "success");
@@ -180,6 +185,10 @@ app.controller("sea_transport_order_detail_controller", ["$scope","$stateParams"
                             payMoney: shipTransFeeInfo.pay_money,
                             remark: shipTransFeeInfo.remark
                         };
+                        // 如果数量没有输入，就去掉此属性
+                        if (shipTransFeeInfo.qty == null || shipTransFeeInfo.qty === "") {
+                            delete obj.qty;
+                        }
                         // 修改费用
                         var url = _host.api_url + "/user/" + userId + "/shipTransOrderFeeRel/" + shipTransFeeInfo.id;
                         _basic.put(url, obj).then(function (data) {
