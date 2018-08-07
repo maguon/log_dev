@@ -777,16 +777,43 @@
                 <div class="divider col s12" style="background-color: #c2c0c2;margin-top: 10px;margin-bottom: 10px;"></div>
             </div>
 
+            <!-- 头部信息 -->
+            <div ng-show="shipTransOrderFeeRelList.length > 0" class="col s12">
+                <!-- 类别 -->
+                <div class="col left-align" style="width:25%;">Item</div>
+                <!-- 数量 -->
+                <div class="col right-align" style="width:10%;">Qty</div>
+                <!-- 费用(美元) -->
+                <div class="col right-align" style="width:15%;">Amount</div>
+                <!-- 备注 -->
+                <div class="col center-align" style="width:50%;">备注</div>
+            </div>
+
+            <!-- 分割线 -->
+            <div ng-show="shipTransOrderFeeRelList.length > 0" class="col s12">
+                <div class="divider col s12" style="background-color: #c2c0c2;margin-top: 10px;margin-bottom: 10px;"></div>
+            </div>
+
             <div ng-repeat="el in shipTransOrderFeeRelList" class="row grey-text text-darken-1" style="height:30px">
 
                 <!-- 类别 -->
-                <div class="col left-align" style="width:60%;">
+                <div class="col left-align" style="width:25%;">
                     {{shipTransFeeTypes[el.pay_type - 1].name}}
                 </div>
 
+                <!-- 数量 -->
+                <div class="col right-align" style="width:10%;">
+                    {{el.qty| number}}
+                </div>
+
                 <!-- 费用(美元) -->
-                <div class="col right-align red-text" style="width:40%;">
+                <div class="col right-align red-text" style="width:15%;">
                     {{el.pay_money| currency}}
+                </div>
+
+                <!-- 备注 -->
+                <div class="col right-align context-ellipsis" style="width:50%;">
+                    {{el.remark}}
                 </div>
 
                 <!-- 分割线 -->
