@@ -14,6 +14,8 @@ app.controller("invoice_detail_controller", ["$scope", "$stateParams", "_basic",
     $scope.paymentStatusList = _config.paymentStatus;
     // 海运费用类别
     $scope.shipTransFeeTypes = _config.shipTransFeeTypes;
+    // 发票开具-公司信息
+    $scope.companyInfo = _config.companyInfo;
 
     // 关联仓储订单 应开发票总额
     $scope.totalStorageMoney = 0;
@@ -42,7 +44,7 @@ app.controller("invoice_detail_controller", ["$scope", "$stateParams", "_basic",
         // 开票人
         invoiceUserName: "",
         // 开票时间
-        createdOn: ""
+        grantDate: ""
     };
 
     /**
@@ -95,7 +97,162 @@ app.controller("invoice_detail_controller", ["$scope", "$stateParams", "_basic",
     };
 
     /**
-     * 点击完结
+     * 点击 发票预览
+     */
+    $scope.previewInvoice = function () {
+        $('.modal').modal();
+        $('#previewInvoiceDiv').modal('open');
+    };
+
+
+
+
+
+
+
+    /*生成canvas图形*/
+    // //html2canvas官网的标准方法
+    // html2canvas(fbody, {
+    //     canvas:canvas,
+    //     onrendered: function(canvas) {
+    //         //将图片转换成：base64编码的jpg图片。
+    //         var imgData = canvas.toDataURL();
+    //         var canWidth = canvas.width;
+    //         var canHeight = canvas.height;
+    //         var arrDPI = js_getDPI();//获取显示器DPI（这个方法没贴出来）
+    //         var dpiX = 96;
+    //         var dpiY = 96;
+    //         if(arrDPI.length>0){
+    //             dpiX = arrDPI[0];
+    //             dpiY = arrDPI[1];
+    //         }
+    //         //l:横向， p：纵向；单位： in:英寸，mm毫米；画布大小：a3,a4,leter,[]（当内容为数组时，为自定义大小）
+    //         var doc = new jsPDF('l', 'in', [(canWidth+10)/dpiX,(canHeight+10)/dpiY]);//设置PDF宽高为要显示的元素的宽高，将像素转化为英寸
+    //         doc.addImage(imgData, 'png', 7/dpiX,5/dpiY); //写入位置：x:5, y:5 单位:英寸
+    //         $('#myFrmame').remove(); //最后将iframe删除
+    //         doc.save('test.pdf');
+    //     },
+    //     background: "#FFFFFF", //这里给生成的图片默认背景，不然的话，如果html根节点没有设置背景的话，会用黑色填充。
+    //     taintTest: false,
+    //     allowTaint: true //避免一些不识别的图片干扰，默认为false，遇到不识别的图片干扰则会停止处理html2canvas
+    // });
+
+
+    /**
+     * 进行canvas生成
+     */
+    $scope.downloadInvoice = function () {
+        // 获取内容id
+        var content = document.getElementById("invoice");
+
+        html2canvas(content, {
+            // Create a canvas with double-resolution.
+            scale: 2,
+
+            // Create a canvas with 144 dpi (1.5x resolution).
+            dpi: 144,
+            onrendered: function(canvas) {
+                //添加属性
+                canvas.setAttribute('id','thecanvas');
+                //读取属性值
+                // var value= canvas.getAttribute('id');
+
+                // // 将生成的canvas进行回调，插入到页面中
+                // document.getElementById('images').innerHTML = '';
+                // document.getElementById('images').appendChild(canvas);
+
+                //返回图片dataURL，参数：图片格式和清晰度(0-1)
+                var pageData = canvas.toDataURL('image/jpeg', 1.0);
+
+                //方向默认竖直，尺寸ponits，格式a4[595.28,841.89]
+                var pdf = new jsPDF('', 'pt', 'a4');
+
+                //addImage后两个参数控制添加图片的尺寸，此处将页面高度按照a4纸宽高比列进行压缩
+                pdf.addImage(pageData, 'JPEG', 0, 0, 595.28, 592.28/canvas.width * canvas.height );
+
+                pdf.save('invoice.pdf');
+
+
+
+
+                // var contentWidth = canvas.width;
+                // var contentHeight = canvas.height;
+                // //一页pdf显示html页面生成的canvas高度;
+                // var pageHeight = contentWidth / 595.28 * 841.89;
+                // //未生成pdf的html页面高度
+                // var leftHeight = contentHeight;
+                // //pdf页面偏移
+                // var position = 0;
+                // //a4纸的尺寸[595.28,841.89]，html页面生成的canvas在pdf中图片的宽高
+                // var imgWidth = 555.28;
+                // var imgHeight = 555.28/contentWidth * contentHeight;
+                // var pageData = canvas.toDataURL('image/jpeg', 1.0);
+                // var pdf = new jsPDF('', 'pt', 'a4');
+                // //有两个高度需要区分，一个是html页面的实际高度，和生成pdf的页面高度(841.89)
+                // //当内容未超过pdf一页显示的范围，无需分页
+                // if (leftHeight < pageHeight) {
+                //     pdf.addImage(pageData, 'JPEG', 20, 0, imgWidth, imgHeight );
+                // } else {
+                //     while(leftHeight > 0) {
+                //         pdf.addImage(pageData, 'JPEG', 20, position, imgWidth, imgHeight)
+                //         leftHeight -= pageHeight;
+                //         position -= 841.89;
+                //         //避免添加空白页
+                //         if(leftHeight > 0) {
+                //             pdf.addPage();
+                //         }
+                //     }
+                // }
+                // pdf.save('content.pdf');
+            },
+            // 背景设为白色（默认为黑色）
+            background: "#fff"
+        });
+    };
+
+    /*
+     * 说明
+     * 不支持跨域图片
+     * 不能在浏览器插件中使用
+     * 部分浏览器上不支持SVG图片
+     * 不支持Flash
+     */
+    // var Download = document.getElementById("Download");
+    // Download.onclick = function(){
+    //     var oCanvas = document.getElementById("thecanvas");
+    //
+    //     /*自动保存为png*/
+    //     // 获取图片资源
+    //     var img_data1 = Canvas2Image.saveAsPNG(oCanvas, true).getAttribute('src');
+    //     saveFile(img_data1, 'richer.png');
+    //
+    //     /*下面的为原生的保存，不带格式名*/
+    //     // 这将会提示用户保存PNG图片
+    //     // Canvas2Image.saveAsPNG(oCanvas);
+    // };
+
+    /**
+     * 在本地进行文件保存
+     * @param  {String} data     要保存到本地的图片数据
+     * @param  {String} filename 文件名
+     */
+    function saveFile(data, filename) {
+        var save_link = document.createElementNS('http://www.w3.org/1999/xhtml', 'a');
+        save_link.href = data;
+        save_link.download = filename;
+
+        var event = document.createEvent('MouseEvents');
+        event.initMouseEvent('click', true, false, window, 0, 0, 0, 0, 0, false, false, false, false, 0, null);
+        save_link.dispatchEvent(event);
+    }
+
+
+
+
+
+
+    /**
+     * 点击发放
      * */
     $scope.updateInvoiceStatus = function () {
         swal({
@@ -532,7 +689,7 @@ app.controller("invoice_detail_controller", ["$scope", "$stateParams", "_basic",
                 // 开票人
                 $scope.invoiceInfo.invoiceUserName = data.result[0].invoice_user_name;
                 // 开票时间
-                $scope.invoiceInfo.createdOn = data.result[0].created_on;
+                $scope.invoiceInfo.grantDate = data.result[0].grant_date == null ? moment(new Date()).format('YYYY-MM-DD') : data.result[0].grant_date;
 
                 // 显示 发票信息 TAB
                 $scope.lookInvoiceInfo();
