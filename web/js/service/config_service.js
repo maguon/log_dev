@@ -538,15 +538,14 @@ baseService.factory("_config", function () {
     ];
 
     // 发票开具-公司信息
-    _this.companyInfo = [
-        {
-            name: "US HONYA INTERNATIONAL INC.",
-            address1: "16293 GALE AVE",
-            address2: "CITY OF INDUSTRY. CA 91745",
-            tel: "714-332-0266",
-            website: "www.ushonya.com"
-        }
-    ];
+    _this.companyInfo = {
+        name: "US HONYA INTERNATIONAL INC.",
+        address1: "16293 GALE AVE",
+        address2: "CITY OF INDUSTRY, CA 91745",
+        tel: "714-332-0266",
+        mail: "rlf@ushonya.cc",
+        website: "www.ushonya.com"
+    };
 
     return _this
 });
