@@ -152,12 +152,12 @@
                 </div>
             </div>
 
-            <!-- 委托方已支付未开发票订单 无订单 -->
+            <!-- 委托方未开发票订单 无订单 -->
             <div class="col s6" ng-show="storageOrderList.length==0">
                 <div  class="col s12 left">
                     <div class="card" style="border: 2px solid #ccc">
                         <div class="card-content bold cyan-text fz18 left-align grey lighten-4" style="border-bottom: 2px solid #ccc">
-                            委托方已支付未开发票订单
+                            委托方未开发票订单
                         </div>
                         <div class="card-content">
                             <div style="height:200px;line-height: 200px;text-align: center">
@@ -168,12 +168,12 @@
                     </div>
                 </div>
             </div>
-            <!-- 委托方已支付未开发票订单 有订单 -->
+            <!-- 委托方未开发票订单 有订单 -->
             <div class="col s6" ng-show="storageOrderList.length!==0">
                 <div  class="col s12 left">
                     <div class="card" style="border: 2px solid #ccc;height:auto">
                         <div class="card-content bold cyan-text fz18 left-align grey lighten-4" style="border-bottom: 2px solid #ccc">
-                            委托方已支付未开发票订单
+                            委托方未开发票订单
                         </div>
                         <div class="card-content">
                             <table class="bordered centered" style="width: 100%;">
@@ -334,7 +334,7 @@
                 <div  class="col s12 left">
                     <div class="card" style="border: 2px solid #ccc">
                         <div class="card-content bold cyan-text fz18 left-align grey lighten-4" style="border-bottom: 2px solid #ccc">
-                            委托方已支付未开发票订单
+                            委托方未开发票订单
                         </div>
                         <div class="card-content">
                             <div style="height:200px;line-height: 200px;text-align: center">
@@ -350,7 +350,7 @@
                 <div  class="col s12 left">
                     <div class="card" style="border: 2px solid #ccc;height:auto">
                         <div class="card-content bold cyan-text fz18 left-align grey lighten-4" style="border-bottom: 2px solid #ccc">
-                            委托方已支付未开发票订单
+                            委托方未开发票订单
                         </div>
                         <div class="card-content">
                             <table class="bordered centered" style="width: 100%;">
@@ -529,7 +529,7 @@
                 <div  class="col s12 left">
                     <div class="card" style="border: 2px solid #ccc">
                         <div class="card-content bold cyan-text fz18 left-align grey lighten-4" style="border-bottom: 2px solid #ccc">
-                            委托方已支付未开发票订单
+                            委托方未开发票订单
                         </div>
                         <div class="card-content">
                             <div style="height:200px;line-height: 200px;text-align: center">
@@ -545,7 +545,7 @@
                 <div  class="col s12 left">
                     <div class="card" style="border: 2px solid #ccc;height:auto">
                         <div class="card-content bold cyan-text fz18 left-align grey lighten-4" style="border-bottom: 2px solid #ccc">
-                            委托方已支付未开发票订单
+                            委托方未开发票订单
                         </div>
                         <div class="card-content">
                             <table class="bordered centered" style="width: 100%;">
@@ -816,10 +816,10 @@
 </div>
 
 <!-- 模态画面【发票预览】 模态框 -->
-<div id="previewInvoiceDiv" class="modal modal-fixed-footer row" style="max-height: 1106px;width: 1280px;">
+<div id="previewInvoiceDiv" class="modal modal-fixed-footer row" style="width: 1280px;">
 
     <!-- Body -->
-    <div id="invoice" class="modal-content" style="max-height: 1000px;">
+    <div id="invoice" class="white black-text modal-content">
 
         <!-- 发票头部 -->
         <div class="row">
@@ -846,55 +846,107 @@
             </div>
             <!-- 分割线 -->
             <div class="col s12">
-                <div class="divider col s12" style="background-color: #c0c0c0;margin-top: 10px;margin-bottom: 10px;"></div>
+                <div class="divider col s12" style="background-color: #c0c0c0;margin-top: 10px;"></div>
             </div>
         </div>
 
-
-
-        <!-- 下部分：检索结果显示区域 -->
+        <!-- 表格：海运费用 -->
         <div class="col s12">
-
             <!-- 标题 -->
-            <div class="col s12 fz16 bold" style="padding-left: 0;margin-bottom: 10px;">海运费用</div>
+            <div class="col s12 fz15 bold" style="padding-left: 0;margin-bottom: 10px;">海运费用</div>
 
-            <table style="width: 100%;border:1px solid #d0d0d0">
+            <table class="fz14" style="width: 100%;border:1px solid #d0d0d0">
                 <tbody>
-                <tr class="grey-text text-darken-2 blue-grey lighten-5" style="height: 20px;">
-                    <th style="width:20%">Item</th>
-                    <th style="width:15%">booking</th>
-                    <th style="width:15%">VIN</th>
-                    <th style="width:35%">备注</th>
-                    <th style="width:5%">Qty</th>
-                    <th style="width:10%">Amount</th>
+
+                <!-- Header -->
+                <tr class="blue-grey lighten-5 fz15" style="height: 20px;">
+                    <th class="invoice-table-td-height tr-border" style="width:20%">Item</th>
+                    <th class="invoice-table-td-height tr-border" style="width:15%">booking</th>
+                    <th class="invoice-table-td-height tr-border" style="width:15%">VIN</th>
+                    <th class="invoice-table-td-height tr-border" style="width:35%">备注</th>
+                    <th class="invoice-table-td-height tr-border" style="width:5%">Qty</th>
+                    <th class="invoice-table-td-height tr-border" style="width:10%;border-right: 0">Amount</th>
                 </tr>
-                <tr ng-repeat="el in invoiceShipOrderRelList">
-                    <!-- 订单编号 -->
-                    <td ng-bind="el.ship_trans_order_id" style="padding-bottom: 1px;"></td>
+
+                <!-- Details -->
+                <tr ng-repeat="el in invoiceShipTransOrderList">
+                    <!-- Item -->
+                    <td class="invoice-table-td-height td-border">{{shipTransFeeTypes[el.pay_type - 1].name}}</td>
                     <!-- booking -->
-                    <td style="padding-bottom: 1px;">{{el.booking}}</td>
+                    <td class="invoice-table-td-height td-border">{{el.booking}}</td>
                     <!-- VIN -->
-                    <td ng-bind="el.vin" style="padding-bottom: 1px;"></td>
-
-                    <!-- 费用(美元) -->
-                    <td class="red-text" style="padding-bottom: 1px;">{{el.total_fee|currency}}</td>
-                    <!-- 订单日期 -->
-                    <td style="border:1px solid #d0d0d0;padding-bottom: 1px;">{{el.ship_trans_order_date |date:'yyyy-MM-dd'}}</td>
+                    <td class="invoice-table-td-height td-border">{{el.vin}}</td>
+                    <!-- 备注 -->
+                    <td class="invoice-table-td-height td-border">{{el.remark}}</td>
+                    <!-- Qty -->
+                    <td class="invoice-table-td-height td-border">{{el.qty}}</td>
+                    <!-- Amount -->
+                    <td class="invoice-table-td-height last-td-border right-align">{{el.pay_money|currency}}</td>
                 </tr>
 
-                <tr >
-                    <td colspan="3" style="letter-spacing: 2px;text-align: center;">暂无数据</td>
-                    <td colspan="2" style="letter-spacing: 2px;text-align: center;">暂无数据</td>
+                <!-- Total -->
+                <tr class="fz15">
+                    <td colspan="3" class="invoice-table-td-height last-row-border left-align">Total</td>
+                    <td colspan="3" class="invoice-table-td-height last-row-border right-align">{{invoiceShipTransTotalMoney|currency}}</td>
                 </tr>
                 </tbody>
             </table>
         </div>
 
+        <!-- 表格：金融贷款 -->
+        <div class="col s12">
+            <!-- 标题 -->
+            <div class="col s12 fz15 bold" style="padding-left: 0;margin-top: 20px;margin-bottom: 10px;">金融贷款</div>
+
+            <table class="fz14" style="width: 100%;border:1px solid #d0d0d0">
+                <tbody>
+
+                <!-- Header -->
+                <tr class="blue-grey lighten-5 fz15" style="height: 20px;">
+                    <th class="invoice-table-td-height tr-border" style="width:20%">Item</th>
+                    <th class="invoice-table-td-height tr-border" style="width:15%">booking</th>
+                    <th class="invoice-table-td-height tr-border" style="width:15%">VIN</th>
+                    <th class="invoice-table-td-height tr-border" style="width:35%">备注</th>
+                    <th class="invoice-table-td-height tr-border" style="width:5%">Qty</th>
+                    <th class="invoice-table-td-height tr-border" style="width:10%;border-right: 0">Amount</th>
+                </tr>
+
+                <!-- Details -->
+                <tr ng-repeat="el in invoiceShipTransOrderList">
+                    <!-- Item -->
+                    <td class="invoice-table-td-height td-border">{{shipTransFeeTypes[el.pay_type - 1].name}}</td>
+                    <!-- booking -->
+                    <td class="invoice-table-td-height td-border">{{el.booking}}</td>
+                    <!-- VIN -->
+                    <td class="invoice-table-td-height td-border">{{el.vin}}</td>
+                    <!-- 备注 -->
+                    <td class="invoice-table-td-height td-border">{{el.remark}}</td>
+                    <!-- Qty -->
+                    <td class="invoice-table-td-height td-border">{{el.qty}}</td>
+                    <!-- Amount -->
+                    <td class="invoice-table-td-height last-td-border right-align">{{el.pay_money|currency}}</td>
+                </tr>
+
+                <!-- Total -->
+                <tr class="fz15">
+                    <td colspan="3" class="invoice-table-td-height last-row-border left-align">Total</td>
+                    <td colspan="3" class="invoice-table-td-height last-row-border right-align">{{invoiceShipTransTotalMoney|currency}}</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- 分割线 -->
+        <div class="col s12" style="margin-top: 25px;margin-bottom: 10px;">
+            <div class="divider col s12" style="background-color: #c0c0c0;margin-top: 10px;margin-bottom: 10px;"></div>
+        </div>
+
+        <div class="col s12 fz15 bold">
+            <div class="col s6 left-align" style="padding-left: 0">发票总金额</div>
+            <div class="col s6 right-align fz16" style="padding-right: 0">TODO -- {{invoiceShipTransTotalMoney|currency}}</div>
+        </div>
 
     </div>
-
-
-
 
     <!-- Footer -->
     <div class="modal-footer right-align">
