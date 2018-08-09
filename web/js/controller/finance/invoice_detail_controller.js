@@ -102,9 +102,30 @@ app.controller("invoice_detail_controller", ["$scope", "$stateParams", "_basic",
     $scope.previewInvoice = function () {
         $('.modal').modal();
         $('#previewInvoiceDiv').modal('open');
+        // 查询发票 关联 海运费用
+        queryInvoiceShipTransOrderList();
     };
 
-
+    /**
+     * 查询发票 关联 海运费用
+     */
+    function queryInvoiceShipTransOrderList() {
+        var url = _host.api_url + "/invoiceShipTransOrderList?invoiceId=" + invoiceId;
+        _basic.get(url).then(function (data) {
+            if (data.success) {
+                $scope.invoiceShipTransOrderList = data.result;
+                $scope.invoiceShipTransTotalMoney = 0;
+                for (var i = 0; i < $scope.invoiceShipTransOrderList.length; i++) {
+                    if ($scope.invoiceShipTransOrderList[i].pay_money == null) {
+                        $scope.invoiceShipTransOrderList[i].pay_money = 0;
+                    }
+                    $scope.invoiceShipTransTotalMoney = $scope.invoiceShipTransOrderList[i].pay_money + $scope.invoiceShipTransTotalMoney;
+                }
+            } else {
+                swal(data.msg, "", "error");
+            }
+        });
+    }
 
 
 
@@ -145,65 +166,69 @@ app.controller("invoice_detail_controller", ["$scope", "$stateParams", "_basic",
         // 获取内容id
         var content = document.getElementById("invoice");
 
+
+
+        var useWidth = $("#invoice").prop('scrollWidth');
+        var useHeight = $("#invoice").prop('scrollHeight');
+        console.log($("#invoice").width());
+        console.log($("#invoice").height());
+
+
+        var targetDom = $("#invoice");
+        var copyDom = targetDom.clone();
+
+        copyDom.width(targetDom.width() + "px");
+        copyDom.height(targetDom.height() + "px");
+        $('body').append(copyDom);
+
+
+
         html2canvas(content, {
+            // allowTaint: true,
+            // taintTest: false,
+            // height: $("#invoice").outerHeight(),
+
             // Create a canvas with double-resolution.
             scale: 2,
 
             // Create a canvas with 144 dpi (1.5x resolution).
-            dpi: 144,
+            dpi: 192,
             onrendered: function(canvas) {
-                //添加属性
-                canvas.setAttribute('id','thecanvas');
-                //读取属性值
-                // var value= canvas.getAttribute('id');
+                var contentWidth = canvas.width;
+                var contentHeight = canvas.height;
 
-                // // 将生成的canvas进行回调，插入到页面中
-                // document.getElementById('images').innerHTML = '';
-                // document.getElementById('images').appendChild(canvas);
 
-                //返回图片dataURL，参数：图片格式和清晰度(0-1)
+                console.log(contentWidth);
+                console.log(contentHeight + "--- " + $("#invoice").outerHeight());
+
+
+                //一页pdf显示html页面生成的canvas高度;
+                var pageHeight = contentWidth / 595.28 * 841.89;
+                //未生成pdf的html页面高度
+                var leftHeight = contentHeight;
+                //pdf页面偏移
+                var position = 0;
+                //a4纸的尺寸[595.28,841.89]，html页面生成的canvas在pdf中图片的宽高
+                var imgWidth = 595.28;
+                var imgHeight = 595.28/contentWidth * contentHeight;
                 var pageData = canvas.toDataURL('image/jpeg', 1.0);
-
-                //方向默认竖直，尺寸ponits，格式a4[595.28,841.89]
                 var pdf = new jsPDF('', 'pt', 'a4');
-
-                //addImage后两个参数控制添加图片的尺寸，此处将页面高度按照a4纸宽高比列进行压缩
-                pdf.addImage(pageData, 'JPEG', 0, 0, 595.28, 592.28/canvas.width * canvas.height );
-
+                //有两个高度需要区分，一个是html页面的实际高度，和生成pdf的页面高度(841.89)
+                //当内容未超过pdf一页显示的范围，无需分页
+                if (leftHeight < pageHeight) {
+                    pdf.addImage(pageData, 'JPEG', 0, 0, imgWidth, imgHeight );
+                } else {
+                    while(leftHeight > 0) {
+                        pdf.addImage(pageData, 'JPEG', 0, position, imgWidth, imgHeight)
+                        leftHeight -= pageHeight;
+                        position -= 841.89;
+                        //避免添加空白页
+                        if(leftHeight > 0) {
+                            pdf.addPage();
+                        }
+                    }
+                }
                 pdf.save('invoice.pdf');
-
-
-
-
-                // var contentWidth = canvas.width;
-                // var contentHeight = canvas.height;
-                // //一页pdf显示html页面生成的canvas高度;
-                // var pageHeight = contentWidth / 595.28 * 841.89;
-                // //未生成pdf的html页面高度
-                // var leftHeight = contentHeight;
-                // //pdf页面偏移
-                // var position = 0;
-                // //a4纸的尺寸[595.28,841.89]，html页面生成的canvas在pdf中图片的宽高
-                // var imgWidth = 555.28;
-                // var imgHeight = 555.28/contentWidth * contentHeight;
-                // var pageData = canvas.toDataURL('image/jpeg', 1.0);
-                // var pdf = new jsPDF('', 'pt', 'a4');
-                // //有两个高度需要区分，一个是html页面的实际高度，和生成pdf的页面高度(841.89)
-                // //当内容未超过pdf一页显示的范围，无需分页
-                // if (leftHeight < pageHeight) {
-                //     pdf.addImage(pageData, 'JPEG', 20, 0, imgWidth, imgHeight );
-                // } else {
-                //     while(leftHeight > 0) {
-                //         pdf.addImage(pageData, 'JPEG', 20, position, imgWidth, imgHeight)
-                //         leftHeight -= pageHeight;
-                //         position -= 841.89;
-                //         //避免添加空白页
-                //         if(leftHeight > 0) {
-                //             pdf.addPage();
-                //         }
-                //     }
-                // }
-                // pdf.save('content.pdf');
             },
             // 背景设为白色（默认为黑色）
             background: "#fff"
@@ -287,8 +312,9 @@ app.controller("invoice_detail_controller", ["$scope", "$stateParams", "_basic",
         $('.tabWrap .lookRelatedOrder').addClass("active");
         $("#lookRelatedOrder").addClass("active");
         $("#lookRelatedOrder").show();
-        // 左侧 未完结 列表
-        var url = _host.api_url + "/storageOrder?entrustId=" + $scope.invoiceInfo.entrustId + '&orderStatus=' + $scope.paymentStatusList[1].id + '&invoiceStatus=' + $scope.invoiceStatus[0].id;
+        // 左侧 未完结 列表 包含未支付
+        // var url = _host.api_url + "/storageOrder?entrustId=" + $scope.invoiceInfo.entrustId + '&orderStatus=' + $scope.paymentStatusList[1].id + '&invoiceStatus=' + $scope.invoiceStatus[0].id;
+        var url = _host.api_url + "/storageOrder?entrustId=" + $scope.invoiceInfo.entrustId + '&invoiceStatus=' + $scope.invoiceStatus[0].id;
         _basic.get(url).then(function (data) {
             if (data.success) {
                 $scope.storageOrderList = data.result;
@@ -379,7 +405,8 @@ app.controller("invoice_detail_controller", ["$scope", "$stateParams", "_basic",
         $("#invoiceShipOrderDiv").addClass("active");
         $("#invoiceShipOrderDiv").show();
         // 左侧一览 未完结
-        var url = _host.api_url + "/shipTransOrder?entrustId=" + $scope.invoiceInfo.entrustId + '&orderStatus=' + $scope.paymentStatusList[1].id + '&invoiceStatus=' + $scope.invoiceStatus[0].id;
+        // var url = _host.api_url + "/shipTransOrder?entrustId=" + $scope.invoiceInfo.entrustId + '&orderStatus=' + $scope.paymentStatusList[1].id + '&invoiceStatus=' + $scope.invoiceStatus[0].id;
+        var url = _host.api_url + "/shipTransOrder?entrustId=" + $scope.invoiceInfo.entrustId + '&invoiceStatus=' + $scope.invoiceStatus[0].id;
         _basic.get(url).then(function (data) {
             if (data.success) {
                 $scope.shipTransOrderList = data.result;
@@ -515,7 +542,8 @@ app.controller("invoice_detail_controller", ["$scope", "$stateParams", "_basic",
         $("#paymentDiv").show();
 
         // 左侧一览 未完结
-        var url = _host.api_url + "/loanRepayment?entrustId=" + $scope.invoiceInfo.entrustId + '&repaymentStatus=' + $scope.paymentStatusList[1].id + '&invoiceStatus=' + $scope.invoiceStatus[0].id;
+        // var url = _host.api_url + "/loanRepayment?entrustId=" + $scope.invoiceInfo.entrustId + '&repaymentStatus=' + $scope.paymentStatusList[1].id + '&invoiceStatus=' + $scope.invoiceStatus[0].id;
+        var url = _host.api_url + "/loanRepayment?entrustId=" + $scope.invoiceInfo.entrustId + '&invoiceStatus=' + $scope.invoiceStatus[0].id;
         _basic.get(url).then(function (data) {
             if (data.success) {
                 $scope.loanRepaymentList = data.result;
