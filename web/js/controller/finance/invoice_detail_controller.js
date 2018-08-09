@@ -100,10 +100,12 @@ app.controller("invoice_detail_controller", ["$scope", "$stateParams", "_basic",
      * 点击 发票预览
      */
     $scope.previewInvoice = function () {
-        $('.modal').modal();
-        $('#previewInvoiceDiv').modal('open');
-        // 查询发票 关联 海运费用
-        queryInvoiceShipTransOrderList();
+        // $('.modal').modal();
+        // $('#previewInvoiceDiv').modal('open');
+        // // 查询发票 关联 海运费用
+        // queryInvoiceShipTransOrderList();
+
+        $scope.downloadInvoice();
     };
 
     /**
@@ -164,7 +166,7 @@ app.controller("invoice_detail_controller", ["$scope", "$stateParams", "_basic",
      */
     $scope.downloadInvoice = function () {
         // 获取内容id
-        var content = document.getElementById("invoice");
+        var content = document.getElementById("invoiceTTT");
 
 
 
