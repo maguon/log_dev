@@ -168,18 +168,18 @@ app.controller("invoice_detail_controller", ["$scope", "$stateParams", "_basic",
 
 
 
-        var useWidth = $("#invoice").prop('scrollWidth');
-        var useHeight = $("#invoice").prop('scrollHeight');
-        console.log($("#invoice").width());
-        console.log($("#invoice").height());
-
-
-        var targetDom = $("#invoice");
-        var copyDom = targetDom.clone();
-
-        copyDom.width(targetDom.width() + "px");
-        copyDom.height(targetDom.height() + "px");
-        $('body').append(copyDom);
+        // var useWidth = $("#invoice").prop('scrollWidth');
+        // var useHeight = $("#invoice").prop('scrollHeight');
+        // console.log($("#invoice").width());
+        // console.log($("#invoice").height());
+        //
+        //
+        // var targetDom = $("#invoice");
+        // var copyDom = targetDom.clone();
+        //
+        // copyDom.width(targetDom.width() + "px");
+        // copyDom.height(targetDom.height() + "px");
+        // $('body').append(copyDom);
 
 
 
