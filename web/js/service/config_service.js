@@ -547,5 +547,13 @@ baseService.factory("_config", function () {
         website: "www.ushonya.com"
     };
 
+    // 发票开具-金融贷款信息
+    _this.loanInfo = {
+        loanInterest: "LOAN-INTEREST",
+        bankServices: "BANK SERVICES",
+        bankServicesDetail: "LC FEE AND WIRE TRANSFER FEE",
+        interestRate: "interest rate"
+    };
+
     return _this
 });
