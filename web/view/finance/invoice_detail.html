@@ -571,15 +571,16 @@
                                     <!-- 利率/天 -->
                                     <td>{{el.rate}}%</td>
                                     <!-- 日期范围 -->
-                                    <td>{{el.loan_start_date |date:'yyyy-MM-dd'}} 至 {{el.created_on |date:'yyyy-MM-dd'}}</td>
+                                    <td>{{el.loan_start_date |date:'yy/MM/dd'}}-{{el.created_on |date:'yy/MM/dd'}}</td>
                                     <!-- 天数 -->
                                     <td ng-bind="el.day_count"></td>
                                     <!-- 利息(美元) -->
                                     <td class="red-text">{{el.interest_money|currency}}</td>
                                     <!-- 手续费(美元) -->
                                     <td class="red-text">{{el.fee|currency}}</td>
-                                    <!-- 总额(美元) -->
-                                    <td class="red-text">{{(el.repayment_money==null ? 0 : el.repayment_money) + (el.interest_money==null ? 0 : el.interest_money) + (el.fee==null ? 0 : el.fee) | currency}}</td>
+                                    <!-- 总额(美元)  暂定：利息+手续费 -->
+                                    <!--<td class="red-text">{{(el.repayment_money==null ? 0 : el.repayment_money) + (el.interest_money==null ? 0 : el.interest_money) + (el.fee==null ? 0 : el.fee) | currency}}</td>-->
+                                    <td class="red-text">{{(el.interest_money==null ? 0 : el.interest_money) + (el.fee==null ? 0 : el.fee) | currency}}</td>
                                     <!-- 显示画面按钮 -->
                                     <td class="operation">
                                         <a  ng-click="addInvoiceLoanRepRel(el.id)" class="col s2 left" style="cursor: pointer">
@@ -641,15 +642,16 @@
                                     <!-- 利率/天 -->
                                     <td>{{el.rate}}%</td>
                                     <!-- 日期范围 -->
-                                    <td>{{el.loan_start_date |date:'yyyy-MM-dd'}} 至 {{el.repayment_date |date:'yyyy-MM-dd'}}</td>
+                                    <td>{{el.loan_start_date |date:'yy/MM/dd'}}-{{el.repayment_date |date:'yy/MM/dd'}}</td>
                                     <!-- 天数 -->
                                     <td ng-bind="el.day_count"></td>
                                     <!-- 利息(美元) -->
                                     <td class="red-text">{{el.interest_money|currency}}</td>
                                     <!-- 手续费(美元) -->
                                     <td class="red-text">{{el.fee|currency}}</td>
-                                    <!-- 总额(美元) -->
-                                    <td class="red-text">{{(el.repayment_money==null ? 0 : el.repayment_money) + (el.interest_money==null ? 0 : el.interest_money) + (el.fee==null ? 0 : el.fee) | currency}}</td>
+                                    <!-- 总额(美元)  暂定：利息+手续费 -->
+                                    <!--<td class="red-text">{{(el.repayment_money==null ? 0 : el.repayment_money) + (el.interest_money==null ? 0 : el.interest_money) + (el.fee==null ? 0 : el.fee) | currency}}</td>-->
+                                    <td class="red-text">{{(el.interest_money==null ? 0 : el.interest_money) + (el.fee==null ? 0 : el.fee) | currency}}</td>
                                     <!-- 显示画面按钮 -->
                                     <td class="operation">
                                         <a  ng-click="deleteInvoiceLoanRepRel(el.repayment_id)" class="col s2 left" style="cursor: pointer">
@@ -705,15 +707,16 @@
                                 <!-- 利率/天 -->
                                 <td>{{el.rate}}%</td>
                                 <!-- 日期范围 -->
-                                <td>{{el.loan_start_date |date:'yyyy-MM-dd'}} 至 {{el.repayment_date |date:'yyyy-MM-dd'}}</td>
+                                <td>{{el.loan_start_date |date:'yy/MM/dd'}}-{{el.repayment_date |date:'yy/MM/dd'}}</td>
                                 <!-- 天数 -->
                                 <td ng-bind="el.day_count"></td>
                                 <!-- 利息(美元) -->
                                 <td class="red-text">{{el.interest_money|currency}}</td>
                                 <!-- 手续费(美元) -->
                                 <td class="red-text">{{el.fee|currency}}</td>
-                                <!-- 总额(美元) -->
-                                <td class="red-text">{{(el.repayment_money==null ? 0 : el.repayment_money) + (el.interest_money==null ? 0 : el.interest_money) + (el.fee==null ? 0 : el.fee) | currency}}</td>
+                                <!-- 总额(美元)  暂定：利息+手续费 -->
+                                <!--<td class="red-text">{{(el.repayment_money==null ? 0 : el.repayment_money) + (el.interest_money==null ? 0 : el.interest_money) + (el.fee==null ? 0 : el.fee) | currency}}</td>-->
+                                <td class="red-text">{{(el.interest_money==null ? 0 : el.interest_money) + (el.fee==null ? 0 : el.fee) | currency}}</td>
                             </tr>
                             </tbody>
                         </table>
@@ -816,10 +819,10 @@
 </div>
 
 <!-- 模态画面【发票预览】 模态框 -->
-<div id="previewInvoiceDiv" class="modal modal-fixed-footer row" style="width: 1280px;">
+<div id="previewInvoiceDiv" class="modal white black-text" style="height:700px; width: 1280px;">
 
-    <!-- Body -->
-    <div id="invoice" class="white black-text modal-content">
+    <!-- Body 发票主体内容 -->
+    <div id="invoice" style="padding: 30px 20px 30px 20px">
 
         <!-- 发票头部 -->
         <div class="row">
@@ -851,111 +854,120 @@
         </div>
 
         <!-- 表格：海运费用 -->
-        <div class="col s12">
-            <!-- 标题 -->
-            <div class="col s12 fz15 bold" style="padding-left: 0;margin-bottom: 10px;">海运费用</div>
+        <div class="row">
+            <div class="col s12">
+                <!-- 标题 暂不显示 -->
+                <!--<div class="col s12 fz15 bold" style="padding-left: 0;margin-bottom: 10px;">海运费用</div>-->
 
-            <table class="fz14" style="width: 100%;border:1px solid #d0d0d0">
-                <tbody>
+                <table class="fz14" style="width: 100%;border:1px solid #d0d0d0">
+                    <tbody>
 
-                <!-- Header -->
-                <tr class="blue-grey lighten-5 fz15" style="height: 20px;">
-                    <th class="invoice-table-td-height tr-border" style="width:20%">Item</th>
-                    <th class="invoice-table-td-height tr-border" style="width:15%">booking</th>
-                    <th class="invoice-table-td-height tr-border" style="width:15%">VIN</th>
-                    <th class="invoice-table-td-height tr-border" style="width:35%">备注</th>
-                    <th class="invoice-table-td-height tr-border" style="width:5%">Qty</th>
-                    <th class="invoice-table-td-height tr-border" style="width:10%;border-right: 0">Amount</th>
-                </tr>
+                    <!-- Header -->
+                    <tr class="blue-grey lighten-5 fz15" style="height: 20px;">
+                        <th class="invoice-table-td-height tr-border" style="width:20%">Item</th>
+                        <th class="invoice-table-td-height tr-border" style="width:15%">booking</th>
+                        <th class="invoice-table-td-height tr-border" style="width:15%">VIN</th>
+                        <th class="invoice-table-td-height tr-border" style="width:35%">remark</th>
+                        <th class="invoice-table-td-height tr-border" style="width:5%">Qty</th>
+                        <th class="invoice-table-td-height tr-border" style="width:10%;border-right: 0">Amount</th>
+                    </tr>
 
-                <!-- Details -->
-                <tr ng-repeat="el in invoiceShipTransOrderList">
-                    <!-- Item -->
-                    <td class="invoice-table-td-height td-border">{{shipTransFeeTypes[el.pay_type - 1].name}}</td>
-                    <!-- booking -->
-                    <td class="invoice-table-td-height td-border">{{el.booking}}</td>
-                    <!-- VIN -->
-                    <td class="invoice-table-td-height td-border">{{el.vin}}</td>
-                    <!-- 备注 -->
-                    <td class="invoice-table-td-height td-border">{{el.remark}}</td>
-                    <!-- Qty -->
-                    <td class="invoice-table-td-height td-border">{{el.qty}}</td>
-                    <!-- Amount -->
-                    <td class="invoice-table-td-height last-td-border right-align">{{el.pay_money|currency}}</td>
-                </tr>
+                    <!-- Details -->
+                    <tr ng-repeat="el in invoiceShipTransOrderList">
+                        <!-- Item -->
+                        <td class="invoice-table-td-height td-border">{{shipTransFeeTypes[el.pay_type - 1].name}}</td>
+                        <!-- booking -->
+                        <td class="invoice-table-td-height td-border">{{el.booking}}</td>
+                        <!-- VIN -->
+                        <td class="invoice-table-td-height td-border">{{el.vin}}</td>
+                        <!-- 备注 -->
+                        <td class="invoice-table-td-height td-border">{{el.remark}}</td>
+                        <!-- Qty -->
+                        <td class="invoice-table-td-height td-border">{{el.qty}}</td>
+                        <!-- Amount -->
+                        <td class="invoice-table-td-height last-td-border right-align">{{el.pay_money|currency}}</td>
+                    </tr>
 
-                <!-- Total -->
-                <tr class="fz15">
-                    <td colspan="3" class="invoice-table-td-height last-row-border left-align">Total</td>
-                    <td colspan="3" class="invoice-table-td-height last-row-border right-align">{{invoiceShipTransTotalMoney|currency}}</td>
-                </tr>
-                </tbody>
-            </table>
+                    <!-- Total -->
+                    <tr class="fz15">
+                        <td colspan="3" class="invoice-table-td-height last-row-border left-align">Total</td>
+                        <td colspan="3" class="invoice-table-td-height last-row-border right-align">{{invoiceShipTransTotalMoney|currency}}</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
 
         <!-- 表格：金融贷款 -->
-        <div class="col s12">
-            <!-- 标题 -->
-            <div class="col s12 fz15 bold" style="padding-left: 0;margin-top: 20px;margin-bottom: 10px;">金融贷款</div>
+        <div class="row">
+            <div class="col s12">
+                <!-- 标题 暂不显示 -->
+                <!--<div class="col s12 fz15 bold" style="padding-left: 0;margin-top: 20px;margin-bottom: 10px;">金融贷款</div>-->
 
-            <table class="fz14" style="width: 100%;border:1px solid #d0d0d0">
-                <tbody>
+                <table class="fz14" style="width: 100%;border:1px solid #d0d0d0">
+                    <tbody>
 
-                <!-- Header -->
-                <tr class="blue-grey lighten-5 fz15" style="height: 20px;">
-                    <th class="invoice-table-td-height tr-border" style="width:20%">Item</th>
-                    <th class="invoice-table-td-height tr-border" style="width:15%">booking</th>
-                    <th class="invoice-table-td-height tr-border" style="width:15%">VIN</th>
-                    <th class="invoice-table-td-height tr-border" style="width:35%">备注</th>
-                    <th class="invoice-table-td-height tr-border" style="width:5%">Qty</th>
-                    <th class="invoice-table-td-height tr-border" style="width:10%;border-right: 0">Amount</th>
-                </tr>
+                    <!-- Header -->
+                    <tr class="blue-grey lighten-5 fz15" style="height: 20px;">
+                        <th class="invoice-table-td-height tr-border" style="width:20%">Item</th>
+                        <th class="invoice-table-td-height tr-border" style="width:40%">remark</th>
+                        <th class="invoice-table-td-height tr-border" style="width:10%">Qty</th>
+                        <th class="invoice-table-td-height tr-border" style="width:15%">Rate</th>
+                        <th class="invoice-table-td-height tr-border" style="width:15%;border-right: 0">Amount</th>
+                    </tr>
 
-                <!-- Details -->
-                <tr ng-repeat="el in invoiceShipTransOrderList">
-                    <!-- Item -->
-                    <td class="invoice-table-td-height td-border">{{shipTransFeeTypes[el.pay_type - 1].name}}</td>
-                    <!-- booking -->
-                    <td class="invoice-table-td-height td-border">{{el.booking}}</td>
-                    <!-- VIN -->
-                    <td class="invoice-table-td-height td-border">{{el.vin}}</td>
-                    <!-- 备注 -->
-                    <td class="invoice-table-td-height td-border">{{el.remark}}</td>
-                    <!-- Qty -->
-                    <td class="invoice-table-td-height td-border">{{el.qty}}</td>
-                    <!-- Amount -->
-                    <td class="invoice-table-td-height last-td-border right-align">{{el.pay_money|currency}}</td>
-                </tr>
+                    <!-- Details -->
+                    <tr ng-repeat="el in invoiceLoanRepRelList">
+                        <!-- Item -->
+                        <td class="invoice-table-td-height td-border" style="height: 55px;">{{loanInfo.loanInterest}}<br>{{loanInfo.bankServices}}</td>
+                        <!-- remark -->
+                        <td class="invoice-table-td-height td-border">
+                            {{el.loan_money | currency}} ({{el.loan_start_date | date:'MM/dd/yy'}} - {{el.loan_start_date | date:'MM/dd/yy'}}) {{el.rate}}% {{loanInfo.interestRate}}
+                            <br>
+                            {{loanInfo.bankServicesDetail}}
+                        </td>
 
-                <!-- Total -->
-                <tr class="fz15">
-                    <td colspan="3" class="invoice-table-td-height last-row-border left-align">Total</td>
-                    <td colspan="3" class="invoice-table-td-height last-row-border right-align">{{invoiceShipTransTotalMoney|currency}}</td>
-                </tr>
-                </tbody>
-            </table>
+                        <!-- Qty -->
+                        <td class="invoice-table-td-height td-border">{{el.day_count}}<br>1</td>
+                        <!-- Rate -->
+                        <td class="invoice-table-td-height td-border">${{el.interest_money / el.day_count | number: 6}}<br>{{el.fee|currency}}</td>
+                        <!-- Amount -->
+                        <td class="invoice-table-td-height last-td-border right-align">{{el.interest_money|currency}}<br>{{el.fee|currency}}</td>
+                    </tr>
+
+                    <!-- Total -->
+                    <tr class="fz15">
+                        <td colspan="2" class="invoice-table-td-height last-row-border left-align">Total</td>
+                        <td colspan="3" class="invoice-table-td-height last-row-border right-align">{{totalPaymentMoney|currency}}</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
 
-        <!-- 分割线 -->
-        <div class="col s12" style="margin-top: 25px;margin-bottom: 10px;">
-            <div class="divider col s12" style="background-color: #c0c0c0;margin-top: 10px;margin-bottom: 10px;"></div>
-        </div>
+        <!-- 发票总金额 -->
+        <div class="row">
+            <!-- 分割线 -->
+            <div class="col s12" style="margin-top: 25px;margin-bottom: 10px;">
+                <div class="divider col s12" style="background-color: #c0c0c0;margin-top: 10px;margin-bottom: 10px;"></div>
+            </div>
 
-        <div class="col s12 fz15 bold">
-            <div class="col s6 left-align" style="padding-left: 0">发票总金额</div>
-            <div class="col s6 right-align fz16" style="padding-right: 0">TODO -- {{invoiceShipTransTotalMoney|currency}}</div>
+            <div class="col s12 fz15 bold">
+                <div class="col s6 left-align" style="padding-left: 0">Invoice Total Fee</div>
+                <div class="col s6 right-align fz16" style="padding-right: 0">TODO -- {{invoiceShipTransTotalMoney + totalPaymentMoney|currency}}</div>
+            </div>
         </div>
-
     </div>
 
-    <!-- Footer -->
-    <div class="modal-footer right-align">
-        <a class="btn-floating waves-effect waves-light btn cyan lighten-1" style="width:38px;height:38px; margin-right: 50px;"
+    <!-- Footer 画面操作按钮 -->
+    <div class="right-align" style="margin-bottom: 20px;">
+        <a class="btn-floating waves-effect waves-light btn modal-close grey" style="width:38px;height:38px; margin-right: 50px;">
+            <i class="mdi mdi-close"></i>
+        </a>
+
+        <a class="btn-floating waves-effect waves-light btn cyan lighten-1" style="width:38px;height:38px; margin-right: 30px;"
            ng-click="downloadInvoice()">
             <i class="mdi mdi-printer"></i>
-        </a>
-        <a class="btn-floating waves-effect waves-light btn modal-close grey" style="width:38px;height:38px; margin-right: 20px;">
-            <i class="mdi mdi-close"></i>
         </a>
     </div>
 </div>
