@@ -16,6 +16,8 @@ app.controller("invoice_detail_controller", ["$scope", "$stateParams", "_basic",
     $scope.shipTransFeeTypes = _config.shipTransFeeTypes;
     // 发票开具-公司信息
     $scope.companyInfo = _config.companyInfo;
+    // 发票开具-金融贷款信息
+    $scope.loanInfo = _config.loanInfo;
 
     // 关联仓储订单 应开发票总额
     $scope.totalStorageMoney = 0;
@@ -102,9 +104,12 @@ app.controller("invoice_detail_controller", ["$scope", "$stateParams", "_basic",
     $scope.previewInvoice = function () {
         $('.modal').modal();
         $('#previewInvoiceDiv').modal('open');
+        // 查询发票 关联 仓储费用 TODO
+
         // 查询发票 关联 海运费用
         queryInvoiceShipTransOrderList();
-        // $scope.downloadInvoice();
+        // 查询发票 关联 还款费用
+        queryInvoiceLoanRepRel();
     };
 
     /**
@@ -128,80 +133,24 @@ app.controller("invoice_detail_controller", ["$scope", "$stateParams", "_basic",
         });
     }
 
-
-
-
-
-    /*生成canvas图形*/
-    // //html2canvas官网的标准方法
-    // html2canvas(fbody, {
-    //     canvas:canvas,
-    //     onrendered: function(canvas) {
-    //         //将图片转换成：base64编码的jpg图片。
-    //         var imgData = canvas.toDataURL();
-    //         var canWidth = canvas.width;
-    //         var canHeight = canvas.height;
-    //         var arrDPI = js_getDPI();//获取显示器DPI（这个方法没贴出来）
-    //         var dpiX = 96;
-    //         var dpiY = 96;
-    //         if(arrDPI.length>0){
-    //             dpiX = arrDPI[0];
-    //             dpiY = arrDPI[1];
-    //         }
-    //         //l:横向， p：纵向；单位： in:英寸，mm毫米；画布大小：a3,a4,leter,[]（当内容为数组时，为自定义大小）
-    //         var doc = new jsPDF('l', 'in', [(canWidth+10)/dpiX,(canHeight+10)/dpiY]);//设置PDF宽高为要显示的元素的宽高，将像素转化为英寸
-    //         doc.addImage(imgData, 'png', 7/dpiX,5/dpiY); //写入位置：x:5, y:5 单位:英寸
-    //         $('#myFrmame').remove(); //最后将iframe删除
-    //         doc.save('test.pdf');
-    //     },
-    //     background: "#FFFFFF", //这里给生成的图片默认背景，不然的话，如果html根节点没有设置背景的话，会用黑色填充。
-    //     taintTest: false,
-    //     allowTaint: true //避免一些不识别的图片干扰，默认为false，遇到不识别的图片干扰则会停止处理html2canvas
-    // });
-
-
     /**
      * 进行canvas生成
      */
     $scope.downloadInvoice = function () {
-        // 获取内容id
-        var content = document.getElementById("invoiceTTT");
+        // 去掉画面滚动条
+        $("#context-div").removeClass("ConWrap");
+        $("#previewInvoiceDiv").removeClass("modal");
 
-
-
-        // var useWidth = $("#invoice").prop('scrollWidth');
-        // var useHeight = $("#invoice").prop('scrollHeight');
-        // console.log($("#invoice").width());
-        // console.log($("#invoice").height());
-        //
-        //
-        // var targetDom = $("#invoice");
-        // var copyDom = targetDom.clone();
-        //
-        // copyDom.width(targetDom.width() + "px");
-        // copyDom.height(targetDom.height() + "px");
-        // $('body').append(copyDom);
-
-
-
-        html2canvas(content, {
-            // allowTaint: true,
-            // taintTest: false,
-            // height: $("#invoice").outerHeight(),
-
+        html2canvas(document.getElementById("invoice"), {
+            allowTaint: true, //避免一些不识别的图片干扰，默认为false，遇到不识别的图片干扰则会停止处理html2canvas
+            taintTest: false,
             // Create a canvas with double-resolution.
             scale: 2,
-
             // Create a canvas with 144 dpi (1.5x resolution).
             dpi: 192,
             onrendered: function(canvas) {
                 var contentWidth = canvas.width;
                 var contentHeight = canvas.height;
-
-
-                console.log(contentWidth);
-                console.log(contentHeight + "--- " + $("#invoice").outerHeight());
-
 
                 //一页pdf显示html页面生成的canvas高度;
                 var pageHeight = contentWidth / 595.28 * 841.89;
@@ -213,6 +162,12 @@ app.controller("invoice_detail_controller", ["$scope", "$stateParams", "_basic",
                 var imgWidth = 595.28;
                 var imgHeight = 595.28/contentWidth * contentHeight;
                 var pageData = canvas.toDataURL('image/jpeg', 1.0);
+
+                // 追加画面用CSS
+                $("#previewInvoiceDiv").addClass("modal");
+                $('#previewInvoiceDiv').modal('close');
+                $("#context-div").addClass("ConWrap");
+
                 var pdf = new jsPDF('', 'pt', 'a4');
                 //有两个高度需要区分，一个是html页面的实际高度，和生成pdf的页面高度(841.89)
                 //当内容未超过pdf一页显示的范围，无需分页
@@ -236,46 +191,20 @@ app.controller("invoice_detail_controller", ["$scope", "$stateParams", "_basic",
         });
     };
 
-    /*
-     * 说明
-     * 不支持跨域图片
-     * 不能在浏览器插件中使用
-     * 部分浏览器上不支持SVG图片
-     * 不支持Flash
-     */
-    // var Download = document.getElementById("Download");
-    // Download.onclick = function(){
-    //     var oCanvas = document.getElementById("thecanvas");
+    // /**
+    //  * 在本地进行文件保存
+    //  * @param  {String} data     要保存到本地的图片数据
+    //  * @param  {String} filename 文件名
+    //  */
+    // function saveFile(data, filename) {
+    //     var save_link = document.createElementNS('http://www.w3.org/1999/xhtml', 'a');
+    //     save_link.href = data;
+    //     save_link.download = filename;
     //
-    //     /*自动保存为png*/
-    //     // 获取图片资源
-    //     var img_data1 = Canvas2Image.saveAsPNG(oCanvas, true).getAttribute('src');
-    //     saveFile(img_data1, 'richer.png');
-    //
-    //     /*下面的为原生的保存，不带格式名*/
-    //     // 这将会提示用户保存PNG图片
-    //     // Canvas2Image.saveAsPNG(oCanvas);
-    // };
-
-    /**
-     * 在本地进行文件保存
-     * @param  {String} data     要保存到本地的图片数据
-     * @param  {String} filename 文件名
-     */
-    function saveFile(data, filename) {
-        var save_link = document.createElementNS('http://www.w3.org/1999/xhtml', 'a');
-        save_link.href = data;
-        save_link.download = filename;
-
-        var event = document.createEvent('MouseEvents');
-        event.initMouseEvent('click', true, false, window, 0, 0, 0, 0, 0, false, false, false, false, 0, null);
-        save_link.dispatchEvent(event);
-    }
-
-
-
-
-
+    //     var event = document.createEvent('MouseEvents');
+    //     event.initMouseEvent('click', true, false, window, 0, 0, 0, 0, 0, false, false, false, false, 0, null);
+    //     save_link.dispatchEvent(event);
+    // }
 
     /**
      * 点击发放
@@ -573,7 +502,9 @@ app.controller("invoice_detail_controller", ["$scope", "$stateParams", "_basic",
                     thisRepayMoney = $scope.invoiceLoanRepRelList[i].repayment_money;
                     thisInterestMoney = $scope.invoiceLoanRepRelList[i].interest_money;
                     thisFee = $scope.invoiceLoanRepRelList[i].fee;
-                    $scope.totalPaymentMoney = $scope.totalPaymentMoney + (thisRepayMoney==null ? 0 : thisRepayMoney) + (thisInterestMoney==null ? 0 : thisInterestMoney) + (thisFee==null ? 0 : thisFee);
+                    // 暂定 利息+手续费 合计
+                    // $scope.totalPaymentMoney = $scope.totalPaymentMoney + (thisRepayMoney==null ? 0 : thisRepayMoney) + (thisInterestMoney==null ? 0 : thisInterestMoney) + (thisFee==null ? 0 : thisFee);
+                    $scope.totalPaymentMoney = $scope.totalPaymentMoney + (thisInterestMoney==null ? 0 : thisInterestMoney) + (thisFee==null ? 0 : thisFee);
                 }
             } else {
                 swal(data.msg, "", "error");
