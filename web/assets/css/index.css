@@ -12,7 +12,8 @@ body{
     overflow-y: hidden;
 }
 .ConWrap{
-    margin-bottom: 70px;
+    /* 画面高度 - 头部（64+20）- 底部（50） */
+    height: calc(100% - 134px);
     background: #f1f5f5;
     overflow-y: auto;
 }
