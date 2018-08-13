@@ -922,7 +922,7 @@
                         <td class="invoice-table-td-height td-border" style="height: 55px;">{{loanInfo.loanInterest}}<br>{{loanInfo.bankServices}}</td>
                         <!-- remark -->
                         <td class="invoice-table-td-height td-border">
-                            {{el.loan_money | currency}} ({{el.loan_start_date | date:'MM/dd/yy'}} - {{el.loan_start_date | date:'MM/dd/yy'}}) {{el.rate}}% {{loanInfo.interestRate}}
+                            {{el.repayment_money | currency}} ({{el.loan_start_date | date:'MM/dd/yy'}} - {{el.loan_start_date | date:'MM/dd/yy'}}) {{el.rate}}% {{loanInfo.interestRate}}
                             <br>
                             {{loanInfo.bankServicesDetail}}
                         </td>
@@ -930,7 +930,7 @@
                         <!-- Qty -->
                         <td class="invoice-table-td-height td-border">{{el.day_count}}<br>1</td>
                         <!-- Rate -->
-                        <td class="invoice-table-td-height td-border">${{el.interest_money / el.day_count | number: 6}}<br>{{el.fee|currency}}</td>
+                        <td class="invoice-table-td-height td-border">${{el.interest_money == 0 ? '0.00': (el.interest_money / el.day_count | number)}}<br>{{el.fee|currency}}</td>
                         <!-- Amount -->
                         <td class="invoice-table-td-height last-td-border right-align">{{el.interest_money|currency}}<br>{{el.fee|currency}}</td>
                     </tr>
@@ -952,9 +952,9 @@
                 <div class="divider col s12" style="background-color: #c0c0c0;margin-top: 10px;margin-bottom: 10px;"></div>
             </div>
 
-            <div class="col s12 fz15 bold">
+            <div class="col s12 fz16 bold">
                 <div class="col s6 left-align" style="padding-left: 0">Invoice Total Fee</div>
-                <div class="col s6 right-align fz16" style="padding-right: 0">TODO -- {{invoiceShipTransTotalMoney + totalPaymentMoney|currency}}</div>
+                <div class="col s6 right-align" style="padding-right: 0">TODO -- {{invoiceShipTransTotalMoney + totalPaymentMoney|currency}}</div>
             </div>
         </div>
     </div>
