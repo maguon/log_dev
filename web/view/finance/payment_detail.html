@@ -32,7 +32,7 @@
                 <div class="row col s12">
                     <div class="col s6 input-field">
                         <select material-select watch ng-model="storagePaymentArray.entrust_type" ng-change="getEntrustInfo(storagePaymentArray.entrust_type)">
-                            <option value=""  ><span style="color: red">*</span>委托方性质</option>
+                            <option value="">委托方性质</option>
                             <option ng-repeat="el in entrustTypeList" ng-value="el.entrust_type">{{el.name}}</option>
                         </select>
                     </div>
@@ -46,7 +46,7 @@
                 <div class="row col s12">
                     <div class="col s6 input-field">
                         <select material-select watch ng-model="storagePaymentArray.payment_type">
-                            <option value=""  ><span style="color: red">*</span>支付方式</option>
+                            <option value="" disabled>支付方式</option>
                             <option ng-repeat="el in paymentTypeList" ng-value="el.id">{{el.name}}</option>
                         </select>
                     </div>
