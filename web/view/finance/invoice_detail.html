@@ -131,7 +131,12 @@
                 </div>
                 <!--实分割线-->
                 <div  class="row col s12" style="height:2px;border-bottom: 1px solid #ccc;width:96%;margin-left: 2%"></div>
+            </div>
 
+            <div class="row col s12" style="margin-top: 30px">
+                <div class="col s2 offset-s5">
+                    <a ng-click="previewInvoice()" style="width: 100%" class="waves-light waves-effect cyan lighten-2 btn">发票预览</a>
+                </div>
             </div>
         </div>
     </div>
@@ -854,7 +859,7 @@
         </div>
 
         <!-- 表格：海运费用 -->
-        <div class="row">
+        <div class="row" ng-show="invoiceShipTransOrderList.length > 0">
             <div class="col s12">
                 <!-- 标题 暂不显示 -->
                 <!--<div class="col s12 fz15 bold" style="padding-left: 0;margin-bottom: 10px;">海运费用</div>-->
@@ -899,7 +904,7 @@
         </div>
 
         <!-- 表格：金融贷款 -->
-        <div class="row">
+        <div class="row" ng-show="invoiceLoanRepRelList.length > 0">
             <div class="col s12">
                 <!-- 标题 暂不显示 -->
                 <!--<div class="col s12 fz15 bold" style="padding-left: 0;margin-top: 20px;margin-bottom: 10px;">金融贷款</div>-->
@@ -926,7 +931,6 @@
                             <br>
                             {{loanInfo.bankServicesDetail}}
                         </td>
-
                         <!-- Qty -->
                         <td class="invoice-table-td-height td-border">{{el.day_count}}<br>1</td>
                         <!-- Rate -->
@@ -954,7 +958,9 @@
 
             <div class="col s12 fz16 bold">
                 <div class="col s6 left-align" style="padding-left: 0">Invoice Total Fee</div>
-                <div class="col s6 right-align" style="padding-right: 0">TODO -- {{invoiceShipTransTotalMoney + totalPaymentMoney|currency}}</div>
+                <!-- TODO -->
+                <!--<div class="col s6 right-align" style="padding-right: 0">{{totalStorageMoney + invoiceShipTransTotalMoney + totalPaymentMoney|currency}}</div>-->
+                <div class="col s6 right-align" style="padding-right: 0">{{invoiceShipTransTotalMoney + totalPaymentMoney|currency}}</div>
             </div>
         </div>
     </div>
