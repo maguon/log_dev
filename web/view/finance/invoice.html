@@ -82,6 +82,7 @@
         <table class="bordered striped">
             <thead class="blue-grey lighten-5">
             <tr class="grey-text text-darken-2">
+                <th>发票ID</th>
                 <th>发票编号</th>
                 <th>委托方</th>
                 <th>发票金额(美元)</th>
@@ -93,6 +94,8 @@
             </thead>
             <tbody>
             <tr ng-repeat="el in financeInvoiceList" class="grey-text text-darken-1">
+                <!-- 发票ID -->
+                <td ng-bind="el.id"></td>
                 <!-- 发票编号 -->
                 <td ng-bind="el.invoice_num"></td>
                 <!-- 委托方 -->
