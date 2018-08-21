@@ -55,16 +55,20 @@ app.controller("sea_transport_order_detail_controller", ["$scope","$stateParams"
                     return;
                 }
                 $scope.paymentInfo = data.result[0];
-                getPaymentInfo( $scope.paymentInfo.id);
+                // 获取支付信息
+                getPaymentInfo($scope.paymentInfo.id);
+                // 获取发票信息
+                getInvoiceInfo($scope.paymentInfo.id);
             } else {
                 swal(data.msg, "", "error");
             }
         });
     }
 
-    /*
-    * 获取支付信息
-    * */
+    /**
+     * 获取支付信息
+     * @param id 海运订单ID
+     */
     function getPaymentInfo(id) {
         _basic.get(_host.api_url + "/payment?shipTransOrderId=" + id).then(function (data) {
             if (data.success) {
@@ -72,6 +76,23 @@ app.controller("sea_transport_order_detail_controller", ["$scope","$stateParams"
                     return;
                 }
                 $scope.paymentList = data.result[0];
+            } else {
+                swal(data.msg, "", "error");
+            }
+        });
+    }
+
+    /**
+     * 获取发票信息
+     * @param id 海运订单ID
+     */
+    function getInvoiceInfo(id) {
+        _basic.get(_host.api_url + "/invoice?shipTransOrderId=" + id).then(function (data) {
+            if (data.success) {
+                if (data.result.length === 0) {
+                    return;
+                }
+                $scope.invoiceList = data.result[0];
             } else {
                 swal(data.msg, "", "error");
             }

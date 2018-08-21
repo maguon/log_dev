@@ -56,8 +56,9 @@
         <div class="col s6">
             订单编号：{{paymentInfo.id}}
         </div>
-        <div class="col s6 right-align" ng-class="{'red-text':paymentInfo.order_status == 1}">
-            {{payStatus[paymentInfo.order_status-1].name}}/{{invoiceStatus[paymentInfo.invoice_status-1].name}}
+        <div class="col s6 right-align">
+            <span ng-class="{'red-text':paymentInfo.order_status == 1}">{{payStatus[paymentInfo.order_status-1].name}}</span> /
+            <span ng-class="{'red-text':paymentInfo.invoice_status == 1}">{{invoiceStatus[paymentInfo.invoice_status-1].name}}</span>
         </div>
     </div>
 
@@ -115,26 +116,39 @@
         </div>
     </div>
 
-    <div ng-if="paymentInfo.order_status !== 1" >
-        <div class="col s12 white">
-            <div class="s12 center" style="width:98%; margin-left: 10px;margin-right: 10px;margin-top: 10px;border: 1px dotted #ccc"></div>
+    <!-- 支付状态为：已支付 时，显示下列内容：支付编号，支付时间 -->
+    <div ng-if="paymentInfo.order_status !== 1" class="col s12 white">
+        <div class="s12 center" style="width:98%; margin-left: 10px;margin-right: 10px;margin-top: 10px;border: 1px dotted #ccc"></div>
+    </div>
+    <div ng-if="paymentInfo.order_status !== 1" class="col s12 lighten-1 white grey-text vc-center fz13"  style="height:50px;">
+        <div class="input-field col s6 cyan-text">
+            支付编号：{{paymentList.id}}
         </div>
-        <div class="col s12 lighten-1 white grey-text vc-center fz13"  ng-if="paymentInfo.order_status !== 1" style="height:45px;">
-            <div class="col s6 cyan-text">
-                支付编号：{{paymentList.id}}
-            </div>
-            <div class="col s6 right-align">
-                支付时间：{{paymentList.created_on |date:'yyyy-MM-dd HH:mm:ss'}}
-            </div>
+        <div class="input-field col s6 right-align">
+            支付时间：{{paymentList.created_on |date:'yyyy-MM-dd HH:mm:ss'}}
         </div>
     </div>
+
+    <!-- 发票状态为：已开票 时，显示下列内容：开票编号，开票时间 -->
+    <div ng-if="paymentInfo.invoice_status == 2" class="col s12 white">
+        <div class="s12 center" style="width:98%; margin-left: 10px;margin-right: 10px;margin-top: 10px;border: 1px dotted #ccc"></div>
+    </div>
+    <div ng-if="paymentInfo.invoice_status == 2" class="col s12 lighten-1 white grey-text vc-center fz13"  style="height:50px;">
+        <div class="input-field col s6 cyan-text">
+            发票编号：{{invoiceList.invoice_num}}
+        </div>
+        <div class="input-field col s6 right-align">
+            开票时间：{{invoiceList.created_on |date:'yyyy-MM-dd HH:mm:ss'}}
+        </div>
+    </div>
+
 
     <div class="col s12 white">
         <div class="divider s12 center" style="width:98%; margin-left: 10px;margin-right: 10px;margin-top: 10px;"></div>
     </div>
     <div class="col s12 lighten-1 white grey-text vc-center fz13" style="height:40px;">
         <div class="col s6">
-            操作员：{{paymentInfo.start_ship_user_name}}
+            操作员：{{paymentInfo.ship_trans_user_name}}
         </div>
         <div class="col s6 right-align">
             生成时间：{{paymentInfo.ship_trans_created_date | date:'yyyy-MM-dd HH:mm:ss'}}
