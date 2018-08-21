@@ -89,6 +89,8 @@ app.controller("setting_port_controller", ["$scope", "_basic", "_config", "_host
                     $(".modal").modal();
                     $("#savePortDiv").modal("open");
 
+                    // 港口ID
+                    $scope.portInfo.id = selectedItem.id;
                     // 国家
                     $scope.portInfo.country = data.result[0].country_id;
                     // 港口名称
@@ -128,7 +130,7 @@ app.controller("setting_port_controller", ["$scope", "_basic", "_config", "_host
                     }
                 })
             } else {
-                _basic.put(_host.api_url + "/user/" + userId+"/port/" + $scope.id, obj).then(function (data) {
+                _basic.put(_host.api_url + "/user/" + userId + "/port/" + $scope.portInfo.id, obj).then(function (data) {
                     if (data.success) {
                         $('#savePortDiv').modal('close');
                         swal("修改成功", "", "success");
