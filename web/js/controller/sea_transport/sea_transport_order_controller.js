@@ -9,6 +9,8 @@ app.controller("sea_transport_order_controller", ["$scope", "$rootScope", "_host
     var userId = _basic.getSession(_basic.USER_ID);
     // 支付状态 列表
     $scope.payStatusList = _config.payStatus;
+    // 发票状态 列表
+    $scope.invoiceStatus = _config.invoiceStatus;
     $scope.portList = [];
 
     /*
@@ -41,7 +43,7 @@ app.controller("sea_transport_order_controller", ["$scope", "$rootScope", "_host
      */
     function getCarMakerList() {
         _basic.get(_host.api_url + "/carMake").then(function (data) {
-            if (data.success == true && data.result.length > 0) {
+            if (data.success && data.result.length > 0) {
                 $scope.carMakerList = data.result;
             } else {
                 swal(data.msg, "", "error");
@@ -55,11 +57,11 @@ app.controller("sea_transport_order_controller", ["$scope", "$rootScope", "_host
      */
     $scope.changeMakerId = function (val) {
         if (val) {
-            if ($scope.curruntId == val) {
+            if ($scope.curruntId === val) {
             } else {
                 $scope.curruntId = val;
                 _basic.get(_host.api_url + "/carMake/" + val + "/carModel").then(function (data) {
-                    if (data.success == true && data.result.length > 0) {
+                    if (data.success && data.result.length > 0) {
                         $scope.carModelList = data.result;
                     } else {
                         swal(data.msg, "", "error")
@@ -83,15 +85,11 @@ app.controller("sea_transport_order_controller", ["$scope", "$rootScope", "_host
     }
 
     /**
-     * 获取委托方信息
-     * @param type 委托方类型
-     */
-    /**
-     * 【委托方】列表查询
+     * 获取【委托方】列表信息
      */
     function getEntrustInfo() {
         _basic.get(_host.api_url + "/entrust").then(function (data) {
-            if (data.success == true) {
+            if (data.success) {
                 $scope.entrustList = data.result;
                 $('#entrustSelect').select2({
                     placeholder: '委托方',
@@ -115,7 +113,7 @@ app.controller("sea_transport_order_controller", ["$scope", "$rootScope", "_host
         reqUrl = conditions.length > 0 ? reqUrl + "&" + conditions : reqUrl;
 
         _basic.get(reqUrl).then(function (data) {
-            if (data.success == true) {
+            if (data.success) {
                 $scope.orderResult = data.result;
                 $scope.orderList = $scope.orderResult.slice(0, 10);
                 if ($scope.start > 0) {
@@ -180,36 +178,38 @@ app.controller("sea_transport_order_controller", ["$scope", "$rootScope", "_host
             actualEndDateStart: $scope.condActualEndDateStart,
             // 实际到港日期 终了
             actualEndDateEnd: $scope.condActualEndDateEnd,
-            booking:$scope.conditionBooking
+            booking:$scope.conditionBooking,
+            // 发票状态
+            invoiceStatus :$scope.conditionInvoiceStatus
     };
         return obj;
     }
 
-    /*
-    * 删除
-    * */
-    $scope.deletePriceOrder=function(shipTransId,carId){
-        swal({
-                title: "确定删除当前订单吗？",
-                type: "warning",
-                showCancelButton: true,
-                confirmButtonColor: "#DD6B55",
-                confirmButtonText: "确认",
-                cancelButtonText: "取消",
-                closeOnConfirm: false
-            },
-            function(){
-                _basic.delete(_host.api_url + "/user/" + userId + "/shipTrans/"+shipTransId+'/car/'+carId).then(function (data) {
-                    if (data.success === true) {
-                        queryOrderData();
-                        swal("删除成功", "", "success");
-                    }
-                    else {
-                        swal(data.msg, "", "error");
-                    }
-                });
-            });
-    };
+    // /*
+    // * 删除
+    // * */
+    // $scope.deletePriceOrder=function(shipTransId,carId){
+    //     swal({
+    //             title: "确定删除当前订单吗？",
+    //             type: "warning",
+    //             showCancelButton: true,
+    //             confirmButtonColor: "#DD6B55",
+    //             confirmButtonText: "确认",
+    //             cancelButtonText: "取消",
+    //             closeOnConfirm: false
+    //         },
+    //         function(){
+    //             _basic.delete(_host.api_url + "/user/" + userId + "/shipTrans/"+shipTransId+'/car/'+carId).then(function (data) {
+    //                 if (data.success) {
+    //                     queryOrderData();
+    //                     swal("删除成功", "", "success");
+    //                 }
+    //                 else {
+    //                     swal(data.msg, "", "error");
+    //                 }
+    //             });
+    //         });
+    // };
 
     /**
      * 上一页
@@ -237,9 +237,9 @@ app.controller("sea_transport_order_controller", ["$scope", "$rootScope", "_host
         getCarMakerList();
         // 取得查询条件【船公司】列表
         getShippingCoList();
-
+        // 获取【委托方】列表信息
         getEntrustInfo();
-
+        // 执行检索
         queryOrderData();
     }
     initData();
