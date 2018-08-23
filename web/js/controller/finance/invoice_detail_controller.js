@@ -134,61 +134,64 @@ app.controller("invoice_detail_controller", ["$scope", "$stateParams", "_basic",
     }
 
     /**
-     * 进行canvas生成
+     * 进行canvas生成。(点击下载按钮)
      */
     $scope.downloadInvoice = function () {
-        // 去掉画面滚动条
-        $("#context-div").removeClass("ConWrap");
-        $("#previewInvoiceDiv").removeClass("modal");
+        try{
+            // 去掉画面CSS (主要为了去滚动条)
+            $("#context-div").removeClass("ConWrap");
+            $("#previewInvoiceDiv").removeClass("modal");
 
-        html2canvas(document.getElementById("invoice"), {
-            allowTaint: true, //避免一些不识别的图片干扰，默认为false，遇到不识别的图片干扰则会停止处理html2canvas
-            taintTest: false,
-            // Create a canvas with double-resolution.
-            scale: 2,
-            // Create a canvas with 144 dpi (1.5x resolution).
-            dpi: 192,
-            onrendered: function(canvas) {
-                var contentWidth = canvas.width;
-                var contentHeight = canvas.height;
+            html2canvas(document.getElementById("invoice"), {
+                allowTaint: true, //避免一些不识别的图片干扰，默认为false，遇到不识别的图片干扰则会停止处理html2canvas
+                taintTest: false,
+                // Create a canvas with double-resolution.
+                scale: 2,
+                // Create a canvas with 144 dpi (1.5x resolution).
+                dpi: 192,
+                onrendered: function(canvas) {
+                    var contentWidth = canvas.width;
+                    var contentHeight = canvas.height;
 
-                //一页pdf显示html页面生成的canvas高度;
-                var pageHeight = contentWidth / 595.28 * 841.89;
-                //未生成pdf的html页面高度
-                var leftHeight = contentHeight;
-                //pdf页面偏移
-                var position = 0;
-                //a4纸的尺寸[595.28,841.89]，html页面生成的canvas在pdf中图片的宽高
-                var imgWidth = 595.28;
-                var imgHeight = 595.28/contentWidth * contentHeight;
-                var pageData = canvas.toDataURL('image/jpeg', 1.0);
+                    //一页pdf显示html页面生成的canvas高度;
+                    var pageHeight = contentWidth / 595.28 * 841.89;
+                    //未生成pdf的html页面高度
+                    var leftHeight = contentHeight;
+                    //pdf页面偏移
+                    var position = 0;
+                    //a4纸的尺寸[595.28,841.89]，html页面生成的canvas在pdf中图片的宽高
+                    var imgWidth = 595.28;
+                    var imgHeight = 595.28/contentWidth * contentHeight;
+                    var pageData = canvas.toDataURL('image/jpeg', 1.0);
 
-                // 追加画面用CSS
-                $("#previewInvoiceDiv").addClass("modal");
-                $('#previewInvoiceDiv').modal('close');
-                $("#context-div").addClass("ConWrap");
-
-                var pdf = new jsPDF('', 'pt', 'a4');
-                //有两个高度需要区分，一个是html页面的实际高度，和生成pdf的页面高度(841.89)
-                //当内容未超过pdf一页显示的范围，无需分页
-                if (leftHeight < pageHeight) {
-                    pdf.addImage(pageData, 'JPEG', 0, 0, imgWidth, imgHeight );
-                } else {
-                    while(leftHeight > 0) {
-                        pdf.addImage(pageData, 'JPEG', 0, position, imgWidth, imgHeight)
-                        leftHeight -= pageHeight;
-                        position -= 841.89;
-                        //避免添加空白页
-                        if(leftHeight > 0) {
-                            pdf.addPage();
+                    var pdf = new jsPDF('', 'pt', 'a4');
+                    //有两个高度需要区分，一个是html页面的实际高度，和生成pdf的页面高度(841.89)
+                    //当内容未超过pdf一页显示的范围，无需分页
+                    if (leftHeight < pageHeight) {
+                        pdf.addImage(pageData, 'JPEG', 0, 0, imgWidth, imgHeight );
+                    } else {
+                        while(leftHeight > 0) {
+                            pdf.addImage(pageData, 'JPEG', 0, position, imgWidth, imgHeight)
+                            leftHeight -= pageHeight;
+                            position -= 841.89;
+                            //避免添加空白页
+                            if(leftHeight > 0) {
+                                pdf.addPage();
+                            }
                         }
                     }
-                }
-                pdf.save('invoice.pdf');
-            },
-            // 背景设为白色（默认为黑色）
-            background: "#fff"
-        });
+                    pdf.save('invoice.pdf');
+                },
+                // 背景设为白色（默认为黑色）
+                background: "#fff"
+            });
+        } finally {
+            // 追加画面CSS
+            $("#previewInvoiceDiv").addClass("modal");
+            $("#context-div").addClass("ConWrap");
+            // 关闭模态
+            $('#previewInvoiceDiv').modal('close');
+        }
     };
 
     // /**
