@@ -164,11 +164,11 @@ app.controller("order_detail_controller", ["$scope", "$state", "$stateParams", "
 
         if ($scope.paymentInfo.paymentType !== "" && $scope.paymentInfo.number !== "" && $scope.paymentInfo.paymentMoney !== "") {
 
-            // 修改订单状态为【2：已支付】
-            var url = _host.api_url + "/user/" + userId + "/storageOrder/" + $scope.storageOrderId + "/orderStatus/" + $scope.payStatusList[1].id;
+            // // 修改订单状态为【2：已支付】
+            // var url = _host.api_url + "/user/" + userId + "/storageOrder/" + $scope.storageOrderId + "/orderStatus/" + $scope.payStatusList[1].id;
 
-            _basic.put(url, {}).then(function (data) {
-                if (data.success) {
+            // _basic.put(url, {}).then(function (data) {
+            //     if (data.success) {
                     // 执行支付时，将选中的订单一并提交
                     if ($scope.selectedRelOrder.length > 0) {
                         $scope.selectedRelOrder.forEach(function (value, index, array) {
@@ -185,10 +185,10 @@ app.controller("order_detail_controller", ["$scope", "$state", "$stateParams", "
                             swal(data.msg, "", "error");
                         }
                     })
-                } else {
-                    swal(data.msg, "", "error");
-                }
-            });
+                // } else {
+                //     swal(data.msg, "", "error");
+                // }
+            // });
         } else {
             swal("请填写完整信息！", "", "warning");
         }
