@@ -872,7 +872,7 @@
                         <th class="invoice-table-td-height tr-border" style="width:20%">Item</th>
                         <th class="invoice-table-td-height tr-border" style="width:15%">booking</th>
                         <th class="invoice-table-td-height tr-border" style="width:15%">VIN</th>
-                        <th class="invoice-table-td-height tr-border" style="width:35%">remark</th>
+                        <th class="invoice-table-td-height tr-border" style="width:35%">description</th>
                         <th class="invoice-table-td-height tr-border" style="width:5%">Qty</th>
                         <th class="invoice-table-td-height tr-border" style="width:10%;border-right: 0">Amount</th>
                     </tr>
@@ -885,7 +885,7 @@
                         <td class="invoice-table-td-height td-border">{{el.booking}}</td>
                         <!-- VIN -->
                         <td class="invoice-table-td-height td-border">{{el.vin}}</td>
-                        <!-- 备注 -->
+                        <!-- description -->
                         <td class="invoice-table-td-height td-border">{{el.remark}}</td>
                         <!-- Qty -->
                         <td class="invoice-table-td-height td-border">{{el.qty}}</td>
@@ -915,7 +915,7 @@
                     <!-- Header -->
                     <tr class="blue-grey lighten-5 fz15" style="height: 20px;">
                         <th class="invoice-table-td-height tr-border" style="width:20%">Item</th>
-                        <th class="invoice-table-td-height tr-border" style="width:40%">remark</th>
+                        <th class="invoice-table-td-height tr-border" style="width:40%">description</th>
                         <th class="invoice-table-td-height tr-border" style="width:10%">Qty</th>
                         <th class="invoice-table-td-height tr-border" style="width:15%">Rate</th>
                         <th class="invoice-table-td-height tr-border" style="width:15%;border-right: 0">Amount</th>
@@ -925,7 +925,7 @@
                     <tr ng-repeat="el in invoiceLoanRepRelList">
                         <!-- Item -->
                         <td class="invoice-table-td-height td-border" style="height: 55px;">{{loanInfo.loanInterest}}<br>{{loanInfo.bankServices}}</td>
-                        <!-- remark -->
+                        <!-- description -->
                         <td class="invoice-table-td-height td-border">
                             {{el.repayment_money | currency}} ({{el.loan_start_date | date:'MM/dd/yy'}} - {{el.loan_start_date | date:'MM/dd/yy'}}) {{el.rate}}% {{loanInfo.interestRate}}
                             <br>
