@@ -313,10 +313,10 @@ app.controller("order_detail_controller", ["$scope", "$state", "$stateParams", "
     function getOtherOrderPayment() {
 
         // 查询状态为[1：未支付]的所有订单
-        var url = _host.api_url + "/storageOrder?orderStatus=" + +$scope.payStatusList[0].id;
+        var url = _host.api_url + "/storageOrder?entrustId=" + $scope.orderInfo.entrustId + "&orderStatus=" + $scope.payStatusList[0].id;
 
         _basic.get(url).then(function (data) {
-            if (data.success == true) {
+            if (data.success) {
 
                 data.result.forEach(function (value, index, array) {
                     // 去掉自己
