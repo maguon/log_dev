@@ -20,8 +20,6 @@ app.controller("invoice_controller", ["$scope", "$rootScope", "_host", "_basic",
 
     // 新增发票信息 默认数据
     $scope.newInvoiceInfo = {
-        // 发票编号
-        invoiceNum: "",
         // 发票金额
         invoiceMoney: "",
         // 委托方性质
@@ -88,7 +86,7 @@ app.controller("invoice_controller", ["$scope", "$rootScope", "_host", "_basic",
      */
     function setConditions(conditions) {
         // 发票编号
-        $scope.condInvoiceNum = conditions.invoiceNum;
+        $scope.condInvoiceId = conditions.invoiceId;
         // 委托方性质
         $scope.condEntrustType = conditions.entrustType;
         // 委托方
@@ -111,7 +109,7 @@ app.controller("invoice_controller", ["$scope", "$rootScope", "_host", "_basic",
     function makeConditions() {
         return {
             // 发票编号
-            invoiceNum: $scope.condInvoiceNum,
+            invoiceId: $scope.condInvoiceId,
             // 委托方性质
             entrustType: $scope.condEntrustType,
             // 委托方
@@ -176,10 +174,8 @@ app.controller("invoice_controller", ["$scope", "$rootScope", "_host", "_basic",
      * 新增 发票信息。
      */
     $scope.addInvoice = function () {
-        if ($scope.invoiceInfo.invoiceNum !== "" && $scope.invoiceInfo.invoiceMoney !== "" && $scope.invoiceInfo.entrustId !== "") {
+        if ($scope.invoiceInfo.invoiceMoney !== "" && $scope.invoiceInfo.entrustId !== "") {
             var obj = {
-                // 发票编号
-                invoiceNum: $scope.invoiceInfo.invoiceNum,
                 // 发票金额
                 invoiceMoney: $scope.invoiceInfo.invoiceMoney,
                 // 委托方

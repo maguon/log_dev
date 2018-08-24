@@ -8,8 +8,8 @@
 
             <!-- 查询条件：发票编号 -->
             <div class="input-field col s3">
-                <input type="text" id="invoiceNumText" ng-model="condInvoiceNum">
-                <label for="invoiceNumText">发票编号</label>
+                <input type="text" id="invoiceIdText" ng-model="condInvoiceId">
+                <label for="invoiceIdText">发票编号</label>
             </div>
 
             <!-- 查询条件：委托方性质 -->
@@ -82,7 +82,6 @@
         <table class="bordered striped">
             <thead class="blue-grey lighten-5">
             <tr class="grey-text text-darken-2">
-                <th>发票ID</th>
                 <th>发票编号</th>
                 <th>委托方</th>
                 <th>发票金额(美元)</th>
@@ -94,10 +93,8 @@
             </thead>
             <tbody>
             <tr ng-repeat="el in financeInvoiceList" class="grey-text text-darken-1">
-                <!-- 发票ID -->
-                <td ng-bind="el.id"></td>
                 <!-- 发票编号 -->
-                <td ng-bind="el.invoice_num"></td>
+                <td ng-bind="el.id"></td>
                 <!-- 委托方 -->
                 <td ng-bind="el.short_name"></td>
                 <!-- 发票金额(美元) -->
@@ -117,7 +114,7 @@
                 </td>
             </tr>
             <tr class="grey-text text-darken-1" ng-if="financeInvoiceList.length == 0">
-                <td colspan="8" style="letter-spacing: 2px;text-align: center;">暂无数据</td>
+                <td colspan="7" style="letter-spacing: 2px;text-align: center;">暂无数据</td>
             </tr>
             </tbody>
         </table>
@@ -148,14 +145,8 @@
         <div class="col" style="width:95%; margin-left: 20px;">
 
             <div class="col s12">
-                <!-- 发票编号 -->
-                <div class="input-field col s6">
-                    <input type="text" id="invoiceNoText" ng-model="invoiceInfo.invoiceNum">
-                    <label for="invoiceNoText"><span class="red-text">*</span>发票编号</label>
-                </div>
-
                 <!-- 发票金额 -->
-                <div class="input-field col s6">
+                <div class="input-field col s12">
                     <input type="text" id="invoiceMoneyText" maxlength="8" valid-money ng-model="invoiceInfo.invoiceMoney">
                     <label for="invoiceMoneyText"><span class="red-text">*</span>发票金额</label>
                 </div>
