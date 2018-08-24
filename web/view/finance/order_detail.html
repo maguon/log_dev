@@ -211,7 +211,7 @@
                     <tbody>
                     <tr ng-repeat="el in relOrderList" class="grey-text text-darken-1">
                         <!-- 订单编号 -->
-                        <td>{{el.id}}</td>
+                        <td>{{el.storage_order_id}}</td>
                         <!-- VIN -->
                         <td ng-bind="el.vin"></td>
                         <!-- 车型 -->
@@ -402,7 +402,7 @@
                 <div class="col s12 lighten-1 white grey-text vc-center">
                     <div class="input-field col s4 left-align">
                         <select material-select watch ng-model="paymentInfo.paymentType">
-                            <option value="" selected>支付方式</option>
+                            <option value="" disabled>支付方式</option>
                             <option ng-repeat="el in paymentMethodList" ng-value="el.id">{{el.name}}</option>
                         </select>
                     </div>
