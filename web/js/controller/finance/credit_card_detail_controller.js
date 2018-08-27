@@ -14,9 +14,7 @@ app.controller("credit_card_detail_controller", ["$scope", "$rootScope", "_host"
     // 颜色列表
     $scope.configColor = _config.config_color;
 
-
     //获取委托方信息
-
     $scope.getEntrustInfo = function (type, selectText) {
         var url = _host.api_url + "/entrust";
         if (type != null && type !== undefined) {
@@ -69,7 +67,7 @@ app.controller("credit_card_detail_controller", ["$scope", "$rootScope", "_host"
      */
     function queryBaseItem (){
         _basic.get(_host.api_url + "/credit?creditId="+val).then(function (data) {
-            if (data.success == true) {
+            if (data.success) {
                 $scope.showMsgInfo();
                 $scope.baseInfoList =data.result[0];
                 $scope.baseInfoList.short_name =data.result[0].short_name;
@@ -114,7 +112,7 @@ app.controller("credit_card_detail_controller", ["$scope", "$rootScope", "_host"
      */
     function queryLinkCar(){
         _basic.get(_host.api_url + "/creditCarRel?creditId="+val).then(function (data) {
-            if (data.success == true) {
+            if (data.success) {
                 if(data.result.length==0){
                     $scope.getLinkCarList=[];
                 }else{
@@ -214,9 +212,11 @@ app.controller("credit_card_detail_controller", ["$scope", "$rootScope", "_host"
             }
         }
         if(vin!==undefined&&vin!=="") {
+            $scope.addCarInfoFlg = false;
+
             if (vin.length >= 6) {
                 _basic.get(_host.api_url + "/shipTransCarRel?entrustId="+$scope.entrustId+"&vinCode=" +vin, {}).then(function (data) {
-                    if (data.success == true && data.result.length > 0) {
+                    if (data.success && data.result.length > 0) {
                         $scope.vinMsg = data.result;
                         $scope.carId= data.result[0].car_id;
                         vinObjs = {};
@@ -230,13 +230,23 @@ app.controller("credit_card_detail_controller", ["$scope", "$rootScope", "_host"
                 }).then(function (vinObjs) {
                     $('#autocomplete-input').autocomplete({
                         data: vinObjs,
-                        minLength: 6
+                        minLength: 6,
+                        onAutocomplete: function (val) {
+                            $scope.addCarInfoFlg = true;
+                        },
+                        limit: 6
                     });
                     $('#autocomplete-input').focus();
                 })
             } else {
                 $('#autocomplete-input').autocomplete({minLength: 6});
                 $scope.vinMsg = {}
+            }
+
+            // 根据填充完毕的完整vin码信息进行精确查询
+            $scope.addCarInfoFlg = false;
+            if (vin.length === 17) {
+                $scope.addCarInfoFlg = true;
             }
         }
     };
@@ -247,11 +257,14 @@ app.controller("credit_card_detail_controller", ["$scope", "$rootScope", "_host"
             creditId: val,
             carId: $scope.carId
         }).then(function (data) {
-            if (data.success == true) {
+            if (data.success) {
                 $scope.linkCarId =data.id;
                 queryLinkCar();
-            }
-            else {
+                // 使追加按钮灰掉
+                $scope.addCarInfoFlg = false;
+                // 清空VIN输入框
+                $scope.creditVin = '';
+            } else {
                 swal(data.msg, "", "error");
             }
         })
@@ -268,8 +281,7 @@ app.controller("credit_card_detail_controller", ["$scope", "$rootScope", "_host"
                     swal(data.msg, "", "error");
                 }
             });
-
-    }
+    };
 
     //完結
     $scope.endOfProcessing = function(){
@@ -287,18 +299,14 @@ app.controller("credit_card_detail_controller", ["$scope", "$rootScope", "_host"
                     }
                 });
         }
-    }
-
-
+    };
 
     /**
      * 画面初期显示时，用来获取画面必要信息的初期方法。
      */
-    $scope.initData = function () {
+    function initData() {
         queryBaseItem ();
         queryLinkCar();
-    };
-    $scope.initData();
-
-
-}])
+    }
+    initData();
+}]);

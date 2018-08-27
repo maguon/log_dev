@@ -253,7 +253,7 @@
             <div id="lookLinkCar" class="col s12 tab_box" style="width: 95%; margin:0 2%;">
 
                 <!--未完結-->
-                <div class="row col s12" ng-if="baseInfoList.credit_status==1">
+                <div class="row col s12" ng-show="baseInfoList.credit_status==1">
                     <!--上部分：查询功能-->
                     <div class="row col" style="width: 100%;position: relative">
 
@@ -261,10 +261,10 @@
                             <input type="text" id="autocomplete-input" placeholder="模糊查询至少需要6位vin" ng-change="shortSearch(creditVin)" ng-model="creditVin" style="margin: 0 0 20px 0" class="autocomplete">
                             <label for="autocomplete-input" class="label-active">VIN</label>
                         </div>
-                        <button class=" btn btn-floating btn-small waves-effect cyan lighten-1" ng-if="carId!==undefined" ng-click="addLinkCar()"  style="position: absolute;top: 15px;right: 10px;">
+                        <button class="btn btn-floating btn-small waves-effect cyan lighten-1" ng-if="addCarInfoFlg" ng-click="addLinkCar()"  style="position: absolute;top: 15px;right: 10px;">
                             <i class="mdi white-text mdi-plus fz30"></i>
                         </button>
-                        <button class=" btn btn-floating btn-small waves-effect cyan lighten-1" ng-if="carId==undefined" disabled style="position: absolute;top: 15px;right: 10px;">
+                        <button class="btn btn-floating btn-small waves-effect cyan lighten-1" ng-if="!addCarInfoFlg" disabled style="position: absolute;top: 15px;right: 10px;">
                             <i class="mdi white-text mdi-plus fz30"></i>
                         </button>
                     </div>
@@ -384,7 +384,7 @@
                 </div>
 
                 <!--已完結-->
-                <div class="row col s12" ng-if="baseInfoList.credit_status!==1">
+                <div class="row col s12" ng-show="baseInfoList.credit_status!==1">
                     <div class="row col s12" style="margin-top: 50px"></div>
                     <div class="col s12" ng-repeat="linkCar in getLinkCarList" style="height:270px;margin-top: 10px">
                         <div class="row blue-grey lighten-5" style="width:60%;border:1px solid #bdbdbd">
