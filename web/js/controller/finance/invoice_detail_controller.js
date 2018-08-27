@@ -28,12 +28,10 @@ app.controller("invoice_detail_controller", ["$scope", "$stateParams", "_basic",
 
     // 发票信息
     $scope.invoiceInfo = {
-        // id
+        // 发票编号
         invoiceId: "",
         // 发票状态
         invoiceStatus: "",
-        // 发票编号
-        invoiceNum: "",
         // 发票金额
         invoiceMoney: "",
         // 委托方性质
@@ -76,12 +74,10 @@ app.controller("invoice_detail_controller", ["$scope", "$stateParams", "_basic",
      * 保存修改信息
      * */
     $scope.updateInvoiceInfo = function () {
-        if ($scope.invoiceInfo.invoiceNum !== ""
-            && $scope.invoiceInfo.invoiceMoney !== ""
+        if ($scope.invoiceInfo.invoiceMoney !== ""
             && $scope.invoiceInfo.entrustType !== ""
             && $scope.invoiceInfo.entrustId !== "") {
             var obj = {
-                invoiceNum: $scope.invoiceInfo.invoiceNum,
                 invoiceMoney: $scope.invoiceInfo.invoiceMoney,
                 entrustId: $scope.invoiceInfo.entrustId,
                 remark: $scope.invoiceInfo.remark
@@ -180,6 +176,9 @@ app.controller("invoice_detail_controller", ["$scope", "$stateParams", "_basic",
                             }
                         }
                     }
+                    // 当前 日期
+                    // var now = moment(new Date()).format('YYYY-MM-DD');
+                    // pdf.save('invoice_' + now + '.pdf');
                     pdf.save('invoice.pdf');
                 },
                 // 背景设为白色（默认为黑色）
@@ -632,12 +631,10 @@ app.controller("invoice_detail_controller", ["$scope", "$stateParams", "_basic",
         _basic.get(_host.api_url + "/invoice?invoiceId=" + invoiceId).then(function (data) {
             if (data.success) {
                 // 当前发票信息
-                // id
+                // 发票编号
                 $scope.invoiceInfo.invoiceId = data.result[0].id;
                 // 发票状态
                 $scope.invoiceInfo.invoiceStatus = data.result[0].invoice_status;
-                // 发票编号
-                $scope.invoiceInfo.invoiceNum = data.result[0].invoice_num;
                 // 发票金额
                 $scope.invoiceInfo.invoiceMoney = data.result[0].invoice_money;
                 // 委托方性质
