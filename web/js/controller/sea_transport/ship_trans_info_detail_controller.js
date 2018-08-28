@@ -838,7 +838,7 @@ app.controller("ship_trans_info_detail_controller", ["$scope", "$state", "$state
      */
     function getCarMakerList() {
         _basic.get(_host.api_url + "/carMake").then(function (data) {
-            if (data.success == true && data.result.length > 0) {
+            if (data.success && data.result.length > 0) {
                 $scope.carMakerList = data.result;
             } else {
                 swal(data.msg, "", "error");
@@ -856,7 +856,7 @@ app.controller("ship_trans_info_detail_controller", ["$scope", "$state", "$state
             } else {
                 $scope.curruntId = val;
                 _basic.get(_host.api_url + "/carMake/" + val + "/carModel").then(function (data) {
-                    if (data.success == true && data.result.length > 0) {
+                    if (data.success && data.result.length > 0) {
                         $scope.carModelList = data.result;
                     } else {
                         swal(data.msg, "", "error")

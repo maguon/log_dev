@@ -61,7 +61,6 @@ app.controller("credit_card_detail_controller", ["$scope", "$rootScope", "_host"
         $scope.carId = undefined;
     };
 
-
     /**
      * 获取基本信息
      */
@@ -102,7 +101,6 @@ app.controller("credit_card_detail_controller", ["$scope", "$rootScope", "_host"
                 if($scope.baseInfoList.actual_remit_date=='Invalid date'){
                     $scope.baseInfoList.actual_remit_date=""
                 }
-
             }
         })
     }
@@ -120,7 +118,6 @@ app.controller("credit_card_detail_controller", ["$scope", "$rootScope", "_host"
                     $scope.carId = undefined;
                 }
             }
-
         })
     }
 
@@ -177,8 +174,6 @@ app.controller("credit_card_detail_controller", ["$scope", "$rootScope", "_host"
                 delete obj.actualRemitDate;
             }
 
-
-
             _basic.put(_host.api_url + "/user/" + userId + "/credit/"+val, obj).then(function (data) {
                 if (data.success) {
                     swal('修改成功!', "", "success");
@@ -190,19 +185,20 @@ app.controller("credit_card_detail_controller", ["$scope", "$rootScope", "_host"
         } else {
             swal("请输入完整信息！", "", "warning");
         }
-    }
+    };
 
 
     //模糊查询
-    var vinObjs ={}
+    var vinObjs ={};
     $('#autocomplete-input').autocomplete({
         data: vinObjs,
         limit: 10,
         onAutocomplete: function(val) {
         },
-        minLength: 6,
+        minLength: 6
     });
-    $scope.shortSearch=function (vin) {
+
+    $scope.shortSearch = function (vin) {
         // 委托方 下拉选中 内容
         if ($("#putEntrustSelect").val() != null && $("#putEntrustSelect").val() !== "") {
             $scope.entrustId = $("#putEntrustSelect").select2("data")[0].id;
@@ -211,7 +207,7 @@ app.controller("credit_card_detail_controller", ["$scope", "$rootScope", "_host"
                 $scope.entrustId = $scope.baseInfoList.entrust_id;
             }
         }
-        if(vin!==undefined&&vin!=="") {
+        if (vin !== undefined && vin !== "") {
             $scope.addCarInfoFlg = false;
 
             if (vin.length >= 6) {
