@@ -238,12 +238,6 @@ app.controller("credit_card_detail_controller", ["$scope", "$rootScope", "_host"
                 $('#autocomplete-input').autocomplete({minLength: 6});
                 $scope.vinMsg = {}
             }
-
-            // 根据填充完毕的完整vin码信息进行精确查询
-            $scope.addCarInfoFlg = false;
-            if (vin.length === 17) {
-                $scope.addCarInfoFlg = true;
-            }
         }
     };
 
