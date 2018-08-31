@@ -69,7 +69,7 @@ app.controller("finance_car_controller", ["$scope", "$rootScope", "_host", "_bas
         // 检索URL
         url = conditions.length > 0 ? url + "&" + conditions : url;
         _basic.get(url).then(function (data) {
-            if (data.success === true) {
+            if (data.success) {
 
                 // 当前画面的检索信息
                 var pageItems = {
@@ -303,7 +303,7 @@ app.controller("finance_car_controller", ["$scope", "$rootScope", "_host", "_bas
             }
         }
 
-        if ($scope.carInfo.vin !== "" && $scope.carInfo.makerId !== "" && $scope.carInfo.modelId !== ""
+        if ($scope.carInfo.vin !== "" && $scope.carInfo.vin.length === 17 && $scope.carInfo.makerId !== "" && $scope.carInfo.modelId !== ""
             && entrustId !== "" && $scope.carInfo.valuation !== "" && $scope.carInfo.msoStatus !== "" && $scope.carInfo.purchaseType !== "") {
             var obj = {
                 // vin
@@ -362,7 +362,11 @@ app.controller("finance_car_controller", ["$scope", "$rootScope", "_host", "_bas
                 })
             }
         } else {
-            swal("请填写完整车辆信息！", "", "warning");
+            if ($scope.carInfo.vin.length !== 17) {
+                swal("请填写17位VIN！", "", "warning");
+            } else {
+                swal("请填写完整车辆信息！", "", "warning");
+            }
         }
     };
 
@@ -466,7 +470,7 @@ app.controller("finance_car_controller", ["$scope", "$rootScope", "_host", "_bas
     /**
      * 画面初期显示时，用来获取画面必要信息的初期方法。
      */
-    $scope.initData = function () {
+    function initData() {
         // 取得 检索条件：汽车品牌
         getCarMakerList();
 
@@ -489,7 +493,7 @@ app.controller("finance_car_controller", ["$scope", "$rootScope", "_host", "_bas
 
         // 查询数据
         queryFinanceCarList();
-    };
-    $scope.initData();
+    }
+    initData();
 }]);
 
