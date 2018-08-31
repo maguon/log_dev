@@ -10,7 +10,7 @@ app.controller("setting_amend_vin_controller", ["$scope", "_basic", "_config", "
 
     //获取委托方信息
     _basic.get(_host.api_url + "/entrust").then(function (data) {
-        if (data.success == true) {
+        if (data.success) {
             $scope.getEntrust = data.result;
             $('#getEntrustId').select2({
                 placeholder: '委托方',
@@ -38,14 +38,14 @@ app.controller("setting_amend_vin_controller", ["$scope", "_basic", "_config", "
         if($scope.demandVin&&$scope.demandVin!==""){
             if($scope.demandVin.length>=6){
                 _basic.get(_host.api_url+"/user/"+userId+"/car?vinCode="+$scope.demandVin+'&active=1',{}).then(function (data) {
-                    if(data.success==true&&data.result.length>0){
+                    if(data.success && data.result.length>0){
                         $scope.vinMsg=data.result;
                         vinObjs ={};
                         for(var i in $scope.vinMsg){
                             vinObjs[$scope.vinMsg[i].vin]=null;
                         }
                         return vinObjs;
-                    }else{
+                    } else{
                         return {};
                     }
                 }).then(function(vinObjs){
@@ -54,9 +54,8 @@ app.controller("setting_amend_vin_controller", ["$scope", "_basic", "_config", "
                         minLength: 6
                     });
                     $('#autocomplete-input').focus();
-
                 })
-            }else {
+            } else {
                 $('#autocomplete-input').autocomplete({minLength:6});
                 $scope.vinMsg={}
             }
@@ -68,8 +67,8 @@ app.controller("setting_amend_vin_controller", ["$scope", "_basic", "_config", "
         $scope.self_car.model_id='';
         if($scope.demandVin!=="") {
             _basic.get(_host.api_url +"/user/"+userId+"/car?vin="+ $scope.demandVin+'&active=1').then(function (data) {
-                if (data.success = true) {
-                    if (data.result.length == 0) {
+                if (data.success) {
+                    if (data.result.length === 0) {
                         $(".no_car_detail").show();
                         $(".car_detail").hide();
                     } else {
@@ -87,36 +86,24 @@ app.controller("setting_amend_vin_controller", ["$scope", "_basic", "_config", "
                             }
                         }
                     }
-                }
-                else {
+                } else {
                     swal(data.msg, "", "error");
                 }
             })
-        }
-        else{
+        } else{
             swal('请输入VIN','','error')
         }
     };
 
-    // 车辆品牌查询
-    function getMakeCarName(){
-        _basic.get(_host.api_url + "/carMake").then(function (data) {
-            if (data.success == true&&data.result.length>0) {
-                $scope.makecarName = data.result;
-            } else {
-                swal(data.msg, "", "error");
-            }
-        });
-    }
+
 
 
     // 车辆型号联动查询
     $scope.changeMakeId = function (val) {
         if ( val&&val!==null) {
             _basic.get(_host.api_url + "/carMake/" + val + "/carModel").then(function (data) {
-                if (data.success == true&&data.result.length>0) {
+                if (data.success &&data.result.length>0) {
                     $scope.carModelName = data.result;
-
                 } else {
                     swal(data.msg, "", "error")
                 }
@@ -134,14 +121,15 @@ app.controller("setting_amend_vin_controller", ["$scope", "_basic", "_config", "
     };
 
     // 修改vin码
-    $scope.amend_vin=function (id) {
+    $scope.changeVin = function (id) {
         $scope.flag=true;
         var obj={
             "vin":$scope.vin
         };
-        if($scope.vin.length==17){
-            _basic.put(_host.api_url+"/admin/"+userId+"/car/"+id+"/vin",obj).then(function (data) {
-                if(data.success==true){
+
+        if($scope.vin.length === 17){
+            _basic.put(_host.api_url + "/admin/" + userId + "/car/" + id + "/vin", obj).then(function (data) {
+                if(data.success){
                     swal("修改成功","","success");
                     $scope.demandVin="";
                 }else {
@@ -149,43 +137,59 @@ app.controller("setting_amend_vin_controller", ["$scope", "_basic", "_config", "
                     $scope.vin=$scope.self_car.vin;
                 }
             })
-        }else {
-            swal("请输入17位数字","","error");
+        } else {
+            swal("请填写17位VIN","","error");
             $scope.vin=$scope.self_car.vin;
         }
-    }
-
-    // 修改
-    $scope.putDataItem = function (id) {
-        var obj = {
-            vin: $scope.self_car.vin,
-            makeId: $scope.self_car.make_id,
-            makeName: $("#look_makecarName").find("option:selected").text(),
-            modelId: $scope.self_car.model_id,
-            modelName: $("#look_model_name").find("option:selected").text(),
-            proDate: $scope.self_car.pro_date,
-            colour: $scope.self_car.colour,
-            engineNum: $scope.self_car.engine_num,
-            entrustId:  $scope.self_car.entrust_id,
-            valuation:  $scope.self_car.valuation,
-            purchaseType:$scope.self_car.purchase_type,
-            msoStatus:  $scope.self_car.mso_status,
-            remark: $scope.self_car.remark
-        };
-        // 修改仓库信息
-        _basic.put(_host.api_url + "/user/" + userId + "/car/" + id, obj).then(function (data) {
-            if (data.success == true) {
-                $scope.demandVin="";
-                $(".car_detail").hide();
-                swal("修改成功", "", "success");
-
-            }
-            else {
-                swal(data.msg, "", "error")
-            }
-        });
     };
 
+    /**
+     * 保存汽车详细信息。
+     *
+     * @param id 汽车ID
+     */
+    $scope.saveCarDetail = function (id) {
+        if ($scope.self_car.engine_num !== "" && $scope.self_car.model_id !== null && $scope.self_car.model_id !== ""
+            && $scope.self_car.pro_date !== "" && $scope.self_car.valuation !== "") {
+            var obj = {
+                vin: $scope.self_car.vin,
+                makeId: $scope.self_car.make_id,
+                makeName: $("#look_makecarName").find("option:selected").text(),
+                modelId: $scope.self_car.model_id,
+                modelName: $("#look_model_name").find("option:selected").text(),
+                proDate: $scope.self_car.pro_date,
+                colour: $scope.self_car.colour,
+                engineNum: $scope.self_car.engine_num,
+                entrustId:  $scope.self_car.entrust_id,
+                valuation:  $scope.self_car.valuation,
+                purchaseType:$scope.self_car.purchase_type,
+                msoStatus:  $scope.self_car.mso_status,
+                remark: $scope.self_car.remark
+            };
+            // 修改仓库信息
+            _basic.put(_host.api_url + "/user/" + userId + "/car/" + id, obj).then(function (data) {
+                if (data.success) {
+                    $scope.demandVin="";
+                    $(".car_detail").hide();
+                    swal("修改成功", "", "success");
+                } else {
+                    swal(data.msg, "", "error")
+                }
+            });
+        } else {
+            swal("请填写完整车辆信息！", "", "warning");
+        }
+    };
 
+    // 车辆品牌查询
+    function getMakeCarName(){
+        _basic.get(_host.api_url + "/carMake").then(function (data) {
+            if (data.success &&data.result.length>0) {
+                $scope.makecarName = data.result;
+            } else {
+                swal(data.msg, "", "error");
+            }
+        });
+    }
     getMakeCarName();
 }]);
