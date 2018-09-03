@@ -19,12 +19,6 @@ app.controller("setting_amend_vin_controller", ["$scope", "_basic", "_config", "
         }
     });
 
-    /**
-     * 根据画面输入的vin码进行查询车辆信息。
-     *
-     * @param $iValid 是否有效
-     */
-
     //模糊查询
     var vinObjs ={}
     $('#autocomplete-input').autocomplete({
@@ -32,7 +26,7 @@ app.controller("setting_amend_vin_controller", ["$scope", "_basic", "_config", "
         limit: 10,
         onAutocomplete: function(val) {
         },
-        minLength: 6,
+        minLength: 6
     });
     $scope.shortSearch=function () {
         if($scope.demandVin&&$scope.demandVin!==""){
@@ -61,7 +55,10 @@ app.controller("setting_amend_vin_controller", ["$scope", "_basic", "_config", "
             }
         }
     };
-    // 查询vin码
+
+    /**
+     * 根据画面输入的vin码进行查询车辆信息。
+     */
     $scope.demandCar=function () {
         $scope.carModelName = [];
         $scope.self_car.model_id='';
@@ -94,9 +91,6 @@ app.controller("setting_amend_vin_controller", ["$scope", "_basic", "_config", "
             swal('请输入VIN','','error')
         }
     };
-
-
-
 
     // 车辆型号联动查询
     $scope.changeMakeId = function (val) {
