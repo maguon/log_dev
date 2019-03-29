@@ -28,7 +28,8 @@ app.controller("credit_card_controller", ["$scope", "$rootScope", "_host", "_bas
         $('ul.tabWrap li.baseMsg ').addClass("active");
         $("#baseMsg").addClass("active");
         $("#baseMsg").show();
-    };
+    }
+
    function linkFinanceCar() {
         $('ul.tabWrap li').removeClass("active");
         $(".tab_box").removeClass("active");
@@ -37,48 +38,12 @@ app.controller("credit_card_controller", ["$scope", "$rootScope", "_host", "_bas
         $("#linkFinanceCar").addClass("active");
         $("#linkFinanceCar").show();
         $scope.getLinkCarList =[];
-    };
-
-    /**
-     * 获取委托方信息
-     * @param type 委托方类型
-     */
-    $scope.getEntrustInfo = function (type) {
-        var url = '';
-        if (type == undefined) {
-            url = _host.api_url + "/entrust";
-        } else {
-            url = _host.api_url + "/entrust?entrustType=" + type;
-        }
-        _basic.get(url).then(function (data) {
-            if (data.success == true) {
-                $scope.addEntrustList = data.result;
-                $('#addEntrustSelect').select2({
-                    placeholder: '委托方',
-                    containerCssClass: 'select2_dropdown',
-                    allowClear: true
-                });
-                $("#addEntrustSelect").val(null).trigger("change");
-            }
-        });
-    };
-
-
-    /**
-     * 查询页面获取委托方信息
-     */
-    function getEntrustInfo (){
-        _basic.get(_host.api_url + "/entrust").then(function (data) {
-            if (data.success == true) {
-                $scope.entrustList = data.result;
-                $('#entrustSelect').select2({
-                    placeholder: '委托方',
-                    containerCssClass: 'select2_dropdown',
-                    allowClear: true
-                });
-            }
-        })
     }
+
+
+
+
+
 
 
     /**
@@ -166,87 +131,224 @@ app.controller("credit_card_controller", ["$scope", "$rootScope", "_host", "_bas
 
 
     /**
+     * 【新增信用证】 获取委托方信息
+     * @param type 委托方类型
+     */
+    $scope.getEntrustInfo = function (type) {
+        var url = '';
+        if (type == undefined) {
+            url = _host.api_url + "/entrust";
+        } else {
+            url = _host.api_url + "/entrust?entrustType=" + type;
+        }
+        _basic.get(url).then(function (data) {
+            if (data.success == true) {
+                $scope.addEntrustList = data.result;
+                $('#addEntrustSelect').select2({
+                    placeholder: '委托方',
+                    containerCssClass: 'select2_dropdown',
+                    allowClear: true
+                });
+                $("#addEntrustSelect").val(null).trigger("change");
+            }
+        });
+    };
+
+    /**
+     * 【新增信用证】 设定 实际到款金额
+     */
+    $scope.setActualMoney = function () {
+        if ($scope.acceptFee === '') {
+            $scope.addActualMoney = '';
+        } else {
+            // 信用证扣费项目：快递费
+            var expressFee = $scope.expressFee === '' ? 0 : parseFloat($scope.expressFee);
+            // 信用证扣费项目：通知费
+            var advising = $scope.advisingCharges === '' ? 0 : parseFloat($scope.advisingCharges);
+            // 信用证扣费项目：修改通知费
+            var againAdvising = $scope.againAdvisingCharges === '' ? 0 : parseFloat($scope.againAdvisingCharges);
+            // 信用证扣费项目：手续费
+            var service = $scope.serviceCharge === '' ? 0 : parseFloat($scope.serviceCharge);
+            // 信用证扣费项目：离岸汇款手续费
+            var offshoreService = $scope.offshoreServiceCharge === '' ? 0 : parseFloat($scope.offshoreServiceCharge);
+            // 信用证扣费项目：美国收款手续费
+            var ashoreReceivablesService = $scope.ashoreReceivablesServiceCharge === '' ? 0 : parseFloat($scope.ashoreReceivablesServiceCharge);
+            // 信用证扣费项目：美国汇款手续费
+            var ashoreRemittanceService = $scope.ashoreRemittanceServiceCharge === '' ? 0 : parseFloat($scope.ashoreRemittanceServiceCharge);
+
+            // 实际到款金额 = 接证金额 - 信用证扣费 总计
+            $scope.addActualMoney = ($scope.acceptFee - expressFee - advising - againAdvising - service - offshoreService - ashoreReceivablesService - ashoreRemittanceService).toFixed(2);
+            // 修改画面差额表示。
+            $scope.setDifference();
+        }
+    };
+
+    /**
+     * 【新增信用证】 设定 差额
+     */
+    $scope.setDifference = function () {
+        if ($scope.addCreditMoney === '' || $scope.addActualMoney === '') {
+            $scope.difference = '';
+        } else {
+            // 差额 = 信用证金额 - 实际到款金额
+            $scope.difference = $scope.addCreditMoney - $scope.addActualMoney;
+        }
+    };
+
+    /**
      * 打开【新增信用证】模态画面。
      */
     $scope.openNewCreditCardDiv = function () {
+        // 打开画面
         $('.modal').modal();
         $('#newCreditCardDiv').modal('open');
-        $scope.getEntrustInfo();
+
+        // 信用证编码
         $scope.addCreditId = '';
-        $scope.creditVin ='';
-        $scope.addCreditMoney='';
+        // 委托方性质
         $scope.addEntrustType ='';
-        $scope.addCreditMoney='';
-        $scope.addActualMoney='';
-        $scope.addPlanReturnDate='';
-        $scope.addActualReturnDate='';
-        $scope.addReceiveCardDate='';
-        $scope.addDocumentsDate='';
-        $scope.addDocumentsSendDate='';
-        $scope.addDocumentsReceiveDate='';
-        $scope.addActualRemitDate='';
+        // 委托方
+        $scope.getEntrustInfo();
+        // 发票号码
         $scope.addInvoiceNumber='';
+        // 信用证金额
+        $scope.addCreditMoney='';
+        // 接证金额
+        $scope.acceptFee='';
+        // 实际到款金额 = 接证金额 - 信用证扣费 总计
+        $scope.addActualMoney='';
+
+        // 信用证扣费项目：快递费
+        $scope.expressFee='0';
+        // 信用证扣费项目：通知费
+        $scope.advisingCharges='0';
+        // 信用证扣费项目：修改通知费
+        $scope.againAdvisingCharges='0';
+        // 信用证扣费项目：手续费
+        $scope.serviceCharge='0';
+        // 信用证扣费项目：离岸汇款手续费
+        $scope.offshoreServiceCharge='0';
+        // 信用证扣费项目：美国收款手续费
+        $scope.ashoreReceivablesServiceCharge='0';
+        // 信用证扣费项目：美国汇款手续费
+        $scope.ashoreRemittanceServiceCharge='0';
+        // 信用证扣费项目：差额
+        $scope.difference='';
+
+        // 信用证相关日期：预计回款日期
+        $scope.addPlanReturnDate='';
+        // 信用证相关日期：接证日期
+        $scope.addReceiveCardDate='';
+        // 信用证相关日期：交单日期
+        $scope.addDocumentsDate='';
+        // 信用证相关日期：实际回款日期
+        $scope.addActualReturnDate='';
+        // 信用证相关日期：文件发出日期
+        $scope.addDocumentsSendDate='';
+        // 信用证相关日期：开户行文件接收日期
+        $scope.addDocumentsReceiveDate='';
+        // 信用证相关日期：实际汇款日期
+        $scope.addActualRemitDate='';
+
+        // 备注
         $scope.addRemarkText='';
+        // 设定显示效果
         baseMsg();
     };
 
     /**
-     *提交【新增信用证】模态画面的基本信息。
+     * 提交【新增信用证】模态画面的基本信息。
      */
     $scope.addCreditCardInfo = function () {
 
         // 委托方 下拉选中 内容
         $scope.entrust = $("#addEntrustSelect").select2("data")[0]; //单选
 
-        if ( $scope.entrust.id !== "" && $scope.addCreditId !== "" && $scope.addCreditMoney !== "" && $scope.addActualMoney !== "") {
-
-
+        // 必须项目：信用证编码 委托方 信用证金额 接证金额
+        if ($scope.addCreditId !== "" && $scope.entrust.id !== "" && $scope.addCreditMoney !== "" && $scope.acceptFee !== "") {
             // 追加画面数据
             var obj = {
+                // 信用证编码
                 creditNumber: $scope.addCreditId,
+                // 委托方
                 entrustId: $scope.entrust.id,
-                creditMoney: $scope.addCreditMoney,
-                actualMoney: $scope.addActualMoney,
-                planReturnDate: $scope.addPlanReturnDate,
-                actualReturnDate: $scope.addActualReturnDate,
-                receiveCardDate: $scope.addReceiveCardDate,
-                documentsDate: $scope.addDocumentsDate,
-                documentsSendDate:$scope.addDocumentsSendDate,
-                documentsReceiveDate: $scope.addDocumentsReceiveDate,
-                actualRemitDate:$scope.addActualRemitDate,
+                // 发票号码
                 invoiceNumber: $scope.addInvoiceNumber,
+                // 信用证金额
+                creditMoney: $scope.addCreditMoney,
+                // 接证金额
+                receiveCardMoney: $scope.acceptFee,
+                // 实际到款金额
+                actualMoney: $scope.addActualMoney,
+
+                // 信用证扣费项目：快递费
+                expressFee: $scope.expressFee === '' ? 0 : $scope.expressFee,
+                // 信用证扣费项目：通知费
+                informFee: $scope.advisingCharges === '' ? 0 : $scope.advisingCharges,
+                // 信用证扣费项目：修改通知费
+                updateInformFee: $scope.againAdvisingCharges === '' ? 0 : $scope.againAdvisingCharges,
+                // 信用证扣费项目：手续费
+                proceFee: $scope.serviceCharge === '' ? 0 : $scope.serviceCharge,
+                // 信用证扣费项目：离岸汇款手续费
+                leaveShoreFee: $scope.offshoreServiceCharge === '' ? 0 : $scope.offshoreServiceCharge,
+                // 信用证扣费项目：美国收款手续费
+                usReceiptsFee: $scope.ashoreReceivablesServiceCharge === '' ? 0 : $scope.ashoreReceivablesServiceCharge,
+                // 信用证扣费项目：美国汇款手续费
+                usRemitFee: $scope.ashoreRemittanceServiceCharge === '' ? 0 : $scope.ashoreRemittanceServiceCharge,
+                // 信用证扣费项目：差额
+                differenceFee: $scope.difference === '' ? 0 : $scope.difference,
+
+                // 信用证相关日期：预计回款日期
+                planReturnDate: $scope.addPlanReturnDate,
+                // 信用证相关日期：接证日期
+                receiveCardDate: $scope.addReceiveCardDate,
+                // 信用证相关日期：交单日期
+                documentsDate: $scope.addDocumentsDate,
+                // 信用证相关日期：实际回款日期
+                actualReturnDate: $scope.addActualReturnDate,
+                // 信用证相关日期：文件发出日期
+                documentsSendDate:$scope.addDocumentsSendDate,
+                // 信用证相关日期：开户行文件接收日期
+                documentsReceiveDate: $scope.addDocumentsReceiveDate,
+                // 信用证相关日期：实际汇款日期
+                actualRemitDate:$scope.addActualRemitDate,
+                // 备注
                 remark: $scope.addRemarkText
             };
 
             // 如果日期没有输入，就去掉此属性
-            if ($scope.addPlanReturnDate ==  "") {
+            if ($scope.addPlanReturnDate ===  "") {
                 delete obj.planReturnDate;
             }
-            if ($scope.addActualReturnDate ==  "") {
+            if ($scope.addActualReturnDate ===  "") {
                 delete obj.actualReturnDate;
             }
-            if ( $scope.addReceiveCardDate ==  "") {
+            if ( $scope.addReceiveCardDate ===  "") {
                 delete obj.receiveCardDate;
             }
-            if ($scope.addDocumentsDate ==  "") {
+            if ($scope.addDocumentsDate ===  "") {
                 delete obj.documentsDate;
             }
-            if ($scope.addDocumentsSendDate ==  "") {
+            if ($scope.addDocumentsSendDate ===  "") {
                 delete obj.documentsSendDate;
             }
-            if ($scope.addDocumentsReceiveDate ==  "") {
+            if ($scope.addDocumentsReceiveDate ===  "") {
                 delete obj.documentsReceiveDate;
             }
-            if ($scope.addActualRemitDate ==  "") {
+            if ($scope.addActualRemitDate ===  "") {
                 delete obj.actualRemitDate;
             }
 
             _basic.post(_host.api_url + "/user/" + userId + "/credit", obj).then(function (data) {
                 if (data.success) {
-                    $scope.creditCarRelId = data.id;
+                    // 迁移到下一个画面(TAB:关联车辆)
                     linkFinanceCar();
+                    //
+                    queryCreditCardList();
+                    // 一览画面刷新数据
+                    $scope.creditCarRelId = data.id;
+                    // 取得关联车辆信息
                     queryLinkCar($scope.creditCarRelId);
-
                 } else {
                     swal(data.msg, "", "error");
                 }
@@ -255,7 +357,6 @@ app.controller("credit_card_controller", ["$scope", "$rootScope", "_host", "_bas
             swal("请输入完整信息！", "", "warning");
         }
     };
-
 
     /**
      * 获取关联车辆信息
@@ -274,15 +375,14 @@ app.controller("credit_card_controller", ["$scope", "$rootScope", "_host", "_bas
         })
     }
 
-
     //模糊查询
-    var vinObjs ={}
+    var vinObjs ={};
     $('#autocomplete-input').autocomplete({
         data: vinObjs,
         limit: 10,
         onAutocomplete: function(val) {
         },
-        minLength: 6,
+        minLength: 6
     });
     $scope.shortSearch=function () {
         if($scope.creditVin!==""&&$scope.creditVin!==undefined) {
@@ -343,7 +443,7 @@ app.controller("credit_card_controller", ["$scope", "$rootScope", "_host", "_bas
                 }
             });
 
-    }
+    };
 
     //关闭模态框
     $scope.addCarLinkInfo = function(){
@@ -352,7 +452,7 @@ app.controller("credit_card_controller", ["$scope", "$rootScope", "_host", "_bas
         queryCreditCardList();
         swal("新增成功", "", "success");
 
-    }
+    };
 
     /**
      * 上一页
@@ -370,7 +470,21 @@ app.controller("credit_card_controller", ["$scope", "$rootScope", "_host", "_bas
         queryCreditCardList();
     };
 
-
+    /**
+     * 组装 委托方 select2 数据 (一览画面)
+     */
+    function getEntrustInfo (){
+        _basic.get(_host.api_url + "/entrust").then(function (data) {
+            if (data.success === true) {
+                $scope.entrustList = data.result;
+                $('#entrustSelect').select2({
+                    placeholder: '委托方',
+                    containerCssClass: 'select2_dropdown',
+                    allowClear: true
+                });
+            }
+        })
+    }
 
     /**
      * 画面初期显示时，用来获取画面必要信息的初期方法。
@@ -378,12 +492,8 @@ app.controller("credit_card_controller", ["$scope", "$rootScope", "_host", "_bas
     $scope.initData = function () {
         // 查询数据
         queryCreditCardList();
-        // 获取委托方信息
+        // 组装 委托方 select2 数据
         getEntrustInfo();
     };
     $scope.initData();
-
-
-
-
-}])
+}]);

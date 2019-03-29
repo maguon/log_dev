@@ -41,6 +41,47 @@ app.controller("credit_card_detail_controller", ["$scope", "$rootScope", "_host"
     };
 
     /**
+     * 【信用证详情】 设定 实际到款金额
+     */
+    $scope.setActualMoney = function () {
+        if ($scope.baseInfoList.receive_card_money === '') {
+            $scope.baseInfoList.actual_money = '';
+        } else {
+            // 信用证扣费项目：快递费
+            var expressFee = $scope.baseInfoList.express_fee === '' ? 0 : parseFloat($scope.baseInfoList.express_fee);
+            // 信用证扣费项目：通知费
+            var advising = $scope.baseInfoList.inform_fee === '' ? 0 : parseFloat($scope.baseInfoList.inform_fee);
+            // 信用证扣费项目：修改通知费
+            var againAdvising = $scope.baseInfoList.update_inform_fee === '' ? 0 : parseFloat($scope.baseInfoList.update_inform_fee);
+            // 信用证扣费项目：手续费
+            var service = $scope.baseInfoList.proce_fee === '' ? 0 : parseFloat($scope.baseInfoList.proce_fee);
+            // 信用证扣费项目：离岸汇款手续费
+            var offshoreService = $scope.baseInfoList.leave_shore_fee === '' ? 0 : parseFloat($scope.baseInfoList.leave_shore_fee);
+            // 信用证扣费项目：美国收款手续费
+            var ashoreReceivablesService = $scope.baseInfoList.us_receipts_fee === '' ? 0 : parseFloat($scope.baseInfoList.us_receipts_fee);
+            // 信用证扣费项目：美国汇款手续费
+            var ashoreRemittanceService = $scope.baseInfoList.us_remit_fee === '' ? 0 : parseFloat($scope.baseInfoList.us_remit_fee);
+
+            // 实际到款金额 = 接证金额 - 信用证扣费 总计
+            $scope.baseInfoList.actual_money = ($scope.baseInfoList.receive_card_money - expressFee - advising - againAdvising - service - offshoreService - ashoreReceivablesService - ashoreRemittanceService).toFixed(2);
+            // 修改画面差额表示。
+            $scope.setDifference();
+        }
+    };
+
+    /**
+     * 【信用证详情】 设定 差额
+     */
+    $scope.setDifference = function () {
+        if ($scope.baseInfoList.credit_money === '' || $scope.baseInfoList.receive_card_money === '') {
+            $scope.baseInfoList.difference_fee = '';
+        } else {
+            // 差额 = 信用证金额 - 实际到款金额
+            $scope.baseInfoList.difference_fee = $scope.baseInfoList.credit_money - $scope.baseInfoList.actual_money;
+        }
+    };
+
+    /**
      * 基本信息 关联车辆 跳转
      */
     $scope.showMsgInfo = function () {
@@ -134,50 +175,84 @@ app.controller("credit_card_detail_controller", ["$scope", "$rootScope", "_host"
             }
         }
 
-        if ( $scope.entrustId !== "" && $scope.baseInfoList.credit_number !== "" && $scope.baseInfoList.credit_money!== "" && $scope.baseInfoList.actual_money !== "") {
+        // 必须项目：信用证编码 委托方 信用证金额 接证金额
+        if ($scope.baseInfoList.credit_number !== "" && $scope.entrustId !== "" && $scope.baseInfoList.credit_money!== "" && $scope.baseInfoList.receive_card_money !== "") {
             var obj = {
+                // 信用证编码
                 creditNumber:  $scope.baseInfoList.credit_number,
+                // 委托方
                 entrustId:  $scope.entrustId,
-                creditMoney:  $scope.baseInfoList.credit_money,
-                actualMoney: $scope.baseInfoList.actual_money,
-                planReturnDate:  $scope.baseInfoList.plan_return_date,
-                actualReturnDate:  $scope.baseInfoList.actual_return_date,
-                receiveCardDate:  $scope.baseInfoList.receive_card_date,
-                documentsDate:  $scope.baseInfoList.documents_date,
-                documentsSendDate:  $scope.baseInfoList.documents_send_date,
-                documentsReceiveDate:  $scope.baseInfoList.documents_receive_date,
-                actualRemitDate:  $scope.baseInfoList.actual_remit_date,
+                // 发票号码
                 invoiceNumber: $scope.baseInfoList.invoice_number,
+                // 信用证金额
+                creditMoney:  $scope.baseInfoList.credit_money,
+                // 接证金额
+                receiveCardMoney: $scope.baseInfoList.receive_card_money,
+                // 实际到款金额
+                actualMoney: $scope.baseInfoList.actual_money,
+
+                // 信用证扣费项目：快递费
+                expressFee: $scope.baseInfoList.express_fee === '' ? 0 : $scope.baseInfoList.express_fee,
+                // 信用证扣费项目：通知费
+                informFee: $scope.baseInfoList.inform_fee === '' ? 0 : $scope.baseInfoList.inform_fee,
+                // 信用证扣费项目：修改通知费
+                updateInformFee: $scope.baseInfoList.update_inform_fee === '' ? 0 : $scope.baseInfoList.update_inform_fee,
+                // 信用证扣费项目：手续费
+                proceFee: $scope.baseInfoList.proce_fee === '' ? 0 : $scope.baseInfoList.proce_fee,
+                // 信用证扣费项目：离岸汇款手续费
+                leaveShoreFee: $scope.baseInfoList.leave_shore_fee === '' ? 0 : $scope.baseInfoList.leave_shore_fee,
+                // 信用证扣费项目：美国收款手续费
+                usReceiptsFee: $scope.baseInfoList.us_receipts_fee === '' ? 0 : $scope.baseInfoList.us_receipts_fee,
+                // 信用证扣费项目：美国汇款手续费
+                usRemitFee: $scope.baseInfoList.us_remit_fee === '' ? 0 : $scope.baseInfoList.us_remit_fee,
+                // 信用证扣费项目：差额
+                differenceFee: $scope.baseInfoList.difference_fee === '' ? 0 : $scope.baseInfoList.difference_fee,
+
+                // 信用证相关日期：预计回款日期
+                planReturnDate:  $scope.baseInfoList.plan_return_date,
+                // 信用证相关日期：接证日期
+                receiveCardDate:  $scope.baseInfoList.receive_card_date,
+                // 信用证相关日期：交单日期
+                documentsDate:  $scope.baseInfoList.documents_date,
+                // 信用证相关日期：实际回款日期
+                actualReturnDate:  $scope.baseInfoList.actual_return_date,
+                // 信用证相关日期：文件发出日期
+                documentsSendDate:  $scope.baseInfoList.documents_send_date,
+                // 信用证相关日期：开户行文件接收日期
+                documentsReceiveDate:  $scope.baseInfoList.documents_receive_date,
+                // 信用证相关日期：实际汇款日期
+                actualRemitDate:  $scope.baseInfoList.actual_remit_date,
+                // 备注
                 remark:  $scope.baseInfoList.remark
             };
 
             // 如果日期没有输入，就去掉此属性
-            if ($scope.baseInfoList.plan_return_date ==  "") {
+            if ($scope.baseInfoList.plan_return_date ===  "") {
                 delete obj.planReturnDate;
             }
-            if ($scope.baseInfoList.actual_return_date ==  "") {
+            if ($scope.baseInfoList.actual_return_date ===  "") {
                 delete obj.actualReturnDate;
             }
-            if ( $scope.baseInfoList.receive_card_date ==  "") {
+            if ( $scope.baseInfoList.receive_card_date ===  "") {
                 delete obj.receiveCardDate;
             }
-            if ($scope.baseInfoList.documents_date ==  "") {
+            if ($scope.baseInfoList.documents_date ===  "") {
                 delete obj.documentsDate;
             }
-            if ($scope.baseInfoList.documents_send_date ==  "") {
+            if ($scope.baseInfoList.documents_send_date ===  "") {
                 delete obj.documentsSendDate;
             }
-            if ($scope.baseInfoList.documents_receive_date ==  "") {
+            if ($scope.baseInfoList.documents_receive_date ===  "") {
                 delete obj.documentsReceiveDate;
             }
-            if (  $scope.baseInfoList.actual_remit_date ==  "") {
+            if (  $scope.baseInfoList.actual_remit_date ===  "") {
                 delete obj.actualRemitDate;
             }
 
             _basic.put(_host.api_url + "/user/" + userId + "/credit/"+val, obj).then(function (data) {
                 if (data.success) {
                     swal('修改成功!', "", "success");
-
+                    // queryBaseItem ();
                 } else {
                     swal(data.msg, "", "error");
                 }
@@ -186,7 +261,6 @@ app.controller("credit_card_detail_controller", ["$scope", "$rootScope", "_host"
             swal("请输入完整信息！", "", "warning");
         }
     };
-
 
     //模糊查询
     var vinObjs ={};
@@ -199,6 +273,8 @@ app.controller("credit_card_detail_controller", ["$scope", "$rootScope", "_host"
     });
 
     $scope.shortSearch = function (vin) {
+        console.log('vin',vin);
+
         // 委托方 下拉选中 内容
         if ($("#putEntrustSelect").val() != null && $("#putEntrustSelect").val() !== "") {
             $scope.entrustId = $("#putEntrustSelect").select2("data")[0].id;

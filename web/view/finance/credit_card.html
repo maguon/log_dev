@@ -176,136 +176,204 @@
 
 <!-- 画面【新增信用证】 模态框 -->
 <div id="newCreditCardDiv" class="modal row" style="width: 45%;">
-    <!-- Header -->
+    <!-- 画面【新增信用证】 Header -->
     <div class="modal_title center-align cyan white-text">新增信用证</div>
 
+    <!-- 画面【新增信用证】 Body -->
     <div class="modal-content center" style="font-weight: 500;padding: 0">
 
         <div class="row no-marBottom" ul-tabs>
-            <div class="col s12 p0" style="width: 88%;margin-left:6%;margin-top: 20px">
+
+            <!-- 头部：TAB标题 -->
+            <div class="col s12 p0" style="width: 94%;margin-left:3%;margin-top: 10px">
                 <ul class="tabWrap grey lighten-4">
                     <li class="tab col s6 baseMsg vc-center active">基本信息</li>
                     <li class="tab col s6 linkFinanceCar vc-center">关联车辆</li>
                 </ul>
             </div>
 
-            <!--基本信息-->
+            <!-- TAB: 基本信息 -->
             <div id="baseMsg" class="col s12 tab_box">
-                <!-- 显示画面【新增信用证】 Body -->
-                <div class="row col" style="width:94%; margin-left: 3%;">
-                    <!-- 金融车辆信息 -->
-                    <div class="col s12" style="margin-top: 20px;">
-                        <div class="row col s12">
-                            <!-- 新增條件：信用证编码 -->
-                            <div class="input-field col s4">
-                                <input type="text" id="addCreditId" ng-model="addCreditId">
-                                <label for="addCreditId"><span class="red-text">*</span>信用证编码</label>
+                <!-- 主体 -->
+                <div class="col s12" style="margin-top: 5px;">
+
+                    <!-- 信用证基本内容 -->
+                    <div class="row" style="margin-bottom: 5px">
+                        <!-- 新增條件：信用证编码 -->
+                        <div class="input-field col s3">
+                            <input type="text" id="addCreditId" maxlength="50" ng-model="addCreditId">
+                            <label for="addCreditId"><span class="red-text">*</span>信用证编码</label>
+                        </div>
+
+                        <!-- 委托方性质 -->
+                        <div class="input-field col s3">
+                            <select material-select watch ng-model="addEntrustType" ng-change="getEntrustInfo(addEntrustType)">
+                                <option value="" disabled>委托方性质</option>
+                                <option ng-repeat="el in entrustTypeList" ng-value="el.entrust_type">{{el.name}}</option>
+                            </select>
+                        </div>
+
+                        <!--委托方-->
+                        <div class="input-field col s3">
+                            <select  id="addEntrustSelect" style="width: 100%">
+                                <option value="" ></option>
+                                <option ng-repeat="el in addEntrustList" ng-value="el.id">{{el.short_name}}</option>
+                            </select>
+                        </div>
+
+                        <!-- 发票号码 -->
+                        <div class="input-field col s3">
+                            <input type="text" id="addInvoiceNumber" maxlength="50" ng-model="addInvoiceNumber">
+                            <label for="addInvoiceNumber">发票号码</label>
+                        </div>
+
+                        <!-- 新增條件：信用证金额(美元) -->
+                        <div class="input-field col s3">
+                            <input type="text" id="addCreditMoney" valid-money maxlength="8" ng-model="addCreditMoney" ng-change="setDifference()">
+                            <label for="addCreditMoney"><span class="red-text">*</span>信用证金额(美元)</label>
+                        </div>
+
+                        <!-- 新增條件：接证金额(美元) -->
+                        <div class="input-field col s3">
+                            <input type="text" id="acceptFee" valid-money maxlength="8" ng-model="acceptFee" ng-change="setActualMoney()">
+                            <label for="acceptFee"><span class="red-text">*</span>接证金额(美元)</label>
+                        </div>
+
+                        <!-- 新增條件：实际到款金额(美元) -->
+                        <div class="input-field col s3">
+                            <input type="text" id="addActualMoney" valid-money maxlength="8" ng-model="addActualMoney" disabled>
+                            <label for="addActualMoney">实际到款金额(美元)</label>
+                        </div>
+                    </div>
+
+
+                    <!-- 信用证扣费项目 -->
+                    <div class="row left cyan-text" style="margin-bottom: 5px;padding-left:10px;padding-right: 10px;">
+                        信用证扣费项目
+                    </div>
+                    <div class="row" style="margin-bottom: 10px;padding-left:10px;padding-right: 10px;">
+                        <div class="col s12" style="border:1px solid grey;padding-bottom: 5px;">
+                            <!-- 新增條件：快递费(美元) -->
+                            <div class="input-field col s3">
+                                <input type="text" id="expressFee" valid-money maxlength="8" ng-model="expressFee" ng-change="setActualMoney()">
+                                <label for="expressFee">快递费(美元)</label>
                             </div>
 
-                            <!-- 委托方性质 -->
-                            <div class="input-field col s4">
-                                <select material-select watch ng-model="addEntrustType" ng-change="getEntrustInfo(addEntrustType)">
-                                    <option value="" disabled>委托方性质</option>
-                                    <option ng-repeat="el in entrustTypeList" ng-value="el.entrust_type">{{el.name}}</option>
-                                </select>
+                            <!-- 新增條件：通知费(美元) -->
+                            <div class="input-field col s3">
+                                <input type="text" id="advisingCharges" valid-money maxlength="8" ng-model="advisingCharges" ng-change="setActualMoney()">
+                                <label for="advisingCharges">通知费(美元)</label>
                             </div>
 
-                            <!--委托方-->
-                            <div class="input-field col s4">
-                                <select  id="addEntrustSelect" style="width: 100%">
-                                    <option value="" ></option>
-                                    <option ng-repeat="el in addEntrustList" ng-value="el.id">{{el.short_name}}</option>
-                                </select>
+                            <!-- 新增條件：修改通知费(美元) -->
+                            <div class="input-field col s3">
+                                <input type="text" id="againAdvisingCharges" valid-money maxlength="8" ng-model="againAdvisingCharges" ng-change="setActualMoney()">
+                                <label for="againAdvisingCharges">修改通知费(美元)</label>
+                            </div>
+
+                            <!-- 新增條件：手续费(美元) -->
+                            <div class="input-field col s3">
+                                <input type="text" id="serviceCharge" valid-money maxlength="8" ng-model="serviceCharge" ng-change="setActualMoney()">
+                                <label for="serviceCharge">手续费(美元)</label>
+                            </div>
+
+                            <!-- 新增條件：离岸汇款手续费(美元) -->
+                            <div class="input-field col s3">
+                                <input type="text" id="offshoreServiceCharge" valid-money maxlength="8" ng-model="offshoreServiceCharge" ng-change="setActualMoney()">
+                                <label for="offshoreServiceCharge">离岸汇款手续费(美元)</label>
+                            </div>
+
+                            <!-- 新增條件：美国收款手续费(美元) -->
+                            <div class="input-field col s3">
+                                <input type="text" id="ashoreReceivablesServiceCharge" valid-money maxlength="8" ng-model="ashoreReceivablesServiceCharge" ng-change="setActualMoney()">
+                                <label for="ashoreReceivablesServiceCharge">美国收款手续费(美元)</label>
+                            </div>
+
+                            <!-- 新增條件：美国汇款手续费(美元) -->
+                            <div class="input-field col s3">
+                                <input type="text" id="ashoreRemittanceServiceCharge" valid-money maxlength="8" ng-model="ashoreRemittanceServiceCharge" ng-change="setActualMoney()">
+                                <label for="ashoreRemittanceServiceCharge">美国汇款手续费(美元)</label>
+                            </div>
+
+                            <!-- 新增條件：差额(美元) -->
+                            <div class="input-field col s3">
+                                <input type="text" id="difference" valid-money maxlength="8" ng-model="difference" disabled>
+                                <label for="difference">差额(美元)</label>
                             </div>
                         </div>
-                        <div class="row col s12">
-                            <!-- 新增條件：信用证金额(美元) -->
-                            <div class="input-field col" style="width: 33.3%">
-                                <input type="text" id="addCreditMoney" valid-money maxlength="8" ng-model="addCreditMoney">
-                                <label for="addCreditMoney"><span class="red-text">*</span>信用证金额(美元)</label>
-                            </div>
+                    </div>
 
-                            <!-- 新增條件：实际到款金额(美元) -->
-                            <div class="input-field col" style="width: 33.3%">
-                                <input type="text" id="addActualMoney" valid-money maxlength="8" ng-model="addActualMoney">
-                                <label for="addActualMoney"><span class="red-text">*</span>实际到款金额(美元)</label>
-                            </div>
-
+                    <!-- 信用证相关日期 -->
+                    <div class="row left cyan-text" style="margin-bottom: 5px;padding-left:10px;padding-right: 10px;">
+                        相关日期
+                    </div>
+                    <div class="row" style="margin-bottom: 10px;padding-left:10px;padding-right: 10px;">
+                        <div class="col s12" style="border:1px solid grey;padding-bottom: 5px;">
                             <!-- 预计回款日期 -->
-                            <div class="input-field col s4">
+                            <div class="input-field col s3">
                                 <input type="text" id="addPlanReturnDate" ng-model="addPlanReturnDate" class="datepicker" date>
                                 <i class="mdi dataIcon mdi-table-large"></i>
                                 <label for="addPlanReturnDate">预计回款日期</label>
                             </div>
-                        </div>
-                        <div class="row col s12">
-                        <!--接证日期-->
-                            <div class="input-field col s4">
+
+                            <!--接证日期-->
+                            <div class="input-field col s3">
                                 <input id="addReceiveCardDate" type="text" ng-model="addReceiveCardDate" class="datepicker" date>
                                 <i class="mdi dataIcon mdi-table-large"></i>
                                 <label for="addReceiveCardDate">接证日期</label>
                             </div>
 
                             <!-- 交单日期 -->
-                            <div class="input-field col s4">
+                            <div class="input-field col s3">
                                 <input type="text" id="addDocumentsDate" ng-model="addDocumentsDate" class="datepicker" date>
                                 <i class="mdi dataIcon mdi-table-large"></i>
                                 <label for="addDocumentsDate">交单日期</label>
                             </div>
 
                             <!--实际回款日期-->
-                            <div class="input-field col s4">
+                            <div class="input-field col s3">
                                 <input id="addActualReturnDate" type="text" ng-model="addActualReturnDate" class="datepicker" date>
                                 <i class="mdi dataIcon mdi-table-large"></i>
                                 <label for="addActualReturnDate">实际回款日期</label>
                             </div>
-                        </div>
-                        <div class="row col s12">
+
                             <!--文件发出日期-->
-                            <div class="input-field col s4">
+                            <div class="input-field col s3">
                                 <input id="addDocumentsSendDate" type="text" ng-model="addDocumentsSendDate" class="datepicker" date>
                                 <i class="mdi dataIcon mdi-table-large"></i>
                                 <label for="addDocumentsSendDate">文件发出日期</label>
                             </div>
 
                             <!--开户行文件接收日期-->
-                            <div class="input-field col s4">
+                            <div class="input-field col s3">
                                 <input id="addDocumentsReceiveDate" type="text" ng-model="addDocumentsReceiveDate" class="datepicker" date>
                                 <i class="mdi dataIcon mdi-table-large"></i>
                                 <label for="addDocumentsReceiveDate">开户行文件接收日期</label>
                             </div>
 
                             <!--实际汇款日期-->
-                            <div class="input-field col s4">
+                            <div class="input-field col s3">
                                 <input id="addActualRemitDate" type="text" ng-model="addActualRemitDate" class="datepicker" date>
                                 <i class="mdi dataIcon mdi-table-large"></i>
                                 <label for="addActualRemitDate">实际汇款日期</label>
                             </div>
                         </div>
-                        <!-- 发票号码 -->
-                        <div class="row col s12">
-                            <div class="input-field col s12">
-                                <input type="text" id="addInvoiceNumber" ng-model="addInvoiceNumber">
-                                <label for="addInvoiceNumber">发票号码</label>
-                            </div>
-                        </div>
-
-                        <!-- 备注 -->
-                        <div class="row col s12">
-                            <div class="input-field col s12">
-                                <input type="text" id="addRemarkText" ng-model="addRemarkText">
-                                <label for="addRemarkText">备注</label>
-                            </div>
-                        </div>
                     </div>
 
+                    <!-- 备注 -->
+                    <div class="row" style="margin-bottom: 5px">
+                        <div class="input-field col s12">
+                            <input type="text" id="addRemarkText" ng-model="addRemarkText">
+                            <label for="addRemarkText">备注</label>
+                        </div>
+                    </div>
                 </div>
 
                 <!-- 分割线 -->
-                <div class="divider col s12" style="margin-top: 50px;"></div>
+                <div class="divider col s12" style="margin-top: 5px;"></div>
 
                 <!-- 取消/确认 按钮 -->
-                <div class="row col right-align" style="width: 96%;margin-top: 20px;">
+                <div class="row col s12 right-align" style="margin-top: 10px;margin-bottom: 10px;padding-right: 20px;">
                     <a class="btn-floating waves-effect waves-light grey btn modal-close">
                         <i class="mdi mdi-close"></i>
                     </a>
@@ -314,7 +382,6 @@
                         <i class="mdi mdi-check"></i>
                     </a>
                 </div>
-
             </div>
 
             <!--关联金融车-->
