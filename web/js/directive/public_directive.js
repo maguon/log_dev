@@ -382,7 +382,11 @@ publicDirective.directive('validMoney', ['$parse', function ($parse) {
                     clean = val;
                 } else {
                     if (n==1 && val.substr(val.length-1) == '.') {
-                        clean = val;
+                        if (val === '.') {
+                            clean = '';
+                        } else {
+                            clean = val;
+                        }
                     } else {
                         clean = val.toString().substr(0,val.length-1);
                     }
