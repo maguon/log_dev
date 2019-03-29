@@ -241,7 +241,7 @@ app.controller("finance_loan_out_controller", ["$scope", "$rootScope", "_host", 
      * @param entrustId
      */
     function getCarValuation(entrustId) {
-        _basic.get(_host.api_url + "/carMortgageStatusCount?relStatus=1&active=1&entrustId=" + entrustId).then(function (data) {
+        _basic.get(_host.api_url + "/carMortgageStatusCount?purchaseType=0&relStatus=1&active=1&entrustId=" + entrustId).then(function (data) {
             if (data.success) {
                 if (data.result.length === 0) {
                     // 可抵押车辆总数
