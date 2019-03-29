@@ -232,7 +232,7 @@ app.controller("ship_trans_info_detail_controller", ["$scope", "$state", "$state
                         $scope.carList = data.result;
                         vinObjs = {};
                         for (var i in $scope.carList) {
-                            vinObjs[$scope.carList[i].vin + "  " + $scope.carList[i].make_name + "/" + $scope.carList[i].model_name + "  委托方：" + $scope.carList[i].entrust_id] = null;
+                            vinObjs[$scope.carList[i].vin + "  " + $scope.carList[i].make_name + "/" + $scope.carList[i].model_name + "  委托方：" + $scope.carList[i].short_name] = null;
                         }
                         return vinObjs;
                     } else {
