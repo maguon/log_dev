@@ -11,6 +11,9 @@ body{
     overflow-x: auto;
     overflow-y: hidden;
 }
+.pointer {
+    cursor: pointer;
+}
 .ConWrap{
     /* 画面高度 - 头部（64+20）- 底部（50） */
     height: calc(100% - 134px);
@@ -123,6 +126,7 @@ body{
 
 .side-nav{
     color: white;
+    height: 100%;
 }
 .side-nav a{
     color: white;
