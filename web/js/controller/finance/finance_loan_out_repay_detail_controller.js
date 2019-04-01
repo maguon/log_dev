@@ -326,7 +326,8 @@ app.controller("finance_loan_out_repay_detail_controller", ["$scope", "$statePar
         var creditNumber = $scope.newCreditId;
 
         // 检索用url
-        var url = _host.api_url + "/credit?creditNumber=" + creditNumber + "&entrustId=" + $scope.repay.entrustId  + "&creditStatus=" + unfinished;
+        // var url = _host.api_url + "/credit?creditNumber=" + creditNumber + "&entrustId=" + $scope.repay.entrustId  + "&creditStatus=" + unfinished;
+        var url = _host.api_url + "/credit?creditNumber=" + creditNumber + "&entrustId=" + $scope.repay.entrustId;
 
         _basic.get(url).then(function (data) {
             if (data.success) {
