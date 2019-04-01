@@ -270,23 +270,23 @@
                 <li ng-repeat="el in loanRepCreditRelList">
 
                     <!-- 信用证 详细列表 标题栏 -->
-                    <div ng-click="getCreditCarRel($event,el.credit_id)" class="collapsible-header blue-grey lighten-5 grey-text text-darken-1 row no-mp fz14">
-                        <div class="col left-align cyan-text" style="width:20%;">
-                            信用证号：{{el.credit_number}}
+                    <div ng-click="getCreditCarRel($event,el.credit_id)"
+                         class="collapsible-header blue-grey lighten-5 grey-text text-darken-1 row no-mp fz14"
+                         style="padding-left: 0;padding-right: 0">
+                        <div class="col s3 left-align cyan-text">信用证号：{{el.credit_number}}</div>
+
+                        <div class="col s6 left-align">
+                            信用证金额：<span class="red-text">{{el.credit_money | number}}</span>
+                            <span style="margin-left:20px;">接证金额：<span class="red-text">{{el.receive_card_money | number}}</span></span>
+                            <span style="margin-left:20px;">实际到款金额：<span class="red-text">{{el.actual_money | number}}</span></span>
+                            <span style="margin-left:20px;">差额：<span class="red-text">{{el.difference_fee | number}}</span></span>
                         </div>
 
-                        <div class="col left-align" style="width:24%;">
-                            信用证金额(美元)：<span class="red-text">{{el.credit_money | number}}</span>
-                        </div>
-                        <div class="col left-align" style="width:28%;">
-                            实际到款金额(美元)：<span class="red-text">{{el.actual_money | number}}</span>
-                        </div>
-
-                        <div class="col left-align" style="width:16%;">
+                        <div class="col s2 left-align">
                             {{el.credit_created_date |date:'yyyy-MM-dd HH:mm'}}
                         </div>
 
-                        <div class="col right-align cyan-text" style="width:12%;">
+                        <div class="col s1 right-align cyan-text">
                             关联车辆
                             <span ng-show="repay.repaymentStatus == 1" class="mdi mdi-close red-text" ng-click="deleteCreditPayment($event, el.credit_id)" style="margin-left: 3px;"></span>
                         </div>
