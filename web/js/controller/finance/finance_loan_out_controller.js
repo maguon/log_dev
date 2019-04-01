@@ -193,6 +193,11 @@ app.controller("finance_loan_out_controller", ["$scope", "$rootScope", "_host", 
 
         // 获取委托方信息
         $scope.getEntrustInfo(null,"委托方");
+        // $("#select2-addEntrustSelect-container").text("委托方").trigger("change");
+        $scope.loanInfo.entrustId = "";
+        $scope.loanInfo.entrustNm = "委托方";
+        $("#addEntrustSelect").val(null).trigger("change");
+        $("#addEntrustSelect").text("委托方").trigger("change");
     };
 
     /**
@@ -282,7 +287,6 @@ app.controller("finance_loan_out_controller", ["$scope", "$rootScope", "_host", 
      * @param selectText 默认选中项文字
      */
     $scope.getEntrustInfo = function (selectText) {
-
         // 取得委托方url
         var url = _host.api_url + "/entrust";
 
