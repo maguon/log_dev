@@ -962,35 +962,61 @@
 
                     <!-- Header -->
                     <tr class="blue-grey lighten-5 fz15" style="height: 20px;">
-                        <th class="invoice-table-td-height tr-border" style="width:20%">Item</th>
-                        <th class="invoice-table-td-height tr-border" style="width:40%">description</th>
+                        <th class="invoice-table-td-height tr-border" style="width:15%">Item</th>
+                        <th class="invoice-table-td-height tr-border" style="width:33%">description</th>
+                        <th class="invoice-table-td-height tr-border" style="width:12%">VIN</th>
                         <th class="invoice-table-td-height tr-border center-align" style="width:10%">Qty</th>
                         <th class="invoice-table-td-height tr-border right-align" style="width:15%">Rate</th>
                         <th class="invoice-table-td-height tr-border right-align" style="width:15%;border-right: 0">Amount</th>
                     </tr>
 
                     <!-- Details -->
+                    <!--<tr ng-repeat="el in invoiceLoanRepRelList">-->
+                        <!--&lt;!&ndash; Item &ndash;&gt;-->
+                        <!--<td class="invoice-table-td-height td-border" style="height: 55px;">{{loanInfo.loanInterest}}<br>{{loanInfo.bankServices}}</td>-->
+                        <!--&lt;!&ndash; description &ndash;&gt;-->
+                        <!--<td class="invoice-table-td-height td-border">-->
+                            <!--{{el.repayment_money | currency}} ({{el.loan_start_date | date:'MM/dd/yy'}} - {{el.loan_start_date | date:'MM/dd/yy'}}) {{el.rate}}% {{loanInfo.interestRate}}-->
+                            <!--<br>-->
+                            <!--{{loanInfo.lcFee}}-->
+                            <!--<br>-->
+                            <!--{{loanInfo.wireTransferFee}}-->
+                        <!--</td>-->
+                        <!--&lt;!&ndash; VIN &ndash;&gt;-->
+                        <!--<td class="invoice-table-td-height td-border center-align">12345678901234567<br>12345678901234567<br>12345678901234567<br>12345678901234567<br>12345678901234567</td>-->
+                        <!--&lt;!&ndash; Qty &ndash;&gt;-->
+                        <!--<td class="invoice-table-td-height td-border center-align">{{el.day_count}}<br>1<br>1</td>-->
+                        <!--&lt;!&ndash; Rate &ndash;&gt;-->
+                        <!--<td class="invoice-table-td-height td-border right-align">${{el.interest_money == 0 ? '0.00': (el.interest_money / el.day_count | number)}}<br>{{el.fee|currency}}<br>{{el.fee|currency}}</td>-->
+                        <!--&lt;!&ndash; Amount &ndash;&gt;-->
+                        <!--<td class="invoice-table-td-height last-td-border right-align">{{el.interest_money|currency}}<br>{{el.fee|currency}}<br>{{el.fee|currency}}</td>-->
+                    <!--</tr>-->
+
+                    <!-- Details -->
                     <tr ng-repeat="el in invoiceLoanRepRelList">
                         <!-- Item -->
-                        <td class="invoice-table-td-height td-border" style="height: 55px;">{{loanInfo.loanInterest}}<br>{{loanInfo.bankServices}}</td>
+                        <td class="invoice-table-td-height td-border" style="height: 55px;">{{loanInfo.loanInterest}}</td>
                         <!-- description -->
                         <td class="invoice-table-td-height td-border">
                             {{el.repayment_money | currency}} ({{el.loan_start_date | date:'MM/dd/yy'}} - {{el.loan_start_date | date:'MM/dd/yy'}}) {{el.rate}}% {{loanInfo.interestRate}}
-                            <br>
-                            {{loanInfo.bankServicesDetail}}
+                        </td>
+                        <!-- VIN -->
+                        <td class="invoice-table-td-height td-border center-align">
+                            <span ng-repeat="v in el.vin">{{v}}<br></span>
                         </td>
                         <!-- Qty -->
-                        <td class="invoice-table-td-height td-border center-align">{{el.day_count}}<br>1</td>
+                        <td class="invoice-table-td-height td-border center-align">{{el.day_count}}</td>
                         <!-- Rate -->
-                        <td class="invoice-table-td-height td-border right-align">${{el.interest_money == 0 ? '0.00': (el.interest_money / el.day_count | number)}}<br>{{el.fee|currency}}</td>
+                        <td class="invoice-table-td-height td-border right-align">${{el.interest_money == 0 ? '0.00': (el.interest_money / el.day_count | number)}}</td>
                         <!-- Amount -->
-                        <td class="invoice-table-td-height last-td-border right-align">{{el.interest_money|currency}}<br>{{el.fee|currency}}</td>
+                        <td class="invoice-table-td-height last-td-border right-align">{{el.interest_money|currency}}</td>
                     </tr>
 
                     <!-- Total -->
                     <tr class="fz15">
-                        <td colspan="2" class="invoice-table-td-height last-row-border left-align">Total</td>
-                        <td colspan="3" class="invoice-table-td-height last-row-border right-align">{{totalPaymentMoney|currency}}</td>
+                        <td colspan="3" class="invoice-table-td-height last-row-border left-align">Total</td>
+                        <!--<td colspan="3" class="invoice-table-td-height last-row-border right-align">{{totalPaymentMoney|currency}}</td>-->
+                        <td colspan="3" class="invoice-table-td-height last-row-border right-align">{{thisInterestMoney|currency}}</td>
                     </tr>
                     </tbody>
                 </table>

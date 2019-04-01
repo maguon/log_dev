@@ -552,6 +552,8 @@ baseService.factory("_config", function () {
         loanInterest: "LOAN-INTEREST",
         bankServices: "BANK SERVICES",
         bankServicesDetail: "LC FEE AND WIRE TRANSFER FEE",
+        lcFee: "LC FEE",
+        wireTransferFee: "WIRE TRANSFER FEE",
         interestRate: "interest rate"
     };
 

@@ -100,8 +100,8 @@ app.controller("invoice_detail_controller", ["$scope", "$stateParams", "_basic",
     $scope.previewInvoice = function () {
         $('.modal').modal();
         $('#previewInvoiceDiv').modal('open');
-        // 查询发票 关联 仓储费用 TODO
-
+        // 查询发票 关联 仓储费用
+        queryInvoiceStorageOrderRel();
         // 查询发票 关联 海运费用
         queryInvoiceShipTransOrderList();
         // 查询发票 关联 还款费用
@@ -495,18 +495,33 @@ app.controller("invoice_detail_controller", ["$scope", "$stateParams", "_basic",
         var url = _host.api_url + "/invoiceLoanRepRel?invoiceId=" + invoiceId;
         _basic.get(url).then(function (data) {
             if (data.success) {
-                $scope.invoiceLoanRepRelList = data.result;
+                $scope.invoiceLoanRepRelList = [];
                 $scope.totalPaymentMoney = 0;
+                $scope.thisInterestMoney = 0;
                 var thisRepayMoney = 0;
                 var thisInterestMoney = 0;
                 var thisFee = 0;
-                for (var i = 0; i < $scope.invoiceLoanRepRelList.length; i++) {
-                    thisRepayMoney = $scope.invoiceLoanRepRelList[i].repayment_money;
-                    thisInterestMoney = $scope.invoiceLoanRepRelList[i].interest_money;
-                    thisFee = $scope.invoiceLoanRepRelList[i].fee;
-                    // 暂定 利息+手续费 合计
-                    // $scope.totalPaymentMoney = $scope.totalPaymentMoney + (thisRepayMoney==null ? 0 : thisRepayMoney) + (thisInterestMoney==null ? 0 : thisInterestMoney) + (thisFee==null ? 0 : thisFee);
-                    $scope.totalPaymentMoney = $scope.totalPaymentMoney + (thisInterestMoney==null ? 0 : thisInterestMoney) + (thisFee==null ? 0 : thisFee);
+                var preId = -1;
+                var vinArray = [];
+                for (var i = 0; i < data.result.length; i++) {
+                    // 当前行 和前一行(或者第一行的前一行)，不一致时，则为新数据，创建新行
+                    if (data.result[i].id !== preId) {
+                        preId = data.result[i].id;
+                        $scope.invoiceLoanRepRelList.push(data.result[i]);
+                        vinArray = [data.result[i].vin];
+                        $scope.invoiceLoanRepRelList[$scope.invoiceLoanRepRelList.length-1].vin = vinArray;
+
+                        // 以下为计算合计
+                        thisRepayMoney = data.result[i].repayment_money;
+                        thisInterestMoney = data.result[i].interest_money;
+                        thisFee = data.result[i].fee;
+                        // 暂定 利息+手续费 合计
+                        $scope.totalPaymentMoney = $scope.totalPaymentMoney + (thisInterestMoney==null ? 0 : thisInterestMoney) + (thisFee==null ? 0 : thisFee);
+                        $scope.thisInterestMoney = $scope.thisInterestMoney + (thisInterestMoney==null ? 0 : thisInterestMoney);
+                    } else {
+                        vinArray.push(data.result[i].vin);
+                        $scope.invoiceLoanRepRelList[$scope.invoiceLoanRepRelList.length-1].vin = vinArray;
+                    }
                 }
             } else {
                 swal(data.msg, "", "error");
