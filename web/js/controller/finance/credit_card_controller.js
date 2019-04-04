@@ -16,7 +16,7 @@ app.controller("credit_card_controller", ["$scope", "$rootScope", "_host", "_bas
     $scope.statusList = _config.paymentStatus;
 
     //添加关联车辆是时
-    $scope.creditCarRelId=0;
+    $scope.creditCarRelId = 0;
 
     /**
      * 页面跳转
@@ -53,7 +53,6 @@ app.controller("credit_card_controller", ["$scope", "$rootScope", "_host", "_bas
         // 调用接口下载
         window.open(url);
     };
-
 
     /**
      * 组装检索条件。
@@ -120,7 +119,6 @@ app.controller("credit_card_controller", ["$scope", "$rootScope", "_host", "_bas
         $scope.start = 0;
         queryCreditCardList();
     };
-
 
     /**
      * 【新增信用证】 获取委托方信息
