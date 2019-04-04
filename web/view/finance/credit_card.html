@@ -116,7 +116,7 @@
                 <th>交单日期</th>
                 <th>预计回款日期</th>
                 <th>实际回款日期</th>
-                <th>关联还款编号</th>
+                <!--<th>关联还款编号</th>-->
                 <th>状态</th>
                 <th>操作</th>
             </tr>
@@ -139,9 +139,9 @@
                 <td ng-bind="el.plan_return_date|date:'yyyy-MM-dd'"></td>
                 <!-- 实际回款日期 -->
                 <td ng-bind="el.actual_return_date|date:'yyyy-MM-dd'"></td>
-                <!-- 关联还款编号 -->
-                <td ng-if="el.repayment_id==null"></td>
-                <td ng-if="el.repayment_id!==null">{{el.repayment_id}}</td>
+                <!--&lt;!&ndash; 关联还款编号 &ndash;&gt;-->
+                <!--<td ng-if="el.repayment_id==null"></td>-->
+                <!--<td ng-if="el.repayment_id!==null">{{el.repayment_id}}</td>-->
                 <!-- 状态 -->
                 <td  ng-bind="statusList[el.credit_status-1].name"></td>
                 <!--操作-->
@@ -153,7 +153,7 @@
                 </td>
             </tr>
             <tr class="grey-text text-darken-1" ng-if="creditCardList.length == 0">
-                <td colspan="11" style="letter-spacing: 2px;text-align: center;">暂无数据</td>
+                <td colspan="10" style="letter-spacing: 2px;text-align: center;">暂无数据</td>
             </tr>
             </tbody>
         </table>
@@ -170,9 +170,7 @@
             </a>
         </div>
     </div>
-
 </div>
-
 
 <!-- 画面【新增信用证】 模态框 -->
 <div id="newCreditCardDiv" class="modal row" style="width: 45%;">
