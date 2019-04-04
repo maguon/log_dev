@@ -114,6 +114,8 @@ app.controller("finance_loan_out_detail_controller", ["$scope", "$stateParams", 
                 // 贷出时间
                 $scope.loanInfo.loanStartDate = data.result[0].loan_start_date;
 
+                // 合同编号
+                $scope.loanInfo.contractNum = data.result[0].contract_num;
                 // 定金
                 $scope.loanInfo.deposit = data.result[0].deposit == null ? 0 : data.result[0].deposit;
                 // 贷出金额
@@ -166,6 +168,8 @@ app.controller("finance_loan_out_detail_controller", ["$scope", "$stateParams", 
             },
             function () {
                 var obj = {
+                    // 合同编号
+                    contractNum: $scope.loanInfo.contractNum,
                     // 定金
                     deposit: $scope.loanInfo.deposit === "" ? 0 : $scope.loanInfo.deposit,
                     // 贷出金额

@@ -29,6 +29,8 @@ app.controller("finance_loan_out_controller", ["$scope", "$rootScope", "_host", 
         unMortgageCarCount: 0,
         // 可抵押车辆总值
         unMortgageCarValuation: 0,
+        // 合同编号
+        contractNum: "",
         // 定金
         deposit: 0,
         // 贷出金额(美元)
@@ -192,7 +194,7 @@ app.controller("finance_loan_out_controller", ["$scope", "$rootScope", "_host", 
         $('#remarkText').trigger('autoresize');
 
         // 获取委托方信息
-        $scope.getEntrustInfo(null,"委托方");
+        $scope.getEntrustInfo("委托方");
         // $("#select2-addEntrustSelect-container").text("委托方").trigger("change");
         $scope.loanInfo.entrustId = "";
         $scope.loanInfo.entrustNm = "委托方";
@@ -208,6 +210,8 @@ app.controller("finance_loan_out_controller", ["$scope", "$rootScope", "_host", 
             var obj = {
                 // 委托方
                 entrustId: $scope.loanInfo.entrustId,
+                // 合同编号
+                contractNum: $scope.loanInfo.contractNum,
                 // 定金
                 deposit: $scope.loanInfo.deposit === "" ? 0 : $scope.loanInfo.deposit,
                 // 贷出金额(美元)

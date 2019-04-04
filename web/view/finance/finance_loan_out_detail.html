@@ -55,14 +55,20 @@
 
         <!-- 定金，贷出金额 -->
         <div class="row col s12" style="margin-top: 40px;">
-            <!-- 定金 -->
+            <!-- 合同编号 -->
             <div class="input-field col s6">
+                <input type="text" id="contractNum" maxlength="50" ng-model="loanInfo.contractNum" ng-disabled="loanInfo.loanStatus!=1">
+                <label for="contractNum" id="contractNumLabel"> 合同编号</label>
+            </div>
+
+            <!-- 定金 -->
+            <div class="input-field col s3">
                 <input type="text" id="depositText" maxlength="8" valid-money ng-model="loanInfo.deposit" class="red-text" ng-disabled="loanInfo.loanStatus!=1">
                 <label for="depositText" id="depositLabel"> 定金</label>
             </div>
 
             <!-- 贷出金额(美元) -->
-            <div class="input-field col s6">
+            <div class="input-field col s3">
                 <input type="text" id="loanMoneyText" maxlength="8" valid-money ng-model="loanInfo.loanMoney" class="red-text" ng-disabled="loanInfo.loanStatus!=1">
                 <label for="loanMoneyText" id="loanMoneyLabel"> 贷出金额(美元)</label>
             </div>

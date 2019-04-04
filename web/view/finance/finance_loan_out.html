@@ -92,6 +92,7 @@
                 <th>委托方</th>
                 <th>抵押车辆</th>
                 <th>抵押车值(美元)</th>
+                <th>合同编号</th>
                 <th>定金(美元)</th>
                 <th>购买车辆</th>
                 <th>贷出金额</th>
@@ -112,6 +113,8 @@
                 <td ng-bind="el.mortgage_car_count | number"></td>
                 <!-- 抵押车值(美元) -->
                 <td>{{el.mortgage_valuation==null ? 0 : el.mortgage_valuation | number}}</td>
+                <!-- 合同编号 -->
+                <td ng-bind="el.contract_num"></td>
                 <!-- 定金(美元) -->
                 <td ng-bind="el.deposit | number"></td>
                 <!-- 购买车辆 -->
@@ -135,7 +138,7 @@
                 </td>
             </tr>
             <tr class="grey-text text-darken-1" ng-if="financeLoanList.length == 0">
-                <td colspan="12" style="letter-spacing: 2px;text-align: center;">暂无数据</td>
+                <td colspan="13" style="letter-spacing: 2px;text-align: center;">暂无数据</td>
             </tr>
             </tbody>
         </table>
@@ -195,14 +198,20 @@
 
             <!-- 贷出订单信息 -->
             <div class="col s12">
-                <!-- 定金 -->
+                <!-- 合同编号 -->
                 <div class="input-field col s6">
+                    <input type="text" id="contractNum" maxlength="50" ng-model="loanInfo.contractNum">
+                    <label for="contractNum"><span class="red-text">*</span> 合同编号</label>
+                </div>
+
+                <!-- 定金 -->
+                <div class="input-field col s3">
                     <input type="text" id="depositText" maxlength="8" valid-money ng-model="loanInfo.deposit" class="red-text">
                     <label id="earnestMoneyLabel" for="depositText"> 定金</label>
                 </div>
 
                 <!-- 贷出金额(美元) -->
-                <div class="input-field col s6">
+                <div class="input-field col s3">
                     <input type="text" id="loanMoneyText" maxlength="8" valid-money ng-model="loanInfo.loanMoney">
                     <label for="loanMoneyText"><span class="red-text">*</span> 贷出金额(美元)</label>
                 </div>
