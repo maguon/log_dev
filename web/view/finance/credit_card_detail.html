@@ -67,7 +67,7 @@
                         <!-- 接证金额(美元) -->
                         <div class="input-field col s3">
                             <input type="text" id="putAcceptFee" ng-model="baseInfoList.receive_card_money" maxlength="8" valid-money  ng-change="setActualMoney()">
-                            <label for="putAcceptFee"><span class="red-text">*</span>接证金额(美元)</label>
+                            <label for="putAcceptFee" class="active"><span class="red-text">*</span>接证金额(美元)</label>
                         </div>
 
                         <!-- 实际到款金额(美元) -->
@@ -128,7 +128,7 @@
                             <!-- 新增條件：差额(美元) -->
                             <div class="input-field col s3">
                                 <input type="text" id="difference" ng-model="baseInfoList.difference_fee" disabled>
-                                <label for="difference">差额(美元)</label>
+                                <label for="difference" class="active">差额(美元)</label>
                             </div>
                         </div>
                     </div>
@@ -321,88 +321,61 @@
                         <div class="row blue-grey lighten-5" style="width:98%;border:1px solid #bdbdbd">
                             <!-- header -->
                             <div class="col s12 lighten-1 cyan-text vc-center left-align" style="height:50px;">
-                                <div class="col s4">
+                                <div class="col s11">
                                     VIN：{{linkCar.vin}}
-                                </div>
-                                <div class="col s5 ">
-                                    <div class="col s4">
-                                        <!--<div class="col s6" ng-if="linkCar.purchase_type!==0"> <i class="mdi mdi-slackware" style="color: #f0ad4e"></i></div>-->
-                                        <!--<div class="col s6" ng-if="linkCar.purchase_type==0"> <i class="mdi mdi-slackware grey-text"></i></div>-->
-                                        <!--<div class="col s6 right-align" ng-if="linkCar.mortgage_status!==2"><i class="mdi mdi-briefcase grey-text"></i></div>-->
-                                        <!--<div class="col s6 right-align" ng-if="linkCar.mortgage_status==2"><i class="mdi mdi-briefcase cyan-text"></i></div>-->
-                                        <!-- 金融车(0：不是金融车， 1 金融车) -->
-                                        <span ng-show="linkCar.purchase_type==1" class="mdi mdi-cash-usd fz18" style="color: #f0ad4e"></span>
-                                        <!-- 抵押车(1：未抵押，2：抵押) -->
-                                        <span ng-show="linkCar.mortgage_status==2" class="mdi mdi-lock fz18 cyan-text"></span>
+                                    <!-- 金融车(0：不是金融车， 1 金融车) -->
+                                    <span ng-show="linkCar.purchase_type==1" class="mdi mdi-cash-usd fz18" style="margin-left: 30px;color: #f0ad4e"></span>
+                                    <span ng-show="linkCar.purchase_type!=1" class="mdi mdi-cash-usd fz18 grey-text" style="margin-left: 30px"></span>
 
-                                    </div>
-                                    <div class="col s8">
-                                        <div class="col s10 grey-text right-align"> {{linkCar.make_name}} /{{linkCar.model_name}}</div>
-                                        <div class="col s2" ng-if="linkCar.colour==''"></div>
-                                        <div class="col s2 z-depth-1" ng-if="linkCar.colour!=''"  style="width:20px;height:20px; background-color: {{'#' + linkCar.colour}}"></div>
-                                    </div>
-                                </div>
-                                <div class="col s3 red-text">
-                                    <div class="col s9">
-                                        {{linkCar.valuation| currency }}
-                                    </div>
-                                    <div class="col s3" style="cursor: pointer" ng-click="deleteLinkCar(linkCar.car_id)">x</div>
+                                    <!-- 抵押车(1：未抵押，2：抵押) -->
+                                    <span ng-show="linkCar.mortgage_status==2" class="mdi mdi-lock fz18 cyan-text" style="margin-left: 20px"></span>
+                                    <span ng-show="linkCar.mortgage_status!=2" class="mdi mdi-lock fz18 grey-text" style="margin-left: 20px"></span>
+                                    <!-- 车辆：品牌/型号 颜色 -->
+                                    <span class="grey-text" style="margin-left:40px;">{{linkCar.make_name}} /{{linkCar.model_name}}</span>
+                                    <span class="z-depth-1" style="margin-left: 20px;display:inline-block;height: 20px;width: 20px;background-color: {{'#'+linkCar.colour}};"></span>
+                                    <!-- 车辆：估值 -->
+                                    <span class="red-text" style="margin-left:40px;">{{linkCar.valuation| currency }}</span>
                                 </div>
 
+                                <!-- 操作按钮 编辑车辆服务费，删除关联车辆 -->
+                                <div class="col s1 right-align" style="font-size: 20px;">
+                                    <i class="col s6 mdi mdi-currency-usd cyan-text" style="cursor: pointer;" title="修改车辆费用"
+                                       ng-click="openEditCarServiceFeeDiv(linkCar.credit_id,linkCar.car_id,linkCar.lc_handling_fee,linkCar.bank_services_fee)"></i>
+                                    <i class="col s6 mdi mdi-close  red-text" style="cursor: pointer;" title="删除关联车辆" ng-click="deleteLinkCar(linkCar.car_id)"></i>
+                                </div>
                             </div>
 
                             <!-- body -->
                             <div class="col s12 lighten-1 white grey-text vc-center fz13 left-align" style="height:40px;">
-                                <div class="input-field col s4">
-                                    始发港口：{{linkCar.start_port_name}}
-                                </div>
-                                <div class="input-field col s4">
-                                    目的港口：{{linkCar.end_port_name}}
-                                </div>
-                                <div class="input-field col s4">
-                                    开船日期：{{linkCar.start_ship_date | date:'yyyy-MM-dd' }}
-                                </div>
+                                <div class="input-field col s4">始发港口：{{linkCar.start_port_name}}</div>
+                                <div class="input-field col s4">目的港口：{{linkCar.end_port_name}}</div>
+                                <div class="input-field col s4">开船日期：{{linkCar.start_ship_date | date:'yyyy-MM-dd' }}</div>
                             </div>
                             <div class="col s12 white">
                                 <div class="s12 center" style="width:98%; margin-left: 10px;margin-right: 10px;margin-top: 10px;border: 1px dotted #ccc"></div>
                             </div>
                             <!-- body -->
                             <div class="col s12 lighten-1 white grey-text vc-center fz13 left-align" style="height:40px;">
-                                <div class="input-field col s4">
-                                    船公司：{{linkCar.ship_company_name}}
-                                </div>
-                                <div class="input-field col s4">
-                                    船名：{{linkCar.ship_name}}
-                                </div>
-                                <div class="input-field col s4">
-                                    到港日期：{{linkCar.end_ship_date | date:'yyyy-MM-dd'}}
-                                </div>
+                                <div class="input-field col s4">船公司：{{linkCar.ship_company_name}}</div>
+                                <div class="input-field col s4">船名：{{linkCar.ship_name}}</div>
+                                <div class="input-field col s4">到港日期：{{linkCar.end_ship_date | date:'yyyy-MM-dd'}}</div>
                             </div>
                             <div class="col s12 white">
                                 <div class="s12 center" style="width:98%; margin-left: 10px;margin-right: 10px;margin-top: 10px;border: 1px dotted #ccc"></div>
                             </div>
                             <!-- body -->
                             <div class="col s12 lighten-1 white grey-text vc-center fz13 left-align" style="height:40px;">
-                                <div class="input-field col s4">
-                                    货柜：{{linkCar.container}}
-                                </div>
-                                <div class="input-field col s4">
-                                    booking：{{linkCar.booking}}
-                                </div>
-                                <div class="input-field col s4">
-                                    封签：{{linkCar.tab}}
-                                </div>
+                                <div class="input-field col s4">货柜：{{linkCar.container}}</div>
+                                <div class="input-field col s4">booking：{{linkCar.booking}}</div>
+                                <div class="input-field col s4">封签：{{linkCar.tab}}</div>
                             </div>
 
                             <div class="col s12 white">
                                 <div class="divider s12 center" style="width:98%; margin-left: 10px;margin-right: 10px;margin-top: 10px;"></div>
                             </div>
 
-
                             <div class="col s12 lighten-1 white grey-text vc-center fz13 left-align" style="height:40px;">
-                                <div class="col s12">
-                                    备注：{{linkCar.remark}}
-                                </div>
+                                <div class="col s12">备注：{{linkCar.remark}}</div>
                             </div>
                         </div>
                     </div>
@@ -415,7 +388,6 @@
                             <span style="margin-left: 10px;">暂无关联车辆</span>
                         </div>
                     </div>
-
 
                     <!--下部分：完结-->
                     <div class="row col s12" ng-if="getLinkCarList.length!==0" style="margin: 40px 0 15px 0">
@@ -512,11 +484,52 @@
                             </div>
                         </div>
                     </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
+
+<!-- 模态画面【修改车辆手续费】 模态框 -->
+<div id="editCarServiceFeeDiv" class="modal modal-fixed-footer row" style="max-height: 336px;">
+
+    <!-- Header -->
+    <div class="modal_title center-align cyan white-text">修改车辆手续费</div>
+
+    <!-- Body -->
+    <div class="modal-content" style="max-height: 220px;">
+
+        <!-- 显示画面【修改车辆手续费】 Body -->
+        <div class="col" style="width:95%; margin-left: 20px;">
+
+            <div class="col s12">
+                <!-- LC Fee -->
+                <div class="input-field col s12">
+                    <input type="text" id="lcFee" maxlength="8" valid-money ng-model="editLcFee">
+                    <label id="lcFeeLabel" for="lcFee"><span class="red-text">*</span> Lc Handling Fee</label>
+                </div>
+            </div>
+
+            <div class="col s12" style="margin-top: 30px;">
+                <!-- Bank Service Fee -->
+                <div class="input-field col s12">
+                    <input type="text" id="bankServiceFee" maxlength="8" valid-money ng-model="editBankServicesFee">
+                    <label id="bankServiceFeeLabel" for="bankServiceFee"><span class="red-text">*</span> Bank Services Fee</label>
                 </div>
 
             </div>
-
         </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="modal-footer right-align">
+        <a class="btn-floating waves-effect waves-light btn cyan lighten-1" style="width:38px;height:38px; margin-right: 50px;"
+           ng-click="editCarServiceFee()">
+            <i class="mdi mdi-check"></i>
+        </a>
+        <a class="btn-floating waves-effect waves-light btn modal-close grey" style="width:38px;height:38px; margin-right: 20px;">
+            <i class="mdi mdi-close"></i>
+        </a>
     </div>
 </div>
