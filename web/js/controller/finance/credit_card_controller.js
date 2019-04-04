@@ -40,12 +40,6 @@ app.controller("credit_card_controller", ["$scope", "$rootScope", "_host", "_bas
         $scope.getLinkCarList =[];
     }
 
-
-
-
-
-
-
     /**
      * 数据导出
      */
@@ -87,7 +81,6 @@ app.controller("credit_card_controller", ["$scope", "$rootScope", "_host", "_bas
         return obj;
     }
 
-
     /**
      * 根据画面输入的查询条件，进行数据查询。
      */
@@ -118,7 +111,6 @@ app.controller("credit_card_controller", ["$scope", "$rootScope", "_host", "_bas
             }
         });
     }
-
 
     /**
      * 点击：查询按钮，进行数据查询
@@ -449,9 +441,13 @@ app.controller("credit_card_controller", ["$scope", "$rootScope", "_host", "_bas
     $scope.addCarLinkInfo = function(){
         $('.modal').modal();
         $('#newCreditCardDiv').modal('close');
-        queryCreditCardList();
         swal("新增成功", "", "success");
-
+        // 跳转到 详情画面
+        $state.go('credit_card_detail', {
+            reload: true,
+            id: $scope.creditCarRelId,
+            from: 'credit_card'
+        });
     };
 
     /**
