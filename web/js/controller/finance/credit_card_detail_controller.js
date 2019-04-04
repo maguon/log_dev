@@ -273,8 +273,6 @@ app.controller("credit_card_detail_controller", ["$scope", "$rootScope", "_host"
     });
 
     $scope.shortSearch = function (vin) {
-        console.log('vin',vin);
-
         // 委托方 下拉选中 内容
         if ($("#putEntrustSelect").val() != null && $("#putEntrustSelect").val() !== "") {
             $scope.entrustId = $("#putEntrustSelect").select2("data")[0].id;
@@ -283,9 +281,8 @@ app.controller("credit_card_detail_controller", ["$scope", "$rootScope", "_host"
                 $scope.entrustId = $scope.baseInfoList.entrust_id;
             }
         }
+        $scope.addCarInfoFlg = false;
         if (vin !== undefined && vin !== "") {
-            $scope.addCarInfoFlg = false;
-
             if (vin.length >= 6) {
                 _basic.get(_host.api_url + "/shipTransCarRel?entrustId="+$scope.entrustId+"&vinCode=" +vin, {}).then(function (data) {
                     if (data.success && data.result.length > 0) {
@@ -321,7 +318,9 @@ app.controller("credit_card_detail_controller", ["$scope", "$rootScope", "_host"
     $scope.addLinkCar=function () {
         _basic.post(_host.api_url + "/user/"+userId+"/creditCarRel" ,{
             creditId: val,
-            carId: $scope.carId
+            carId: $scope.carId,
+            lcHandlingFee: 0,
+            bankServicesFee: 0
         }).then(function (data) {
             if (data.success) {
                 $scope.linkCarId =data.id;
@@ -336,14 +335,29 @@ app.controller("credit_card_detail_controller", ["$scope", "$rootScope", "_host"
         })
     };
 
+    // 修改车辆手续费
+    $scope.editCarServiceFee=function () {
+        _basic.put(_host.api_url + "/user/" + userId + "/credit/" + $scope.editCreditId + '/car/' + $scope.editCarId ,{
+            lcHandlingFee: $scope.editLcFee,
+            bankServicesFee: $scope.editBankServicesFee
+        }).then(function (data) {
+            if (data.success) {
+                // $('.modal').modal();
+                $('#editCarServiceFeeDiv').modal('close');
+                queryLinkCar();
+            } else {
+                swal(data.msg, "", "error");
+            }
+        })
+    };
+
     //刪除
     $scope.deleteLinkCar = function(carId){
         _basic.delete(_host.api_url + "/user/" + userId + "/credit/" + val + '/car/' + carId, {}).then(
             function (data) {
                 if (data.success === true) {
                     queryLinkCar();
-                }
-                else {
+                } else {
                     swal(data.msg, "", "error");
                 }
             });
@@ -359,12 +373,33 @@ app.controller("credit_card_detail_controller", ["$scope", "$rootScope", "_host"
                     if (data.success === true) {
                         queryBaseItem();
                         queryLinkCar();
-                    }
-                    else {
+                    } else {
                         swal(data.msg, "", "error");
                     }
                 });
         }
+    };
+
+    /**
+     * 打开【修改车辆手续费】模态画面。
+     */
+    $scope.openEditCarServiceFeeDiv = function (creditId, carId, lcHandlingFee, bankServicesFee) {
+        // 打开画面
+        $('.modal').modal();
+        $('#editCarServiceFeeDiv').modal('open');
+
+        // 信用证ID
+        $scope.editCreditId = creditId;
+        // car id
+        $scope.editCarId = carId;
+        // lc fee
+        $scope.editLcFee = lcHandlingFee;
+        // bank service fee
+        $scope.editBankServicesFee = bankServicesFee;
+
+        // 激活label状态
+        $('#lcFeeLabel').addClass('active');
+        $('#bankServiceFeeLabel').addClass('active');
     };
 
     /**
