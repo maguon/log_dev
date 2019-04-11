@@ -228,6 +228,21 @@ app.controller("finance_loan_out_repay_controller", ["$scope", "$rootScope", "_h
     };
 
     /**
+     * 取得 贷出编号 对应的 购买车辆列表
+     */
+    function getBuyingCarsByLoanId (loanId) {
+        // 取得 该贷款 购买的金融车列表
+        _basic.get(_host.api_url + "/loanBuyCarRel?loanId=" + loanId).then(function (data) {
+            if (data.success) {
+                // 购买车辆 列表
+                $scope.buyingCarList = data.result;
+            } else {
+                swal(data.msg, "", "error");
+            }
+        });
+    }
+
+    /**
      * 获取贷出基本信息
      * @param loanId 贷出编号
      */
@@ -252,6 +267,9 @@ app.controller("finance_loan_out_repay_controller", ["$scope", "$rootScope", "_h
                     // 上次还款时间
                     $scope.loanInfo.lastRepaymentDate = data.result[0].last_repayment_date;
 
+                    // 取得 贷出编号 对应的 购买车辆列表
+                    getBuyingCarsByLoanId(loanId);
+
                     // 本次还贷金额(美元)
                     $scope.repay.paymentMoney = "";
                     // 利率/天
@@ -266,8 +284,8 @@ app.controller("finance_loan_out_repay_controller", ["$scope", "$rootScope", "_h
 
                     // 利息(美元)
                     $scope.repay.interest = 0;
-                    // 手续费(美元)
-                    $scope.repay.poundage = 0;
+                    // // 手续费(美元)
+                    // $scope.repay.poundage = 0;
                     // 本次应还总金额(美元)
                     $scope.repay.totalPaymentMoney = 0;
                     // // 剩余未还金额(美元)
@@ -331,13 +349,14 @@ app.controller("finance_loan_out_repay_controller", ["$scope", "$rootScope", "_h
                 // 利率/天
                 rate: $scope.repay.rate === "" ? 0.0333 : $scope.repay.rate,
                 // 产生利息金额(美元)
-                createInterestMoney: $scope.loanInfo.notRepaymentMoney,
+                createInterestMoney: $scope.repay.paymentMoney,
                 // 产生利息时长(天)
                 dayCount: $scope.repay.interestDay,
                 // 利息(美元)
                 interestMoney: $scope.repay.interest,
+                // 2019-04-08 去掉手续费
                 // 手续费
-                fee: $scope.repay.poundage === "" ? 0 : $scope.repay.poundage,
+                // fee: $scope.repay.poundage === "" ? 0 : $scope.repay.poundage,
                 // 备注
                 remark: $scope.repay.remark
             };
@@ -398,9 +417,9 @@ app.controller("finance_loan_out_repay_controller", ["$scope", "$rootScope", "_h
 
         // 手续费
         var poundage = 0;
-        if ($scope.repay.poundage !== "") {
-            poundage = parseFloat($scope.repay.poundage);
-        }
+        // if ($scope.repay.poundage !== "") {
+        //     poundage = parseFloat($scope.repay.poundage);
+        // }
 
         // 本次应还总金额 = 本次还贷金额 + 利息 + 手续费
         $scope.repay.totalPaymentMoney = paymentMoney + parseFloat($scope.repay.interest) + poundage;
