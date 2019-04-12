@@ -357,7 +357,7 @@ app.controller("finance_loan_out_repay_detail_controller", ["$scope", "$statePar
     // };
 
     /**
-     * 新增还款信用证。 TODO 需要根据接口确定，添加过的 信用证 后的按钮 是否 变灰
+     * 新增还款信用证。
      * @param creditId 信用证ID
      */
     $scope.addLoanRepCreditRel = function (creditId) {
@@ -378,7 +378,7 @@ app.controller("finance_loan_out_repay_detail_controller", ["$scope", "$statePar
     };
 
     /**
-     * 从还款信息中删除指定信用证。 TODO ，追加一个判断，最好接口处理，接口判断：信用证关联的车辆，是否已经还款，还款了，则不能移除
+     * 从还款信息中删除指定信用证。
      * @param creditId 信用证ID
      */
     $scope.deleteCreditPayment = function ($event, creditId) {
@@ -447,13 +447,15 @@ app.controller("finance_loan_out_repay_detail_controller", ["$scope", "$statePar
     // 修改车辆手续费
     $scope.editCarServiceFee=function () {
         _basic.put(_host.api_url + "/user/" + userId + "/credit/" + $scope.editCreditId + '/car/' + $scope.editCarId ,{
-            lcHandlingFee: $scope.editLcFee,
-            bankServicesFee: $scope.editBankServicesFee
+            lcHandlingFee: parseFloat($scope.editLcFee),
+            bankServicesFee: parseFloat($scope.editBankServicesFee)
         }).then(function (data) {
             if (data.success) {
                 // $('.modal').modal();
                 $('#editCarServiceFeeDiv').modal('close');
                 $scope.getCreditCarRel($scope.editCreditId);
+                // 取得 信用证还款金额
+                queryCreditRepMoney();
             } else {
                 swal(data.msg, "", "error");
             }

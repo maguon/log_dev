@@ -228,6 +228,29 @@ app.controller("finance_loan_out_repay_controller", ["$scope", "$rootScope", "_h
     };
 
     /**
+     * 本次应还总金额/剩余未还金额 计算用方法。
+     */
+    $scope.calculatePaymentMoney = function () {
+        // 利率/天
+        var rate = 0.0333;
+        if ($scope.repay.rate !== "") {
+            rate = parseFloat($scope.repay.rate);
+        }
+        // 利息 = 利率/天 * 本次还贷金额 * 产生利息时长
+        $scope.repay.interest = rate * $scope.repay.paymentMoney * $scope.repay.interestDay / 100;
+        $scope.repay.interest = $scope.repay.interest.toFixed(2);
+
+        // 本次还贷金额
+        var paymentMoney = 0;
+        if ($scope.repay.paymentMoney !== "") {
+            paymentMoney = parseFloat($scope.repay.paymentMoney);
+        }
+        // 实际还款金额(美元) = 本次还贷金额 + 利息
+        $scope.repay.totalPaymentMoney = paymentMoney + parseFloat($scope.repay.interest);
+        $scope.repay.totalPaymentMoney = $scope.repay.totalPaymentMoney.toFixed(2);
+    };
+
+    /**
      * 取得 贷出编号 对应的 购买车辆列表
      */
     function getBuyingCarsByLoanId (loanId) {
@@ -302,9 +325,10 @@ app.controller("finance_loan_out_repay_controller", ["$scope", "$rootScope", "_h
     };
 
     /**
-     * Tab跳转 其他方式还款
+     *  点击【新增还款】模态画面 下一步按钮。
      */
     $scope.gotoNextPage = function () {
+        // 基本信息画面 下一步 按钮
         if ($scope.tabId === "paymentInfo") {
             // 新增还款基本信息。
             addLoanRepayment();
@@ -320,10 +344,6 @@ app.controller("finance_loan_out_repay_controller", ["$scope", "$rootScope", "_h
             // TAB 画面ID：其他方式还款
             $scope.tabId = "otherPayment";
 
-            // 本次应还总金额(美元)
-            $scope.otherPayment.totalPaymentMoney = $scope.creditPayment.leftPaymentMoney;
-            // 未还金额(美元)
-            $scope.otherPayment.leftPaymentMoney = $scope.creditPayment.leftPaymentMoney;
             // 清空 支付编号
             $scope.newOtherPaymentId = "";
             // 清空其他方式列表
@@ -375,12 +395,14 @@ app.controller("finance_loan_out_repay_controller", ["$scope", "$rootScope", "_h
                     $("#creditPaymentDiv").addClass("active");
                     $("#creditPaymentDiv").show();
 
-                    // 本次应还总金额(美元)
-                    $scope.creditPayment.totalPaymentMoney = $scope.repay.totalPaymentMoney;
                     // 未还金额(美元)
-                    $scope.creditPayment.leftPaymentMoney = $scope.repay.totalPaymentMoney;
-                    // 清空 信用证号
-                    $scope.newCreditId = "";
+                    $scope.repay.leftPaymentMoney = $scope.repay.totalPaymentMoney;
+                    // 信用证 已还金额
+                    $scope.creditPayment.paymentMoney = 0;
+                    // 其他方式 已还金额
+                    $scope.otherPayment.paymentMoney = 0;
+                    // 取得可以用来还款的信用证列表
+                    getCreditListByLoan();
                     // 清空信用证列表
                     $scope.loanRepCreditRelList = {};
 
@@ -396,74 +418,24 @@ app.controller("finance_loan_out_repay_controller", ["$scope", "$rootScope", "_h
     }
 
     /**
-     * 本次应还总金额/剩余未还金额 计算用方法。
+     * 取得可以使用的信用证列表。
      */
-    $scope.calculatePaymentMoney = function () {
-
-        // 利率/天
-        var rate = 0.0333;
-        if ($scope.repay.rate !== "") {
-            rate = parseFloat($scope.repay.rate);
-        }
-        // 利息 = 利率/天 * 本次还贷金额 * 产生利息时长
-        $scope.repay.interest = rate * $scope.repay.paymentMoney * $scope.repay.interestDay / 100;
-        $scope.repay.interest = $scope.repay.interest.toFixed(2);
-
-        // 本次还贷金额
-        var paymentMoney = 0;
-        if ($scope.repay.paymentMoney !== "") {
-            paymentMoney = parseFloat($scope.repay.paymentMoney);
-        }
-
-        // 手续费
-        var poundage = 0;
-        // if ($scope.repay.poundage !== "") {
-        //     poundage = parseFloat($scope.repay.poundage);
-        // }
-
-        // 本次应还总金额 = 本次还贷金额 + 利息 + 手续费
-        $scope.repay.totalPaymentMoney = paymentMoney + parseFloat($scope.repay.interest) + poundage;
-        $scope.repay.totalPaymentMoney = $scope.repay.totalPaymentMoney.toFixed(2);
-
-        // // 剩余未还金额 = 前次未还本金 - 本次还贷金额
-        // $scope.repay.leftPaymentMoney = parseFloat($scope.loanInfo.notRepaymentMoney) - paymentMoney;
-        // $scope.repay.leftPaymentMoney = $scope.repay.leftPaymentMoney < 0 ? 0 : $scope.repay.leftPaymentMoney;
-        // $scope.repay.leftPaymentMoney = $scope.repay.leftPaymentMoney.toFixed(2);
-    };
-
-    /**
-     * 点击 追加信用证还款按钮
-     */
-    $scope.addCreditPayment = function () {
-
-        // 未完结ID = 1
-        var unfinished = $scope.paymentStatus[0].id;
-        // 信用证号
-        var creditNumber = $scope.newCreditId;
-
-        // 检索用url
-        var url = _host.api_url + "/credit?creditNumber=" + creditNumber + "&entrustId=" + $scope.repay.entrustId;
-        // var url = _host.api_url + "/credit?creditNumber=" + creditNumber + "&entrustId=" + $scope.repay.entrustId  + "&creditStatus=" + unfinished;
-        _basic.get(url).then(function (data) {
+    function getCreditListByLoan() {
+        _basic.get(_host.api_url + '/creditBase?creditStatus=1&loanId=' + $scope.repay.loanId + '&entrustId=' + $scope.repay.entrustId).then(function (data) {
             if (data.success) {
-
-                if (data.result.length === 0) {
-                    swal("请填写正确的委托方信用证号！", "", "warning");
-                } else {
-                    // 若输入为正确的信用证号，则 追加信用证关联
-                    addLoanRepCreditRel(data.result[0].id);
-                }
+                $scope.creditList = data.result;
             } else {
                 swal(data.msg, "", "error");
             }
         });
-    };
+    }
 
     /**
      * 新增还款信用证。
      * @param creditId 信用证ID
      */
-    function addLoanRepCreditRel(creditId) {
+    $scope.addLoanRepCreditRel = function (creditId) {
+    // function addLoanRepCreditRel(creditId) {
         // 追加画面数据
         var obj = {
             // 还款编号
@@ -475,59 +447,26 @@ app.controller("finance_loan_out_repay_controller", ["$scope", "$rootScope", "_h
                 // 成功后，刷新页面数据
                 $scope.newCreditId = "";
                 // 取得信用证 还款信息
-                getCreditPaymentInfo();
+                getCreditPaymentList();
             } else {
                 swal(data.msg, "", "error");
             }
         })
-    }
+    };
 
     /**
      * 取得信用证 还款信息。
      */
-    function getCreditPaymentInfo() {
-
-        // 信用证 已还金额
-        $scope.creditPayment.paymentMoney = 0;
-
+    function getCreditPaymentList() {
         // 取得信用证还款列表
         _basic.get(_host.api_url + "/loanRepCreditRel?repaymentId=" + $scope.repay.repaymentId).then(function (data) {
             if (data.success) {
                 $scope.loanRepCreditRelList = data.result;
-
-                // 计算已还金额
-                for (var i = 0; i < $scope.loanRepCreditRelList.length; i++) {
-                    if ($scope.loanRepCreditRelList[i].actual_money == null) {
-                        $scope.loanRepCreditRelList[i].actual_money = 0;
-                    }
-                    $scope.creditPayment.paymentMoney = $scope.loanRepCreditRelList[i].actual_money + $scope.creditPayment.paymentMoney;
-                }
-
-                // 未还金额(美元) = 本次应还总金额 - 已还金额
-                $scope.creditPayment.leftPaymentMoney = $scope.creditPayment.totalPaymentMoney - $scope.creditPayment.paymentMoney;
-                // 如果小于0 ，则显示0
-                $scope.creditPayment.leftPaymentMoney = $scope.creditPayment.leftPaymentMoney < 0 ? 0 : $scope.creditPayment.leftPaymentMoney;
             } else {
                 swal(data.msg, "", "error");
             }
         })
     }
-
-    /**
-     * 取得指定信用证关联车辆。
-     * @param creditId 信用证ID
-     */
-    $scope.getCreditCarRel = function ($event, creditId) {
-        // 检索用url
-        var url = _host.api_url + "/creditCarRel?creditId=" + creditId;
-        _basic.get(url).then(function (data) {
-            if (data.success) {
-                $scope.creditCarRelList = data.result;
-            } else {
-                swal(data.msg, "", "error");
-            }
-        });
-    };
 
     /**
      * 从还款信息中删除指定信用证。
@@ -549,13 +488,121 @@ app.controller("finance_loan_out_repay_controller", ["$scope", "$rootScope", "_h
                     function (data) {
                         if (data.success) {
                             // 取得信用证 还款信息
-                            getCreditPaymentInfo();
+                            getCreditPaymentList();
                         } else {
                             swal(data.msg, "", "error");
                         }
                     });
             });
     };
+
+    /**
+     * 取得指定信用证关联车辆。
+     * @param creditId 信用证ID
+     */
+    $scope.getCreditCarRel = function (creditId) {
+
+        // 检索用url
+        var url = _host.api_url + "/creditCarRel?creditId=" + creditId;
+        _basic.get(url).then(function (data) {
+            if (data.success) {
+                $scope.creditCarRelList = data.result;
+            } else {
+                swal(data.msg, "", "error");
+            }
+        });
+    };
+
+    /**
+     * 查询信用证还款金额。
+     */
+    function queryCreditRepMoney(){
+        // 检索用url
+        var url = _host.api_url + "/repayment/" + $scope.repay.repaymentId + "/creditRepMoney";
+
+        _basic.get(url).then(function (data) {
+            if (data.success) {
+                if (data.result.length > 0) {
+                    // 还款金额
+                    $scope.creditPayment.paymentMoney = data.result[0].credit_rep_money == null ? 0 : data.result[0].credit_rep_money;
+                }
+                // 未还金额 = 本次应还总金额(美元) - 信用证还款金额 - 其他方式还款金额
+                $scope.repay.leftPaymentMoney = $scope.repay.totalPaymentMoney - $scope.creditPayment.paymentMoney - $scope.otherPayment.paymentMoney;
+                // // 如果小于0 ，则显示0
+                // $scope.repay.leftPaymentMoney = $scope.repay.leftPaymentMoney < 0 ? 0 : $scope.repay.leftPaymentMoney;
+            } else {
+                swal(data.msg, "", "error");
+            }
+        });
+    }
+
+    /**
+     * 查询其他方式还款金额。
+     */
+    function queryOtherRepMoney(){
+        // 检索用url
+        var url = _host.api_url + "/repayment/" + $scope.repay.repaymentId + "/paymentRepMoney";
+        _basic.get(url).then(function (data) {
+            if (data.success) {
+                if (data.result.length > 0) {
+                    // 还款金额
+                    $scope.otherPayment.paymentMoney = data.result[0].payment_rep_money == null ? 0 : data.result[0].payment_rep_money;
+                }
+                // 未还金额 = 本次应还总金额(美元) - 信用证还款金额 - 其他方式还款金额
+                $scope.repay.leftPaymentMoney = $scope.repay.totalPaymentMoney - $scope.creditPayment.paymentMoney - $scope.otherPayment.paymentMoney;
+                // // 如果小于0 ，则显示0
+                // $scope.repay.leftPaymentMoney = $scope.repay.leftPaymentMoney < 0 ? 0 : $scope.repay.leftPaymentMoney;
+            } else {
+                swal(data.msg, "", "error");
+            }
+        });
+    }
+
+    /**
+     * 信用证关联车辆，进行支付，或者，取消支付
+     * @param creditId 信用证号
+     * @param carId 车辆ID
+     * @param selectRepaymentId 车辆关联还款编号
+     */
+    $scope.setCreditCarRepRel = function (creditId, carId, selectRepaymentId) {
+        var repaymentId = 0;
+        var title = '';
+        if (selectRepaymentId === 0) {
+            repaymentId = $scope.repay.repaymentId;
+            title = '确定要支付该车辆吗？';
+        } else {
+            title = '确定要移除该支付吗？';
+            if (selectRepaymentId !== parseInt($scope.repay.repaymentId)) {
+                swal("不能移除非本次还款的支付！", "", "error");
+                return;
+            }
+        }
+
+        swal({
+                title: title,
+                type: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#DD6B55",
+                confirmButtonText: "确认",
+                cancelButtonText: "取消",
+                closeOnConfirm: true
+            },
+            function () {
+                _basic.put(_host.api_url + "/user/" + userId + "/credit/" + creditId + '/car/' + carId + '/creditCarRepRel', {repaymentId: repaymentId}).then(
+                    function (data) {
+                        if (data.success === true) {
+                            // 成功后，刷新页面数据
+                            $scope.getCreditCarRel(creditId);
+                            // 取得 信用证还款金额
+                            queryCreditRepMoney();
+                        } else {
+                            swal(data.msg, "", "error");
+                        }
+                    });
+            });
+    };
+
+
 
     /**
      * 点击 追加其他还款按钮
@@ -611,25 +658,12 @@ app.controller("finance_loan_out_repay_controller", ["$scope", "$rootScope", "_h
      * 取得其他还款 还款信息。
      */
     function getOtherPaymentInfo() {
-        // 已还金额
-        $scope.otherPayment.paymentMoney = 0;
-
         // 取得信用证还款列表
         _basic.get(_host.api_url + "/paymentLoanRepRel?repaymentId=" + $scope.repay.repaymentId).then(function (data) {
             if (data.success) {
                 $scope.loanRepPaymentRelList = data.result;
-                // 计算已还金额
-                for (var i = 0; i < $scope.loanRepPaymentRelList.length; i++) {
-                    if ($scope.loanRepPaymentRelList[i].this_payment_money == null) {
-                        $scope.loanRepPaymentRelList[i].this_payment_money = 0;
-                    }
-                    $scope.otherPayment.paymentMoney = $scope.loanRepPaymentRelList[i].this_payment_money + $scope.otherPayment.paymentMoney;
-                }
-
-                // 未还金额(美元) = 本次应还总金额 - 已还金额
-                $scope.otherPayment.leftPaymentMoney = $scope.otherPayment.totalPaymentMoney - $scope.otherPayment.paymentMoney;
-                // 如果小于0 ，则显示0
-                $scope.otherPayment.leftPaymentMoney = $scope.otherPayment.leftPaymentMoney < 0 ? 0 : $scope.otherPayment.leftPaymentMoney;
+                // 取得 其他方式还款金额
+                queryOtherRepMoney();
             } else {
                 swal(data.msg, "", "error");
             }
