@@ -151,14 +151,6 @@
                         <label for="realPaymentText" ng-class="{'label-active':repay.totalPaymentMoney !== ''}">实际还款金额(美元)</label>
                     </div>
                 </div>
-
-                <!--<div class="col s12">-->
-                    <!--&lt;!&ndash; 手续费(美元) &ndash;&gt;-->
-                    <!--<div class="input-field col s4">-->
-                        <!--<input type="text" id="poundageText" maxlength="8" valid-money ng-model="repay.poundage" class="red-text right-align" ng-change="calculatePaymentMoney()">-->
-                        <!--<label for="poundageText" ng-class="{'label-active':repay.poundage !== ''}">手续费(美元)</label>-->
-                    <!--</div>-->
-                <!--</div>-->
             </div>
             <!-- 备注 -->
             <div class="col s12">
@@ -212,13 +204,8 @@
                         <label class="grey-text"><span class="fz14">利息(美元)：</span><span class="red-text">{{repay.interest| number:2}}</span></label>
                     </div>
 
-                    <!-- 手续费(美元) -->
+                    <!-- 实际还款金额(美元) -->
                     <div class="input-field col s4">
-                        <label class="grey-text"><span class="fz14">手续费(美元)：</span><span class="red-text">{{repay.poundage| number:2}}</span></label>
-                    </div>
-
-                    <!-- 产生利息时长(天) -->
-                    <div class="input-field col s4 ">
                         <label class="grey-text"><span class="fz14">实际还款金额(美元)：</span><span class="red-text">{{repay.totalPaymentMoney| number:2}}</span></label>
                     </div>
                 </div>
@@ -245,7 +232,7 @@
             <!-- 本次应还总金额 本还金额 (只读) -->
             <div class="col s12 vc-center cyan-text fz14" style="margin-top: 20px;margin-bottom: 20px;">
                 <div class="col s6 left-align blue-grey lighten-5" style="height:50px; padding-top: 15px; border: 1px solid lightgrey;border-right: 0">
-                    本次应还总金额(美元): <span class="red-text">{{repay.totalPaymentMoney | number:2}}</span>
+                    本次应还总金额(美元): <span class="red-text">{{repay.oldTotalPaymentMoney | number:2}}</span>
                 </div>
                 <div class="col s6 right-align blue-grey lighten-5" style="height:50px; padding-top: 15px; border: 1px solid lightgrey;border-left: 0">
                     未还金额(美元): <span class="red-text">{{repay.leftPaymentMoney | number:2}}</span>
@@ -391,7 +378,7 @@
             <!-- 本次应还总金额 本还金额 (只读) -->
             <div class="col s12 vc-center cyan-text fz14" style="margin-top: 20px;margin-bottom: 20px;">
                 <div class="col s6 left-align blue-grey lighten-5" style="height:50px; padding-top: 15px; border: 1px solid lightgrey;border-right: 0">
-                    本次应还总金额(美元): <span class="red-text">{{repay.totalPaymentMoney | number:2}}</span>
+                    本次应还总金额(美元): <span class="red-text">{{repay.oldTotalPaymentMoney | number:2}}</span>
                 </div>
                 <div class="col s6 right-align blue-grey lighten-5" style="height:50px; padding-top: 15px; border: 1px solid lightgrey;border-left: 0">
                     未还金额(美元): <span class="red-text">{{repay.leftPaymentMoney | number:2}}</span>

@@ -90,6 +90,7 @@ app.controller("finance_loan_out_repay_detail_controller", ["$scope", "$statePar
                     // $scope.repay.totalPaymentMoney = parseFloat($scope.repay.paymentMoney) + parseFloat($scope.repay.interest) + parseFloat($scope.repay.poundage);
                     $scope.repay.totalPaymentMoney = parseFloat($scope.repay.paymentMoney) + parseFloat($scope.repay.interest);
                     $scope.repay.totalPaymentMoney = $scope.repay.totalPaymentMoney.toFixed(2);
+                    $scope.repay.oldTotalPaymentMoney = $scope.repay.totalPaymentMoney;
 
                     // 备注
                     $scope.repay.remark = data.result[0].remark;
@@ -175,7 +176,7 @@ app.controller("finance_loan_out_repay_detail_controller", ["$scope", "$statePar
                     $scope.creditPayment.paymentMoney = data.result[0].credit_rep_money == null ? 0 : data.result[0].credit_rep_money;
                 }
                 // 未还金额 = 本次应还总金额(美元) - 信用证还款金额 - 其他方式还款金额
-                $scope.repay.leftPaymentMoney = $scope.repay.totalPaymentMoney - $scope.creditPayment.paymentMoney - $scope.otherPayment.paymentMoney;
+                $scope.repay.leftPaymentMoney = $scope.repay.oldTotalPaymentMoney - $scope.creditPayment.paymentMoney - $scope.otherPayment.paymentMoney;
                 // // 如果小于0 ，则显示0
                 // $scope.repay.leftPaymentMoney = $scope.repay.leftPaymentMoney < 0 ? 0 : $scope.repay.leftPaymentMoney;
             } else {
@@ -197,7 +198,7 @@ app.controller("finance_loan_out_repay_detail_controller", ["$scope", "$statePar
                     $scope.otherPayment.paymentMoney = data.result[0].payment_rep_money == null ? 0 : data.result[0].payment_rep_money;
                 }
                 // 未还金额 = 本次应还总金额(美元) - 信用证还款金额 - 其他方式还款金额
-                $scope.repay.leftPaymentMoney = $scope.repay.totalPaymentMoney - $scope.creditPayment.paymentMoney - $scope.otherPayment.paymentMoney;
+                $scope.repay.leftPaymentMoney = $scope.repay.oldTotalPaymentMoney - $scope.creditPayment.paymentMoney - $scope.otherPayment.paymentMoney;
                 // // 如果小于0 ，则显示0
                 // $scope.repay.leftPaymentMoney = $scope.repay.leftPaymentMoney < 0 ? 0 : $scope.repay.leftPaymentMoney;
             } else {

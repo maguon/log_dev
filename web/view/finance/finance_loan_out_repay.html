@@ -319,28 +319,15 @@
                             </div>
                         </div>
 
-                        <!--&lt;!&ndash; 信用证号 &ndash;&gt;-->
-                        <!--<div class="col s12">-->
-                            <!--<div class="col s12 z-depth-1" style="border:1px solid lightgrey" style="margin-top: 20px;margin-bottom: 20px;height: 200px;">-->
-                                <!--<div class="input-field col s12" style="margin-top: 30px;margin-bottom: 20px;">-->
-                                    <!--<input type="text" id="newCreditIdText" ng-model="newCreditId" >-->
-                                    <!--<a ng-click="addCreditPayment()" class="dataIcon btn-floating cyan" style="width:20px;height: 20px;">-->
-                                        <!--<i class="mdi mdi-plus" style="position: absolute;right:0px;bottom:0px;font-size:15px;line-height: 20px;"></i>-->
-                                    <!--</a>-->
-                                    <!--<label for="newCreditIdText" class="active" style="padding-left: 2px;">信用证号</label>-->
-                                <!--</div>-->
-                            <!--</div>-->
-                        <!--</div>-->
-
                         <div class="col s12 bold cyan-text fz15">
                             可使用信用证
                         </div>
 
                         <!-- 可使用信用证列表 区域 -->
-                        <div ng-show="creditList.length > 0" class="col s12">
+                        <div ng-show="loanCreditList.length > 0" class="col s12">
                             <ul class="collapsible" data-collapsible="accordion" collapsible>
                                 <!-- 可使用信用证 遍历 -->
-                                <li ng-repeat="el in creditList">
+                                <li ng-repeat="el in loanCreditList">
 
                                     <!-- 信用证 基本信息 -->
                                     <div class="row no-mp blue-grey lighten-5 grey-text text-darken-1 fz14"
@@ -382,7 +369,6 @@
                                 <div ng-click="getCreditCarRel(el.credit_id)"
                                      class="collapsible-header blue-grey lighten-5 grey-text text-darken-1 row no-mp fz14"
                                      style="padding-left: 0;padding-right: 0">
-
 
                                     <div class="col" style="width:20%;">信用证号：<span class="cyan-text">{{el.credit_number}}</span></div>
                                     <div class="col" style="width:15%;">信用证金额：<span class="red-text">{{el.credit_money | number}}</span></div>

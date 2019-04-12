@@ -423,7 +423,7 @@ app.controller("finance_loan_out_repay_controller", ["$scope", "$rootScope", "_h
     function getCreditListByLoan() {
         _basic.get(_host.api_url + '/creditBase?creditStatus=1&loanId=' + $scope.repay.loanId + '&entrustId=' + $scope.repay.entrustId).then(function (data) {
             if (data.success) {
-                $scope.creditList = data.result;
+                $scope.loanCreditList = data.result;
             } else {
                 swal(data.msg, "", "error");
             }
