@@ -163,6 +163,45 @@ app.controller("finance_loan_out_repay_detail_controller", ["$scope", "$statePar
     }
 
     /**
+     * 贷入还款关联车辆，进行添加车辆，或者，移除车辆
+     * @param loanId 贷出编号
+     * @param carId 车辆ID
+     * @param selectRepaymentId 车辆关联还款编号
+     */
+    $scope.setLoanBuyCarRel = function (loanId, carId, selectRepaymentId) {
+        var repaymentId = 0;
+        var title = '';
+        if (selectRepaymentId === 0) {
+            repaymentId = repayId;
+            title = '确定要添加本次还款车辆吗？';
+        } else {
+            title = '确定要移除本次还款车辆吗？';
+        }
+
+        swal({
+                title: title,
+                type: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#DD6B55",
+                confirmButtonText: "确认",
+                cancelButtonText: "取消",
+                closeOnConfirm: true
+            },
+            function () {
+                _basic.put(_host.api_url + "/user/" + userId + "/loan/" + loanId + '/car/' + carId + '/loanBuyCarRel', {repaymentId: repaymentId}).then(
+                    function (data) {
+                        if (data.success === true) {
+                            // 成功后，刷新页面数据
+                            // 取得 贷出编号 对应的 购买车辆列表
+                            getBuyingCarsByLoanId($scope.repay.loanId);
+                        } else {
+                            swal(data.msg, "", "error");
+                        }
+                    });
+            });
+    };
+
+    /**
      * 查询信用证还款金额。
      */
     function queryCreditRepMoney(){
@@ -238,7 +277,9 @@ app.controller("finance_loan_out_repay_detail_controller", ["$scope", "$statePar
                         // 2019-04-08 去掉手续费
                         // fee: $scope.repay.poundage === "" ? 0 : $scope.repay.poundage,
                         // 备注
-                        remark: $scope.repay.remark
+                        remark: $scope.repay.remark,
+                        // 本次还款车辆
+                        carIds: $scope.selectedPaymentCars
                     };
                     // 修改本次支付金额
                     var url = _host.api_url + "/user/" + userId + "/repayment/" + repayId;

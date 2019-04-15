@@ -511,27 +511,74 @@
                 <div style="min-height: 480px;">
                     <!-- 第一部分 -->
 
-                    <!-- 未还金额 起始时间 (只读) -->
-                    <div ng-show="modalFlag=='newPaymentInfo'" class="col s12 vc-center fz14" style="margin-top: 20px;margin-bottom: 20px;">
-                        <div class="col s6 left-align blue-grey lighten-5 cyan-text" style="height:50px; padding-top: 15px; border: 1px solid lightgrey;border-right: 0">
-                            未还金额(美元): <span class="red-text">{{paymentInfo.leftPaymentMoney | number}}</span>
-                        </div>
-                        <div class="col s6 right-align blue-grey lighten-5 grey-text" style="height:50px; padding-top: 15px; border: 1px solid lightgrey;border-left: 0">
-                            起始时间: {{paymentInfo.loanStartDate |date:'yyyy-MM-dd HH:mm'}}
-                        </div>
-                    </div>
 
-                    <!-- 还款编号 还款时间 (只读) -->
-                    <div ng-show="modalFlag!='newPaymentInfo'" class="col s12 vc-center cyan-text fz14" style="margin-top: 20px;">
-                        <div class="col s6 left-align" style="height:44px; padding-top: 10px;">
-                            还款编号: {{newPayment.repaymentId}}
-                        </div>
-                        <div class="col s6 right-align grey-text" style="height:44px; padding-top: 10px;">
-                            还款时间: {{newPayment.repaymentDate |date:'yyyy-MM-dd HH:mm'}}
-                        </div>
-                    </div>
                     <!-- 分割线 -->
-                    <div class="col divider" ng-show="modalFlag!='newPaymentInfo'" style="width:96%; margin-left: 20px;margin-bottom: 5px;"></div>
+                    <!--<div class="col divider" ng-show="modalFlag!='newPaymentInfo'" style="width:96%; margin-left: 20px;margin-bottom: 5px;"></div>-->
+
+                    <div class="col s12">
+                        <ul class="collapsible" data-collapsible="accordion" collapsible>
+                            <li>
+                                <div class="collapsible-header blue-grey lighten-5 grey-text text-darken-1 row no-mp fz14"
+                                     style="padding-left: 0;padding-right: 0">
+
+                                    <!-- body -->
+                                    <div class="col s12 lighten-1 white grey-text fz14" style="border-top:1px solid #bdbdbd;">
+                                        <div class="col s4 left-align" ng-show="modalFlag=='newPaymentInfo'">
+                                            未还金额(美元): <span class="red-text">{{paymentInfo.leftPaymentMoney | number}}</span>
+                                        </div>
+                                        <div class="col s4 left-align" ng-show="modalFlag=='newPaymentInfo'">
+                                            起始时间: {{paymentInfo.loanStartDate |date:'yyyy-MM-dd HH:mm'}}
+                                        </div>
+
+                                        <div class="col s4 left-align" ng-show="modalFlag!='newPaymentInfo'">
+                                            还款编号: {{newPayment.repaymentId}}
+                                        </div>
+                                        <div class="col s4 left-align" ng-show="modalFlag!='newPaymentInfo'">
+                                            还款时间: {{newPayment.repaymentDate |date:'yyyy-MM-dd HH:mm'}}
+                                        </div>
+
+                                        <div class="col s4 cyan-text right-align">本次还款车辆</div>
+
+                                    </div>
+                                </div>
+                                <!-- 车辆品牌 详细列表 主体内容(初期为隐藏) -->
+                                <div class="collapsible-body fz14" style="padding: 0">
+                                    <!-- （车辆品牌 -> 品牌类型）详细画面 -->
+                                    <div style="padding: 1rem;overflow: hidden">
+                                        <table class="bordered">
+                                            <tbody>
+                                            <tr ng-repeat="el in buyingCarList" class="grey-text text-darken-1" style="height:30px">
+                                                <td style="width:20%;">VIN：{{el.vin}}</td>
+                                                <td style="width:40%;">{{el.make_name}}/{{el.model_name}}({{el.pro_date}})</td>
+                                                <td class="red-text right-align" style="width:20%;">{{el.valuation|currency}}</td>
+                                                <td class="center" style="width:15%;" ng-show="el.repayment_id !== 0">还款编号：{{el.repayment_id}}</td>
+                                                <td class="center" style="width:15%;" ng-show="el.repayment_id === 0"></td>
+                                                <!-- 选择还款车辆 -->
+                                                <td ng-show="modalFlag == 'newPaymentInfo'" class="right-align" style="width:5%;">
+                                                    <div ng-show="el.repayment_id == 0">
+                                                        <input type="checkbox" id="{{el.car_id}}" class="filled-in" ng-checked="isSelected(el.car_id)" ng-click="selectPaymentCar($event,el.car_id)" title="支付"/>
+                                                        <label for="{{el.car_id}}"></label>
+                                                    </div>
+                                                </td>
+
+                                                <td ng-show="modalFlag != 'newPaymentInfo' && loanInfo.loanStatus != 4 && newPayment.repaymentStatus == 1" class="red-text" style="width:5%;">
+                                                    <span ng-show="el.repayment_id == 0" class="mdi mdi-check-circle-outline fz18 cyan-text" title="添加本次还款车辆"
+                                                          ng-click="setLoanBuyCarRel(el.loan_id,el.car_id,el.repayment_id)" style="margin-left: 5px;cursor: pointer"></span>
+                                                    <span ng-show="el.repayment_id == newPayment.repaymentId" class="mdi mdi-cancel fz18 pink-text" title="移除本次还款车辆"
+                                                          ng-click="setLoanBuyCarRel(el.loan_id,el.car_id,el.repayment_id)" style="margin-left: 5px;cursor: pointer"></span>
+                                                </td>
+
+                                            </tr>
+                                            <tr class="grey-text text-darken-1" ng-if="buyingCarList.length == 0">
+                                                <td colspan="4" style="letter-spacing: 2px;text-align: center;">暂无数据</td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
 
                     <!-- 第二部分 -->
                     <!-- 基本信息 (录入) -->

@@ -1,5 +1,4 @@
 /**
- * 主菜单：财务管理 -> 贷出还款 控制器
  */
 app.controller("finance_loan_out_repay_controller", ["$scope", "$rootScope", "_host", "_basic", "_config", "$state", "$stateParams","_baseService", function ($scope, $rootScope, _host, _basic, _config, $state, $stateParams,_baseService) {
 
@@ -51,6 +50,9 @@ app.controller("finance_loan_out_repay_controller", ["$scope", "$rootScope", "_h
     $scope.creditPayment = {};
     // 新增还款 其他方式还款
     $scope.otherPayment = {};
+
+    // 选中的支付车辆(selected状态)
+    $scope.selectedPaymentCars = [];
 
     /**
      * 根据画面输入的查询条件，进行数据查询。
@@ -225,6 +227,9 @@ app.controller("finance_loan_out_repay_controller", ["$scope", "$rootScope", "_h
         $scope.hasLoanInfo = false;
         $scope.loanList = [];
         $scope.loanInfo = {};
+
+        // 选中的支付车辆(selected状态)
+        $scope.selectedPaymentCars = [];
     };
 
     /**
@@ -264,6 +269,32 @@ app.controller("finance_loan_out_repay_controller", ["$scope", "$rootScope", "_h
             }
         });
     }
+
+    /**
+     * 当前行是否选中。
+     * @param id
+     * @returns {boolean}
+     */
+    $scope.isSelected = function (id) {
+        return $scope.selectedPaymentCars.indexOf(id) >= 0;
+    };
+
+    /**
+     * 点击某一行关联订单时，修改选中数据列表以及合并金额。
+     * @param $event
+     * @param id
+     */
+    $scope.selectPaymentCar = function ($event, id) {
+        var checkbox = $event.target;
+
+        // 选中的情况
+        if (checkbox.checked) {
+            $scope.selectedPaymentCars.push(id);
+        } else {
+            var idx = $scope.selectedPaymentCars.indexOf(id);
+            $scope.selectedPaymentCars.splice(idx, 1);
+        }
+    };
 
     /**
      * 获取贷出基本信息
@@ -378,7 +409,9 @@ app.controller("finance_loan_out_repay_controller", ["$scope", "$rootScope", "_h
                 // 手续费
                 // fee: $scope.repay.poundage === "" ? 0 : $scope.repay.poundage,
                 // 备注
-                remark: $scope.repay.remark
+                remark: $scope.repay.remark,
+                // 本次还款车辆
+                carIds: $scope.selectedPaymentCars
             };
             _basic.post(_host.api_url + "/user/" + userId + "/loanRepayment", obj).then(function (data) {
                 if (data.success) {

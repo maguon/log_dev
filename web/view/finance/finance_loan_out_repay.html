@@ -203,58 +203,65 @@
                     <!-- 第二部分 贷出编号 对应详细信息 -->
                     <div ng-show="hasLoanInfo" class="col s12">
                         <div class="col s12">
-                                <ul class="collapsible" data-collapsible="accordion" collapsible>
-                                    <li>
-                                        <div class="collapsible-header blue-grey lighten-5 grey-text text-darken-1 row no-mp fz14"
-                                             style="padding-left: 0;padding-right: 0">
-                                            <!-- header -->
-                                            <div class="col s12 lighten-1 cyan-text vc-center fz15" style="height:60px;">
-                                                <div class="col s6 left-align">
-                                                    贷出编号：{{loanInfo.id}}
-                                                </div>
-                                                <div class="col s6 right-align grey-text fz14">
-                                                    贷出时间：{{loanInfo.loanStartDate |date:'yyyy-MM-dd'}}
-                                                </div>
+                            <ul class="collapsible" data-collapsible="accordion" collapsible>
+                                <li>
+                                    <div class="collapsible-header blue-grey lighten-5 grey-text text-darken-1 row no-mp fz14"
+                                         style="padding-left: 0;padding-right: 0">
+                                        <!-- header -->
+                                        <div class="col s12 lighten-1 cyan-text vc-center fz15" style="height:60px;">
+                                            <div class="col s6 left-align">
+                                                贷出编号：{{loanInfo.id}}
                                             </div>
-
-                                            <!-- body -->
-                                            <div class="col s12 lighten-1 white grey-text vc-center fz14" style="height:60px;border-top:1px solid #bdbdbd;">
-                                                <div class="col s4 left-align">
-                                                    贷出总金额(美元)：<span class="red-text">{{loanInfo.loanMoney | number}}</span>
-                                                </div>
-                                                <div class="col s4 left-align">
-                                                    未还本金(美元)：<span class="red-text">{{loanInfo.notRepaymentMoney | number}}</span>
-                                                </div>
-                                                <div class="col s3 right-align">
-                                                    上次还款时间：{{loanInfo.lastRepaymentDate |date:'yyyy-MM-dd'}}
-                                                </div>
-                                                <div class="col s1 cyan-text right-align" style="padding-left: 0;padding-right: 0;">
-                                                    关联车辆
-                                                </div>
+                                            <div class="col s6 right-align grey-text fz14">
+                                                贷出时间：{{loanInfo.loanStartDate |date:'yyyy-MM-dd'}}
                                             </div>
                                         </div>
-                                        <!-- 车辆品牌 详细列表 主体内容(初期为隐藏) -->
-                                        <div class="collapsible-body fz14" style="padding: 0">
-                                            <!-- （车辆品牌 -> 品牌类型）详细画面 -->
-                                            <div style="padding: 1rem;overflow: hidden">
-                                                <table class="bordered">
-                                                    <tbody>
-                                                    <tr ng-repeat="el in buyingCarList" class="grey-text text-darken-1" style="height:30px">
-                                                        <td style="width:25%;">VIN：{{el.vin}}</td>
-                                                        <td style="width:40%;">{{el.make_name}}/{{el.model_name}}</td>
-                                                        <td style="width:10%;">{{el.pro_date}}</td>
-                                                        <td class="red-text right-align" style="width:25%;">{{el.valuation|currency}}</td>
-                                                    </tr>
-                                                    <tr class="grey-text text-darken-1" ng-if="buyingCarList.length == 0">
-                                                        <td colspan="4" style="letter-spacing: 2px;text-align: center;">暂无数据</td>
-                                                    </tr>
-                                                    </tbody>
-                                                </table>
+
+                                        <!-- body -->
+                                        <div class="col s12 lighten-1 white grey-text vc-center fz14" style="height:60px;border-top:1px solid #bdbdbd;">
+                                            <div class="col s4 left-align">
+                                                贷出总金额(美元)：<span class="red-text">{{loanInfo.loanMoney | number}}</span>
+                                            </div>
+                                            <div class="col s4 left-align">
+                                                未还本金(美元)：<span class="red-text">{{loanInfo.notRepaymentMoney | number}}</span>
+                                            </div>
+                                            <div class="col s3 right-align">
+                                                上次还款时间：{{loanInfo.lastRepaymentDate |date:'yyyy-MM-dd'}}
+                                            </div>
+                                            <div class="col s1 cyan-text right-align" style="padding-left: 0;padding-right: 0;">
+                                                本次还款车辆
                                             </div>
                                         </div>
-                                    </li>
-                                </ul>
-
+                                    </div>
+                                    <!-- 车辆品牌 详细列表 主体内容(初期为隐藏) -->
+                                    <div class="collapsible-body fz14" style="padding: 0">
+                                        <!-- （车辆品牌 -> 品牌类型）详细画面 -->
+                                        <div style="padding: 1rem;overflow: hidden">
+                                            <table class="bordered">
+                                                <tbody>
+                                                <tr ng-repeat="el in buyingCarList" class="grey-text text-darken-1" style="height:30px">
+                                                    <td style="width:20%;">VIN：{{el.vin}}</td>
+                                                    <td style="width:40%;">{{el.make_name}}/{{el.model_name}}({{el.pro_date}})</td>
+                                                    <td class="red-text right-align" style="width:20%;">{{el.valuation|currency}}</td>
+                                                    <td class="center" style="width:15%;" ng-show="el.repayment_id !== 0">还款编号：{{el.repayment_id}}</td>
+                                                    <td class="center" style="width:15%;" ng-show="el.repayment_id === 0"></td>
+                                                    <!-- 选择还款车辆 -->
+                                                    <td class="right-align" style="width:5%;">
+                                                        <div ng-show="el.repayment_id == 0">
+                                                            <input type="checkbox" id="{{el.car_id}}" class="filled-in" ng-checked="isSelected(el.car_id)" ng-click="selectPaymentCar($event,el.car_id)" title="支付"/>
+                                                            <label for="{{el.car_id}}"></label>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <tr class="grey-text text-darken-1" ng-if="buyingCarList.length == 0">
+                                                    <td colspan="4" style="letter-spacing: 2px;text-align: center;">暂无数据</td>
+                                                </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
                         </div>
                     </div>
 

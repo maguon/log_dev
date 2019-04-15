@@ -65,6 +65,9 @@ app.controller("finance_loan_out_detail_controller", ["$scope", "$stateParams", 
     // 还款记录(TAB4) 新增还款 其他方式还款
     $scope.otherPayment = {};
 
+    // 还款记录(TAB4) 本次还款车辆列表
+    $scope.selectedPaymentCars = [];
+
     /**
      * 返回前画面。
      */
@@ -84,8 +87,49 @@ app.controller("finance_loan_out_detail_controller", ["$scope", "$stateParams", 
         $("#lookLoanFinfoDiv").addClass("active");
         $("#lookLoanFinfoDiv").show();
 
-        // 取得订单详情
+        // 取得出信息
         getLoanInfo();
+    };
+
+    /**
+     * 取得 贷出编号 对应的 购买车辆列表
+     */
+    function getBuyingCarsByLoanId (loanId) {
+        // 取得 该贷款 购买的金融车列表
+        _basic.get(_host.api_url + "/loanBuyCarRel?loanId=" + loanId).then(function (data) {
+            if (data.success) {
+                // 购买车辆 列表
+                $scope.buyingCarList = data.result;
+            } else {
+                swal(data.msg, "", "error");
+            }
+        });
+    }
+
+    /**
+     * 当前行是否选中。
+     * @param id
+     * @returns {boolean}
+     */
+    $scope.isSelected = function (id) {
+        return $scope.selectedPaymentCars.indexOf(id) >= 0;
+    };
+
+    /**
+     * 点击某一行关联订单时，修改选中数据列表以及合并金额。
+     * @param $event
+     * @param id
+     */
+    $scope.selectPaymentCar = function ($event, id) {
+        var checkbox = $event.target;
+
+        // 选中的情况
+        if (checkbox.checked) {
+            $scope.selectedPaymentCars.push(id);
+        } else {
+            var idx = $scope.selectedPaymentCars.indexOf(id);
+            $scope.selectedPaymentCars.splice(idx, 1);
+        }
     };
 
     /**
@@ -650,8 +694,14 @@ app.controller("finance_loan_out_detail_controller", ["$scope", "$stateParams", 
         // TAB 信用证还款 信用证号 初期化
         $scope.newCreditId = "";
 
+        // 取得 贷出编号 对应的 购买车辆列表
+        getBuyingCarsByLoanId(loanId);
+
         // 【新增还款】模态画面。
         if ($scope.modalFlag === "newPaymentInfo") {
+            // 清空 本次还款车辆
+            $scope.selectedPaymentCars = [];
+
             // 本次还贷金额(美元)
             $scope.newPayment.paymentMoney = "";
             // 利率
@@ -812,7 +862,8 @@ app.controller("finance_loan_out_detail_controller", ["$scope", "$stateParams", 
                 createInterestMoney: $scope.newPayment.principal,
                 dayCount: $scope.newPayment.interestDay,
                 interestMoney: $scope.newPayment.interest,
-                remark: $scope.newPayment.remark
+                remark: $scope.newPayment.remark,
+                carIds: $scope.selectedPaymentCars
             };
             _basic.post(_host.api_url + "/user/" + userId + "/loanRepayment", obj).then(function (data) {
                 if (data.success) {
@@ -854,6 +905,45 @@ app.controller("finance_loan_out_detail_controller", ["$scope", "$stateParams", 
             swal("请填写必需还款信息！", "", "warning");
         }
     }
+
+    /**
+     * 贷入还款关联车辆，进行添加车辆，或者，移除车辆
+     * @param loanId 贷出编号
+     * @param carId 车辆ID
+     * @param selectRepaymentId 车辆关联还款编号
+     */
+    $scope.setLoanBuyCarRel = function (loanId, carId, selectRepaymentId) {
+        var repaymentId = 0;
+        var title = '';
+        if (selectRepaymentId === 0) {
+            repaymentId = $scope.newPayment.repaymentId;
+            title = '确定要添加本次还款车辆吗？';
+        } else {
+            title = '确定要移除本次还款车辆吗？';
+        }
+
+        swal({
+                title: title,
+                type: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#DD6B55",
+                confirmButtonText: "确认",
+                cancelButtonText: "取消",
+                closeOnConfirm: true
+            },
+            function () {
+                _basic.put(_host.api_url + "/user/" + userId + "/loan/" + loanId + '/car/' + carId + '/loanBuyCarRel', {repaymentId: repaymentId}).then(
+                    function (data) {
+                        if (data.success === true) {
+                            // 成功后，刷新页面数据
+                            // 取得 贷出编号 对应的 购买车辆列表
+                            getBuyingCarsByLoanId(loanId);
+                        } else {
+                            swal(data.msg, "", "error");
+                        }
+                    });
+            });
+    };
 
     /**
      * 修改还款信息。
