@@ -106,6 +106,8 @@ app.controller("invoice_detail_controller", ["$scope", "$stateParams", "_basic",
         queryInvoiceShipTransOrderList();
         // 查询发票 关联 还款费用
         queryInvoiceLoanRepRel();
+        // 查询发票 关联 Lc Handling Fee / Bank Services Fee
+        queryCreditCarRelBase();
     };
 
     /**
@@ -492,37 +494,64 @@ app.controller("invoice_detail_controller", ["$scope", "$stateParams", "_basic",
      * 查询已关联还款订单（右侧）。
      */
     function queryInvoiceLoanRepRel() {
-        var url = _host.api_url + "/invoiceLoanRepRel?invoiceId=" + invoiceId;
-        _basic.get(url).then(function (data) {
+        $scope.totalInterestMoney = 0;
+        $scope.totalLcFee = 0;
+        $scope.totalBankServiceFee = 0;
+        $scope.totalPaymentMoney = 0;
+        _basic.get(_host.api_url + "/invoiceLoanRepRel?invoiceId=" + invoiceId).then(function (data) {
             if (data.success) {
-                $scope.invoiceLoanRepRelList = [];
-                $scope.totalPaymentMoney = 0;
-                $scope.thisInterestMoney = 0;
-                var thisRepayMoney = 0;
+                $scope.invoiceLoanRepRelList = data.result;
                 var thisInterestMoney = 0;
-                var thisFee = 0;
+                var thisLcFee = 0;
+                var thisBankServiceFee = 0;
+                // 以下为计算合计
+                for (var i = 0; i < data.result.length; i++) {
+                    // 当前行 数据
+                    thisInterestMoney = data.result[i].interest_money;
+                    thisLcFee = data.result[i].lc_handling_fee_total;
+                    thisBankServiceFee = data.result[i].bank_services_fee_total;
+
+                    $scope.totalInterestMoney = $scope.totalInterestMoney + (thisInterestMoney==null ? 0 : thisInterestMoney);
+                    $scope.totalLcFee = $scope.totalLcFee + (thisLcFee==null ? 0 : thisLcFee);
+                    $scope.totalBankServiceFee = $scope.totalBankServiceFee + (thisBankServiceFee==null ? 0 : thisBankServiceFee);
+                }
+                // 暂定 利息+手续费 合计
+                $scope.totalPaymentMoney = $scope.totalPaymentMoney + $scope.totalInterestMoney + $scope.totalLcFee + $scope.totalBankServiceFee;
+            } else {
+                swal(data.msg, "", "error");
+            }
+        });
+
+        _basic.get(_host.api_url + "/invoiceLoanRepRelList?invoiceId=" + invoiceId).then(function (data) {
+            if (data.success) {
+                $scope.invoiceLoanRepRelArray = [];
                 var preId = -1;
                 var vinArray = [];
                 for (var i = 0; i < data.result.length; i++) {
                     // 当前行 和前一行(或者第一行的前一行)，不一致时，则为新数据，创建新行
                     if (data.result[i].id !== preId) {
                         preId = data.result[i].id;
-                        $scope.invoiceLoanRepRelList.push(data.result[i]);
+                        $scope.invoiceLoanRepRelArray.push(data.result[i]);
                         vinArray = [data.result[i].vin];
-                        $scope.invoiceLoanRepRelList[$scope.invoiceLoanRepRelList.length-1].vin = vinArray;
-
-                        // 以下为计算合计
-                        thisRepayMoney = data.result[i].repayment_money;
-                        thisInterestMoney = data.result[i].interest_money;
-                        thisFee = data.result[i].fee;
-                        // 暂定 利息+手续费 合计
-                        $scope.totalPaymentMoney = $scope.totalPaymentMoney + (thisInterestMoney==null ? 0 : thisInterestMoney) + (thisFee==null ? 0 : thisFee);
-                        $scope.thisInterestMoney = $scope.thisInterestMoney + (thisInterestMoney==null ? 0 : thisInterestMoney);
+                        $scope.invoiceLoanRepRelArray[$scope.invoiceLoanRepRelArray.length-1].vin = vinArray;
                     } else {
                         vinArray.push(data.result[i].vin);
-                        $scope.invoiceLoanRepRelList[$scope.invoiceLoanRepRelList.length-1].vin = vinArray;
+                        $scope.invoiceLoanRepRelArray[$scope.invoiceLoanRepRelArray.length-1].vin = vinArray;
                     }
                 }
+            } else {
+                swal(data.msg, "", "error");
+            }
+        });
+    }
+
+    /**
+     * 发票预览：查询 Lc Handling Fee / Bank Services Fee 相关数据。
+     */
+    function queryCreditCarRelBase() {
+        _basic.get(_host.api_url + "/creditCarRelBase?invoiceId=" + invoiceId).then(function (data) {
+            if (data.success) {
+                $scope.invoicePaymentCarArray = data.result;
             } else {
                 swal(data.msg, "", "error");
             }

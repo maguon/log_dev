@@ -550,9 +550,9 @@ baseService.factory("_config", function () {
     // 发票开具-金融贷款信息
     _this.loanInfo = {
         loanInterest: "LOAN-INTEREST",
-        bankServices: "BANK SERVICES",
+        bankServices: "BANK SERVICES FEE",
         bankServicesDetail: "LC FEE AND WIRE TRANSFER FEE",
-        lcFee: "LC FEE",
+        lcFee: "LC HANDLING FEE",
         wireTransferFee: "WIRE TRANSFER FEE",
         interestRate: "interest rate"
     };

@@ -555,9 +555,9 @@
                                     <th data-field="">利率/天</th>
                                     <th data-field="">日期范围</th>
                                     <th data-field="">天数</th>
-                                    <th data-field="">利息(美元)</th>
-                                    <th data-field="">手续费(美元)</th>
-                                    <th data-field="">总额(美元)</th>
+                                    <th data-field="">利息</th>
+                                    <th data-field="">Lc Handling Fee</th>
+                                    <th data-field="">Bank Services Fee</th>
                                     <th></th>
                                 </tr>
                                 </thead>
@@ -575,11 +575,10 @@
                                     <td ng-bind="el.day_count"></td>
                                     <!-- 利息(美元) -->
                                     <td class="red-text">{{el.interest_money|currency}}</td>
-                                    <!-- 手续费(美元) -->
-                                    <td class="red-text">{{el.fee|currency}}</td>
-                                    <!-- 总额(美元)  暂定：利息+手续费 -->
-                                    <!--<td class="red-text">{{(el.repayment_money==null ? 0 : el.repayment_money) + (el.interest_money==null ? 0 : el.interest_money) + (el.fee==null ? 0 : el.fee) | currency}}</td>-->
-                                    <td class="red-text">{{(el.interest_money==null ? 0 : el.interest_money) + (el.fee==null ? 0 : el.fee) | currency}}</td>
+                                    <!-- Lc Handling Fee -->
+                                    <td class="red-text">{{el.lc_handling_fee_total|currency}}</td>
+                                    <!-- Bank Services Fee  -->
+                                    <td class="red-text">{{el.bank_services_fee_total|currency}}</td>
                                     <!-- 显示画面按钮 -->
                                     <td class="operation">
                                         <a  ng-click="addInvoiceLoanRepRel(el.id)" class="col s2 left" style="cursor: pointer">
@@ -627,8 +626,8 @@
                                     <th data-field="">日期范围</th>
                                     <th data-field="">天数</th>
                                     <th data-field="">利息(美元)</th>
-                                    <th data-field="">手续费(美元)</th>
-                                    <th data-field="">总额(美元)</th>
+                                    <th data-field="">Lc Handling Fee</th>
+                                    <th data-field="">Bank Services Fee</th>
                                     <th></th>
                                 </tr>
                                 </thead>
@@ -646,11 +645,10 @@
                                     <td ng-bind="el.day_count"></td>
                                     <!-- 利息(美元) -->
                                     <td class="red-text">{{el.interest_money|currency}}</td>
-                                    <!-- 手续费(美元) -->
-                                    <td class="red-text">{{el.fee|currency}}</td>
-                                    <!-- 总额(美元)  暂定：利息+手续费 -->
-                                    <!--<td class="red-text">{{(el.repayment_money==null ? 0 : el.repayment_money) + (el.interest_money==null ? 0 : el.interest_money) + (el.fee==null ? 0 : el.fee) | currency}}</td>-->
-                                    <td class="red-text">{{(el.interest_money==null ? 0 : el.interest_money) + (el.fee==null ? 0 : el.fee) | currency}}</td>
+                                    <!-- Lc Handling Fee -->
+                                    <td class="red-text">{{el.lc_handling_fee_total|currency}}</td>
+                                    <!-- Bank Services Fee -->
+                                    <td class="red-text">{{el.bank_services_fee_total|currency}}</td>
                                     <!-- 显示画面按钮 -->
                                     <td class="operation">
                                         <a  ng-click="deleteInvoiceLoanRepRel(el.repayment_id)" class="col s2 left" style="cursor: pointer">
@@ -693,8 +691,8 @@
                                 <th data-field="">日期范围</th>
                                 <th data-field="">天数</th>
                                 <th data-field="">利息(美元)</th>
-                                <th data-field="">手续费(美元)</th>
-                                <th data-field="">总额(美元)</th>
+                                <th data-field="">Lc Handling Fee</th>
+                                <th data-field="">Bank Services Fee</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -711,11 +709,10 @@
                                 <td ng-bind="el.day_count"></td>
                                 <!-- 利息(美元) -->
                                 <td class="red-text">{{el.interest_money|currency}}</td>
-                                <!-- 手续费(美元) -->
-                                <td class="red-text">{{el.fee|currency}}</td>
-                                <!-- 总额(美元)  暂定：利息+手续费 -->
-                                <!--<td class="red-text">{{(el.repayment_money==null ? 0 : el.repayment_money) + (el.interest_money==null ? 0 : el.interest_money) + (el.fee==null ? 0 : el.fee) | currency}}</td>-->
-                                <td class="red-text">{{(el.interest_money==null ? 0 : el.interest_money) + (el.fee==null ? 0 : el.fee) | currency}}</td>
+                                <!-- Lc Handling Fee -->
+                                <td class="red-text">{{el.lc_handling_fee_total|currency}}</td>
+                                <!-- Bank Services Fee  -->
+                                <td class="red-text">{{el.bank_services_fee_total|currency}}</td>
                             </tr>
                             </tbody>
                         </table>
@@ -952,7 +949,7 @@
         </div>
 
         <!-- 表格：金融贷款 -->
-        <div class="row" ng-show="invoiceLoanRepRelList.length > 0">
+        <div class="row" ng-show="invoiceLoanRepRelArray.length > 0">
             <div class="col s12">
                 <!-- 标题 暂不显示 -->
                 <!--<div class="col s12 fz15 bold" style="padding-left: 0;margin-top: 20px;margin-bottom: 10px;">金融贷款</div>-->
@@ -993,7 +990,7 @@
                     <!--</tr>-->
 
                     <!-- Details -->
-                    <tr ng-repeat="el in invoiceLoanRepRelList">
+                    <tr ng-repeat="el in invoiceLoanRepRelArray">
                         <!-- Item -->
                         <td class="invoice-table-td-height td-border" style="height: 55px;">{{loanInfo.loanInterest}}</td>
                         <!-- description -->
@@ -1016,7 +1013,91 @@
                     <tr class="fz15">
                         <td colspan="3" class="invoice-table-td-height last-row-border left-align">Total</td>
                         <!--<td colspan="3" class="invoice-table-td-height last-row-border right-align">{{totalPaymentMoney|currency}}</td>-->
-                        <td colspan="3" class="invoice-table-td-height last-row-border right-align">{{thisInterestMoney|currency}}</td>
+                        <td colspan="3" class="invoice-table-td-height last-row-border right-align">{{totalInterestMoney|currency}}</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- 表格：金融贷款 - lc_handling_fee  -->
+        <div class="row" ng-show="invoicePaymentCarArray.length > 0">
+            <div class="col s12">
+                <!-- 标题 暂不显示 -->
+                <!--<div class="col s12 fz15 bold" style="padding-left: 0;margin-top: 20px;margin-bottom: 10px;">金融贷款</div>-->
+
+                <table class="fz14" style="width: 100%;border:1px solid #d0d0d0">
+                    <tbody>
+
+                    <!-- Header -->
+                    <tr class="blue-grey lighten-5 fz15" style="height: 20px;">
+                        <th class="invoice-table-td-height tr-border" style="width:20%">Item</th>
+                        <th class="invoice-table-td-height tr-border" style="width:20%">VIN</th>
+                        <th class="invoice-table-td-height tr-border center-align" style="width:10%">Qty</th>
+                        <th class="invoice-table-td-height tr-border right-align" style="width:25%">Rate</th>
+                        <th class="invoice-table-td-height tr-border right-align" style="width:25%;border-right: 0">Amount</th>
+                    </tr>
+
+                    <!-- Details -->
+                    <tr ng-repeat="el in invoicePaymentCarArray">
+                        <!-- Item -->
+                        <td class="invoice-table-td-height td-border">{{loanInfo.lcFee}}</td>
+                        <!-- VIN -->
+                        <td class="invoice-table-td-height td-border center-align">{{el.vin}}</td>
+                        <!-- Qty -->
+                        <td class="invoice-table-td-height td-border center-align">1</td>
+                        <!-- Rate -->
+                        <td class="invoice-table-td-height td-border right-align">{{el.lc_handling_fee|currency}}</td>
+                        <!-- Amount -->
+                        <td class="invoice-table-td-height last-td-border right-align">{{el.lc_handling_fee|currency}}</td>
+                    </tr>
+
+                    <!-- Total -->
+                    <tr class="fz15">
+                        <td colspan="2" class="invoice-table-td-height last-row-border left-align">Total</td>
+                        <td colspan="3" class="invoice-table-td-height last-row-border right-align">{{totalLcFee|currency}}</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- 表格：金融贷款 - lc_handling_fee  -->
+        <div class="row" ng-show="invoicePaymentCarArray.length > 0">
+            <div class="col s12">
+                <!-- 标题 暂不显示 -->
+                <!--<div class="col s12 fz15 bold" style="padding-left: 0;margin-top: 20px;margin-bottom: 10px;">金融贷款</div>-->
+
+                <table class="fz14" style="width: 100%;border:1px solid #d0d0d0">
+                    <tbody>
+
+                    <!-- Header -->
+                    <tr class="blue-grey lighten-5 fz15" style="height: 20px;">
+                        <th class="invoice-table-td-height tr-border" style="width:20%">Item</th>
+                        <th class="invoice-table-td-height tr-border" style="width:20%">VIN</th>
+                        <th class="invoice-table-td-height tr-border center-align" style="width:10%">Qty</th>
+                        <th class="invoice-table-td-height tr-border right-align" style="width:25%">Rate</th>
+                        <th class="invoice-table-td-height tr-border right-align" style="width:25%;border-right: 0">Amount</th>
+                    </tr>
+
+                    <!-- Details -->
+                    <tr ng-repeat="el in invoicePaymentCarArray">
+                        <!-- Item -->
+                        <td class="invoice-table-td-height td-border">{{loanInfo.bankServices}}</td>
+                        <!-- VIN -->
+                        <td class="invoice-table-td-height td-border center-align">{{el.vin}}</td>
+                        <!-- Qty -->
+                        <td class="invoice-table-td-height td-border center-align">1</td>
+                        <!-- Rate -->
+                        <td class="invoice-table-td-height td-border right-align">{{el.bank_services_fee|currency}}</td>
+                        <!-- Amount -->
+                        <td class="invoice-table-td-height last-td-border right-align">{{el.bank_services_fee|currency}}</td>
+                    </tr>
+
+                    <!-- Total -->
+                    <tr class="fz15">
+                        <td colspan="2" class="invoice-table-td-height last-row-border left-align">Total</td>
+                        <td colspan="3" class="invoice-table-td-height last-row-border right-align">{{totalBankServiceFee|currency}}</td>
                     </tr>
                     </tbody>
                 </table>
