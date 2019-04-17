@@ -290,6 +290,7 @@ app.controller("storage_car_details_controller", [ "$scope","$state", "$statePar
             }
         });
     };
+
     // 查看详情
     $scope.lookStorageCar = function (val, vin) {
         $scope.submitted = false;
@@ -328,6 +329,16 @@ app.controller("storage_car_details_controller", [ "$scope","$state", "$statePar
                     $scope.look_storageName = $scope.self_car.storage_name + " " +$scope.self_car.area_name+"扇区"+ $scope.self_car.row + "排" + $scope.self_car.col + "列"+selfLot;
                     // 车辆id
                     $scope.look_car_id = $scope.self_car.id;
+                }
+            } else {
+                swal(data.msg, "", "error")
+            }
+        });
+
+        _basic.get(_host.record_url + "/user/" + userId + "/car/" + val + "/record").then(function (data) {
+            if (data.success) {
+                if (data.result.length > 0) {
+                    $scope.comment = data.result[0].comment;
                 }
             } else {
                 swal(data.msg, "", "error")
@@ -617,7 +628,6 @@ app.controller("storage_car_details_controller", [ "$scope","$state", "$statePar
 
                     $scope.operating_record = data.result[0];
                     $scope.record_id=$scope.operating_record._id;
-                    $scope.comment = $scope.operating_record.comment;
 
                     if (type === 'carImage') {
                         $scope.car_image = $scope.operating_record.car_image;
