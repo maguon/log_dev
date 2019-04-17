@@ -53,6 +53,101 @@ app.controller("car_demand_details_controller", ["$state", "$stateParams", "_con
         $("#look_comment").show();
     };
 
+    /**
+     * 点击 发票预览
+     */
+    $scope.previewInvoice = function () {
+        $('.modal').modal();
+        $('#carInfoDiv').modal('open');
+    };
+
+    /**
+     * 进行canvas生成。(点击下载按钮)
+     */
+    $scope.downloadInvoice = function () {
+        try{
+            // 去掉画面CSS (主要为了去滚动条)
+            $("#context-div").removeClass("ConWrap");
+            $("#carInfoDiv").removeClass("modal");
+            // html2canvas(document.getElementById('recommend-div'),{useCORS: true}).then((canvas) => {
+            //
+            // }
+            html2canvas(document.getElementById("car_info"), {
+                // allowTaint: true, //避免一些不识别的图片干扰，默认为false，遇到不识别的图片干扰则会停止处理html2canvas
+                // taintTest: false,
+                useCORS: true,
+                // Create a canvas with double-resolution.
+                scale: 2,
+                // Create a canvas with 144 dpi (1.5x resolution).
+                dpi: 192,
+                onrendered: function(canvas) {
+                    var contentWidth = canvas.width;
+                    var contentHeight = canvas.height;
+
+                    //一页pdf显示html页面生成的canvas高度;
+                    var pageHeight = contentWidth / 595.28 * 841.89;
+                    //未生成pdf的html页面高度
+                    var leftHeight = contentHeight;
+                    //pdf页面偏移
+                    var position = 0;
+                    //a4纸的尺寸[595.28,841.89]，html页面生成的canvas在pdf中图片的宽高
+                    var imgWidth = 595.28;
+                    var imgHeight = 595.28/contentWidth * contentHeight;
+                    var pageData = canvas.toDataURL('image/jpeg', 1.0);
+
+                    // pageData = pageData.replace(/^data:image\/(png|jpg);base64,/, "");
+                    //
+                    // saveFile(pageData,'aaa.png');
+
+                    var pdf = new jsPDF('', 'pt', 'a4');
+                    //有两个高度需要区分，一个是html页面的实际高度，和生成pdf的页面高度(841.89)
+                    //当内容未超过pdf一页显示的范围，无需分页
+                    if (leftHeight < pageHeight) {
+                        pdf.addImage(pageData, 'JPEG', 0, 0, imgWidth, imgHeight );
+                    } else {
+                        while(leftHeight > 0) {
+                            pdf.addImage(pageData, 'JPEG', 0, position, imgWidth, imgHeight)
+                            leftHeight -= pageHeight;
+                            position -= 841.89;
+                            //避免添加空白页
+                            if(leftHeight > 0) {
+                                pdf.addPage();
+                            }
+                        }
+                    }
+                    // 当前 日期
+                    // var now = moment(new Date()).format('YYYY-MM-DD');
+                    // pdf.save('invoice_' + now + '.pdf');
+                    pdf.save('car_info.pdf');
+                },
+                // 背景设为白色（默认为黑色）
+                background: "#fff"
+            });
+        } finally {
+            // 追加画面CSS
+            $("#carInfoDiv").addClass("modal");
+            $("#context-div").addClass("ConWrap");
+            // 关闭模态
+            $('#carInfoDiv').modal('close');
+        }
+    };
+
+    /**
+     * 在本地进行文件保存
+     * @param  {String} data     要保存到本地的图片数据
+     * @param  {String} filename 文件名
+     */
+    function saveFile(data, filename) {
+        var save_link = document.createElementNS('http://www.w3.org/1999/xhtml', 'a');
+        save_link.href = data;
+        save_link.download = filename;
+
+        var event = document.createEvent('MouseEvents');
+        event.initMouseEvent('click', true, false, window, 0, 0, 0, 0, 0, false, false, false, false, 0, null);
+        save_link.dispatchEvent(event);
+    }
+
+
     var viewer;
 
     /**
@@ -90,12 +185,8 @@ app.controller("car_demand_details_controller", ["$state", "$stateParams", "_con
         _basic.get(_host.record_url + "/user/" + userId + "/car/" + val + "/record").then(function (data) {
             if (data.success) {
                 if (data.result.length > 0) {
-
-                    $scope.operating_record = data.result[0];
-                    $scope.comment = $scope.operating_record.comment;
-
                     if (type === 'carImage') {
-                        $scope.car_image = $scope.operating_record.car_image;
+                        $scope.car_image = data.result[0].car_image;
                         for (var i in $scope.car_image) {
                             $scope.car_imageBox.push({
                                 src: _host.file_url + '/image/' + $scope.car_image[i].url,
@@ -104,16 +195,18 @@ app.controller("car_demand_details_controller", ["$state", "$stateParams", "_con
                             });
                         }
                     } else if (type === 'storageImage') {
-                        $scope.storage_image = $scope.operating_record.storage_image;
+                        $scope.storage_image = data.result[0].storage_image;
                         for (var i in $scope.storage_image) {
                             $scope.storage_imageBox.push({
                                 src: _host.file_url + '/image/' + $scope.storage_image[i].url,
                                 time:$scope.storage_image[i].timez,
                                 user:$scope.storage_image[i].name
                             });
+
+                            console.log('',$scope.storage_imageBox);
                         }
                     } else if (type === 'transImage') {
-                        $scope.trans_image = $scope.operating_record.trans_image;
+                        $scope.trans_image = data.result[0].trans_image;
                         for (var i in $scope.trans_image) {
                             $scope.trans_imageBox.push({
                                 src: _host.file_url + '/image/' + $scope.trans_image[i].url,
@@ -128,11 +221,6 @@ app.controller("car_demand_details_controller", ["$state", "$stateParams", "_con
             }
         });
     };
-
-
-
-
-
 
     /**
      * 通过车辆ID，取得仓储车辆信息。
@@ -150,7 +238,7 @@ app.controller("car_demand_details_controller", ["$state", "$stateParams", "_con
         $("#look_msg").addClass("active");
         $("#look_msg").show();
 
-        //基本信息获取
+        // 基本信息获取
         _basic.get(_host.api_url + "/user/" + userId + "/car?carId=" + val).then(function (data) {
             if (data.success == true ) {
                 if (data.result.length == 0) {
@@ -183,7 +271,16 @@ app.controller("car_demand_details_controller", ["$state", "$stateParams", "_con
                 swal(data.msg, "", "error")
             }
 
-        })
+        });
+
+        // 取得操作记录
+        _basic.get(_host.record_url + "/user/" + userId + "/car/" + val + "/record").then(function (data) {
+            if (data.success) {
+                if (data.result.length > 0) {
+                    $scope.comment = data.result[0].comment;
+                }
+            }
+        });
     };
     $scope.getStorageCarInfo(val, vin);
 }]);
