@@ -169,20 +169,20 @@ app.controller("car_demand_details_controller", ["$state", "$stateParams", "_con
                     // Html / Canvas 画面 尺寸
                     var contentWidth = canvas.width;
                     var contentHeight = canvas.height;
-
+                    // 一页pdf显示html页面生成的canvas高度;（根据比例，算出来的固定值）
+                    var htmlPageHeight = contentWidth / 595.28 * 841.89;
                     //a4纸的尺寸[595.28,841.89]，html页面生成的canvas在pdf中图片的宽高
                     var pdfPageWidth = 595.28;
                     var pdfPageHeight = 595.28/contentWidth * contentHeight;
                     var pageData = canvas.toDataURL('image/jpeg', 1.0);
 
                     // var pdf = new jsPDF('', 'pt', 'a4');
-                    var pdf = new jsPDF('', 'pt', [pdfPageWidth, pdfPageHeight + 10]);
+                    // 画面尺寸小于 一页，则默认为A4，否则：设定指定高度画面
+                    var pdf = new jsPDF('', 'pt', contentHeight < htmlPageHeight ? 'a4' : [pdfPageWidth, pdfPageHeight + 30]);
                     pdf.addImage(pageData, 'JPEG', 0, 0, pdfPageWidth, pdfPageHeight );
 
                     // 分页显示 代码暂时不用
 
-                    // // 一页pdf显示html页面生成的canvas高度;（用来判定，HTML中是否有剩余未显示内容）
-                    // var htmlPageHeight = contentWidth / 595.28 * 841.89;
                     // // 未生成pdf的html页面高度
                     // var leftHeight = contentHeight;
                     // // pdf页面偏移 （因为分页，产生偏移）
