@@ -166,48 +166,43 @@ app.controller("car_demand_details_controller", ["$state", "$stateParams", "_con
                 // Create a canvas with 144 dpi (1.5x resolution).
                 dpi: 192,
                 onrendered: function(canvas) {
+                    // Html / Canvas 画面 尺寸
                     var contentWidth = canvas.width;
                     var contentHeight = canvas.height;
-                    console.log('contentWidth',contentWidth);
-                    console.log('contentHeight',contentHeight);
 
-                    //一页pdf显示html页面生成的canvas高度;
-                    var pageHeight = contentWidth / 595.28 * 841.89;
-                    console.log('pageHeight',pageHeight);
-                    //未生成pdf的html页面高度
-                    var leftHeight = contentHeight;
-                    console.log('leftHeight',leftHeight);
-                    //pdf页面偏移
-                    var position = 0;
                     //a4纸的尺寸[595.28,841.89]，html页面生成的canvas在pdf中图片的宽高
-                    var imgWidth = 595.28;
-                    var imgHeight = 595.28/contentWidth * contentHeight;
-                    console.log('imgHeight',imgHeight);
+                    var pdfPageWidth = 595.28;
+                    var pdfPageHeight = 595.28/contentWidth * contentHeight;
                     var pageData = canvas.toDataURL('image/jpeg', 1.0);
 
-                    var pdf = new jsPDF('', 'pt', [595.28, contentHeight]);
-                    // pdf.beginFormObject(10, 10, 100, 100, matrix);
-                    pdf.addImage(pageData, 'JPEG', 0, 0, imgWidth, imgHeight );
+                    // var pdf = new jsPDF('', 'pt', 'a4');
+                    var pdf = new jsPDF('', 'pt', [pdfPageWidth, pdfPageHeight + 10]);
+                    pdf.addImage(pageData, 'JPEG', 0, 0, pdfPageWidth, pdfPageHeight );
 
+                    // 分页显示 代码暂时不用
 
-                    //有两个高度需要区分，一个是html页面的实际高度，和生成pdf的页面高度(841.89)
-                    //当内容未超过pdf一页显示的范围，无需分页
-                    // if (leftHeight < pageHeight) {
-                    //     pdf.addImage(pageData, 'JPEG', 0, 0, imgWidth, imgHeight );
+                    // // 一页pdf显示html页面生成的canvas高度;（用来判定，HTML中是否有剩余未显示内容）
+                    // var htmlPageHeight = contentWidth / 595.28 * 841.89;
+                    // // 未生成pdf的html页面高度
+                    // var leftHeight = contentHeight;
+                    // // pdf页面偏移 （因为分页，产生偏移）
+                    // var position = 0;
+                    // // 当内容未超过pdf一页显示的范围，无需分页
+                    // if (leftHeight < htmlPageHeight) {
+                    //     pdf.addImage(pageData, 'JPEG', 0, 0, pdfPageWidth, pdfPageHeight);
                     // } else {
+                    //     // 有剩余未显示内容，则循环执行
                     //     while(leftHeight > 0) {
-                    //         pdf.addImage(pageData, 'JPEG', 0, position, imgWidth, imgHeight);
-                    //         leftHeight -= pageHeight;
-                    //         console.log('leftHeight',leftHeight);
-                    //         // 比841.89 多减去20 ，是为了留下一定的余白
-                    //         position -= 861.89;
-                    //         console.log('position',position);
+                    //         pdf.addImage(pageData, 'JPEG', 0, position, pdfPageWidth, pdfPageHeight);
+                    //         leftHeight -= htmlPageHeight;
+                    //         position -= 841.89;
                     //         //避免添加空白页
                     //         if(leftHeight > 0) {
                     //             pdf.addPage();
                     //         }
                     //     }
                     // }
+
                     // 保存PDF文件
                     pdf.save(vin + '.pdf');
                     $(".shadeDowWrap").hide();
