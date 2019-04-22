@@ -166,6 +166,8 @@ app.controller("car_demand_details_controller", ["$state", "$stateParams", "_con
             $("#context-div").removeClass("ConWrap");
             $("#carInfoDiv").removeClass("modal");
             $(".shadeDowWrap").show();
+            // 下载PDF 之前，去掉画面显示的 删除图标
+            $(".img_close").remove();
             html2canvas(document.getElementById("car_info"), {
                 // allowTaint: true, //避免一些不识别的图片干扰，默认为false，遇到不识别的图片干扰则会停止处理html2canvas
                 // taintTest: false,
