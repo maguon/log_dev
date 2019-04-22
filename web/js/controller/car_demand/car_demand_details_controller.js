@@ -118,27 +118,21 @@ app.controller("car_demand_details_controller", ["$state", "$stateParams", "_con
                     if ($scope.showCarInfo4PDF) {
                         $scope.car_image = data.result[0].car_image;
                         for (var i in $scope.car_image) {
-                            $scope.pdf_car_imageBox.push({
-                                src: _host.file_url + '/image/' + $scope.car_image[i].url + "?" + nowStr
-                            });
+                            $scope.pdf_car_imageBox.push(_host.file_url + '/image/' + $scope.car_image[i].url + "?" + nowStr);
                         }
                     }
                     // 选中 仓储信息
                     if ($scope.showStorageInfo4PDF) {
                         $scope.storage_image = data.result[0].storage_image;
                         for (var i in $scope.storage_image) {
-                            $scope.pdf_storage_imageBox.push({
-                                src: _host.file_url + '/image/' + $scope.storage_image[i].url + "?" + nowStr
-                            });
+                            $scope.pdf_storage_imageBox.push(_host.file_url + '/image/' + $scope.storage_image[i].url + "?" + nowStr);
                         }
                     }
                     // 选中 海运信息
                     if ($scope.showTransInfo4PDF) {
                         $scope.trans_image = data.result[0].trans_image;
                         for (var i in $scope.trans_image) {
-                            $scope.pdf_trans_imageBox.push({
-                                src: _host.file_url + '/image/' + $scope.trans_image[i].url + "?" + nowStr
-                            });
+                            $scope.pdf_trans_imageBox.push(_host.file_url + '/image/' + $scope.trans_image[i].url + "?" + nowStr);
                         }
                     }
                 }
@@ -147,6 +141,21 @@ app.controller("car_demand_details_controller", ["$state", "$stateParams", "_con
             }
         });
     }
+
+    /**
+     * 预览画面：删除照片
+     * @param src
+     * @param urlSuffix 区分
+     */
+    $scope.deleteImg = function (src, urlSuffix) {
+        if (urlSuffix === 'carImage') {
+            $scope.pdf_car_imageBox.splice($scope.pdf_car_imageBox.indexOf(src), 1);
+        } else if (urlSuffix === 'storageImage') {
+            $scope.pdf_storage_imageBox.splice($scope.pdf_storage_imageBox.indexOf(src), 1);
+        } else if (urlSuffix === 'transImage') {
+            $scope.pdf_trans_imageBox.splice($scope.pdf_trans_imageBox.indexOf(src), 1);
+        }
+    };
 
     /**
      * 下载PDF文件。
