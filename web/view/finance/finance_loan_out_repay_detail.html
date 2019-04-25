@@ -352,8 +352,8 @@
                                     <td style="width:15%;padding-left: 0;padding-right: 0;">VIN：{{car.vin}}</td>
                                     <td style="width:20%;">{{car.make_name}}/{{car.model_name}} ({{car.pro_date}})</td>
                                     <td style="width:14%;">估值：{{car.valuation|currency}}</td>
-                                    <td style="width:17%;">Lc Handling Fee：{{car.lc_handling_fee|currency}}</td>
-                                    <td style="width:19%;">Bank Services Fee：{{car.bank_services_fee|currency}}</td>
+                                    <td style="width:17%;">Lc Handling Fee：{{((car.lc_handling_fee == null || car.lc_handling_fee == '') ? 0 : car.lc_handling_fee)|currency}}</td>
+                                    <td style="width:19%;">Bank Services Fee：{{((car.bank_services_fee == null || car.bank_services_fee == '') ? 0 : car.bank_services_fee)|currency}}</td>
                                     <td style="width:10%;" ng-show="car.repayment_id !== 0">还款编号：{{car.repayment_id}}</td>
                                     <td style="width:10%;" ng-show="car.repayment_id === 0"></td>
                                     <td ng-show="repay.repaymentStatus == 1" class="red-text" style="width:5%;">

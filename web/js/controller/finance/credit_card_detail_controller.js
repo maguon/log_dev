@@ -393,9 +393,9 @@ app.controller("credit_card_detail_controller", ["$scope", "$rootScope", "_host"
         // car id
         $scope.editCarId = carId;
         // lc fee
-        $scope.editLcFee = lcHandlingFee;
+        $scope.editLcFee = (lcHandlingFee == null || lcHandlingFee === '') ? 0 : lcHandlingFee;
         // bank service fee
-        $scope.editBankServicesFee = bankServicesFee;
+        $scope.editBankServicesFee = (bankServicesFee == null || bankServicesFee === '') ? 0 : bankServicesFee;
 
         // 激活label状态
         $('#lcFeeLabel').addClass('active');

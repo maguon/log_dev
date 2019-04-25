@@ -477,9 +477,9 @@ app.controller("finance_loan_out_repay_detail_controller", ["$scope", "$statePar
         // car id
         $scope.editCarId = carId;
         // lc fee
-        $scope.editLcFee = lcHandlingFee;
+        $scope.editLcFee = (lcHandlingFee == null || lcHandlingFee === '') ? 0 : lcHandlingFee;
         // bank service fee
-        $scope.editBankServicesFee = bankServicesFee;
+        $scope.editBankServicesFee = (bankServicesFee == null || bankServicesFee === '') ? 0 : bankServicesFee;
 
         // 激活label状态
         $('#lcFeeLabel').addClass('active');

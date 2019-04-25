@@ -1047,9 +1047,9 @@
                         <!-- Qty -->
                         <td class="invoice-table-td-height td-border center-align">1</td>
                         <!-- Rate -->
-                        <td class="invoice-table-td-height td-border right-align">{{el.lc_handling_fee|currency}}</td>
+                        <td class="invoice-table-td-height td-border right-align">{{((el.lc_handling_fee == null || el.lc_handling_fee == '') ? 0 : el.lc_handling_fee)|currency}}</td>
                         <!-- Amount -->
-                        <td class="invoice-table-td-height last-td-border right-align">{{el.lc_handling_fee|currency}}</td>
+                        <td class="invoice-table-td-height last-td-border right-align">{{((el.lc_handling_fee == null || el.lc_handling_fee == '') ? 0 : el.lc_handling_fee)|currency}}</td>
                     </tr>
 
                     <!-- Total -->
@@ -1062,7 +1062,7 @@
             </div>
         </div>
 
-        <!-- 表格：金融贷款 - lc_handling_fee  -->
+        <!-- 表格：金融贷款 - bank_services_fee  -->
         <div class="row" ng-show="invoicePaymentCarArray.length > 0">
             <div class="col s12">
                 <!-- 标题 暂不显示 -->
@@ -1089,9 +1089,9 @@
                         <!-- Qty -->
                         <td class="invoice-table-td-height td-border center-align">1</td>
                         <!-- Rate -->
-                        <td class="invoice-table-td-height td-border right-align">{{el.bank_services_fee|currency}}</td>
+                        <td class="invoice-table-td-height td-border right-align">{{((el.bank_services_fee == null || el.bank_services_fee == '') ? 0 : el.bank_services_fee)|currency}}</td>
                         <!-- Amount -->
-                        <td class="invoice-table-td-height last-td-border right-align">{{el.bank_services_fee|currency}}</td>
+                        <td class="invoice-table-td-height last-td-border right-align">{{((el.bank_services_fee == null || el.bank_services_fee == '') ? 0 : el.bank_services_fee)|currency}}</td>
                     </tr>
 
                     <!-- Total -->
