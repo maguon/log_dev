@@ -20,30 +20,32 @@
                 <li style="border-bottom: 1px solid #6192d1" ng-repeat="el in userInfoArray">
 
                     <!-- 列表：头部信息(部门) -->
-                    <div class="collapsible-header userInfoList " flag="true"
-                         ng-click="get_userInfo($event,el.user_type)"><i class="mdi  mdi-account"></i><span>{{el.type_name}}</span>
+                    <div class="collapsible-header userInfoList" ng-click="get_userInfo($event,el.user_type)">
+                        <i class="mdi  mdi-account"></i><span>{{el.type_name}}</span>
                     </div>
 
                     <!-- 列表：主体信息(用户详细信息列表) -->
                     <div class="collapsible-body" style="padding: 0">
-                        <div class="col s12 p0">
-                            <table class=" bordered striped">
-                                <thead class="blue-grey lighten-5">
+                        <div class="row no-marBottom">
+                            <div class="col s12 p0">
+                                <table class=" bordered striped">
+                                    <thead class="blue-grey lighten-5">
                                     <tr class="grey-text text-darken-1">
                                         <th class="center-align" data-field="">姓名</th>
                                         <th class="center-align" data-field="">性别</th>
                                         <th class="center-align" data-field="">联系电话</th>
                                     </tr>
-                                </thead>
-                                <tbody class="grey-text text-darken-1">
+                                    </thead>
+                                    <tbody class="grey-text text-darken-1">
                                     <tr ng-repeat="els in el.userInfoListArray">
                                         <td class="center-align" ng-bind="els.real_name"></td>
                                         <td class="center-align" ng-if="els.gender==1">男</td>
                                         <td class="center-align" ng-if="els.gender==0">女</td>
                                         <td class="center-align" ng-bind="els.mobile"></td>
                                     </tr>
-                                </tbody>
-                            </table>
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
                     </div>
                 </li>
