@@ -321,7 +321,7 @@
                         <div class="row blue-grey lighten-5" style="width:98%;border:1px solid #bdbdbd">
                             <!-- header -->
                             <div class="col s12 lighten-1 cyan-text vc-center left-align" style="height:50px;">
-                                <div class="col s11">
+                                <div class="col" style="width:68%;padding-right: 0;">
                                     VIN：{{linkCar.vin}}
                                     <!-- 金融车(0：不是金融车， 1 金融车) -->
                                     <span ng-show="linkCar.purchase_type==1" class="mdi mdi-cash-usd fz18" style="margin-left: 30px;color: #f0ad4e"></span>
@@ -334,11 +334,22 @@
                                     <span class="grey-text" style="margin-left:40px;">{{linkCar.make_name}} /{{linkCar.model_name}}</span>
                                     <span class="z-depth-1" style="margin-left: 20px;display:inline-block;height: 20px;width: 20px;background-color: {{'#'+linkCar.colour}};"></span>
                                     <!-- 车辆：估值 -->
-                                    <span class="red-text" style="margin-left:40px;">{{linkCar.valuation| currency }}</span>
+                                    <span style="margin-left:40px;">
+                                        估值：<span class="red-text">{{linkCar.valuation| currency }}</span>
+                                    </span>
+                                </div>
+
+                                <div class="col" style="width:25%;padding-left:0;padding-right: 0;">
+                                    <!-- Lc Handling Fee -->
+                                    LC：<span class="red-text">{{((linkCar.lc_handling_fee == null || linkCar.lc_handling_fee ==='') ? 0 : linkCar.lc_handling_fee)| currency }}</span>
+                                    <!-- Bank Services Fee -->
+                                    <span style="margin-left:30px;">
+                                        BANK：<span class="red-text">{{((linkCar.bank_services_fee == null || linkCar.bank_services_fee ==='') ? 0 : linkCar.bank_services_fee)| currency }}</span>
+                                    </span>
                                 </div>
 
                                 <!-- 操作按钮 编辑车辆服务费，删除关联车辆 -->
-                                <div class="col s1 right-align" style="font-size: 20px;">
+                                <div class="col right-align" style="width:7%;font-size: 20px;padding-right: 5px;">
                                     <i class="col s6 mdi mdi-currency-usd cyan-text" style="cursor: pointer;" title="修改车辆费用"
                                        ng-click="openEditCarServiceFeeDiv(linkCar.credit_id,linkCar.car_id,linkCar.lc_handling_fee,linkCar.bank_services_fee)"></i>
                                     <i class="col s6 mdi mdi-close  red-text" style="cursor: pointer;" title="删除关联车辆" ng-click="deleteLinkCar(linkCar.car_id)"></i>
